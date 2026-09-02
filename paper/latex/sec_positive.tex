@@ -1,0 +1,134 @@
+Before attributing collapse to generation, we must exclude the
+
+alternative: that BIRD/GLM simply has no exploitable
+
+instance-conditional signal --- that \emph{any} population, however
+
+diverse, could only be noise. We therefore wrote four harnesses by hand,
+
+each with an execution path forcibly different from bare:
+
+
+
+\begin{itemize}
+
+\tightlist
+
+\item
+
+  \texttt{hpc\_repair} --- execute the SQL; on error, feed the message
+
+  back for one repair round;
+
+\item
+
+  \texttt{hpc\_vote3} --- three independent samples at temperature
+
+  \textgreater{} 0, majority vote on execution results;
+
+\item
+
+  \texttt{hpc\_schema} --- a schema-linking pass that prunes the schema
+
+  before generation;
+
+\item
+
+  \texttt{hpc\_hint} --- re-order the question into hint-first form
+
+  before generation.
+
+\end{itemize}
+
+
+
+Same frozen target, same 60 tasks, same judge as the collapsed AI
+
+population. One caveat is auditable in the released matrices: the bare
+
+baseline itself flipped 3 of 60 items between the two day-1 runs (26
+
+vs.~29 bare errors; API nondeterminism at temperature 0), so the two
+
+columns are not conditioned on an identical bare-error set. On the
+
+60-item run:
+
+
+
+{\def\LTcaptype{none} % do not increment counter
+
+\begin{longtable}[]{@{}
+
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+
+\toprule\noalign{}
+
+\begin{minipage}[b]{\linewidth}\raggedright
+
+Metric
+
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+
+AI population (A)
+
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+
+Human positive control
+
+\end{minipage} \\
+
+\midrule\noalign{}
+
+\endhead
+
+\bottomrule\noalign{}
+
+\endlastfoot
+
+Pairwise disagreement & 3.5\% & \textbf{8.6\%} \\
+
+Union repair of bare errors & 7.7\% (2/26) & \textbf{20.7\%} (6/29) \\
+
+Oracle headroom vs best fixed & 3.3 pp & \textbf{6.67 pp} \\
+
+Harnesses with distinct non-empty fix sets & 1 & \textbf{3} (repair
+
+\{36,38,53\}, schema \{11,12,38\}, hint \{38,43,53\}) \\
+
+Union regressions & 7 & 4 \\
+
+\end{longtable}
+
+}
+
+
+
+The fix-set audit (\texttt{hpc\_fixset\_audit.json}) makes the
+
+complementarity claim precise and replaces our earlier, stronger
+
+phrasing: repair/schema/hint each produce repairs the others miss (1/2/1
+
+repairs unique to one harness), their fix sets are pairwise distinct,
+
+and \texttt{vote3} contributes no repair on this run. On the 151-item
+
+set the control's headroom holds at \textbf{7.28 pp} {[}3.3, 10.0{]}
+
+while its repair rate settles at 14.9\% --- the 60-item 20.7\% was
+
+small-sample optimism, disclosed in Section~7 --- so the two conclusions stand
+
+with tightened numbers: \textbf{F2} (the domain admits ≥5 pp of
+
+instance-conditional headroom at the point estimate) and the
+
+localization of the failure to the generation side.
+
+
+

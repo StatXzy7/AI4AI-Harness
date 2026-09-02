@@ -1,0 +1,7 @@
+[collector] split tasks: {'card_games': 121, 'formula_1': 30}
+[collector] tasks={'card_games': 121, 'formula_1': 30} | harnesses: ['c2_b2dexp_schema_link', 'c2_b2dexp_hint_guard', 'c2_b2qwen_repair', 'c2_b3glm_repair', 'c2_b3glm_vote3', 'c2_b3glm_two_view']
+    c2_b2dexp_schema_link: 25/151
+    c2_b2dexp_schema_link: 50/151
+    c2_b2dexp_schema_link: 75/151
+    c2_b2dexp_schema_link: 100/151
+    c2_b2dexp_schema_link: 125/151
