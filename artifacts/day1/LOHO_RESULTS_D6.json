@@ -1,0 +1,215 @@
+{
+  "stats": {
+    "n_tasks": 151,
+    "n_harnesses": 7,
+    "per_harness_acc": {
+      "c2_b2dexp_format_guard": 0.5497,
+      "c2_b2dexp_repair": 0.543,
+      "c2_b2dexp_vote3": 0.5232,
+      "bare": 0.5099,
+      "c2_b2dexp_decompose": 0.5033,
+      "c2_b2dexp_error_classify": 0.4834,
+      "c2_b2dexp_two_view": 0.4834
+    },
+    "best_fixed": "c2_b2dexp_format_guard",
+    "best_fixed_acc": 0.5496688741721855,
+    "H0_acc": 0.5099337748344371,
+    "oracle_acc": 0.6291390728476821,
+    "headroom_vs_best_fixed_pp": 7.947019867549665,
+    "headroom_vs_H0_pp": 11.920529801324498,
+    "delta_prevalence": {
+      "-1": 0.05077262693156733,
+      "0": 0.8940397350993378,
+      "1": 0.05518763796909492
+    }
+  },
+  "loho_A": [
+    {
+      "held_out": "c2_b2dexp_decompose",
+      "auroc_pos": 0.9082733812949639,
+      "auprc_pos": 0.7374184981684982,
+      "macro_f1": 0.03773584905660377,
+      "prev_pos": 0.07947019867549669,
+      "prev_neg": 0.08609271523178808
+    },
+    {
+      "held_out": "c2_b2dexp_error_classify",
+      "auroc_pos": 0.8214285714285714,
+      "auprc_pos": 0.27666393889798147,
+      "macro_f1": 0.013333333333333334,
+      "prev_pos": 0.026490066225165563,
+      "prev_neg": 0.052980132450331126
+    },
+    {
+      "held_out": "c2_b2dexp_format_guard",
+      "auroc_pos": 0.9546165884194053,
+      "auprc_pos": 0.6814814814814816,
+      "macro_f1": 0.08089175231374955,
+      "prev_pos": 0.059602649006622516,
+      "prev_neg": 0.019867549668874173
+    },
+    {
+      "held_out": "c2_b2dexp_repair",
+      "auroc_pos": 0.960093896713615,
+      "auprc_pos": 0.6435167229284877,
+      "macro_f1": 0.03563979879769353,
+      "prev_pos": 0.059602649006622516,
+      "prev_neg": 0.026490066225165563
+    },
+    {
+      "held_out": "c2_b2dexp_two_view",
+      "auroc_pos": 0.9514866979655712,
+      "auprc_pos": 0.6724636802650987,
+      "macro_f1": 0.02295628962295629,
+      "prev_pos": 0.059602649006622516,
+      "prev_neg": 0.08609271523178808
+    },
+    {
+      "held_out": "c2_b2dexp_vote3",
+      "auroc_pos": 0.9816468253968254,
+      "auprc_pos": 0.6450636664922378,
+      "macro_f1": 0.081799591002045,
+      "prev_pos": 0.046357615894039736,
+      "prev_neg": 0.033112582781456956
+    }
+  ],
+  "loho_task_only": [
+    {
+      "held_out": "c2_b2dexp_decompose",
+      "auroc_pos": 0.922062350119904,
+      "auprc_pos": 0.6915360873694207,
+      "macro_f1": 0.03090507726269316,
+      "prev_pos": 0.07947019867549669,
+      "prev_neg": 0.08609271523178808
+    },
+    {
+      "held_out": "c2_b2dexp_error_classify",
+      "auroc_pos": 0.8061224489795918,
+      "auprc_pos": 0.42656765676567654,
+      "macro_f1": 0.018583268583268583,
+      "prev_pos": 0.026490066225165563,
+      "prev_neg": 0.052980132450331126
+    },
+    {
+      "held_out": "c2_b2dexp_format_guard",
+      "auroc_pos": 0.9460093896713615,
+      "auprc_pos": 0.7319868734676038,
+      "macro_f1": 0.03215372907153729,
+      "prev_pos": 0.059602649006622516,
+      "prev_neg": 0.019867549668874173
+    },
+    {
+      "held_out": "c2_b2dexp_repair",
+      "auroc_pos": 0.9624413145539906,
+      "auprc_pos": 0.5485920001528877,
+      "macro_f1": 0.03616964690790194,
+      "prev_pos": 0.059602649006622516,
+      "prev_neg": 0.026490066225165563
+    },
+    {
+      "held_out": "c2_b2dexp_two_view",
+      "auroc_pos": 0.9436619718309859,
+      "auprc_pos": 0.5629360057931486,
+      "macro_f1": 0.027421869703748897,
+      "prev_pos": 0.059602649006622516,
+      "prev_neg": 0.08609271523178808
+    },
+    {
+      "held_out": "c2_b2dexp_vote3",
+      "auroc_pos": 0.9930555555555556,
+      "auprc_pos": 0.8752628324056895,
+      "macro_f1": 0.022407407407407407,
+      "prev_pos": 0.046357615894039736,
+      "prev_neg": 0.033112582781456956
+    }
+  ],
+  "loho_harness_only": [
+    {
+      "held_out": "c2_b2dexp_decompose",
+      "auroc_pos": 0.5,
+      "auprc_pos": 0.07947019867549669,
+      "macro_f1": 0.049079754601226995,
+      "prev_pos": 0.07947019867549669,
+      "prev_neg": 0.08609271523178808
+    },
+    {
+      "held_out": "c2_b2dexp_error_classify",
+      "auroc_pos": 0.5,
+      "auprc_pos": 0.026490066225165563,
+      "macro_f1": 0.017204301075268817,
+      "prev_pos": 0.026490066225165563,
+      "prev_neg": 0.052980132450331126
+    },
+    {
+      "held_out": "c2_b2dexp_format_guard",
+      "auroc_pos": 0.5,
+      "auprc_pos": 0.059602649006622516,
+      "macro_f1": 0.0375,
+      "prev_pos": 0.059602649006622516,
+      "prev_neg": 0.019867549668874173
+    },
+    {
+      "held_out": "c2_b2dexp_repair",
+      "auroc_pos": 0.5,
+      "auprc_pos": 0.059602649006622516,
+      "macro_f1": 0.0375,
+      "prev_pos": 0.059602649006622516,
+      "prev_neg": 0.026490066225165563
+    },
+    {
+      "held_out": "c2_b2dexp_two_view",
+      "auroc_pos": 0.5,
+      "auprc_pos": 0.059602649006622516,
+      "macro_f1": 0.0375,
+      "prev_pos": 0.059602649006622516,
+      "prev_neg": 0.08609271523178808
+    },
+    {
+      "held_out": "c2_b2dexp_vote3",
+      "auroc_pos": 0.5,
+      "auprc_pos": 0.046357615894039736,
+      "macro_f1": 0.029535864978902954,
+      "prev_pos": 0.046357615894039736,
+      "prev_neg": 0.033112582781456956
+    }
+  ],
+  "closedset_harness_id_auroc": 0.4709784411276948,
+  "closedset_task_only_auroc": 0.5563847429519071,
+  "summary": {
+    "A": {
+      "mean_auroc_pos": 0.9295909935364919,
+      "min": 0.8214285714285714,
+      "max": 0.9816468253968254,
+      "mean_macro_f1": 0.045392769021063574
+    },
+    "task_only": {
+      "mean_auroc_pos": 0.9288921717852315,
+      "min": 0.8061224489795918,
+      "max": 0.9930555555555556,
+      "mean_macro_f1": 0.027940166489426214
+    },
+    "harness_only": {
+      "mean_auroc_pos": 0.5,
+      "min": 0.5,
+      "max": 0.5,
+      "mean_macro_f1": 0.0347199867758998
+    }
+  },
+  "policy": {
+    "tau": 0.024999999999999998,
+    "best_fixed_config": "c2_b2dexp_format_guard",
+    "H0_acc": 0.5172413793103449,
+    "best_fixed_acc": 0.5689655172413793,
+    "policy_acc": 0.5344827586206896,
+    "gain_vs_H0_pp": 1.724137931034475,
+    "gain_vs_best_fixed_pp": -3.4482758620689724,
+    "intervention_rate": 0.19827586206896552,
+    "harm_rate_on_intervention": 0.08695652173913043,
+    "repair_rate_on_intervention": 0.17391304347826086,
+    "oracle_acc": 0.6379310344827587,
+    "gain_vs_best_fixed_ci95": [
+      -0.09482758620689649,
+      0.025862068965517238
+    ]
+  }
+}

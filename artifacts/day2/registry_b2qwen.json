@@ -1,0 +1,21 @@
+{
+  "run": "b2qwen",
+  "builder": "qwen",
+  "model": "Qwen3.8-Flash",
+  "generated": [
+    "c2_b2qwen_schema_link",
+    "c2_b2qwen_hint_guard",
+    "c2_b2qwen_two_view",
+    "c2_b2qwen_format_guard",
+    "c2_b2qwen_decompose",
+    "c2_b2qwen_error_classify"
+  ],
+  "hashes": {
+    "c2_b2qwen_schema_link": "4b7fc25cc371",
+    "c2_b2qwen_hint_guard": "8a79db68e67b",
+    "c2_b2qwen_two_view": "9a4d6b1df76b",
+    "c2_b2qwen_format_guard": "219c158162a2",
+    "c2_b2qwen_decompose": "bbdf8e57c31e",
+    "c2_b2qwen_error_classify": "963188194116"
+  }
+}

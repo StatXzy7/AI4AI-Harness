@@ -1,0 +1,29 @@
+{
+  "per_harness_acc": {
+    "bare": 0.5167,
+    "hpc_hint": 0.55,
+    "hpc_repair": 0.55,
+    "hpc_schema": 0.5333,
+    "hpc_vote3": 0.5167
+  },
+  "oracle": 0.6167,
+  "best_fixed": 0.55,
+  "headroom_pp": 6.67,
+  "bare_wrong": 29,
+  "mean_pairwise_disagreement": 0.0861,
+  "fix_sets": {
+    "hpc_hint": 3,
+    "hpc_repair": 3,
+    "hpc_schema": 3,
+    "hpc_vote3": 0
+  },
+  "union_fix": 6,
+  "union_fix_rate_of_bare_errors": 0.207,
+  "regressions": {
+    "hpc_hint": 1,
+    "hpc_repair": 1,
+    "hpc_schema": 2,
+    "hpc_vote3": 0
+  },
+  "union_reg": 4
+}

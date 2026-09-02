@@ -1,0 +1,21 @@
+{
+  "run": "b2dexp",
+  "builder": "dsexp",
+  "model": "DeepSeek-V4-Flash-Vision-Exp",
+  "generated": [
+    "c2_b2dexp_two_view",
+    "c2_b2dexp_format_guard",
+    "c2_b2dexp_decompose",
+    "c2_b2dexp_error_classify",
+    "c2_b2dexp_repair",
+    "c2_b2dexp_vote3"
+  ],
+  "hashes": {
+    "c2_b2dexp_two_view": "3acfa59fbb7f",
+    "c2_b2dexp_format_guard": "c49ce5383768",
+    "c2_b2dexp_decompose": "86c8ef51ec97",
+    "c2_b2dexp_error_classify": "ad335e993583",
+    "c2_b2dexp_repair": "72bd309ffb56",
+    "c2_b2dexp_vote3": "43cde9575b0b"
+  }
+}

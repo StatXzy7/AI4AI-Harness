@@ -1,0 +1,126 @@
+{
+  "stats": {
+    "n_tasks": 60,
+    "n_harnesses": 14,
+    "per_harness_acc": {
+      "bare": 0.5667,
+      "cand_bird_g1_b0r1_g0": 0.5667,
+      "cand_bird_g1_b1r0_g0": 0.5667,
+      "cand_bird_g1_b0r1_g1": 0.5667,
+      "cand_bird_pop1_b0r0_g1": 0.5667,
+      "cand_bird_g1_b2r0_g0": 0.5667,
+      "react": 0.5667,
+      "cand_bird_g1_b2r0_g1": 0.5667,
+      "cand_bird_pop1_b0r0_g0": 0.5667,
+      "cand_bird_g1_b1r1_g0": 0.55,
+      "cand_bird_g1_b0r0_g1": 0.5333,
+      "cand_bird_g1_b0r0_g0": 0.5333,
+      "cand_bird_g1_b1r1_g1": 0.5333,
+      "cand_bird_g1_b1r0_g1": 0.5333
+    },
+    "best_fixed": "bare",
+    "best_fixed_acc": 0.5666666666666667,
+    "H0_acc": 0.5666666666666667,
+    "oracle_acc": 0.6,
+    "headroom_vs_best_fixed_pp": 3.3333333333333326,
+    "headroom_vs_H0_pp": 3.3333333333333326,
+    "delta_prevalence": {
+      "-1": 0.015384615384615385,
+      "0": 0.9807692307692307,
+      "1": 0.0038461538461538464
+    }
+  },
+  "loho_A": [
+    {
+      "held_out": "cand_bird_g1_b0r0_g1",
+      "auroc_pos": 1.0,
+      "auprc_pos": 1.0,
+      "macro_f1": 0.01092896174863388,
+      "prev_pos": 0.016666666666666666,
+      "prev_neg": 0.05
+    },
+    {
+      "held_out": "cand_bird_g1_b1r1_g1",
+      "auroc_pos": 0.9568965517241379,
+      "auprc_pos": 0.6428571428571428,
+      "macro_f1": 0.02150537634408602,
+      "prev_pos": 0.03333333333333333,
+      "prev_neg": 0.06666666666666667
+    }
+  ],
+  "loho_task_only": [
+    {
+      "held_out": "cand_bird_g1_b0r0_g1",
+      "auroc_pos": 1.0,
+      "auprc_pos": 1.0,
+      "macro_f1": 0.01092896174863388,
+      "prev_pos": 0.016666666666666666,
+      "prev_neg": 0.05
+    },
+    {
+      "held_out": "cand_bird_g1_b1r1_g1",
+      "auroc_pos": 0.7327586206896552,
+      "auprc_pos": 0.5303030303030303,
+      "macro_f1": 0.02150537634408602,
+      "prev_pos": 0.03333333333333333,
+      "prev_neg": 0.06666666666666667
+    }
+  ],
+  "loho_harness_only": [
+    {
+      "held_out": "cand_bird_g1_b0r0_g1",
+      "auroc_pos": 0.5,
+      "auprc_pos": 0.016666666666666666,
+      "macro_f1": 0.01092896174863388,
+      "prev_pos": 0.016666666666666666,
+      "prev_neg": 0.05
+    },
+    {
+      "held_out": "cand_bird_g1_b1r1_g1",
+      "auroc_pos": 0.5,
+      "auprc_pos": 0.03333333333333333,
+      "macro_f1": 0.02150537634408602,
+      "prev_pos": 0.03333333333333333,
+      "prev_neg": 0.06666666666666667
+    }
+  ],
+  "closedset_harness_id_auroc": 0.7538860103626943,
+  "closedset_task_only_auroc": 0.7020725388601036,
+  "summary": {
+    "A": {
+      "mean_auroc_pos": 0.978448275862069,
+      "min": 0.9568965517241379,
+      "max": 1.0,
+      "mean_macro_f1": 0.01621716904635995
+    },
+    "task_only": {
+      "mean_auroc_pos": 0.8663793103448276,
+      "min": 0.7327586206896552,
+      "max": 1.0,
+      "mean_macro_f1": 0.01621716904635995
+    },
+    "harness_only": {
+      "mean_auroc_pos": 0.5,
+      "min": 0.5,
+      "max": 0.5,
+      "mean_macro_f1": 0.01621716904635995
+    }
+  },
+  "policy": {
+    "tau": 0.024999999999999998,
+    "best_fixed_config": "cand_bird_g1_b1r1_g1",
+    "H0_acc": 0.5555555555555556,
+    "best_fixed_acc": 0.5111111111111111,
+    "policy_acc": 0.5555555555555556,
+    "gain_vs_H0_pp": 0.0,
+    "gain_vs_best_fixed_pp": 4.444444444444451,
+    "intervention_rate": 0.0,
+    "harm_rate_on_intervention": 0.0,
+    "repair_rate_on_intervention": 0.0,
+    "oracle_acc": 0.5777777777777777,
+    "gain_vs_best_fixed_ci95": [
+      -0.022222222222222254,
+      0.13333333333333336
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+ "doc": "generate + execute + error feedback repair x2",
+ "context": {},
+ "generate": {
+  "candidates": 1,
+  "temperature": 0.0
+ },
+ "execution": {
+  "execute_each": true
+ },
+ "repair": {
+  "on_error": true,
+  "max_rounds": 3
+ },
+ "selection": {
+  "type": "first_ok"
+ }
+}

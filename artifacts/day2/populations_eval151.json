@@ -1,0 +1,10 @@
+{
+  "A6_old_proposer": ["cand_bird_g1_b1r0_g1", "cand_bird_g1_b1r1_g0", "cand_bird_g1_b1r1_g1", "cand_bird_g1_b2r0_g1", "cand_bird_pop1_b0r0_g0", "cand_bird_pop1_b0r0_g1"],
+  "C6_qwen_freeform": ["c2_b2qwen_schema_link", "c2_b2qwen_hint_guard", "c2_b2qwen_two_view", "c2_b2qwen_format_guard", "c2_b2qwen_decompose", "c2_b2qwen_error_classify"],
+  "D6_dsexp_freeform": ["c2_b2dexp_two_view", "c2_b2dexp_format_guard", "c2_b2dexp_decompose", "c2_b2dexp_error_classify", "c2_b2dexp_repair", "c2_b2dexp_vote3"],
+  "IR6_compiled": ["c3ir_ir_plain", "c3ir_ir_repair", "c3ir_ir_vote3", "c3ir_ir_hint_repair", "c3ir_ir_schema_repair", "c3ir_ir_link_vote3"],
+  "human_control": ["hpc_schema", "hpc_hint", "hpc_repair", "hpc_vote3"],
+  "seeds": ["react"],
+  "ALL_nonseed_24": ["cand_bird_g1_b1r0_g1", "cand_bird_g1_b1r1_g0", "cand_bird_g1_b1r1_g1", "cand_bird_g1_b2r0_g1", "cand_bird_pop1_b0r0_g0", "cand_bird_pop1_b0r0_g1", "c2_b2qwen_schema_link", "c2_b2qwen_hint_guard", "c2_b2qwen_two_view", "c2_b2qwen_format_guard", "c2_b2qwen_decompose", "c2_b2qwen_error_classify", "c2_b2dexp_two_view", "c2_b2dexp_format_guard", "c2_b2dexp_decompose", "c2_b2dexp_error_classify", "c2_b2dexp_repair", "c2_b2dexp_vote3", "c3ir_ir_plain", "c3ir_ir_repair", "c3ir_ir_vote3", "c3ir_ir_hint_repair", "c3ir_ir_schema_repair", "c3ir_ir_link_vote3"],
+  "cross_protocol_18": ["cand_bird_g1_b1r0_g1", "cand_bird_g1_b1r1_g0", "cand_bird_g1_b1r1_g1", "cand_bird_g1_b2r0_g1", "cand_bird_pop1_b0r0_g0", "cand_bird_pop1_b0r0_g1", "c2_b2qwen_schema_link", "c2_b2qwen_hint_guard", "c2_b2qwen_two_view", "c2_b2qwen_format_guard", "c2_b2qwen_decompose", "c2_b2qwen_error_classify", "c2_b2dexp_two_view", "c2_b2dexp_format_guard", "c2_b2dexp_decompose", "c2_b2dexp_error_classify", "c2_b2dexp_repair", "c2_b2dexp_vote3"]
+}

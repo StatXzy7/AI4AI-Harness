@@ -1,0 +1,58 @@
+{
+  "n_tasks": 60,
+  "bare_wrong": 26,
+  "outcome_diversity": {
+    "mean_D": 0.03547008547008547,
+    "max_D": 0.13333333333333333,
+    "min_D": 0.0,
+    "n_pairs_zero_diversity": 28,
+    "n_pairs": 78
+  },
+  "repair_diversity": {
+    "cand_bird_g1_b0r0_g0": 0,
+    "cand_bird_g1_b0r0_g1": 1,
+    "cand_bird_g1_b0r1_g0": 0,
+    "cand_bird_g1_b0r1_g1": 0,
+    "cand_bird_g1_b1r0_g0": 0,
+    "cand_bird_g1_b1r0_g1": 0,
+    "cand_bird_g1_b1r1_g0": 0,
+    "cand_bird_g1_b1r1_g1": 2,
+    "cand_bird_g1_b2r0_g0": 0,
+    "cand_bird_g1_b2r0_g1": 0,
+    "cand_bird_pop1_b0r0_g0": 0,
+    "cand_bird_pop1_b0r0_g1": 0,
+    "react": 0
+  },
+  "union_fix": 2,
+  "regression": {
+    "cand_bird_g1_b0r0_g0": 2,
+    "cand_bird_g1_b0r0_g1": 3,
+    "cand_bird_g1_b0r1_g0": 0,
+    "cand_bird_g1_b0r1_g1": 0,
+    "cand_bird_g1_b1r0_g0": 0,
+    "cand_bird_g1_b1r0_g1": 2,
+    "cand_bird_g1_b1r1_g0": 1,
+    "cand_bird_g1_b1r1_g1": 4,
+    "cand_bird_g1_b2r0_g0": 0,
+    "cand_bird_g1_b2r0_g1": 0,
+    "cand_bird_pop1_b0r0_g0": 0,
+    "cand_bird_pop1_b0r0_g1": 0,
+    "react": 0
+  },
+  "union_reg": 7,
+  "bare_vs_cands": {
+    "cand_bird_g1_b0r0_g0": 0.03333333333333333,
+    "cand_bird_g1_b0r0_g1": 0.06666666666666667,
+    "cand_bird_g1_b0r1_g0": 0.0,
+    "cand_bird_g1_b0r1_g1": 0.0,
+    "cand_bird_g1_b1r0_g0": 0.0,
+    "cand_bird_g1_b1r0_g1": 0.03333333333333333,
+    "cand_bird_g1_b1r1_g0": 0.016666666666666666,
+    "cand_bird_g1_b1r1_g1": 0.1,
+    "cand_bird_g1_b2r0_g0": 0.0,
+    "cand_bird_g1_b2r0_g1": 0.0,
+    "cand_bird_pop1_b0r0_g0": 0.0,
+    "cand_bird_pop1_b0r0_g1": 0.0,
+    "react": 0.0
+  }
+}

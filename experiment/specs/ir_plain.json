@@ -1,0 +1,11 @@
+{
+ "doc": "plain one-shot",
+ "context": {},
+ "generate": {
+  "candidates": 1,
+  "temperature": 0.0
+ },
+ "execution": {},
+ "repair": {},
+ "selection": {}
+}

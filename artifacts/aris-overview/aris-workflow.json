@@ -1,0 +1,372 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "ARIS · 梦中科研 — 自主研究系统整体流程",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "full-lifecycle",
+        "label": "全生命周期",
+        "focus": [
+          "kickoff",
+          "w1",
+          "w15",
+          "w2",
+          "w3",
+          "audits",
+          "w4",
+          "w56"
+        ],
+        "note": "从一句话研究方向到投稿、rebuttal 与会议报告的七条工作流主线。"
+      },
+      {
+        "id": "adversarial-loop",
+        "label": "对抗审稿环",
+        "focus": [
+          "codex",
+          "w2",
+          "w15",
+          "w3"
+        ],
+        "note": "Claude 执行、GPT 跨家族审稿：每轮 fresh thread，循环到分数达标或轮数用尽。"
+      },
+      {
+        "id": "integrity-gates",
+        "label": "完整性审计门",
+        "focus": [
+          "audits",
+          "w3",
+          "w4"
+        ],
+        "note": "执行者不审判自己：实验诚实度、结论支撑度、论文如实报告三道跨模型审计。"
+      },
+      {
+        "id": "memory-outer-loop",
+        "label": "记忆与外环进化",
+        "focus": [
+          "wiki",
+          "w1",
+          "meta"
+        ],
+        "note": "失败 pilot 写入 research-wiki 形成反重复记忆；meta-optimize 读日志改进 SKILL.md。"
+      }
+    ],
+    "output": "E:/Study/PhD/Research/AI4AI-Harness/artifacts/aris-overview/aris-overview.html"
+  },
+  "lanes": [
+    {
+      "id": "human",
+      "label": "人类研究员"
+    },
+    {
+      "id": "exec",
+      "label": "执行者 · Claude Code"
+    },
+    {
+      "id": "review",
+      "label": "跨模型审稿 · Codex MCP"
+    },
+    {
+      "id": "mem",
+      "label": "审计 · 记忆"
+    }
+  ],
+  "phases": [
+    {
+      "id": "discover",
+      "label": "想法 → 实验",
+      "fromCol": 0,
+      "toCol": 1
+    },
+    {
+      "id": "polish",
+      "label": "对抗打磨",
+      "fromCol": 2,
+      "toCol": 3,
+      "variant": "emphasis"
+    },
+    {
+      "id": "submit",
+      "label": "投稿 → 进化",
+      "fromCol": 4,
+      "toCol": 5,
+      "variant": "dashed"
+    }
+  ],
+  "groups": [
+    {
+      "id": "overnight",
+      "label": "整夜自主运行 · MAX_ROUNDS=4",
+      "lane": "exec",
+      "fromCol": 2,
+      "toCol": 2,
+      "variant": "emphasis"
+    },
+    {
+      "id": "gates",
+      "label": "跨模型完整性门",
+      "lane": "mem",
+      "fromCol": 4,
+      "toCol": 4,
+      "variant": "security"
+    },
+    {
+      "id": "memory",
+      "label": "跨工作流记忆",
+      "lane": "mem",
+      "fromCol": 0,
+      "toCol": 1,
+      "variant": "dashed"
+    }
+  ],
+  "mainPath": [
+    "kickoff",
+    "w1",
+    "w15",
+    "w2",
+    "w3",
+    "audits",
+    "w4",
+    "w56"
+  ],
+  "nodes": [
+    {
+      "id": "kickoff",
+      "lane": "human",
+      "col": 0,
+      "type": "external",
+      "label": "研究员",
+      "sublabel": "给方向·签核",
+      "width": 110,
+      "height": 52
+    },
+    {
+      "id": "w1",
+      "lane": "exec",
+      "col": 0,
+      "type": "backend",
+      "label": "W1 · idea-discovery",
+      "sublabel": "文献→查新→pilot",
+      "width": 135,
+      "height": 52
+    },
+    {
+      "id": "w15",
+      "lane": "exec",
+      "col": 1,
+      "type": "backend",
+      "label": "W1.5 · 实验桥接",
+      "sublabel": "experiment-bridge",
+      "width": 132,
+      "height": 52
+    },
+    {
+      "id": "w2",
+      "lane": "exec",
+      "col": 2,
+      "type": "backend",
+      "label": "W2 · auto-review-loop",
+      "sublabel": "审稿→修复→重评",
+      "tag": "整夜主打",
+      "width": 142,
+      "height": 52
+    },
+    {
+      "id": "w3",
+      "lane": "exec",
+      "col": 3,
+      "type": "backend",
+      "label": "W3 · paper-writing",
+      "sublabel": "叙事→LaTeX→润色",
+      "width": 140,
+      "height": 52
+    },
+    {
+      "id": "codex",
+      "lane": "review",
+      "col": 2,
+      "type": "security",
+      "label": "GPT-5.6-Sol 审稿人",
+      "sublabel": "每轮新 thread",
+      "width": 145,
+      "height": 52
+    },
+    {
+      "id": "audits",
+      "lane": "mem",
+      "col": 4,
+      "type": "security",
+      "label": "三层审计链",
+      "sublabel": "实验→结论→论文",
+      "tag": "citation+kill",
+      "width": 140,
+      "height": 52
+    },
+    {
+      "id": "wiki",
+      "lane": "mem",
+      "col": 0,
+      "type": "database",
+      "label": "research-wiki",
+      "sublabel": "失败=反重复记忆",
+      "width": 130,
+      "height": 52
+    },
+    {
+      "id": "meta",
+      "lane": "mem",
+      "col": 1,
+      "type": "database",
+      "label": "meta-optimize",
+      "sublabel": "日志→SKILL进化",
+      "width": 130,
+      "height": 52
+    },
+    {
+      "id": "w4",
+      "lane": "exec",
+      "col": 4,
+      "type": "backend",
+      "label": "W4 · rebuttal",
+      "sublabel": "策略→草稿→压测",
+      "width": 140,
+      "height": 52
+    },
+    {
+      "id": "w56",
+      "lane": "exec",
+      "col": 5,
+      "type": "cloud",
+      "label": "W5 resubmit · W6 talk",
+      "sublabel": "跨 venue / Beamer+PPTX",
+      "width": 150,
+      "height": 52
+    }
+  ],
+  "edges": [
+    {
+      "id": "kickoff-w1",
+      "from": "kickoff",
+      "to": "w1",
+      "label": "研究方向",
+      "variant": "emphasis"
+    },
+    {
+      "id": "w1-w15",
+      "from": "w1",
+      "to": "w15",
+      "label": "EXPERIMENT_PLAN.md",
+      "variant": "emphasis"
+    },
+    {
+      "id": "w15-w2",
+      "from": "w15",
+      "to": "w2",
+      "label": "结果+草稿",
+      "variant": "emphasis"
+    },
+    {
+      "id": "w2-w3",
+      "from": "w2",
+      "to": "w3",
+      "label": "达标叙事",
+      "variant": "emphasis"
+    },
+    {
+      "id": "w3-audits",
+      "from": "w3",
+      "to": "audits",
+      "label": "投稿就绪?",
+      "variant": "emphasis"
+    },
+    {
+      "id": "audits-w4",
+      "from": "audits",
+      "to": "w4",
+      "label": "投稿后收审稿意见",
+      "variant": "emphasis"
+    },
+    {
+      "id": "w4-w56",
+      "from": "w4",
+      "to": "w56",
+      "label": "接收/被拒",
+      "variant": "emphasis"
+    },
+    {
+      "id": "w15-codex",
+      "from": "w15",
+      "to": "codex",
+      "label": "代码审查",
+      "variant": "security"
+    },
+    {
+      "id": "w2-codex",
+      "from": "w2",
+      "to": "codex",
+      "label": "深度审稿",
+      "variant": "security"
+    },
+    {
+      "id": "codex-w2",
+      "from": "codex",
+      "to": "w2",
+      "label": "弱点清单 + 分数",
+      "variant": "dashed",
+      "role": "return"
+    },
+    {
+      "id": "w3-codex",
+      "from": "w3",
+      "to": "codex",
+      "label": "润色轮评审",
+      "variant": "dashed"
+    },
+    {
+      "id": "w1-wiki",
+      "from": "w1",
+      "to": "wiki",
+      "label": "失败 ⇄ 反重复",
+      "variant": "dashed"
+    },
+    {
+      "id": "w2-meta",
+      "from": "w15",
+      "to": "meta",
+      "label": "events.jsonl",
+      "variant": "dashed",
+      "role": "branch"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "跨家族不变量",
+      "items": [
+        "执行者与审稿人必须来自不同模型家族（Claude × GPT）",
+        "每轮 review 用全新 thread，禁止 codex-reply 续聊",
+        "AI 分数是迭代信号，不是接收概率的 ground truth"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "自主运行护栏",
+      "items": [
+        "MAX_ROUNDS=4 防死循环，达到阈值即停",
+        "超过 4 GPU-hour 的实验跳过并标记人工跟进",
+        "rebuttal 三道门：provenance / commitment / coverage"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "记忆与进化",
+      "items": [
+        "research-wiki 让失败 pilot 成为下次的反重复记忆",
+        "meta-optimize 读 events.jsonl，经审稿人把关后改进 SKILL.md",
+        "Markdown 是 canonical 源，HTML 只是带 SHA256 的渲染视图"
+      ]
+    }
+  ]
+}

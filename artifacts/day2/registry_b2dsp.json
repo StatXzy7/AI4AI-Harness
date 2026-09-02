@@ -1,0 +1,7 @@
+{
+  "run": "b2dsp",
+  "builder": "dspro",
+  "model": "deepseek-v4-pro",
+  "generated": [],
+  "hashes": {}
+}

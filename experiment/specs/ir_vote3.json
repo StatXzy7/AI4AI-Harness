@@ -1,0 +1,15 @@
+{
+ "doc": "3 candidates @0.7, execute each, majority rows",
+ "context": {},
+ "generate": {
+  "candidates": 3,
+  "temperature": 0.7
+ },
+ "execution": {
+  "execute_each": true
+ },
+ "repair": {},
+ "selection": {
+  "type": "majority_rows"
+ }
+}

@@ -1,0 +1,20 @@
+{
+  "labels": [
+    "g1_b0r0_g0",
+    "g1_b0r0_g1",
+    "g1_b0r1_g0",
+    "g1_b0r1_g1",
+    "g1_b1r0_g0",
+    "g1_b1r0_g1",
+    "g1_b1r1_g0",
+    "g1_b1r1_g1",
+    "g1_b2r0_g0",
+    "g1_b2r0_g1",
+    "pop1_b0r0_g0",
+    "pop1_b0r0_g1"
+  ],
+  "code_sim_mean_offdiag": 0.14305489552850972,
+  "out_agree_mean_offdiag": 0.9618686868686869,
+  "n_identical_behavior_pairs": 21,
+  "n_pairs": 66
+}

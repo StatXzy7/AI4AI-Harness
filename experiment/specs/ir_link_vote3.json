@@ -1,0 +1,17 @@
+{
+ "doc": "schema link + 3 candidates + majority",
+ "context": {
+  "schema_link": "llm_select"
+ },
+ "generate": {
+  "candidates": 3,
+  "temperature": 0.7
+ },
+ "execution": {
+  "execute_each": true
+ },
+ "repair": {},
+ "selection": {
+  "type": "majority_rows"
+ }
+}

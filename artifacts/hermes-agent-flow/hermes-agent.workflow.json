@@ -1,0 +1,102 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "HERMES Agent 整体流程",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "artifacts/hermes-agent-flow/hermes-agent-workflow.html",
+    "views": [
+      {
+        "id": "main-loop",
+        "label": "一次消息的主链路",
+        "focus": ["gateway", "agent_loop", "prompt_builder", "provider", "final_reply"],
+        "note": "从 CLI/平台消息进入，到系统提示组装、LLM 推理，再到最终回复送达。"
+      },
+      {
+        "id": "tool-loop",
+        "label": "工具调用循环与审批",
+        "focus": ["provider", "tool_dispatch", "approval"],
+        "note": "tool_calls 交给 70+ 工具执行，危险命令先过审批门，结果回填继续推理。"
+      },
+      {
+        "id": "self-improve",
+        "label": "自我改进闭环",
+        "focus": ["final_reply", "review", "memskills"],
+        "note": "每轮结束后台 review：沉淀记忆条目、创建/修补技能，供下一次会话使用。"
+      },
+      {
+        "id": "memory-layers",
+        "label": "记忆体系与会话检索",
+        "focus": ["memskills", "session_db", "agent_loop"],
+        "note": "常驻快照与技能按需加载进提示，SessionDB 的 FTS5 检索供随时回查历史。"
+      }
+    ]
+  },
+  "lanes": [
+    { "id": "entry", "label": "入口" },
+    { "id": "agent", "label": "Agent 核心" },
+    { "id": "tools", "label": "工具与安全" },
+    { "id": "learning", "label": "记忆与技能" }
+  ],
+  "phases": [
+    { "id": "intake", "label": "接入", "fromCol": 0, "toCol": 0 },
+    { "id": "loop", "label": "推理与工具循环", "fromCol": 1, "toCol": 3, "variant": "emphasis" },
+    { "id": "deliver", "label": "回复与学习", "fromCol": 4, "toCol": 4, "variant": "dashed" }
+  ],
+  "groups": [
+    { "id": "agent_core", "label": "AIAgent 核心", "lane": "agent", "fromCol": 1, "toCol": 3, "variant": "emphasis" },
+    { "id": "tool_exec", "label": "Tool Dispatch 与审批", "lane": "tools", "fromCol": 3, "toCol": 4, "variant": "dashed" },
+    { "id": "self_improve", "label": "自我改进闭环", "lane": "learning", "fromCol": 1, "toCol": 3, "variant": "dashed" }
+  ],
+  "mainPath": ["gateway", "agent_loop", "prompt_builder", "provider", "final_reply"],
+  "nodes": [
+    { "id": "gateway", "lane": "entry", "col": 0, "type": "frontend", "label": "接入层 Gateway", "sublabel": "CLI · 平台 · ACP · Cron", "width": 132 },
+    { "id": "final_reply", "lane": "entry", "col": 4, "type": "frontend", "label": "最终回复", "sublabel": "送达原平台", "width": 132 },
+
+    { "id": "agent_loop", "lane": "agent", "col": 1, "type": "backend", "label": "AIAgent 核心循环", "sublabel": "run_conversation()", "width": 132 },
+    { "id": "prompt_builder", "lane": "agent", "col": 2, "type": "backend", "label": "Prompt Builder", "sublabel": "分层提示 + 缓存", "width": 132 },
+    { "id": "provider", "lane": "agent", "col": 3, "type": "cloud", "label": "Runtime Provider", "sublabel": "18+ 提供商", "width": 132 },
+
+    { "id": "tool_dispatch", "lane": "tools", "col": 3, "type": "messagebus", "label": "Tool Dispatch", "sublabel": "70+ 工具", "width": 132 },
+    { "id": "approval", "lane": "tools", "col": 4, "type": "security", "label": "命令审批", "sublabel": "危险命令检测", "width": 132 },
+
+    { "id": "session_db", "lane": "learning", "col": 1, "type": "database", "label": "SessionDB", "sublabel": "SQLite + FTS5", "width": 132 },
+    { "id": "memskills", "lane": "learning", "col": 2, "type": "database", "label": "记忆 + 技能", "sublabel": "MEMORY.md · SKILL.md", "width": 132 },
+    { "id": "review", "lane": "learning", "col": 3, "type": "messagebus", "label": "后台自我改进", "sublabel": "每轮结束 review", "width": 132 }
+  ],
+  "edges": [
+    { "id": "spawn-agent", "from": "gateway", "to": "agent_loop", "label": "创建 AIAgent", "role": "main", "variant": "emphasis" },
+    { "id": "load-history", "from": "session_db", "to": "agent_loop", "label": "载入历史", "variant": "dashed", "role": "branch" },
+    { "id": "build-prompt", "from": "agent_loop", "to": "prompt_builder", "label": "组装系统提示", "role": "main" },
+    { "id": "inject-ctx", "from": "memskills", "to": "prompt_builder", "label": "快照 · 索引", "variant": "dashed", "role": "branch" },
+    { "id": "infer", "from": "prompt_builder", "to": "provider", "label": "API 调用", "role": "main", "variant": "emphasis" },
+    { "id": "tool-calls", "from": "provider", "to": "tool_dispatch", "label": "tool_calls", "role": "branch" },
+    { "id": "tool-result", "from": "tool_dispatch", "to": "provider", "label": "结果回填", "role": "return" },
+    { "id": "risky", "from": "tool_dispatch", "to": "approval", "label": "危险命令?", "variant": "security", "role": "error" },
+    { "id": "gate-back", "from": "approval", "to": "tool_dispatch", "label": "批准后执行", "variant": "security", "role": "return" },
+    { "id": "final-answer", "from": "provider", "to": "final_reply", "label": "最终回复", "role": "main", "variant": "emphasis" },
+    { "id": "turn-end", "from": "final_reply", "to": "review", "label": "turn 结束", "variant": "dashed", "role": "branch" },
+    { "id": "learn", "from": "review", "to": "memskills", "label": "沉淀记忆 · patch 技能", "variant": "dashed", "role": "branch" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "三条入口数据流",
+      "items": [
+        "CLI: process_input() → run_conversation()",
+        "Gateway: 平台事件 → 鉴权 → 带历史创建 AIAgent",
+        "Cron: jobs.json 到期 → 无历史 AIAgent → 送达平台"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "记忆与自我改进",
+      "items": [
+        "三层记忆: 常驻快照 / 按需技能 / FTS5 会话检索",
+        "每轮后台 review: 补记忆、create/patch 技能",
+        "写入门控: /memory pending · /skills pending"
+      ]
+    }
+  ]
+}

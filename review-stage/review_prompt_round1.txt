@@ -1,0 +1,18 @@
+你是独立审稿人(跨模型审核,与执行者不同模型)。请审核 ICLR 2027 投稿 "Behavior-Aware Harness Generation" 的当前稿件。
+
+必读材料:
+1. 稿件: paper/draft/00_abstract_07_08.md, 01_intro.md, 02_related_work.md, 03_setup.md, 04_measurement.md, 05_06_positive_control_protocols.md
+2. 结果依据: artifacts/day2/DAY2_RESULTS.md, artifacts/day2/eval151_comparison.json, artifacts/day2/eval151_comparison_ci.json
+3. 预注册纪律: PROBLEM_FREEZE.md (v7 定位 + v8 changelog)
+4. LOHO 结果: artifacts/day1/LOHO_RESULTS_D6.json, LOHO_RESULTS_C6.json, LOHO_RESULTS_ALL24.json
+
+审核要求:
+- 逐个数字抽查:稿件里的每个数字必须能在结果文件中找到出处
+- 检查过度声明:'first systematic measurement' 的优先权声明、21/66 vs 28/78 口径一致性、人工对照 60 题 vs 151 题的表述
+- 检查负结果(L3 FAIL)是否被如实、清晰报告,没有淡化
+- 结构完整性:9 页 ICLR 主文章节骨架是否成立,缺什么(如 method 图、消融、appendix 清单)
+- 指出最致命的 3 个弱点
+
+输出格式(严格执行):
+- 每个问题一条,标注 [P0 致命/P1 重要/P2 建议] + 文件位置 + 具体证据
+- 最后一行必须是: SCORE: x/10 | VERDICT: ready 或 almost 或 not ready

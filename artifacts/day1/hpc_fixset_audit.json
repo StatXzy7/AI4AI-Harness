@@ -1,0 +1,28 @@
+{
+ "hpc_fixsets_day1": {
+  "hpc_repair": [
+   "card_games#36",
+   "card_games#38",
+   "card_games#53"
+  ],
+  "hpc_vote3": [],
+  "hpc_schema": [
+   "card_games#11",
+   "card_games#12",
+   "card_games#38"
+  ],
+  "hpc_hint": [
+   "card_games#38",
+   "card_games#43",
+   "card_games#53"
+  ]
+ },
+ "bare_run_consistency": {
+  "common_tasks": 60,
+  "disagreements": [
+   "card_games#38",
+   "card_games#43",
+   "card_games#53"
+  ]
+ }
+}

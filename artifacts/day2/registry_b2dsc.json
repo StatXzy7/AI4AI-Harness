@@ -1,0 +1,7 @@
+{
+  "run": "b2dsc",
+  "builder": "dschat",
+  "model": "deepseek-chat",
+  "generated": [],
+  "hashes": {}
+}
