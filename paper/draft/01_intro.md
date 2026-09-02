@@ -14,7 +14,7 @@ We test that premise directly. On BIRD text-to-SQL with a frozen mid-tier target
 take the full candidate population produced by a standard harness-evolution loop and
 measure what its members actually do, not what their source files say. The population
 is a lesion: every candidate passes a code-difference check, yet among the 12
-generated candidates average pairwise outcome disagreement is **3.5%** and **21 of 66
+generated candidates average pairwise outcome disagreement is **3.8%** and **21 of 66
 candidate pairs are behaviorally identical** (28 of 78 pairs once the shipped ReAct
 harness is included); the ReAct variant reproduces the bare baseline's final SQL
 **byte-for-byte on every audited task**. Execution traces explain the gap with a
@@ -34,22 +34,22 @@ If the bottleneck is generation, the obvious next question is whether it is a
 *capability* bottleneck (a stronger builder would fix it) or a *protocol* bottleneck
 (no builder is asked, checked, or forced to change behavior). We probe both axes with
 two nested contrasts (not a full factorial; §3.4): a pre-registered builder sweep
-under a behavior-aware **mechanism-gated free-form** protocol — which assigns each
-candidate an explicit control-flow mechanism and accepts it only if the emitted
-artifact implements it in executable form (import plus execution smoke check) — run
-with GLM, Qwen, and DeepSeek; and a **Harness IR** that compiles declarative mechanism
+under a **strategy-forced free-form** protocol — which assigns each candidate an
+explicit control-flow mechanism and accepts the emitted artifact only after an
+import and execution smoke check — run with GLM, Qwen, and DeepSeek; and a **Harness IR** that compiles declarative mechanism
 specifications into harness code deterministically, guaranteeing mechanism diversity
 by construction and isolating "what mechanisms do" from "whether the builder can
 write code". On the builder-held-out 151-question set, both stronger-builder gated
 populations exceed all three pre-registered diversity thresholds at the point
 estimate for the first time — 5.96 and 7.95 pp oracle headroom, six pairwise-distinct
 repair sets each — while the old proposer protocol misses the headroom threshold
-(4.64 pp, its best member dominating) and the GLM builder produces no accepted
-candidate under the gate (0/6): both axes are implicated, though the design cannot
-separate their main effects (F3).
+(4.64 pp, its best member dominating), and under fully logged generation the GLM
+builder accepts only 3 of 8 strategies against Qwen's 7 of 8 and DeepSeek's 8 of 8:
+both axes are implicated, though the design cannot separate their main effects (F3).
 A leave-one-harness-out value predictor over these admitted populations, however, does
-not beat the best fixed harness — and the per-task signal it does show is task
-memorization, which vanishes on task-level held-out splits: behavioral diversity is
+not beat the best fixed harness — and its apparent per-task signal is task
+memorization: in a task-held-out control on D6 it falls to chance (AUROC 0.475).
+Behavioral diversity is
 *necessary* for routing value to exist, but estimating an unseen harness's value from
 code and task text alone remains open (F4).
 
@@ -63,15 +63,17 @@ Our contributions:
    work uses behavior-aware verification inside evolution systems (§2); none measures
    population-level collapse as an outcome phenomenon.
 2. **A controlled generation-side study**: two nested contrasts — a builder sweep
-   (GLM / Qwen / DeepSeek) under the gated protocol plus an old-protocol arm and a
-   compiled IR arm with a human positive control — evaluated under pre-registered
+   (GLM / Qwen / DeepSeek) under the strategy-forced protocol plus an old-protocol arm
+   and a compiled IR arm with a human positive control — evaluated under pre-registered
    admission thresholds on the builder-held-out 151-question set, showing behavioral
-   diversity is restorable (two admitted populations) and that the old protocol's
-   failure mode is quality concentration rather than absence of repairs.
+   diversity is restorable (two admitted populations), that the old protocol's
+   failure mode is quality concentration rather than absence of repairs, and that
+   per-strategy generation acceptance orders with builder capability (3/8 vs 7/8
+   vs 8/8, logged).
 3. **A boundary result for the routing literature**: on the admitted populations,
    open-set harness-value prediction fails to beat the best fixed harness
-   (≤0.001 AUROC over task-only features), and its apparent per-task signal is task
-   memorization — it vanishes on task-level held-out splits — while the same
+   (≤0.001 AUROC over task-only features), and in a task-held-out control its repair
+   signal falls to chance — while the same
    predictor used as an abstaining gate over the 24-harness pool gains +6.9 pp over
    bare with zero induced harm there. Diversity is necessary, not sufficient, and the
    precondition checklist tells you which regime you are in.

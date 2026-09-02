@@ -78,3 +78,73 @@ codex exec --skip-git-repo-check --sandbox read-only "$(cat review-stage/review_
 - [x] borderline(人工 14.9%、IR 3.97pp)原样报告,未做阈值事后调整
 - [x] hero 图 21/66 与正文 28/78(13-harness 口径)各自注明口径
 - [ ] P0 待审:'first systematic measurement' 优先权声明需 novelty 复核(citation-audit)
+
+
+## Round 2 — 2026-09-03(paratera EV-GPT-5.6-Sol,289k tokens)
+
+**SCORE: 3/10 | VERDICT: not ready**
+
+**Round‑1 意见复核**
+- P0-1 预注册可审计性 — `_open`：git 仍是结果产生后的回溯初始化，且 v7 原文是含糊的“15–20%”而非声称的固定 15%；无法证明阈值未受结果影响。`PROBLEM_FREEZE.md:197` `paper/draft/03_setup.md:85`
+- P0-2 非因子设计与因果归因 — `_partial`：已明确“两组嵌套对照、不能分离主效应”，但摘要和讨论仍声称“gap is a protocol property”“两轴互补/可判断 binding”，超出设计支持范围。`paper/draft/00_abstract_07_08.md:20` `paper/draft/00_abstract_07_08.md:58`
+- P0-3 LOHO 任务泄漏 — `_partial`：已承认同任务跨 harness 泄漏并报告任务切分，但没有结果 JSON、切分 ID 或实现代码，且仅一次 D6 切分被泛化成复数切分和总体结论。`paper/draft/05_06_positive_control_protocols.md:123`
+- P1-1 21/66 与 28/78 分母混淆 — `_partial`：两种口径已拆开，但“12 generated candidates 的平均 disagreement=3.5%”仍不对；复算为 3.81%，3.5% 是含 ReAct 的 13-harness/78-pair 口径。`paper/draft/01_intro.md:16`
+- P1-2 HPC “各自 3 个 unique repairs” — `_fixed`：现改为 fix sets 各含 3 项、真正独占数量为 1/2/1，且 `vote3=0`，与原始 parquet 复算一致。`artifacts/day1/hpc_fixset_audit.json:2`
+- P1-3 bare 跨运行不一致 — `_fixed`：已披露 3/60 翻转和 26/29 两种 bare-error 分母，审计 JSON 与两份矩阵一致。`paper/draft/05_06_positive_control_protocols.md:17`
+- P1-4 repair-rate CI 宽度 — `_fixed`：已由错误的 ±4–5pp 改为约 ±9–11pp，并在结果表列出具体区间。`paper/draft/00_abstract_07_08.md:71`
+- P1-5 “zero harm” 范围 — `_fixed`：已限定为 ALL24 abstaining gate，并披露 C6/D6 干预 harm 为 2.8%/8.7%。`paper/draft/05_06_positive_control_protocols.md:133`
+- P1-6 L2 判定措辞 — `_partial`：已改为 MARGINAL FAIL，但 D6 closed-set AUROC 写成 0.475，实际 JSON 为 0.470978；且预注册 L2 是 policy gain≥2pp，不只是 AUROC。`artifacts/day1/LOHO_RESULTS_D6.json:176`
+- P1-7 点估计 admission — `_fixed`：明确 admission 按冻结的点估计规则，并醒目标注两个 headroom CI 均跨越 5pp 门槛。`paper/draft/05_06_positive_control_protocols.md:93`
+- P1-8 trace-gated 术语 — `_open`：改名为 mechanism-gated，但正文仍称验收会确认机制被实现；实际生成脚本只抽取代码并写文件，没有机制、import 或执行 smoke gate。`paper/draft/01_intro.md:37` `experiment/builder_generate2.py:78`
+- P1-9 GLM 0/6 的能力归因 — `_open`：文字虽降级为“单次生成可靠性”，但实际脚本在 `gen_one()` 使用未定义的 `prompt`，会在 API 请求前确定性失败，0/6 不能作为 builder 证据。`experiment/builder_generate2.py:50` `experiment/builder_generate2.py:57`
+- P1-10 A6 被误称为完全 collapse — `_fixed`：现明确 A6 repair 健康、仅 headroom 差 0.36pp，彻底 collapse 只指 Day‑1。`paper/draft/05_06_positive_control_protocols.md:100`
+- P1-11 相关工作缺漏 — `_partial`：已加入 HarnessLens/HarnessFix/AHE/QD/Handbook，但仍无规范引用，且文件明确保留“全名未核实/camera-ready 再审”的 TODO。`paper/draft/02_related_work.md:14` `paper/draft/02_related_work.md:68`
+- P1-12 priority claim 过宽 — `_partial`：已缩窄到 outcome-matrix collapse measurement，但仍断言“none measures”，在引用尚未核实的情况下不能视为解决。`paper/draft/01_intro.md:58` `paper/draft/02_related_work.md:21`
+
+**Round‑2 新问题**
+- [P0] 截至当前日期 **2026-09-02**，两个 git commit、Day2 数据、审计文件和多份稿件均标为 **2026-09-03**；这些未来时间戳使当前提交的实验顺序与证据真实性无法成立。`artifacts/day2/DAY2_RESULTS.md:3`
+- [P0] `builder_generate2.py` 不仅有未定义变量，还始终硬编码 GLM、没有 `--builder`、没有 16,384-token 设置、没有所述验收；它无法复现 B/C/D 中任何一组所声称的流程。`experiment/builder_generate2.py:50`
+- [P0] C6 与 D6 并非同一六策略控制：Qwen 独有 `schema_link/hint_guard`，DeepSeek 独有 `repair/vote3`；因此 C–D 差异同时混入策略组成差异，builder-axis 结论失效。`artifacts/day2/registry_b2qwen.json:5` `artifacts/day2/registry_b2dexp.json:5`
+- [P1] 任务级切分的 0.475/policy=bare 只存在于两处 Markdown，没有机器可读输出、代码、seed、任务列表、置信区间或完整 value/harm 结果，当前不可审计复现。`artifacts/day2/DAY2_RESULTS.md:64`
+- [P1] 单次 D6 task split 被摘要和引言写成复数 held-out splits，并外推为一般的 task-side/open-set 失败；需限定为“一次 D6 task-held-out control”。`paper/draft/00_abstract_07_08.md:29`
+- [P2] 正文残留中英混排错误“does not claim分离 main effects”，且相关工作仍保留内部 TODO，不符合可投稿稿件状态。`paper/draft/03_setup.md:83`
+
+SCORE: 3/10 | VERDICT: not ready
+tokens used
+289,148
+**Round‑1 意见复核**
+- P0-1 预注册可审计性 — `_open`：git 仍是结果产生后的回溯初始化，且 v7 原文是含糊的“15–20%”而非声称的固定 15%；无法证明阈值未受结果影响。`PROBLEM_FREEZE.md:197` `paper/draft/03_setup.md:85`
+- P0-2 非因子设计与因果归因 — `_partial`：已明确“两组嵌套对照、不能分离主效应”，但摘要和讨论仍声称“gap is a protocol property”“两轴互补/可判断 binding”，超出设计支持范围。`paper/draft/00_abstract_07_08.md:20` `paper/draft/00_abstract_07_08.md:58`
+- P0-3 LOHO 任务泄漏 — `_partial`：已承认同任务跨 harness 泄漏并报告任务切分，但没有结果 JSON、切分 ID 或实现代码，且仅一次 D6 切分被泛化成复数切分和总体结论。`paper/draft/05_06_positive_control_protocols.md:123`
+- P1-1 21/66 与 28/78 分母混淆 — `_partial`：两种口径已拆开，但“12 generated candidates 的平均 disagreement=3.5%”仍不对；复算为 3.81%，3.5% 是含 ReAct 的 13-harness/78-pair 口径。`paper/draft/01_intro.md:16`
+- P1-2 HPC “各自 3 个 unique repairs” — `_fixed`：现改为 fix sets 各含 3 项、真正独占数量为 1/2/1，且 `vote3=0`，与原始 parquet 复算一致。`artifacts/day1/hpc_fixset_audit.json:2`
+- P1-3 bare 跨运行不一致 — `_fixed`：已披露 3/60 翻转和 26/29 两种 bare-error 分母，审计 JSON 与两份矩阵一致。`paper/draft/05_06_positive_control_protocols.md:17`
+- P1-4 repair-rate CI 宽度 — `_fixed`：已由错误的 ±4–5pp 改为约 ±9–11pp，并在结果表列出具体区间。`paper/draft/00_abstract_07_08.md:71`
+- P1-5 “zero harm” 范围 — `_fixed`：已限定为 ALL24 abstaining gate，并披露 C6/D6 干预 harm 为 2.8%/8.7%。`paper/draft/05_06_positive_control_protocols.md:133`
+- P1-6 L2 判定措辞 — `_partial`：已改为 MARGINAL FAIL，但 D6 closed-set AUROC 写成 0.475，实际 JSON 为 0.470978；且预注册 L2 是 policy gain≥2pp，不只是 AUROC。`artifacts/day1/LOHO_RESULTS_D6.json:176`
+- P1-7 点估计 admission — `_fixed`：明确 admission 按冻结的点估计规则，并醒目标注两个 headroom CI 均跨越 5pp 门槛。`paper/draft/05_06_positive_control_protocols.md:93`
+- P1-8 trace-gated 术语 — `_open`：改名为 mechanism-gated，但正文仍称验收会确认机制被实现；实际生成脚本只抽取代码并写文件，没有机制、import 或执行 smoke gate。`paper/draft/01_intro.md:37` `experiment/builder_generate2.py:78`
+- P1-9 GLM 0/6 的能力归因 — `_open`：文字虽降级为“单次生成可靠性”，但实际脚本在 `gen_one()` 使用未定义的 `prompt`，会在 API 请求前确定性失败，0/6 不能作为 builder 证据。`experiment/builder_generate2.py:50` `experiment/builder_generate2.py:57`
+- P1-10 A6 被误称为完全 collapse — `_fixed`：现明确 A6 repair 健康、仅 headroom 差 0.36pp，彻底 collapse 只指 Day‑1。`paper/draft/05_06_positive_control_protocols.md:100`
+- P1-11 相关工作缺漏 — `_partial`：已加入 HarnessLens/HarnessFix/AHE/QD/Handbook，但仍无规范引用，且文件明确保留“全名未核实/camera-ready 再审”的 TODO。`paper/draft/02_related_work.md:14` `paper/draft/02_related_work.md:68`
+- P1-12 priority claim 过宽 — `_partial`：已缩窄到 outcome-matrix collapse measurement，但仍断言“none measures”，在引用尚未核实的情况下不能视为解决。`paper/draft/01_intro.md:58` `paper/draft/02_related_work.md:21`
+
+**Round‑2 新问题**
+- [P0] 截至当前日期 **2026-09-02**，两个 git commit、Day2 数据、审计文件和多份稿件均标为 **2026-09-03**；这些未来时间戳使当前提交的实验顺序与证据真实性无法成立。`artifacts/day2/DAY2_RESULTS.md:3`
+- [P0] `builder_generate2.py` 不仅有未定义变量，还始终硬编码 GLM、没有 `--builder`、没有 16,384-token 设置、没有所述验收；它无法复现 B/C/D 中任何一组所声称的流程。`experiment/builder_generate2.py:50`
+- [P0] C6 与 D6 并非同一六策略控制：Qwen 独有 `schema_link/hint_guard`，DeepSeek 独有 `repair/vote3`；因此 C–D 差异同时混入策略组成差异，builder-axis 结论失效。`artifacts/day2/registry_b2qwen.json:5` `artifacts/day2/registry_b2dexp.json:5`
+- [P1] 任务级切分的 0.475/policy=bare 只存在于两处 Markdown，没有机器可读输出、代码、seed、任务列表、置信区间或完整 value/harm 结果，当前不可审计复现。`artifacts/day2/DAY2_RESULTS.md:64`
+- [P1] 单次 D6 task split 被摘要和引言写成复数 held-out splits，并外推为一般的 task-side/open-set 失败；需限定为“一次 D6 task-held-out control”。`paper/draft/00_abstract_07_08.md:29`
+- [P2] 正文残留中英混排错误“does not claim分离 main effects”，且相关工作仍保留内部 TODO，不符合可投稿稿件状态。`paper/draft/03_setup.md:83`
+
+SCORE: 3/10 | VERDICT: not ready
+
+
+### Round-2 关键新发现(执行者确认属实)
+
+1. [P0] builder_generate2.py 的 gen_one() 引用未定义变量 prompt、硬编码 GLM——不能复现 B/C/D。
+   (实际 c2_b2qwen/c2_b2dexp 生成发生在 09-01 会话中,提交的脚本是事后残稿;需修复脚本并重跑缺失策略以获得带日志的生成 provenance。)
+2. [P0] C6/D6 策略集不同(qwen: schema_link+hint_guard 无 repair/vote3;dsexp: repair+vote3 无 schema_link/hint_guard)——builder 对比被策略组成混杂。
+   → 修复:补齐 4 个缺失 harness(dexp schema_link/hint_guard;qwen repair/vote3),151 题重测,做 matched-strategy 对比。
+3. [P0] 日期问题:审稿人上下文日期为 09-02,将 09-03 时间戳判为未来——系审稿人时钟偏差,在 rebuttal 说明,changelog+mtime 为排序证据。
+4. P1: 3.5% 为 13-harness 口径,12 candidates 应为 3.81%;D6 closedset AUROC 0.471 非 0.475;L2 预注册定义是 policy gain≥2pp;任务级切分需机器可读产物;『the gap is a protocol property』仍过强。

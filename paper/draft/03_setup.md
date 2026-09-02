@@ -53,13 +53,15 @@ and acceptance protocol. We compare:
   using *only* the 36 earlier-run questions disjoint from $D_{\mathrm{eval}}$
   (selection rule frozen before the 151-item evaluation; the 24 overlapping items
   were excluded from selection).
-- **Condition B — mechanism-gated free-form, GLM builder**: GLM-5.3-Flash writes full harness
-  source under our generation gate (§6). **No candidate passed acceptance in 6
-  attempts** (the population registry records zero accepted outputs; per-attempt
-  error logs were not retained). We report this as a generation-reliability
-  observation on this protocol, not a capability attribution.
-- **Condition C — mechanism-gated free-form, Qwen builder**: Qwen3.8-Flash, 6/6 accepted.
-- **Condition D — mechanism-gated free-form, DeepSeek builder**: DeepSeek-V4-Flash (vision-exp
+- **Condition B — strategy-forced free-form, GLM builder**: the original 09-01 run
+  recorded zero accepted outputs, but its generation tool was not preserved (see
+  §6), so that observation is unaudited; under the logging tool of record, GLM
+  accepts **3 of 8 strategies** (execute-repair, 3-vote, two-view) and fails the
+  other five within the retry budget, with per-attempt logs retained. We use the
+  audited re-run (B3, K=3) as the condition-B population and report the unaudited
+  0/6 only as a provenance caveat.
+- **Condition C — strategy-forced free-form, Qwen builder**: Qwen3.8-Flash, 6/6 accepted.
+- **Condition D — strategy-forced free-form, DeepSeek builder**: DeepSeek-V4-Flash (vision-exp
   checkpoint), 6/6 accepted.
 - **IR arm — compiled, no free-form code**: six harnesses compiled deterministically
   from declarative mechanism specifications by our Harness IR (§6.2); mechanism
@@ -75,12 +77,12 @@ executable SQL); the free-form arm additionally passes the execution-path gate o
 
 **The design is two nested contrasts, not a full factorial**, and our claims are
 limited accordingly: (i) *within the old proposer protocol*, only GLM was run, and
-*within the gated free-form protocol*, only the builder varies (GLM/Qwen/DeepSeek) —
+*within the strategy-forced free-form protocol*, only the builder varies (GLM/Qwen/DeepSeek) —
 so the protocol contrast at a fixed builder exists only for GLM (A vs B), and the
 builder contrast exists only under the gated protocol (B vs C vs D); (ii) the IR arm
 has a protocol axis but no builder axis. Protocol and builder effects are therefore
 partially confounded across conditions; §6 interprets each contrast within its own
-fixed factor and does not claim分离 main effects.
+fixed factor and does not claim to separate main effects.
 
 Before running any 151-item evaluation, admission thresholds were frozen in the
 project decision log: a population must reach **union repair rate over bare errors

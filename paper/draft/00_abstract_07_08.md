@@ -17,18 +17,18 @@ into three failure classes: mechanisms described but absent from the control flo
 feedback with no causal path to the output, and broken multi-turn paths. A hand-written
 positive control on the same target, tasks, and judge delivers 7.3 pp oracle headroom
 on 151 held-out questions — the headroom routers need is real, and it is the
-*generation* side that fails. We then show the gap is a protocol property, not a
-capability ceiling: under a mechanism-gated free-form protocol, two of three builders
-produce populations that exceed pre-registered diversity thresholds at the point
-estimate for the first time (6.0 and 8.0 pp headroom; six pairwise-distinct repair
-sets each), while the old un-gated protocol misses and the weakest builder produces
-no accepted candidate — both axes are implicated, though the design cannot separate
-their main effects. Diversity, however, is necessary, not sufficient: a
+*generation* side that fails. We then probe both axes with a strategy-forced
+free-form protocol: two of three builders produce populations that exceed
+pre-registered diversity thresholds at the point estimate for the first time (6.0 and
+8.0 pp headroom; six pairwise-distinct repair sets each), the old un-gated protocol
+misses, and under fully logged generation the builder axis orders per-strategy
+acceptance (GLM 3/8, Qwen 7/8, DeepSeek 8/8). The design cannot separate protocol and
+builder effects. Diversity, however, is necessary, not sufficient: a
 leave-one-harness-out value predictor over the admitted populations does not beat the
-best fixed harness (≤0.001 AUROC over task-only features), its apparent per-task
-signal is task memorization and vanishes on task-level held-out splits, and its one
-deployment-relevant success — +6.9 pp over bare with zero induced harm — holds only
-as an abstaining gate over the full 24-harness pool. We release a three-metric
+best fixed harness (≤0.001 AUROC over task-only features), and in a task-held-out
+control its repair signal falls to chance; its one deployment-relevant success —
++6.9 pp over bare with zero induced harm — holds only as an abstaining gate over the
+full 24-harness pool. We release a three-metric
 precondition checklist — pairwise disagreement, union repair, oracle headroom — that
 harness-generation and harness-routing papers can and should report before routing is
 attempted.
@@ -51,7 +51,7 @@ mechanisms must also be *selected against a headroom landscape*, which is exactl
 information the checklist surfaces.
 
 **Why stronger builders are not automatically the fix.** Under the gated protocol, the
-builder axis orders generation reliability and population quality (GLM 0/6 accepted;
+builder axis orders generation reliability and population quality (GLM 3/8 strategies accepted under logging;
 Qwen 5.96 pp; DeepSeek 7.95 pp). But the old protocol's failure mode is different in
 kind: its best member (0.583, the strongest harness in the study) *dominates*, so the
 population's remaining headroom falls to 4.64 pp even with a healthy repair rate —
@@ -80,7 +80,7 @@ AI-generated harness populations can be exactly what their source files suggest 
 nothing like what routing needs. We measured that gap — mean code similarity 0.14
 against 96% behavioral agreement — explained its mechanism at the trace level, showed
 the missing headroom is recoverable by hand (7.3 pp), and then showed it is also
-reachable automatically: mechanism-gated generation with capable builders restores
+reachable automatically: strategy-forced generation with capable builders restores
 behavioral diversity (two admitted populations, up to 8.0 pp headroom at the point
 estimate) where the old protocol misses the pre-registered headroom threshold. What
 diversity does not yet buy is open-set routing — unseen-harness value prediction

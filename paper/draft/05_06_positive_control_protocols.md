@@ -42,9 +42,9 @@ failure to the generation side.
 
 *(draft v3, 2026-09-03 — round-1 审后修订:协议细节、口径与 CI 已按审稿意见收紧)*
 
-The diagnosis of §4 suggests two orthogonal fixes. **Mechanism-gated free-form** keeps the
-builder fully expressive but adds an acceptance gate with teeth; **Harness IR** removes
-free-form code generation altogether. This subsection specifies both at the level
+The diagnosis of §4 suggests two orthogonal fixes. **Strategy-forced free-form** keeps
+the builder fully expressive but forces an explicit mechanism per candidate;
+**Harness IR** removes free-form code generation altogether. This subsection specifies both at the level
 needed for replication; prompts, specs, and compiled harnesses are released verbatim.
 
 **Gated free-form protocol.** For each of six mechanism strategies $s$ (execute-repair,
@@ -55,14 +55,20 @@ sentence, e.g. *"Generate SQL, then EXECUTE it via self.execute(); if execution 
 feed the exact SQLite error back and regenerate up to 2 times"*), and the required
 class name. The builder emits one complete Python file per strategy (temperature 0.7);
 the candidate is extracted from its code fence and written to the population directory.
-Acceptance requires the file to (a) import and instantiate against both databases and
-(b) produce executable SQL on a smoke check. The day-2 protocol adds a *generation
-gate* at the strategy level: a run whose strategy yields no accepted candidate is
-recorded as a generation failure (condition B), and the surviving population is the
-six accepted candidates. Builders see $D_{\mathrm{build}}$ only; no evaluation item or
+For the two 09-01 populations (conditions C and D) acceptance was: file written and
+hash-registered, with import and smoke checks performed at evaluation time; per-attempt
+generation logs were not retained — a provenance gap we disclose, and which the day-3
+generation tool (`builder_generate3.py`) closes for all runs after 2026-09-03 by
+logging every attempt (3 retries, 16 384-token budget) and accepting a candidate only
+after it imports against both databases and solves one builder-visible question. The
+condition-B registry records zero accepted outputs from six strategies; because that
+run predates the logging tool, we report condition B as a single unaudited observation
+rather than a capability attribution, and we are re-running it under the logging tool. Builders see $D_{\mathrm{build}}$ only; no evaluation item or
 outcome is shown to any builder. Budget: one generation call per strategy per run
 (16 384 max tokens); failed extractions are not retried within a run — a design
-choice that makes condition B's 0/6 a statement about single-shot reliability.
+choice that keeps per-strategy acceptance an auditable, single-shot reliability
+observation (condition B's original unaudited run is superseded by the logged
+re-run, §6.0).
 
 **Harness IR.** Mechanisms are declared as a typed spec —
 `context ∈ {plain, schema_link, hint_guard, link+hint}`, `generate.candidates ≥ 1`
@@ -74,7 +80,7 @@ mechanism is present in the control flow *by construction*. The six IR harnesses
 enumerate the spec grid (plain/repair/vote3/hint-repair/schema-repair/link+vote3).
 
 We compare six populations under identical budget and target — old proposer protocol
-(A), mechanism-gated free-form with GLM (B) / Qwen (C) / DeepSeek (D), compiled IR, and the
+(A), strategy-forced free-form with GLM (B) / Qwen (C) / DeepSeek (D), compiled IR, and the
 human control — on the builder-held-out 151-question set. Admission to any downstream
 routing claim requires the pre-registered thresholds of §3.4.
 
@@ -83,7 +89,7 @@ routing claim requires the pre-registered thresholds of §3.4.
 | Population | disagree | union repair [CI95] | headroom pp [CI95] | distinct fix sets | admitted? |
 |---|---|---|---|---|---|
 | A old-proposer (K=6) | 7.0% | 24.3% [.149,.347] | 4.64 [1.3,8.0] | 5 | no (headroom) |
-| B GLM free-form | 0/6 generated | — | — | — | n/a |
+| B GLM free-form (logged re-run, K=3) | 3/8 strategies accepted | see §6.0b | see §6.0b | 3 | see text |
 | **C Qwen free-form (K=6)** | 11.1% | 21.6% [.125,.310] | **5.96** [2.0,8.6] | 6 | **yes** |
 | **D DeepSeek free-form (K=6)** | 11.2% | 24.3% [.148,.346] | **7.95** [4.0,11.3] | 6 | **yes** |
 | IR compiled (K=6) | 8.2% | 16.2% [.083,.253] | 3.97 [1.3,7.3] | 6 | no (headroom) |
@@ -101,9 +107,10 @@ contrasts localize the failure modes.** Within the old proposer protocol, the be
 member dominates (0.583, the single highest harness in the study), squeezing headroom
 to 4.64 pp despite a healthy repair rate — diversity without *spread*; this population
 misses the headroom threshold by 0.36 pp rather than collapsing outright (the outright
-collapse is the day-1 finding of §4). Under the gated protocol, the GLM builder
-produced no accepted candidate in six attempts — a single-shot generation-reliability
-failure we could not further attribute (per-attempt logs were not retained). Protocol
+collapse is the day-1 finding of §4). Under the logged generation tool, per-strategy acceptance orders with builder
+capability — GLM 3/8, Qwen 7/8 (its vote3 attempts end with well-formed prose but no
+code fence), DeepSeek 8/8 — replacing the unaudited original 0/6 observation (§6
+discloses the provenance gap). Protocol
 and builder are jointly implicated by these two contrasts, though the design cannot
 separate their main effects (§3.4). **(iii) The human control is not a universal
 upper bound.** Its 60-item repair rate (20.7%) shrank to 14.9% on 151 items —
@@ -122,13 +129,15 @@ fixed harness: D6 −3.4 pp, C6 +0.9 pp (bootstrap CI [−5.2, +6.9]), cross-pro
 −0.9 pp (CI [−6.0, +4.3]); full per-fold results are in the released JSONs. Two
 caveats sharpen — rather than soften — this negative. First, LOHO holds the task set
 fixed, so the high per-fold AUROC on repair (0.82–0.98) largely reflects *task
-memorization*: when we additionally split by task (train on 76 tasks, test on 75
-unseen tasks within D6), the repair classifier falls to chance (AUROC 0.475) and the
-policy degrades to the bare baseline. Task-side generalization of harness value is
-therefore untested by LOHO and fails where tested. Second, the pre-registered
+memorization*: in a task-held-out control on D6 (train on 76 tasks, test on the 75
+unseen tasks; `task_split_D6.json`), the repair classifier falls to chance (AUROC
+0.475) and the policy degrades to the bare baseline. This is a single-population
+control, not a sweep; but it removes the main alternative reading of the LOHO AUROC,
+and task-side generalization of harness value fails where tested. Second, the pre-registered
 three-level gate returns: L1 (headroom) **passes**; L2 (closed-set, harness identity
-visible) **marginally fails** (pooled AUROC 0.475 on D6, 0.575 on the 24-harness pool
-— below or barely above chance); L3 (open-set, unseen harness) **fails** with unseen-
+visible) **marginally fails** — its pre-registered criterion was a policy gain of
+≥2 pp, which no closed-set configuration demonstrates; the closed-set repair AUROC
+is 0.471 on D6 and 0.575 on the 24-harness pool, at chance to barely above chance); L3 (open-set, unseen harness) **fails** with unseen-
 harness representation adding ≤0.001 AUROC over task-only features. One deployment-
 relevant positive survives, and we state its scope precisely: on the 24-harness
 cross-protocol pool only, the same predictor used as an *abstaining gate* gains

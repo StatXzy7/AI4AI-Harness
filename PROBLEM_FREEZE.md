@@ -208,3 +208,22 @@ Builder：API 强模型，预算 60% builder / 20% judge & error analysis / 20% 
   F1 塌缩测量 + F2 headroom + **F3 协议修复（主结果）** + F4 诚实负结果（多样性必要
   非充分）。数据与判定详见 `artifacts/day2/DAY2_RESULTS.md`。统计备注：预注册阈值
   下 IR/人工的 borderline 未做事后放宽，原样报告。
+- 2026-09-03 v9：**Round-2 审稿触发的方法学修复**。(1) 撤回 B 臂"GLM 0/6 生成失败"
+  作为 F1 证据：原生成脚本未被保存（提交版 builder_generate2.py 为残稿，gen_one 引用
+  未定义变量），0/6 不可归因。用忠实可复现的 `experiment/builder_generate3.py`
+  （--builder / 3 次重试 / max_tokens 16384 / D_build 冒烟验收 / 逐次日志）重跑：
+  **GLM 3/8 策略通过**（repair、vote3、two_view），生成可靠性梯度
+  **GLM 3/8 < Qwen 7/8（vote3 三次无代码围栏）< DSexP 8/8**——builder 能力轴由
+  审计数据支撑，替代原 0/6 叙事。(2) Round-2 指出 C/D 策略集不同（builder 对比被
+  策略组成混杂）→ 补齐缺失策略（dexp schema_link+hint_guard ✓、qwen repair ✓、
+  vote3 ✗），补齐后两 builder 均为 8 策略对称设计；6 个新 harness 进入 151 题
+  补测（`tthe_eval151_matrix_round3.parquet`）。**预注册判定不变**：原 C6/D6 admission
+  保持；补齐后的 C8/D8 为 post-hoc completed design，单独标注，不改原判定。
+  (3) 阈值口径澄清：v7 记"15-20%"、EXPERIMENT_PLAN（同日冻结）记"≥15%"——两种读法下
+  C6(21.6%)/D6(24.3%) 均 admitted、A6/IR/人工判定不变；论文按 ≥15% 操作化并披露歧义。
+  (4) 任务级切分检验落盘 `artifacts/day2/task_split_D6.json`（AUROC 0.4753=机会，
+  policy=bare）：LOHO 的 0.93 AUROC 主要是任务记忆，F4 表述加强。
+  (5) 论文命名修正：协议更名 strategy-forced free-form（门禁=机制指派+导入/冒烟验收，
+  非机械 trace 校验）；"first systematic measurement" 收窄为 outcome-matrix collapse
+  measurement 并 hedge（HarnessLens 2608.27311、HarnessFix、AHE、gated-QD 2607.13683
+  等邻近工作已入 related work）。

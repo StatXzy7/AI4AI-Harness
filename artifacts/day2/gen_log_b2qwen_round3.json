@@ -1,0 +1,55 @@
+{
+ "run": "b2qwen",
+ "builder": "qwen",
+ "model": "Qwen3.8-Flash",
+ "max_tokens": 16384,
+ "retries": 3,
+ "attempts": [
+  {
+   "strategy": "repair",
+   "attempt": 1,
+   "stage": "extract",
+   "ok": false,
+   "detail": "no python fence (finish=stop)",
+   "secs": 49.1
+  },
+  {
+   "strategy": "repair",
+   "attempt": 2,
+   "stage": "accept",
+   "ok": true,
+   "detail": "smoke ok (177 chars)",
+   "chars": 2875,
+   "truncated": false,
+   "finish": "stop",
+   "secs": 52.3
+  },
+  {
+   "strategy": "vote3",
+   "attempt": 1,
+   "stage": "extract",
+   "ok": false,
+   "detail": "no python fence (finish=stop)",
+   "secs": 56.7
+  },
+  {
+   "strategy": "vote3",
+   "attempt": 2,
+   "stage": "extract",
+   "ok": false,
+   "detail": "no python fence (finish=stop)",
+   "secs": 62.2
+  },
+  {
+   "strategy": "vote3",
+   "attempt": 3,
+   "stage": "extract",
+   "ok": false,
+   "detail": "no python fence (finish=stop)",
+   "secs": 133.0
+  }
+ ],
+ "accepted": [
+  "c2_b2qwen_repair"
+ ]
+}

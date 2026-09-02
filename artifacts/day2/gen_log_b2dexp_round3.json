@@ -1,0 +1,39 @@
+{
+ "run": "b2dexp",
+ "builder": "dsexp",
+ "model": "DeepSeek-V4-Flash-Vision-Exp",
+ "max_tokens": 16384,
+ "retries": 3,
+ "attempts": [
+  {
+   "strategy": "schema_link",
+   "attempt": 1,
+   "stage": "extract",
+   "ok": false,
+   "detail": "no python fence",
+   "secs": 55.0
+  },
+  {
+   "strategy": "schema_link",
+   "attempt": 2,
+   "stage": "accept",
+   "ok": true,
+   "detail": "smoke ok (162 chars)",
+   "chars": 2360,
+   "secs": 67.3
+  },
+  {
+   "strategy": "hint_guard",
+   "attempt": 1,
+   "stage": "accept",
+   "ok": true,
+   "detail": "smoke ok (261 chars)",
+   "chars": 2922,
+   "secs": 120.5
+  }
+ ],
+ "accepted": [
+  "c2_b2dexp_schema_link",
+  "c2_b2dexp_hint_guard"
+ ]
+}

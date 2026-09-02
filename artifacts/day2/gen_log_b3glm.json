@@ -1,0 +1,203 @@
+{
+ "run": "b3glm",
+ "builder": "glm",
+ "model": "GLM-5.3-Flash",
+ "max_tokens": 16384,
+ "retries": 3,
+ "attempts": [
+  {
+   "strategy": "repair",
+   "attempt": 1,
+   "stage": "accept",
+   "ok": false,
+   "detail": "SyntaxError: unterminated string literal (detected at line 148) (c2_b3glm_repair.py, line 148)",
+   "chars": 6130,
+   "secs": 275.6
+  },
+  {
+   "strategy": "repair",
+   "attempt": 2,
+   "stage": "accept",
+   "ok": true,
+   "detail": "smoke ok (163 chars)",
+   "chars": 5291,
+   "secs": 261.4
+  },
+  {
+   "strategy": "vote3",
+   "attempt": 1,
+   "stage": "accept",
+   "ok": false,
+   "detail": "SyntaxError: unterminated string literal (detected at line 37) (c2_b3glm_vote3.py, line 37)",
+   "chars": 1401,
+   "secs": 83.6
+  },
+  {
+   "strategy": "vote3",
+   "attempt": 2,
+   "stage": "accept",
+   "ok": true,
+   "detail": "smoke ok (148 chars)",
+   "chars": 7323,
+   "secs": 204.7
+  },
+  {
+   "strategy": "schema_link",
+   "attempt": 1,
+   "stage": "accept",
+   "ok": false,
+   "detail": "SyntaxError: unterminated string literal (detected at line 339) (c2_b3glm_schema_link.py, line 339)",
+   "chars": 13937,
+   "secs": 293.6
+  },
+  {
+   "strategy": "schema_link",
+   "attempt": 2,
+   "stage": "extract",
+   "ok": false,
+   "detail": "no python fence",
+   "secs": 369.5
+  },
+  {
+   "strategy": "schema_link",
+   "attempt": 3,
+   "stage": "extract",
+   "ok": false,
+   "detail": "no python fence",
+   "secs": 333.3
+  },
+  {
+   "strategy": "hint_guard",
+   "attempt": 1,
+   "stage": "extract",
+   "ok": false,
+   "detail": "no python fence",
+   "secs": 373.4
+  },
+  {
+   "strategy": "hint_guard",
+   "attempt": 2,
+   "stage": "accept",
+   "ok": false,
+   "detail": "SyntaxError: unterminated string literal (detected at line 20) (c2_b3glm_hint_guard.py, line 20)",
+   "chars": 744,
+   "secs": 267.0
+  },
+  {
+   "strategy": "hint_guard",
+   "attempt": 3,
+   "stage": "extract",
+   "ok": false,
+   "detail": "no python fence",
+   "secs": 463.7
+  },
+  {
+   "strategy": "two_view",
+   "attempt": 1,
+   "stage": "accept",
+   "ok": false,
+   "detail": "SyntaxError: unterminated string literal (detected at line 42) (c2_b3glm_two_view.py, line 42)",
+   "chars": 1732,
+   "secs": 120.3
+  },
+  {
+   "strategy": "two_view",
+   "attempt": 2,
+   "stage": "accept",
+   "ok": false,
+   "detail": "SyntaxError: unterminated string literal (detected at line 47) (c2_b3glm_two_view.py, line 47)",
+   "chars": 2388,
+   "secs": 154.2
+  },
+  {
+   "strategy": "two_view",
+   "attempt": 3,
+   "stage": "accept",
+   "ok": true,
+   "detail": "smoke ok (167 chars)",
+   "chars": 3945,
+   "secs": 133.0
+  },
+  {
+   "strategy": "decompose",
+   "attempt": 1,
+   "stage": "accept",
+   "ok": false,
+   "detail": "SyntaxError: unterminated string literal (detected at line 330) (c2_b3glm_decompose.py, line 330)",
+   "chars": 11739,
+   "secs": 261.8
+  },
+  {
+   "strategy": "decompose",
+   "attempt": 2,
+   "stage": "accept",
+   "ok": false,
+   "detail": "SyntaxError: unterminated string literal (detected at line 56) (c2_b3glm_decompose.py, line 56)",
+   "chars": 1865,
+   "secs": 233.9
+  },
+  {
+   "strategy": "decompose",
+   "attempt": 3,
+   "stage": "extract",
+   "ok": false,
+   "detail": "no python fence",
+   "secs": 349.1
+  },
+  {
+   "strategy": "error_classify",
+   "attempt": 1,
+   "stage": "extract",
+   "ok": false,
+   "detail": "no python fence",
+   "secs": 312.2
+  },
+  {
+   "strategy": "error_classify",
+   "attempt": 2,
+   "stage": "extract",
+   "ok": false,
+   "detail": "no python fence",
+   "secs": 377.0
+  },
+  {
+   "strategy": "error_classify",
+   "attempt": 3,
+   "stage": "extract",
+   "ok": false,
+   "detail": "no python fence",
+   "secs": 472.5
+  },
+  {
+   "strategy": "format_guard",
+   "attempt": 1,
+   "stage": "accept",
+   "ok": false,
+   "detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (c2_b3glm_format_guard.py, line 1)",
+   "chars": 102,
+   "secs": 338.7
+  },
+  {
+   "strategy": "format_guard",
+   "attempt": 2,
+   "stage": "extract",
+   "ok": false,
+   "detail": "no python fence",
+   "secs": 400.5
+  },
+  {
+   "strategy": "format_guard",
+   "attempt": 3,
+   "stage": "accept",
+   "ok": false,
+   "detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (c2_b3glm_format_guard.py, line 1)",
+   "chars": 88,
+   "secs": 492.4
+  }
+ ],
+ "accepted": [
+  "c2_b3glm_repair",
+  "c2_b3glm_vote3",
+  "c2_b3glm_two_view"
+ ]
+}

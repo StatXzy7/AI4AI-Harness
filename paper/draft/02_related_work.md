@@ -21,9 +21,9 @@ and Meta-Harness attack behavior localization and outer-loop search. These syste
 treat behavior as a *signal inside the loop*; none measures whether a generated
 population is behaviorally diverse as an outcome property, which is precisely the
 failure we quantify: evolved candidates that pass every per-edit check can still
-share one execution path with the bare baseline. Our gated free-form and harness-IR
-protocols are generation-protocol fixes; they are orthogonal to, and composable with,
-the search loops above.
+share one execution path with the bare baseline. Our strategy-forced free-form and
+harness-IR protocols are generation-protocol fixes; they are orthogonal to, and
+composable with, the search loops above.
 
 ## 2.2 Harness conditional utility and routing
 
@@ -48,10 +48,10 @@ Diversity of LLM outputs has mostly been studied at the sample level
 documented in program synthesis and in mutation-testing practice; our contribution is
 to instantiate it for AI-generated harness populations — measuring, on a full
 generated population's outcome matrix, the gap between syntactic and behavioral
-diversity — and to show the gap is a generation-protocol property that stronger
-builders alone do not close (§6). We claim priority only for this outcome-matrix
-collapse measurement and its trace taxonomy; behavior-aware *verification inside*
-evolution systems is concurrent independent work (§2.1).
+diversity. To our knowledge (literature scan 2026-09-02, to be re-run at
+camera-ready), no prior work measures this collapse as an outcome property of a
+generated population; behavior-aware verification *inside* evolution systems is
+concurrent independent work (§2.1).
 
 ## 2.4 Positioning summary
 
