@@ -54,9 +54,16 @@ config-level 上的失败一致——现在是在 admitted population 上的决�
 - F4(诚实负结果):多样性是路由的必要条件而非充分条件——开放集 value prediction
   仍无可学习信号(§7,L3 全线 FAIL 如实报告)。
 
-## 4. 待办
+## 4. Round-1 审后补充审计(2026-09-03,codex/EV-GPT-5.6-Sol 审稿触发)
 
-1. 论文占位符回填([R1][R2][F3]、§6.0 表、abstract Draft A 变体、§7 两处、§8);
-2. `/auto-review-loop` 送审(Codex);
-3. 剩余时间(至 09-25):Exp C 跨域(TTHE/ds1000)是加分项;figures 精修;
-   LaTeX 化 + 匿名仓。
+- **hpc fix-set 审计**(`artifacts/day1/hpc_fixset_audit.json`):repair{36,38,53} /
+  schema{11,12,38} / hint{38,43,53},**vote3 在 60 题上 fix=0**;"各 3 个 unique repairs"
+  表述撤回,准确表述为 1/2/1 个他人没有的修复、3 个 pairwise-distinct 非空集合。
+- **bare 跨运行一致性**:两次 day-1 运行 bare 在 3/60 题翻转(26 vs 29 错,temp=0 下 API
+  非确定性)——对照表比较需注明 bare-error 集不完全相同。
+- **任务级切分检验**(D6,76 train / 75 test 任务):repair 分类器 AUROC **0.475(机会水平)**,
+  policy=bare;证实 LOHO 的 0.93 AUROC 主要是任务记忆。F4 表述加强:value prediction 在
+  harness 级与任务级泛化下都不可学。
+- **审稿修稿**:3×P0(预注册可审计性/git、非因子设计的措辞、LOHO 任务泄漏)+ 12×P1
+  全部落实;术语统一 mechanism-gated(门禁=机制指派+可执行冒烟,非机械 trace 校验)。
+- **git 仓库回溯初始化**(2026-09-03),commit 注明回溯性质,changelog 仍为排序权威。

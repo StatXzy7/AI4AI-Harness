@@ -31,8 +31,12 @@ differ only in how harness *code* is produced.
 We use two databases, `card_games` and `formula_1`. The **builder-visible set**
 $D_{\mathrm{build}}$ contains 8 `card_games` questions. The **evaluation set**
 $D_{\mathrm{eval}}$ contains **151 questions** (121 `card_games`, 30 `formula_1`),
-with $D_{\mathrm{build}} \cap D_{\mathrm{eval}} = \emptyset$ enforced by construction.
-Harness populations are
+held out from all builders ($D_{\mathrm{build}} \cap D_{\mathrm{eval}} = \emptyset$
+by construction). We disclose two overlaps explicitly: (i) 24 of the 151 items were
+also used in day-1 protocol-development measurements (their day-1 outcomes informed
+the diagnosis of §4, not any generation input); (ii) the four human control harnesses
+(§5) were designed after inspecting day-1 traces on these tasks, so the control's
+headroom is an existence proof rather than a blind estimate. Harness populations are
 generated, frozen, and hashed *before* any evaluation on $D_{\mathrm{eval}}$; no
 harness is re-tuned after evaluation.
 
@@ -47,14 +51,16 @@ and acceptance protocol. We compare:
   loop (GLM-5.3-Flash as builder), which sees 3 questions per round and edits harness
   code in a single turn. We select the 6 most behaviorally diverse of 12 candidates
   using *only* the 36 earlier-run questions disjoint from $D_{\mathrm{eval}}$
-  (selection rule frozen before the 151-item evaluation).
-- **Condition B — gated free-form, weak builder**: GLM-5.3-Flash writes full harness
-  source under our generation gate (§6). **0/6 candidates were produced**: the model
-  cannot reliably emit long code files. We report this as a generation-reliability
-  finding, not a population.
-- **Condition C — gated free-form, mid builder**: Qwen3.8-Flash, 6/6 generated.
-- **Condition D — gated free-form, strong builder**: DeepSeek-V4-Flash (vision-exp
-  checkpoint), 6/6 generated.
+  (selection rule frozen before the 151-item evaluation; the 24 overlapping items
+  were excluded from selection).
+- **Condition B — mechanism-gated free-form, GLM builder**: GLM-5.3-Flash writes full harness
+  source under our generation gate (§6). **No candidate passed acceptance in 6
+  attempts** (the population registry records zero accepted outputs; per-attempt
+  error logs were not retained). We report this as a generation-reliability
+  observation on this protocol, not a capability attribution.
+- **Condition C — mechanism-gated free-form, Qwen builder**: Qwen3.8-Flash, 6/6 accepted.
+- **Condition D — mechanism-gated free-form, DeepSeek builder**: DeepSeek-V4-Flash (vision-exp
+  checkpoint), 6/6 accepted.
 - **IR arm — compiled, no free-form code**: six harnesses compiled deterministically
   from declarative mechanism specifications by our Harness IR (§6.2); mechanism
   diversity is guaranteed by construction, isolating "what mechanisms do" from
@@ -65,15 +71,31 @@ and acceptance protocol. We compare:
 Every harness is accepted only after passing a smoke check (it runs and emits
 executable SQL); the free-form arm additionally passes the execution-path gate of §6.
 
-## 3.4 Pre-registered decision criteria
+## 3.4 Design structure and pre-registered decision criteria
 
-Before running any 151-item evaluation we froze, in the project decision log, the
-following admission thresholds for treating a population as *behaviorally diverse
-enough to route over*: union repair rate over bare errors $\geq 15\%$, oracle headroom
-(vs. best fixed harness) $\geq 5$ pp, and $\geq 3$ harnesses with non-empty,
-pairwise-distinct repair sets. Populations failing these thresholds are not subjected
-to downstream value-prediction experiments. All results in §6 follow these rules;
-nothing was re-defined after seeing the data.
+**The design is two nested contrasts, not a full factorial**, and our claims are
+limited accordingly: (i) *within the old proposer protocol*, only GLM was run, and
+*within the gated free-form protocol*, only the builder varies (GLM/Qwen/DeepSeek) —
+so the protocol contrast at a fixed builder exists only for GLM (A vs B), and the
+builder contrast exists only under the gated protocol (B vs C vs D); (ii) the IR arm
+has a protocol axis but no builder axis. Protocol and builder effects are therefore
+partially confounded across conditions; §6 interprets each contrast within its own
+fixed factor and does not claim分离 main effects.
+
+Before running any 151-item evaluation, admission thresholds were frozen in the
+project decision log: a population must reach **union repair rate over bare errors
+≥ 15%**, **oracle headroom (vs. best fixed harness) ≥ 5 pp**, and **≥ 3 harnesses
+with non-empty, pairwise-distinct repair sets**. The audit trail is as follows: the
+20% repair threshold first appears in the v6 decision-log entry (2026-08-31, when the
+plan moved to 150-item evaluation); it was set to 15% in the v7 entry (2026-09-01,
+when the evaluation set was fixed at 151 items) — *both before any 151-item outcome
+existed*; the matrix was collected 2026-09-02. The repository now carries a git
+history initialized from file mtimes and the decision-log changelog, which together
+document this ordering; we flag that the history is retrospective and the changelog
+is the authoritative ordering record. Populations failing the thresholds are not
+subjected to downstream value-prediction experiments. Admission is decided on point
+estimates by the frozen rule; bootstrap intervals are reported alongside for
+calibration, and §6 marks populations whose intervals include sub-threshold values.
 
 <!-- NOTE(写作纪律): 所有 §6 数字到位后回填;本节引用的切分数与选择规则已与
      experiment/split_eval151.json、artifacts/day2/a6_selection.json 核对一致。 -->

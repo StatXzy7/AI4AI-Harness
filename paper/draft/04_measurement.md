@@ -13,11 +13,12 @@ difference is what routing consumes. We propose that any harness-generation pipe
 1. **Pairwise outcome disagreement.** Over all harness pairs $(H_i, H_j)$, the fraction
    of tasks where $Y(x,H_i,M) \neq Y(x,H_j,M)$. Zero disagreement means the population
    is behaviorally one harness.
-2. **Union repair rate.** The fraction of bare errors $x$ (where $\Delta(x,H_0,M)=-1$
-   conceptually) such that *some* harness in the population answers correctly. This
+2. **Union repair rate.** The fraction of bare errors — tasks where
+   $Y(x,H_0,M)=0$ — such that *some* harness in the population answers correctly. This
    bounds what any selector over the population could achieve.
 3. **Oracle headroom.** Accuracy of the per-item oracle selector
-   $\max_i Y(x,H_i,M)$ minus the best fixed harness. Positive headroom means the
+   $\max_i Y(x,H_i,M)$ (taken over harnesses *and* the bare baseline) minus the best
+   fixed harness. Positive headroom means the
    population's value is *conditional on the item* — exactly the signal a value
    predictor or router would need.
 

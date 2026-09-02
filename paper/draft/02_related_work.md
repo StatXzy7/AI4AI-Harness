@@ -11,11 +11,19 @@ LLM proposer/judge loop (2607.08124); a-evolve and related evolutionary systems
 maintain and edit agent code populations; Self-Harness (2606.09498) shows a model can
 improve its own harness; JIT-Agent (2608.25593) trains a model to *generate* a harness
 per task at inference time. Task-CoEvolve (2608.20169) co-evolves tasks and scaffolds.
-These systems implicitly assume that iterating on harness code yields harnesses that
-*behave* differently — the assumption our measurements contradict in the deployed
-regime: with a mid-tier builder, evolved candidates share one execution path with the
-bare baseline. Our gated free-form and harness-IR protocols are generation-protocol
-fixes; they are orthogonal to, and composable with, the search loops above.
+A concurrent 2026 cluster makes harness evolution *behavior-aware* from the
+verification side: HarnessLens (2608.27311) allocates a rollout budget across task
+space and behavior-level checks during evolution; HarnessFix repairs harnesses from
+trace-grounded diagnoses; AHE verifies each proposed edit against self-declared
+behavioral predictions; gated semantic quality-diversity search (2607.13683) evolves
+populations over LLM-assigned pathology descriptors; Harness Handbook (2607.13285)
+and Meta-Harness attack behavior localization and outer-loop search. These systems
+treat behavior as a *signal inside the loop*; none measures whether a generated
+population is behaviorally diverse as an outcome property, which is precisely the
+failure we quantify: evolved candidates that pass every per-edit check can still
+share one execution path with the bare baseline. Our gated free-form and harness-IR
+protocols are generation-protocol fixes; they are orthogonal to, and composable with,
+the search loops above.
 
 ## 2.2 Harness conditional utility and routing
 
@@ -38,9 +46,12 @@ Diversity of LLM outputs has mostly been studied at the sample level
 (self-consistency, diverse decoding) or the agent-policy level. The observation that
 *syntactically distinct programs exhibit identical behavior* echoes coverage gaps
 documented in program synthesis and in mutation-testing practice; our contribution is
-to instantiate it for AI-generated harness populations, give a three-metric outcome
-checklist (§4), and show the gap is a generation-protocol property that stronger
-builders alone do not close (§6).
+to instantiate it for AI-generated harness populations — measuring, on a full
+generated population's outcome matrix, the gap between syntactic and behavioral
+diversity — and to show the gap is a generation-protocol property that stronger
+builders alone do not close (§6). We claim priority only for this outcome-matrix
+collapse measurement and its trace taxonomy; behavior-aware *verification inside*
+evolution systems is concurrent independent work (§2.1).
 
 ## 2.4 Positioning summary
 
@@ -51,6 +62,8 @@ builders alone do not close (§6).
 | HELIX router | (roadmap) | fixed portfolio | we provide the precondition its router needs |
 | JIT-Agent | generate per task | generated on the fly | we study population diversity of frozen harnesses |
 | TTHE | evolve one winner | candidates discarded | we keep and audit the whole population |
+| HarnessLens / HarnessFix / AHE | in-loop verification & repair | evolving single lineage | we audit the population as an outcome, post hoc |
+| Gated QD search (2607.13683) | QD exploration w/ gates | evolving population | we measure collapse + protocol effect on a fixed population |
 
 <!-- 待办: 2607.18235/2605.26731 两篇 phenomenology 论文未在本机核实全名;
      camera-ready 前用 citation-audit 跑一遍。 -->
