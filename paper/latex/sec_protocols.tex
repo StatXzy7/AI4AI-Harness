@@ -109,8 +109,7 @@ GLM produced) reaches 5.96 pp headroom and 21.6\% union repair with
 three distinct fix sets; C8 holds at 5.96 pp / 21.6\% with seven; D8
 rises to \textbf{9.93 pp / 28.4\%} with all eight strategies
 contributing a distinct fix set. Per-strategy accuracies show no builder
-dominance (Qwen wins hint-guard 0.556 vs 0.510; DeepSeek wins repair
-0.543 vs 0.550 for Qwen; GLM's vote3 reaches 0.543) --- generation
+dominance (Qwen wins hint-guard 0.556 vs 0.510; Qwen wins repair 0.550 vs 0.543; GLM's vote3 reaches 0.543) --- generation
 \emph{acceptance} orders with builder identity, not per-strategy solution
 quality.
 These rows are labeled post-hoc: the frozen admission decisions belong
@@ -174,7 +173,7 @@ memorization}: in stratified task-held-out controls on D6 (random
 database-stratified 50/50 task splits, five seeds, task text + harness
 identity features;   \texttt{task\_split\_D6\_v2.json}), the repair
 classifier is at chance (mean AUROC 0.512, seed range 0.35--0.60) and
-the policy matches bare (+0.27 pp).
+the policy matches bare (+0.27 pp). Task-side
 generalization of harness value fails where tested. Second, the
 pre-specified three-level gate returns: L1 (headroom) \textbf{passes};
 L2 (closed-set, harness identity visible) \textbf{marginally fails} ---
