@@ -1,3 +1,151 @@
 [collector] split tasks: {'card_games': 121, 'formula_1': 30}
 [collector] tasks={'card_games': 121, 'formula_1': 30} | harnesses: ['bare', 'react', 'c2_b2dexp_two_view', 'c2_b2dexp_format_guard', 'c2_b2dexp_decompose', 'c2_b2dexp_error_classify', 'c2_b2dexp_repair', 'c2_b2dexp_vote3', 'cand_bird_g1_b1r0_g1', 'cand_bird_g1_b1r1_g0', 'cand_bird_g1_b1r1_g1', 'cand_bird_g1_b2r0_g1', 'cand_bird_pop1_b0r0_g0', 'cand_bird_pop1_b0r0_g1', 'hpc_schema', 'hpc_hint', 'hpc_repair', 'hpc_vote3']
     bare: 25/151
+    bare: 50/151
+    bare: 75/151
+    bare: 100/151
+    bare: 125/151
+    bare: 150/151
+  [done] bare: acc=0.536 (151 tasks)
+    react: 25/151
+    react: 50/151
+    react: 75/151
+    react: 100/151
+    react: 125/151
+    react: 150/151
+  [done] react: acc=0.536 (151 tasks)
+    c2_b2dexp_two_view: 25/151
+    c2_b2dexp_two_view: 50/151
+    c2_b2dexp_two_view: 75/151
+    c2_b2dexp_two_view: 100/151
+    c2_b2dexp_two_view: 125/151
+    c2_b2dexp_two_view: 150/151
+  [done] c2_b2dexp_two_view: acc=0.523 (151 tasks)
+    c2_b2dexp_format_guard: 25/151
+    c2_b2dexp_format_guard: 50/151
+    c2_b2dexp_format_guard: 75/151
+    c2_b2dexp_format_guard: 100/151
+    c2_b2dexp_format_guard: 125/151
+    c2_b2dexp_format_guard: 150/151
+  [done] c2_b2dexp_format_guard: acc=0.556 (151 tasks)
+    c2_b2dexp_decompose: 25/151
+    c2_b2dexp_decompose: 50/151
+    c2_b2dexp_decompose: 75/151
+    c2_b2dexp_decompose: 100/151
+    c2_b2dexp_decompose: 125/151
+    c2_b2dexp_decompose: 150/151
+  [done] c2_b2dexp_decompose: acc=0.503 (151 tasks)
+    c2_b2dexp_error_classify: 25/151
+    c2_b2dexp_error_classify: 50/151
+    c2_b2dexp_error_classify: 75/151
+    c2_b2dexp_error_classify: 100/151
+    c2_b2dexp_error_classify: 125/151
+    c2_b2dexp_error_classify: 150/151
+  [done] c2_b2dexp_error_classify: acc=0.550 (151 tasks)
+    c2_b2dexp_repair: 25/151
+    c2_b2dexp_repair: 50/151
+    c2_b2dexp_repair: 75/151
+    c2_b2dexp_repair: 100/151
+    c2_b2dexp_repair: 125/151
+    c2_b2dexp_repair: 150/151
+  [done] c2_b2dexp_repair: acc=0.536 (151 tasks)
+    c2_b2dexp_vote3: 25/151
+    c2_b2dexp_vote3: 50/151
+    c2_b2dexp_vote3: 75/151
+    c2_b2dexp_vote3: 100/151
+    c2_b2dexp_vote3: 125/151
+    c2_b2dexp_vote3: 150/151
+  [done] c2_b2dexp_vote3: acc=0.536 (151 tasks)
+    cand_bird_g1_b1r0_g1: 25/151
+    cand_bird_g1_b1r0_g1: 50/151
+    cand_bird_g1_b1r0_g1: 75/151
+    cand_bird_g1_b1r0_g1: 100/151
+    cand_bird_g1_b1r0_g1: 125/151
+    cand_bird_g1_b1r0_g1: 150/151
+  [done] cand_bird_g1_b1r0_g1: acc=0.556 (151 tasks)
+    cand_bird_g1_b1r1_g0: 25/151
+    cand_bird_g1_b1r1_g0: 50/151
+    cand_bird_g1_b1r1_g0: 75/151
+    cand_bird_g1_b1r1_g0: 100/151
+    cand_bird_g1_b1r1_g0: 125/151
+    cand_bird_g1_b1r1_g0: 150/151
+  [done] cand_bird_g1_b1r1_g0: acc=0.523 (151 tasks)
+    cand_bird_g1_b1r1_g1: 25/151
+    cand_bird_g1_b1r1_g1: 50/151
+    cand_bird_g1_b1r1_g1: 75/151
+    cand_bird_g1_b1r1_g1: 100/151
+    cand_bird_g1_b1r1_g1: 125/151
+    cand_bird_g1_b1r1_g1: 150/151
+  [done] cand_bird_g1_b1r1_g1: acc=0.576 (151 tasks)
+    cand_bird_g1_b2r0_g1: 25/151
+    cand_bird_g1_b2r0_g1: 50/151
+    cand_bird_g1_b2r0_g1: 75/151
+    cand_bird_g1_b2r0_g1: 100/151
+    cand_bird_g1_b2r0_g1: 125/151
+    cand_bird_g1_b2r0_g1: 150/151
+  [done] cand_bird_g1_b2r0_g1: acc=0.576 (151 tasks)
+    cand_bird_pop1_b0r0_g0: 25/151
+    cand_bird_pop1_b0r0_g0: 50/151
+    cand_bird_pop1_b0r0_g0: 75/151
+    cand_bird_pop1_b0r0_g0: 100/151
+    cand_bird_pop1_b0r0_g0: 125/151
+    cand_bird_pop1_b0r0_g0: 150/151
+  [done] cand_bird_pop1_b0r0_g0: acc=0.536 (151 tasks)
+    cand_bird_pop1_b0r0_g1: 25/151
+    cand_bird_pop1_b0r0_g1: 50/151
+    cand_bird_pop1_b0r0_g1: 75/151
+    cand_bird_pop1_b0r0_g1: 100/151
+    cand_bird_pop1_b0r0_g1: 125/151
+    cand_bird_pop1_b0r0_g1: 150/151
+  [done] cand_bird_pop1_b0r0_g1: acc=0.583 (151 tasks)
+    hpc_schema: 25/151
+    hpc_schema: 50/151
+    hpc_schema: 75/151
+    hpc_schema: 100/151
+    hpc_schema: 125/151
+    hpc_schema: 150/151
+  [done] hpc_schema: acc=0.570 (151 tasks)
+    hpc_hint: 25/151
+    hpc_hint: 50/151
+    hpc_hint: 75/151
+    hpc_hint: 100/151
+    hpc_hint: 125/151
+    hpc_hint: 150/151
+  [done] hpc_hint: acc=0.285 (151 tasks)
+    hpc_repair: 25/151
+    hpc_repair: 50/151
+    hpc_repair: 75/151
+    hpc_repair: 100/151
+    hpc_repair: 125/151
+    hpc_repair: 150/151
+  [done] hpc_repair: acc=0.556 (151 tasks)
+    hpc_vote3: 25/151
+    hpc_vote3: 50/151
+    hpc_vote3: 75/151
+    hpc_vote3: 100/151
+    hpc_vote3: 125/151
+    hpc_vote3: 150/151
+  [done] hpc_vote3: acc=0.543 (151 tasks)
+[collector] wrote E:\Study\PhD\Research\AI4AI-Harness\artifacts\outcomes\tthe_eval151_qwentarget.parquet (2718 rows, 18 harnesses)
+[collector] harness registry appended -> E:\Study\PhD\Research\AI4AI-Harness\artifacts\outcomes\harness_registry.jsonl
+[collector] per-harness accuracy:
+harness_id
+bare                        0.536
+c2_b2dexp_decompose         0.503
+c2_b2dexp_error_classify    0.550
+c2_b2dexp_format_guard      0.556
+c2_b2dexp_repair            0.536
+c2_b2dexp_two_view          0.523
+c2_b2dexp_vote3             0.536
+cand_bird_g1_b1r0_g1        0.556
+cand_bird_g1_b1r1_g0        0.523
+cand_bird_g1_b1r1_g1        0.576
+cand_bird_g1_b2r0_g1        0.576
+cand_bird_pop1_b0r0_g0      0.536
+cand_bird_pop1_b0r0_g1      0.583
+hpc_hint                    0.285
+hpc_repair                  0.556
+hpc_schema                  0.570
+hpc_vote3                   0.543
+react                       0.536
+[collector] best-fixed acc = 1.000 | oracle-any acc = 0.689
