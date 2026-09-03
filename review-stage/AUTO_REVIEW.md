@@ -233,3 +233,19 @@ SCORE: 6/10 | VERDICT: not ready
 - 另外，截至 **2026 年 9 月 3 日**，最近三笔提交均被标记为 **2026 年 9 月 4 日**，因此 `git log` 时间戳不能作为有效的先后顺序证明。
 
 SCORE: 5/10 | VERDICT: not ready
+
+
+## Round 6 — 2026-09-04(paratera EV-GPT-5.6-Sol)
+
+**SCORE: 8.4/10 | VERDICT: almost** ← 首次达到 policy 阈值(score>=6 且 verdict∈{ready,almost})
+
+通过:K-curve 与数据一致、task-held-out v2 正文+附录全部对齐、页数 9+3、无未定义引用。
+遗留 5 处小修(本轮已全部落实并 commit):Pre-registered 大写残留、task-side 句残、
+repair 0.550/0.543 归属、gate-without-capable-builder 与 B3 冲突、conclusion capable builders。
+
+## 结论
+
+审稿回环在 Round 6 达到停止条件(8.4/10 + almost)。剩余已知事项(非阻塞):
+- references.bib 中 8 个 arXiv ID 带"camera-ready 复核"标注(已验证 6/14)
+- \iclrfinalcopy 在投稿时需关闭并重新核对页数
+- untouched120 split 已就绪未跑(可选加固)
