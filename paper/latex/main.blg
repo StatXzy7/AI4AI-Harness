@@ -6,15 +6,15 @@ Database file #1: references.bib
 You've used 14 entries,
             2773 wiz_defined-function locations,
             651 strings with 6508 characters,
-and the built_in function-call counts, 4304 in all, are:
-= -- 386
+and the built_in function-call counts, 4286 in all, are:
+= -- 382
 > -- 140
 < -- 14
 + -- 56
 - -- 42
 * -- 212
-:= -- 718
-add.period$ -- 53
+:= -- 714
+add.period$ -- 51
 call.type$ -- 14
 change.case$ -- 56
 chr.to.int$ -- 14
@@ -22,13 +22,13 @@ cite$ -- 28
 duplicate$ -- 266
 empty$ -- 421
 format.name$ -- 56
-if$ -- 891
+if$ -- 887
 int.to.chr$ -- 1
 int.to.str$ -- 1
 missing$ -- 14
-newline$ -- 89
+newline$ -- 87
 num.names$ -- 56
-pop$ -- 115
+pop$ -- 117
 preamble$ -- 1
 purify$ -- 42
 quote$ -- 0
@@ -43,4 +43,4 @@ type$ -- 154
 warning$ -- 0
 while$ -- 42
 width$ -- 0
-write$ -- 197
+write$ -- 193

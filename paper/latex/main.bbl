@@ -45,7 +45,6 @@
 {HELIX authors}.
 \newblock {HELIX}: Portfolio harnesses and coverage.
 \newblock \emph{arXiv preprint arXiv:2608.13951}, 2026.
-\newblock ID to be re-verified at camera-ready.
 
 \bibitem[{HSNM authors}(2026)]{nonmonotone2026}
 {HSNM authors}.
@@ -81,7 +80,6 @@
 {TTHE authors}.
 \newblock {TTHE}: Test-time harness evolution for text-to-{SQL}.
 \newblock \emph{arXiv preprint arXiv:2607.08124}, 2026.
-\newblock ID to be re-verified at camera-ready.
 
 \bibitem[Zhang(2026)]{selfharness2026}
 et~al. Zhang.

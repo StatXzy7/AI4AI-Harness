@@ -41,10 +41,12 @@ specifications into harness code deterministically, guaranteeing mechanism diver
 by construction and isolating "what mechanisms do" from "whether the builder can
 write code". On the builder-held-out 151-question set, both stronger-builder gated
 populations exceed all three pre-registered diversity thresholds at the point
-estimate for the first time — 5.96 and 7.95 pp oracle headroom, six pairwise-distinct
+at the point estimate — 5.96 and 7.95 pp oracle headroom, six pairwise-distinct
 repair sets each — while the old proposer protocol misses the headroom threshold
-(4.64 pp, its best member dominating), and under fully logged generation the GLM
-builder accepts only 3 of 8 strategies against Qwen's 7 of 8 and DeepSeek's 8 of 8:
+(4.64 pp, its best member dominating); and on completed strategy grids every
+builder's population clears the checklist (up to 9.93 pp for DeepSeek, and even the
+GLM builder's three accepted harnesses reach 5.96 pp), with per-strategy generation
+acceptance ordering by builder (GLM 3/8, Qwen 7/8, DeepSeek 8/8, fully logged):
 both axes are implicated, though the design cannot separate their main effects (F3).
 A leave-one-harness-out value predictor over these admitted populations, however, does
 not beat the best fixed harness — and its apparent per-task signal is task

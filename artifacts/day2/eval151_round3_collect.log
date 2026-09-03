@@ -1,7 +1,63 @@
 [collector] split tasks: {'card_games': 121, 'formula_1': 30}
-[collector] tasks={'card_games': 121, 'formula_1': 30} | harnesses: ['c2_b2dexp_schema_link', 'c2_b2dexp_hint_guard', 'c2_b2qwen_repair', 'c2_b3glm_repair', 'c2_b3glm_vote3', 'c2_b3glm_two_view']
+[collector] tasks={'card_games': 121, 'formula_1': 30} | harnesses: ['bare', 'c2_b2dexp_schema_link', 'c2_b2dexp_hint_guard', 'c2_b2qwen_repair', 'c2_b3glm_repair', 'c2_b3glm_vote3', 'c2_b3glm_two_view']
+    bare: 25/151
+    bare: 50/151
+    bare: 75/151
+    bare: 100/151
+    bare: 125/151
+    bare: 150/151
+  [done] bare: acc=0.510 (151 tasks)
     c2_b2dexp_schema_link: 25/151
     c2_b2dexp_schema_link: 50/151
     c2_b2dexp_schema_link: 75/151
     c2_b2dexp_schema_link: 100/151
     c2_b2dexp_schema_link: 125/151
+    c2_b2dexp_schema_link: 150/151
+  [done] c2_b2dexp_schema_link: acc=0.523 (151 tasks)
+    c2_b2dexp_hint_guard: 25/151
+    c2_b2dexp_hint_guard: 50/151
+    c2_b2dexp_hint_guard: 75/151
+    c2_b2dexp_hint_guard: 100/151
+    c2_b2dexp_hint_guard: 125/151
+    c2_b2dexp_hint_guard: 150/151
+  [done] c2_b2dexp_hint_guard: acc=0.510 (151 tasks)
+    c2_b2qwen_repair: 25/151
+    c2_b2qwen_repair: 50/151
+    c2_b2qwen_repair: 75/151
+    c2_b2qwen_repair: 100/151
+    c2_b2qwen_repair: 125/151
+    c2_b2qwen_repair: 150/151
+  [done] c2_b2qwen_repair: acc=0.550 (151 tasks)
+    c2_b3glm_repair: 25/151
+    c2_b3glm_repair: 50/151
+    c2_b3glm_repair: 75/151
+    c2_b3glm_repair: 100/151
+    c2_b3glm_repair: 125/151
+    c2_b3glm_repair: 150/151
+  [done] c2_b3glm_repair: acc=0.523 (151 tasks)
+    c2_b3glm_vote3: 25/151
+    c2_b3glm_vote3: 50/151
+    c2_b3glm_vote3: 75/151
+    c2_b3glm_vote3: 100/151
+    c2_b3glm_vote3: 125/151
+    c2_b3glm_vote3: 150/151
+  [done] c2_b3glm_vote3: acc=0.543 (151 tasks)
+    c2_b3glm_two_view: 25/151
+    c2_b3glm_two_view: 50/151
+    c2_b3glm_two_view: 75/151
+    c2_b3glm_two_view: 100/151
+    c2_b3glm_two_view: 125/151
+    c2_b3glm_two_view: 150/151
+  [done] c2_b3glm_two_view: acc=0.556 (151 tasks)
+[collector] wrote E:\Study\PhD\Research\AI4AI-Harness\artifacts\outcomes\tthe_eval151_matrix_round3.parquet (1057 rows, 7 harnesses)
+[collector] harness registry appended -> E:\Study\PhD\Research\AI4AI-Harness\artifacts\outcomes\harness_registry.jsonl
+[collector] per-harness accuracy:
+harness_id
+bare                     0.510
+c2_b2dexp_hint_guard     0.510
+c2_b2dexp_schema_link    0.523
+c2_b2qwen_repair         0.550
+c2_b3glm_repair          0.523
+c2_b3glm_two_view        0.556
+c2_b3glm_vote3           0.543
+[collector] best-fixed acc = 1.000 | oracle-any acc = 0.642

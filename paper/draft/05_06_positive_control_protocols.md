@@ -95,6 +95,11 @@ routing claim requires the pre-registered thresholds of §3.4.
 | IR compiled (K=6) | 8.2% | 16.2% [.083,.253] | 3.97 [1.3,7.3] | 6 | no (headroom) |
 | Human control (K=4) | 8.9% | 14.9% [.071,.237] | 7.28 [3.3,10.0] | 4 | no (repair, by 0.1pp) |
 | Cross-protocol pool (K=24) | 10.3% | 37.8% [.268,.488] | **11.26** [6.6,15.9] | 23 | yes (analysis) |
+| B3 GLM logged re-run (K=3) | 8.8% | 21.6% | 5.96 | 3 | yes (post-hoc, K=3) |
+| C8 Qwen completed grid (K=7) | 10.4% | 21.6% | 5.96 | 7 | yes (post-hoc) |
+| D8 DeepSeek completed grid (K=8) | 10.6% | 28.4% | **9.93** | 8 | yes (post-hoc) |
+
+*Rows 7–9 are the post-hoc completed-grid analysis (§6.2): the original admission decisions (rows 1–6) are unchanged; the GLM re-run population clears the checklist at K=3, though its small size limits any downstream claim.*
 
 Three observations. **(i) Behavior-aware generation restores behavioral diversity.**
 Both free-form populations built by Qwen and DeepSeek exceed all three pre-registered
@@ -118,6 +123,21 @@ small-sample optimism we had flagged in advance — while its headroom (7.28 pp)
 strong: hand-designed harnesses are complementary specialists, not uniformly stronger
 solvers. We report the borderline cases (IR at 3.97 pp, human at 14.9%) exactly as
 measured, without post-hoc threshold adjustment.
+
+## 6.2 Completed-grid re-analysis (post-hoc)
+
+After the pre-registered comparison, we completed the strategy grid: DeepSeek gained
+schema-link and hint-guard (its weakest strategies are none; it accepts 8/8), Qwen
+gained execute-repair (its vote3 attempts consistently emit prose without a code
+fence and are logged; 7/8), and GLM was re-run under the logging tool (3/8). On the
+completed grids, every builder's population clears the checklist: B3 (the three
+harnesses GLM produced) reaches 5.96 pp headroom and 21.6% union repair with three
+distinct fix sets; C8 holds at 5.96 pp / 21.6% with seven; D8 rises to **9.93 pp /
+28.4%** with all eight strategies contributing a distinct fix set. Per-strategy
+accuracies show no builder dominance (Qwen wins hint-guard 0.556 vs 0.510; DeepSeek
+wins repair 0.543 vs 0.550 for Qwen; GLM's vote3 reaches 0.543) — capability orders
+*generation reliability*, not per-strategy solution quality. These rows are labeled
+post-hoc: the frozen admission decisions belong to rows 1–6.
 
 ## 6.1 Does diversity buy learnable routing? (honest negative)
 

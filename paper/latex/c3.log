@@ -108,19 +108,19 @@ l.45 collapse}
 Overfull \vbox (341.06467pt too high) has occurred while \output is active
 [1{e:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 ! Undefined control sequence.
-l.129 \tightlist
+l.133 \tightlist
                 
 Runaway argument?
 {The first systematic outcome-matrix measurement of behavioral 
 ! Paragraph ended before \text@command was complete.
 <to be read again> 
                    \par 
-l.135   collapse}
+l.139   collapse}
                   in AI-generated harness populations --- narrow the priority
 ! Extra }, or forgotten \endgroup.
 <recently read> \egroup 
                         
-l.135   collapse}
+l.139   collapse}
                   in AI-generated harness populations --- narrow the priority
 [2]
 
@@ -131,7 +131,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.175   fixed harness (≤
+l.179   fixed harness (≤
                           0.001 AUROC over task-only features), and in a
 ) (./sec_related.tex
 Runaway argument?
@@ -185,6 +185,8 @@ l.105 behavior}
 l.105 behavior}
                 echoes coverage gaps documented in program synthesis and in
 
+Underfull \vbox (badness 10000) has occurred while \output is active [4]
+
 ! LaTeX Error: Environment longtable undefined.
 
 See the LaTeX manual or LaTeX Companion for explanation.
@@ -193,8 +195,6 @@ Type  H <return>  for immediate help.
                                                   
 l.129 \begin{longtable}
                        []{@{}
-
-Underfull \vbox (badness 10000) has occurred while \output is active [4]
 ! Undefined control sequence.
 l.131   >{\raggedright\arraybackslash
                                      }p{(\linewidth - 6\tabcolsep) * \real{0...
@@ -627,6 +627,7 @@ l.63   >{\raggedright\arraybackslash
 ! Undefined control sequence.
 l.63 ...slash}p{(\linewidth - 4\tabcolsep) * \real
                                                   {0.3333}}
+[10]
 ! Undefined control sequence.
 l.65   >{\raggedright\arraybackslash
                                     }p{(\linewidth - 4\tabcolsep) * \real{0....
@@ -651,7 +652,6 @@ l.69 \toprule
                          
 l.69 \toprule\noalign
                      {}
-[10]
 ! Misplaced alignment tab character &.
 l.75 \end{minipage} &
                       \begin{minipage}[b]{\linewidth}\raggedright
@@ -1052,6 +1052,61 @@ l.195 \textbf{11.26} {[}6.6,15.9{]} & 23 &
 
 Underfull \hbox (badness 10000) in paragraph at lines 195--196
 
+[13]
+! Misplaced alignment tab character &.
+l.197 B3 GLM logged re-run (K=3) &
+                                   8.8\% & 21.6\% & 5.96 & 3 & yes (post-hoc,
+! Misplaced alignment tab character &.
+l.197 B3 GLM logged re-run (K=3) & 8.8\% &
+                                           21.6\% & 5.96 & 3 & yes (post-hoc,
+! Misplaced alignment tab character &.
+l.197 ...LM logged re-run (K=3) & 8.8\% & 21.6\% &
+                                                   5.96 & 3 & yes (post-hoc,
+! Misplaced alignment tab character &.
+l.197 ...ed re-run (K=3) & 8.8\% & 21.6\% & 5.96 &
+                                                   3 & yes (post-hoc,
+! Misplaced alignment tab character &.
+l.197 ...e-run (K=3) & 8.8\% & 21.6\% & 5.96 & 3 &
+                                                   yes (post-hoc,
+
+Underfull \hbox (badness 10000) in paragraph at lines 199--200
+
+! Misplaced alignment tab character &.
+l.201 C8 Qwen completed grid (K=7) &
+                                     10.4\% & 21.6\% & 5.96 & 7 & yes
+! Misplaced alignment tab character &.
+l.201 C8 Qwen completed grid (K=7) & 10.4\% &
+                                              21.6\% & 5.96 & 7 & yes
+! Misplaced alignment tab character &.
+l.201 ... completed grid (K=7) & 10.4\% & 21.6\% &
+                                                   5.96 & 7 & yes
+! Misplaced alignment tab character &.
+l.201 ...ted grid (K=7) & 10.4\% & 21.6\% & 5.96 &
+                                                   7 & yes
+! Misplaced alignment tab character &.
+l.201 ...grid (K=7) & 10.4\% & 21.6\% & 5.96 & 7 &
+                                                   yes
+
+Underfull \hbox (badness 10000) in paragraph at lines 203--204
+
+! Misplaced alignment tab character &.
+l.205 D8 DeepSeek completed grid (K=8) &
+                                         10.6\% & 28.4\% & \textbf{9.93} & 8 &
+! Misplaced alignment tab character &.
+l.205 D8 DeepSeek completed grid (K=8) & 10.6\% &
+                                                  28.4\% & \textbf{9.93} & 8 &
+! Misplaced alignment tab character &.
+l.205 ... completed grid (K=8) & 10.6\% & 28.4\% &
+                                                   \textbf{9.93} & 8 &
+! Misplaced alignment tab character &.
+l.205 ...(K=8) & 10.6\% & 28.4\% & \textbf{9.93} &
+                                                   8 &
+! Misplaced alignment tab character &.
+l.205 ...) & 10.6\% & 28.4\% & \textbf{9.93} & 8 &
+                                                  
+
+Underfull \hbox (badness 10000) in paragraph at lines 207--208
+
 
 ! LaTeX Error: \begin{document} ended by \end{longtable}.
 
@@ -1059,69 +1114,93 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.197 \end{longtable}
+l.209 \end{longtable}
                      
+Runaway argument?
+{Rows 7--9 are the post-hoc completed-grid analysis (Section~6.2): th\ETC.
+! Paragraph ended before \text@command was complete.
+<to be read again> 
+                   \par 
+l.221 downstream claim.}
+                        
+! Too many }'s.
+<recently read> \egroup 
+                        
+l.221 downstream claim.}
+                        
 Runaway argument?
 {(i) Behavior-aware generation restores 
 ! Paragraph ended before \text@command was complete.
 <to be read again> 
                    \par 
-l.205 behavioral diversity.}
+l.227 behavioral diversity.}
                              Both free-form populations built by Qwen and
-
-Underfull \vbox (badness 4454) has occurred while \output is active [13]
 ! Too many }'s.
 <recently read> \egroup 
                         
-l.205 behavioral diversity.}
+l.227 behavioral diversity.}
                              Both free-form populations built by Qwen and
 Runaway argument?
 {at the point 
 ! Paragraph ended before \text@command was complete.
 <to be read again> 
                    \par 
-l.209 estimate}
+l.231 estimate}
                 --- the first AI-generated populations to do so --- with
 ! Too many }'s.
 <recently read> \egroup 
                         
-l.209 estimate}
+l.231 estimate}
                 --- the first AI-generated populations to do so --- with
 Runaway argument?
 {(ii) The 
 ! Paragraph ended before \text@command was complete.
 <to be read again> 
                    \par 
-l.221 contrasts localize the failure modes.}
+l.243 contrasts localize the failure modes.}
                                              Within the old proposer protocol,
 ! Too many }'s.
 <recently read> \egroup 
                         
-l.221 contrasts localize the failure modes.}
+l.243 contrasts localize the failure modes.}
                                              Within the old proposer protocol,
+
+Underfull \vbox (badness 10000) has occurred while \output is active [14]
 Runaway argument?
 {(iii) The human control is not a 
 ! Paragraph ended before \text@command was complete.
 <to be read again> 
                    \par 
-l.245 universal upper bound.}
+l.267 universal upper bound.}
                               Its 60-item repair rate (20.7\%) shrank to
 ! Too many }'s.
 <recently read> \egroup 
                         
-l.245 universal upper bound.}
+l.267 universal upper bound.}
                               Its 60-item repair rate (20.7\%) shrank to
+Runaway argument?
+{Completed-grid re-analysis 
+! Paragraph ended before \@sect was complete.
+<to be read again> 
+                   \par 
+l.283 (post-hoc)}
+                 \label{completed-grid-re-analysis-post-hoc}
+! Too many }'s.
+\@xdblarg #1#2->#1[{#2}
+                       ]{#2}
+l.283 (post-hoc)}
+                 \label{completed-grid-re-analysis-post-hoc}
 Runaway argument?
 {Does diversity buy learnable routing? (honest 
 ! Paragraph ended before \@sect was complete.
 <to be read again> 
                    \par 
-l.261 negative)}
+l.321 negative)}
                 \label{does-diversity-buy-learnable-routing-honest-negative}
 ! Too many }'s.
 \@xdblarg #1#2->#1[{#2}
                        ]{#2}
-l.261 negative)}
+l.321 negative)}
                 \label{does-diversity-buy-learnable-routing-honest-negative}
 
 ! LaTeX Error: Unicode character − (U+2212)
@@ -1131,7 +1210,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.275 fixed harness: D6 −
+l.335 fixed harness: D6 −
                            3.4 pp, C6 +0.9 pp (bootstrap CI {[}−5.2, +6.9{...
 
 
@@ -1142,9 +1221,8 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.275 ...��3.4 pp, C6 +0.9 pp (bootstrap CI {[}−
+l.335 ...��3.4 pp, C6 +0.9 pp (bootstrap CI {[}−
                                                   5.2, +6.9{]}),
-[14]
 
 ! LaTeX Error: Unicode character − (U+2212)
                not set up for use with LaTeX.
@@ -1153,7 +1231,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.277 cross-protocol pool −
+l.337 cross-protocol pool −
                              0.9 pp (CI {[}−6.0, +4.3{]}); full per-fold r...
 
 
@@ -1164,7 +1242,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.277 cross-protocol pool −0.9 pp (CI {[}−
+l.337 cross-protocol pool −0.9 pp (CI {[}−
                                               6.0, +4.3{]}); full per-fold r...
 
 Runaway argument?
@@ -1172,12 +1250,14 @@ Runaway argument?
 ! Paragraph ended before \text@command was complete.
 <to be read again> 
                    \par 
-l.285 memorization}
+l.345 memorization}
                    : in a task-held-out control on D6 (train on 76 tasks, test
+
+Underfull \vbox (badness 1688) has occurred while \output is active [15]
 ! Too many }'s.
 <recently read> \egroup 
                         
-l.285 memorization}
+l.345 memorization}
                    : in a task-held-out control on D6 (train on 76 tasks, test
 
 ! LaTeX Error: Unicode character ≥ (U+2265)
@@ -1187,7 +1267,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.301 ...stered criterion was a policy gain of ≥
+l.361 ...stered criterion was a policy gain of ≥
                                                   2 pp, which no
 
 ! LaTeX Error: Unicode character ≤ (U+2264)
@@ -1197,40 +1277,31 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.309 harness representation adding ≤
+l.369 harness representation adding ≤
                                        0.001 AUROC over task-only features. One
 
-) (./sec_discussion.tex
-Underfull \vbox (badness 1596) has occurred while \output is active [15])
-(./sec_conclusion.tex
-Underfull \vbox (badness 1596) has occurred while \output is active [16])
-(./main.bbl
-Underfull \hbox (badness 4168) in paragraph at lines 57--61
-[]\OT1/ptm/b/n/10 JIT-Agent au-thors.  JIT-agent: Just-in-time har-ness gen-er-
-a-tion.  \OT1/ptm/b/it/10 arXiv preprint
+) (./sec_discussion.tex [16]) (./sec_conclusion.tex [17]) (./main.bbl
+Underfull \hbox (badness 4805) in paragraph at lines 56--60
+[]\OT1/ptm/b/it/10 JIT-Agent au-thors.  JIT-agent: Just-in-time har-ness gen-er
+-a-tion.  \OT1/ptm/b/n/10 arXiv preprint
 
-Underfull \hbox (badness 1072) in paragraph at lines 69--73
-[]\OT1/ptm/b/n/10 STS au-thors.  STS: Scaf-fold se-lec-tion over a closed set o
-f scaf-folds.  \OT1/ptm/b/it/10 arXiv preprint
+Underfull \hbox (badness 1205) in paragraph at lines 68--72
+[]\OT1/ptm/b/it/10 STS au-thors.  STS: Scaf-fold se-lec-tion over a closed set 
+of scaf-folds.  \OT1/ptm/b/n/10 arXiv preprint
 
-Underfull \hbox (badness 1112) in paragraph at lines 81--85
-[]\OT1/ptm/b/n/10 TTHE au-thors.  TTHE: Test-time har-ness evo-lu-tion for text
--to-SQL.  \OT1/ptm/b/it/10 arXiv preprint
+Underfull \hbox (badness 1622) in paragraph at lines 80--83
+[]\OT1/ptm/b/it/10 TTHE au-thors.  TTHE: Test-time har-ness evo-lu-tion for tex
+t-to-SQL.  \OT1/ptm/b/n/10 arXiv preprint
 
-Underfull \hbox (badness 3168) in paragraph at lines 87--90
-[]\OT1/ptm/b/n/10 et al. Zhang.  Self-harness: Har-nesses that im-prove them-se
-lves.  \OT1/ptm/b/it/10 arXiv preprint
-) (./sec_appendix.tex [17]
+Underfull \hbox (badness 3536) in paragraph at lines 85--88
+[]\OT1/ptm/b/it/10 et al. Zhang.  Self-harness: Har-nesses that im-prove them-s
+elves.  \OT1/ptm/b/n/10 arXiv preprint
+) (./sec_appendix.tex [18]
 Underfull \hbox (badness 10000) in paragraph at lines 35--42
-[] \OMS/cmsy/m/n/10 ^^U \OT1/cmr/m/n/10 1$ \OT1/ptm/b/n/10 with tem-per-a-ture,
- $[] \OMS/cmsy/m/n/10 2 f\OT1/cmr/m/n/10 0\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 1\
-OMS/cmsy/m/n/10 g$\OT1/ptm/b/n/10 ,
-
-Underfull \hbox (badness 2837) in paragraph at lines 35--42
-[]\OML/cmm/m/it/10 :\OMS/cmsy/m/n/10 f[]\OML/cmm/m/it/10 ; []\OMS/cmsy/m/n/10 g
-$\OT1/ptm/b/n/10 , $[] \OMS/cmsy/m/n/10 2 f[]\OML/cmm/m/it/10 ; []; []\OMS/cmsy
-/m/n/10 g$\OT1/ptm/b/n/10 . The
-) [18] (./main.aux) )
+[] \OMS/cmsy/m/n/10 ^^U \OT1/cmr/m/n/10 1$ \OT1/ptm/b/it/10 with tem-per-a-ture
+, $[] \OMS/cmsy/m/n/10 2 f\OT1/cmr/m/n/10 0\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 1
+\OMS/cmsy/m/n/10 g$\OT1/ptm/b/it/10 ,
+) [19] (./main.aux) )
 (see the transcript file for additional information){e:/texlive/2022/texmf-dist
 /fonts/enc/dvips/base/8r.enc}<e:/texlive/2022/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmbsy10.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm
@@ -1245,5 +1316,5 @@ b><e:/texlive/2022/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb><e:/texlive/20
 22/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><e:/texlive/2022/texmf-dist/font
 s/type1/urw/times/utmbi8a.pfb><e:/texlive/2022/texmf-dist/fonts/type1/urw/times
 /utmr8a.pfb><e:/texlive/2022/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (18 pages, 222928 bytes).
+Output written on main.pdf (19 pages, 224083 bytes).
 Transcript written on main.log.

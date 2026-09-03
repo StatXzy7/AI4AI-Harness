@@ -18,12 +18,12 @@ feedback with no causal path to the output, and broken multi-turn paths. A hand-
 positive control on the same target, tasks, and judge delivers 7.3 pp oracle headroom
 on 151 held-out questions — the headroom routers need is real, and it is the
 *generation* side that fails. We then probe both axes with a strategy-forced
-free-form protocol: two of three builders produce populations that exceed
-pre-registered diversity thresholds at the point estimate for the first time (6.0 and
-8.0 pp headroom; six pairwise-distinct repair sets each), the old un-gated protocol
-misses, and under fully logged generation the builder axis orders per-strategy
-acceptance (GLM 3/8, Qwen 7/8, DeepSeek 8/8). The design cannot separate protocol and
-builder effects. Diversity, however, is necessary, not sufficient: a
+free-form protocol: populations from all three builders exceed the pre-registered
+diversity thresholds (oracle headroom 6.0--9.9 pp at the point estimate; a distinct
+repair set from nearly every strategy), the old un-gated protocol misses, and
+per-strategy generation acceptance orders with builder capability (GLM 3/8, Qwen
+7/8, DeepSeek 8/8, fully logged). The design cannot separate protocol and builder
+effects. Diversity, however, is necessary, not sufficient: a
 leave-one-harness-out value predictor over the admitted populations does not beat the
 best fixed harness (≤0.001 AUROC over task-only features), and in a task-held-out
 control its repair signal falls to chance; its one deployment-relevant success —
