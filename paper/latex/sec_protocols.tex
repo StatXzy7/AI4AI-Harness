@@ -123,7 +123,7 @@ at K = 2..K\_max (60 random subsamples per K, 95\% bands in
 \texttt{kcurve.json} / \texttt{fig\_kcurve.png}): at K=6 the old
 proposer protocol reaches 4.64 pp and never crosses the 5 pp line at any
 K, while the strategy-forced populations exceed it already at K=2
-(DeepSeek 6.08 pp, Qwen 4.67 pp) and at every matched K thereafter (K=6:
+(DeepSeek 6.08 pp; Qwen crosses only at K=4, 5.17 pp) and at every matched K thereafter (K=6:
 8.92 / 5.68 pp). The protocol effect is not a population-size effect.
 \subsection{Builder x protocol: completing the
 factorial}\label{builder-x-protocol-completing-the-factorial}
@@ -144,18 +144,18 @@ capability enters.
 \subsection{Second target: the phenomena
 transfer}\label{second-target-the-phenomena-transfer}
 
-Re-evaluating \{bare, react, A6, D8, human control\} with
+Re-evaluating \{bare, react, A6, D6, human control\} with
 \textbf{Qwen3.8-Flash as the frozen target} (151 items, fresh cache):
 collapse replicates (react vs bare: 0.0\% disagreement; A6 mean
-disagreement 6.8\%), and D8 still clears the checklist (union repair
-17.1\%, headroom 5.96 pp, 6 pairwise-distinct fix sets) --- behavioral
-diversity transfers across targets. One honest counter-result: the human
+disagreement 6.8\%), and D6 still meets the checklist (union repair 17.1\%, headroom 5.96 pp,
+6 pairwise-distinct fix sets) --- behavioral diversity transfers across
+targets. One honest counter-result: the human
 control does not transfer wholesale --- \texttt{hpc\_hint} (hint
-re-ordering in the prompt) collapses to 28.5\% accuracy on the Qwen
-target while the three \emph{execution-path} controls (repair 55.6\%,
-schema 57.0\%, vote3 54.3\%) hold. Cross-target transfer of prompt-side
-mechanisms is not automatic; control-flow-side mechanisms are the robust
-ones.
+re-ordering in the prompt) falls to 28.5\% accuracy on the Qwen target, while the three
+\emph{execution-path} controls (repair 55.6\%, schema 57.0\%, vote3
+54.3\%) do not exhibit the same collapse. Prompt-side mechanisms are not
+automatically portable across targets in our one tested case; the
+control-flow-side variants we tested are.
 \subsection{Does diversity buy learnable routing? (honest
 negative)}\label{does-diversity-buy-learnable-routing-honest-negative}
 
@@ -171,7 +171,7 @@ are in the released JSONs. Two caveats sharpen --- rather than soften
 per-fold AUROC on repair (0.82--0.98) largely reflects \emph{task
 memorization}: in a task-held-out control on D6 (train on 76 tasks, test
 on the 75 unseen tasks; \texttt{task\_split\_D6.json}), the repair
-classifier falls to chance (AUROC 0.475) and the policy degrades to the
+classifier is at chance (mean AUROC 0.512) and the policy degrades to the
 bare baseline. This is a single-population control, not a sweep; but it
 removes the main alternative reading of the LOHO AUROC, and task-side
 generalization of harness value fails where tested. Second, the

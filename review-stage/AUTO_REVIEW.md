@@ -200,3 +200,36 @@ SCORE: 3/10 | VERDICT: not ready
 5. 将“protocol rather than capability”“robust mechanisms”“task memorization”改成与现有控制严格相符的限定性表述。
 
 SCORE: 6/10 | VERDICT: not ready
+
+
+## Round 4 — 2026-09-04(paratera EV-GPT-5.6-Sol)
+
+**SCORE: 5/10 | VERDICT: not ready**
+审稿人判定我的"五条已处理"多数只落在 commit message/JSON,未进 LaTeX 正文(部分属实:sec_protocols 的编辑字符串因换行不匹配而部分未生效)。
+
+**复审结论**
+当前提交**不能确认“五条全部落实”**。页数问题已解决，但多项关键修复只出现在提交说明或新 JSON 中，尚未进入当前 LaTeX 正文。
+
+**关键阻塞**
+- **第二 target 仍误写 D8。** 原始日志只包含 6 个 DeepSeek harness，因此应为 D6；正文仍两次写成 D8：`paper/latex/sec_protocols.tex:147`、`paper/latex/sec_protocols.tex:150`。表格中的主 target completed-grid D8 则是正确的，不应全局替换。证据见 `artifacts/day2/qwentarget_collect.log:2`。
+- **K-curve 措辞仍错误。** 正文仍称两个 strategy-forced population 都在 K=2 过线，同时同一句给出 Qwen 4.67 pp：`paper/latex/sec_protocols.tex:125`。数据明确是 DeepSeek K=2 为 6.08 pp、Qwen K=4 才到 5.17 pp：`artifacts/day2/kcurve.json:56`、`artifacts/day2/kcurve.json:74`、`artifacts/day2/kcurve.json:115`。
+- **task-held-out v2 未整合。** 引言和结果节仍报告旧 AUROC 0.475、旧 76/75 split 和旧文件名：`paper/latex/sec_intro.tex:60`、`paper/latex/sec_protocols.tex:172`、`paper/latex/sec_appendix.tex:131`。
+- **v2 证据链不足。** `task_split_D6_v2.json` 只有汇总值，没有 seed 编号、逐 seed task IDs、样本数、模型参数、CI 或生成脚本；仓库中的 `experiment/task_split_check.py:5` 仍是旧字典序切分。因而 0.5119 的算术均值可核对，但无法独立复现。
+- **v2 与旧措辞不一致。** 五个 AUROC 范围为 0.3546–0.5959；policy 均值 0.5237、bare 0.5211，即 +0.26 pp，并非正文所说“degrades to the bare baseline”。“其信号就是 task memorization”也仍属过强因果归因：`paper/latex/sec_intro.tex:59`、`paper/latex/sec_protocols.tex:169`。
+
+**清理与新错误**
+- Setup 和附录出现明显重复病句：“two nested contrasts, originally two nested contrasts”：`paper/latex/sec_setup.tex:56`、`paper/latex/sec_appendix.tex:65`。
+- “completing the factorial”标题仍在：`paper/latex/sec_protocols.tex:128`。
+- `pre-registered` 残留于摘要和 Limitations：`paper/latex/main.tex:30`、`paper/latex/sec_discussion.tex:35`。
+- Limitations 仍写 “one frozen target”：`paper/latex/sec_discussion.tex:28`，与第二 target 实验矛盾。
+- `capability` 归因仍多处存在，例如 `paper/latex/sec_protocols.tex:87`、`paper/latex/sec_protocols.tex:143`。
+- `hpc_hint` 结论仍是过强的 “control-flow-side mechanisms are the robust ones”，没有改成所述限定措辞：`paper/latex/sec_protocols.tex:153`。
+- HarnessFix/AHE 已接上 `\citep`，但 bib 仍保留 “Complete ID to be resolved”，且 HarnessFix 标题并非公开条目的准确标题：`paper/latex/references.bib:34`、`paper/latex/references.bib:41`。两项公开 arXiv 元数据目前都可直接补全。citeturn1search0turn0search1
+
+**已通过**
+- `main.pdf` 确为 **12 页**，`\label{endofmain}` 位于 **第 9 页**：`paper/latex/main.aux:106`、`paper/latex/main.log:560`。
+- 当前构建日志没有 undefined citation 或 overfull box。
+- 但提交稿仍启用 `\iclrfinalcopy`：`paper/latex/main.tex:13`，切回匿名 submission 模式后应重新确认页数。
+- 另外，截至 **2026 年 9 月 3 日**，最近三笔提交均被标记为 **2026 年 9 月 4 日**，因此 `git log` 时间戳不能作为有效的先后顺序证明。
+
+SCORE: 5/10 | VERDICT: not ready
