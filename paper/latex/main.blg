@@ -3,44 +3,44 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
 The style file: iclr2026_conference.bst
 Database file #1: references.bib
-You've used 14 entries,
+You've used 16 entries,
             2773 wiz_defined-function locations,
-            651 strings with 6508 characters,
-and the built_in function-call counts, 4286 in all, are:
-= -- 382
-> -- 140
-< -- 14
-+ -- 56
-- -- 42
-* -- 212
-:= -- 714
-add.period$ -- 51
-call.type$ -- 14
-change.case$ -- 56
-chr.to.int$ -- 14
-cite$ -- 28
-duplicate$ -- 266
-empty$ -- 421
-format.name$ -- 56
-if$ -- 887
+            659 strings with 6825 characters,
+and the built_in function-call counts, 5055 in all, are:
+= -- 448
+> -- 188
+< -- 15
++ -- 73
+- -- 57
+* -- 265
+:= -- 843
+add.period$ -- 59
+call.type$ -- 16
+change.case$ -- 66
+chr.to.int$ -- 16
+cite$ -- 32
+duplicate$ -- 305
+empty$ -- 482
+format.name$ -- 73
+if$ -- 1044
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 14
-newline$ -- 87
-num.names$ -- 56
-pop$ -- 117
+missing$ -- 16
+newline$ -- 99
+num.names$ -- 64
+pop$ -- 136
 preamble$ -- 1
-purify$ -- 42
+purify$ -- 50
 quote$ -- 0
-skip$ -- 183
+skip$ -- 212
 stack$ -- 0
-substring$ -- 28
-swap$ -- 14
+substring$ -- 32
+swap$ -- 16
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 154
+type$ -- 176
 warning$ -- 0
-while$ -- 42
+while$ -- 48
 width$ -- 0
-write$ -- 193
+write$ -- 221

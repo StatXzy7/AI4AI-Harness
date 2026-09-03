@@ -148,3 +148,55 @@ SCORE: 3/10 | VERDICT: not ready
    → 修复:补齐 4 个缺失 harness(dexp schema_link/hint_guard;qwen repair/vote3),151 题重测,做 matched-strategy 对比。
 3. [P0] 日期问题:审稿人上下文日期为 09-02,将 09-03 时间戳判为未来——系审稿人时钟偏差,在 rebuttal 说明,changelog+mtime 为排序证据。
 4. P1: 3.5% 为 13-harness 口径,12 candidates 应为 3.81%;D6 closedset AUROC 0.471 非 0.475;L2 预注册定义是 policy gain≥2pp;任务级切分需机器可读产物;『the gap is a protocol property』仍过强。
+
+
+## Round 3 — 2026-09-04(paratera EV-GPT-5.6-Sol)
+
+**SCORE: 6/10 | VERDICT: not ready**(进步显著:Round-2 的 12 条 P1 中 8 条 _fixed;
+剩余问题集中在新实验的措辞精度与两处事实性标注)
+
+- **P0-2 builder × protocol 混杂 — `_partial`**：新增旧协议 Qwen/DeepSeek 实验基本补齐了所需证据；但稿件同时称“completing the factorial”与“not a full factorial / old protocol only GLM”，内部直接冲突。见 `paper/latex/sec_protocols.tex:128`、`paper/latex/sec_appendix.tex:65`。此外“capability governs”应改成可观测的“builder identity/model choice governs”，因为没有独立 capability 测量。
+- **P0-3 LOHO 任务泄漏 — `_partial`**：机器可读产物和代码已补齐，但当前 control 不是严格的原模型 task-generalization 检验。代码只使用 task TF-IDF，没有 harness 特征；同一任务的六个 harness 得到相同特征和预测概率。更严重的是按字典序取前 76 题，训练集全部来自 `card_games`，测试集包含全部 30 个 `formula_1`，把 unseen-task 与跨数据库分布偏移混在一起。也没有 CI。见 `experiment/task_split_check.py:29`、`experiment/task_split_check.py:33`、`artifacts/day2/task_split_D6.json:1`。
+
+### 原 P1
+
+- **P1-1 21/66 与 28/78 口径 — `_fixed`**：12 candidates 已改为 3.8%，两种分母明确区分。`paper/latex/sec_intro.tex:14`
+- **P1-2 HPC unique repairs — `_fixed`**：已区分 pairwise-distinct fix sets 与真正独占修复。
+- **P1-3 bare 跨运行不一致 — `_fixed`**：3/60 翻转及 26/29 分母均明确披露。`paper/latex/sec_positive.tex:22`
+- **P1-4 repair CI 宽度 — `_fixed`**：已正确写成约 ±9–11pp。`paper/latex/sec_discussion.tex:38`
+- **P1-5 zero-harm 范围 — `_fixed`**：已限定为 ALL24 abstaining gate。
+- **P1-6 L2 判定 — `_fixed`**：D6 AUROC 已改为 0.471，并明确 L2 标准是 policy gain ≥2pp。`paper/latex/sec_protocols.tex:178`
+- **P1-7 点估计 admission — `_fixed`**：点估计规则与区间跨阈值均已披露。
+- **P1-8 mechanism/trace gate — `_partial`**：新脚本确实做 import、双数据库实例化和单题 smoke solve，但不验证指定机制是否真实进入控制流或具有因果路径；因此“execution-path gate”仍不成立。见 `experiment/builder_generate3.py:67`、`paper/latex/sec_setup.tex:50`。
+- **P1-9 GLM 0/6 能力归因 — `_fixed`**：原 0/6 已降为不可审计历史，主结果换成完整日志的 3/8。`paper/latex/sec_appendix.tex:43`
+- **P1-10 A6 被称为完全 collapse — `_partial`**：Discussion 已正确称 A6 只是差 0.36pp，但 Introduction/§6.4 又写“under the old protocol every builder collapses”，发生措辞回归。见 `paper/latex/sec_discussion.tex:20`、`paper/latex/sec_protocols.tex:137`。
+- **P1-11 相关工作 — `_partial`**：新增方向正确，但 HarnessFix/AHE 在正文没有实际 `\citep`，bib 仍有“ID to be resolved/re-verified”和占位作者，不是投稿态参考文献。`paper/latex/sec_related.tex:11`、`paper/latex/references.bib:27`
+- **P1-12 priority claim — `_partial`**：增加 concurrent-work hedge，但仍多次断言“first systematic”及“none measures”，而文献审计仍标记 camera-ready 再跑。`paper/latex/sec_intro.tex:70`、`paper/latex/sec_related.tex:48`
+
+### Round-2 新问题
+
+- **未来时间戳 — `_open`**：当前日期是 **2026-09-03**；第二 target 提交 `32e58e0`、整合提交 `1097d31` 和裁页提交 `4e9ec08` 的日期均为 **2026-09-04**。数字可以从工作区复算，但这些 commit 目前不能作为有效的时间顺序证据。
+- **损坏的 `builder_generate2.py` — `_fixed`**：已由 `builder_generate3.py` 取代并在附录明确披露旧脚本不可复现。
+- **C6/D6 策略集不一致 — `_fixed`**：缺失策略已补齐并作为 post-hoc completed-grid 分析报告；原始 admission 与补全分析也做了区分。
+- **task split 缺机器可读产物 — `_partial`**：JSON、代码、seed、任务 ID 已有，但仍缺 CI、随机/分层多切分以及与完整 LOHO 特征一致的模型。
+- **单次 split 写成复数 — `_fixed`**：现在明确写成单次 D6 task-held-out control。
+- **中英混排与内部 TODO — `_partial`**：中英混排已清理，但引用中的“camera-ready 再核验”和未解析 ID 仍未清除。
+
+## 新证据与 Claim 匹配
+
+- **旧协议 factorial：基本充分但须收窄。** 我复算 `tthe_sel36_matrix.parquet`，40 candidates 的 780/780 correctness-vector pairs 全同、总修复数为 0；选出的 Qwen/DeepSeek 各六个在 151 题上也与 bare correctness 完全一致。可以声称“在该旧协议、这三个 builder 和该任务设置中均未通过 checklist；Qwen/DeepSeek 条件完全塌缩”。不宜写成普适的“protocol variable, not capability”。
+- **第二 target：当前 claim 不成立。** 实际矩阵只有六个 DeepSeek harness，没有新补的 `schema_link` 和 `hint_guard`；因此 17.1% / 5.96pp / 6 fixsets 是 **D6，不是 D8**。日志也明确只列六个。见 `artifacts/day2/qwentarget_collect.log:2`、`paper/latex/sec_protocols.tex:147`。
+- **K curve：一半成立。** 旧协议任意 K 均低于 5pp 是正确的；DeepSeek K=2 为 6.08pp，也正确。但 Qwen K=2 是 **4.67pp，未过线**，到 K=4 才达到 5.17pp。当前“strategy-forced populations exceed it already at K=2”与紧随其后的数字自相矛盾。`paper/latex/sec_protocols.tex:120`
+- **跨 target 机制结论过强。** `hpc_hint` 28.5% 的失败可靠；但由一个额外 target 直接总结“control-flow-side mechanisms are the robust ones”仍太强，应改为“the three tested control-flow variants did not exhibit the same collapse on this target”。
+- **主文还有 stale 限制。** 加入第二 target 后，Limitations 仍写“one frozen target”；同时 Setup 写“四个 AI populations each K=6”，但 B3 是 K=3、补全网格是 K=7/K=8。见 `paper/latex/sec_discussion.tex:28`、`paper/latex/sec_setup.tex:40`。
+- **投稿模式风险。** `main.tex` 当前启用了 `\iclrfinalcopy`，注释也注明 submission 时应关闭。`paper/latex/main.tex:13`
+
+## 最关键剩余修复
+
+1. 将第二-target 全部 `D8` 改为 `D6`，或真正补跑缺失两个 harness。
+2. 修正 K-curve：DeepSeek K=2 过线；Qwen K=4 才按均值过线。
+3. 重做 task-held-out control：随机且按数据库分层，多 seeds/CI，并保留 task × harness 特征；否则只能称“single task-text-only diagnostic”。
+4. 清除残余 `pre-registered`、旧 factorial 描述、旧 target/K 限制和未核实引用。
+5. 将“protocol rather than capability”“robust mechanisms”“task memorization”改成与现有控制严格相符的限定性表述。
+
+SCORE: 6/10 | VERDICT: not ready

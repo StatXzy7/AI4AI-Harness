@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.1.28)  4 SEP 2026 02:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.1.28)  4 SEP 2026 02:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -498,19 +498,19 @@ LaTeX Font Info:    Font shape `OML/ptm/m/n' in size <10> not available
  [5])
 (./sec_protocols.tex [6] [7]) (./sec_discussion.tex) [8] (./sec_conclusion.tex)
 (./main.bbl
-Underfull \hbox (badness 1742) in paragraph at lines 26--30
+Underfull \hbox (badness 1742) in paragraph at lines 33--37
 []\OT1/ptm/m/n/10 GRASP au-thors.  GRASP: Gated skill ad-mis-sion at de-vel-op-
 ment time.  \OT1/ptm/m/it/10 arXiv preprint
  []
 
 [9]
-Underfull \hbox (badness 2020) in paragraph at lines 68--72
+Underfull \hbox (badness 2020) in paragraph at lines 82--86
 []\OT1/ptm/m/n/10 STS au-thors.  STS: Scaf-fold se-lec-tion over a closed set o
 f scaf-folds.  \OT1/ptm/m/it/10 arXiv preprint
  []
 
 
-Underfull \hbox (badness 3386) in paragraph at lines 80--83
+Underfull \hbox (badness 3386) in paragraph at lines 94--97
 []\OT1/ptm/m/n/10 TTHE au-thors.  TTHE: Test-time har-ness evo-lu-tion for text
 -to-SQL.  \OT1/ptm/m/it/10 arXiv preprint
  []
@@ -540,13 +540,13 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: F2E5D8BE922A1E012711995895E302AF;6758.
  ) 
 Here is how much of TeX's memory you used:
- 11134 strings out of 478268
- 169347 string characters out of 5850345
- 479443 words of memory out of 5000000
- 29078 multiletter control sequences out of 15000+600000
+ 11142 strings out of 478268
+ 169489 string characters out of 5850345
+ 479518 words of memory out of 5000000
+ 29084 multiletter control sequences out of 15000+600000
  486589 words of font info for 58 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 61i,11n,75p,2314b,453s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 61i,11n,75p,2314b,455s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {e:/texlive/2022/texmf-dist/fonts/enc/dvips/base/8r.enc}<e:/texlive/2022/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><e:/texlive/2022/texmf-dist/fo
 nts/type1/public/amsfonts/cm/cmmi7.pfb><e:/texlive/2022/texmf-dist/fonts/type1/
@@ -557,10 +557,10 @@ e:/texlive/2022/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb><e:/texlive/2022/
 texmf-dist/fonts/type1/urw/times/utmb8a.pfb><e:/texlive/2022/texmf-dist/fonts/t
 ype1/urw/times/utmr8a.pfb><e:/texlive/2022/texmf-dist/fonts/type1/urw/times/utm
 ri8a.pfb>
-Output written on main.pdf (12 pages, 181032 bytes).
+Output written on main.pdf (12 pages, 181856 bytes).
 PDF statistics:
- 314 PDF objects out of 1000 (max. 8388607)
- 277 compressed objects within 3 object streams
- 73 named destinations out of 1000 (max. 500000)
+ 320 PDF objects out of 1000 (max. 8388607)
+ 283 compressed objects within 3 object streams
+ 75 named destinations out of 1000 (max. 500000)
  249 words of extra memory for PDF output out of 10000 (max. 10000000)
 

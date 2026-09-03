@@ -63,8 +63,8 @@ distinct execution paths (execute-and-repair, 3-vote, schema-linking, hint-first
 \label{app:design}
 
 This appendix details the design structure of Section~3.4. \textbf{The design is two
-nested contrasts, not a full factorial}, and our claims are limited accordingly:
-(i) \emph{within the old proposer protocol}, only GLM was run, and \emph{within the
+nested contrasts, originally two nested contrasts (the old-protocol row was later completed for Qwen and DeepSeek; Section~6.2)}, and our claims are limited accordingly:
+(i) \emph{within the old proposer protocol}, the day-2 design ran GLM only, and \emph{within the
 strategy-forced free-form protocol}, only the builder varies (GLM/Qwen/DeepSeek) ---
 so the protocol contrast at a fixed builder exists only for GLM (A vs B), and the
 builder contrast exists only under the gated protocol (B vs C vs D); (ii) the IR arm

@@ -1,4 +1,4 @@
-\begin{thebibliography}{14}
+\begin{thebibliography}{16}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -16,6 +16,13 @@
 \newblock Counterfactual routing over \{No-Search, Search, Abstain\}.
 \newblock \emph{arXiv preprint arXiv:2607.05752}, 2026.
 \newblock ID to be re-verified at camera-ready.
+
+\bibitem[Chen(2026)]{harnessfix2026}
+et~al. Chen.
+\newblock {HarnessFix}: Trace-grounded diagnosis-driven repair of agent
+  harnesses.
+\newblock \emph{arXiv preprint, 2026}, 2026.
+\newblock Complete ID to be resolved via citation audit.
 
 \bibitem[{Gated-QD authors}(2026)]{gatedqd2026}
 {Gated-QD authors}.
@@ -57,6 +64,13 @@
 \newblock {JIT}-agent: Just-in-time harness generation.
 \newblock \emph{arXiv preprint arXiv:2608.25593}, 2026.
 \newblock ID to be re-verified at camera-ready.
+
+\bibitem[Lin et~al.(2026)Lin, Liu, Gui, et~al.]{ahe2026}
+Jiahang Lin, Shichun Liu, Tao Gui, et~al.
+\newblock Agentic harness engineering: Observability-driven automatic evolution
+  of coding-agent harnesses.
+\newblock \emph{arXiv preprint, 2026}, 2026.
+\newblock Complete ID to be resolved via citation audit.
 
 \bibitem[{NUSH authors}(2026)]{nouniversal2026}
 {NUSH authors}.

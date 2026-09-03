@@ -1,0 +1,14 @@
+{
+ "protocol": "stratified task-held-out control on D6 (50% tasks per db in train, task TF-IDF + harness one-hot, 5 seeds)",
+ "auroc_repair_unseen_tasks_mean": 0.5119,
+ "auroc_seeds": [
+  0.5424,
+  0.3546,
+  0.5959,
+  0.5756,
+  0.4908
+ ],
+ "policy_acc_mean": 0.5237,
+ "bare_acc_mean": 0.5211,
+ "note": "random stratified splits; multi-seed; harness identity visible (closed-set aid); if identity helps nothing generalizes across tasks"
+}
