@@ -46,3 +46,51 @@
 [saved] E:\Study\PhD\Research\AI4AI-Harness\external\TTHE\text_to_sql\logs\oldqwen_20260903_133003/result.json
 
 ERR:
+
+===== C:\Python313\python.exe -m text_to_sql.optimize --db card_games --group 2 --max-rounds 2 --model DeepSeek-V4-Flash-Vision-Exp --run-name oldds
+
+######### TEST-TIME harness optimization (streaming; proposer=agentic reads official traces; controller alone executes each child) #########
+[stream] 5 questions across DBs: ['card_games']
+[batch-evolution] 5 batches of up to 1; selected H accumulates across batches (resume at batch 0, H=bare). Per batch: G=2 fixed branches, R=2 branch-update rounds, then 1 JUDGE picks only among the final branches. Full traces kept under E:\Study\PhD\Research\AI4AI-Harness\external\TTHE\text_to_sql\logs\oldds_20260903_133300/traces/.
+
+===== BATCH 0/5 (1 q) — start from H=bare =====
+   batch0 gen-round0: 0/2 branches advanced
+   batch0 gen-round1: 0/2 branches advanced
+   batch0: final branches=['bare', 'bare'] (1 unique) -> JUDGE picked H=bare
+   [test-time] batch0 H=bare: 0/1
+
+===== BATCH 1/5 (1 q) — start from H=bare =====
+   batch1 gen-round0: 0/2 branches advanced
+   batch1 gen-round1: 0/2 branches advanced
+   batch1: final branches=['bare', 'bare'] (1 unique) -> JUDGE picked H=bare
+   [test-time] batch1 H=bare: 0/1
+
+===== BATCH 2/5 (1 q) — start from H=bare =====
+   batch2 gen-round0: 0/2 branches advanced
+   batch2 gen-round1: 0/2 branches advanced
+   batch2: final branches=['bare', 'bare'] (1 unique) -> JUDGE picked H=bare
+   [test-time] batch2 H=bare: 0/1
+
+===== BATCH 3/5 (1 q) — start from H=bare =====
+   batch3 gen-round0: 0/2 branches advanced
+   batch3 gen-round1: 0/2 branches advanced
+   batch3: final branches=['bare', 'bare'] (1 unique) -> JUDGE picked H=bare
+   [test-time] batch3 H=bare: 0/1
+
+===== BATCH 4/5 (1 q) — start from H=bare =====
+   batch4 gen-round0: 0/2 branches advanced
+   batch4 gen-round1: 0/2 branches advanced
+   batch4: final branches=['bare', 'bare'] (1 unique) -> JUDGE picked H=bare
+   [test-time] batch4 H=bare: 0/1
+
+######### RESULT (test-time / transductive) — final harness H = bare #########
+  test-time evolved = 0/5  (each batch scored with the harness CHOSEN FOR it)
+  baseline = plain react, measured separately (never recomputed here)
+    batch0 [bare]: 0/1
+    batch1 [bare]: 0/1
+    batch2 [bare]: 0/1
+    batch3 [bare]: 0/1
+    batch4 [bare]: 0/1
+[saved] E:\Study\PhD\Research\AI4AI-Harness\external\TTHE\text_to_sql\logs\oldds_20260903_133300/result.json
+
+ERR:

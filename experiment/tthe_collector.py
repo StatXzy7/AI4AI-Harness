@@ -129,6 +129,7 @@ def main() -> None:
                 "harness_correct": correct, "delta": None,
                 "task_text": q.question, "harness_text": p.read_text(encoding="utf-8"),
                 "harness_description": desc,
+                "final_sql": sql,
                 "prompt_tokens": None, "completion_tokens": None,
                 "latency_ms": latency_ms, "cost_usd": None,
                 "split": "unassigned", "error": err}
