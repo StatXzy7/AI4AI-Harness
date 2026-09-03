@@ -8,3 +8,10 @@ refine-logs/
 .aris/
 *.parquet
 external/data/
+paper/latex/*.log
+paper/latex/main.aux
+paper/latex/main.bbl
+paper/latex/main.blg
+paper/latex/main.out
+paper/latex/tmp_*.tex
+paper/latex/backup_*.tex
