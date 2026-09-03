@@ -149,6 +149,31 @@ strategy-forced populations exceed it already at K=2 (DeepSeek 6.08 pp, Qwen 4.6
 and at every matched K thereafter (K=6: 8.92 / 5.68 pp). The protocol effect is not a
 population-size effect.
 
+## 6.2 Builder x protocol: completing the factorial
+
+The old proposer protocol is builder-independent in its failure. We ran TTHE's own
+optimize loop (the old protocol) with Qwen3.8-Flash and DeepSeek-V4-Flash builders
+(20 candidates each, GLM target, same budget), evaluated all 40 candidates on the
+36 earlier-run items disjoint from Eval151: **all 780 candidate pairs are behaviorally
+identical** (mean disagreement 0.0%) and **no bare error is repaired by any candidate**.
+Combined with the day-1 GLM run (3.5% disagreement) and the strategy-forced arm (all
+three builders admitted), the completed design reads: under the old protocol every
+builder collapses; under strategy-forced generation every builder clears the
+checklist. Generation *reliability* (3/8, 7/8, 8/8 strategies accepted) — not
+population behavioral diversity — is where builder capability enters.
+
+## 6.3 Second target: the phenomena transfer
+
+Re-evaluating {bare, react, A6, D8, human control} with **Qwen3.8-Flash as the frozen
+target** (151 items, fresh cache): collapse replicates (react vs bare: 0.0%
+disagreement; A6 mean disagreement 6.8%), and D8 still clears the checklist
+(union repair 17.1%, headroom 5.96 pp, 6 pairwise-distinct fix sets) — behavioral
+diversity transfers across targets. One honest counter-result: the human control does
+not transfer wholesale — `hpc_hint` (hint re-ordering in the prompt) collapses to 28.5%
+accuracy on the Qwen target while the three *execution-path* controls (repair 55.6%,
+schema 57.0%, vote3 54.3%) hold. Cross-target transfer of prompt-side mechanisms is
+not automatic; control-flow-side mechanisms are the robust ones.
+
 ## 6.1 Does diversity buy learnable routing? (honest negative)
 
 For the two admitted populations we ran the pre-specified leave-one-harness-out

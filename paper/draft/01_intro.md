@@ -42,15 +42,15 @@ by construction and isolating "what mechanisms do" from "whether the builder can
 write code". On the builder-held-out 151-question set, both stronger-builder gated
 populations exceed all three pre-specified diversity thresholds at the point
 at the point estimate — 5.96 and 7.95 pp oracle headroom, six pairwise-distinct
-repair sets each — while the old proposer protocol misses the headroom threshold
-(4.64 pp, its best member dominating); and on completed strategy grids every
-builder's population clears the checklist (up to 9.93 pp for DeepSeek, and even the
-GLM builder's three accepted harnesses reach 5.96 pp), with per-strategy generation
-acceptance ordering by builder (GLM 3/8, Qwen 7/8, DeepSeek 8/8, fully logged):
-both axes are implicated, though the design cannot separate their main effects; a
-K-controlled subsampling analysis shows the gap is not a population-size effect
-(the old protocol never crosses the 5 pp line at any K, while strategy-forced
-populations exceed it at K=2) (F3).
+repair sets each — while under the old protocol *every* builder collapses: with
+Qwen and DeepSeek builders the optimize loop's 40 candidates are behaviorally
+identical to one another (780/780 pairs, no repairs). The protocol variable, not
+builder capability, is load-bearing for behavioral diversity; capability governs
+generation reliability (3/8, 7/8, 8/8 strategies accepted, fully logged) and
+repaired-population quality (up to 9.93 pp). A K-controlled subsampling analysis
+rules out population-size effects (the old protocol never crosses the 5 pp line at
+any K; strategy-forced populations exceed it at K=2), and the repaired population's
+checklist metrics replicate on a second frozen target (F3).
 A leave-one-harness-out value predictor over these admitted populations, however, does
 not beat the best fixed harness — and its apparent per-task signal is task
 memorization: in a task-held-out control on D6 it falls to chance (AUROC 0.475).

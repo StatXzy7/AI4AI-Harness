@@ -1,78 +1,258 @@
-\subsection{Harnesses and harness value}\label{harnesses-and-harness-value}
+\subsection{Harnesses and harness
+
+value}\label{harnesses-and-harness-value}
+
+
 
 Following the harness-abstraction of TTHE, a \textbf{harness} \(H\) is a
+
 program that wraps a frozen target model \(M\): it receives the
+
 natural-language task input \(x\), issues one or more calls to \(M\),
+
 optionally executes intermediate artifacts (e.g., SQL against the
+
 database), and returns a final answer. Execution accuracy is scored
+
 programmatically. For a task \(x\), we define the \textbf{harness
+
 marginal value}
+
+
 
 \[\Delta(x, H, M) \;=\; Y(x, H, M) - Y(x, H_0, M) \in \{-1, 0, +1\},\]
 
-where \(H_0\) is the bare single-call baseline and \(Y \in \{0,1\}\) is
-programmatic correctness; \(+1\) is a \emph{repair} (raw wrong, harness
-correct), \(-1\) is \emph{harness-induced harm}. The deployment question
-that motivates this paper --- predict \(\Delta\) before executing \(H\)
---- presupposes that \(\Delta\) is not almost-always zero. Our first
-contribution is to take this presupposition seriously and measure it.
 
-\subsection{Domain, target, and data splits}\label{domain-target-and-data-splits}
+
+where \(H_0\) is the bare single-call baseline and \(Y \in \{0,1\}\) is
+
+programmatic correctness; \(+1\) is a \emph{repair} (raw wrong, harness
+
+correct), \(-1\) is \emph{harness-induced harm}. The deployment question
+
+that motivates this paper --- predict \(\Delta\) before executing \(H\)
+
+--- presupposes that \(\Delta\) is not almost-always zero. A population
+
+of harnesses in which every harness reproduces the raw model's outcomes
+
+offers nothing to predict or route over. Our first contribution is to
+
+take this presupposition seriously and measure it.
+
+
+
+\subsection{Domain, target, and data
+
+splits}\label{domain-target-and-data-splits}
+
+
 
 We instantiate the problem on \textbf{BIRD text-to-SQL} (SQLite), whose
-answers are judged by execution against gold query results --- no
-model-based grading. The target model is frozen throughout:
-\textbf{GLM-5.3-Flash} served through an OpenAI-compatible endpoint
-(temperature 0); builders differ only in how harness \emph{code} is
-produced. We use two databases, \texttt{card\_games} and
-\texttt{formula\_1}: the \textbf{builder-visible set}
-\(D_{\mathrm{build}}\) contains 8 \texttt{card\_games} questions, and
-the \textbf{evaluation set} \(D_{\mathrm{eval}}\) contains \textbf{151
-questions} (121 \texttt{card\_games}, 30 \texttt{formula\_1}), held out
-from all builders (\(D_{\mathrm{build}} \cap D_{\mathrm{eval}} =
-\emptyset\) by construction). We disclose two overlaps explicitly:
-(i) 24 of the 151 items were also used in day-1 protocol-development
-measurements (their day-1 outcomes informed the diagnosis of
-Section~4, not any generation input); (ii) the four human control
-harnesses (Section~5) were designed after inspecting day-1 traces on
-these tasks, so the control's headroom is an existence proof rather
-than a blind estimate. Harness populations are generated, frozen, and
-hashed \emph{before} any evaluation on \(D_{\mathrm{eval}}\); no
-harness is re-tuned after evaluation.
 
-\subsection{Populations under comparison}\label{populations-under-comparison}
+answers are judged by execution against gold query results --- no
+
+model-based grading. The target model is frozen throughout:
+
+\textbf{GLM-5.3-Flash} served through an OpenAI-compatible endpoint
+
+(temperature 0). All harnesses in a population call the same frozen
+
+target; builders differ only in how harness \emph{code} is produced.
+
+
+
+We use two databases, \texttt{card\_games} and \texttt{formula\_1}. The
+
+\textbf{builder-visible set} \(D_{\mathrm{build}}\) contains 8
+
+\texttt{card\_games} questions. The \textbf{evaluation set}
+
+\(D_{\mathrm{eval}}\) contains \textbf{151 questions} (121
+
+\texttt{card\_games}, 30 \texttt{formula\_1}), held out from all
+
+builders (\(D_{\mathrm{build}} \cap D_{\mathrm{eval}} = \emptyset\) by
+
+construction). We disclose two overlaps explicitly: (i) 24 of the 151
+
+items were also used in day-1 protocol-development measurements (their
+
+day-1 outcomes informed the diagnosis of Section~4, not any generation input);
+
+(ii) the four human control harnesses (Section~5) were designed after
+
+inspecting day-1 traces on these tasks, so the control's headroom is an
+
+existence proof rather than a blind estimate. Harness populations are
+
+generated, frozen, and hashed \emph{before} any evaluation on
+
+\(D_{\mathrm{eval}}\); no harness is re-tuned after evaluation.
+
+
+
+\subsection{Populations under
+
+comparison}\label{populations-under-comparison}
+
+
 
 Each AI-generated population contains \(K=6\) harnesses produced under a
-fixed budget and acceptance protocol. We compare seed baselines
-(\texttt{bare} and the shipped \texttt{react}), the old TTHE proposer
-protocol (condition A), strategy-forced free-form populations with GLM
-(condition B; the audited logged re-run B3, K=3), Qwen (C), and DeepSeek
-(D) builders, a compiled Harness-IR arm, and a four-harness human
-positive control; Appendix~\ref{app:populations} details each condition,
-including the selection rule for A, the unaudited 0/6 original B
-observation, and the condition-by-condition acceptance records. Every
-harness is accepted only after passing a smoke check (it runs and emits
-executable SQL); the free-form arm additionally passes the
+
+fixed budget and acceptance protocol. We compare:
+
+
+
+\begin{itemize}
+
+\tightlist
+
+\item
+
+  \textbf{Seed baselines}: \texttt{bare} (single call) and
+
+  \texttt{react} (execution feedback loop, shipped with TTHE).
+
+\item
+
+  \textbf{Condition A --- proposer protocol (old)}: six candidates from
+
+  TTHE's own optimize loop (GLM-5.3-Flash as builder), which sees 3
+
+  questions per round and edits harness code in a single turn. We select
+
+  the 6 most behaviorally diverse of 12 candidates using \emph{only} the
+
+  36 earlier-run questions disjoint from \(D_{\mathrm{eval}}\)
+
+  (selection rule frozen before the 151-item evaluation; the 24
+
+  overlapping items were excluded from selection).
+
+\item
+
+  \textbf{Condition B --- strategy-forced free-form, GLM builder}: the
+
+  original 09-01 run recorded zero accepted outputs, but its generation
+
+  tool was not preserved (see Section~6), so that observation is unaudited;
+
+  under the logging tool of record, GLM accepts \textbf{3 of 8
+
+  strategies} (execute-repair, 3-vote, two-view) and fails the other
+
+  five within the retry budget, with per-attempt logs retained. We use
+
+  the audited re-run (B3, K=3) as the condition-B population and report
+
+  the unaudited 0/6 only as a provenance caveat.
+
+\item
+
+  \textbf{Condition C --- strategy-forced free-form, Qwen builder}:
+
+  Qwen3.8-Flash, 6/6 accepted.
+
+\item
+
+  \textbf{Condition D --- strategy-forced free-form, DeepSeek builder}:
+
+  DeepSeek-V4-Flash (vision-exp checkpoint), 6/6 accepted.
+
+\item
+
+  \textbf{IR arm --- compiled, no free-form code}: six harnesses
+
+  compiled deterministically from declarative mechanism specifications
+
+  by our Harness IR (Section~6.2); mechanism diversity is guaranteed by
+
+  construction, isolating ``what mechanisms do'' from ``can a builder
+
+  write code''.
+
+\item
+
+  \textbf{Human positive control}: four hand-written harnesses with
+
+  forcibly distinct execution paths (execute-and-repair, 3-vote,
+
+  schema-linking, hint-first).
+
+\end{itemize}
+
+
+
+Every harness is accepted only after passing a smoke check (it runs and
+
+emits executable SQL); the free-form arm additionally passes the
+
 execution-path gate of Section~6.
 
-\subsection{Design structure and pre-registered decision criteria}\label{design-structure-and-pre-registered-decision-criteria}
+
+
+\subsection{Design structure and pre-specified decision
+
+criteria}\label{design-structure-and-pre-specified-decision-criteria}
+
+
 
 \textbf{The design is two nested contrasts, not a full factorial}, and
-our claims are limited accordingly: the protocol contrast at a fixed
-builder exists only for GLM (A vs B), the builder contrast exists only
-under the gated protocol (B vs C vs D), and the IR arm has a protocol
-axis but no builder axis; Section~6 interprets each contrast within its
-own fixed factor and does not claim to separate main effects
-(Appendix~\ref{app:design} details the design). Before running any
-151-item evaluation, admission thresholds were frozen in the project
-decision log: a population must reach \textbf{union repair rate over
-bare errors $\geq$ 15\%}, \textbf{oracle headroom (vs.~best fixed harness)
-$\geq$ 5 pp}, and \textbf{$\geq$ 3 harnesses with non-empty, pairwise-distinct
-repair sets}; the audit trail --- the 20\% threshold in the v6 entry
-(2026-08-31), set to 15\% in the v7 entry (2026-09-01), both before any
-151-item outcome existed --- is disclosed in Appendix~\ref{app:repro}.
+
+our claims are limited accordingly: (i) \emph{within the old proposer
+
+protocol}, only GLM was run, and \emph{within the strategy-forced
+
+free-form protocol}, only the builder varies (GLM/Qwen/DeepSeek) --- so
+
+the protocol contrast at a fixed builder exists only for GLM (A vs B),
+
+and the builder contrast exists only under the gated protocol (B vs C vs
+
+D); (ii) the IR arm has a protocol axis but no builder axis. Protocol
+
+and builder effects are therefore partially confounded across
+
+conditions; Section~6 interprets each contrast within its own fixed factor and
+
+does not claim to separate main effects.
+
+
+
+Before running any 151-item evaluation, admission thresholds were frozen
+
+in the project decision log: a population must reach \textbf{union
+
+repair rate over bare errors ≥ 15\%}, \textbf{oracle headroom (vs.~best
+
+fixed harness) ≥ 5 pp}, and \textbf{≥ 3 harnesses with non-empty,
+
+pairwise-distinct repair sets}. The audit trail is as follows: the 20\%
+
+repair threshold first appears in the v6 decision-log entry (2026-08-31,
+
+when the plan moved to 150-item evaluation); it was set to 15\% in the
+
+v7 entry (2026-09-01, when the evaluation set was fixed at 151 items)
+
+--- \emph{both before any 151-item outcome existed}; the matrix was
+
+collected 2026-09-02. The repository now carries a git history
+
+initialized from file mtimes and the decision-log changelog, which
+
+together document this ordering; we flag that the history is
+
+retrospective and the changelog is the authoritative ordering record.
+
 Populations failing the thresholds are not subjected to downstream
+
 value-prediction experiments. Admission is decided on point estimates by
+
 the frozen rule; bootstrap intervals are reported alongside for
+
 calibration, and Section~6 marks populations whose intervals include
+
 sub-threshold values.
+

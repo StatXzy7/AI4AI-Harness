@@ -20,9 +20,10 @@ questions — the headroom routers need is real, and it is the generation side t
 fails. Two pre-specified interventions repair it: forcing an explicit mechanism into
 every candidate, and compiling mechanisms from a declarative harness IR. Populations
 from all three tested builders then exceed pre-specified diversity thresholds (oracle
-headroom 6.0–9.9 pp at the point estimate), per-strategy generation acceptance orders
-with builder capability (3/8, 7/8, 8/8 under full logging), and a K-controlled
-subsampling analysis shows the repair is not a population-size effect. Diversity,
+headroom 6.0–9.9 pp at the point estimate), while the old protocol collapses for every
+builder (40/40 candidates behaviorally identical for the two stronger builders);
+a K-controlled subsampling analysis shows the repair is not a population-size effect,
+and its checklist metrics replicate on a second frozen target. Diversity,
 however, is necessary, not sufficient: a value predictor over the repaired populations
 does not beat the best fixed harness on unseen tasks. We release a three-metric
 precondition checklist — pairwise disagreement, union repair, oracle headroom — that
