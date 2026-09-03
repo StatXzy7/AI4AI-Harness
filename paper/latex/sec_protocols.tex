@@ -84,7 +84,7 @@ headroom to 4.64 pp despite a healthy repair rate --- diversity without
 \emph{spread}; this population misses the headroom threshold by 0.36 pp
 rather than collapsing outright (the outright collapse is the day-1
 finding of Section~4). Under the logged generation tool, per-strategy
-acceptance orders with builder capability --- GLM 3/8, Qwen 7/8 (its
+acceptance orders with builder identity --- GLM 3/8, Qwen 7/8 (its
 vote3 attempts end with well-formed prose but no code fence), DeepSeek
 8/8 --- replacing the unaudited original 0/6 observation (Appendix~A
 discloses the provenance gap). Protocol and builder are jointly
@@ -110,8 +110,9 @@ three distinct fix sets; C8 holds at 5.96 pp / 21.6\% with seven; D8
 rises to \textbf{9.93 pp / 28.4\%} with all eight strategies
 contributing a distinct fix set. Per-strategy accuracies show no builder
 dominance (Qwen wins hint-guard 0.556 vs 0.510; DeepSeek wins repair
-0.543 vs 0.550 for Qwen; GLM's vote3 reaches 0.543) --- capability
-orders \emph{generation reliability}, not per-strategy solution quality.
+0.543 vs 0.550 for Qwen; GLM's vote3 reaches 0.543) --- generation
+\emph{acceptance} orders with builder identity, not per-strategy solution
+quality.
 These rows are labeled post-hoc: the frozen admission decisions belong
 to rows 1--6.
 \subsection{K-controlled headroom curves (population-size
@@ -122,9 +123,10 @@ comparison is only meaningful at matched K. Subsampling every population
 at K = 2..K\_max (60 random subsamples per K, 95\% bands in
 \texttt{kcurve.json} / \texttt{fig\_kcurve.png}): at K=6 the old
 proposer protocol reaches 4.64 pp and never crosses the 5 pp line at any
-K, while the strategy-forced populations exceed it already at K=2
-(DeepSeek 6.08 pp; Qwen crosses only at K=4, 5.17 pp) and at every matched K thereafter (K=6:
-8.92 / 5.68 pp). The protocol effect is not a population-size effect.
+K, while the DeepSeek strategy-forced population exceeds it already at K=2
+(6.08 pp) and at every matched K thereafter (K=6: 8.92 pp); the Qwen population
+crosses at K=4 (5.17 pp; K=6: 5.68 pp). The protocol gap at matched K is not a
+population-size effect.
 \subsection{Builder x protocol: completing the
 factorial}\label{builder-x-protocol-completing-the-factorial}
 
@@ -139,8 +141,7 @@ disagreement) and the strategy-forced arm (all three builders admitted),
 the completed design reads: under the old protocol every builder
 collapses; under strategy-forced generation every builder clears the
 checklist. Generation \emph{reliability} (3/8, 7/8, 8/8 strategies
-accepted) --- not population behavioral diversity --- is where builder
-capability enters.
+accepted) --- not population behavioral diversity --- is where builder identity enters.
 \subsection{Second target: the phenomena
 transfer}\label{second-target-the-phenomena-transfer}
 
@@ -169,11 +170,11 @@ cross-protocol pool $-0.9$ pp (CI {[}$-6.0$, +4.3{]}); full per-fold results
 are in the released JSONs. Two caveats sharpen --- rather than soften
 --- this negative. First, LOHO holds the task set fixed, so the high
 per-fold AUROC on repair (0.82--0.98) largely reflects \emph{task
-memorization}: in a task-held-out control on D6 (train on 76 tasks, test
-on the 75 unseen tasks; \texttt{task\_split\_D6.json}), the repair
-classifier is at chance (mean AUROC 0.512) and the policy degrades to the
-bare baseline. This is a single-population control, not a sweep; but it
-removes the main alternative reading of the LOHO AUROC, and task-side
+memorization}: in stratified task-held-out controls on D6 (random
+database-stratified 50/50 task splits, five seeds, task text + harness
+identity features;   \texttt{task\_split\_D6\_v2.json}), the repair
+classifier is at chance (mean AUROC 0.512, seed range 0.35--0.60) and
+the policy matches bare (+0.27 pp).
 generalization of harness value fails where tested. Second, the
 pre-specified three-level gate returns: L1 (headroom) \textbf{passes};
 L2 (closed-set, harness identity visible) \textbf{marginally fails} ---
