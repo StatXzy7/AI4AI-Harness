@@ -1,0 +1,19 @@
+{
+ "qwen": [
+  "cand_oldqwen_b3r1_g0",
+  "cand_oldqwen_b3r1_g1",
+  "cand_oldqwen_b4r0_g0",
+  "cand_oldqwen_b4r0_g1",
+  "cand_oldqwen_b4r1_g0",
+  "cand_oldqwen_b4r1_g1"
+ ],
+ "dsexp": [
+  "cand_oldds_b3r1_g0",
+  "cand_oldds_b3r1_g1",
+  "cand_oldds_b4r0_g0",
+  "cand_oldds_b4r0_g1",
+  "cand_oldds_b4r1_g0",
+  "cand_oldds_b4r1_g1"
+ ],
+ "rule": "greedy union fixsets then disagreement on 36 disjoint items"
+}

@@ -5,3 +5,46 @@
 [13:34:33] candidates: qwen=20 dsexp=20
 [13:34:33] disjoint selection items: 36
 [13:34:33] RUN: C:\Python313\python.exe ../../experiment/tthe_collector.py --split split_sel36.json --harnesses bare,cand_oldqwen_b0r0_g0,cand_oldqwen_b0r0_g1,cand_oldqwen_b0r1_g0,cand_oldqwen_b0r1_g1,cand_oldqwen_b1r0_g0,cand_oldqwen_b1r0_g1,cand_oldqwen_b1r1_g0,cand_oldqwen_b1r1_g1,cand_oldqwen_b2r0_g0,cand_oldqwen_b2r0_g1,cand_oldqwen_b2r1_g0,cand_oldqwen_b2r1_g1,cand_oldqwen_b3r0_g0,cand_oldqwen_b3r0_g1,cand_oldqwen_b3r1_g0,cand_oldqwen_b3r1_g1,cand_oldqwen_b4r0_g0,cand_oldqwen_b4r0_g1,cand_oldqwen_b4r1_g0,cand_oldqwen_b4r1_g1,cand_oldds_b0r0_g0,cand_oldds_b0r0_g1,cand_oldds_b0r1_g0,cand_oldds_b0r1_g1,cand_oldds_b1r0_g0,cand_oldds_b1r0_g1,cand_oldds_b1r1_g0,cand_oldds_b1r1_g1,cand_oldds_b2r0_g0,cand_oldds_b2r0_g1,cand_oldds_b2r1_g0,cand_oldds_b2r1_g1,cand_oldds_b3r0_g0,cand_oldds_b3r0_g1,cand_oldds_b3r1_g0,cand_oldds_b3r1_g1,cand_oldds_b4r0_g0,cand_oldds_b4r0_g1,cand_oldds_b4r1_g0,cand_oldds_b4r1_g1 --workers 6 --out tthe_sel36_matrix.parquet
+[13:45:53] stage gen oldqwen: 20 candidates already exist, skip
+[13:45:53] stage gen oldds: 20 candidates already exist, skip
+[13:45:53] candidates: qwen=20 dsexp=20
+[13:45:53] disjoint selection items: 36
+[13:45:53] RUN: C:\Python313\python.exe ../../experiment/tthe_collector.py --split split_sel36.json --harnesses bare,cand_oldqwen_b0r0_g0,cand_oldqwen_b0r0_g1,cand_oldqwen_b0r1_g0,cand_oldqwen_b0r1_g1,cand_oldqwen_b1r0_g0,cand_oldqwen_b1r0_g1,cand_oldqwen_b1r1_g0,cand_oldqwen_b1r1_g1,cand_oldqwen_b2r0_g0,cand_oldqwen_b2r0_g1,cand_oldqwen_b2r1_g0,cand_oldqwen_b2r1_g1,cand_oldqwen_b3r0_g0,cand_oldqwen_b3r0_g1,cand_oldqwen_b3r1_g0,cand_oldqwen_b3r1_g1,cand_oldqwen_b4r0_g0,cand_oldqwen_b4r0_g1,cand_oldqwen_b4r1_g0,cand_oldqwen_b4r1_g1,cand_oldds_b0r0_g0,cand_oldds_b0r0_g1,cand_oldds_b0r1_g0,cand_oldds_b0r1_g1,cand_oldds_b1r0_g0,cand_oldds_b1r0_g1,cand_oldds_b1r1_g0,cand_oldds_b1r1_g1,cand_oldds_b2r0_g0,cand_oldds_b2r0_g1,cand_oldds_b2r1_g0,cand_oldds_b2r1_g1,cand_oldds_b3r0_g0,cand_oldds_b3r0_g1,cand_oldds_b3r1_g0,cand_oldds_b3r1_g1,cand_oldds_b4r0_g0,cand_oldds_b4r0_g1,cand_oldds_b4r1_g0,cand_oldds_b4r1_g1 --workers 6 --out artifacts/outcomes/tthe_sel36_matrix.parquet
+[13:54:58] stage gen oldqwen: 20 candidates already exist, skip
+[13:54:58] stage gen oldds: 20 candidates already exist, skip
+[13:54:58] candidates: qwen=20 dsexp=20
+[13:54:58] disjoint selection items: 36
+[13:54:58] RUN: C:\Python313\python.exe ../../experiment/tthe_collector.py --split split_sel36.json --harnesses bare,cand_oldqwen_b0r0_g0,cand_oldqwen_b0r0_g1,cand_oldqwen_b0r1_g0,cand_oldqwen_b0r1_g1,cand_oldqwen_b1r0_g0,cand_oldqwen_b1r0_g1,cand_oldqwen_b1r1_g0,cand_oldqwen_b1r1_g1,cand_oldqwen_b2r0_g0,cand_oldqwen_b2r0_g1,cand_oldqwen_b2r1_g0,cand_oldqwen_b2r1_g1,cand_oldqwen_b3r0_g0,cand_oldqwen_b3r0_g1,cand_oldqwen_b3r1_g0,cand_oldqwen_b3r1_g1,cand_oldqwen_b4r0_g0,cand_oldqwen_b4r0_g1,cand_oldqwen_b4r1_g0,cand_oldqwen_b4r1_g1,cand_oldds_b0r0_g0,cand_oldds_b0r0_g1,cand_oldds_b0r1_g0,cand_oldds_b0r1_g1,cand_oldds_b1r0_g0,cand_oldds_b1r0_g1,cand_oldds_b1r1_g0,cand_oldds_b1r1_g1,cand_oldds_b2r0_g0,cand_oldds_b2r0_g1,cand_oldds_b2r1_g0,cand_oldds_b2r1_g1,cand_oldds_b3r0_g0,cand_oldds_b3r0_g1,cand_oldds_b3r1_g0,cand_oldds_b3r1_g1,cand_oldds_b4r0_g0,cand_oldds_b4r0_g1,cand_oldds_b4r1_g0,cand_oldds_b4r1_g1 --workers 6 --out artifacts/outcomes/tthe_sel36_matrix.parquet
+[14:13:20] stage gen oldqwen: 20 candidates already exist, skip
+[14:13:20] stage gen oldds: 20 candidates already exist, skip
+[14:13:20] candidates: qwen=20 dsexp=20
+[14:13:21] disjoint selection items: 36
+[14:13:21] RUN: C:\Python313\python.exe ../../experiment/tthe_collector.py --split split_sel36.json --harnesses bare,cand_oldqwen_b0r0_g0,cand_oldqwen_b0r0_g1,cand_oldqwen_b0r1_g0,cand_oldqwen_b0r1_g1,cand_oldqwen_b1r0_g0,cand_oldqwen_b1r0_g1,cand_oldqwen_b1r1_g0,cand_oldqwen_b1r1_g1,cand_oldqwen_b2r0_g0,cand_oldqwen_b2r0_g1,cand_oldqwen_b2r1_g0,cand_oldqwen_b2r1_g1,cand_oldqwen_b3r0_g0,cand_oldqwen_b3r0_g1,cand_oldqwen_b3r1_g0,cand_oldqwen_b3r1_g1,cand_oldqwen_b4r0_g0,cand_oldqwen_b4r0_g1,cand_oldqwen_b4r1_g0,cand_oldqwen_b4r1_g1,cand_oldds_b0r0_g0,cand_oldds_b0r0_g1,cand_oldds_b0r1_g0,cand_oldds_b0r1_g1,cand_oldds_b1r0_g0,cand_oldds_b1r0_g1,cand_oldds_b1r1_g0,cand_oldds_b1r1_g1,cand_oldds_b2r0_g0,cand_oldds_b2r0_g1,cand_oldds_b2r1_g0,cand_oldds_b2r1_g1,cand_oldds_b3r0_g0,cand_oldds_b3r0_g1,cand_oldds_b3r1_g0,cand_oldds_b3r1_g1,cand_oldds_b4r0_g0,cand_oldds_b4r0_g1,cand_oldds_b4r1_g0,cand_oldds_b4r1_g1 --workers 6 --out artifacts/outcomes/tthe_sel36_matrix.parquet
+[14:24:34] stage gen oldqwen: 20 candidates already exist, skip
+[14:24:34] stage gen oldds: 20 candidates already exist, skip
+[14:24:34] candidates: qwen=20 dsexp=20
+[14:24:34] disjoint selection items: 36
+[14:24:34] selected qwen-old: ['cand_oldqwen_b3r1_g0', 'cand_oldqwen_b3r1_g1', 'cand_oldqwen_b4r0_g0', 'cand_oldqwen_b4r0_g1', 'cand_oldqwen_b4r1_g0', 'cand_oldqwen_b4r1_g1']
+[14:24:34] selected dsexp-old: ['cand_oldds_b3r1_g0', 'cand_oldds_b3r1_g1', 'cand_oldds_b4r0_g0', 'cand_oldds_b4r0_g1', 'cand_oldds_b4r1_g0', 'cand_oldds_b4r1_g1']
+[14:24:34] RUN: C:\Python313\python.exe ../../experiment/tthe_collector.py --split split_eval151.json --harnesses cand_oldqwen_b3r1_g0,cand_oldqwen_b3r1_g1,cand_oldqwen_b4r0_g0,cand_oldqwen_b4r0_g1,cand_oldqwen_b4r1_g0,cand_oldqwen_b4r1_g1,cand_oldds_b3r1_g0,cand_oldds_b3r1_g1,cand_oldds_b4r0_g0,cand_oldds_b4r0_g1,cand_oldds_b4r1_g0,cand_oldds_b4r1_g1 --workers 6 --out tthe_eval151_matrix_round4.parquet
+[14:33:16]   exit=1 (continuing chain)
+[14:36:31] stage gen oldqwen: 20 candidates already exist, skip
+[14:36:31] stage gen oldds: 20 candidates already exist, skip
+[14:36:31] candidates: qwen=20 dsexp=20
+[14:36:31] disjoint selection items: 36
+[14:36:31] selected qwen-old: ['cand_oldqwen_b3r1_g0', 'cand_oldqwen_b3r1_g1', 'cand_oldqwen_b4r0_g0', 'cand_oldqwen_b4r0_g1', 'cand_oldqwen_b4r1_g0', 'cand_oldqwen_b4r1_g1']
+[14:36:31] selected dsexp-old: ['cand_oldds_b3r1_g0', 'cand_oldds_b3r1_g1', 'cand_oldds_b4r0_g0', 'cand_oldds_b4r0_g1', 'cand_oldds_b4r1_g0', 'cand_oldds_b4r1_g1']
+[14:36:31] RUN: C:\Python313\python.exe ../../experiment/tthe_collector.py --split split_eval151.json --harnesses bare,cand_oldqwen_b3r1_g0,cand_oldqwen_b3r1_g1,cand_oldqwen_b4r0_g0,cand_oldqwen_b4r0_g1,cand_oldqwen_b4r1_g0,cand_oldqwen_b4r1_g1,cand_oldds_b3r1_g0,cand_oldds_b3r1_g1,cand_oldds_b4r0_g0,cand_oldds_b4r0_g1,cand_oldds_b4r1_g0,cand_oldds_b4r1_g1 --workers 6 --out tthe_eval151_matrix_round4.parquet
+[14:47:32] stage gen oldqwen: 20 candidates already exist, skip
+[14:47:32] stage gen oldds: 20 candidates already exist, skip
+[14:47:32] candidates: qwen=20 dsexp=20
+[14:47:32] disjoint selection items: 36
+[14:47:32] selected qwen-old: ['cand_oldqwen_b3r1_g0', 'cand_oldqwen_b3r1_g1', 'cand_oldqwen_b4r0_g0', 'cand_oldqwen_b4r0_g1', 'cand_oldqwen_b4r1_g0', 'cand_oldqwen_b4r1_g1']
+[14:47:32] selected dsexp-old: ['cand_oldds_b3r1_g0', 'cand_oldds_b3r1_g1', 'cand_oldds_b4r0_g0', 'cand_oldds_b4r0_g1', 'cand_oldds_b4r1_g0', 'cand_oldds_b4r1_g1']
+[14:47:32] stage 5 done
+[14:47:32] config target switched to Qwen3.8-Flash; cache rotated
+[14:47:32] RUN: C:\Python313\python.exe ../../experiment/tthe_collector.py --split split_eval151.json --harnesses bare,react,c2_b2dexp_two_view,c2_b2dexp_format_guard,c2_b2dexp_decompose,c2_b2dexp_error_classify,c2_b2dexp_repair,c2_b2dexp_vote3,cand_bird_g1_b1r0_g1,cand_bird_g1_b1r1_g0,cand_bird_g1_b1r1_g1,cand_bird_g1_b2r0_g1,cand_bird_pop1_b0r0_g0,cand_bird_pop1_b0r0_g1,hpc_schema,hpc_hint,hpc_repair,hpc_vote3 --workers 6 --out artifacts/outcomes/tthe_eval151_qwentarget.parquet
+[16:47:33] config + GLM cache restored
+[16:51:40] swapped to Qwen3.8-Flash target + qwen cache
+[16:51:40] RUN collector (resume)
+[17:23:25] collector exit=0

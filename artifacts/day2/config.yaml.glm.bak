@@ -1,0 +1,17 @@
+llm:
+  provider: openai
+  base_url: https://llmapi.paratera.com/v1
+  api_key_env: PARATERA_API_KEY
+  solver_model: GLM-5.3-Flash
+  controller_model: GLM-5.3-Flash
+  temperature: 0.0
+  request_timeout: 120
+  thinking_style: none
+  reasoning_effort: high
+
+dataset:
+  name: bird
+  db_id: card_games
+  bird_root: E:/Study/PhD/Research/AI4AI-Harness/external/data/bird/dev_20240627
+
+output_dir: runs

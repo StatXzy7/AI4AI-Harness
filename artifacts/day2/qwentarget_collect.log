@@ -1,0 +1,3 @@
+[collector] split tasks: {'card_games': 121, 'formula_1': 30}
+[collector] tasks={'card_games': 121, 'formula_1': 30} | harnesses: ['bare', 'react', 'c2_b2dexp_two_view', 'c2_b2dexp_format_guard', 'c2_b2dexp_decompose', 'c2_b2dexp_error_classify', 'c2_b2dexp_repair', 'c2_b2dexp_vote3', 'cand_bird_g1_b1r0_g1', 'cand_bird_g1_b1r1_g0', 'cand_bird_g1_b1r1_g1', 'cand_bird_g1_b2r0_g1', 'cand_bird_pop1_b0r0_g0', 'cand_bird_pop1_b0r0_g1', 'hpc_schema', 'hpc_hint', 'hpc_repair', 'hpc_vote3']
+    bare: 25/151

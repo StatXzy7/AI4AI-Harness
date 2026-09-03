@@ -94,3 +94,643 @@ ERR:
 [saved] E:\Study\PhD\Research\AI4AI-Harness\external\TTHE\text_to_sql\logs\oldds_20260903_133300/result.json
 
 ERR:
+
+===== C:\Python313\python.exe ../../experiment/tthe_collector.py --split split_sel36.json --harnesses bare,cand_oldqwen_b0r0_g0,cand_oldqwen_b0r0_g1,cand_oldqwen_b0r1_g0,cand_oldqwen_b0r1_g1,cand_oldqwen_b1r0_g0,cand_oldqwen_b1r0_g1,cand_oldqwen_b1r1_g0,cand_oldqwen_b1r1_g1,cand_oldqwen_b2r0_g0,cand_oldqwen_b2r0_g1,cand_oldqwen_b2r1_g0,cand_oldqwen_b2r1_g1,cand_oldqwen_b3r0_g0,cand_oldqwen_b3r0_g1,cand_oldqwen_b3r1_g0,cand_oldqwen_b3r1_g1,cand_oldqwen_b4r0_g0,cand_oldqwen_b4r0_g1,cand_oldqwen_b4r1_g0,cand_oldqwen_b4r1_g1,cand_oldds_b0r0_g0,cand_oldds_b0r0_g1,cand_oldds_b0r1_g0,cand_oldds_b0r1_g1,cand_oldds_b1r0_g0,cand_oldds_b1r0_g1,cand_oldds_b1r1_g0,cand_oldds_b1r1_g1,cand_oldds_b2r0_g0,cand_oldds_b2r0_g1,cand_oldds_b2r1_g0,cand_oldds_b2r1_g1,cand_oldds_b3r0_g0,cand_oldds_b3r0_g1,cand_oldds_b3r1_g0,cand_oldds_b3r1_g1,cand_oldds_b4r0_g0,cand_oldds_b4r0_g1,cand_oldds_b4r1_g0,cand_oldds_b4r1_g1 --workers 6 --out tthe_sel36_matrix.parquet
+c=0.556 (36 tasks)
+    cand_oldds_b0r1_g0: 25/36
+  [done] cand_oldds_b0r1_g0: acc=0.556 (36 tasks)
+    cand_oldds_b0r1_g1: 25/36
+  [done] cand_oldds_b0r1_g1: acc=0.556 (36 tasks)
+    cand_oldds_b1r0_g0: 25/36
+  [done] cand_oldds_b1r0_g0: acc=0.556 (36 tasks)
+    cand_oldds_b1r0_g1: 25/36
+  [done] cand_oldds_b1r0_g1: acc=0.556 (36 tasks)
+    cand_oldds_b1r1_g0: 25/36
+  [done] cand_oldds_b1r1_g0: acc=0.556 (36 tasks)
+    cand_oldds_b1r1_g1: 25/36
+  [done] cand_oldds_b1r1_g1: acc=0.556 (36 tasks)
+    cand_oldds_b2r0_g0: 25/36
+  [done] cand_oldds_b2r0_g0: acc=0.556 (36 tasks)
+    cand_oldds_b2r0_g1: 25/36
+  [done] cand_oldds_b2r0_g1: acc=0.556 (36 tasks)
+    cand_oldds_b2r1_g0: 25/36
+  [done] cand_oldds_b2r1_g0: acc=0.556 (36 tasks)
+    cand_oldds_b2r1_g1: 25/36
+  [done] cand_oldds_b2r1_g1: acc=0.556 (36 tasks)
+    cand_oldds_b3r0_g0: 25/36
+  [done] cand_oldds_b3r0_g0: acc=0.556 (36 tasks)
+    cand_oldds_b3r0_g1: 25/36
+  [done] cand_oldds_b3r0_g1: acc=0.556 (36 tasks)
+    cand_oldds_b3r1_g0: 25/36
+  [done] cand_oldds_b3r1_g0: acc=0.556 (36 tasks)
+    cand_oldds_b3r1_g1: 25/36
+  [done] cand_oldds_b3r1_g1: acc=0.556 (36 tasks)
+    cand_oldds_b4r0_g0: 25/36
+  [done] cand_oldds_b4r0_g0: acc=0.556 (36 tasks)
+    cand_oldds_b4r0_g1: 25/36
+  [done] cand_oldds_b4r0_g1: acc=0.556 (36 tasks)
+    cand_oldds_b4r1_g0: 25/36
+  [done] cand_oldds_b4r1_g0: acc=0.556 (36 tasks)
+    cand_oldds_b4r1_g1: 25/36
+  [done] cand_oldds_b4r1_g1: acc=0.556 (36 tasks)
+[collector] wrote E:\Study\PhD\Research\AI4AI-Harness\tthe_sel36_matrix.parquet (1476 rows, 41 harnesses)
+[collector] harness registry appended -> E:\Study\PhD\Research\AI4AI-Harness\harness_registry.jsonl
+[collector] per-harness accuracy:
+harness_id
+bare                    0.556
+cand_oldds_b0r0_g0      0.556
+cand_oldds_b0r0_g1      0.556
+cand_oldds_b0r1_g0      0.556
+cand_oldds_b0r1_g1      0.556
+cand_oldds_b1r0_g0      0.556
+cand_oldds_b1r0_g1      0.556
+cand_oldds_b1r1_g0      0.556
+cand_oldds_b1r1_g1      0.556
+cand_oldds_b2r0_g0      0.556
+cand_oldds_b2r0_g1      0.556
+cand_oldds_b2r1_g0      0.556
+cand_oldds_b2r1_g1      0.556
+cand_oldds_b3r0_g0      0.556
+cand_oldds_b3r0_g1      0.556
+cand_oldds_b3r1_g0      0.556
+cand_oldds_b3r1_g1      0.556
+cand_oldds_b4r0_g0      0.556
+cand_oldds_b4r0_g1      0.556
+cand_oldds_b4r1_g0      0.556
+cand_oldds_b4r1_g1      0.556
+cand_oldqwen_b0r0_g0    0.556
+cand_oldqwen_b0r0_g1    0.556
+cand_oldqwen_b0r1_g0    0.556
+cand_oldqwen_b0r1_g1    0.556
+cand_oldqwen_b1r0_g0    0.556
+cand_oldqwen_b1r0_g1    0.556
+cand_oldqwen_b1r1_g0    0.556
+cand_oldqwen_b1r1_g1    0.556
+cand_oldqwen_b2r0_g0    0.556
+cand_oldqwen_b2r0_g1    0.556
+cand_oldqwen_b2r1_g0    0.556
+cand_oldqwen_b2r1_g1    0.556
+cand_oldqwen_b3r0_g0    0.556
+cand_oldqwen_b3r0_g1    0.556
+cand_oldqwen_b3r1_g0    0.556
+cand_oldqwen_b3r1_g1    0.556
+cand_oldqwen_b4r0_g0    0.556
+cand_oldqwen_b4r0_g1    0.556
+cand_oldqwen_b4r1_g0    0.556
+cand_oldqwen_b4r1_g1    0.556
+[collector] best-fixed acc = 1.000 | oracle-any acc = 0.556
+
+ERR:
+
+===== C:\Python313\python.exe ../../experiment/tthe_collector.py --split split_sel36.json --harnesses bare,cand_oldqwen_b0r0_g0,cand_oldqwen_b0r0_g1,cand_oldqwen_b0r1_g0,cand_oldqwen_b0r1_g1,cand_oldqwen_b1r0_g0,cand_oldqwen_b1r0_g1,cand_oldqwen_b1r1_g0,cand_oldqwen_b1r1_g1,cand_oldqwen_b2r0_g0,cand_oldqwen_b2r0_g1,cand_oldqwen_b2r1_g0,cand_oldqwen_b2r1_g1,cand_oldqwen_b3r0_g0,cand_oldqwen_b3r0_g1,cand_oldqwen_b3r1_g0,cand_oldqwen_b3r1_g1,cand_oldqwen_b4r0_g0,cand_oldqwen_b4r0_g1,cand_oldqwen_b4r1_g0,cand_oldqwen_b4r1_g1,cand_oldds_b0r0_g0,cand_oldds_b0r0_g1,cand_oldds_b0r1_g0,cand_oldds_b0r1_g1,cand_oldds_b1r0_g0,cand_oldds_b1r0_g1,cand_oldds_b1r1_g0,cand_oldds_b1r1_g1,cand_oldds_b2r0_g0,cand_oldds_b2r0_g1,cand_oldds_b2r1_g0,cand_oldds_b2r1_g1,cand_oldds_b3r0_g0,cand_oldds_b3r0_g1,cand_oldds_b3r1_g0,cand_oldds_b3r1_g1,cand_oldds_b4r0_g0,cand_oldds_b4r0_g1,cand_oldds_b4r1_g0,cand_oldds_b4r1_g1 --workers 6 --out artifacts/outcomes/tthe_sel36_matrix.parquet
+_g0: 25/36
+  [done] cand_oldds_b0r1_g0: acc=0.556 (36 tasks)
+    cand_oldds_b0r1_g1: 25/36
+  [done] cand_oldds_b0r1_g1: acc=0.556 (36 tasks)
+    cand_oldds_b1r0_g0: 25/36
+  [done] cand_oldds_b1r0_g0: acc=0.556 (36 tasks)
+    cand_oldds_b1r0_g1: 25/36
+  [done] cand_oldds_b1r0_g1: acc=0.556 (36 tasks)
+    cand_oldds_b1r1_g0: 25/36
+  [done] cand_oldds_b1r1_g0: acc=0.556 (36 tasks)
+    cand_oldds_b1r1_g1: 25/36
+  [done] cand_oldds_b1r1_g1: acc=0.556 (36 tasks)
+    cand_oldds_b2r0_g0: 25/36
+  [done] cand_oldds_b2r0_g0: acc=0.556 (36 tasks)
+    cand_oldds_b2r0_g1: 25/36
+  [done] cand_oldds_b2r0_g1: acc=0.556 (36 tasks)
+    cand_oldds_b2r1_g0: 25/36
+  [done] cand_oldds_b2r1_g0: acc=0.556 (36 tasks)
+    cand_oldds_b2r1_g1: 25/36
+  [done] cand_oldds_b2r1_g1: acc=0.556 (36 tasks)
+    cand_oldds_b3r0_g0: 25/36
+  [done] cand_oldds_b3r0_g0: acc=0.556 (36 tasks)
+    cand_oldds_b3r0_g1: 25/36
+  [done] cand_oldds_b3r0_g1: acc=0.556 (36 tasks)
+    cand_oldds_b3r1_g0: 25/36
+  [done] cand_oldds_b3r1_g0: acc=0.556 (36 tasks)
+    cand_oldds_b3r1_g1: 25/36
+  [done] cand_oldds_b3r1_g1: acc=0.556 (36 tasks)
+    cand_oldds_b4r0_g0: 25/36
+  [done] cand_oldds_b4r0_g0: acc=0.556 (36 tasks)
+    cand_oldds_b4r0_g1: 25/36
+  [done] cand_oldds_b4r0_g1: acc=0.556 (36 tasks)
+    cand_oldds_b4r1_g0: 25/36
+  [done] cand_oldds_b4r1_g0: acc=0.556 (36 tasks)
+    cand_oldds_b4r1_g1: 25/36
+  [done] cand_oldds_b4r1_g1: acc=0.556 (36 tasks)
+[collector] wrote E:\Study\PhD\Research\AI4AI-Harness\artifacts\outcomes\tthe_sel36_matrix.parquet (1476 rows, 41 harnesses)
+[collector] harness registry appended -> E:\Study\PhD\Research\AI4AI-Harness\artifacts\outcomes\harness_registry.jsonl
+[collector] per-harness accuracy:
+harness_id
+bare                    0.556
+cand_oldds_b0r0_g0      0.556
+cand_oldds_b0r0_g1      0.556
+cand_oldds_b0r1_g0      0.556
+cand_oldds_b0r1_g1      0.556
+cand_oldds_b1r0_g0      0.556
+cand_oldds_b1r0_g1      0.556
+cand_oldds_b1r1_g0      0.556
+cand_oldds_b1r1_g1      0.556
+cand_oldds_b2r0_g0      0.556
+cand_oldds_b2r0_g1      0.556
+cand_oldds_b2r1_g0      0.556
+cand_oldds_b2r1_g1      0.556
+cand_oldds_b3r0_g0      0.556
+cand_oldds_b3r0_g1      0.556
+cand_oldds_b3r1_g0      0.556
+cand_oldds_b3r1_g1      0.556
+cand_oldds_b4r0_g0      0.556
+cand_oldds_b4r0_g1      0.556
+cand_oldds_b4r1_g0      0.556
+cand_oldds_b4r1_g1      0.556
+cand_oldqwen_b0r0_g0    0.556
+cand_oldqwen_b0r0_g1    0.556
+cand_oldqwen_b0r1_g0    0.556
+cand_oldqwen_b0r1_g1    0.556
+cand_oldqwen_b1r0_g0    0.556
+cand_oldqwen_b1r0_g1    0.556
+cand_oldqwen_b1r1_g0    0.556
+cand_oldqwen_b1r1_g1    0.556
+cand_oldqwen_b2r0_g0    0.556
+cand_oldqwen_b2r0_g1    0.556
+cand_oldqwen_b2r1_g0    0.556
+cand_oldqwen_b2r1_g1    0.556
+cand_oldqwen_b3r0_g0    0.556
+cand_oldqwen_b3r0_g1    0.556
+cand_oldqwen_b3r1_g0    0.556
+cand_oldqwen_b3r1_g1    0.556
+cand_oldqwen_b4r0_g0    0.556
+cand_oldqwen_b4r0_g1    0.556
+cand_oldqwen_b4r1_g0    0.556
+cand_oldqwen_b4r1_g1    0.556
+[collector] best-fixed acc = 1.000 | oracle-any acc = 0.556
+
+ERR:
+
+===== C:\Python313\python.exe ../../experiment/tthe_collector.py --split split_sel36.json --harnesses bare,cand_oldqwen_b0r0_g0,cand_oldqwen_b0r0_g1,cand_oldqwen_b0r1_g0,cand_oldqwen_b0r1_g1,cand_oldqwen_b1r0_g0,cand_oldqwen_b1r0_g1,cand_oldqwen_b1r1_g0,cand_oldqwen_b1r1_g1,cand_oldqwen_b2r0_g0,cand_oldqwen_b2r0_g1,cand_oldqwen_b2r1_g0,cand_oldqwen_b2r1_g1,cand_oldqwen_b3r0_g0,cand_oldqwen_b3r0_g1,cand_oldqwen_b3r1_g0,cand_oldqwen_b3r1_g1,cand_oldqwen_b4r0_g0,cand_oldqwen_b4r0_g1,cand_oldqwen_b4r1_g0,cand_oldqwen_b4r1_g1,cand_oldds_b0r0_g0,cand_oldds_b0r0_g1,cand_oldds_b0r1_g0,cand_oldds_b0r1_g1,cand_oldds_b1r0_g0,cand_oldds_b1r0_g1,cand_oldds_b1r1_g0,cand_oldds_b1r1_g1,cand_oldds_b2r0_g0,cand_oldds_b2r0_g1,cand_oldds_b2r1_g0,cand_oldds_b2r1_g1,cand_oldds_b3r0_g0,cand_oldds_b3r0_g1,cand_oldds_b3r1_g0,cand_oldds_b3r1_g1,cand_oldds_b4r0_g0,cand_oldds_b4r0_g1,cand_oldds_b4r1_g0,cand_oldds_b4r1_g1 --workers 6 --out artifacts/outcomes/tthe_sel36_matrix.parquet
+_g0: 25/36
+  [done] cand_oldds_b0r1_g0: acc=0.556 (36 tasks)
+    cand_oldds_b0r1_g1: 25/36
+  [done] cand_oldds_b0r1_g1: acc=0.556 (36 tasks)
+    cand_oldds_b1r0_g0: 25/36
+  [done] cand_oldds_b1r0_g0: acc=0.556 (36 tasks)
+    cand_oldds_b1r0_g1: 25/36
+  [done] cand_oldds_b1r0_g1: acc=0.556 (36 tasks)
+    cand_oldds_b1r1_g0: 25/36
+  [done] cand_oldds_b1r1_g0: acc=0.556 (36 tasks)
+    cand_oldds_b1r1_g1: 25/36
+  [done] cand_oldds_b1r1_g1: acc=0.556 (36 tasks)
+    cand_oldds_b2r0_g0: 25/36
+  [done] cand_oldds_b2r0_g0: acc=0.556 (36 tasks)
+    cand_oldds_b2r0_g1: 25/36
+  [done] cand_oldds_b2r0_g1: acc=0.556 (36 tasks)
+    cand_oldds_b2r1_g0: 25/36
+  [done] cand_oldds_b2r1_g0: acc=0.556 (36 tasks)
+    cand_oldds_b2r1_g1: 25/36
+  [done] cand_oldds_b2r1_g1: acc=0.556 (36 tasks)
+    cand_oldds_b3r0_g0: 25/36
+  [done] cand_oldds_b3r0_g0: acc=0.556 (36 tasks)
+    cand_oldds_b3r0_g1: 25/36
+  [done] cand_oldds_b3r0_g1: acc=0.556 (36 tasks)
+    cand_oldds_b3r1_g0: 25/36
+  [done] cand_oldds_b3r1_g0: acc=0.556 (36 tasks)
+    cand_oldds_b3r1_g1: 25/36
+  [done] cand_oldds_b3r1_g1: acc=0.556 (36 tasks)
+    cand_oldds_b4r0_g0: 25/36
+  [done] cand_oldds_b4r0_g0: acc=0.556 (36 tasks)
+    cand_oldds_b4r0_g1: 25/36
+  [done] cand_oldds_b4r0_g1: acc=0.556 (36 tasks)
+    cand_oldds_b4r1_g0: 25/36
+  [done] cand_oldds_b4r1_g0: acc=0.556 (36 tasks)
+    cand_oldds_b4r1_g1: 25/36
+  [done] cand_oldds_b4r1_g1: acc=0.556 (36 tasks)
+[collector] wrote E:\Study\PhD\Research\AI4AI-Harness\artifacts\outcomes\tthe_sel36_matrix.parquet (1476 rows, 41 harnesses)
+[collector] harness registry appended -> E:\Study\PhD\Research\AI4AI-Harness\artifacts\outcomes\harness_registry.jsonl
+[collector] per-harness accuracy:
+harness_id
+bare                    0.556
+cand_oldds_b0r0_g0      0.556
+cand_oldds_b0r0_g1      0.556
+cand_oldds_b0r1_g0      0.556
+cand_oldds_b0r1_g1      0.556
+cand_oldds_b1r0_g0      0.556
+cand_oldds_b1r0_g1      0.556
+cand_oldds_b1r1_g0      0.556
+cand_oldds_b1r1_g1      0.556
+cand_oldds_b2r0_g0      0.556
+cand_oldds_b2r0_g1      0.556
+cand_oldds_b2r1_g0      0.556
+cand_oldds_b2r1_g1      0.556
+cand_oldds_b3r0_g0      0.556
+cand_oldds_b3r0_g1      0.556
+cand_oldds_b3r1_g0      0.556
+cand_oldds_b3r1_g1      0.556
+cand_oldds_b4r0_g0      0.556
+cand_oldds_b4r0_g1      0.556
+cand_oldds_b4r1_g0      0.556
+cand_oldds_b4r1_g1      0.556
+cand_oldqwen_b0r0_g0    0.556
+cand_oldqwen_b0r0_g1    0.556
+cand_oldqwen_b0r1_g0    0.556
+cand_oldqwen_b0r1_g1    0.556
+cand_oldqwen_b1r0_g0    0.556
+cand_oldqwen_b1r0_g1    0.556
+cand_oldqwen_b1r1_g0    0.556
+cand_oldqwen_b1r1_g1    0.556
+cand_oldqwen_b2r0_g0    0.556
+cand_oldqwen_b2r0_g1    0.556
+cand_oldqwen_b2r1_g0    0.556
+cand_oldqwen_b2r1_g1    0.556
+cand_oldqwen_b3r0_g0    0.556
+cand_oldqwen_b3r0_g1    0.556
+cand_oldqwen_b3r1_g0    0.556
+cand_oldqwen_b3r1_g1    0.556
+cand_oldqwen_b4r0_g0    0.556
+cand_oldqwen_b4r0_g1    0.556
+cand_oldqwen_b4r1_g0    0.556
+cand_oldqwen_b4r1_g1    0.556
+[collector] best-fixed acc = 1.000 | oracle-any acc = 0.556
+
+ERR:
+
+===== C:\Python313\python.exe ../../experiment/tthe_collector.py --split split_sel36.json --harnesses bare,cand_oldqwen_b0r0_g0,cand_oldqwen_b0r0_g1,cand_oldqwen_b0r1_g0,cand_oldqwen_b0r1_g1,cand_oldqwen_b1r0_g0,cand_oldqwen_b1r0_g1,cand_oldqwen_b1r1_g0,cand_oldqwen_b1r1_g1,cand_oldqwen_b2r0_g0,cand_oldqwen_b2r0_g1,cand_oldqwen_b2r1_g0,cand_oldqwen_b2r1_g1,cand_oldqwen_b3r0_g0,cand_oldqwen_b3r0_g1,cand_oldqwen_b3r1_g0,cand_oldqwen_b3r1_g1,cand_oldqwen_b4r0_g0,cand_oldqwen_b4r0_g1,cand_oldqwen_b4r1_g0,cand_oldqwen_b4r1_g1,cand_oldds_b0r0_g0,cand_oldds_b0r0_g1,cand_oldds_b0r1_g0,cand_oldds_b0r1_g1,cand_oldds_b1r0_g0,cand_oldds_b1r0_g1,cand_oldds_b1r1_g0,cand_oldds_b1r1_g1,cand_oldds_b2r0_g0,cand_oldds_b2r0_g1,cand_oldds_b2r1_g0,cand_oldds_b2r1_g1,cand_oldds_b3r0_g0,cand_oldds_b3r0_g1,cand_oldds_b3r1_g0,cand_oldds_b3r1_g1,cand_oldds_b4r0_g0,cand_oldds_b4r0_g1,cand_oldds_b4r1_g0,cand_oldds_b4r1_g1 --workers 6 --out artifacts/outcomes/tthe_sel36_matrix.parquet
+_g0: 25/36
+  [done] cand_oldds_b0r1_g0: acc=0.556 (36 tasks)
+    cand_oldds_b0r1_g1: 25/36
+  [done] cand_oldds_b0r1_g1: acc=0.556 (36 tasks)
+    cand_oldds_b1r0_g0: 25/36
+  [done] cand_oldds_b1r0_g0: acc=0.556 (36 tasks)
+    cand_oldds_b1r0_g1: 25/36
+  [done] cand_oldds_b1r0_g1: acc=0.556 (36 tasks)
+    cand_oldds_b1r1_g0: 25/36
+  [done] cand_oldds_b1r1_g0: acc=0.556 (36 tasks)
+    cand_oldds_b1r1_g1: 25/36
+  [done] cand_oldds_b1r1_g1: acc=0.556 (36 tasks)
+    cand_oldds_b2r0_g0: 25/36
+  [done] cand_oldds_b2r0_g0: acc=0.556 (36 tasks)
+    cand_oldds_b2r0_g1: 25/36
+  [done] cand_oldds_b2r0_g1: acc=0.556 (36 tasks)
+    cand_oldds_b2r1_g0: 25/36
+  [done] cand_oldds_b2r1_g0: acc=0.556 (36 tasks)
+    cand_oldds_b2r1_g1: 25/36
+  [done] cand_oldds_b2r1_g1: acc=0.556 (36 tasks)
+    cand_oldds_b3r0_g0: 25/36
+  [done] cand_oldds_b3r0_g0: acc=0.556 (36 tasks)
+    cand_oldds_b3r0_g1: 25/36
+  [done] cand_oldds_b3r0_g1: acc=0.556 (36 tasks)
+    cand_oldds_b3r1_g0: 25/36
+  [done] cand_oldds_b3r1_g0: acc=0.556 (36 tasks)
+    cand_oldds_b3r1_g1: 25/36
+  [done] cand_oldds_b3r1_g1: acc=0.556 (36 tasks)
+    cand_oldds_b4r0_g0: 25/36
+  [done] cand_oldds_b4r0_g0: acc=0.556 (36 tasks)
+    cand_oldds_b4r0_g1: 25/36
+  [done] cand_oldds_b4r0_g1: acc=0.556 (36 tasks)
+    cand_oldds_b4r1_g0: 25/36
+  [done] cand_oldds_b4r1_g0: acc=0.556 (36 tasks)
+    cand_oldds_b4r1_g1: 25/36
+  [done] cand_oldds_b4r1_g1: acc=0.556 (36 tasks)
+[collector] wrote E:\Study\PhD\Research\AI4AI-Harness\artifacts\outcomes\tthe_sel36_matrix.parquet (1476 rows, 41 harnesses)
+[collector] harness registry appended -> E:\Study\PhD\Research\AI4AI-Harness\artifacts\outcomes\harness_registry.jsonl
+[collector] per-harness accuracy:
+harness_id
+bare                    0.556
+cand_oldds_b0r0_g0      0.556
+cand_oldds_b0r0_g1      0.556
+cand_oldds_b0r1_g0      0.556
+cand_oldds_b0r1_g1      0.556
+cand_oldds_b1r0_g0      0.556
+cand_oldds_b1r0_g1      0.556
+cand_oldds_b1r1_g0      0.556
+cand_oldds_b1r1_g1      0.556
+cand_oldds_b2r0_g0      0.556
+cand_oldds_b2r0_g1      0.556
+cand_oldds_b2r1_g0      0.556
+cand_oldds_b2r1_g1      0.556
+cand_oldds_b3r0_g0      0.556
+cand_oldds_b3r0_g1      0.556
+cand_oldds_b3r1_g0      0.556
+cand_oldds_b3r1_g1      0.556
+cand_oldds_b4r0_g0      0.556
+cand_oldds_b4r0_g1      0.556
+cand_oldds_b4r1_g0      0.556
+cand_oldds_b4r1_g1      0.556
+cand_oldqwen_b0r0_g0    0.556
+cand_oldqwen_b0r0_g1    0.556
+cand_oldqwen_b0r1_g0    0.556
+cand_oldqwen_b0r1_g1    0.556
+cand_oldqwen_b1r0_g0    0.556
+cand_oldqwen_b1r0_g1    0.556
+cand_oldqwen_b1r1_g0    0.556
+cand_oldqwen_b1r1_g1    0.556
+cand_oldqwen_b2r0_g0    0.556
+cand_oldqwen_b2r0_g1    0.556
+cand_oldqwen_b2r1_g0    0.556
+cand_oldqwen_b2r1_g1    0.556
+cand_oldqwen_b3r0_g0    0.556
+cand_oldqwen_b3r0_g1    0.556
+cand_oldqwen_b3r1_g0    0.556
+cand_oldqwen_b3r1_g1    0.556
+cand_oldqwen_b4r0_g0    0.556
+cand_oldqwen_b4r0_g1    0.556
+cand_oldqwen_b4r1_g0    0.556
+cand_oldqwen_b4r1_g1    0.556
+[collector] best-fixed acc = 1.000 | oracle-any acc = 0.556
+
+ERR:
+
+===== C:\Python313\python.exe ../../experiment/tthe_collector.py --split split_eval151.json --harnesses cand_oldqwen_b3r1_g0,cand_oldqwen_b3r1_g1,cand_oldqwen_b4r0_g0,cand_oldqwen_b4r0_g1,cand_oldqwen_b4r1_g0,cand_oldqwen_b4r1_g1,cand_oldds_b3r1_g0,cand_oldds_b3r1_g1,cand_oldds_b4r0_g0,cand_oldds_b4r0_g1,cand_oldds_b4r1_g0,cand_oldds_b4r1_g1 --workers 6 --out tthe_eval151_matrix_round4.parquet
+dds_b4r1_g0', 'cand_oldds_b4r1_g1']
+    cand_oldqwen_b3r1_g0: 25/151
+    cand_oldqwen_b3r1_g0: 50/151
+    cand_oldqwen_b3r1_g0: 75/151
+    cand_oldqwen_b3r1_g0: 100/151
+    cand_oldqwen_b3r1_g0: 125/151
+    cand_oldqwen_b3r1_g0: 150/151
+  [done] cand_oldqwen_b3r1_g0: acc=0.510 (151 tasks)
+    cand_oldqwen_b3r1_g1: 25/151
+    cand_oldqwen_b3r1_g1: 50/151
+    cand_oldqwen_b3r1_g1: 75/151
+    cand_oldqwen_b3r1_g1: 100/151
+    cand_oldqwen_b3r1_g1: 125/151
+    cand_oldqwen_b3r1_g1: 150/151
+  [done] cand_oldqwen_b3r1_g1: acc=0.510 (151 tasks)
+    cand_oldqwen_b4r0_g0: 25/151
+    cand_oldqwen_b4r0_g0: 50/151
+    cand_oldqwen_b4r0_g0: 75/151
+    cand_oldqwen_b4r0_g0: 100/151
+    cand_oldqwen_b4r0_g0: 125/151
+    cand_oldqwen_b4r0_g0: 150/151
+  [done] cand_oldqwen_b4r0_g0: acc=0.510 (151 tasks)
+    cand_oldqwen_b4r0_g1: 25/151
+    cand_oldqwen_b4r0_g1: 50/151
+    cand_oldqwen_b4r0_g1: 75/151
+    cand_oldqwen_b4r0_g1: 100/151
+    cand_oldqwen_b4r0_g1: 125/151
+    cand_oldqwen_b4r0_g1: 150/151
+  [done] cand_oldqwen_b4r0_g1: acc=0.510 (151 tasks)
+    cand_oldqwen_b4r1_g0: 25/151
+    cand_oldqwen_b4r1_g0: 50/151
+    cand_oldqwen_b4r1_g0: 75/151
+    cand_oldqwen_b4r1_g0: 100/151
+    cand_oldqwen_b4r1_g0: 125/151
+    cand_oldqwen_b4r1_g0: 150/151
+  [done] cand_oldqwen_b4r1_g0: acc=0.510 (151 tasks)
+    cand_oldqwen_b4r1_g1: 25/151
+    cand_oldqwen_b4r1_g1: 50/151
+    cand_oldqwen_b4r1_g1: 75/151
+    cand_oldqwen_b4r1_g1: 100/151
+    cand_oldqwen_b4r1_g1: 125/151
+    cand_oldqwen_b4r1_g1: 150/151
+  [done] cand_oldqwen_b4r1_g1: acc=0.510 (151 tasks)
+    cand_oldds_b3r1_g0: 25/151
+    cand_oldds_b3r1_g0: 50/151
+    cand_oldds_b3r1_g0: 75/151
+    cand_oldds_b3r1_g0: 100/151
+    cand_oldds_b3r1_g0: 125/151
+    cand_oldds_b3r1_g0: 150/151
+  [done] cand_oldds_b3r1_g0: acc=0.510 (151 tasks)
+    cand_oldds_b3r1_g1: 25/151
+    cand_oldds_b3r1_g1: 50/151
+    cand_oldds_b3r1_g1: 75/151
+    cand_oldds_b3r1_g1: 100/151
+    cand_oldds_b3r1_g1: 125/151
+    cand_oldds_b3r1_g1: 150/151
+  [done] cand_oldds_b3r1_g1: acc=0.510 (151 tasks)
+    cand_oldds_b4r0_g0: 25/151
+    cand_oldds_b4r0_g0: 50/151
+    cand_oldds_b4r0_g0: 75/151
+    cand_oldds_b4r0_g0: 100/151
+    cand_oldds_b4r0_g0: 125/151
+    cand_oldds_b4r0_g0: 150/151
+  [done] cand_oldds_b4r0_g0: acc=0.510 (151 tasks)
+    cand_oldds_b4r0_g1: 25/151
+    cand_oldds_b4r0_g1: 50/151
+    cand_oldds_b4r0_g1: 75/151
+    cand_oldds_b4r0_g1: 100/151
+    cand_oldds_b4r0_g1: 125/151
+    cand_oldds_b4r0_g1: 150/151
+  [done] cand_oldds_b4r0_g1: acc=0.510 (151 tasks)
+    cand_oldds_b4r1_g0: 25/151
+    cand_oldds_b4r1_g0: 50/151
+    cand_oldds_b4r1_g0: 75/151
+    cand_oldds_b4r1_g0: 100/151
+    cand_oldds_b4r1_g0: 125/151
+    cand_oldds_b4r1_g0: 150/151
+  [done] cand_oldds_b4r1_g0: acc=0.510 (151 tasks)
+    cand_oldds_b4r1_g1: 25/151
+    cand_oldds_b4r1_g1: 50/151
+    cand_oldds_b4r1_g1: 75/151
+    cand_oldds_b4r1_g1: 100/151
+    cand_oldds_b4r1_g1: 125/151
+    cand_oldds_b4r1_g1: 150/151
+  [done] cand_oldds_b4r1_g1: acc=0.510 (151 tasks)
+
+ERR:baseline harness 'bare' missing from population
+
+
+===== C:\Python313\python.exe ../../experiment/tthe_collector.py --split split_eval151.json --harnesses bare,cand_oldqwen_b3r1_g0,cand_oldqwen_b3r1_g1,cand_oldqwen_b4r0_g0,cand_oldqwen_b4r0_g1,cand_oldqwen_b4r1_g0,cand_oldqwen_b4r1_g1,cand_oldds_b3r1_g0,cand_oldds_b3r1_g1,cand_oldds_b4r0_g0,cand_oldds_b4r0_g1,cand_oldds_b4r1_g0,cand_oldds_b4r1_g1 --workers 6 --out tthe_eval151_matrix_round4.parquet
+0_g0: 125/151
+    cand_oldqwen_b4r0_g0: 150/151
+  [done] cand_oldqwen_b4r0_g0: acc=0.510 (151 tasks)
+    cand_oldqwen_b4r0_g1: 25/151
+    cand_oldqwen_b4r0_g1: 50/151
+    cand_oldqwen_b4r0_g1: 75/151
+    cand_oldqwen_b4r0_g1: 100/151
+    cand_oldqwen_b4r0_g1: 125/151
+    cand_oldqwen_b4r0_g1: 150/151
+  [done] cand_oldqwen_b4r0_g1: acc=0.510 (151 tasks)
+    cand_oldqwen_b4r1_g0: 25/151
+    cand_oldqwen_b4r1_g0: 50/151
+    cand_oldqwen_b4r1_g0: 75/151
+    cand_oldqwen_b4r1_g0: 100/151
+    cand_oldqwen_b4r1_g0: 125/151
+    cand_oldqwen_b4r1_g0: 150/151
+  [done] cand_oldqwen_b4r1_g0: acc=0.510 (151 tasks)
+    cand_oldqwen_b4r1_g1: 25/151
+    cand_oldqwen_b4r1_g1: 50/151
+    cand_oldqwen_b4r1_g1: 75/151
+    cand_oldqwen_b4r1_g1: 100/151
+    cand_oldqwen_b4r1_g1: 125/151
+    cand_oldqwen_b4r1_g1: 150/151
+  [done] cand_oldqwen_b4r1_g1: acc=0.510 (151 tasks)
+    cand_oldds_b3r1_g0: 25/151
+    cand_oldds_b3r1_g0: 50/151
+    cand_oldds_b3r1_g0: 75/151
+    cand_oldds_b3r1_g0: 100/151
+    cand_oldds_b3r1_g0: 125/151
+    cand_oldds_b3r1_g0: 150/151
+  [done] cand_oldds_b3r1_g0: acc=0.510 (151 tasks)
+    cand_oldds_b3r1_g1: 25/151
+    cand_oldds_b3r1_g1: 50/151
+    cand_oldds_b3r1_g1: 75/151
+    cand_oldds_b3r1_g1: 100/151
+    cand_oldds_b3r1_g1: 125/151
+    cand_oldds_b3r1_g1: 150/151
+  [done] cand_oldds_b3r1_g1: acc=0.510 (151 tasks)
+    cand_oldds_b4r0_g0: 25/151
+    cand_oldds_b4r0_g0: 50/151
+    cand_oldds_b4r0_g0: 75/151
+    cand_oldds_b4r0_g0: 100/151
+    cand_oldds_b4r0_g0: 125/151
+    cand_oldds_b4r0_g0: 150/151
+  [done] cand_oldds_b4r0_g0: acc=0.510 (151 tasks)
+    cand_oldds_b4r0_g1: 25/151
+    cand_oldds_b4r0_g1: 50/151
+    cand_oldds_b4r0_g1: 75/151
+    cand_oldds_b4r0_g1: 100/151
+    cand_oldds_b4r0_g1: 125/151
+    cand_oldds_b4r0_g1: 150/151
+  [done] cand_oldds_b4r0_g1: acc=0.510 (151 tasks)
+    cand_oldds_b4r1_g0: 25/151
+    cand_oldds_b4r1_g0: 50/151
+    cand_oldds_b4r1_g0: 75/151
+    cand_oldds_b4r1_g0: 100/151
+    cand_oldds_b4r1_g0: 125/151
+    cand_oldds_b4r1_g0: 150/151
+  [done] cand_oldds_b4r1_g0: acc=0.510 (151 tasks)
+    cand_oldds_b4r1_g1: 25/151
+    cand_oldds_b4r1_g1: 50/151
+    cand_oldds_b4r1_g1: 75/151
+    cand_oldds_b4r1_g1: 100/151
+    cand_oldds_b4r1_g1: 125/151
+    cand_oldds_b4r1_g1: 150/151
+  [done] cand_oldds_b4r1_g1: acc=0.510 (151 tasks)
+[collector] wrote E:\Study\PhD\Research\AI4AI-Harness\tthe_eval151_matrix_round4.parquet (1963 rows, 13 harnesses)
+[collector] harness registry appended -> E:\Study\PhD\Research\AI4AI-Harness\harness_registry.jsonl
+[collector] per-harness accuracy:
+harness_id
+bare                    0.51
+cand_oldds_b3r1_g0      0.51
+cand_oldds_b3r1_g1      0.51
+cand_oldds_b4r0_g0      0.51
+cand_oldds_b4r0_g1      0.51
+cand_oldds_b4r1_g0      0.51
+cand_oldds_b4r1_g1      0.51
+cand_oldqwen_b3r1_g0    0.51
+cand_oldqwen_b3r1_g1    0.51
+cand_oldqwen_b4r0_g0    0.51
+cand_oldqwen_b4r0_g1    0.51
+cand_oldqwen_b4r1_g0    0.51
+cand_oldqwen_b4r1_g1    0.51
+[collector] best-fixed acc = 1.000 | oracle-any acc = 0.510
+
+ERR:
+2dexp_decompose: acc=0.503 (151 tasks)
+    c2_b2dexp_error_classify: 25/151
+    c2_b2dexp_error_classify: 50/151
+    c2_b2dexp_error_classify: 75/151
+    c2_b2dexp_error_classify: 100/151
+    c2_b2dexp_error_classify: 125/151
+    c2_b2dexp_error_classify: 150/151
+  [done] c2_b2dexp_error_classify: acc=0.483 (151 tasks)
+    c2_b2dexp_repair: 25/151
+    c2_b2dexp_repair: 50/151
+    c2_b2dexp_repair: 75/151
+    c2_b2dexp_repair: 100/151
+    c2_b2dexp_repair: 125/151
+    c2_b2dexp_repair: 150/151
+  [done] c2_b2dexp_repair: acc=0.543 (151 tasks)
+    c2_b2dexp_vote3: 25/151
+    c2_b2dexp_vote3: 50/151
+    c2_b2dexp_vote3: 75/151
+    c2_b2dexp_vote3: 100/151
+    c2_b2dexp_vote3: 125/151
+    c2_b2dexp_vote3: 150/151
+  [done] c2_b2dexp_vote3: acc=0.523 (151 tasks)
+    cand_bird_g1_b1r0_g1: 25/151
+    cand_bird_g1_b1r0_g1: 50/151
+    cand_bird_g1_b1r0_g1: 75/151
+    cand_bird_g1_b1r0_g1: 100/151
+    cand_bird_g1_b1r0_g1: 125/151
+    cand_bird_g1_b1r0_g1: 150/151
+  [done] cand_bird_g1_b1r0_g1: acc=0.530 (151 tasks)
+    cand_bird_g1_b1r1_g0: 25/151
+    cand_bird_g1_b1r1_g0: 50/151
+    cand_bird_g1_b1r1_g0: 75/151
+    cand_bird_g1_b1r1_g0: 100/151
+    cand_bird_g1_b1r1_g0: 125/151
+    cand_bird_g1_b1r1_g0: 150/151
+  [done] cand_bird_g1_b1r1_g0: acc=0.517 (151 tasks)
+    cand_bird_g1_b1r1_g1: 25/151
+    cand_bird_g1_b1r1_g1: 50/151
+    cand_bird_g1_b1r1_g1: 75/151
+    cand_bird_g1_b1r1_g1: 100/151
+    cand_bird_g1_b1r1_g1: 125/151
+    cand_bird_g1_b1r1_g1: 150/151
+  [done] cand_bird_g1_b1r1_g1: acc=0.583 (151 tasks)
+    cand_bird_g1_b2r0_g1: 25/151
+    cand_bird_g1_b2r0_g1: 50/151
+    cand_bird_g1_b2r0_g1: 75/151
+    cand_bird_g1_b2r0_g1: 100/151
+    cand_bird_g1_b2r0_g1: 125/151
+    cand_bird_g1_b2r0_g1: 150/151
+  [done] cand_bird_g1_b2r0_g1: acc=0.530 (151 tasks)
+    cand_bird_pop1_b0r0_g0: 25/151
+    cand_bird_pop1_b0r0_g0: 50/151
+    cand_bird_pop1_b0r0_g0: 75/151
+    cand_bird_pop1_b0r0_g0: 100/151
+    cand_bird_pop1_b0r0_g0: 125/151
+    cand_bird_pop1_b0r0_g0: 150/151
+  [done] cand_bird_pop1_b0r0_g0: acc=0.510 (151 tasks)
+    cand_bird_pop1_b0r0_g1: 25/151
+    cand_bird_pop1_b0r0_g1: 50/151
+    cand_bird_pop1_b0r0_g1: 75/151
+    cand_bird_pop1_b0r0_g1: 100/151
+    cand_bird_pop1_b0r0_g1: 125/151
+    cand_bird_pop1_b0r0_g1: 150/151
+  [done] cand_bird_pop1_b0r0_g1: acc=0.550 (151 tasks)
+    hpc_schema: 25/151
+    hpc_schema: 50/151
+    hpc_schema: 75/151
+    hpc_schema: 100/151
+    hpc_schema: 125/151
+    hpc_schema: 150/151
+  [done] hpc_schema: acc=0.490 (151 tasks)
+    hpc_hint: 25/151
+    hpc_hint: 50/151
+    hpc_hint: 75/151
+    hpc_hint: 100/151
+    hpc_hint: 125/151
+    hpc_hint: 150/151
+  [done] hpc_hint: acc=0.483 (151 tasks)
+    hpc_repair: 25/151
+    hpc_repair: 50/151
+    hpc_repair: 75/151
+    hpc_repair: 100/151
+    hpc_repair: 125/151
+    hpc_repair: 150/151
+  [done] hpc_repair: acc=0.497 (151 tasks)
+    hpc_vote3: 25/151
+    hpc_vote3: 50/151
+    hpc_vote3: 75/151
+    hpc_vote3: 100/151
+    hpc_vote3: 125/151
+    hpc_vote3: 150/151
+  [done] hpc_vote3: acc=0.510 (151 tasks)
+[collector] wrote E:\Study\PhD\Research\AI4AI-Harness\artifacts\outcomes\tthe_eval151_qwentarget.parquet (2718 rows, 18 harnesses)
+[collector] harness registry appended -> E:\Study\PhD\Research\AI4AI-Harness\artifacts\outcomes\harness_registry.jsonl
+[collector] per-harness accuracy:
+harness_id
+bare                        0.510
+c2_b2dexp_decompose         0.503
+c2_b2dexp_error_classify    0.483
+c2_b2dexp_format_guard      0.550
+c2_b2dexp_repair            0.543
+c2_b2dexp_two_view          0.483
+c2_b2dexp_vote3             0.523
+cand_bird_g1_b1r0_g1        0.530
+cand_bird_g1_b1r1_g0        0.517
+cand_bird_g1_b1r1_g1        0.583
+cand_bird_g1_b2r0_g1        0.530
+cand_bird_pop1_b0r0_g0      0.510
+cand_bird_pop1_b0r0_g1      0.550
+hpc_hint                    0.483
+hpc_repair                  0.497
+hpc_schema                  0.490
+hpc_vote3                   0.510
+react                       0.510
+[collector] best-fixed acc = 1.000 | oracle-any acc = 0.682
+
+ERR:

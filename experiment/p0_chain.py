@@ -54,6 +54,8 @@ def ziyang_env():
 
 
 def collect(harnesses, out_name, tag):
+    if "/" not in out_name:
+        out_name = "artifacts/outcomes/" + out_name   # collector resolves relative to repo root
     cmd = [sys.executable, "../../experiment/tthe_collector.py", "--split", "split_eval151.json",
            "--harnesses", ",".join(harnesses), "--workers", "6", "--out", out_name]
     run(cmd, ziyang_env())
@@ -114,16 +116,16 @@ def main():
     (ROOT / "experiment" / "split_sel36.json").write_text(json.dumps(sel_split))
 
     allc = ["bare"] + q_cands + d_cands
-    df_sel_path = "tthe_sel36_matrix.parquet"
-    df_sel = pd.read_parquet(ROOT / "artifacts" / "outcomes" / df_sel_path) \
-        if (ROOT / "artifacts" / "outcomes" / df_sel_path).exists() else None
+    df_sel_path = "tthe_sel36_matrix.parquet"   # collector resolves --out to artifacts/outcomes/
+    sel36_path = ROOT / "artifacts" / "outcomes" / df_sel_path
+    df_sel = pd.read_parquet(sel36_path) if sel36_path.exists() else None
     if df_sel is None or df_sel.harness_id.nunique() < len(allc):
         # collector with custom split file name relative to experiment/
         cmd = [sys.executable, "../../experiment/tthe_collector.py", "--split", "split_sel36.json",
                "--harnesses", ",".join(allc), "--workers", "6",
                "--out", df_sel_path]
         run(cmd, ziyang_env(), timeout=14400)
-        df_sel = pd.read_parquet(ROOT / "artifacts" / "outcomes" / df_sel_path)
+        df_sel = pd.read_parquet(sel36_path)
 
     # --- stage 4: selection ---
     q6 = select_top6(df_sel, q_cands, set(f"card_games#{i}" for i in disjoint36))
@@ -136,7 +138,8 @@ def main():
     # --- stage 5: eval151 for the 12 selected (GLM target) ---
     df151r4 = ROOT / "artifacts" / "outcomes" / "tthe_eval151_matrix_round4.parquet"
     if not df151r4.exists():
-        collect(q6 + d6, "tthe_eval151_matrix_round4.parquet", "old-protocol eval151")
+        # collector needs bare in the population for baseline/delta; include it (cached, cheap)
+        collect(["bare"] + q6 + d6, "tthe_eval151_matrix_round4.parquet", "old-protocol eval151")
     log("stage 5 done")
 
     # --- stage 6: second target (Qwen3.8-Flash) ---
