@@ -1,98 +1,43 @@
-\subsection{Section~7 Discussion}\label{discussion}
-
-
-
-\textbf{The checklist as a community tool.} The three metrics of Section~4 are
-
-computable from the outcome matrix any evaluation already produces. A
-
-routing paper whose population fails the checklist has, at best,
-
-rediscovered its best fixed harness; we argue the checklist should be
-
-reported alongside accuracy, the way calibration plots accompany
-
+\subsection{Discussion}\label{discussion}
+\textbf{The checklist as a community tool.} The three metrics of
+Section~4 are computable from the outcome matrix any evaluation already
+produces. A routing paper whose population fails the checklist has, at
+best, rediscovered its best fixed harness; we argue the checklist should
+be reported alongside accuracy, the way calibration plots accompany
 confidence-based methods.
-
-
-
 \textbf{Implications for AI4AI generation.} T1--T3 imply concrete
-
 protocol requirements: (i) acceptance must be defined on \emph{traces},
-
 not docstrings or code diffs; (ii) feedback mechanisms need a
-
-demonstrated causal path (the modified answer must depend on the
-
-executed artifact); (iii) executable-output validation precedes any
-
-capability claim. The IR arm shows the third requirement is not enough
-
-on its own: compiled mechanism diversity yielded the most distinct fix
-
-sets (6/6) yet only 3.97 pp headroom --- mechanisms must also be
-
-\emph{selected against a headroom landscape}, which is exactly the
-
-information the checklist surfaces.
-
-
-
+demonstrated causal path; (iii) executable-output validation precedes
+any capability claim. The IR arm shows the third requirement is not
+enough on its own: compiled mechanism diversity yielded the most
+distinct fix sets (6/6) yet only 3.97 pp headroom --- mechanisms must
+also be \emph{selected against a headroom landscape}, which is exactly
+the information the checklist surfaces.
 \textbf{Why stronger builders are not automatically the fix.} Under the
-
 gated protocol, the builder axis orders generation reliability and
-
 population quality (GLM 3/8 strategies accepted under logging; Qwen 5.96
-
 pp; DeepSeek 7.95 pp). But the old protocol's failure mode is different
-
 in kind: its best member (0.583, the strongest harness in the study)
-
 \emph{dominates}, so the population's remaining headroom falls to 4.64
-
 pp even with a healthy repair rate --- missing the threshold by 0.36 pp
-
 rather than collapsing. A strong builder without a behavioral gate
-
 concentrates quality; a gate without a capable builder produces nothing.
-
-The two axes are complements by these contrasts, and the checklist
-
-detects which one is binding --- while we acknowledge the design cannot
-
-separate main effects.
-
-
-
+The checklist detects which axis is binding --- while we acknowledge the
+design cannot separate main effects.
 \textbf{Limitations.} One domain family (text-to-SQL; a second database
-
 for build--eval disjointness), one frozen target, K=6 populations, and
-
 execution-accuracy judging (set-of-rows equality, not BIRD's official
-
 scorer). 24 of the 151 evaluation items overlap with earlier
-
 protocol-development runs --- this overlap is disclosed, and the A-arm
-
 population selection used only the 36 fully disjoint items. The human
-
 control was designed after inspecting day-1 traces, so its headroom is
-
 an existence proof, not a blind estimate. Pre-registered thresholds were
-
 set from 60-item evidence; the borderline populations (IR at 3.97 pp,
-
 human control at 14.9\% repair) are reported exactly as measured,
-
 without post-hoc adjustment. Bootstrap intervals on 151 items are wide
-
 --- roughly ±9--11 pp on repair rates --- and all raw metrics are
-
 released so stricter readings can be applied. Finally, the admission
-
 decision follows the frozen point-estimate rule; readers applying
-
 interval-based standards would admit fewer populations, and we say so
-
 where it matters.
-
