@@ -33,21 +33,24 @@ predictors need is real; it is the generation side that fails to populate it.
 If the bottleneck is generation, the obvious next question is whether it is a
 *capability* bottleneck (a stronger builder would fix it) or a *protocol* bottleneck
 (no builder is asked, checked, or forced to change behavior). We probe both axes with
-two nested contrasts (not a full factorial; §3.4): a pre-registered builder sweep
+two nested contrasts (not a full factorial; §3.4): a pre-specified builder sweep
 under a **strategy-forced free-form** protocol — which assigns each candidate an
 explicit control-flow mechanism and accepts the emitted artifact only after an
 import and execution smoke check — run with GLM, Qwen, and DeepSeek; and a **Harness IR** that compiles declarative mechanism
 specifications into harness code deterministically, guaranteeing mechanism diversity
 by construction and isolating "what mechanisms do" from "whether the builder can
 write code". On the builder-held-out 151-question set, both stronger-builder gated
-populations exceed all three pre-registered diversity thresholds at the point
+populations exceed all three pre-specified diversity thresholds at the point
 at the point estimate — 5.96 and 7.95 pp oracle headroom, six pairwise-distinct
 repair sets each — while the old proposer protocol misses the headroom threshold
 (4.64 pp, its best member dominating); and on completed strategy grids every
 builder's population clears the checklist (up to 9.93 pp for DeepSeek, and even the
 GLM builder's three accepted harnesses reach 5.96 pp), with per-strategy generation
 acceptance ordering by builder (GLM 3/8, Qwen 7/8, DeepSeek 8/8, fully logged):
-both axes are implicated, though the design cannot separate their main effects (F3).
+both axes are implicated, though the design cannot separate their main effects; a
+K-controlled subsampling analysis shows the gap is not a population-size effect
+(the old protocol never crosses the 5 pp line at any K, while strategy-forced
+populations exceed it at K=2) (F3).
 A leave-one-harness-out value predictor over these admitted populations, however, does
 not beat the best fixed harness — and its apparent per-task signal is task
 memorization: in a task-held-out control on D6 it falls to chance (AUROC 0.475).
@@ -66,7 +69,7 @@ Our contributions:
    population-level collapse as an outcome phenomenon.
 2. **A controlled generation-side study**: two nested contrasts — a builder sweep
    (GLM / Qwen / DeepSeek) under the strategy-forced protocol plus an old-protocol arm
-   and a compiled IR arm with a human positive control — evaluated under pre-registered
+   and a compiled IR arm with a human positive control — evaluated under pre-specified
    admission thresholds on the builder-held-out 151-question set, showing behavioral
    diversity is restorable (two admitted populations), that the old protocol's
    failure mode is quality concentration rather than absence of repairs, and that

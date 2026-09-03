@@ -24,13 +24,94 @@ from 2026-09-03 (\texttt{builder\_generate3.py}) logs every attempt (3 retries,
 only after it imports against both databases and solves one builder-visible question.
 The GLM condition-B population reported in Section~6 is the logged re-run.
 
+\section{Population conditions (detail)}
+\label{app:populations}
+
+This appendix details the populations compared in Section~3.3; each AI-generated
+population contains $K=6$ harnesses produced under a fixed budget and acceptance
+protocol unless noted.
+
+\begin{itemize}
+\item \textbf{Seed baselines}: \texttt{bare} (single call) and \texttt{react}
+(execution feedback loop, shipped with TTHE).
+\item \textbf{Condition A --- proposer protocol (old)}: six candidates from TTHE's
+own optimize loop (GLM-5.3-Flash as builder), which sees 3 questions per round and
+edits harness code in a single turn. We select the 6 most behaviorally diverse of
+12 candidates using \emph{only} the 36 earlier-run questions disjoint from
+$D_{\mathrm{eval}}$ (selection rule frozen before the 151-item evaluation; the 24
+overlapping items were excluded from selection).
+\item \textbf{Condition B --- strategy-forced free-form, GLM builder}: the original
+09-01 run recorded zero accepted outputs, but its generation tool was not preserved
+(see Section~6), so that observation is unaudited; under the logging tool of record,
+GLM accepts \textbf{3 of 8 strategies} (execute-repair, 3-vote, two-view) and fails
+the other five within the retry budget, with per-attempt logs retained. We use the
+audited re-run (B3, K=3) as the condition-B population and report the unaudited 0/6
+only as a provenance caveat.
+\item \textbf{Condition C --- strategy-forced free-form, Qwen builder}:
+Qwen3.8-Flash, 6/6 accepted.
+\item \textbf{Condition D --- strategy-forced free-form, DeepSeek builder}:
+DeepSeek-V4-Flash (vision-exp checkpoint), 6/6 accepted.
+\item \textbf{IR arm --- compiled, no free-form code}: six harnesses compiled
+deterministically from declarative mechanism specifications by our Harness IR
+(Section~6.2); mechanism diversity is guaranteed by construction, isolating ``what
+mechanisms do'' from ``can a builder write code''.
+\item \textbf{Human positive control}: four hand-written harnesses with forcibly
+distinct execution paths (execute-and-repair, 3-vote, schema-linking, hint-first).
+\end{itemize}
+
+\section{Design and pre-registration (detail)}
+\label{app:design}
+
+This appendix details the design structure of Section~3.4. \textbf{The design is two
+nested contrasts, not a full factorial}, and our claims are limited accordingly:
+(i) \emph{within the old proposer protocol}, only GLM was run, and \emph{within the
+strategy-forced free-form protocol}, only the builder varies (GLM/Qwen/DeepSeek) ---
+so the protocol contrast at a fixed builder exists only for GLM (A vs B), and the
+builder contrast exists only under the gated protocol (B vs C vs D); (ii) the IR arm
+has a protocol axis but no builder axis. Protocol and builder effects are therefore
+partially confounded across conditions; Section~6 interprets each contrast within its
+own fixed factor and does not claim to separate main effects.
+
+\paragraph{Audit trail.} Before running any 151-item evaluation, admission thresholds
+were frozen in the project decision log: a population must reach union repair rate
+over bare errors $\geq$15\%, oracle headroom (vs.\ best fixed harness) $\geq$5~pp,
+and $\geq$3 harnesses with non-empty, pairwise-distinct repair sets. The 20\% repair
+threshold first appears in the v6 decision-log entry (2026-08-31, when the plan moved
+to 150-item evaluation); it was set to 15\% in the v7 entry (2026-09-01, when the
+evaluation set was fixed at 151 items) --- \emph{both before any 151-item outcome
+existed}; the matrix was collected 2026-09-02. The repository now carries a git
+history initialized from file mtimes and the decision-log changelog, which together
+document this ordering; we flag that the history is retrospective and the changelog
+is the authoritative ordering record. Populations failing the thresholds are not
+subjected to downstream value-prediction experiments; admission is decided on point
+estimates by the frozen rule, bootstrap intervals are reported alongside for
+calibration, and Section~6 marks populations whose intervals include sub-threshold
+values.
+
 \section{Generation and IR Specifications}
 \label{app:specs}
 
-\paragraph{Strategy-forced free-form prompt.} Builders receive the \texttt{SQLHarness}
-interface, one strategy description sentence, and the required class name; the full
-prompt template, per-strategy descriptions, and the six per-builder acceptance logs
-are released verbatim.
+\paragraph{Strategy-forced free-form protocol (detail).} For each of six mechanism
+strategies $s$ (execute-repair, 3-vote, schema-linking, hint-guard, decomposition,
+format-guard), the builder receives a fixed prompt: the \texttt{SQLHarness} interface
+(constructor-provided schema; \texttt{self.llm} and \texttt{self.execute} primitives;
+\texttt{bridge.extract\_sql}), the strategy description (one sentence,
+e.g.~\emph{``Generate SQL, then EXECUTE it via self.execute(); if execution fails,
+feed the exact SQLite error back and regenerate up to 2 times''}), and the required
+class name. The builder emits one complete Python file per strategy (temperature
+0.7); the candidate is extracted from its code fence and written to the population
+directory. Acceptance for the 09-01 populations (conditions C and D) was: file
+written and hash-registered, with import and smoke checks performed at evaluation
+time; per-attempt generation logs were not retained --- a provenance gap disclosed in
+Section~6. The day-3 generation tool (\texttt{builder\_generate3.py}) closes this gap
+for all runs after 2026-09-03 by logging every attempt (3 retries, 16{,}384-token
+budget) and accepting a candidate only after it imports against both databases and
+solves one builder-visible question. Budget: one generation call per strategy per run
+(16{,}384 max tokens); failed extractions are not retried within a run --- a design
+choice that keeps per-strategy acceptance an auditable, single-shot reliability
+observation (condition B's original unaudited run is superseded by the logged
+re-run, Section~6.0). The full prompt template, per-strategy descriptions, and the
+six per-builder acceptance logs are released verbatim.
 
 \paragraph{Harness IR.} A spec is a typed record:
 $\text{context} \in \{\text{plain}, \text{schema\_link}, \text{hint\_guard}, \text{link+hint}\}$,
@@ -38,7 +119,10 @@ $\text{generate.candidates} \geq 1$ with temperature,
 $\text{execution.execute\_each} \in \{0,1\}$,
 $\text{repair}.\{\text{on\_error}, \text{max\_rounds}\}$,
 $\text{selection} \in \{\text{first\_ok}, \text{majority\_rows}, \text{llm\_judge}\}$.
-The compiler emits deterministic Python from fixed templates.
+The compiler emits deterministic Python from fixed templates; the builder (or human)
+chooses and parameterizes modules but cannot emit control flow, so a declared
+mechanism is present in the control flow \emph{by construction}. The six IR harnesses
+enumerate the spec grid (plain/repair/vote3/hint-repair/schema-repair/link+vote3).
 
 \section{Additional Results}
 \label{app:results}

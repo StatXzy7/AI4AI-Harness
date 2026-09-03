@@ -1,0 +1,4 @@
+[13:30:01] stage gen oldqwen via optimize --model Qwen3.8-Flash
+[13:30:01] RUN: C:\Python313\python.exe -m text_to_sql.optimize --db card_games --group 2 --max-rounds 2 --model Qwen3.8-Flash --run-name oldqwen
+[13:32:57] stage gen oldds via optimize --model DeepSeek-V4-Flash-Vision-Exp
+[13:32:57] RUN: C:\Python313\python.exe -m text_to_sql.optimize --db card_games --group 2 --max-rounds 2 --model DeepSeek-V4-Flash-Vision-Exp --run-name oldds

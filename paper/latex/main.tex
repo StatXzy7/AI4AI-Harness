@@ -4,6 +4,9 @@
 \usepackage{url}
 \usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{calc}
 \usepackage{amsmath,amssymb}
 \usepackage{xcolor}
 
@@ -19,6 +22,8 @@
 \newcommand{\hpc}{\texttt{hpc}}
 \newcommand{\pp}{\,pp}
 
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
 \begin{document}
 \maketitle
 
@@ -26,29 +31,31 @@
 Large language models are increasingly wrapped in \emph{harnesses}---generated programs of prompts, tools, and control flow---and a growing literature routes over \emph{populations} of such harnesses per query. Routing presupposes that population members disagree behaviorally. We show this presupposition fails for automatically generated populations: on BIRD text-to-SQL with a frozen mid-tier target, the candidates of a standard harness-evolution loop are syntactically diverse (mean pairwise code similarity 0.14) yet behaviorally collapsed (96\% outcome agreement; 21 of 66 candidate pairs identical on every task; the shipped ReAct variant reproduces \bare{}'s final SQL byte-for-byte on every audited task). Execution-trace auditing resolves the collapse into three failure classes: mechanisms described but absent from the control flow, feedback with no causal path to the output, and broken multi-turn paths. A hand-written positive control on the same target, tasks, and judge delivers 7.3\,pp oracle headroom on 151 held-out questions---the headroom routers need is real, and it is the \emph{generation} side that fails. We then probe both axes with a strategy-forced free-form protocol: two of three builders produce populations that exceed pre-registered diversity thresholds at the point estimate for the first time (6.0 and 8.0\,pp headroom; six pairwise-distinct repair sets each), the old un-gated protocol misses, and under fully logged generation the builder axis orders per-strategy acceptance (GLM 3/8, Qwen 7/8, DeepSeek 8/8). The design cannot separate protocol and builder effects. Diversity, however, is necessary, not sufficient: a leave-one-harness-out value predictor over the admitted populations does not beat the best fixed harness ($\leq$0.001 AUROC over task-only features), and in a task-held-out control its repair signal falls to chance; its one deployment-relevant success---+6.9\,pp over bare with zero induced harm---holds only as an abstaining gate over the full 24-harness pool. We release a three-metric precondition checklist---pairwise disagreement, union repair, oracle headroom---that harness-generation and harness-routing papers can and should report before routing is attempted.
 \end{abstract}
 
-\section{Introduction}
-\input{sec_intro}
+\section{Introduction}\label{sec:introduction}
+\input{sec_intro_test1}
 
-\section{Related Work}
+\section{Related Work}\label{sec:related}
 \input{sec_related}
 
-\section{Setup}
+\section{Setup}\label{sec:setup}
 \input{sec_setup}
 
-\section{Measuring Behavioral Diversity}
+\section{Measuring Behavioral Diversity}\label{sec:measuring}
 \input{sec_measurement}
 
-\section{Positive Control: The Headroom Exists}
+\section{Positive Control: The Headroom Exists}\label{sec:positive}
 \input{sec_positive}
 
-\section{Behavior-Aware Generation Protocols}
+\section{Behavior-Aware Generation Protocols}\label{sec:behavior-aware}
 \input{sec_protocols}
 
-\section{Discussion}
+\section{Discussion}\label{sec:discussion}
 \input{sec_discussion}
 
-\section{Conclusion}
+\section{Conclusion}\label{sec:conclusion}
 \input{sec_conclusion}
+
+\label{endofmain}
 
 \bibliography{references}
 \bibliographystyle{iclr2026_conference}

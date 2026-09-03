@@ -73,7 +73,7 @@ and acceptance protocol. We compare:
 Every harness is accepted only after passing a smoke check (it runs and emits
 executable SQL); the free-form arm additionally passes the execution-path gate of §6.
 
-## 3.4 Design structure and pre-registered decision criteria
+## 3.4 Design structure and pre-specified decision criteria
 
 **The design is two nested contrasts, not a full factorial**, and our claims are
 limited accordingly: (i) *within the old proposer protocol*, only GLM was run, and

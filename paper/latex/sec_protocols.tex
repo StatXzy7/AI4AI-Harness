@@ -1,386 +1,172 @@
-The diagnosis of Section~4 suggests two orthogonal fixes.
-
-\textbf{Strategy-forced free-form} keeps the builder fully expressive
-
-but forces an explicit mechanism per candidate; \textbf{Harness IR}
-
-removes free-form code generation altogether. This subsection specifies
-
-both at the level needed for replication; prompts, specs, and compiled
-
-harnesses are released verbatim.
-
-
-
-\textbf{Gated free-form protocol.} For each of six mechanism strategies
-
-\(s\) (execute-repair, 3-vote, schema-linking, hint-guard,
-
-decomposition, format-guard), the builder receives a fixed prompt: the
-
-\texttt{SQLHarness} interface (constructor-provided schema;
-
-\texttt{self.llm} and \texttt{self.execute} primitives;
-
-\texttt{bridge.extract\_sql}), the strategy description (one sentence,
-
-e.g.~\emph{``Generate SQL, then EXECUTE it via self.execute(); if
-
-execution fails, feed the exact SQLite error back and regenerate up to 2
-
-times''}), and the required class name. The builder emits one complete
-
-Python file per strategy (temperature 0.7); the candidate is extracted
-
-from its code fence and written to the population directory. For the two
-
-09-01 populations (conditions C and D) acceptance was: file written and
-
-hash-registered, with import and smoke checks performed at evaluation
-
-time; per-attempt generation logs were not retained --- a provenance gap
-
-we disclose, and which the day-3 generation tool
-
+The diagnosis of Section~4 suggests two orthogonal fixes: a
+\textbf{strategy-forced free-form} protocol, which keeps the builder
+fully expressive but forces an explicit control-flow mechanism per
+candidate and accepts the emitted artifact only after an import and
+execution smoke check; and a \textbf{Harness IR} that compiles
+declarative mechanism specifications into harness code deterministically,
+so a declared mechanism is present in the control flow \emph{by
+construction} (the six IR harnesses enumerate the spec grid:
+plain/repair/vote3/hint-repair/schema-repair/link+vote3). For the two
+09-01 free-form populations (conditions C and D) acceptance was: file
+written and hash-registered, with import and smoke checks performed at
+evaluation time; per-attempt generation logs were not retained --- a
+provenance gap we disclose, and which the day-3 generation tool
 (\texttt{builder\_generate3.py}) closes for all runs after 2026-09-03 by
-
-logging every attempt (3 retries, 16 384-token budget) and accepting a
-
-candidate only after it imports against both databases and solves one
-
-builder-visible question. The condition-B registry records zero accepted
-
-outputs from six strategies; because that run predates the logging tool,
-
-we report condition B as a single unaudited observation rather than a
-
-capability attribution, and we are re-running it under the logging tool.
-
-Builders see \(D_{\mathrm{build}}\) only; no evaluation item or outcome
-
-is shown to any builder. Budget: one generation call per strategy per
-
-run (16 384 max tokens); failed extractions are not retried within a run
-
---- a design choice that keeps per-strategy acceptance an auditable,
-
-single-shot reliability observation (condition B's original unaudited
-
-run is superseded by the logged re-run, Section~6.0).
-
-
-
-\textbf{Harness IR.} Mechanisms are declared as a typed spec ---
-
-\texttt{context\ ∈\ \{plain,\ schema\_link,\ hint\_guard,\ link+hint\}},
-
-\texttt{generate.candidates\ ≥\ 1} with temperature,
-
-\texttt{execution.execute\_each\ ∈\ \{0,1\}}, \texttt{repair.on\_error}
-
-with \texttt{max\_rounds},
-
-\texttt{selection\ ∈\ \{first\_ok,\ majority\_rows,\ llm\_judge\}} ---
-
-and a deterministic compiler emits the harness subclass from fixed code
-
-templates. The builder (or human) chooses and parameterizes modules; it
-
-cannot emit control flow, so a declared mechanism is present in the
-
-control flow \emph{by construction}. The six IR harnesses enumerate the
-
-spec grid (plain/repair/vote3/hint-repair/schema-repair/link+vote3).
-
-
-
-We compare six populations under identical budget and target --- old
-
-proposer protocol (A), strategy-forced free-form with GLM (B) / Qwen (C)
-
-/ DeepSeek (D), compiled IR, and the human control --- on the
-
-builder-held-out 151-question set. Admission to any downstream routing
-
-claim requires the pre-registered thresholds of Section~3.4.
-
-
+logging every attempt and accepting a candidate only after it imports
+against both databases and solves one builder-visible question. The
+condition-B registry records zero accepted outputs from six strategies
+in that original run; because it predates the logging tool, we report
+condition B as a single unaudited observation rather than a capability
+attribution, and we are re-running it under the logging tool (the
+logged re-run B3 is the condition-B population used here). Builders see
+\(D_{\mathrm{build}}\) only; no evaluation item or outcome is shown to
+any builder. The full protocol specification --- prompts, gate
+mechanics, budget, and the typed IR spec --- is given in
+Appendix~\ref{app:specs}; prompts, specs, and compiled harnesses are
+released verbatim.
 
 \subsection{Results table (eval151, n=74 bare errors; CIs are
-
 task-level bootstrap
-
 95\%)}\label{results-table-eval151-n74-bare-errors-cis-are-task-level-bootstrap-95}
 
-
+We compare six populations under identical budget and target --- old
+proposer protocol (A), strategy-forced free-form with GLM (B) / Qwen (C)
+/ DeepSeek (D), compiled IR, and the human control --- on the
+builder-held-out 151-question set; admission to any downstream routing
+claim requires the pre-registered thresholds of Section~3.4.
 
 {\def\LTcaptype{none} % do not increment counter
-
 \begin{longtable}[]{@{}
-
   >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
-
   >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
-
   >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
-
   >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
-
   >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}
-
   >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1667}}@{}}
-
 \toprule\noalign{}
-
 \begin{minipage}[b]{\linewidth}\raggedright
-
 Population
-
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-
 disagree
-
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-
 union repair {[}CI95{]}
-
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-
 headroom pp {[}CI95{]}
-
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-
 distinct fix sets
-
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-
 admitted?
-
 \end{minipage} \\
-
 \midrule\noalign{}
-
 \endhead
-
 \bottomrule\noalign{}
-
 \endlastfoot
-
 A old-proposer (K=6) & 7.0\% & 24.3\% {[}.149,.347{]} & 4.64
-
 {[}1.3,8.0{]} & 5 & no (headroom) \\
-
 B GLM free-form (logged re-run, K=3) & 3/8 strategies accepted & see
-
 Section~6.0b & see Section~6.0b & 3 & see text \\
-
 \textbf{C Qwen free-form (K=6)} & 11.1\% & 21.6\% {[}.125,.310{]} &
-
 \textbf{5.96} {[}2.0,8.6{]} & 6 & \textbf{yes} \\
-
 \textbf{D DeepSeek free-form (K=6)} & 11.2\% & 24.3\% {[}.148,.346{]} &
-
 \textbf{7.95} {[}4.0,11.3{]} & 6 & \textbf{yes} \\
-
 IR compiled (K=6) & 8.2\% & 16.2\% {[}.083,.253{]} & 3.97 {[}1.3,7.3{]}
-
 & 6 & no (headroom) \\
-
 Human control (K=4) & 8.9\% & 14.9\% {[}.071,.237{]} & 7.28
-
 {[}3.3,10.0{]} & 4 & no (repair, by 0.1pp) \\
-
 Cross-protocol pool (K=24) & 10.3\% & 37.8\% {[}.268,.488{]} &
-
 \textbf{11.26} {[}6.6,15.9{]} & 23 & yes (analysis) \\
-
 B3 GLM logged re-run (K=3) & 8.8\% & 21.6\% & 5.96 & 3 & yes (post-hoc,
-
 K=3) \\
-
 C8 Qwen completed grid (K=7) & 10.4\% & 21.6\% & 5.96 & 7 & yes
-
 (post-hoc) \\
-
 D8 DeepSeek completed grid (K=8) & 10.6\% & 28.4\% & \textbf{9.93} & 8 &
-
 yes (post-hoc) \\
-
 \end{longtable}
-
 }
 
-
-
-\emph{Rows 7--9 are the post-hoc completed-grid analysis (Section~6.2): the
-
-original admission decisions (rows 1--6) are unchanged; the GLM re-run
-
-population clears the checklist at K=3, though its small size limits any
-
-downstream claim.}
-
-
+\emph{Rows 7--9 are the post-hoc completed-grid analysis (Section~6.2):
+the original admission decisions (rows 1--6) are unchanged; the GLM
+re-run population clears the checklist at K=3, though its small size
+limits any downstream claim.}
 
 Three observations. \textbf{(i) Behavior-aware generation restores
-
 behavioral diversity.} Both free-form populations built by Qwen and
-
 DeepSeek exceed all three pre-registered thresholds \emph{at the point
-
 estimate} --- the first AI-generated populations to do so --- with
-
 disagreement more than 3× the day-1 level and six pairwise-distinct
-
-repair sets apiece. We note for calibration that the headroom intervals
-
-{[}2.0, 8.6{]} and {[}4.0, 11.3{]} include sub-threshold values;
-
-admission follows the frozen point-estimate rule, and the intervals are
-
-reported so readers can apply a stricter reading. \textbf{(ii) The
-
-contrasts localize the failure modes.} Within the old proposer protocol,
-
-the best member dominates (0.583, the single highest harness in the
-
-study), squeezing headroom to 4.64 pp despite a healthy repair rate ---
-
+repair sets apiece. For calibration, the headroom intervals {[}2.0,
+8.6{]} and {[}4.0, 11.3{]} include sub-threshold values; admission
+follows the frozen point-estimate rule, and the intervals are reported
+so readers can apply a stricter reading. \textbf{(ii) The contrasts
+localize the failure modes.} Within the old proposer protocol, the best
+member dominates (0.583, the single highest harness in the study),
+squeezing headroom to 4.64 pp despite a healthy repair rate ---
 diversity without \emph{spread}; this population misses the headroom
-
 threshold by 0.36 pp rather than collapsing outright (the outright
-
-collapse is the day-1 finding of Section~4). Under the logged generation tool,
-
-per-strategy acceptance orders with builder capability --- GLM 3/8, Qwen
-
-7/8 (its vote3 attempts end with well-formed prose but no code fence),
-
-DeepSeek 8/8 --- replacing the unaudited original 0/6 observation (Section~6
-
-discloses the provenance gap). Protocol and builder are jointly
-
-implicated by these two contrasts, though the design cannot separate
-
-their main effects (Section~3.4). \textbf{(iii) The human control is not a
-
-universal upper bound.} Its 60-item repair rate (20.7\%) shrank to
-
-14.9\% on 151 items --- small-sample optimism we had flagged in advance
-
---- while its headroom (7.28 pp) stayed strong: hand-designed harnesses
-
-are complementary specialists, not uniformly stronger solvers. We report
-
-the borderline cases (IR at 3.97 pp, human at 14.9\%) exactly as
-
-measured, without post-hoc threshold adjustment.
-
-
+collapse is the day-1 finding of Section~4). Under the logged generation
+tool, per-strategy acceptance orders with builder capability --- GLM
+3/8, Qwen 7/8 (its vote3 attempts end with well-formed prose but no code
+fence), DeepSeek 8/8 --- replacing the unaudited original 0/6
+observation (the provenance gap is disclosed above). Protocol and
+builder are jointly implicated by these two contrasts, though the design
+cannot separate their main effects (Section~3.4). \textbf{(iii) The
+human control is not a universal upper bound.} Its 60-item repair rate
+(20.7\%) shrank to 14.9\% on 151 items --- small-sample optimism we had
+flagged in advance --- while its headroom (7.28 pp) stayed strong:
+hand-designed harnesses are complementary specialists, not uniformly
+stronger solvers. We report the borderline cases (IR at 3.97 pp, human
+at 14.9\%) exactly as measured, without post-hoc threshold adjustment.
 
 \subsection{Completed-grid re-analysis
-
 (post-hoc)}\label{completed-grid-re-analysis-post-hoc}
 
-
-
 After the pre-registered comparison, we completed the strategy grid:
-
 DeepSeek gained schema-link and hint-guard (its weakest strategies are
-
 none; it accepts 8/8), Qwen gained execute-repair (its vote3 attempts
-
 consistently emit prose without a code fence and are logged; 7/8), and
-
 GLM was re-run under the logging tool (3/8). On the completed grids,
-
 every builder's population clears the checklist: B3 (the three harnesses
-
 GLM produced) reaches 5.96 pp headroom and 21.6\% union repair with
-
 three distinct fix sets; C8 holds at 5.96 pp / 21.6\% with seven; D8
-
 rises to \textbf{9.93 pp / 28.4\%} with all eight strategies
-
 contributing a distinct fix set. Per-strategy accuracies show no builder
-
 dominance (Qwen wins hint-guard 0.556 vs 0.510; DeepSeek wins repair
-
 0.543 vs 0.550 for Qwen; GLM's vote3 reaches 0.543) --- capability
-
 orders \emph{generation reliability}, not per-strategy solution quality.
-
 These rows are labeled post-hoc: the frozen admission decisions belong
-
 to rows 1--6.
 
-
-
 \subsection{Does diversity buy learnable routing? (honest
-
 negative)}\label{does-diversity-buy-learnable-routing-honest-negative}
 
-
-
 For the two admitted populations we ran the pre-registered
-
-leave-one-harness-out value-prediction protocol: logistic heads on task
-
-TF-IDF text plus harness code and structural features, one held-out
-
-harness per fold, with a hash-based item split (20\% tune / 80\% eval)
-
-used only for threshold selection. It does \textbf{not} beat the best
-
-fixed harness: D6 −3.4 pp, C6 +0.9 pp (bootstrap CI {[}−5.2, +6.9{]}),
-
-cross-protocol pool −0.9 pp (CI {[}−6.0, +4.3{]}); full per-fold results
-
+leave-one-harness-out (LOHO) value-prediction protocol: logistic heads
+on task TF-IDF text plus harness code and structural features, one
+held-out harness per fold, with a hash-based item split (20\% tune / 80\%
+eval) used only for threshold selection. It does \textbf{not} beat the
+best fixed harness: D6 $-$3.4 pp, C6 +0.9 pp (bootstrap CI {[}$-$5.2, +6.9{]}),
+cross-protocol pool $-$0.9 pp (CI {[}$-$6.0, +4.3{]}); full per-fold results
 are in the released JSONs. Two caveats sharpen --- rather than soften
-
 --- this negative. First, LOHO holds the task set fixed, so the high
-
 per-fold AUROC on repair (0.82--0.98) largely reflects \emph{task
-
 memorization}: in a task-held-out control on D6 (train on 76 tasks, test
-
 on the 75 unseen tasks; \texttt{task\_split\_D6.json}), the repair
-
 classifier falls to chance (AUROC 0.475) and the policy degrades to the
-
 bare baseline. This is a single-population control, not a sweep; but it
-
 removes the main alternative reading of the LOHO AUROC, and task-side
-
 generalization of harness value fails where tested. Second, the
-
 pre-registered three-level gate returns: L1 (headroom) \textbf{passes};
-
 L2 (closed-set, harness identity visible) \textbf{marginally fails} ---
-
-its pre-registered criterion was a policy gain of ≥2 pp, which no
-
+its pre-registered criterion was a policy gain of $\geq$2 pp, which no
 closed-set configuration demonstrates; the closed-set repair AUROC is
-
 0.471 on D6 and 0.575 on the 24-harness pool, at chance to barely above
-
-chance); L3 (open-set, unseen harness) \textbf{fails} with unseen-
-
-harness representation adding ≤0.001 AUROC over task-only features. One
-
-deployment- relevant positive survives, and we state its scope
-
-precisely: on the 24-harness cross-protocol pool only, the same
-
+chance; L3 (open-set, unseen harness) \textbf{fails} with
+unseen-harness representation adding $\leq$0.001 AUROC over task-only
+features. One deployment-relevant positive survives, and we state its
+scope precisely: on the 24-harness cross-protocol pool only, the same
 predictor used as an \emph{abstaining gate} gains \textbf{+6.9 pp} over
-
 bare with zero harness-induced harm on its interventions (the admitted
-
 single-builder populations show intervention harm of 2.8\% and 8.7\%).
-
 The open problem stands: estimating an unseen harness's per-item value
-
 from code and task text alone, on tasks the predictor has not seen, is
-
 unsolved by our strongest attempt.
-

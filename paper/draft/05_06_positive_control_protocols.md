@@ -82,7 +82,7 @@ enumerate the spec grid (plain/repair/vote3/hint-repair/schema-repair/link+vote3
 We compare six populations under identical budget and target — old proposer protocol
 (A), strategy-forced free-form with GLM (B) / Qwen (C) / DeepSeek (D), compiled IR, and the
 human control — on the builder-held-out 151-question set. Admission to any downstream
-routing claim requires the pre-registered thresholds of §3.4.
+routing claim requires the pre-specified thresholds of §3.4.
 
 ## 6.0 Results table (eval151, n=74 bare errors; CIs are task-level bootstrap 95%)
 
@@ -102,7 +102,7 @@ routing claim requires the pre-registered thresholds of §3.4.
 *Rows 7–9 are the post-hoc completed-grid analysis (§6.2): the original admission decisions (rows 1–6) are unchanged; the GLM re-run population clears the checklist at K=3, though its small size limits any downstream claim.*
 
 Three observations. **(i) Behavior-aware generation restores behavioral diversity.**
-Both free-form populations built by Qwen and DeepSeek exceed all three pre-registered
+Both free-form populations built by Qwen and DeepSeek exceed all three pre-specified
 thresholds *at the point estimate* — the first AI-generated populations to do so —
 with disagreement more than 3× the day-1 level and six pairwise-distinct repair sets
 apiece. We note for calibration that the headroom intervals [2.0, 8.6] and [4.0, 11.3]
@@ -126,7 +126,7 @@ measured, without post-hoc threshold adjustment.
 
 ## 6.2 Completed-grid re-analysis (post-hoc)
 
-After the pre-registered comparison, we completed the strategy grid: DeepSeek gained
+After the pre-specified comparison, we completed the strategy grid: DeepSeek gained
 schema-link and hint-guard (its weakest strategies are none; it accepts 8/8), Qwen
 gained execute-repair (its vote3 attempts consistently emit prose without a code
 fence and are logged; 7/8), and GLM was re-run under the logging tool (3/8). On the
@@ -139,9 +139,19 @@ wins repair 0.543 vs 0.550 for Qwen; GLM's vote3 reaches 0.543) — capability o
 *generation reliability*, not per-strategy solution quality. These rows are labeled
 post-hoc: the frozen admission decisions belong to rows 1–6.
 
+## 6.15 K-controlled headroom curves (population-size control)
+
+Oracle headroom grows with K by construction, so cross-population comparison is only
+meaningful at matched K. Subsampling every population at K = 2..K_max (60 random
+subsamples per K, 95% bands in `kcurve.json` / `fig_kcurve.png`): at K=6 the old
+proposer protocol reaches 4.64 pp and never crosses the 5 pp line at any K, while the
+strategy-forced populations exceed it already at K=2 (DeepSeek 6.08 pp, Qwen 4.67 pp)
+and at every matched K thereafter (K=6: 8.92 / 5.68 pp). The protocol effect is not a
+population-size effect.
+
 ## 6.1 Does diversity buy learnable routing? (honest negative)
 
-For the two admitted populations we ran the pre-registered leave-one-harness-out
+For the two admitted populations we ran the pre-specified leave-one-harness-out
 value-prediction protocol: logistic heads on task TF-IDF text plus harness code and
 structural features, one held-out harness per fold, with a hash-based item split
 (20% tune / 80% eval) used only for threshold selection. It does **not** beat the best
@@ -153,9 +163,9 @@ memorization*: in a task-held-out control on D6 (train on 76 tasks, test on the 
 unseen tasks; `task_split_D6.json`), the repair classifier falls to chance (AUROC
 0.475) and the policy degrades to the bare baseline. This is a single-population
 control, not a sweep; but it removes the main alternative reading of the LOHO AUROC,
-and task-side generalization of harness value fails where tested. Second, the pre-registered
+and task-side generalization of harness value fails where tested. Second, the pre-specified
 three-level gate returns: L1 (headroom) **passes**; L2 (closed-set, harness identity
-visible) **marginally fails** — its pre-registered criterion was a policy gain of
+visible) **marginally fails** — its pre-specified criterion was a policy gain of
 ≥2 pp, which no closed-set configuration demonstrates; the closed-set repair AUROC
 is 0.471 on D6 and 0.575 on the 24-harness pool, at chance to barely above chance); L3 (open-set, unseen harness) **fails** with unseen-
 harness representation adding ≤0.001 AUROC over task-only features. One deployment-

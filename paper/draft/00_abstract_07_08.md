@@ -2,35 +2,31 @@
 
 *(draft v2, 2026-09-03 — eval151 判定后定稿:正文采用下方 Abstract 定稿版;原 Draft A/B 草稿留档备查。)*
 
-## Abstract (定稿)
+## Abstract (定稿,review §15 收敛版)
 
-Large language models are increasingly wrapped in **harnesses** — generated programs of
-prompts, tools, and control flow — and a growing literature routes over *populations*
+Large language models are increasingly wrapped in 'harnesses' — generated programs of
+prompts, tools, and control flow — and a growing literature routes over 'populations'
 of such harnesses per query. Routing presupposes that population members disagree
 behaviorally. We show this presupposition fails for automatically generated
 populations: on BIRD text-to-SQL with a frozen mid-tier target, the candidates of a
 standard harness-evolution loop are syntactically diverse (mean pairwise code
-similarity 0.14) yet behaviorally collapsed (96% outcome agreement; 21 of 66 candidate
-pairs identical on every task; the shipped ReAct variant reproduces bare's final SQL
-byte-for-byte on every audited task). Execution-trace auditing resolves the collapse
-into three failure classes: mechanisms described but absent from the control flow,
-feedback with no causal path to the output, and broken multi-turn paths. A hand-written
-positive control on the same target, tasks, and judge delivers 7.3 pp oracle headroom
-on 151 held-out questions — the headroom routers need is real, and it is the
-*generation* side that fails. We then probe both axes with a strategy-forced
-free-form protocol: populations from all three builders exceed the pre-registered
-diversity thresholds (oracle headroom 6.0--9.9 pp at the point estimate; a distinct
-repair set from nearly every strategy), the old un-gated protocol misses, and
-per-strategy generation acceptance orders with builder capability (GLM 3/8, Qwen
-7/8, DeepSeek 8/8, fully logged). The design cannot separate protocol and builder
-effects. Diversity, however, is necessary, not sufficient: a
-leave-one-harness-out value predictor over the admitted populations does not beat the
-best fixed harness (≤0.001 AUROC over task-only features), and in a task-held-out
-control its repair signal falls to chance; its one deployment-relevant success —
-+6.9 pp over bare with zero induced harm — holds only as an abstaining gate over the
-full 24-harness pool. We release a three-metric
+similarity 0.14) yet behaviorally collapsed — 96\% outcome agreement, and the shipped
+ReAct variant reproduces the bare baseline's final SQL byte-for-byte on every audited
+task. Execution-trace auditing resolves the collapse into three failure classes:
+mechanisms described but absent from the control flow, feedback with no causal path
+to the output, and broken multi-turn paths. A hand-written positive control on the
+same target, tasks, and judge delivers 7.3 pp of oracle headroom on 151 held-out
+questions — the headroom routers need is real, and it is the generation side that
+fails. Two pre-specified interventions repair it: forcing an explicit mechanism into
+every candidate, and compiling mechanisms from a declarative harness IR. Populations
+from all three tested builders then exceed pre-specified diversity thresholds (oracle
+headroom 6.0–9.9 pp at the point estimate), per-strategy generation acceptance orders
+with builder capability (3/8, 7/8, 8/8 under full logging), and a K-controlled
+subsampling analysis shows the repair is not a population-size effect. Diversity,
+however, is necessary, not sufficient: a value predictor over the repaired populations
+does not beat the best fixed harness on unseen tasks. We release a three-metric
 precondition checklist — pairwise disagreement, union repair, oracle headroom — that
-harness-generation and harness-routing papers can and should report before routing is
+harness-generation and harness-routing papers should report before routing is
 attempted.
 
 ## §7 Discussion
@@ -82,7 +78,7 @@ against 96% behavioral agreement — explained its mechanism at the trace level,
 the missing headroom is recoverable by hand (7.3 pp), and then showed it is also
 reachable automatically: strategy-forced generation with capable builders restores
 behavioral diversity (two admitted populations, up to 8.0 pp headroom at the point
-estimate) where the old protocol misses the pre-registered headroom threshold. What
+estimate) where the old protocol misses the pre-specified headroom threshold. What
 diversity does not yet buy is open-set routing — unseen-harness value prediction
 remains unsolved, under both harness-level and task-level generalization — so the
 practical output of this paper is deliberately small and reusable: report
