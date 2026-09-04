@@ -1,0 +1,1 @@
+"""Self-repair harness that executes candidate SQL against SQLite and regenerates up to two times using the exact execution error as feedback."""

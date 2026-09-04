@@ -1,0 +1,1 @@
+"""Format-guard harness: re-prompts the frozen weak solver in a validate-and-repair loop until its reply is exactly one schema-faithful query inside a single

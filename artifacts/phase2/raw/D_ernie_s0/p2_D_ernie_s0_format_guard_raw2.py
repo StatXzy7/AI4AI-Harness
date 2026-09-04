@@ -1,0 +1,1 @@
+"""A harness that uses a single LLM call with strict format instructions to generate a Text-to-SQL query, extracting and returning the SQL from a

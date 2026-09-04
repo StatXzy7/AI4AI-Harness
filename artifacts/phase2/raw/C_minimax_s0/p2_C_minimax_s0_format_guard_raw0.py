@@ -1,0 +1,1 @@
+"""Prompt-to-prompt format-guarded harness enforcing strict

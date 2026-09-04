@@ -1,0 +1,1 @@
+"""Format-guard Text-to-SQL harness that prompts the frozen solver for exactly one

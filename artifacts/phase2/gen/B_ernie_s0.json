@@ -1,0 +1,235 @@
+{
+ "builder": "ernie",
+ "model": "ERNIE-5.0-Thinking-Preview",
+ "arm": "B",
+ "seed": 0,
+ "gate": true,
+ "forced": false,
+ "raw_attempts_per_slot": 3,
+ "n_slots": 8,
+ "K_admitted": 8,
+ "raw_total": 8,
+ "R_artifact": 1.0,
+ "R_contract": 1.0,
+ "R_fidelity": 1.0,
+ "p_neutral_valid": 1.0,
+ "p_mechanism_pass": 1.0,
+ "results": [
+  {
+   "harness": "p2_B_ernie_s0_g0",
+   "arm": "B",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (91 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "repair"
+     },
+     "secs": 37.5
+    }
+   ]
+  },
+  {
+   "harness": "p2_B_ernie_s0_g1",
+   "arm": "B",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (91 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "repair"
+     },
+     "secs": 19.2
+    }
+   ]
+  },
+  {
+   "harness": "p2_B_ernie_s0_g2",
+   "arm": "B",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (91 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "repair"
+     },
+     "secs": 19.9
+    }
+   ]
+  },
+  {
+   "harness": "p2_B_ernie_s0_g3",
+   "arm": "B",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (91 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "repair"
+     },
+     "secs": 13.5
+    }
+   ]
+  },
+  {
+   "harness": "p2_B_ernie_s0_g4",
+   "arm": "B",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (91 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "repair"
+     },
+     "secs": 45.3
+    }
+   ]
+  },
+  {
+   "harness": "p2_B_ernie_s0_g5",
+   "arm": "B",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (91 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "repair"
+     },
+     "secs": 17.5
+    }
+   ]
+  },
+  {
+   "harness": "p2_B_ernie_s0_g6",
+   "arm": "B",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (91 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "repair"
+     },
+     "secs": 18.0
+    }
+   ]
+  },
+  {
+   "harness": "p2_B_ernie_s0_g7",
+   "arm": "B",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (91 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "repair"
+     },
+     "secs": 30.4
+    }
+   ]
+  }
+ ]
+}

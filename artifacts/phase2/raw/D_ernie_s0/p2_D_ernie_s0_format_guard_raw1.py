@@ -1,0 +1,1 @@
+"""Uses a frozen weak LLM with iterative format enforcement and schema-aware execution validation to extract valid SQL inside a

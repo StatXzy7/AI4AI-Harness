@@ -1,0 +1,1 @@
+"""Format-guard Text-to-SQL harness: forces the LLM to answer with exactly one

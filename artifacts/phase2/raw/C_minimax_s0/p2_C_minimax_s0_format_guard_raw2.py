@@ -1,0 +1,1 @@
+"""Harness wrapping a weak Text-to-SQL solver with strict

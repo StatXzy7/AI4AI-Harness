@@ -35,3 +35,6 @@
   p2_D_glm_s0_hint_guard                   empty  nv=0/3 mech=0 no python fence
   p2_D_glm_s0_two_view                     ADMIT  nv=1/1 mech=1 PASS
   p2_D_glm_s0_decompose                    empty  nv=0/3 mech=0 no python fence
+  p2_D_glm_s0_error_classify               empty  nv=0/3 mech=0 no python fence
+  p2_D_glm_s0_format_guard                 empty  nv=0/3 mech=0 no python fence
+[gen] K=2/8 admitted | R_artifact=0.1 R_contract=0.1 R_fidelity=1.0 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\D_glm_s0.json

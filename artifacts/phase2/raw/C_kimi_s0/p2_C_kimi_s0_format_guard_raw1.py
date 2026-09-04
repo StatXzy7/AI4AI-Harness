@@ -1,0 +1,1 @@
+"""FormatGuard harness that forces the frozen Kimi solver to emit exactly one

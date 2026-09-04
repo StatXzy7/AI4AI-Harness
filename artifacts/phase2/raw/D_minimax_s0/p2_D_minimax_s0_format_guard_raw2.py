@@ -1,0 +1,1 @@
+"""Format-fence guard that retries when the weak solver's output lacks a

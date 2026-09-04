@@ -1,0 +1,40 @@
+[run ] A/kimi/s0
+[run ] A/minimax/s0
+[run ] A/ernie/s0
+[run ] B/ernie/s0
+[run ] C/ernie/s0
+[run ] B/minimax/s0
+[run ] C/minimax/s0
+[run ] B/kimi/s0
+[run ] D/minimax/s0
+[run ] D/ernie/s0
+[done] builder minimax
+[run ] C/kimi/s0
+[done] builder ernie
+[run ] D/kimi/s0
+[done] builder kimi
+=== sweep complete ===
+  A/deepseek/s0: K=8/8 nv=0.7273 mech=0.0
+  A/ernie/s0: K=8/8 nv=1.0 mech=0.0
+  A/glm/s0: K=1/8 nv=0.0455 mech=0.0
+  A/kimi/s0: K=8/8 nv=0.5333 mech=0.0
+  A/minimax/s0: K=5/8 nv=0.3333 mech=0.0
+  A/qwen/s0: K=5/8 nv=0.2632 mech=0.0
+  B/deepseek/s0: K=7/8 nv=0.5833 mech=0.5833
+  B/ernie/s0: K=8/8 nv=1.0 mech=1.0
+  B/glm/s0: K=3/8 nv=0.15 mech=0.15
+  B/kimi/s0: K=8/8 nv=0.7273 mech=0.7273
+  B/minimax/s0: K=6/8 nv=0.4118 mech=0.3529
+  B/qwen/s0: K=5/8 nv=0.4118 mech=0.2941
+  C/deepseek/s0: K=5/8 nv=0.3333 mech=0.0
+  C/ernie/s0: K=7/8 nv=0.5833 mech=0.0
+  C/glm/s0: K=4/8 nv=0.1905 mech=0.0
+  C/kimi/s0: K=7/8 nv=0.5385 mech=0.0
+  C/minimax/s0: K=7/8 nv=0.5833 mech=0.0
+  C/qwen/s0: K=3/8 nv=0.1429 mech=0.0
+  D/deepseek/s0: K=5/8 nv=0.4375 mech=0.3125
+  D/ernie/s0: K=4/8 nv=0.7647 mech=0.2353
+  D/glm/s0: K=2/8 nv=0.1 mech=0.1
+  D/kimi/s0: K=5/8 nv=0.4286 mech=0.3571
+  D/minimax/s0: K=5/8 nv=0.4706 mech=0.2941
+  E/deepseek/s0: K=3/4 nv=0.6 mech=0.3

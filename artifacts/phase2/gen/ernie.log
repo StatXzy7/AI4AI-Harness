@@ -1,0 +1,40 @@
+[gen] builder=ernie(ERNIE-5.0-Thinking-Preview) arm=A seed=0 gate=False forced=False slots=8 raw_budget=3/slot
+  p2_A_ernie_s0_g0                         ADMIT  nv=1/1 mech=0 
+  p2_A_ernie_s0_g1                         ADMIT  nv=1/1 mech=0 
+  p2_A_ernie_s0_g2                         ADMIT  nv=1/1 mech=0 
+  p2_A_ernie_s0_g3                         ADMIT  nv=1/1 mech=0 
+  p2_A_ernie_s0_g4                         ADMIT  nv=1/1 mech=0 
+  p2_A_ernie_s0_g5                         ADMIT  nv=1/1 mech=0 
+  p2_A_ernie_s0_g6                         ADMIT  nv=1/1 mech=0 
+  p2_A_ernie_s0_g7                         ADMIT  nv=1/1 mech=0 
+[gen] K=8/8 admitted | R_artifact=1.0 R_contract=0.0 R_fidelity=0.0 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\A_ernie_s0.json
+[gen] builder=ernie(ERNIE-5.0-Thinking-Preview) arm=B seed=0 gate=True forced=False slots=8 raw_budget=3/slot
+  p2_B_ernie_s0_g0                         ADMIT  nv=1/1 mech=1 PASS
+  p2_B_ernie_s0_g1                         ADMIT  nv=1/1 mech=1 PASS
+  p2_B_ernie_s0_g2                         ADMIT  nv=1/1 mech=1 PASS
+  p2_B_ernie_s0_g3                         ADMIT  nv=1/1 mech=1 PASS
+  p2_B_ernie_s0_g4                         ADMIT  nv=1/1 mech=1 PASS
+  p2_B_ernie_s0_g5                         ADMIT  nv=1/1 mech=1 PASS
+  p2_B_ernie_s0_g6                         ADMIT  nv=1/1 mech=1 PASS
+  p2_B_ernie_s0_g7                         ADMIT  nv=1/1 mech=1 PASS
+[gen] K=8/8 admitted | R_artifact=1.0 R_contract=1.0 R_fidelity=1.0 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\B_ernie_s0.json
+[gen] builder=ernie(ERNIE-5.0-Thinking-Preview) arm=C seed=0 gate=False forced=True slots=8 raw_budget=3/slot
+  p2_C_ernie_s0_repair                     ADMIT  nv=1/1 mech=0 
+  p2_C_ernie_s0_vote3                      ADMIT  nv=1/1 mech=0 
+  p2_C_ernie_s0_schema_link                ADMIT  nv=1/1 mech=0 
+  p2_C_ernie_s0_hint_guard                 ADMIT  nv=1/1 mech=0 
+  p2_C_ernie_s0_two_view                   ADMIT  nv=1/1 mech=0 
+  p2_C_ernie_s0_decompose                  ADMIT  nv=1/3 mech=0 
+  p2_C_ernie_s0_error_classify             ADMIT  nv=1/1 mech=0 
+  p2_C_ernie_s0_format_guard               empty  nv=0/3 mech=0 
+[gen] K=7/8 admitted | R_artifact=0.5833 R_contract=0.0 R_fidelity=0.0 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\C_ernie_s0.json
+[gen] builder=ernie(ERNIE-5.0-Thinking-Preview) arm=D seed=0 gate=True forced=True slots=8 raw_budget=3/slot
+  p2_D_ernie_s0_repair                     ADMIT  nv=1/1 mech=1 PASS
+  p2_D_ernie_s0_vote3                      ADMIT  nv=1/1 mech=1 PASS
+  p2_D_ernie_s0_schema_link                empty  nv=3/3 mech=0 T2_stage1_output_discarded
+  p2_D_ernie_s0_hint_guard                 empty  nv=3/3 mech=0 NO_MECHANISM_declared
+  p2_D_ernie_s0_two_view                   ADMIT  nv=2/2 mech=1 PASS
+  p2_D_ernie_s0_decompose                  empty  nv=2/3 mech=0 
+  p2_D_ernie_s0_error_classify             ADMIT  nv=1/1 mech=1 PASS
+  p2_D_ernie_s0_format_guard               empty  nv=0/3 mech=0 
+[gen] K=4/8 admitted | R_artifact=0.7647 R_contract=0.7647 R_fidelity=0.3077 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\D_ernie_s0.json

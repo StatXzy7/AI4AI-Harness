@@ -1,0 +1,1 @@
+"""Format-guard harness: force the frozen weak solver to emit schema-faithful SQL inside a single

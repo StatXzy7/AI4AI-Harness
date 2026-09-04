@@ -1,0 +1,259 @@
+{
+ "builder": "minimax",
+ "model": "MiniMax-M3",
+ "arm": "A",
+ "seed": 0,
+ "gate": false,
+ "forced": false,
+ "raw_attempts_per_slot": 3,
+ "n_slots": 8,
+ "K_admitted": 5,
+ "raw_total": 15,
+ "R_artifact": 0.3333,
+ "R_contract": 0.0,
+ "R_fidelity": 0.0,
+ "p_neutral_valid": 0.3333,
+ "p_mechanism_pass": 0.0,
+ "results": [
+  {
+   "harness": "p2_A_minimax_s0_g0",
+   "arm": "A",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (89 chars)",
+     "secs": 20.1
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_minimax_s0_g1",
+   "arm": "A",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 1,
+   "contract": null,
+   "n_raw": 2,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated f-string literal (detected at line 31) (p2_A_minimax_s0_g1.py, line 31)",
+     "secs": 12.8
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "secs": 16.2
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_minimax_s0_g2",
+   "arm": "A",
+   "strategy": null,
+   "seed": 0,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 16) (p2_A_minimax_s0_g2.py, line 16)",
+     "secs": 11.8
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 12.7
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 15.1
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_minimax_s0_g3",
+   "arm": "A",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (149 chars)",
+     "secs": 191.7
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_minimax_s0_g4",
+   "arm": "A",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (106 chars)",
+     "secs": 14.2
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_minimax_s0_g5",
+   "arm": "A",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "secs": 14.0
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_minimax_s0_g6",
+   "arm": "A",
+   "strategy": null,
+   "seed": 0,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "empty sql on dev question",
+     "secs": 29.1
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 26.6
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 47) (p2_A_minimax_s0_g6.py, line 47)",
+     "secs": 23.5
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_minimax_s0_g7",
+   "arm": "A",
+   "strategy": null,
+   "seed": 0,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 2.9
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 45) (p2_A_minimax_s0_g7.py, line 45)",
+     "secs": 9.9
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 7.9
+    }
+   ]
+  }
+ ]
+}

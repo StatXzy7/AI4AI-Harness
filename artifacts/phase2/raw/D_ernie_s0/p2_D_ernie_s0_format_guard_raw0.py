@@ -1,0 +1,1 @@
+"""Generates a Text-to-SQL query by prompting a frozen LLM with strict schema and format instructions and extracts the SQL from a

@@ -1,0 +1,303 @@
+{
+ "builder": "minimax",
+ "model": "MiniMax-M3",
+ "arm": "B",
+ "seed": 0,
+ "gate": true,
+ "forced": false,
+ "raw_attempts_per_slot": 3,
+ "n_slots": 8,
+ "K_admitted": 6,
+ "raw_total": 17,
+ "R_artifact": 0.4118,
+ "R_contract": 0.4118,
+ "R_fidelity": 0.8571,
+ "p_neutral_valid": 0.4118,
+ "p_mechanism_pass": 0.3529,
+ "results": [
+  {
+   "harness": "p2_B_minimax_s0_g0",
+   "arm": "B",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 1,
+   "contract": null,
+   "n_raw": 2,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 7.8
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "twostage"
+     },
+     "secs": 13.6
+    }
+   ]
+  },
+  {
+   "harness": "p2_B_minimax_s0_g1",
+   "arm": "B",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 1,
+   "contract": null,
+   "n_raw": 2,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 15.0
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "twostage"
+     },
+     "secs": 14.3
+    }
+   ]
+  },
+  {
+   "harness": "p2_B_minimax_s0_g2",
+   "arm": "B",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 1,
+   "contract": null,
+   "n_raw": 2,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 13.3
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "repair"
+     },
+     "secs": 10.6
+    }
+   ]
+  },
+  {
+   "harness": "p2_B_minimax_s0_g3",
+   "arm": "B",
+   "strategy": null,
+   "seed": 0,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 6.1
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 23) (p2_B_minimax_s0_g3.py, line 23)",
+     "secs": 5.4
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 13.1
+    }
+   ]
+  },
+  {
+   "harness": "p2_B_minimax_s0_g4",
+   "arm": "B",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (100 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "twostage"
+     },
+     "secs": 22.8
+    }
+   ]
+  },
+  {
+   "harness": "p2_B_minimax_s0_g5",
+   "arm": "B",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "repair"
+     },
+     "secs": 14.7
+    }
+   ]
+  },
+  {
+   "harness": "p2_B_minimax_s0_g6",
+   "arm": "B",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 2,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 2,
+   "n_contract_valid": 2,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 10.2
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (97 chars)",
+     "mechanism_detail": {
+      "verdict": "T2_stage1_output_discarded",
+      "scenario": "twostage"
+     },
+     "secs": 25.4
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "twostage"
+     },
+     "secs": 14.6
+    }
+   ]
+  },
+  {
+   "harness": "p2_B_minimax_s0_g7",
+   "arm": "B",
+   "strategy": null,
+   "seed": 0,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 7.0
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 4.7
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 10.1
+    }
+   ]
+  }
+ ]
+}
