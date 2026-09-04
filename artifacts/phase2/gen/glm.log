@@ -8,3 +8,8 @@
   p2_A_glm_s0_g6                           empty  nv=0/3 mech=0 
   p2_A_glm_s0_g7                           ADMIT  nv=1/1 mech=0 
 [gen] K=1/8 admitted | P(neutral valid)=0.0455 P(mechanism pass)=0.0 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\A_glm_s0.json
+[gen] builder=glm(GLM-5.3) arm=B seed=0 gate=True forced=False slots=8 raw_budget=3/slot
+  p2_B_glm_s0_g0                           empty  nv=0/3 mech=0 
+  p2_B_glm_s0_g1                           empty  nv=0/3 mech=0 
+  p2_B_glm_s0_g2                           ADMIT  nv=1/1 mech=1 PASS
+  p2_B_glm_s0_g3                           ADMIT  nv=1/2 mech=1 PASS

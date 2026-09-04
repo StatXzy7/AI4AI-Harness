@@ -34,3 +34,7 @@
   p2_D_deepseek_s0_schema_link             empty  nv=0/3 mech=0 
   p2_D_deepseek_s0_hint_guard              empty  nv=2/3 mech=0 NO_MECHANISM_declared
   p2_D_deepseek_s0_two_view                ADMIT  nv=1/1 mech=1 PASS
+  p2_D_deepseek_s0_decompose               ADMIT  nv=1/3 mech=1 PASS
+  p2_D_deepseek_s0_error_classify          ADMIT  nv=1/1 mech=1 PASS
+  p2_D_deepseek_s0_format_guard            empty  nv=0/3 mech=0 
+[gen] K=5/8 admitted | P(neutral valid)=0.4375 P(mechanism pass)=0.3125 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\D_deepseek_s0.json

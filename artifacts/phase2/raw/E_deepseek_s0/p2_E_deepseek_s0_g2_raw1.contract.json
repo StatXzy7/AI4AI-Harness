@@ -1,0 +1,7 @@
+{
+  "name": "P2P2EDeepseekS0G2",
+  "min_llm_calls": 2,
+  "min_executions": 1,
+  "branches_on_execution": true,
+  "carries_data_forward": true
+}

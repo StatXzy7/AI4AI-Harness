@@ -129,14 +129,21 @@ def check(contract: dict, obs: dict) -> list[tuple[str, bool, str]]:
         res.append(("min_distinct_samples", ok, f"declared >={n}, observed {f['n_samples']}"))
 
     if contract.get("branches_on_execution"):
-        # the ONLY difference between the probes is the first execution outcome, so any
+        # The ONLY difference between these probes is the first execution outcome, so any
         # downstream difference must be caused by it. An unconditional second call produces
         # identical structure in both and fails here.
+        #
+        # Deliberately NOT conjoined with "the error text reached a later prompt". The DSL text
+        # shown to the builder defines this property as control flow depending on WHETHER a
+        # query executed cleanly; propagating the error STRING is a different property, and the
+        # DSL already expresses that separately as carries_data_forward. Requiring both would
+        # grade a stricter property than the one the builder was asked to assert, and would fail
+        # a legitimate "if it failed, fall back to a different candidate" branch.
         differs = (f["n_llm"] != k["n_llm"]) or (norm(f["final"]) != norm(k["final"]))
-        res.append(("branches_on_execution", bool(differs and f["err_fed_back"]),
+        res.append(("branches_on_execution", bool(differs),
                     f"fail-trace {f['n_llm']}calls/{norm(f['final'])[:24]!r} vs "
-                    f"ok-trace {k['n_llm']}calls/{norm(k['final'])[:24]!r}, "
-                    f"error_fed_back={f['err_fed_back']}"))
+                    f"ok-trace {k['n_llm']}calls/{norm(k['final'])[:24]!r} "
+                    f"(error_text_fed_back={f['err_fed_back']}, not required)"))
 
     if contract.get("carries_data_forward"):
         res.append(("carries_data_forward", c["marker_fed_back"],

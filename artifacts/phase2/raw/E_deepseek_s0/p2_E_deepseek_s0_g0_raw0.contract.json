@@ -1,0 +1,6 @@
+{
+  "name": "plan_to_predict_to_execute_with_repair",
+  "min_llm_calls": 2,
+  "branches_on_execution": true,
+  "carries_data_forward": true
+}
