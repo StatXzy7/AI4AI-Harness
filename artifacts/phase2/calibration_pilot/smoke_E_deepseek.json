@@ -1,0 +1,704 @@
+{
+ "builder": "deepseek",
+ "model": "DeepSeek-V4-Pro",
+ "arm": "E",
+ "seed": 0,
+ "gate": true,
+ "forced": false,
+ "raw_attempts_per_slot": 3,
+ "n_slots": 4,
+ "K_admitted": 0,
+ "raw_total": 12,
+ "p_neutral_valid": 0.9167,
+ "p_mechanism_pass": 0.0,
+ "results": [
+  {
+   "harness": "p2_E_deepseek_s0_g0",
+   "arm": "E",
+   "strategy": null,
+   "seed": 0,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 3,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "contract": {
+      "name": "P2P2EDeepseekS0G0",
+      "min_llm_calls": 4,
+      "min_executions": 3,
+      "min_distinct_samples": 3,
+      "branches_on_execution": true,
+      "carries_data_forward": true,
+      "final_from_last_generation": true,
+      "final_invariant_to_sample_order": true
+     },
+     "neutral_detail": "neutral-valid (91 chars)",
+     "mechanism_detail": {
+      "verdict": "E_CONTRACT_VIOLATED",
+      "reason": "violated ['branches_on_execution', 'final_invariant_to_sample_order']",
+      "checks": [
+       {
+        "property": "min_llm_calls",
+        "ok": true,
+        "detail": "declared >=4, observed 4/4"
+       },
+       {
+        "property": "min_executions",
+        "ok": true,
+        "detail": "declared >=3, observed 3/3"
+       },
+       {
+        "property": "min_distinct_samples",
+        "ok": true,
+        "detail": "declared >=3, observed 4"
+       },
+       {
+        "property": "branches_on_execution",
+        "ok": false,
+        "detail": "fail-trace 4calls/'select id from t1' vs ok-trace 4calls/'select id from t1', error_fed_back=True"
+       },
+       {
+        "property": "carries_data_forward",
+        "ok": true,
+        "detail": "stage-1 marker reached a later prompt"
+       },
+       {
+        "property": "final_invariant_to_sample_order",
+        "ok": false,
+        "detail": "permuted->'select name from t'/'select id from t1' (invariant=False), changed->'select id from t1' (sensitive=True)"
+       },
+       {
+        "property": "final_from_last_generation",
+        "ok": true,
+        "detail": ""
+       }
+      ]
+     },
+     "secs": 160.9
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "contract": {
+      "name": "P2P2EDeepseekS0G0",
+      "min_llm_calls": 4,
+      "min_executions": 3,
+      "min_distinct_samples": 3,
+      "branches_on_execution": true,
+      "carries_data_forward": true,
+      "final_from_last_generation": true,
+      "final_invariant_to_sample_order": true
+     },
+     "neutral_detail": "neutral-valid (91 chars)",
+     "mechanism_detail": {
+      "verdict": "E_CONTRACT_VIOLATED",
+      "reason": "violated ['final_invariant_to_sample_order']",
+      "checks": [
+       {
+        "property": "min_llm_calls",
+        "ok": true,
+        "detail": "declared >=4, observed 22330586/2392746"
+       },
+       {
+        "property": "min_executions",
+        "ok": true,
+        "detail": "declared >=3, observed 3/3"
+       },
+       {
+        "property": "min_distinct_samples",
+        "ok": true,
+        "detail": "declared >=3, observed 22330586"
+       },
+       {
+        "property": "branches_on_execution",
+        "ok": true,
+        "detail": "fail-trace 22330586calls/'select id from t1' vs ok-trace 2392746calls/'select id from t1', error_fed_back=True"
+       },
+       {
+        "property": "carries_data_forward",
+        "ok": true,
+        "detail": "stage-1 marker reached a later prompt"
+       },
+       {
+        "property": "final_invariant_to_sample_order",
+        "ok": false,
+        "detail": "permuted->'select id from t1'/'select id from t1' (invariant=True), changed->'select id from t1' (sensitive=False)"
+       },
+       {
+        "property": "final_from_last_generation",
+        "ok": true,
+        "detail": ""
+       }
+      ]
+     },
+     "secs": 586.8
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "contract": {
+      "name": "p2p2e_deepseek_s0g0",
+      "min_llm_calls": 4,
+      "min_executions": 3,
+      "min_distinct_samples": 3,
+      "branches_on_execution": true,
+      "carries_data_forward": true,
+      "final_from_last_generation": true,
+      "final_invariant_to_sample_order": true
+     },
+     "neutral_detail": "neutral-valid (18 chars)",
+     "mechanism_detail": {
+      "verdict": "E_CONTRACT_VIOLATED",
+      "reason": "violated ['branches_on_execution', 'final_invariant_to_sample_order']",
+      "checks": [
+       {
+        "property": "min_llm_calls",
+        "ok": true,
+        "detail": "declared >=4, observed 4/4"
+       },
+       {
+        "property": "min_executions",
+        "ok": true,
+        "detail": "declared >=3, observed 3/3"
+       },
+       {
+        "property": "min_distinct_samples",
+        "ok": true,
+        "detail": "declared >=3, observed 4"
+       },
+       {
+        "property": "branches_on_execution",
+        "ok": false,
+        "detail": "fail-trace 4calls/'select id from t1' vs ok-trace 4calls/'select id from t1', error_fed_back=False"
+       },
+       {
+        "property": "carries_data_forward",
+        "ok": true,
+        "detail": "stage-1 marker reached a later prompt"
+       },
+       {
+        "property": "final_invariant_to_sample_order",
+        "ok": false,
+        "detail": "permuted->'select name from t'/'select id from t1' (invariant=False), changed->'select id from t1' (sensitive=True)"
+       },
+       {
+        "property": "final_from_last_generation",
+        "ok": true,
+        "detail": ""
+       }
+      ]
+     },
+     "secs": 158.2
+    }
+   ]
+  },
+  {
+   "harness": "p2_E_deepseek_s0_g1",
+   "arm": "E",
+   "strategy": null,
+   "seed": 0,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 2,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "contract": {
+      "name": "DiverseExecuteRepairSelect",
+      "min_llm_calls": 3,
+      "min_executions": 2,
+      "min_distinct_samples": 2,
+      "branches_on_execution": true,
+      "carries_data_forward": true,
+      "final_from_last_generation": true,
+      "final_invariant_to_sample_order": true
+     },
+     "neutral_detail": "neutral-valid (89 chars)",
+     "mechanism_detail": {
+      "verdict": "E_CONTRACT_VIOLATED",
+      "reason": "violated ['branches_on_execution', 'final_invariant_to_sample_order']",
+      "checks": [
+       {
+        "property": "min_llm_calls",
+        "ok": true,
+        "detail": "declared >=3, observed 3/3"
+       },
+       {
+        "property": "min_executions",
+        "ok": true,
+        "detail": "declared >=2, observed 2/2"
+       },
+       {
+        "property": "min_distinct_samples",
+        "ok": true,
+        "detail": "declared >=2, observed 3"
+       },
+       {
+        "property": "branches_on_execution",
+        "ok": false,
+        "detail": "fail-trace 3calls/'select id from t1' vs ok-trace 3calls/'select id from t1', error_fed_back=True"
+       },
+       {
+        "property": "carries_data_forward",
+        "ok": true,
+        "detail": "stage-1 marker reached a later prompt"
+       },
+       {
+        "property": "final_invariant_to_sample_order",
+        "ok": false,
+        "detail": "permuted->'select name from t'/'select id from t1' (invariant=False), changed->'select id from t1' (sensitive=True)"
+       },
+       {
+        "property": "final_from_last_generation",
+        "ok": true,
+        "detail": ""
+       }
+      ]
+     },
+     "secs": 226.4
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "contract": {
+      "name": "multi-exec-refine",
+      "min_llm_calls": 2,
+      "min_executions": 3,
+      "min_distinct_samples": 3,
+      "branches_on_execution": true,
+      "carries_data_forward": true,
+      "final_from_last_generation": true,
+      "final_invariant_to_sample_order": true
+     },
+     "neutral_detail": "SyntaxError: unterminated triple-quoted f-string literal (detected at line 133) (p2_E_deepseek_s0_g1.py, line 126)",
+     "secs": 267.8
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "contract": {
+      "name": "p2p2e-deepseek-s0g1-execution-feedback",
+      "min_llm_calls": 3,
+      "min_executions": 2,
+      "min_distinct_samples": 2,
+      "branches_on_execution": true,
+      "carries_data_forward": true,
+      "final_from_last_generation": true
+     },
+     "neutral_detail": "neutral-valid (18 chars)",
+     "mechanism_detail": {
+      "verdict": "E_CONTRACT_VIOLATED",
+      "reason": "violated ['branches_on_execution']",
+      "checks": [
+       {
+        "property": "min_llm_calls",
+        "ok": true,
+        "detail": "declared >=3, observed 3/3"
+       },
+       {
+        "property": "min_executions",
+        "ok": true,
+        "detail": "declared >=2, observed 2/2"
+       },
+       {
+        "property": "min_distinct_samples",
+        "ok": true,
+        "detail": "declared >=2, observed 3"
+       },
+       {
+        "property": "branches_on_execution",
+        "ok": false,
+        "detail": "fail-trace 3calls/'select id from t1' vs ok-trace 3calls/'select id from t1', error_fed_back=False"
+       },
+       {
+        "property": "carries_data_forward",
+        "ok": true,
+        "detail": "stage-1 marker reached a later prompt"
+       },
+       {
+        "property": "final_from_last_generation",
+        "ok": true,
+        "detail": ""
+       }
+      ]
+     },
+     "secs": 253.6
+    }
+   ]
+  },
+  {
+   "harness": "p2_E_deepseek_s0_g2",
+   "arm": "E",
+   "strategy": null,
+   "seed": 0,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 3,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "contract": {
+      "name": "execution-aware-selection",
+      "min_llm_calls": 2,
+      "min_executions": 2,
+      "min_distinct_samples": 2,
+      "branches_on_execution": true,
+      "carries_data_forward": true,
+      "final_from_last_generation": true,
+      "final_invariant_to_sample_order": true
+     },
+     "neutral_detail": "neutral-valid (89 chars)",
+     "mechanism_detail": {
+      "verdict": "E_CONTRACT_VIOLATED",
+      "reason": "violated ['branches_on_execution', 'final_invariant_to_sample_order']",
+      "checks": [
+       {
+        "property": "min_llm_calls",
+        "ok": true,
+        "detail": "declared >=2, observed 2/2"
+       },
+       {
+        "property": "min_executions",
+        "ok": true,
+        "detail": "declared >=2, observed 2/2"
+       },
+       {
+        "property": "min_distinct_samples",
+        "ok": true,
+        "detail": "declared >=2, observed 3"
+       },
+       {
+        "property": "branches_on_execution",
+        "ok": false,
+        "detail": "fail-trace 2calls/'select id from t1' vs ok-trace 2calls/'select id from t1', error_fed_back=True"
+       },
+       {
+        "property": "carries_data_forward",
+        "ok": true,
+        "detail": "stage-1 marker reached a later prompt"
+       },
+       {
+        "property": "final_invariant_to_sample_order",
+        "ok": false,
+        "detail": "permuted->'select name from t'/'select id from t1' (invariant=False), changed->'select id from t1' (sensitive=True)"
+       },
+       {
+        "property": "final_from_last_generation",
+        "ok": true,
+        "detail": ""
+       }
+      ]
+     },
+     "secs": 301.0
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "contract": {
+      "name": "multi_sample_execute_repair",
+      "min_llm_calls": 4,
+      "min_executions": 4,
+      "branches_on_execution": true,
+      "carries_data_forward": true
+     },
+     "neutral_detail": "neutral-valid (18 chars)",
+     "mechanism_detail": {
+      "verdict": "E_CONTRACT_VIOLATED",
+      "reason": "violated ['branches_on_execution', 'carries_data_forward']",
+      "checks": [
+       {
+        "property": "min_llm_calls",
+        "ok": true,
+        "detail": "declared >=4, observed 4/4"
+       },
+       {
+        "property": "min_executions",
+        "ok": true,
+        "detail": "declared >=4, observed 4/4"
+       },
+       {
+        "property": "branches_on_execution",
+        "ok": false,
+        "detail": "fail-trace 4calls/'select id from t1' vs ok-trace 4calls/'select id from t1', error_fed_back=False"
+       },
+       {
+        "property": "carries_data_forward",
+        "ok": false,
+        "detail": "stage-1 output never reached a later prompt"
+       }
+      ]
+     },
+     "secs": 243.6
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "contract": {
+      "name": "P2P2EDeepseekS0G2",
+      "min_llm_calls": 4,
+      "min_executions": 3,
+      "min_distinct_samples": 3,
+      "branches_on_execution": true,
+      "carries_data_forward": true,
+      "final_from_last_generation": true,
+      "final_invariant_to_sample_order": true
+     },
+     "neutral_detail": "neutral-valid (18 chars)",
+     "mechanism_detail": {
+      "verdict": "E_CONTRACT_VIOLATED",
+      "reason": "violated ['branches_on_execution', 'final_invariant_to_sample_order']",
+      "checks": [
+       {
+        "property": "min_llm_calls",
+        "ok": true,
+        "detail": "declared >=4, observed 4/4"
+       },
+       {
+        "property": "min_executions",
+        "ok": true,
+        "detail": "declared >=3, observed 3/3"
+       },
+       {
+        "property": "min_distinct_samples",
+        "ok": true,
+        "detail": "declared >=3, observed 4"
+       },
+       {
+        "property": "branches_on_execution",
+        "ok": false,
+        "detail": "fail-trace 4calls/'select id from t1' vs ok-trace 4calls/'select id from t1', error_fed_back=True"
+       },
+       {
+        "property": "carries_data_forward",
+        "ok": true,
+        "detail": "stage-1 marker reached a later prompt"
+       },
+       {
+        "property": "final_invariant_to_sample_order",
+        "ok": false,
+        "detail": "permuted->'select name from t'/'select id from t1' (invariant=False), changed->'select id from t1' (sensitive=True)"
+       },
+       {
+        "property": "final_from_last_generation",
+        "ok": true,
+        "detail": ""
+       }
+      ]
+     },
+     "secs": 192.9
+    }
+   ]
+  },
+  {
+   "harness": "p2_E_deepseek_s0_g3",
+   "arm": "E",
+   "strategy": null,
+   "seed": 0,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 3,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "contract": {
+      "name": "p2p2e-deepseek-s0g3-execution-feedback",
+      "min_llm_calls": 4,
+      "min_executions": 2,
+      "min_distinct_samples": 2,
+      "branches_on_execution": true,
+      "carries_data_forward": true,
+      "final_from_last_generation": true,
+      "final_invariant_to_sample_order": true
+     },
+     "neutral_detail": "neutral-valid (90 chars)",
+     "mechanism_detail": {
+      "verdict": "E_CONTRACT_VIOLATED",
+      "reason": "violated ['branches_on_execution', 'final_invariant_to_sample_order']",
+      "checks": [
+       {
+        "property": "min_llm_calls",
+        "ok": true,
+        "detail": "declared >=4, observed 4/4"
+       },
+       {
+        "property": "min_executions",
+        "ok": true,
+        "detail": "declared >=2, observed 2/2"
+       },
+       {
+        "property": "min_distinct_samples",
+        "ok": true,
+        "detail": "declared >=2, observed 4"
+       },
+       {
+        "property": "branches_on_execution",
+        "ok": false,
+        "detail": "fail-trace 4calls/'select id from t1' vs ok-trace 4calls/'select id from t1', error_fed_back=True"
+       },
+       {
+        "property": "carries_data_forward",
+        "ok": true,
+        "detail": "stage-1 marker reached a later prompt"
+       },
+       {
+        "property": "final_invariant_to_sample_order",
+        "ok": false,
+        "detail": "permuted->'select name from t'/'select id from t1' (invariant=False), changed->'select id from t1' (sensitive=True)"
+       },
+       {
+        "property": "final_from_last_generation",
+        "ok": true,
+        "detail": ""
+       }
+      ]
+     },
+     "secs": 262.0
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "contract": {
+      "name": "ExecutionGuidedSelection",
+      "min_llm_calls": 4,
+      "min_executions": 3,
+      "branches_on_execution": true,
+      "carries_data_forward": true,
+      "final_from_last_generation": true,
+      "final_invariant_to_sample_order": true
+     },
+     "neutral_detail": "neutral-valid (88 chars)",
+     "mechanism_detail": {
+      "verdict": "E_CONTRACT_VIOLATED",
+      "reason": "violated ['branches_on_execution', 'final_invariant_to_sample_order']",
+      "checks": [
+       {
+        "property": "min_llm_calls",
+        "ok": true,
+        "detail": "declared >=4, observed 4/4"
+       },
+       {
+        "property": "min_executions",
+        "ok": true,
+        "detail": "declared >=3, observed 3/3"
+       },
+       {
+        "property": "branches_on_execution",
+        "ok": false,
+        "detail": "fail-trace 4calls/'select id from t1' vs ok-trace 4calls/'select id from t1', error_fed_back=True"
+       },
+       {
+        "property": "carries_data_forward",
+        "ok": true,
+        "detail": "stage-1 marker reached a later prompt"
+       },
+       {
+        "property": "final_invariant_to_sample_order",
+        "ok": false,
+        "detail": "permuted->'select name from t'/'select id from t1' (invariant=False), changed->'select id from t1' (sensitive=True)"
+       },
+       {
+        "property": "final_from_last_generation",
+        "ok": true,
+        "detail": ""
+       }
+      ]
+     },
+     "secs": 150.0
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "contract": {
+      "name": "P2P2E-Deepseek-S0G3",
+      "min_llm_calls": 4,
+      "min_executions": 3,
+      "min_distinct_samples": 1,
+      "branches_on_execution": true,
+      "carries_data_forward": true,
+      "final_from_last_generation": false,
+      "final_invariant_to_sample_order": true
+     },
+     "neutral_detail": "neutral-valid (18 chars)",
+     "mechanism_detail": {
+      "verdict": "E_CONTRACT_VIOLATED",
+      "reason": "violated ['branches_on_execution', 'final_invariant_to_sample_order']",
+      "checks": [
+       {
+        "property": "min_llm_calls",
+        "ok": true,
+        "detail": "declared >=4, observed 4/4"
+       },
+       {
+        "property": "min_executions",
+        "ok": true,
+        "detail": "declared >=3, observed 4/4"
+       },
+       {
+        "property": "min_distinct_samples",
+        "ok": true,
+        "detail": "declared >=1, observed 4"
+       },
+       {
+        "property": "branches_on_execution",
+        "ok": false,
+        "detail": "fail-trace 4calls/'select id from t1' vs ok-trace 4calls/'select id from t1', error_fed_back=True"
+       },
+       {
+        "property": "carries_data_forward",
+        "ok": true,
+        "detail": "stage-1 marker reached a later prompt"
+       },
+       {
+        "property": "final_invariant_to_sample_order",
+        "ok": false,
+        "detail": "permuted->'select name from t'/'select id from t1' (invariant=False), changed->'select id from t1' (sensitive=True)"
+       }
+      ]
+     },
+     "secs": 246.2
+    }
+   ]
+  }
+ ]
+}

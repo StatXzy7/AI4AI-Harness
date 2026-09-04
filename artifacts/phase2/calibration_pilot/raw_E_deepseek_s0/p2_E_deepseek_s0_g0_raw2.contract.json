@@ -1,0 +1,10 @@
+{
+  "name": "p2p2e_deepseek_s0g0",
+  "min_llm_calls": 4,
+  "min_executions": 3,
+  "min_distinct_samples": 3,
+  "branches_on_execution": true,
+  "carries_data_forward": true,
+  "final_from_last_generation": true,
+  "final_invariant_to_sample_order": true
+}

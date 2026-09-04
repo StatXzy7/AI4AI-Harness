@@ -1,0 +1,1 @@
+"""Ask DeepSeek to return SQL in a strict single
