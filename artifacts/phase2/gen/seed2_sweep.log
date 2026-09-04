@@ -1,1 +1,8 @@
 [run ] A/glm/s2
+[gen] builder=glm(GLM-5.3) arm=A seed=2 gate=False forced=False slots=8 raw_budget=3/slot
+  p2_A_glm_s2_g0                           empty  nv=0/3 mech=0 no python fence
+  p2_A_glm_s2_g1                           ADMIT  nv=1/1 mech=0 
+  p2_A_glm_s2_g2                           empty  nv=0/3 mech=0 no python fence
+  p2_A_glm_s2_g3                           ADMIT  nv=1/2 mech=0 
+  p2_A_glm_s2_g4                           empty  nv=0/3 mech=0 
+  p2_A_glm_s2_g5                           empty  nv=0/3 mech=0 
