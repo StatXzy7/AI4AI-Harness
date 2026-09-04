@@ -1,4 +1,4 @@
-"""Two-stage harness where the first stage drafts an SQL plan and the second stage writes SQL from it."""
+"""Two-stage SQL generation: first stage produces an intermediate reasoning artifact, second stage consumes it to produce the final SQL."""
 # MECHANISM: twostage
 from ..harness_base import SQLHarness
 from .. import bridge
@@ -6,49 +6,34 @@ from .. import bridge
 
 class P2P2AMinimaxS2G6(SQLHarness):
     def solve(self, question: str) -> str:
-        plan_prompt = (
-            "You are designing a query plan against the schema below.\n"
-            "Schema:\n{schema}\n\n"
-            "Question: {q}\n\n"
-            "List, in plain text, the minimal steps needed to answer the question:\n"
-            "1. Which tables and joins are required.\n"
-            "2. Which columns are selected or filtered.\n"
-            "3. Any aggregates, group-by, or order-by.\n"
-            "4. Any subqueries or CTE structure.\n"
-            "Do NOT write SQL. Output only the numbered plan."
-        ).format(schema=self.schema, q=question)
+        schema = self.schema
 
-        plan = self.llm(plan_prompt, system="You are a precise query planner.", temperature=0.0, n=1).strip()
+        # Stage 1: produce an intermediate artifact -- a structured analysis that
+        # identifies relevant tables/columns and the intended query shape.
+        stage1_prompt = (
+            "You are analyzing a Text-to-SQL problem.\n\n"
+            f"SCHEMA:\n{schema}\n\n"
+            f"QUESTION:\n{question}\n\n"
+            "Produce an ANALYSIS with three sections:\n"
+            "  TABLES: list the tables needed (comma-separated).\n"
+            "  COLUMNS: list the exact column references needed, in the form table.column.\n"
+            "  INTENT: one sentence describing what the query must return and any filters/aggregations.\n"
+            "Do NOT write SQL. Only the analysis."
+        )
+        analysis = self.llm(stage1_prompt, system="You are a precise SQL analyst.", temperature=0.0, n=1).strip()
 
-        sql_prompt = (
-            "Schema:\n{schema}\n\n"
-            "Question: {q}\n\n"
-            "Approved plan:\n{plan}\n\n"
-            "Write a single SQLite-compatible SQL statement that exactly implements the plan above.\n"
-            "Rules:\n"
-            "- Use only tables/columns present in the schema.\n"
-            "- Prefer explicit JOIN ... ON syntax.\n"
-            "- Do not wrap the SQL in markdown or commentary.\n"
-            "SQL:"
-        ).format(schema=self.schema, q=question, plan=plan)
+        # Stage 2: consume the analysis artifact and the original question to produce SQL.
+        stage2_prompt = (
+            "You are writing a SQL query. Use the ANALYSIS below as your plan.\n\n"
+            f"SCHEMA:\n{schema}\n\n"
+            f"QUESTION:\n{question}\n\n"
+            f"ANALYSIS:\n{analysis}\n\n"
+            "Write ONE SQL statement that answers the question. "
+            "Output only the SQL, no prose."
+        )
+        raw = self.llm(stage2_prompt, system="You are an expert SQL generator.", temperature=0.0, n=1)
 
-        draft = self.llm(sql_prompt, system="You translate plans into correct SQL.", temperature=0.0, n=1)
-        sql = bridge.extract_sql(draft)
-
-        # Verification loop: if execution fails, re-prompt using plan + error feedback once.
-        exec_result = self.execute(sql)
-        if not exec_result.get("ok", False):
-            error = exec_result.get("error", "unknown error")
-            repair_prompt = (
-                "Your previous SQL failed to execute.\n"
-                "Schema:\n{schema}\n\n"
-                "Question: {q}\n\n"
-                "Plan:\n{plan}\n\n"
-                "Previous SQL:\n{sql}\n\n"
-                "Error:\n{err}\n\n"
-                "Produce a corrected SQLite SQL statement. Output only the SQL."
-            ).format(schema=self.schema, q=question, plan=plan, sql=sql, err=error)
-            repaired = self.llm(repair_prompt, system="You fix SQL that fails to execute.", temperature=0.0, n=1)
-            sql = bridge.extract_sql(repaired)
-
+        sql = bridge.extract_sql(raw)
+        if not sql:
+            sql = raw.strip()
         return sql

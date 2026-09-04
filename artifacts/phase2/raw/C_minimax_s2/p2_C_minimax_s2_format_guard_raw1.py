@@ -1,1 +1,1 @@
-"""Wraps a frozen weak Text-to-SQL solver with a strict format-guard pipeline that retries on missing or malformed
+"""Prompt-to-prompt correction harness that enforces strict

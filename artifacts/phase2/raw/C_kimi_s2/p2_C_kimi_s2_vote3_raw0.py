@@ -1,87 +1,87 @@
-"""Self-consistency harness: sample 3 independent SQL attempts from the frozen solver (n=3, temperature=0.7), execute every attempt that parses, and return the SQL whose execution result wins the majority vote."""
+"""Sample 3 independent SQL candidates from the frozen solver at temperature 0.7, execute every candidate that parses, and return the candidate whose execution result wins the majority vote."""
+
+from collections import Counter
 
 from ..harness_base import SQLHarness
 from .. import bridge
 
 
 class P2P2CKimiS2Vote3(SQLHarness):
-    """Three-sample execution-based majority-vote (self-consistency) Text-to-SQL harness."""
+    """Self-consistency harness: n=3 samples at T=0.7, execution-result majority vote."""
 
     N_SAMPLES = 3
     TEMPERATURE = 0.7
 
-    SYSTEM_PROMPT = (
-        "You are an expert Text-to-SQL engine. Given a database schema and a "
-        "natural-language question, write a single syntactically valid SQL query "
-        "that answers the question. Output only the SQL query."
-    )
-
-    def _build_prompt(self, question: str) -> str:
-        return (
+    def solve(self, question: str) -> str:
+        system = (
+            "You are a precise Text-to-SQL engine. Given a database schema and a "
+            "natural-language question, you output exactly one SQL query and nothing else."
+        )
+        prompt = (
             "Database schema:\n"
             f"{self.schema}\n\n"
-            "Question:\n"
-            f"{question}\n\n"
-            "Write the SQL query that answers the question. Output only SQL."
+            f"Question: {question}\n\n"
+            "Write a single SQL query that correctly answers the question. "
+            "Output only the SQL query, with no explanation."
         )
+
+        # Step 1: ask the frozen solver for 3 independent attempts in one call.
+        raw = self.llm(prompt, system=system, temperature=self.TEMPERATURE, n=self.N_SAMPLES)
+        completions = self._as_list(raw)
+
+        # Step 2: parse each attempt and execute every candidate that parses.
+        first_parsed_sql = ""
+        executed = []  # (sql, result_key) for candidates that parsed and ran successfully
+        for text in completions:
+            sql = bridge.extract_sql(text if isinstance(text, str) else str(text))
+            if not sql:
+                continue  # attempt did not parse -> skipped
+            if not first_parsed_sql:
+                first_parsed_sql = sql
+            outcome = self.execute(sql)
+            if outcome.get("ok"):
+                executed.append((sql, self._result_key(outcome.get("rows"))))
+
+        # Step 3: majority vote over execution results (ties -> earliest executed).
+        if executed:
+            counts = Counter(key for _sql, key in executed)
+            winning_key = counts.most_common(1)[0][0]
+            for sql, key in executed:
+                if key == winning_key:
+                    return sql
+
+        # Fallbacks (rare): no candidate executed successfully.
+        if first_parsed_sql:
+            return first_parsed_sql
+        for text in completions:
+            text = (text if isinstance(text, str) else str(text)).strip()
+            if text:
+                return text
+        return "SELECT 1"
+
+    # ------------------------------------------------------------------
+    # Helpers
+    # ------------------------------------------------------------------
+    @staticmethod
+    def _as_list(raw):
+        """Normalize self.llm(..., n=3) output to a list of completion strings."""
+        if isinstance(raw, str):
+            return [raw]
+        if isinstance(raw, (list, tuple)):
+            return list(raw)
+        return [str(raw)]
 
     @staticmethod
-    def _canonicalize_rows(rows) -> str:
-        """Order-insensitive, hashable fingerprint of an execution result."""
+    def _result_key(rows):
+        """Order-insensitive, hashable canonical form of an execution result."""
+        def row_key(r):
+            if isinstance(r, dict):
+                return tuple(sorted((str(k), repr(v)) for k, v in r.items()))
+            if isinstance(r, (list, tuple)):
+                return tuple(repr(v) for v in r)
+            return (repr(r),)
+
         try:
-            return repr(sorted(repr(row) for row in rows))
+            return tuple(sorted(row_key(r) for r in (rows or [])))
         except Exception:
             return repr(rows)
-
-    def solve(self, question: str) -> str:
-        prompt = self._build_prompt(question)
-
-        # Step 1: ask the frozen solver for 3 independent attempts at temperature 0.7.
-        response = self.llm(
-            prompt,
-            system=self.SYSTEM_PROMPT,
-            temperature=self.TEMPERATURE,
-            n=self.N_SAMPLES,
-        )
-        if isinstance(response, str):
-            completions = [response]
-        else:
-            completions = list(response)
-
-        # Step 2: extract SQL from each completion and execute all that parse.
-        extracted = []
-        candidates = []  # [{"sql": ..., "key": <result fingerprint>}]
-        for text in completions:
-            sql = bridge.extract_sql(text)
-            if not sql:
-                continue
-            extracted.append(sql)
-            try:
-                outcome = self.execute(sql)
-            except Exception:
-                continue
-            if not outcome.get("ok"):
-                continue
-            key = self._canonicalize_rows(outcome.get("rows", []))
-            candidates.append({"sql": sql, "key": key})
-
-        # Step 3: majority vote over execution results (ties -> earliest group).
-        if candidates:
-            groups = {}
-            order = []
-            for cand in candidates:
-                key = cand["key"]
-                if key not in groups:
-                    groups[key] = {"count": 0, "sql": cand["sql"]}
-                    order.append(key)
-                groups[key]["count"] += 1
-            best_key = max(order, key=lambda k: groups[k]["count"])
-            return groups[best_key]["sql"]
-
-        # Fallbacks: nothing executed successfully.
-        if extracted:
-            return extracted[0]
-        if completions:
-            sql = bridge.extract_sql(completions[0])
-            return sql if sql else completions[0]
-        return "SELECT 1"

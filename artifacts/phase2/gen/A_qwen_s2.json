@@ -1,0 +1,323 @@
+{
+ "builder": "qwen",
+ "model": "Qwen3.8-Max",
+ "arm": "A",
+ "seed": 2,
+ "gate": false,
+ "forced": false,
+ "raw_attempts_per_slot": 3,
+ "n_slots": 8,
+ "K_admitted": 2,
+ "raw_total": 23,
+ "R_artifact": 0.087,
+ "R_contract": 0.0,
+ "R_fidelity": 0.0,
+ "p_neutral_valid": 0.087,
+ "p_mechanism_pass": 0.0,
+ "results": [
+  {
+   "harness": "p2_A_qwen_s2_g0",
+   "arm": "A",
+   "strategy": null,
+   "seed": 2,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 372.7
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 189.8
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 276.0
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_qwen_s2_g1",
+   "arm": "A",
+   "strategy": null,
+   "seed": 2,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 609.7
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 441.8
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 489.3
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_qwen_s2_g2",
+   "arm": "A",
+   "strategy": null,
+   "seed": 2,
+   "admitted": true,
+   "admitted_attempt": 1,
+   "contract": null,
+   "n_raw": 2,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 457.5
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (89 chars)",
+     "secs": 245.9
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_qwen_s2_g3",
+   "arm": "A",
+   "strategy": null,
+   "seed": 2,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 204.6
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 323.1
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 267.7
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_qwen_s2_g4",
+   "arm": "A",
+   "strategy": null,
+   "seed": 2,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 366.0
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 410.9
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 140) (p2_A_qwen_s2_g4.py, line 140)",
+     "secs": 373.4
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_qwen_s2_g5",
+   "arm": "A",
+   "strategy": null,
+   "seed": 2,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 435.3
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 125.2
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 595.5
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_qwen_s2_g6",
+   "arm": "A",
+   "strategy": null,
+   "seed": 2,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 41) (p2_A_qwen_s2_g6.py, line 41)",
+     "secs": 207.9
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 96) (p2_A_qwen_s2_g6.py, line 96)",
+     "secs": 530.1
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 308.1
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_qwen_s2_g7",
+   "arm": "A",
+   "strategy": null,
+   "seed": 2,
+   "admitted": true,
+   "admitted_attempt": 2,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 521.9
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 377) (p2_A_qwen_s2_g7.py, line 377)",
+     "secs": 443.8
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (97 chars)",
+     "secs": 276.0
+    }
+   ]
+  }
+ ]
+}

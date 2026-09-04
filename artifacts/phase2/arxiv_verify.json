@@ -1,0 +1,164 @@
+{
+ "2607.08124": {
+  "exists": true,
+  "title": "TTHE: Test-Time Harness Evolution",
+  "authors": [
+   "Jun Nie",
+   "Yonggang Zhang",
+   "Jun Song",
+   "Qianshu Cai",
+   "Dahai Yu",
+   "Yike Guo",
+   "Xinmei Tian",
+   "Bo Han"
+  ]
+ },
+ "2606.09498": {
+  "exists": true,
+  "title": "Self-Harness: Harnesses That Improve Themselves",
+  "authors": [
+   "Hangfan Zhang",
+   "Shao Zhang",
+   "Kangcong Li",
+   "Chen Zhang",
+   "Yang Chen",
+   "Yiqun Zhang",
+   "Lei Bai",
+   "Shuyue Hu"
+  ]
+ },
+ "2608.25593": {
+  "exists": true,
+  "title": "JIT-Agent: Scaling Harness Intelligence via Just-in-Time Harness Evolution",
+  "authors": [
+   "Guibin Zhang",
+   "Leo Lu",
+   "Fangzhou Xie",
+   "Kang Zhu",
+   "Junhao Wang",
+   "Zhifei Xie",
+   "Zhaochen Yu",
+   "Zihang Liu"
+  ]
+ },
+ "2608.20169": {
+  "exists": true,
+  "title": "Task-CoEvolve: Efficient Harness Optimization via Adaptive Validation Task Selection",
+  "authors": [
+   "Atsuyuki Miyai",
+   "Kiyoharu Aizawa",
+   "Toshihiko Yamasaki"
+  ]
+ },
+ "2608.27311": {
+  "exists": true,
+  "title": "Verify Smarter, Evolve Further: Efficient Harness Evolution through Behavior-Aware Verification",
+  "authors": [
+   "Jinghan Xu",
+   "Yikai Zhang",
+   "Aili Chen",
+   "Weiyuan Li",
+   "Jiaqing Liang",
+   "Deqing Yang"
+  ]
+ },
+ "2607.13683": {
+  "exists": true,
+  "title": "HarnessBank: Semantic Gene-Bank Search with Gated Verification for Agent-Harness Self-Evolution",
+  "authors": [
+   "Xiaotian Luo",
+   "Dizhan Xue",
+   "Fengxingyu Wang",
+   "Chuanrui Hu",
+   "Yafeng Deng"
+  ]
+ },
+ "2607.13285": {
+  "exists": true,
+  "title": "Harness Handbook: Making Evolving Agent Harnesses Readable,Navigable, and Editable",
+  "authors": [
+   "Ruhan Wang",
+   "Yucheng Shi",
+   "Zongxia Li",
+   "Zhongzhi Li",
+   "Yue Yu",
+   "Junyao Yang",
+   "Kishan Panaganti",
+   "Haitao Mi"
+  ]
+ },
+ "2604.06753": {
+  "exists": true,
+  "title": "Select-then-Solve: Paradigm Routing as Inference-Time Optimization for LLM Agents",
+  "authors": [
+   "Heng Zhou",
+   "Zelin Tan",
+   "Zhemeng Zhang",
+   "Yutao Fan",
+   "Yibing Lin",
+   "Li Kang",
+   "Xiufeng Song",
+   "Rui Li"
+  ]
+ },
+ "2605.29668": {
+  "exists": true,
+  "title": "GRASP: Gated Regression-Aware Skill Proposer for Self-Improving LLM Agents",
+  "authors": [
+   "Johannes Moll",
+   "Jean-Philippe Corbeil",
+   "Jiazhen Pan",
+   "Martin Hadamitzky",
+   "Daniel Rueckert",
+   "Lisa Adams",
+   "Keno Bressem"
+  ]
+ },
+ "2608.13951": {
+  "exists": true,
+  "title": "HELIX: Model-Harness Co-evolution for Recursive Self-Improvement",
+  "authors": [
+   "Tianyu Fan",
+   "Chao Huang"
+  ]
+ },
+ "2607.05752": {
+  "exists": true,
+  "title": "When Should LLMs Search? Counterfactual Supervision for Search Routing",
+  "authors": [
+   "Minho Kim"
+  ]
+ },
+ "2607.11399": {
+  "exists": true,
+  "title": "Agentic Routing: The Harness-Native Data Flywheel",
+  "authors": [
+   "Xinchen Liu",
+   "Hang Zhou",
+   "Yingjie Zong",
+   "Yuchuan Tian",
+   "Liuyang Song",
+   "Shuo Zhang",
+   "Yulong Li",
+   "Wei He"
+  ]
+ },
+ "2607.18235": {
+  "exists": true,
+  "title": "Automated Discovery Has No Universally Superior Harness",
+  "authors": [
+   "Akshat Gupta",
+   "Jermaine Lei",
+   "Alexander Lu",
+   "Gopala Anumanchipalli",
+   "Leshem Choshen"
+  ]
+ },
+ "2605.26731": {
+  "exists": true,
+  "title": "It's Not the Capability: Harness Sensitivity Is Non-Monotone Across LLM Agent Tiers",
+  "authors": [
+   "Yong-eun Cho"
+  ]
+ }
+}

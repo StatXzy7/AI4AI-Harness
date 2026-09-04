@@ -1,4 +1,4 @@
-"""P2P2CKimiS2HintGuard: parse the question's Hint line, restate it as explicit hard requirements before any SQL is written, then generate and guard-repair SQL against those requirements."""
+"""Hint-guarded two-stage Text-to-SQL harness: parse the 'Hint:' line, restate it as hard requirements, generate SQL under them, then guard-check and repair before returning."""
 
 import re
 
@@ -7,118 +7,111 @@ from .. import bridge
 
 
 class P2P2CKimiS2HintGuard(SQLHarness):
-    """Hint-first Text-to-SQL harness.
+    """
+    P2P2C pipeline: Parse hint -> Plan requirements -> Produce SQL -> Check compliance.
 
-    Control flow (implemented in code, not only in the prompt):
-      1. PARSE: extract the 'Hint:' line from the question.
-      2. RESTATE: convert the hint into a numbered list of HARD REQUIREMENTS
-         (via the LLM, with a deterministic fallback) BEFORE writing SQL.
-      3. GENERATE: produce SQL under a prompt that forces a requirement check.
-      4. GUARD: verify that hint-derived tokens/literals actually appear in
-         the SQL and that it executes; otherwise repair with targeted feedback.
+    Stage 1 (Parse):   extract the 'Hint:' line from the question text.
+    Stage 2 (Plan):    restate the hint as a numbered list of HARD REQUIREMENTS.
+    Stage 3 (Produce): generate SQL with those requirements injected as mandatory
+                       constraints in the prompt (control-flow enforced, not just
+                       prompt-suggested).
+    Stage 4 (Check):   guard the SQL with (a) a deterministic literal-presence check
+                       derived from the hint and (b) an LLM compliance review of each
+                       requirement; regenerate with violation feedback on failure.
+    Stage 5 (Repair):  execute the SQL and regenerate on database errors while still
+                       enforcing every hard requirement.
     """
 
-    MAX_REPAIRS = 2
-    MAX_VIOLATIONS_REPORTED = 6
+    MAX_GUARD_ATTEMPTS = 2
+    MAX_REPAIR_ATTEMPTS = 3
+    MAX_EMPTY_ATTEMPTS = 2
 
-    _HINT_LINE_RE = re.compile(r"^\s*hint\s*[:\-]\s*(.+?)\s*$", re.IGNORECASE)
-    _HINT_ANY_RE = re.compile(r"hint\s*[:\-]\s*(.+)", re.IGNORECASE | re.DOTALL)
+    # ---------------- LLM helper ----------------
 
-    # ------------------------------------------------------------------ #
-    # Entry point                                                         #
-    # ------------------------------------------------------------------ #
-    def solve(self, question: str) -> str:
-        # Step 1 -- parse the Hint line from the question.
-        hint = self._parse_hint(question)
+    def _call_llm(self, prompt: str, system: str = "") -> str:
+        out = self.llm(prompt, system=system, temperature=0.0, n=1)
+        if isinstance(out, (list, tuple)):
+            return str(out[0]) if out else ""
+        return str(out) if out is not None else ""
 
-        # Step 2 -- restate the hint as hard requirements BEFORE writing SQL.
-        requirements = self._restate_requirements(question, hint)
+    # ---------------- Stage 1: parse the Hint line ----------------
 
-        # Step 3 -- generate SQL constrained by those requirements.
-        sql = self._generate_sql(question, hint, requirements)
-        if not sql:
-            sql = "SELECT 1"
-
-        # Step 4 -- guard loop: hint coverage + executability, else repair.
-        for _ in range(self.MAX_REPAIRS):
-            violations = self._check_guard(sql, hint)
-            result = self.execute(sql)
-            if not violations and result.get("ok"):
-                return sql
-            repaired = self._repair(question, requirements, sql, violations, result)
-            if not repaired or repaired.strip() == sql.strip():
-                break
-            sql = repaired
-
-        return sql
-
-    # ------------------------------------------------------------------ #
-    # Step 1: hint parsing                                                #
-    # ------------------------------------------------------------------ #
     def _parse_hint(self, question: str) -> str:
-        """Extract the Hint line; returns '' when no hint is present."""
+        """Extract the text following 'Hint:' (line-based first, inline fallback)."""
         if not question:
             return ""
         for line in question.splitlines():
-            m = self._HINT_LINE_RE.match(line)
+            m = re.match(r"(?i)^\s*hint\s*[:：]\s*(.+?)\s*$", line)
             if m:
                 return m.group(1).strip()
-        m = self._HINT_ANY_RE.search(question)
+        m = re.search(r"(?is)\bhint\s*[:：]\s*(.+)$", question)
         if m:
-            return m.group(1).strip().splitlines()[0].strip()
+            return m.group(1).strip()
         return ""
 
-    # ------------------------------------------------------------------ #
-    # Step 2: restate hint constraints as hard requirements               #
-    # ------------------------------------------------------------------ #
-    def _restate_requirements(self, question: str, hint: str) -> str:
-        if not hint:
+    def _strip_hint(self, question: str) -> str:
+        """Remove the Hint line (or inline Hint suffix) to get the bare NL question."""
+        if not question:
             return ""
-        system = (
-            "You rewrite vague natural-language hints as precise, enforceable "
-            "SQL requirements. You never write SQL yourself."
-        )
-        prompt = (
-            "Database schema:\n"
-            f"{self.schema}\n\n"
-            f"Question: {question}\n\n"
-            f"Hint: {hint}\n\n"
-            "Restate the hint as a numbered list of HARD REQUIREMENTS that any "
-            "correct SQL query MUST satisfy. For each requirement, be explicit "
-            "about the exact table names, column names, comparison operators, "
-            "direction of inequalities, string values, and aggregations implied "
-            "by the hint. Do NOT write any SQL. Output only the numbered list."
-        )
-        try:
-            text = self._call_llm(prompt, system=system)
-            if text and text.strip():
-                return text.strip()
-        except Exception:
-            pass
-        # Deterministic fallback: still a hard requirement, stated literally.
-        return "1. The query MUST literally satisfy this hint: " + hint
+        kept = [
+            ln for ln in question.splitlines()
+            if not re.match(r"(?i)^\s*hint\s*[:：]", ln)
+        ]
+        cleaned = "\n".join(kept)
+        cleaned = re.sub(r"(?is)\bhint\s*[:：].*$", "", cleaned).strip()
+        return cleaned or question.strip()
 
-    # ------------------------------------------------------------------ #
-    # Step 3: SQL generation under the hard requirements                  #
-    # ------------------------------------------------------------------ #
-    def _generate_sql(self, question: str, hint: str, requirements: str) -> str:
-        req_block = ""
-        if requirements:
-            req_block = (
-                "HARD REQUIREMENTS (MANDATORY -- the query is WRONG unless "
-                "EVERY requirement below is satisfied):\n"
-                f"{requirements}\n\n"
-            )
+    # ---------------- Stage 2: restate hint as hard requirements ----------------
+
+    def _restate_requirements(self, nl_question: str, hint: str) -> list:
+        """Use the LLM to convert the hint into a list of enforceable requirements."""
+        if not hint:
+            return []
         system = (
-            "You are an expert Text-to-SQL engine. You treat stated hard "
-            "requirements as non-negotiable and verify each one before "
-            "writing SQL."
+            "You are a meticulous requirements engineer for a Text-to-SQL system. "
+            "You convert informal hints into precise, enforceable SQL requirements."
         )
         prompt = (
-            "Database schema:\n"
-            f"{self.schema}\n\n"
-            f"Question: {question}\n\n"
-            f"{req_block}"
-            "First, briefly restate how each hard requirement will be "
-            "enforced in the query (one short line per requirement). "
-            "Then output the final SQL query in a single
+            "Question:\n"
+            f"{nl_question}\n\n"
+            "Hint:\n"
+            f"{hint}\n\n"
+            "Restate the Hint as a numbered list of HARD REQUIREMENTS that the SQL "
+            "query MUST satisfy. Each requirement must be concrete and checkable "
+            "(e.g., \"Filter rows where column X = 'Y'\", \"Use table T\", "
+            "\"Order by column C descending\", \"Return only column A\"). "
+            "Do NOT write SQL. Do NOT add new assumptions beyond the hint. "
+            "Output ONLY the numbered list."
+        )
+        text = self._call_llm(prompt, system=system)
+        return self._parse_requirement_list(text)
+
+    def _parse_requirement_list(self, text: str) -> list:
+        reqs = []
+        for line in (text or "").splitlines():
+            s = line.strip()
+            if not s:
+                continue
+            m = re.match(r"^(?:\d+[\.\)]\s*|[-*•]\s+)(.+)$", s)
+            if m:
+                reqs.append(m.group(1).strip())
+            elif reqs and not re.match(r"(?i)^(requirement|output|note)\b", s):
+                reqs[-1] += " " + s  # continuation of previous item
+        return reqs
+
+    def _requirements_block(self, requirements: list) -> str:
+        if not requirements:
+            return ""
+        lines = ["HARD REQUIREMENTS (the SQL MUST satisfy every one of these):"]
+        for i, r in enumerate(requirements, 1):
+            lines.append(f"{i}. {r}")
+        return "\n".join(lines)
+
+    # ---------------- Stage 3: produce SQL under the requirements ----------------
+
+    def _generate_sql(self, nl_question: str, requirements: list,
+                      feedback: str = "", previous_sql: str = "") -> str:
+        req_block = self._requirements_block(requirements)
+        system = (
+            "You are an expert SQLite SQL generator. Output ONLY a single SQL query "
+            "inside a

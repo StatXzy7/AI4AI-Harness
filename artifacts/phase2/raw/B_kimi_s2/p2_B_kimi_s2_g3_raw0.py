@@ -1,61 +1,103 @@
-"""Repairs generated SQL by executing it and feeding errors (or empty results) back for bounded regeneration."""
-# MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration
+"""Repair-loop harness: generate SQL, execute it, and feed execution errors back into regeneration until the query runs."""
+
+# MECHANISM: repair
 
 from ..harness_base import SQLHarness
 from .. import bridge
 
 
 class P2P2BKimiS2G3(SQLHarness):
-    """Generate SQL greedily, execute it, and repair it in a feedback loop.
+    """Wraps the frozen weak solver in a generate -> execute -> repair loop.
 
-    Improvement over a single greedy call: instead of trusting the first
-    generation, the harness actually runs the SQL against the database.
-    Execution errors -- and suspicious empty result sets -- are appended to
-    the prompt as explicit feedback and the model is asked to produce a
-    corrected query. Sampling temperature is escalated slightly on retries so
-    the model escapes the failing mode. The best executable candidate is kept
-    as a fallback so the loop never returns something worse than what already
-    ran successfully.
+    Instead of trusting a single greedy generation, the harness executes the
+    candidate SQL against the database. Whenever SQLite reports an error, the
+    failing SQL together with the exact error message is appended to the
+    prompt and the solver is asked to produce a corrected query. If the solver
+    repeats an already-failed query verbatim, sampling temperature is raised
+    for the next regeneration to escape the loop. The loop stops as soon as a
+    query executes successfully, or after a bounded number of attempts, in
+    which case the last candidate is returned as a best effort.
     """
 
-    MAX_ATTEMPTS = 5
+    _SYSTEM = (
+        "You are an expert SQLite text-to-SQL translator. Given a database "
+        "schema and a natural-language question, output exactly one valid "
+        "SQLite query. Output only the SQL query, with no explanations and "
+        "no markdown prose."
+    )
+
+    _MAX_ATTEMPTS = 5
+    _REPEAT_TEMPERATURE = 0.4
 
     def solve(self, question: str) -> str:
-        system = (
-            "You are an expert SQLite text-to-SQL system. Given a database "
-            "schema and a natural-language question, output exactly one valid "
-            "SQLite query that answers the question. Output only the SQL "
-            "query, with no explanation or commentary."
-        )
-        base_prompt = (
-            f"Database schema:\n{self.schema}\n\n"
-            f"Question: {question}\n\n"
-            "Write the single SQLite SQL query that answers the question."
-        )
+        # History of (sql, error) pairs that failed execution.
+        failed_attempts = []
 
-        history = []          # (sql_or_raw_text, problem_description)
-        fallback_sql = None   # last SQL that executed without error
-        last_sql = None       # last SQL we managed to extract
-        temperature = 0.0
+        sql = self._generate(question, failed_attempts, temperature=0.0)
 
-        for _ in range(self.MAX_ATTEMPTS):
-            prompt = base_prompt
-            if history:
-                parts = ["Your previous attempt(s) did not work. Review them carefully:"]
-                for i, (sql, note) in enumerate(history, 1):
-                    parts.append(f"--- Attempt {i} ---\n{sql}\nProblem: {note}")
-                parts.append(
-                    "Produce a corrected SQLite query that fixes the problem above. "
-                    "Return only the corrected SQL query."
-                )
-                prompt = base_prompt + "\n\n" + "\n\n".join(parts)
+        for attempt_idx in range(self._MAX_ATTEMPTS):
+            result = self.execute(sql)
+            if result.get("ok"):
+                return sql
 
-            response = self.llm(prompt, system=system, temperature=temperature, n=1)
-            text = response[0] if isinstance(response, (list, tuple)) else response
+            error = (result.get("error") or "unknown execution error").strip()
+            repeated = any(prev_sql == sql for prev_sql, _ in failed_attempts)
+            failed_attempts.append((sql, error))
 
-            sql = bridge.extract_sql(text)
-            if not sql:
-                history.append((
-                    (text or "").strip() or "<empty output>",
-                    "No SQL statement could be extracted from your output. "
-                    "Return a single SQL query, optionally inside a
+            if attempt_idx == self._MAX_ATTEMPTS - 1:
+                break
+
+            # If the solver is stuck on the same broken query, inject diversity.
+            temperature = self._REPEAT_TEMPERATURE if repeated else 0.0
+            sql = self._generate(question, failed_attempts, temperature=temperature)
+
+        # Exhausted the repair budget: return the last candidate as best effort.
+        return sql
+
+    # ------------------------------------------------------------------
+    # Helpers
+    # ------------------------------------------------------------------
+
+    def _generate(self, question: str, failed_attempts, temperature: float) -> str:
+        prompt = self._build_prompt(question, failed_attempts)
+        raw = self.llm(prompt, system=self._SYSTEM, temperature=temperature)
+        sql = bridge.extract_sql(raw).strip()
+        if not sql and failed_attempts:
+            # Extraction failed entirely; keep the previous candidate rather
+            # than returning an empty string.
+            return failed_attempts[-1][0]
+        return sql
+
+    def _build_prompt(self, question: str, failed_attempts) -> str:
+        parts = [
+            "Database schema:",
+            self.schema,
+            "",
+            "Question:",
+            question,
+        ]
+        if failed_attempts:
+            parts.append("")
+            parts.append(
+                "The following SQL queries were tried and FAILED to execute on "
+                "this database. Read each SQLite error message carefully and "
+                "produce a corrected query that avoids these mistakes. Do not "
+                "repeat any of the failing queries."
+            )
+            for idx, (bad_sql, error) in enumerate(failed_attempts, start=1):
+                parts.append("")
+                parts.append(f"Failed attempt {idx} SQL:")
+                parts.append(bad_sql)
+                parts.append(f"Failed attempt {idx} SQLite error:")
+                parts.append(error)
+        parts.append("")
+        if failed_attempts:
+            parts.append(
+                "Write a single corrected, executable SQLite query that answers "
+                "the question."
+            )
+        else:
+            parts.append(
+                "Write a single executable SQLite query that answers the question."
+            )
+        return "\n".join(parts)

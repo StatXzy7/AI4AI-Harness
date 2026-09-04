@@ -1,135 +1,115 @@
-"""Prompt-twice, classify execution errors into syntax/schema/semantics, then apply targeted fixes up to 2 rounds."""
-from __future__ import annotations
-from typing import Any, Dict, Optional
-
+"""Wraps a frozen weak SQL solver with classify-and-fix retry that distinguishes syntax, schema, and semantic errors to apply targeted repairs over up to two rounds."""
 from ..harness_base import SQLHarness
 from .. import bridge
 
 
 class P2P2DMinimaxS2ErrorClassify(SQLHarness):
-    """Two-pass prompt harness with error-class taxonomy (S2 = syntax/schema/semantics)."""
+    def solve(self, question: str) -> str:
+        # Round 0: initial generation
+        sql = self._generate(question, hint="")
+        attempt = 0
+        max_rounds = 2
 
-    # ----------------------------- prompts -----------------------------
-    _SYSTEM = (
-        "You are a precise Text-to-SQL generator. Use only the provided schema. "
-        "Output ONLY a single SQL statement and nothing else."
-    )
+        while attempt <= max_rounds:
+            result = self.execute(sql)
+            if result.get("ok"):
+                return sql
 
-    _PROMPT_V1 = (
-        "Schema:\n{schema}\n\n"
-        "Question: {question}\n\n"
-        "Write exactly one SQLite-compatible SQL query that answers the question.\n"
-        "Reply with ONLY the SQL."
-    )
+            err = result.get("error", "") or ""
+            category = self._classify_error(err)
 
-    _PROMPT_V2 = (
-        "Schema:\n{schema}\n\n"
-        "Question: {question}\n\n"
-        "Previous attempt produced this SQL:\n{prev_sql}\n\n"
-        "It failed with this error:\n{error}\n\n"
-        "Error category: {category}\n\n"
-        "Diagnosis hint: {hint}\n\n"
-        "Rewrite the SQL to fix the error. Reply with ONLY the corrected SQL."
-    )
+            if attempt == max_rounds:
+                # No more retries left
+                return sql
 
-    # -------------------------- error classifiers -----------------------
-    @staticmethod
-    def _classify(err: str) -> str:
-        """Return one of: 'syntax', 'schema', 'semantics'."""
-        e = (err or "").lower()
-        # Syntax-ish: parser/tokenizer complaints
-        if any(tok in e for tok in (
-            "syntax error", "near \"", "unexpected", "incomplete input",
-            "unrecognized token", "parse error", "unterminated",
-            "misuse of", "no viable alternative",
-        )):
+            # Strategy-specific fix per category
+            if category == "syntax":
+                repaired = self._repair_syntax(question, sql, err)
+            elif category == "schema":
+                repaired = self._repair_schema(question, sql, err)
+            else:  # semantics (default)
+                repaired = self._repair_semantics(question, sql, err)
+
+            if repaired == sql:
+                # No progress; avoid infinite loop
+                return sql
+            sql = repaired
+            attempt += 1
+
+        return sql
+
+    # ---------- Generation ----------
+    def _generate(self, question: str, hint: str) -> str:
+        system = (
+            "You are a SQL generator. Output exactly one SQL statement "
+            "for the given question against the provided schema. "
+            "Return only the SQL, no prose or markdown fences."
+        )
+        user = f"Schema:\n{self.schema}\n\nQuestion: {question}\n"
+        if hint:
+            user += f"\nHints:\n{hint}\n"
+        user += "\nSQL:"
+        raw = self.llm(user, system=system, temperature=0.0, n=1)
+        sql = bridge.extract_sql(raw)
+        return sql or raw.strip()
+
+    # ---------- Classification ----------
+    def _classify_error(self, err: str) -> str:
+        e = err.lower()
+        # Syntax: parser/tokenizer complaints
+        syntax_keys = (
+            "syntax error", "syntax", "parse error", "unexpected",
+            "near \"", "near '", "token", "unterminated", "mismatched",
+            "invalid input syntax", "ora-", "you have an error in your sql",
+            "malformed", "expected"
+        )
+        # Schema: missing/unknown columns or tables
+        schema_keys = (
+            "no such column", "unknown column", "undefined column",
+            "no such table", "undefined table", "relation",
+            "table not found", "column not found", "does not exist",
+            "ambiguous column", "ambiguous reference",
+            "schema", "invalid identifier", "unknown field",
+            "table", "column"
+        )
+        if any(k in e for k in syntax_keys):
             return "syntax"
-        # Schema-ish: missing/unknown tables or columns
-        if any(tok in e for tok in (
-            "no such table", "no such column", "no such function",
-            "ambiguous column", "unknown column", "does not exist",
-            "table not found", "column not found",
-        )):
+        if any(k in e for k in schema_keys):
             return "schema"
-        # Otherwise treat as semantic/runtime/logic
+        # Default: treat as semantic (empty result / wrong answer / runtime)
         return "semantics"
 
-    @staticmethod
-    def _hint_for(category: str) -> str:
-        if category == "syntax":
-            return (
-                "Check quoting, parentheses, trailing commas, missing FROM/WHERE/GROUP BY keywords, "
-                "and valid SQLite dialect."
-            )
-        if category == "schema":
-            return (
-                "Verify every table and column actually exists in the provided schema; use only listed names; "
-                "use schema-qualified table names if needed and double-check column spellings."
-            )
-        # semantics
-        return (
-            "Check JOIN conditions, GROUP BY/HAVING aggregation coverage, filter predicates, "
-            "subquery aliases, and that the query actually answers the question."
+    # ---------- Repairs ----------
+    def _repair_syntax(self, question: str, sql: str, err: str) -> str:
+        hint = (
+            f"The previous SQL failed with a SYNTAX error: {err}\n"
+            "Fix the syntax. Common issues: missing commas, unbalanced quotes, "
+            "trailing punctuation, unmatched parentheses, reserved-word usage, "
+            "or wrong statement terminators. Output only the corrected SQL."
         )
+        return self._generate(question, hint=hint)
 
-    # ----------------------------- harness ------------------------------
-    def solve(self, question: str) -> str:
-        schema: str = getattr(self, "schema", "") or ""
-
-        # ---- Pass 1: direct generation ----
-        prompt1 = self._PROMPT_V1.format(schema=schema, question=question)
-        text1 = self.llm(prompt1, system=self._SYSTEM, temperature=0.0, n=1)
-        sql1 = bridge.extract_sql(text1) or ""
-        sql1 = sql1.strip()
-        if not sql1:
-            return ""
-
-        res1 = self.execute(sql1)
-        if res1.get("ok"):
-            return sql1
-
-        # ---- Pass 2: classify and ask for a targeted fix ----
-        err = res1.get("error") or "unknown error"
-        category = self._classify(err)
-        hint = self._hint_for(category)
-
-        prompt2 = self._PROMPT_V2.format(
-            schema=schema,
-            question=question,
-            prev_sql=sql1,
-            error=err,
-            category=category,
-            hint=hint,
+    def _repair_schema(self, question: str, sql: str, err: str) -> str:
+        # Forcefully remind the model about the exact schema identifiers
+        hint = (
+            f"The previous SQL failed with a SCHEMA error: {err}\n"
+            "Re-check every table and column name against the schema below. "
+            "Use only tables and columns that exist exactly as written "
+            "(respect case). Add table aliases and qualify columns with the "
+            "correct table prefix if names are ambiguous.\n\n"
+            f"Schema:\n{self.schema}\n"
         )
-        text2 = self.llm(prompt2, system=self._SYSTEM, temperature=0.0, n=1)
-        sql2 = (bridge.extract_sql(text2) or "").strip()
-        if not sql2:
-            return sql1  # nothing better to do than return the previous attempt
+        return self._generate(question, hint=hint)
 
-        res2 = self.execute(sql2)
-        if res2.get("ok"):
-            return sql2
-
-        # ---- Round 2: re-classify the new error and retry once more ----
-        err2 = res2.get("error") or "unknown error"
-        category2 = self._classify(err2)
-        hint2 = self._hint_for(category2)
-
-        prompt3 = self._PROMPT_V2.format(
-            schema=schema,
-            question=question,
-            prev_sql=sql2,
-            error=err2,
-            category=category2,
-            hint=hint2,
+    def _repair_semantics(self, question: str, sql: str, err: str) -> str:
+        hint = (
+            f"The previous SQL ran without error but is likely incorrect "
+            f"(error or empty/wrong result: {err}).\n"
+            "Rewrite it so that it correctly answers the question. "
+            "Re-read the question carefully: ensure the correct tables are "
+            "joined, filters/aggregations match the question's intent, "
+            "GROUP BY includes all selected non-aggregated columns, ORDER BY "
+            "and LIMIT are applied only if needed, and use the proper join "
+            "types. Output only the corrected SQL."
         )
-        text3 = self.llm(prompt3, system=self._SYSTEM, temperature=0.0, n=1)
-        sql3 = (bridge.extract_sql(text3) or "").strip()
-        if not sql3:
-            return sql2
-
-        # Final return: prefer a successful result, else last attempt.
-        res3 = self.execute(sql3)
-        if res3.get("ok"):
-            return sql3
-        return sql3
+        return self._generate(question, hint=hint)

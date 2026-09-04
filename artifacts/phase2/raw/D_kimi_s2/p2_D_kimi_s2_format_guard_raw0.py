@@ -1,1 +1,1 @@
-"""Format-guard harness: forces the frozen solver to return schema-faithful SQL inside a single
+"""Format-guard harness that forces the frozen solver to emit one schema-faithful SQL query inside a lone

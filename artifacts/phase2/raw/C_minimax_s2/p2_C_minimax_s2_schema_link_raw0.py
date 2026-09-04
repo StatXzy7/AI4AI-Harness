@@ -1,150 +1,252 @@
-"""Harness that first extracts referenced tables/columns from the question, then prompts the frozen solver to write SQL against that linked schema subset."""
+"""Schema-linking harness: identifies tables/columns referenced in the question, restricts the schema to that subset, then asks the frozen solver to generate SQL."""
 from ..harness_base import SQLHarness
 from .. import bridge
 
 
 class P2P2CMinimaxS2SchemaLink(SQLHarness):
-    def solve(self, question: str) -> str:
-        # --- Step 1: Schema Linking --------------------------------------------
-        # Ask the LLM to identify which tables/columns are relevant to the question.
-        # We force it to emit a structured inventory so downstream parsing is reliable.
-        linker_system = (
-            "You are a schema-linking module. Given a natural language question and a "
-            "database schema, you output ONLY the minimal subset of tables and columns "
-            "needed to answer the question. Format strictly as:\n"
-            "TABLES: <comma-separated fully-qualified table names>\n"
-            "COLUMNS: <comma-separated fully-qualified column names, one per table allowed>\n"
-            "If none apply, output TABLES: NONE and COLUMNS: NONE."
-        )
-        linker_prompt = (
-            f"Schema:\n{self.schema}\n\n"
-            f"Question: {question}\n\n"
-            "Linked subset:"
-        )
-        linker_response = self.llm(linker_prompt, system=linker_system, temperature=0.0, n=1)
+    # Candidate table names to probe for in the schema.
+    _TABLE_HINTS = [
+        "customers", "customer", "orders", "order_items", "items",
+        "products", "product", "categories", "category", "suppliers",
+        "supplier", "employees", "employee", "shippers", "shipper",
+        "regions", "region", "territories", "territory",
+        "invoices", "invoice", "payments", "payment",
+        "students", "student", "courses", "course", "enrollments",
+        "enrollment", "departments", "department", "teachers", "teacher",
+        "books", "book", "authors", "author", "publishers", "publisher",
+        "movies", "movie", "actors", "actor", "directors", "director",
+        "songs", "song", "albums", "album", "artists", "artist",
+        "matches", "match", "players", "player", "teams", "team",
+        "tickets", "ticket", "flights", "flight", "airports", "airport",
+        "airlines", "airline", "reservations", "reservation",
+        "users", "user", "posts", "post", "comments", "comment",
+        "transactions", "transaction", "accounts", "account",
+        "countries", "country", "cities", "city", "addresses", "address",
+        "sales", "sale", "purchases", "purchase", "inventory",
+    ]
 
-        tables = []
-        columns = []
-        for raw_line in linker_response.splitlines():
-            line = raw_line.strip()
-            if line.upper().startswith("TABLES:"):
-                value = line.split(":", 1)[1].strip()
-                if value and value.upper() != "NONE":
-                    tables = [t.strip() for t in value.split(",") if t.strip()]
-            elif line.upper().startswith("COLUMNS:"):
-                value = line.split(":", 1)[1].strip()
-                if value and value.upper() != "NONE":
-                    columns = [c.strip() for c in value.split(",") if c.strip()]
+    # Candidate column names (lowercased) to probe against.
+    _COLUMN_HINTS = [
+        "customer_id", "customer_name", "customer_email", "customer_phone",
+        "order_id", "order_date", "order_total", "order_status",
+        "product_id", "product_name", "product_price", "category_id",
+        "supplier_id", "employee_id", "manager_id", "region_id",
+        "territory_id", "shipper_id", "country", "city", "state", "postal_code",
+        "phone", "fax", "email", "address", "birth_date", "hire_date",
+        "unit_price", "quantity", "discount", "freight", "shipped_date",
+        "required_date", "payment_date", "amount", "balance", "credit_limit",
+        "student_id", "course_id", "grade", "enrollment_date", "gpa",
+        "department_id", "teacher_id", "book_id", "author_id", "publisher_id",
+        "isbn", "title", "publication_date", "pages", "genre",
+        "movie_id", "actor_id", "director_id", "release_date", "rating",
+        "song_id", "album_id", "artist_id", "duration", "genre_id",
+        "match_id", "player_id", "team_id", "score", "match_date", "venue",
+        "ticket_id", "flight_id", "airport_id", "airline_id", "seat",
+        "reservation_id", "departure_date", "arrival_date", "origin", "dest",
+        "user_id", "username", "password", "post_id", "comment_id",
+        "transaction_id", "account_id", "created_at", "updated_at",
+        "first_name", "last_name", "middle_name", "full_name", "name",
+        "id", "code", "description", "notes", "status", "type",
+    ]
 
-        # Build a reduced-schema string containing only the linked tables/columns.
-        # We keep the original CREATE TABLE blocks but drop any table the linker did not pick.
-        linked_schema = self._filter_schema(self.schema, tables, columns)
-        if not linked_schema.strip():
-            # If linking produced nothing usable, fall back to the full schema so the
-            # frozen solver still has something to work with.
-            linked_schema = self.schema
+    def _extract_keywords(self, question: str) -> str:
+        """Return a deduplicated, schema-friendly keyword list from the question."""
+        import re
+        text = question.lower()
+        # Pull tokens like 'customer id', 'first name', 'order date'
+        multi = [
+            "customer id", "order id", "product id", "category id",
+            "supplier id", "employee id", "region id", "territory id",
+            "shipper id", "student id", "course id", "department id",
+            "teacher id", "book id", "author id", "publisher id",
+            "movie id", "actor id", "director id", "song id", "album id",
+            "artist id", "match id", "player id", "team id", "ticket id",
+            "flight id", "airport id", "airline id", "reservation id",
+            "user id", "post id", "comment id", "transaction id", "account id",
+            "first name", "last name", "middle name", "full name",
+            "order date", "hire date", "birth date", "shipped date",
+            "required date", "payment date", "enrollment date",
+            "publication date", "release date", "match date",
+            "departure date", "arrival date", "order total",
+            "unit price", "product price", "credit limit",
+            "customer name", "product name", "company name", "category name",
+            "region name", "territory name", "shipper name", "country name",
+            "customer email", "customer phone", "postal code",
+            "order status",
+        ]
+        found = set()
+        for phrase in multi:
+            if phrase in text:
+                found.add(phrase)
 
-        # --- Step 2: SQL Generation against the Linked Subset ----------------
-        solver_system = (
-            "You are a Text-to-SQL generator. Use ONLY the tables and columns explicitly "
-            "present in the provided schema subset. Produce a single, executable SQLite "
-            "SQL statement that answers the question. Output the SQL and nothing else."
-        )
-        solver_prompt = (
-            f"Linked Schema:\n{linked_schema}\n\n"
-            f"Question: {question}\n\n"
-            "SQL:"
-        )
-        solver_response = self.llm(solver_prompt, system=solver_system, temperature=0.0, n=1)
-
-        candidate = bridge.extract_sql(solver_response)
-
-        # --- Step 3: Optional execution check & single retry -----------------
-        result = self.execute(candidate)
-        if result.get("ok"):
-            return candidate
-
-        # Retry once with the error feedback, still scoped to the linked schema.
-        retry_prompt = (
-            f"Linked Schema:\n{linked_schema}\n\n"
-            f"Question: {question}\n\n"
-            f"Your previous SQL was:\n{candidate}\n\n"
-            f"It produced this error:\n{result.get('error', 'unknown error')}\n\n"
-            "Correct the SQL and output only the fixed statement."
-        )
-        retry_response = self.llm(retry_prompt, system=solver_system, temperature=0.0, n=1)
-        final_sql = bridge.extract_sql(retry_response)
-        return final_sql
-
-    # ------------------------------------------------------------------------
-    # Helpers
-    # ------------------------------------------------------------------------
-    def _filter_schema(self, full_schema: str, tables, columns):
-        """
-        Reduce the full CREATE TABLE schema to only the linked tables/columns.
-
-        Strategy: scan for CREATE TABLE blocks, keep a block if its table name is in
-        `tables` (case-insensitive). Within a kept block, drop column lines whose
-        identifiers are not in `columns` (when columns is non-empty).
-        """
-        if not tables:
-            # No table guidance -> keep the full schema; columns hint alone isn't enough
-            # to safely rewrite CREATE statements without risking parse-breaking edits.
-            return full_schema
-
-        tables_upper = {t.upper() for t in tables}
-        columns_upper = {c.upper().split(".")[-1] for c in columns} if columns else set()
-
-        lines = full_schema.splitlines()
-        kept_blocks = []
-        current_block = []
-        current_table = None
-        inside = False
-
-        def flush():
-            if not current_block:
-                return
-            if current_table is None or current_table.upper() not in tables_upper:
-                return
-            if columns_upper:
-                filtered = []
-                for ln in current_block:
-                    stripped = ln.strip().rstrip(",")
-                    if not stripped or stripped.upper().startswith(("CREATE", "PRIMARY", "FOREIGN", "UNIQUE", "CHECK", "CONSTRAINT", ")")):
-                        filtered.append(ln)
-                        continue
-                    first_token = stripped.split(None, 1)[0].strip("`,[]\"")
-                    if first_token.upper() in columns_upper:
-                        filtered.append(ln)
-                kept_blocks.extend(filtered)
-            else:
-                kept_blocks.extend(current_block)
-
-        for line in lines:
-            stripped = line.strip()
-            if stripped.upper().startswith("CREATE TABLE"):
-                # start of a new block
-                flush()
-                current_block = [line]
-                inside = True
-                # Extract table name (handle optional IF NOT EXISTS and backticks/quotes)
-                rest = stripped[len("CREATE TABLE"):].strip()
-                if rest.upper().startswith("IF NOT EXISTS"):
-                    rest = rest[len("IF NOT EXISTS"):].strip()
-                # take first token, strip punctuation
-                name_token = rest.split(None, 1)[0].strip("`,;\"")
-                current_table = name_token
+        # Word tokens (strip punctuation, keep length >= 3)
+        tokens = re.findall(r"[a-z_][a-z_]{2,}", text)
+        stop = {
+            "the", "and", "for", "with", "from", "where", "what", "which",
+            "show", "list", "all", "any", "each", "many", "much", "how",
+            "are", "was", "were", "did", "does", "can", "could", "would",
+            "should", "will", "than", "then", "that", "this", "those",
+            "these", "have", "has", "had", "their", "there", "here",
+            "give", "find", "tell", "me", "you", "his", "her", "its",
+            "our", "your", "but", "not", "also", "into", "over", "under",
+            "between", "after", "before", "above", "below", "about",
+            "select", "sql", "query", "table", "column", "row", "rows",
+        }
+        for tok in tokens:
+            if tok in stop:
                 continue
-            if inside:
-                current_block.append(line)
-                if ";" in line:
-                    flush()
-                    current_block = []
-                    current_table = None
-                    inside = False
+            if len(tok) >= 4:
+                found.add(tok)
+        return " ".join(sorted(found))
 
-        flush()
+    def _link_schema(self, question: str) -> str:
+        """Filter self.schema down to tables/columns whose names appear in the question."""
+        schema = self.schema or ""
+        if not schema.strip():
+            return schema
 
-        if not kept_blocks:
-            return full_schema
-        return "\n".join(kept_blocks)
+        q = " " + question.lower() + " "
+        ql = q.lower()
+
+        # Identify candidate tables: lines starting with CREATE TABLE / TABLE / `name`.
+        import re
+        # Try several patterns to segment the schema into table blocks.
+        # Pattern 1: CREATE TABLE [name] ( ... );
+        pattern_create = re.compile(
+            r"(CREATE\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?[`\"\[]?)([A-Za-z_][\w]*)([`\"\]]?\s*\([^;]*?\)\s*(?:ENGINE[^;]*|;))",
+            re.IGNORECASE | re.DOTALL,
+        )
+        # Pattern 2: TABLE `name` ( ... );
+        pattern_table = re.compile(
+            r"(TABLE\s+[`\"\[]?)([A-Za-z_][\w]*)([`\"\]]?\s*\([^;]*?\)\s*;)",
+            re.IGNORECASE | re.DOTALL,
+        )
+
+        tables = {}  # name -> full block text
+        spans = []   # (start, end) of matched blocks so we keep them
+
+        for pat in (pattern_create, pattern_table):
+            for m in pat.finditer(schema):
+                name = m.group(2)
+                start, end = m.span()
+                # Avoid duplicating overlaps: keep the longest first.
+                if any(s <= start < e for s, e in spans):
+                    continue
+                tables[name.lower()] = (name, m.group(0))
+                spans.append(m.span())
+
+        if not tables:
+            # Fallback: line-based segmentation.
+            return self._link_schema_linewise(schema, question)
+
+        keywords = self._extract_keywords(question)
+
+        def _name_in_q(name: str) -> bool:
+            n = name.lower().strip("`\"[]")
+            if not n:
+                return False
+            if n in ql:
+                return True
+            # Singular / plural basic variants.
+            if n.endswith("ies") and n[:-3] + "y" in ql:
+                return True
+            if n.endswith("es") and n[:-2] in ql:
+                return True
+            if n.endswith("s") and n[:-1] in ql:
+                return True
+            # Underscore vs space.
+            spaced = n.replace("_", " ")
+            if spaced in ql:
+                return True
+            return False
+
+        kept = []
+        for key, (orig_name, block) in tables.items():
+            if _name_in_q(orig_name):
+                kept.append(block)
+                continue
+            # Probe column hints within the table block.
+            block_lower = block.lower()
+            for col in self._COLUMN_HINTS:
+                if col in block_lower and (col in ql or col.replace("_", " ") in ql):
+                    kept.append(block)
+                    break
+
+        if not kept:
+            # Nothing matched: return the original schema to avoid empty context.
+            return schema
+
+        header = (
+            "-- Schema link: the following tables/columns were matched to the question.\n"
+        )
+        return header + "\n\n".join(kept)
+
+    def _link_schema_linewise(self, schema: str, question: str) -> str:
+        """Fallback linker that retains lines mentioning candidate names."""
+        ql = " " + question.lower() + " "
+        kept_lines = []
+        for line in schema.splitlines():
+            low = line.lower()
+            for hint in self._TABLE_HINTS + self._COLUMN_HINTS:
+                if hint in low:
+                    kept_lines.append(line)
+                    break
+        if not kept_lines:
+            return schema
+        return "-- Schema link (linewise fallback).\n" + "\n".join(kept_lines)
+
+    def solve(self, question: str) -> str:
+        # Step 1: schema-link -- restrict schema to tables/columns mentioned in the question.
+        linked_schema = self._link_schema(question)
+
+        # Step 2: build a prompt that supplies only the linked subset.
+        system = (
+            "You are a precise Text-to-SQL generator. Use ONLY the tables and "
+            "columns provided in the schema below. Do not invent columns. "
+            "Return a single SQL statement and nothing else."
+        )
+        prompt = (
+            f"Schema (linked subset):\n{linked_schema}\n\n"
+            f"Question: {question}\n\n"
+            "Write the SQL:"
+        )
+
+        # Step 3: ask the frozen weak solver.
+        raw = self.llm(prompt, system=system, temperature=0.0, n=1)
+
+        # Step 4: extract the SQL.
+        sql = bridge.extract_sql(raw) if raw else ""
+
+        # Step 5: validate by executing; if it fails, retry with a corrective hint.
+        if sql:
+            res = self.execute(sql)
+            if res and res.get("ok"):
+                return sql
+            err = (res or {}).get("error", "") if res else "unknown error"
+
+            retry_prompt = (
+                f"Schema (linked subset):\n{linked_schema}\n\n"
+                f"Question: {question}\n\n"
+                f"Your previous SQL:\n{sql}\n\n"
+                f"It failed with: {err}\n\n"
+                "Fix the SQL. Return only the corrected SQL:"
+            )
+            raw2 = self.llm(retry_prompt, system=system, temperature=0.0, n=1)
+            sql2 = bridge.extract_sql(raw2) if raw2 else ""
+            if sql2:
+                res2 = self.execute(sql2)
+                if res2 and res2.get("ok"):
+                    return sql2
+                # Return the best-effort second attempt rather than the broken first.
+                return sql2
+            return sql
+
+        # No SQL extracted at all: one fallback pass with a stricter instruction.
+        fallback_prompt = (
+            f"Schema (linked subset):\n{linked_schema}\n\n"
+            f"Question: {question}\n\n"
+            "Return ONLY the SQL statement, no prose:"
+        )
+        raw3 = self.llm(fallback_prompt, system=system, temperature=0.0, n=1)
+        sql3 = bridge.extract_sql(raw3) if raw3 else ""
+        return sql3 or ""

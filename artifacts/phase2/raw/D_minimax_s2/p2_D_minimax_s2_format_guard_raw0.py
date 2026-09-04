@@ -1,1 +1,1 @@
-"""Harness wrapping a weak solver with strict output-format gating: extracts and validates a
+"""Prompt-to-prompt 2-stage format-guard harness that fences the final SQL in a

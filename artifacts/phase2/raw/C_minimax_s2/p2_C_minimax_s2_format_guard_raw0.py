@@ -1,1 +1,1 @@
-"""Wrap a frozen weak solver with strict formatting and schema-fidelity guardrails to produce a clean
+"""Format-guard harness that retries the weak solver until it emits a single

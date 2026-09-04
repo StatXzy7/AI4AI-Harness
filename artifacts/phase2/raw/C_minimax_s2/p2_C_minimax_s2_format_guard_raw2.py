@@ -1,11 +1,9 @@
-"""Wraps a frozen weak solver by enforcing strict SQL fence formatting and post-extraction schema/structure validation before returning the final query."""
+"""Wraps a frozen weak Text-to-SQL solver with strict output-format guarding and schema fidelity enforcement."""
+
 from ..harness_base import SQLHarness
 from .. import bridge
 
 
 class P2P2CMinimaxS2FormatGuard(SQLHarness):
-    def solve(self, question: str) -> str:
-        # ------------------------------------------------------------------
-        # STRATEGY:
-        #   Stage 1: Prompt the weak solver with a heavy format-emphasis
-        #            system prompt requiring a
+    """Persona 2 + Persona 2C: a format-guard harness that emphasizes output format
+    and schema fidelity, requiring the final answer inside a

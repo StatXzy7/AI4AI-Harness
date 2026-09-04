@@ -1,94 +1,128 @@
-"""Repair-loop Text-to-SQL harness: generate SQL, execute it, and feed execution errors back to the LLM for iterative correction."""
-# MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration
+"""Samples multiple candidate SQL queries and selects the winner by execution validity plus result-set majority voting."""
+# MECHANISM: vote        -- you draw multiple samples and select among them
 
 from ..harness_base import SQLHarness
 from .. import bridge
 
+SYSTEM_PROMPT = (
+    "You are an expert SQLite text-to-SQL assistant. Given a database schema "
+    "and a natural-language question, you output exactly one valid SQLite SQL "
+    "query. Output only the SQL: no explanations, no markdown fences."
+)
+
 
 class P2P2AKimiS2G1(SQLHarness):
-    """Generate SQL, execute it, and loop the database error back into the prompt.
+    """Self-consistency style harness: sample, execute, and vote on results."""
 
-    Control flow:
-      1. Greedy (temperature=0) generation of a candidate query.
-      2. Execute the candidate against the database.
-      3. On success, return immediately.
-      4. On failure, build a repair prompt containing the faulty SQL and the
-         exact database error, and regenerate.
-      5. If the model repeats an already-failed query verbatim, skip execution,
-         raise the temperature, and demand a structurally different query.
-      6. After MAX_ATTEMPTS, return the last parseable candidate.
-    """
-
-    MAX_ATTEMPTS = 4
+    SAMPLES = 5
+    SAMPLE_TEMPERATURE = 0.7
 
     def solve(self, question: str) -> str:
-        system = (
-            "You are an expert Text-to-SQL assistant. Given a database schema "
-            "and a question you write one correct SQLite query. Answer with "
-            "the SQL query only: no explanations, no markdown fences."
-        )
-        base_prompt = (
+        prompt = self._build_prompt(question)
+        raw_outputs = self._sample(prompt)
+        candidates = self._extract_candidates(raw_outputs)
+        if not candidates:
+            # Extraction failed for every sample: one greedy fallback call.
+            fallback = self.llm(prompt, system=SYSTEM_PROMPT, temperature=0.0, n=1)
+            sql = bridge.extract_sql(self._as_text(fallback))
+            return sql or "SELECT 1"
+        return self._elect(candidates)
+
+    # ------------------------------------------------------------------
+    # helpers
+    # ------------------------------------------------------------------
+
+    def _build_prompt(self, question: str) -> str:
+        return (
             "Database schema:\n"
             f"{self.schema}\n\n"
             f"Question: {question}\n\n"
             "Write a single SQLite query that answers the question."
         )
 
-        prompt = base_prompt
-        temperature = 0.0
-        last_sql = ""
-        last_error = ""
-        tried = set()
-
-        for _ in range(self.MAX_ATTEMPTS):
-            raw = self.llm(prompt, system=system, temperature=temperature)
-            if isinstance(raw, (list, tuple)):
-                raw = raw[0] if raw else ""
-            sql = bridge.extract_sql(raw) or ""
-
-            if not sql:
-                # Unparseable reply: re-ask with a stricter instruction.
-                prompt = (
-                    base_prompt
-                    + "\n\nYour previous reply contained no SQL query. "
-                      "Respond with the SQL query only."
+    def _sample(self, prompt: str) -> list:
+        """Draw SAMPLES completions, preferring one batched n>1 call."""
+        try:
+            out = self.llm(
+                prompt,
+                system=SYSTEM_PROMPT,
+                temperature=self.SAMPLE_TEMPERATURE,
+                n=self.SAMPLES,
+            )
+            return self._as_list(out)
+        except TypeError:
+            # Backend does not support n>1: fall back to separate calls.
+            return [
+                self.llm(
+                    prompt,
+                    system=SYSTEM_PROMPT,
+                    temperature=self.SAMPLE_TEMPERATURE,
                 )
+                for _ in range(self.SAMPLES)
+            ]
+
+    @staticmethod
+    def _as_text(out) -> str:
+        if isinstance(out, str):
+            return out
+        if isinstance(out, (list, tuple)) and out:
+            return str(out[0])
+        return str(out)
+
+    @classmethod
+    def _as_list(cls, out) -> list:
+        if isinstance(out, str):
+            return [out]
+        if isinstance(out, (list, tuple)):
+            return [cls._as_text(o) for o in out]
+        return [str(out)]
+
+    def _extract_candidates(self, raw_outputs: list) -> list:
+        """Extract SQL from each sample and drop duplicates."""
+        seen = set()
+        candidates = []
+        for text in raw_outputs:
+            sql = bridge.extract_sql(text)
+            if not sql:
                 continue
-
-            if sql in tried and last_error:
-                # Exact repeat of a known-failing query: don't re-execute,
-                # force exploration of a different formulation instead.
-                temperature = min(1.0, temperature + 0.4)
-                prompt = self._repair_prompt(question, sql, last_error, different=True)
+            norm = " ".join(sql.split()).strip().rstrip(";").lower()
+            if norm in seen:
                 continue
+            seen.add(norm)
+            candidates.append(sql.strip())
+        return candidates
 
-            last_sql = sql
-            outcome = self.execute(sql)
-            if outcome.get("ok"):
-                return sql
+    @staticmethod
+    def _signature(rows) -> str:
+        """Order-insensitive fingerprint of a result set."""
+        try:
+            return repr(sorted(repr(r) for r in rows))
+        except Exception:
+            return repr(rows)
 
-            tried.add(sql)
-            last_error = outcome.get("error") or "unknown execution error"
-            prompt = self._repair_prompt(question, sql, last_error, different=False)
+    def _elect(self, candidates: list) -> str:
+        """Execute candidates and majority-vote on their result sets."""
+        votes = {}  # signature -> {"count", "sql", "nrows"}
+        for sql in candidates:
+            result = self.execute(sql)
+            if not result.get("ok"):
+                continue
+            rows = result.get("rows") or []
+            sig = self._signature(rows)
+            entry = votes.get(sig)
+            if entry is None:
+                votes[sig] = {"count": 1, "sql": sql, "nrows": len(rows)}
+            else:
+                entry["count"] += 1
 
-        return last_sql
+        if not votes:
+            # No candidate executed successfully: return first parseable SQL.
+            return candidates[0]
 
-    def _repair_prompt(self, question: str, sql: str, error: str, different: bool) -> str:
-        note = (
-            "This exact query was already tried and failed; produce a "
-            "structurally different query (different tables, joins, or "
-            "predicates), not a cosmetic rewrite."
-            if different
-            else "Fix the query."
+        # Majority of agreeing result sets wins; ties break toward non-empty
+        # result sets, then toward the shorter (usually simpler) query.
+        best = max(
+            votes.values(),
+            key=lambda e: (e["count"], e["nrows"] > 0, -len(e["sql"])),
         )
-        return (
-            "Database schema:\n"
-            f"{self.schema}\n\n"
-            f"Question: {question}\n\n"
-            "The following SQL query failed to execute.\n"
-            f"Faulty SQL:\n{sql}\n\n"
-            f"Database error:\n{error}\n\n"
-            f"{note} Check table and column names against the schema and use "
-            "valid SQLite syntax. Respond with the corrected SQL query only, "
-            "no explanations, no markdown fences."
-        )
+        return best["sql"]

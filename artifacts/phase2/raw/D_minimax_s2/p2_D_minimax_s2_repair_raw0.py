@@ -1,45 +1,49 @@
-"""Self-repair harness that regenerates SQL by feeding back SQLite execution errors up to two retries."""
+"""Harness that generates SQL with an LLM and repairs it using actual SQLite execution errors up to two retries."""
 from ..harness_base import SQLHarness
 from .. import bridge
 
 
 class P2P2DMinimaxS2Repair(SQLHarness):
     def solve(self, question: str) -> str:
-        max_retries = 2
-        system_prompt = "You are a Text-to-SQL assistant. Output only a single SQL statement."
-
-        # Initial generation
-        prompt = (
-            f"Schema:\n{self.schema}\n\n"
-            f"Question: {question}\n\n"
-            "Write a SQLite-compatible SQL query that answers the question. "
-            "Return ONLY the SQL statement with no explanation or formatting."
+        schema = self.schema
+        system_prompt = (
+            "You are an expert SQL generator for SQLite. Given a database schema and a natural "
+            "language question, produce a single valid SQLite query that answers the question. "
+            "Return ONLY the SQL statement, with no explanations, no markdown fences, and no "
+            "preamble."
         )
-        response = self.llm(prompt, system=system_prompt, temperature=0.0, n=1)
-        sql = bridge.extract_sql(response)
 
-        # Self-repair loop: execute and retry on failure
-        for attempt in range(max_retries + 1):
-            result = self.execute(sql)
+        last_error = None
+        last_sql = None
 
-            if result.get("ok"):
+        for attempt in range(3):  # initial attempt + 2 repairs
+            if attempt == 0:
+                user_prompt = (
+                    f"Schema:\n{schema}\n\n"
+                    f"Question: {question}\n\n"
+                    "Return only the SQL query."
+                )
+            else:
+                user_prompt = (
+                    f"Schema:\n{schema}\n\n"
+                    f"Question: {question}\n\n"
+                    f"Your previous SQL:\n{last_sql}\n\n"
+                    f"It failed with this SQLite error:\n{last_error}\n\n"
+                    "Produce a corrected SQLite query. Return only the SQL."
+                )
+
+            response = self.llm(user_prompt, system=system_prompt, temperature=0.0, n=1)
+            sql = bridge.extract_sql(response)
+            if not sql:
+                last_error = "No SQL could be extracted from the model response."
+                last_sql = ""
+                continue
+
+            execution = self.execute(sql)
+            if execution.get("ok"):
                 return sql
 
-            # Execution failed; if we have retries left, regenerate with error feedback
-            if attempt >= max_retries:
-                break
+            last_error = execution.get("error", "Unknown SQLite execution error.")
+            last_sql = sql
 
-            error_msg = result.get("error", "unknown error")
-            repair_prompt = (
-                f"Schema:\n{self.schema}\n\n"
-                f"Question: {question}\n\n"
-                f"Previous SQL attempt:\n{sql}\n\n"
-                f"This SQL failed with the following SQLite error:\n{error_msg}\n\n"
-                "Write a corrected SQLite-compatible SQL query that fixes the error. "
-                "Return ONLY the corrected SQL statement with no explanation or formatting."
-            )
-            response = self.llm(repair_prompt, system=system_prompt, temperature=0.0, n=1)
-            sql = bridge.extract_sql(response)
-
-        # Exhausted retries; return the last generated SQL even though it failed
-        return sql
+        return last_sql or ""

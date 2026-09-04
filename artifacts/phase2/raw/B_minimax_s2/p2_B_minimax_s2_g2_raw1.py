@@ -1,85 +1,72 @@
-"""Two-stage harness: an LLM first drafts a skeleton/spec, then a second LLM expands it into a final SQL query using the schema and skeleton as focused context."""
-# MECHANISM: twostage
+"""Iterative repair harness that feeds SQL execution errors back to the LLM for regeneration."""
+# MECHANISM: repair
 from ..harness_base import SQLHarness
 from .. import bridge
 
 
 class P2P2BMinimaxS2G2(SQLHarness):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._max_repairs = 4
+
     def solve(self, question: str) -> str:
-        # ---- Stage 1: produce a compact query skeleton (spec) ----
-        skeleton_prompt = (
-            "You are a Text-to-SQL skeleton planner.\n"
-            "Given a natural language question and a database schema, "
-            "produce a SHORT execution plan / skeleton of the SQL query.\n"
-            "The skeleton should specify, in plain English with minimal SQL tokens:\n"
-            "  - the target table(s)\n"
-            "  - the relevant columns (SELECT / WHERE / GROUP BY / ORDER BY)\n"
-            "  - any joins and their keys\n"
-            "  - the type of operation (aggregation, filter, top-k, etc.)\n"
-            "Do NOT write the final SQL. Do NOT use SELECT, FROM, WHERE as code. "
-            "Be terse (3-8 lines).\n\n"
-            f"Schema:\n{self.schema}\n\n"
-            f"Question: {question}\n\n"
-            "Skeleton:"
+        system_prompt = (
+            "You are an expert SQL engineer. Given a database schema and a natural language "
+            "question, produce exactly one valid SQL query that answers the question. "
+            "Output ONLY the SQL statement with no prose, no markdown fences, and no explanation."
         )
-        skeleton = self.llm(
-            skeleton_prompt,
-            system="You produce concise, schema-grounded query plans.",
-            temperature=0.0,
-            n=1,
-        ).strip()
-        if not skeleton:
-            skeleton = "No skeleton produced; default to direct translation."
 
-        # ---- Stage 2: expand the skeleton into final executable SQL ----
-        sql_prompt = (
-            "You are a Text-to-SQL generator.\n"
-            "You are given a database schema, a natural language question, "
-            "and a previously drafted query skeleton / plan.\n"
-            "Your job: emit ONE valid SQL query that answers the question, "
-            "strictly using the provided schema.\n"
-            "Rules:\n"
-            "  - Output ONLY the SQL (no prose, no markdown fences).\n"
-            "  - Follow the skeleton faithfully, but you may add minor details "
-            "(aliases, exact function names, NULL handling) needed for valid SQL.\n"
-            "  - Use only tables/columns present in the schema.\n\n"
-            f"Schema:\n{self.schema}\n\n"
-            f"Question: {question}\n\n"
-            f"Skeleton plan:\n{skeleton}\n\n"
-            "Final SQL:"
-        )
-        raw = self.llm(
-            sql_prompt,
-            system="You translate questions + query plans into precise SQL.",
-            temperature=0.0,
-            n=1,
-        )
-        sql = bridge.extract_sql(raw)
+        # Initial generation
+        prompt = self._build_initial_prompt(question)
+        raw = self.llm(prompt, system=system_prompt, temperature=0.0, n=1)
+        current_sql = bridge.extract_sql(raw)
 
-        # Light self-check / single repair pass using execution feedback,
-        # implemented as a structural follow-up stage rather than a true repair loop.
-        if sql and self.execute(sql).get("ok"):
-            return sql
+        # Repair loop: execute and feed errors back
+        for attempt in range(self._max_repairs):
+            result = self.execute(current_sql)
 
-        repair_prompt = (
-            "Re-emit a single corrected SQL query.\n"
-            "The previous attempt failed to execute or was empty. "
-            "Given the schema, the question, and the skeleton plan, "
-            "produce a valid SQL query that will execute successfully.\n"
-            "Output ONLY the SQL.\n\n"
-            f"Schema:\n{self.schema}\n\n"
+            if result.get("ok"):
+                # Query executed successfully; verify it returns rows
+                rows = result.get("rows", [])
+                if rows is not None and len(rows) > 0:
+                    return current_sql
+                # Empty result set may indicate a logic error; try repairing
+                feedback = "The query executed but returned an empty result set. The query may have incorrect logic, wrong predicates, or wrong table joins."
+            else:
+                error_msg = result.get("error", "unknown execution error")
+                feedback = f"SQL execution failed with error: {error_msg}"
+
+            # Build a repair prompt with the previous attempt and error feedback
+            repair_prompt = self._build_repair_prompt(question, current_sql, feedback, attempt)
+            raw = self.llm(repair_prompt, system=system_prompt, temperature=0.0, n=1)
+            new_sql = bridge.extract_sql(raw)
+
+            # Sanity check: ensure we got something different and non-empty
+            if not new_sql or new_sql.strip() == current_sql.strip():
+                # Model failed to improve; try once more with higher temperature for diversity
+                raw = self.llm(repair_prompt, system=system_prompt, temperature=0.3, n=1)
+                new_sql = bridge.extract_sql(raw)
+
+            if not new_sql:
+                # Give up on this attempt; keep what we have
+                break
+
+            current_sql = new_sql
+
+        return current_sql
+
+    def _build_initial_prompt(self, question: str) -> str:
+        return (
+            f"Database schema:\n{self.schema}\n\n"
             f"Question: {question}\n\n"
-            f"Skeleton plan:\n{skeleton}\n\n"
-            f"Previous attempt (possibly invalid):\n{sql}\n\n"
-            "Corrected SQL:"
+            f"Write a SQL query that answers this question. Return only the SQL."
         )
-        raw2 = self.llm(
-            repair_prompt,
-            system="You fix SQL to be syntactically and semantically valid.",
-            temperature=0.0,
-            n=1,
+
+    def _build_repair_prompt(self, question: str, previous_sql: str, feedback: str, attempt: int) -> str:
+        return (
+            f"Database schema:\n{self.schema}\n\n"
+            f"Question: {question}\n\n"
+            f"Your previous SQL attempt was:\n{previous_sql}\n\n"
+            f"Feedback from execution (attempt {attempt + 1}):\n{feedback}\n\n"
+            f"Produce a corrected SQL query that fixes the issue. Return only the corrected SQL."
         )
-        sql2 = bridge.extract_sql(raw2)
-        if sql2:
-            return sql2
-        return sql or ""

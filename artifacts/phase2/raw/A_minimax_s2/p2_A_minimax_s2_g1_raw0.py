@@ -1,62 +1,27 @@
-"""Two-stage generation where a planner extracts key entities/columns before SQL synthesis, combined with execution-based repair."""
-# MECHANISM: twostage
+# MECHANISM: repair
+"""Wraps a weak solver with a SQL execution repair loop that feeds errors back to the LLM."""
 from ..harness_base import SQLHarness
 from .. import bridge
 
 
-class P2P2AMinimaxS2G1(SQLHarness):
-    def solve(self, question: str) -> str:
-        # ---- Stage 1: Planner ----
-        # Extract a compact plan: relevant tables, columns, joins, and conditions.
-        plan_prompt = (
-            "You are a planning assistant for a Text-to-SQL system.\n"
-            "Given the database schema and a natural language question, "
-            "produce a concise PLAN that lists:\n"
-            "  - Relevant tables\n"
-            "  - Relevant columns (and which table each lives in)\n"
-            "  - Any required JOIN conditions\n"
-            "  - Any WHERE / HAVING / GROUP BY / ORDER BY conditions\n"
-            "  - Aggregation needs (SUM, COUNT, AVG, MAX, MIN)\n"
-            "Do NOT write SQL. Just produce the plan.\n\n"
-            f"Schema:\n{self.schema}\n\n"
-            f"Question: {question}\n\n"
-            "PLAN:"
-        )
-        plan_text = self.llm(plan_prompt, system="", temperature=0.0, n=1)
-        plan = (plan_text or "").strip()
+REPAIR_SYSTEM = (
+    "You are a SQL repair assistant. The previous SQL query failed to execute. "
+    "You will be shown the database schema, the original question, the SQL that was generated, "
+    "and the execution error returned by the database engine. Your job is to produce a corrected "
+    "SQL query that fixes the error while still answering the original question. "
+    "Respond ONLY with the corrected SQL query, with no prose, no markdown fences, and no explanation."
+)
 
-        # ---- Stage 2: SQL synthesis conditioned on the plan ----
-        sql_prompt = (
-            "You are a Text-to-SQL system.\n"
-            "Use the provided PLAN to write a SINGLE SQL query that answers the question.\n"
-            "Follow the plan faithfully. Use only tables/columns that appear in the schema.\n"
-            "Return ONLY the SQL query (no explanation, no markdown).\n\n"
-            f"Schema:\n{self.schema}\n\n"
-            f"Plan:\n{plan}\n\n"
-            f"Question: {question}\n\n"
-            "SQL:"
-        )
-        sql_text = self.llm(sql_prompt, system="", temperature=0.0, n=1)
-        sql = bridge.extract_sql(sql_text or "")
+REPAIR_PROMPT_TEMPLATE = (
+    "SCHEMA:\n{schema}\n\n"
+    "ORIGINAL QUESTION:\n{question}\n\n"
+    "PREVIOUS SQL:\n{prev_sql}\n\n"
+    "EXECUTION ERROR:\n{error}\n\n"
+    "Provide the corrected SQL query."
+)
 
-        # ---- Lightweight repair: execution-guided re-prompt on failure ----
-        if sql:
-            result = self.execute(sql)
-            if not result.get("ok"):
-                err = result.get("error", "unknown error")
-                repair_prompt = (
-                    "The following SQL failed to execute. Diagnose the error and produce a "
-                    "corrected SQL query. Return ONLY the corrected SQL.\n\n"
-                    f"Schema:\n{self.schema}\n\n"
-                    f"Plan:\n{plan}\n\n"
-                    f"Question: {question}\n\n"
-                    f"Failed SQL:\n{sql}\n\n"
-                    f"Error:\n{err}\n\n"
-                    "Corrected SQL:"
-                )
-                fixed_text = self.llm(repair_prompt, system="", temperature=0.0, n=1)
-                fixed_sql = bridge.extract_sql(fixed_text or "")
-                if fixed_sql:
-                    sql = fixed_sql
 
-        return sql
+def _strip_code_fence(text: str) -> str:
+    """Remove markdown code fences if the LLM wrapped the SQL in them."""
+    raw = text.strip()
+    if raw.startswith("

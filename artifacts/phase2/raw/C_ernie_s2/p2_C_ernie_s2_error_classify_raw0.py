@@ -1,4 +1,4 @@
-"""Implements a Text-to-SQL harness that generates SQL, executes it, classifies failures into syntax/schema/semantics errors, and applies targeted fixes for up to two repair rounds."""
+"""A harness that generates SQL, executes it, classifies errors into syntax/schema/semantics, and applies targeted fixes for up to two rounds."""
 
 from ..harness_base import SQLHarness
 from .. import bridge
@@ -6,62 +6,60 @@ from .. import bridge
 
 class P2P2CErnieS2ErrorClassify(SQLHarness):
     def solve(self, question: str) -> str:
-        """Generate SQL, execute it, classify errors, and apply targeted fixes for up to two rounds."""
-        # Initial generation attempt
-        prompt = f"""You are a Text-to-SQL model. Given the following database schema and question, generate a SQL query that answers the question.
-
-Schema:
-{self.schema}
-
-Question: {question}
-
-SQL:"""
+        """Generate SQL, execute, classify errors, and apply targeted fixes for up to 2 rounds."""
+        # Initial generation
+        prompt = f"Schema: {self.schema}\nQuestion: {question}\nSQL:"
         response = self.llm(prompt, system="", temperature=0.0, n=1)
-        sql = bridge.extract_sql(response)
+        current_sql = bridge.extract_sql(response)
         
-        # Execution and error handling loop (up to 3 total attempts: initial + 2 fixes)
-        for attempt in range(3):
-            result = self.execute(sql)
+        # Track errors for classification
+        last_error = None
+        error_type = None
+        
+        for attempt in range(3):  # Initial + 2 fix rounds
+            # Execute current SQL
+            result = self.execute(current_sql)
+            
+            # Success case
             if result["ok"]:
-                return sql
+                return current_sql
             
-            error = result["error"].lower()
-            
-            # Classify error type
-            if any(kw in error for kw in ["syntax error", "near", "unexpected", "missing"]):
+            # Failure: classify error
+            last_error = result["error"]
+            if "syntax error" in last_error.lower() or "near" in last_error.lower():
                 error_type = "syntax"
-            elif any(kw in error for kw in ["table", "column", "does not exist", "unknown"]):
+            elif "no such table" in last_error.lower() or "no such column" in last_error.lower():
                 error_type = "schema"
             else:
                 error_type = "semantics"
             
-            # If this is the last attempt, return the current SQL anyway
+            # Stop if this was the last attempt
             if attempt == 2:
-                return sql
+                break
             
-            # Build fix prompt with error-specific guidance
-            fix_prompt = f"""You are a Text-to-SQL model. The previous SQL query failed with a {error_type} error. Please fix the query.
-
-Schema:
-{self.schema}
-
-Question: {question}
-
-Previous SQL: {sql}
-
-Error: {result['error']}
-
-Error type: {error_type}
-
-Fix instructions:
-- For syntax errors: Ensure proper SQL syntax, correct punctuation, and valid keywords.
-- For schema errors: Use only table and column names that exist in the provided schema.
-- For semantics errors: Ensure the query logic correctly answers the question, with proper joins and conditions.
-
-Fixed SQL:"""
+            # Construct fix-specific prompt
+            if error_type == "syntax":
+                fix_prompt = (
+                    f"The following SQL has a syntax error: {last_error}\n"
+                    f"Please correct the syntax. Question: {question}\n"
+                    f"Schema: {self.schema}\nSQL:"
+                )
+            elif error_type == "schema":
+                fix_prompt = (
+                    f"The following SQL has a schema error: {last_error}\n"
+                    f"Please correct using the schema. Question: {question}\n"
+                    f"Schema: {self.schema}\nSQL:"
+                )
+            else:  # semantics
+                fix_prompt = (
+                    f"The following SQL has a semantic error: {last_error}\n"
+                    f"Please correct to return proper results. Question: {question}\n"
+                    f"Schema: {self.schema}\nSQL:"
+                )
             
             # Generate fixed SQL
-            fix_response = self.llm(fix_prompt, system="", temperature=0.0, n=1)
-            sql = bridge.extract_sql(fix_response)
+            response = self.llm(fix_prompt, system="", temperature=0.0, n=1)
+            current_sql = bridge.extract_sql(response)
         
-        return sql  # Fallback (should not be reached due to loop structure)
+        # Return last attempt (or empty if none)
+        return current_sql if current_sql else ""

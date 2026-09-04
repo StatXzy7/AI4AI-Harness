@@ -1,46 +1,35 @@
-"""Generate three independent SQL candidates via a frozen weak solver, execute each, and return the majority valid result."""
+"""Generates three independent SQL attempts via LLM, executes all that parse, and returns the majority result."""
 
 from ..harness_base import SQLHarness
 from .. import bridge
-
+from collections import Counter
 
 class P2P2DErnieS2Vote3(SQLHarness):
     def solve(self, question: str) -> str:
-        """
-        Ask the weak solver for three independent SQL attempts (temperature=0.7, n=3),
-        execute every attempt that parses successfully, and return the SQL that appears
-        most frequently among the successful executions (majority vote).
-        """
-        # Build the prompt that includes the schema and the natural‑language question.
-        prompt = f"{self.schema}\n\nQuestion: {question}\nSQL:"
-
-        # Obtain three independent completions from the frozen weak solver.
-        raw_attempts = self.llm(prompt, system="", temperature=0.7, n=3)
-
-        # Extract SQL strings from each raw attempt.
-        sql_candidates = [bridge.extract_sql(text) for text in raw_attempts]
-
-        # Execute each candidate and keep those that parse (i.e., execution succeeds).
+        # Construct prompt with schema and question
+        prompt = f"Given the following database schema:\n{self.schema}\n\nQuestion: {question}\n\nWrite a SQL query to answer the question."
+        
+        # Generate 3 independent attempts with temperature 0.7
+        responses = self.llm(prompt, system="", temperature=0.7, n=3)
+        
+        # Extract SQL from each response
+        sqls = [bridge.extract_sql(r) for r in responses]
+        
+        # Execute each SQL and collect successful ones
         successful_sqls = []
-        for sql in sql_candidates:
-            try:
-                result = self.execute(sql)
-                if result.get("ok", False):
-                    successful_sqls.append(sql)
-            except Exception:
-                # If extraction or execution raises, treat as failure.
-                continue
-
+        for sql in sqls:
+            result = self.execute(sql)
+            if result["ok"]:
+                successful_sqls.append(sql)
+        
+        # If no successful executions, return empty string
         if not successful_sqls:
-            # No valid SQL could be produced; return empty string.
             return ""
-
-        # Count occurrences of each successful SQL and pick the majority.
-        vote_counts = {}
-        for sql in successful_sqls:
-            vote_counts[sql] = vote_counts.get(sql, 0) + 1
-
-        # Determine the SQL with the highest vote count.
-        majority_sql = max(vote_counts, key=vote_counts.get)
-
-        return majority_sql
+        
+        # Count frequencies and find majority
+        counts = Counter(successful_sqls)
+        max_count = max(counts.values())
+        candidates = [sql for sql, cnt in counts.items() if cnt == max_count]
+        
+        # Return first candidate (preserves original attempt order for tie-breaking)
+        return candidates[0]

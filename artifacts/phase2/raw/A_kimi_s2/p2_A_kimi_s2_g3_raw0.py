@@ -1,115 +1,86 @@
-"""Execution-guided repair harness: generate SQL, execute it against the database, and feed errors back for iterative regeneration."""
-# MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration
+"""Execution-guided repair harness: generate SQL, run it against the database, and feed any execution error back to the LLM for bounded correction."""
+# MECHANISM: repair
 
 from ..harness_base import SQLHarness
 from .. import bridge
 
 
 class P2P2AKimiS2G3(SQLHarness):
-    """Closed-loop generate -> execute -> repair Text-to-SQL harness.
+    """Wraps the frozen solver with an execution-feedback repair loop.
 
-    Instead of trusting a single greedy generation, this harness runs the
-    produced SQL against the database. Execution errors (and suspicious
-    zero-row results) are fed back into a repair prompt, and the model is
-    asked for a corrected query. The loop stops as soon as a query executes
-    and returns rows; otherwise the best query seen so far is returned.
+    Control flow:
+      1. Greedy-generate an initial SQL query from schema + question.
+      2. Execute it via self.execute.
+      3. If execution fails, build a repair prompt containing the failed SQL
+         and the database error, and regenerate.
+      4. Repeat until a query executes successfully or MAX_ATTEMPTS is hit.
+      5. Fall back to the best candidate seen if no query ever executes.
     """
 
-    MAX_ATTEMPTS = 5
+    MAX_ATTEMPTS = 4
+    SYSTEM = "You are a careful Text-to-SQL engine. Answer with SQL only."
 
-    def solve(self, question: str) -> str:
-        system = (
-            "You are an expert SQLite text-to-SQL translator. "
-            "You output exactly one valid SQLite SELECT query and nothing else."
-        )
-
-        sql = bridge.extract_sql(
-            self._generate(self._initial_prompt(question), system=system, temperature=0.0)
-        )
-
-        last_candidate = sql or ""
-        clean_fallback = ""
-        saw_empty = False
-        failed = set()
-
-        for attempt in range(self.MAX_ATTEMPTS):
-            candidate = (sql or "").strip()
-            if not candidate:
-                sql = self._repair(
-                    question, "",
-                    "Your previous reply contained no SQL query at all.",
-                    system, attempt,
-                )
-                continue
-
-            last_candidate = candidate
-            outcome = self.execute(candidate)
-
-            if outcome.get("ok"):
-                rows = outcome.get("rows") or []
-                if rows:
-                    return candidate
-                # Executable but empty: keep as fallback, challenge it once.
-                clean_fallback = candidate
-                if saw_empty:
-                    # Two clean-but-empty runs: accept that the answer is empty.
-                    return candidate
-                saw_empty = True
-                feedback = (
-                    "The query executed successfully but returned ZERO rows. "
-                    "This usually means over-restrictive WHERE conditions, wrong join keys, "
-                    "or string literals that do not match the stored values. "
-                    "Re-read the question, verify every filter against the schema, and fix "
-                    "the query. If you are certain zero rows is the correct answer, "
-                    "return the same query unchanged."
-                )
-            else:
-                feedback = "SQLite error: " + (outcome.get("error") or "unknown error")
-                failed.add(candidate)
-
-            sql = self._repair(question, candidate, feedback, system, attempt)
-            if (sql or "").strip() in failed:
-                # The model repeated an already-failed query; force a different rewrite.
-                sql = self._repair(
-                    question, candidate,
-                    feedback + "\nDo NOT repeat the same failing query; rewrite it differently.",
-                    system, attempt + 2,
-                )
-
-        return clean_fallback or last_candidate
-
-    # ------------------------------------------------------------------
     def _initial_prompt(self, question: str) -> str:
         return (
-            "Using the database schema below, write a single SQLite SELECT query "
-            "that answers the question.\n\n"
-            f"Database schema:\n{self.schema}\n\n"
-            f"Question: {question}\n\n"
+            "You are an expert SQLite query writer.\n"
+            "Given the database schema and a natural-language question, write ONE "
+            "correct SQL query.\n\n"
+            f"### Schema\n{self.schema}\n\n"
+            f"### Question\n{question}\n\n"
             "Rules:\n"
-            "- Use only tables and columns present in the schema.\n"
-            "- Return ONLY the SQL query: no markdown fences, no commentary.\n\n"
-            "SQL:"
+            "- Output only the SQL query: no explanations, no markdown fences.\n"
+            "- Use only tables and columns that appear in the schema above.\n"
+            "- Use valid SQLite syntax, and add table qualifiers when joining.\n"
         )
 
-    def _repair(self, question: str, bad_sql: str, feedback: str,
-                system: str, attempt: int) -> str:
-        prompt = (
-            "A SQLite query written for the question below needs to be fixed.\n\n"
-            f"Database schema:\n{self.schema}\n\n"
-            f"Question: {question}\n\n"
-            f"Previous SQL:\n{bad_sql or '(no query was produced)'}\n\n"
-            f"Database feedback:\n{feedback}\n\n"
-            "Write a corrected SQLite query that resolves this feedback. "
-            "Return ONLY the corrected SQL query: no markdown fences, no commentary."
-        )
-        # Slightly raise temperature on later repairs to escape repeated mistakes.
-        temperature = min(0.1 + 0.1 * max(attempt, 0), 0.5)
-        return bridge.extract_sql(
-            self._generate(prompt, system=system, temperature=temperature)
+    def _repair_prompt(self, question: str, bad_sql: str, error: str, failed_attempt: int) -> str:
+        return (
+            "Your previous SQL query FAILED to execute on the database. Fix it.\n\n"
+            f"### Schema\n{self.schema}\n\n"
+            f"### Question\n{question}\n\n"
+            f"### Failed SQL (attempt {failed_attempt})\n{bad_sql}\n\n"
+            f"### Database error\n{error[:600]}\n\n"
+            "Diagnose the cause of the error (e.g., nonexistent table/column, bad "
+            "JOIN condition, invalid syntax, wrong aggregation) and produce ONE "
+            "corrected SQLite query that will run successfully.\n"
+            "Output only the corrected SQL: no explanations, no markdown fences.\n"
         )
 
-    def _generate(self, prompt: str, system: str = "", temperature: float = 0.0) -> str:
-        out = self.llm(prompt, system=system, temperature=temperature, n=1)
-        if isinstance(out, (list, tuple)):
-            out = out[0] if out else ""
-        return out if isinstance(out, str) else str(out)
+    def solve(self, question: str) -> str:
+        candidate = ""        # last SQL extracted from the model
+        last_raw = ""         # last raw model output (fallback if extraction always fails)
+        last_error = "No SQL could be extracted from the model output."
+        prev_failed_sql = None
+        prev_error = None
+
+        for attempt in range(1, self.MAX_ATTEMPTS + 1):
+            if attempt == 1:
+                prompt = self._initial_prompt(question)
+            else:
+                prompt = self._repair_prompt(question, candidate or last_raw,
+                                             last_error, attempt - 1)
+
+            text = self.llm(prompt, system=self.SYSTEM, temperature=0.0, n=1)
+            last_raw = (text or "").strip()
+            sql = bridge.extract_sql(text)
+
+            if sql:
+                candidate = sql
+                result = self.execute(sql)
+                if result.get("ok"):
+                    return sql
+                last_error = result.get("error", "") or "Unknown execution error."
+
+                # If the model repeats the identical failing query, further
+                # deterministic repair calls are very unlikely to help; stop early.
+                if sql == prev_failed_sql and last_error == prev_error:
+                    break
+                prev_failed_sql = sql
+                prev_error = last_error
+            else:
+                # Nothing extractable: treat it as a failure and let the repair
+                # prompt show the raw output so the model can correct itself.
+                last_error = "No SQL could be extracted from the model output."
+
+        # Fallback: return the most recent extracted SQL (best effort), else raw text.
+        return candidate if candidate else last_raw

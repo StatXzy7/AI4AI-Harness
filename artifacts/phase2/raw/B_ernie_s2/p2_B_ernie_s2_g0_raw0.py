@@ -1,33 +1,45 @@
-"""Implements a repair mechanism that executes generated SQL and iteratively refines it using execution errors."""
+"""Uses repair mechanism by executing generated SQL and feeding errors back for regeneration."""
 # MECHANISM: repair
 
 from ..harness_base import SQLHarness
 from .. import bridge
 
+
 class P2P2BErnieS2G0(SQLHarness):
     def solve(self, question: str) -> str:
+        """
+        Generate SQL for the given question using a repair loop: if execution fails,
+        feed the error back to the LLM to produce a corrected query.
+        """
         max_attempts = 3
-        current_sql = None
-        
+        prompt_template = (
+            "Given the schema:\n{schema}\n\n"
+            "Question: {question}\n\n"
+            "Generate a valid SQL query that answers the question. "
+            "Do not include any explanation, only the SQL query."
+        )
+
+        # Initial generation
+        prompt = prompt_template.format(schema=self.schema, question=question)
+        raw_sql = self.llm(prompt, system="", temperature=0.0, n=1)
+        sql = bridge.extract_sql(raw_sql)
+
         for attempt in range(max_attempts):
-            if attempt == 0:
-                # First attempt: generate initial SQL
-                prompt = f"Given the following database schema:\n{self.schema}\n\nQuestion: {question}\n\nWrite a SQL query to answer the question."
-                response = self.llm(prompt, system="", temperature=0.0, n=1)
-                current_sql = bridge.extract_sql(response)
-            else:
-                # Subsequent attempts: include error feedback
-                prompt = f"Given the following database schema:\n{self.schema}\n\nQuestion: {question}\n\nThe following SQL query failed with error: {last_error}\n\nThe previous SQL was: {current_sql}\n\nPlease write a corrected SQL query."
-                response = self.llm(prompt, system="", temperature=0.0, n=1)
-                current_sql = bridge.extract_sql(response)
-            
-            # Execute the current SQL
-            result = self.execute(current_sql)
-            
-            if result["ok"]:
-                return current_sql
-            
-            last_error = result["error"]
-        
-        # If all attempts failed, return the last generated SQL
-        return current_sql
+            result = self.execute(sql)
+            if result.get("ok", False):
+                return sql
+
+            # If not ok, prepare repair prompt
+            error_msg = result.get("error", "Unknown error")
+            repair_prompt = (
+                "The following SQL query failed with error: {error}\n\n"
+                "Schema: {schema}\n\n"
+                "Question: {question}\n\n"
+                "Generate a corrected SQL query that avoids the error. "
+                "Do not include any explanation, only the SQL query."
+            ).format(error=error_msg, schema=self.schema, question=question)
+            raw_sql = self.llm(repair_prompt, system="", temperature=0.0, n=1)
+            sql = bridge.extract_sql(raw_sql)
+
+        # If all attempts fail, return the last generated SQL (best effort)
+        return sql

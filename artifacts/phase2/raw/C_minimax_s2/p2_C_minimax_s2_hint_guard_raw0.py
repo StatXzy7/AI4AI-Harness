@@ -1,277 +1,120 @@
-"""Wraps a frozen Text-to-SQL solver by parsing explicit Hint lines and enforcing their constraints as hard gates around SQL generation."""
+"""P2P2C harness that extracts Hint constraints and enforces them as hard requirements before delegating to a frozen weak solver."""
 from ..harness_base import SQLHarness
 from .. import bridge
 
 
 class P2P2CMinimaxS2HintGuard(SQLHarness):
-    # Strategy token: parse-hint-enforce
-    STRATEGY_TOKEN = "parse-hint-enforce"
+    # Strategy-level instructions appended to any prompt sent to the frozen solver.
+    _HINT_GUARD_INSTRUCTION = (
+        "You are writing SQL under a Hint Guard protocol. The question contains a "
+        "'Hint:' line that states mandatory constraints. You MUST treat every Hint "
+        "constraint as a hard filter (WHERE/JOIN/HAVING/clause) that cannot be "
+        "omitted, weakened, or paraphrased away. Do not relax, drop, or invert any "
+        "Hint constraint even if the base question seems to ask for something "
+        "broader. The Hint outranks the literal phrasing of the question when they "
+        "conflict. If a constraint cannot be expressed in pure SQL (e.g., ordering "
+        "by a derived expression), still represent it faithfully. Output only one "
+        "SQL statement."
+    )
 
-    def _parse_hint(self, question: str):
-        """Extract a 'Hint:' clause from the question, if present.
-
-        Returns a tuple (hint_text, hint_constraints) where hint_constraints is a
-        list of structured requirement strings derived from the hint. If no hint
-        line is found, returns (None, []).
-        """
-        hint_text = None
-        constraints = []
-
-        # Scan the question line-by-line for a Hint: prefix (case-insensitive).
-        for raw_line in question.splitlines():
-            stripped = raw_line.strip()
-            lower = stripped.lower()
-            if lower.startswith("hint:") or lower.startswith("hint :"):
-                hint_text = stripped.split(":", 1)[1].strip()
-                break
-
-        if not hint_text:
-            return None, []
-
-        # Break the hint into individual constraint clauses.
-        # Constraints are separated by ';', ' and ', or commas depending on phrasing.
-        raw_clauses = []
-        # Primary separator is ';'. We keep quote awareness simple: no nested
-        # SQL string literals are expected inside Hint lines in this benchmark.
-        for piece in hint_text.split(";"):
-            piece = piece.strip()
-            if not piece:
-                continue
-            # Within each piece, ' and ' often separates conjunctional requirements.
-            if " and " in piece.lower():
-                # split on ' and ' but preserve original casing of pieces
-                buf = ""
-                parts = []
-                tokens = piece.split(" ")
-                i = 0
-                current = []
-                while i < len(tokens):
-                    if tokens[i].lower() == "and" and current:
-                        parts.append(" ".join(current).strip())
-                        current = []
-                        i += 1
-                        # skip following 'then' / ',' tokens if any
-                        while i < len(tokens) and tokens[i] in {",", "then", "also"}:
-                            i += 1
-                        continue
-                    current.append(tokens[i])
-                    i += 1
-                if current:
-                    parts.append(" ".join(current).strip())
-                raw_clauses.extend([p for p in parts if p])
-            else:
-                raw_clauses.append(piece)
-
-        # Normalize each clause into a clean constraint statement.
-        for clause in raw_clauses:
-            c = clause.strip().rstrip(",").strip()
-            if not c:
-                continue
-            constraints.append(c)
-
-        return hint_text, constraints
-
-    def _build_constraint_system_prompt(self, constraints):
-        """Translate parsed hint constraints into a hard-requirement system prompt.
-
-        Each constraint becomes a numbered HARD requirement that the produced
-        SQL MUST satisfy. The prompt also includes a self-check instruction so
-        the weak solver is forced to verify each constraint explicitly.
-        """
-        if not constraints:
+    @staticmethod
+    def _extract_hint(question: str) -> str:
+        """Return the content of the 'Hint:' line, or '' if absent."""
+        if not question:
             return ""
-
-        lines = []
-        lines.append("You are generating a single SQL query for the user's question.")
-        lines.append("")
-        lines.append("The following are HARD requirements derived from the user's Hint.")
-        lines.append("Every one of them MUST be satisfied by the SQL you produce.")
-        lines.append("If a requirement cannot be satisfied, you must still produce")
-        lines.append("the SQL that comes closest while flagging the conflict in a comment.")
-        lines.append("")
-        for idx, c in enumerate(constraints, start=1):
-            lines.append(f"HARD REQ {idx}: {c}.")
-        lines.append("")
-        lines.append("Before finalizing the SQL, mentally verify each HARD REQ against")
-        lines.append("your query. If any requirement is missing or contradicted, rewrite")
-        lines.append("the SQL until all HARD REQs are satisfied.")
-        lines.append("")
-        lines.append("Return ONLY the SQL query, optionally preceded by a brief")
-        lines.append("# CHECK: <one line summary> comment.")
-        return "\n".join(lines)
-
-    def _verify_sql_against_constraints(self, sql: str, constraints):
-        """Lightweight syntactic verification of obvious constraint violations.
-
-        This is a control-flow gate, not a prompt-only claim. We check a few
-        common, easy-to-detect cases (SELECT *, ORDER BY presence, LIMIT presence,
-        DISTINCT presence, JOIN presence, GROUP BY presence, WHERE presence). If
-        a violation is detected we record it; the caller will trigger a repair
-        round-trip with the weak solver rather than accepting the SQL silently.
-        """
-        if not constraints:
-            return [], []
-
-        sql_l = sql.lower()
-        satisfied = []
-        violated = []
-
-        for c in constraints:
-            cl = c.lower()
-            recorded = False
-
-            # SELECT * prohibition
-            if "no select *" in cl or "avoid select *" in cl or "don't select *" in cl or "do not select *" in cl:
-                recorded = True
-                if "select *" in sql_l or "select *\n" in sql_l:
-                    violated.append(c)
-                else:
-                    satisfied.append(c)
+        for raw_line in question.splitlines():
+            line = raw_line.strip()
+            if not line:
                 continue
+            # Match 'Hint:' prefix (also 'Hint :' with whitespace)
+            lower = line.lower()
+            if lower.startswith("hint:") or lower.startswith("hint :"):
+                return line.split(":", 1)[1].strip()
+        return ""
 
-            # ORDER BY requirement
-            if "order by" in cl and ("must" in cl or "include" in cl or "use" in cl or "require" in cl or "sort" in cl):
-                recorded = True
-                if "order by" in sql_l:
-                    satisfied.append(c)
-                else:
-                    violated.append(c)
+    @staticmethod
+    def _enforce_single_statement(sql: str) -> str:
+        """Keep only the first SQL statement, dropping trailing semicolons/comments."""
+        if not sql:
+            return sql
+        # Strip line comments
+        cleaned_lines = []
+        for ln in sql.splitlines():
+            stripped = ln.split("--", 1)[0]
+            cleaned_lines.append(stripped)
+        cleaned = "\n".join(cleaned_lines)
+        # Drop everything after the first ';' that isn't inside quotes -- simple heuristic:
+        # split on ';' and keep only segments that contain at least one SQL keyword.
+        parts = cleaned.split(";")
+        for part in parts:
+            p = part.strip()
+            if not p:
                 continue
+            upper = p.upper()
+            if any(kw in upper for kw in ("SELECT", "INSERT", "UPDATE", "DELETE", "WITH")):
+                return p.strip()
+        return sql.strip().rstrip(";").strip()
 
-            # LIMIT requirement
-            if "limit" in cl and ("must" in cl or "include" in cl or "use" in cl or "require" in cl or "only" in cl or "top" in cl):
-                recorded = True
-                if " limit " in sql_l or sql_l.endswith("limit") or "\nlimit " in sql_l:
-                    satisfied.append(c)
-                else:
-                    violated.append(c)
-                continue
-
-            # DISTINCT requirement
-            if "distinct" in cl and ("must" in cl or "use" in cl or "require" in cl or "include" in cl):
-                recorded = True
-                if "distinct" in sql_l:
-                    satisfied.append(c)
-                else:
-                    violated.append(c)
-                continue
-
-            # JOIN requirement
-            if "join" in cl and ("must" in cl or "use" in cl or "require" in cl or "include" in cl):
-                recorded = True
-                if " join " in sql_l:
-                    satisfied.append(c)
-                else:
-                    violated.append(c)
-                continue
-
-            # GROUP BY requirement
-            if "group by" in cl and ("must" in cl or "use" in cl or "require" in cl or "include" in cl):
-                recorded = True
-                if "group by" in sql_l:
-                    satisfied.append(c)
-                else:
-                    violated.append(c)
-                continue
-
-            # WHERE / filter requirement
-            if ("where" in cl or "filter" in cl) and ("must" in cl or "use" in cl or "require" in cl or "include" in cl):
-                recorded = True
-                if " where " in sql_l:
-                    satisfied.append(c)
-                else:
-                    violated.append(c)
-                continue
-
-            if not recorded:
-                # Constraints we cannot mechanically check are treated as
-                # satisfied-by-trust; the weak solver's own self-check is the
-                # primary guard for unparseable requirements.
-                satisfied.append(c)
-
-        return satisfied, violated
-
-    def _build_repair_prompt(self, question, original_sql, violated_constraints):
-        """Ask the weak solver to repair the SQL so it satisfies the listed constraints."""
-        lines = []
-        lines.append("Your previous SQL did not satisfy these HARD requirements from the user's Hint:")
-        for idx, c in enumerate(violated_constraints, start=1):
-            lines.append(f"  - HARD REQ {idx}: {c}.")
-        lines.append("")
-        lines.append("Previous SQL:")
-        lines.append(original_sql)
-        lines.append("")
-        lines.append("Rewrite the SQL so that every HARD REQ above is satisfied.")
-        lines.append("Keep the query semantically equivalent to the user's question.")
-        lines.append("Return ONLY the corrected SQL.")
-        return "\n".join(lines)
+    def _build_prompt(self, question: str, hint: str) -> str:
+        """Restate Hint constraints explicitly in front of the solver prompt."""
+        if hint:
+            prefix = (
+                "[HINT CONSTRAINTS — MUST BE SATISFIED IN THE SQL]\n"
+                f"- {hint}\n"
+                "[END HINT CONSTRAINTS]\n\n"
+            )
+        else:
+            prefix = ""
+        return (
+            prefix
+            + self._HINT_GUARD_INSTRUCTION
+            + "\n\nQuestion:\n"
+            + question
+            + "\n\nReturn one SQL statement only."
+        )
 
     def solve(self, question: str) -> str:
-        # ----- Step 1: parse the Hint line and convert to hard constraints -----
-        hint_text, constraints = self._parse_hint(question)
+        hint = self._extract_hint(question)
 
-        # Rewrite the question for the weak solver so the Hint is restated as
-        # an explicit, in-prompt requirement rather than a soft suggestion.
-        if hint_text is not None:
-            restated_question = question
-            # Remove the original Hint: line so the solver does not double-count.
-            cleaned_lines = []
-            for ln in question.splitlines():
-                low = ln.strip().lower()
-                if low.startswith("hint:") or low.startswith("hint :"):
-                    continue
-                cleaned_lines.append(ln)
-            restated_question = "\n".join(cleaned_lines).strip()
+        # First attempt: prompt the frozen solver with the Hint constraints restated.
+        prompt_with_hint = self._build_prompt(question, hint)
+        raw1 = self.llm(prompt_with_hint, system="", temperature=0.0, n=1)
+        sql1 = bridge.extract_sql(raw1) or ""
 
-            enforced_block = []
-            enforced_block.append("")
-            enforced_block.append("ENFORCED HINT CONSTRAINTS (these are HARD requirements, not suggestions):")
-            for idx, c in enumerate(constraints, start=1):
-                enforced_block.append(f"  {idx}. {c}.")
-            enforced_block.append("")
-            enforced_block.append("Every numbered constraint above MUST be reflected in the SQL you return.")
-            restated_question = restated_question + "\n" + "\n".join(enforced_block)
-        else:
-            restated_question = question
+        executed = self.execute(sql1) if sql1 else {"ok": False, "rows": [], "error": "empty"}
 
-        # ----- Step 2: build a system prompt that enforces the constraints -----
-        system_prompt = self._build_constraint_system_prompt(constraints)
-
-        # ----- Step 3: first attempt by the weak solver -----
-        raw = self.llm(
-            prompt=restated_question,
-            system=system_prompt,
-            temperature=0.0,
-            n=1,
-        )
-        sql = bridge.extract_sql(raw)
-
-        # ----- Step 4: control-flow gate: verify SQL against constraints -----
-        _, violated = self._verify_sql_against_constraints(sql, constraints)
-
-        # ----- Step 5: if any constraint is violated, force a repair round-trip -----
-        max_repairs = 2
-        repair_round = 0
-        while violated and repair_round < max_repairs:
-            repair_round += 1
-            repair_prompt = self._build_repair_prompt(question, sql, violated)
-            raw2 = self.llm(
-                prompt=repair_prompt,
-                system=system_prompt,
-                temperature=0.0,
-                n=1,
+        # If the first attempt failed AND we actually had a Hint to enforce,
+        # retry once with an even more forceful, constraint-locked prompt.
+        if (not executed.get("ok")) and hint:
+            locked_prompt = (
+                "[STRICT HINT LOCK] The following Hint is non-negotiable and MUST "
+                "be encoded exactly as a WHERE / JOIN / HAVING / ORDER BY clause "
+                "(or equivalent) in the SQL. Do not paraphrase, weaken, drop, or "
+                "reinterpret it. The Hint takes precedence over the rest of the "
+                "question.\n\n"
+                f"Hint: {hint}\n\n"
+                "Question:\n"
+                + question
+                + "\n\nReply with one SQL statement only. No commentary."
             )
-            new_sql = bridge.extract_sql(raw2)
-            if new_sql and new_sql.strip():
-                sql = new_sql
-            _, violated = self._verify_sql_against_constraints(sql, constraints)
+            raw2 = self.llm(locked_prompt, system="", temperature=0.0, n=1)
+            sql2 = bridge.extract_sql(raw2) or ""
+            if sql2:
+                sql1 = sql2
+                executed = self.execute(sql1)
 
-        # ----- Step 6: final execution sanity (no DDL/DML, single statement) -----
-        if sql:
-            stripped = sql.strip().rstrip(";").strip()
-            head = stripped.split(None, 1)[0].upper() if stripped else ""
-            if head not in {"SELECT", "WITH"}:
-                # Reject anything that isn't a read-only query.
-                sql = ""
+        # If we still have nothing executable but no Hint existed, do a plain retry
+        # with a clean prompt so the frozen solver gets a second chance.
+        if (not executed.get("ok")) and not hint:
+            fallback_prompt = (
+                "Write one SQL query that answers the question. "
+                "Output SQL only, no prose.\n\nQuestion:\n" + question
+            )
+            raw3 = self.llm(fallback_prompt, system="", temperature=0.0, n=1)
+            sql3 = bridge.extract_sql(raw3) or ""
+            if sql3:
+                sql1 = sql3
 
-        return sql if sql else ""
+        # Final sanity: ensure single statement, strip trailing semicolons.
+        final_sql = self._enforce_single_statement(sql1) if sql1 else ""
+        return final_sql

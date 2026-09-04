@@ -1,7 +1,7 @@
-"""Two-stage Text-to-SQL harness that first links question terms to schema tables/columns and then generates SQL using only that linked schema subset."""
+"""First performs LLM schema linking to identify relevant tables/columns, then writes SQL using only that linked schema subset."""
+
 import json
 import re
-from typing import Any, Dict, List
 
 from ..harness_base import SQLHarness
 from .. import bridge
@@ -9,112 +9,67 @@ from .. import bridge
 
 class P2P2DDeepseekS2SchemaLink(SQLHarness):
     def solve(self, question: str) -> str:
-        # Stage 1: identify relevant tables/columns mentioned in the question.
-        linked_tables = self._link_schema(question)
-        linked_schema = self._format_linked_schema(linked_tables)
-
-        # Stage 2: generate SQL against only the linked subset.
-        raw_sql = self._generate_sql(question, linked_schema)
-        sql = bridge.extract_sql(raw_sql)
-        return sql or raw_sql.strip()
-
-    def _link_schema(self, question: str) -> List[Dict[str, Any]]:
-        system = (
-            "You are an expert database schema linker. Identify only the tables and columns "
-            "that are mentioned or necessarily implied by the user's question. "
-            'Return a single JSON object in the form {"tables":[{"name":"table_name","columns":["col1","col2"]}]}.'
+        # Step 1: schema linking
+        linking_prompt = (
+            "You are a database schema linker for Text-to-SQL.\n"
+            "Given the user question and the database schema, identify all tables and columns that are needed "
+            "to write the SQL query. Include columns that are directly mentioned or clearly required for joins, "
+            "filters, grouping, and the SELECT clause.\n\n"
+            "Return a JSON object with the following structure:\n"
+            '{"tables": [{"table": "table_name", "columns": ["col1", "col2"]}]}\n\n'
+            f"Question:\n{question}\n\n"
+            f"Schema:\n{self.schema}\n\n"
+            "Return only JSON."
         )
-        prompt = f"""Database schema:
-{self.schema}
+        link_resp = self._call_llm(linking_prompt, "You return only valid JSON schema links.")
+        links = self._parse_links(link_resp)
 
-Question:
-{question}
+        # Step 2: build linked schema subset
+        linked_schema = self._build_linked_schema(links) if links else self.schema
 
-Return only the JSON object, with no additional commentary."""
-        response = self._call_llm(prompt, system)
-        data = self._parse_json(response)
+        # Step 3: generate SQL against the linked subset
+        sql = self._generate_sql(question, linked_schema)
+        if not sql:
+            sql = self._generate_sql(question, self.schema)
 
-        if not isinstance(data, dict):
-            return []
-        tables = data.get("tables", [])
-        if not isinstance(tables, list):
-            return []
-        return [t for t in tables if isinstance(t, dict)]
+        # Optional lightweight validation and repair
+        if sql and self._is_query(sql):
+            try:
+                result = self.execute(sql)
+            except Exception:
+                return sql
 
-    def _generate_sql(self, question: str, linked_schema: str) -> str:
-        system = (
-            "You are an expert SQLite SQL writer. Write a single SQL query that answers "
-            "the user's question using only the provided linked schema subset. "
-            "Do not use tables or columns that are not explicitly listed below."
-        )
-        prompt = f"""Linked schema subset (only these tables/columns are relevant):
-{linked_schema}
+            if result.get("ok"):
+                return sql
 
-Question:
-{question}
+            error = result.get("error") or "unknown execution error"
+            repaired = self._repair_sql(question, sql, error)
+            if repaired:
+                if self._is_query(repaired):
+                    try:
+                        if self.execute(repaired).get("ok"):
+                            return repaired
+                    except Exception:
+                        pass
+                return repaired
 
-Return only SQLite SQL, with no explanation or markdown fences."""
-        return self._call_llm(prompt, system)
+        return sql or ""
 
-    def _call_llm(self, prompt: str, system: str = "") -> str:
-        response = self.llm(prompt, system=system, temperature=0.0, n=1)
-        return self._unwrap_completion(response)
+    def _call_llm(self, prompt: str, system: str) -> str:
+        try:
+            resp = self.llm(prompt, system=system, temperature=0.0, n=1)
+        except TypeError:
+            resp = self.llm(prompt)
 
-    @staticmethod
-    def _unwrap_completion(response: Any) -> str:
-        if isinstance(response, str):
-            return response
-
-        if isinstance(response, list):
-            for item in response:
-                if isinstance(item, str):
-                    return item
-                if isinstance(item, dict):
-                    text = (
-                        item.get("text")
-                        or item.get("content")
-                        or item.get("message", {}).get("content")
-                        if isinstance(item.get("message", {}), dict)
-                        else None
-                    )
-                    if text:
-                        return str(text)
+        if isinstance(resp, (list, tuple)):
+            resp = resp[0] if resp else ""
+        if resp is None:
             return ""
+        return str(resp)
 
-        if isinstance(response, dict):
-            for key in ("text", "content"):
-                if response.get(key):
-                    return str(response[key])
-
-            choices = response.get("choices", [])
-            if isinstance(choices, list):
-                for choice in choices:
-                    if isinstance(choice, str):
-                        return choice
-                    if isinstance(choice, dict):
-                        text = (
-                            choice.get("text")
-                            or choice.get("content")
-                            or choice.get("message", {}).get("content")
-                            if isinstance(choice.get("message", {}), dict)
-                            else None
-                        )
-                        if text:
-                            return str(text)
-
-            message = response.get("message")
-            if isinstance(message, str):
-                return message
-            if isinstance(message, dict):
-                return str(message.get("content", ""))
-
-        return str(response)
-
-    @staticmethod
-    def _parse_json(text: str) -> Any:
+    def _parse_links(self, text: str):
         if not text:
             return None
 
         cleaned = text.strip()
-        # Remove common code fences.
         cleaned = re.sub(r"

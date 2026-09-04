@@ -1,0 +1,250 @@
+{
+ "builder": "kimi",
+ "model": "Kimi-K3",
+ "arm": "A",
+ "seed": 2,
+ "gate": false,
+ "forced": false,
+ "raw_attempts_per_slot": 3,
+ "n_slots": 8,
+ "K_admitted": 7,
+ "raw_total": 14,
+ "R_artifact": 0.5,
+ "R_contract": 0.0,
+ "R_fidelity": 0.0,
+ "p_neutral_valid": 0.5,
+ "p_mechanism_pass": 0.0,
+ "results": [
+  {
+   "harness": "p2_A_kimi_s2_g0",
+   "arm": "A",
+   "strategy": null,
+   "seed": 2,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 23) (p2_A_kimi_s2_g0.py, line 23)",
+     "secs": 115.2
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 20) (p2_A_kimi_s2_g0.py, line 20)",
+     "secs": 87.2
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 57.3
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_kimi_s2_g1",
+   "arm": "A",
+   "strategy": null,
+   "seed": 2,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "secs": 108.7
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_kimi_s2_g2",
+   "arm": "A",
+   "strategy": null,
+   "seed": 2,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "secs": 132.2
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_kimi_s2_g3",
+   "arm": "A",
+   "strategy": null,
+   "seed": 2,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (100 chars)",
+     "secs": 74.3
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_kimi_s2_g4",
+   "arm": "A",
+   "strategy": null,
+   "seed": 2,
+   "admitted": true,
+   "admitted_attempt": 1,
+   "contract": null,
+   "n_raw": 2,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 57.5
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "secs": 41.2
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_kimi_s2_g5",
+   "arm": "A",
+   "strategy": null,
+   "seed": 2,
+   "admitted": true,
+   "admitted_attempt": 2,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 19) (p2_A_kimi_s2_g5.py, line 19)",
+     "secs": 54.0
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "reason": "BadRequestError('Error code: 400 - {\\'error\\': {\\'message\\': \"OpenAIException - <400> InternalError.Algo.InvalidParameter: Parameter \\'temperature\\'=0.7 is not supported for kimi-k",
+     "secs": 10.6
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "secs": 174.1
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_kimi_s2_g6",
+   "arm": "A",
+   "strategy": null,
+   "seed": 2,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (89 chars)",
+     "secs": 176.5
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_kimi_s2_g7",
+   "arm": "A",
+   "strategy": null,
+   "seed": 2,
+   "admitted": true,
+   "admitted_attempt": 1,
+   "contract": null,
+   "n_raw": 2,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 47) (p2_A_kimi_s2_g7.py, line 47)",
+     "secs": 64.2
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (89 chars)",
+     "secs": 58.4
+    }
+   ]
+  }
+ ]
+}

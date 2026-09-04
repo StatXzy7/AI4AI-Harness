@@ -1,0 +1,275 @@
+{
+ "builder": "kimi",
+ "model": "Kimi-K3",
+ "arm": "C",
+ "seed": 2,
+ "gate": false,
+ "forced": true,
+ "raw_attempts_per_slot": 3,
+ "n_slots": 8,
+ "K_admitted": 6,
+ "raw_total": 17,
+ "R_artifact": 0.3529,
+ "R_contract": 0.0,
+ "R_fidelity": 0.0,
+ "p_neutral_valid": 0.3529,
+ "p_mechanism_pass": 0.0,
+ "results": [
+  {
+   "harness": "p2_C_kimi_s2_repair",
+   "arm": "C",
+   "strategy": "repair",
+   "seed": 2,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (98 chars)",
+     "secs": 61.6
+    }
+   ]
+  },
+  {
+   "harness": "p2_C_kimi_s2_vote3",
+   "arm": "C",
+   "strategy": "vote3",
+   "seed": 2,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "secs": 130.9
+    }
+   ]
+  },
+  {
+   "harness": "p2_C_kimi_s2_schema_link",
+   "arm": "C",
+   "strategy": "schema_link",
+   "seed": 2,
+   "admitted": true,
+   "admitted_attempt": 2,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": true,
+     "neutral_detail": "SyntaxError: '(' was never closed (p2_C_kimi_s2_schema_link.py, line 73)",
+     "secs": 540.0
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": true,
+     "neutral_detail": "SyntaxError: '(' was never closed (p2_C_kimi_s2_schema_link.py, line 262)",
+     "secs": 447.0
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (91 chars)",
+     "secs": 314.1
+    }
+   ]
+  },
+  {
+   "harness": "p2_C_kimi_s2_hint_guard",
+   "arm": "C",
+   "strategy": "hint_guard",
+   "seed": 2,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 117) (p2_C_kimi_s2_hint_guard.py, line 117)",
+     "secs": 181.3
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated triple-quoted f-string literal (detected at line 126) (p2_C_kimi_s2_hint_guard.py, line 113)",
+     "secs": 257.7
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 94) (p2_C_kimi_s2_hint_guard.py, line 94)",
+     "secs": 116.9
+    }
+   ]
+  },
+  {
+   "harness": "p2_C_kimi_s2_two_view",
+   "arm": "C",
+   "strategy": "two_view",
+   "seed": 2,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "secs": 125.5
+    }
+   ]
+  },
+  {
+   "harness": "p2_C_kimi_s2_decompose",
+   "arm": "C",
+   "strategy": "decompose",
+   "seed": 2,
+   "admitted": true,
+   "admitted_attempt": 2,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 16) (p2_C_kimi_s2_decompose.py, line 16)",
+     "secs": 310.7
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 132) (p2_C_kimi_s2_decompose.py, line 132)",
+     "secs": 263.9
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (91 chars)",
+     "secs": 192.6
+    }
+   ]
+  },
+  {
+   "harness": "p2_C_kimi_s2_error_classify",
+   "arm": "C",
+   "strategy": "error_classify",
+   "seed": 2,
+   "admitted": true,
+   "admitted_attempt": 1,
+   "contract": null,
+   "n_raw": 2,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 286.1
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (89 chars)",
+     "secs": 137.2
+    }
+   ]
+  },
+  {
+   "harness": "p2_C_kimi_s2_format_guard",
+   "arm": "C",
+   "strategy": "format_guard",
+   "seed": 2,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_C_kimi_s2_format_guard.py, line 1)",
+     "secs": 396.0
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_C_kimi_s2_format_guard.py, line 1)",
+     "secs": 147.8
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_C_kimi_s2_format_guard.py, line 1)",
+     "secs": 330.2
+    }
+   ]
+  }
+ ]
+}

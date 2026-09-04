@@ -1,103 +1,81 @@
-"""Decompose the question into ordered sub-questions, answer each with a small LLM call, then assemble the final SQL."""
+"""Decomposes a natural-language question into ordered sub-questions, solves each with a small LLM call, and assembles the final SQL by stitching the sub-solutions together."""
 from ..harness_base import SQLHarness
 from .. import bridge
 
 
 class P2P2DMinimaxS2Decompose(SQLHarness):
     def solve(self, question: str) -> str:
-        # Step 1: Decompose the question into ordered sub-questions.
-        decomp_system = (
-            "You are a query planner. Given a natural language question and a database schema, "
-            "break it down into an ordered list of atomic sub-questions needed to construct the SQL. "
-            "Each sub-question should target one logical piece (identifying tables, identifying columns, "
-            "filter conditions, aggregations, ordering, limits, etc.). "
-            "Output ONLY a numbered list, one sub-question per line, nothing else."
-        )
-        decomp_prompt = (
-            f"Schema:\n{self.schema}\n\n"
-            f"Question: {question}\n\n"
+        # ------------------------------------------------------------------
+        # STAGE 1: Decompose the question into ordered sub-questions.
+        # ------------------------------------------------------------------
+        decompose_system = (
+            "You are a query-planning assistant. Given a natural language "
+            "question and a database schema, you break the question into a "
+            "small, ordered list of sub-questions that, when answered in "
+            "sequence, fully describe the SQL query needed.\n\n"
+            "Rules:\n"
+            "  - Each sub-question must be a self-contained, minimal NL step.\n"
+            "  - Sub-questions must be ordered (the answer to one may feed "
+            "    into the next).\n"
+            "  - Cover: identifying tables/columns, filters/joins, "
+            "    aggregations/grouping, ordering/limits.\n"
+            "  - Output ONLY the numbered list, one sub-question per line. "
+            "    No prose, no SQL.\n\n"
+            "Schema:\n{schema}\n\n"
+            "Question:\n{question}\n\n"
             "Sub-questions:"
-        )
-        decomp_text = self.llm(decomp_prompt, system=decomp_system, temperature=0.0, n=1)
+        ).format(schema=self.schema, question=question)
 
-        # Parse the decomposition into ordered sub-questions.
+        decompose_text = self.llm(decompose_system, system="", temperature=0.0, n=1)
+
         sub_questions = []
-        for line in decomp_text.splitlines():
+        for line in decompose_text.splitlines():
             line = line.strip()
             if not line:
                 continue
-            # Strip leading numbering like "1.", "1)", "- ", etc.
-            stripped = line
-            for prefix in ("1)", "2)", "3)", "4)", "5)", "6)", "7)", "8)", "9)"):
-                if stripped.startswith(prefix):
-                    stripped = stripped[len(prefix):].strip()
+            # Strip common leading enumerators like "1.", "1)", "-", "*".
+            for prefix in ("- ", "* "):
+                if line.startswith(prefix):
+                    line = line[len(prefix):].strip()
                     break
-            # Handle "1.", "2.", etc.
-            if len(stripped) > 2 and stripped[0].isdigit() and stripped[1] in ".)":
-                stripped = stripped[2:].strip()
-            elif stripped.startswith("- "):
-                stripped = stripped[2:].strip()
-            if stripped:
-                sub_questions.append(stripped)
+            # Remove numeric prefixes like "1." or "1)".
+            if len(line) > 2 and line[0].isdigit():
+                # Find the first non-digit/non-dot/non-paren character.
+                idx = 0
+                while idx < len(line) and (line[idx].isdigit() or line[idx] in ".)"):
+                    idx += 1
+                line = line[idx:].strip()
+            if line:
+                sub_questions.append(line)
 
-        # Step 2: Answer each sub-question with a small LLM call.
-        answers = []
-        ans_system = (
-            "You are a SQL planning assistant. Given the schema, the overall question, "
-            "previously resolved sub-questions and their answers, and the current sub-question, "
-            "answer the current sub-question concisely in plain English. Focus on identifying "
-            "specific tables, columns, conditions, functions, or clauses relevant to that step. "
-            "Be precise and do not include explanations beyond what is asked."
-        )
+        # Defensive fallback: if decomposition yielded nothing useful, treat
+        # the whole question as a single step so downstream still runs.
+        if not sub_questions:
+            sub_questions = [question]
 
-        prev_qa = ""
-        for sq in sub_questions:
-            ans_prompt = (
-                f"Schema:\n{self.schema}\n\n"
-                f"Overall Question: {question}\n\n"
-                f"Previous Resolutions:\n{prev_qa if prev_qa else '(none)'}\n\n"
-                f"Current Sub-question: {sq}\n\n"
-                "Answer:"
-            )
-            a = self.llm(ans_prompt, system=ans_system, temperature=0.0, n=1)
-            a = a.strip()
-            answers.append(a)
-            prev_qa += f"Q: {sq}\nA: {a}\n\n"
+        # ------------------------------------------------------------------
+        # STAGE 2: Solve each sub-question individually with a focused call.
+        # ------------------------------------------------------------------
+        accumulated_context = []
+        sub_solutions = []
+        for idx, sub_q in enumerate(sub_questions, start=1):
+            context_block = ""
+            if accumulated_context:
+                context_block = (
+                    "Previously resolved steps (use these as ground truth, "
+                    "do not change them):\n"
+                    + "\n".join(accumulated_context)
+                    + "\n\n"
+                )
 
-        # Step 3: Assemble the final SQL from the resolved sub-answers.
-        assembly_system = (
-            "You are an expert SQL writer. Given a database schema, a natural language question, "
-            "and an ordered set of resolved sub-questions with answers, synthesize a single, "
-            "executable SQL query that answers the question. "
-            "Output ONLY the SQL statement, no prose, no markdown fences."
-        )
-        assembly_prompt = (
-            f"Schema:\n{self.schema}\n\n"
-            f"Question: {question}\n\n"
-            f"Resolved Sub-questions:\n{prev_qa}\n\n"
-            "Final SQL:"
-        )
-        assembled_text = self.llm(assembly_prompt, system=assembly_system, temperature=0.0, n=1)
-
-        final_sql = bridge.extract_sql(assembled_text)
-
-        # Step 4: Validate execution; if it fails, retry once with an error-aware prompt.
-        result = self.execute(final_sql)
-        if not result["ok"]:
-            repair_system = (
-                "You are an expert SQL debugger. Given a schema, question, a previously generated "
-                "SQL that failed, and the error message, produce a corrected SQL query. "
-                "Output ONLY the corrected SQL, no prose, no markdown fences."
-            )
-            repair_prompt = (
-                f"Schema:\n{self.schema}\n\n"
-                f"Question: {question}\n\n"
-                f"Resolved Sub-questions:\n{prev_qa}\n\n"
-                f"Failed SQL:\n{final_sql}\n\n"
-                f"Error:\n{result['error']}\n\n"
-                "Corrected SQL:"
-            )
-            repaired_text = self.llm(repair_prompt, system=repair_system, temperature=0.0, n=1)
-            final_sql = bridge.extract_sql(repaired_text)
-
-        return final_sql
+            sub_system = (
+                "You are a precise Text-to-SQL assistant. You are answering "
+                "ONE sub-question at a time that, together with the previous "
+                "sub-answers, will build the final SQL.\n\n"
+                "Schema:\n{schema}\n\n"
+                "{context}"
+                "Current sub-question ({idx} of {total}):\n{sub_q}\n\n"
+                "Respond with a SHORT explanation followed by the SQL "
+                "fragment (SELECT clause, WHERE clause, JOIN, etc.) that "
+                "answers THIS sub-question. Wrap the SQL fragment in "
+                "

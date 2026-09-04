@@ -1,4 +1,4 @@
-"""Execution-feedback repair loop: generate SQL, run it, and feed SQLite errors (or zero-row results) back for regeneration up to 4 attempts."""
+"""Iterative repair harness: generate SQL, execute it, and feed any database error back into the prompt for regeneration until the query runs or the attempt budget is exhausted."""
 # MECHANISM: repair
 
 from ..harness_base import SQLHarness
@@ -6,76 +6,92 @@ from .. import bridge
 
 
 class P2P2BKimiS2G4(SQLHarness):
-    """Weak-solver wrapper that repairs its own SQL using live execution feedback.
+    """Repair-loop harness.
 
-    Round 1 is a greedy (temperature=0.0) generation. Each subsequent round
-    re-prompts the frozen model with the previous SQL plus concrete feedback
-    from actually executing it: the SQLite error message on failure, or a
-    zero-row warning on suspicious success. Later rounds use a small
-    temperature so the repair is not stuck repeating the same mistake.
+    Control flow:
+      1. Greedy-generate a candidate SQL query from schema + question.
+      2. Execute it against the database.
+      3. If execution fails, append the failing SQL and the exact database
+         error message to the prompt and regenerate (with a small temperature
+         bump to escape deterministic repetition of the same mistake).
+      4. Stop on the first successfully executing query; otherwise return the
+         last candidate as a best-effort fallback.
     """
 
     MAX_ATTEMPTS = 4
 
-    def _generate(self, prompt: str, system: str, temperature: float) -> str:
-        out = self.llm(prompt, system=system, temperature=temperature, n=1)
-        if isinstance(out, (list, tuple)):
-            out = out[0] if out else ""
-        sql = bridge.extract_sql(out)
-        return sql if sql else out.strip()
+    def _build_base_prompt(self, question: str) -> str:
+        return (
+            "You are given the following database schema:\n"
+            f"{self.schema}\n\n"
+            "Write a single valid SQL query that answers this question:\n"
+            f"{question}\n\n"
+            "Rules:\n"
+            "- Use only tables and columns that appear in the schema.\n"
+            "- Output ONLY the SQL query: no explanation, no comments, "
+            "no markdown fences.\n"
+        )
 
     def solve(self, question: str) -> str:
         system = (
-            "You are an expert SQLite text-to-SQL engine. "
-            "You output exactly one valid SQLite query and nothing else."
+            "You are an expert text-to-SQL engine. You respond with exactly "
+            "one SQL query and nothing else."
         )
-        base_prompt = (
-            "Database schema:\n"
-            f"{self.schema}\n\n"
-            f"Question: {question}\n\n"
-            "Write one SQLite query that answers the question. "
-            "Use only tables and columns present in the schema. "
-            "Return only the SQL."
-        )
+        base_prompt = self._build_base_prompt(question)
 
         prompt = base_prompt
         candidate = ""
-        best_ok_sql = ""
+        seen_sql = set()
 
         for attempt in range(self.MAX_ATTEMPTS):
-            temperature = 0.0 if attempt == 0 else 0.3
-            candidate = self._generate(prompt, system, temperature)
+            # First attempt is strictly greedy; retries get a small
+            # temperature bump so a deterministic re-generation does not
+            # simply repeat the identical failing query.
+            temperature = 0.0 if attempt == 0 else 0.4
 
-            try:
-                result = self.execute(candidate)
-            except Exception as exc:  # defensive: execution layer itself raised
-                result = {"ok": False, "rows": [], "error": str(exc)}
+            raw = self.llm(prompt, system=system, temperature=temperature, n=1)
+            sql = bridge.extract_sql(raw)
 
+            if not sql:
+                # Extraction failed: treat it like an error and ask again.
+                prompt = (
+                    base_prompt
+                    + "\nYour previous reply contained no extractable SQL "
+                      "query. Reply with ONLY the SQL query.\n"
+                )
+                continue
+
+            if sql in seen_sql:
+                # Already executed this exact query and it failed; push the
+                # model to try a structurally different formulation.
+                prompt = (
+                    base_prompt
+                    + "\nThe following query was already tried and failed:\n"
+                    + sql
+                    + "\nDo NOT repeat it. Write a DIFFERENT correct query.\n"
+                )
+                continue
+
+            seen_sql.add(sql)
+            candidate = sql
+
+            result = self.execute(sql)
             if result.get("ok"):
-                if result.get("rows"):
-                    return candidate
-                if not best_ok_sql:
-                    best_ok_sql = candidate
-                feedback = (
-                    "Your query executed but returned ZERO rows, which is usually "
-                    "wrong. Check literal spellings and case in WHERE clauses, "
-                    "JOIN key choices, and whether a filter should be relaxed. "
-                    "Produce a corrected query."
-                )
-            else:
-                feedback = (
-                    "Your query failed to execute. SQLite error:\n"
-                    f"{result.get('error', 'unknown error')}\n"
-                    "Fix the syntax and the table/column names, then produce a "
-                    "corrected query."
-                )
+                return sql
 
+            error = result.get("error", "unknown database error")
             prompt = (
-                f"{base_prompt}\n\n"
-                f"Previous attempt:\n{candidate}\n\n"
-                f"{feedback}\n\n"
-                "Output only the corrected SQL."
+                base_prompt
+                + "\nYour previous SQL query failed to execute.\n"
+                + "Previous SQL:\n"
+                + sql
+                + "\n\nDatabase error message:\n"
+                + str(error)
+                + "\n\nDiagnose the cause of this error (e.g. wrong table or "
+                  "column names, bad joins, invalid syntax) and output ONLY "
+                  "the corrected SQL query.\n"
             )
 
-        # Prefer a syntactically valid, executable query over the last broken one.
-        return best_ok_sql or candidate
+        # All attempts exhausted: return the last extracted candidate as a
+        # best-effort answer rather than an empty string.
+        return candidate

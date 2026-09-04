@@ -1,44 +1,68 @@
-"""P2P2BMinimaxS2G6: two-stage harness where an initial LLM proposes a sketch that is refined into executable SQL."""
-# MECHANISM: twostage
+"""Voting harness that samples multiple SQL candidates and picks the most consistent executable one."""
+# MECHANISM: vote
 from ..harness_base import SQLHarness
 from .. import bridge
 
 
 class P2P2BMinimaxS2G6(SQLHarness):
     def solve(self, question: str) -> str:
-        # Stage 1: ask the LLM to produce a natural-language plan + intent summary
-        plan_system = (
-            "You are a Text-to-SQL planning assistant. Given a database schema and a "
-            "natural language question, produce:\n"
-            "  1. INTENT: a concise description of the desired result (one line).\n"
-            "  2. PLAN: a numbered, step-by-step English plan describing which tables, "
-            "joins, filters, aggregations and ordering are required to answer the question.\n"
-            "Do NOT write SQL yet. Only produce the INTENT and PLAN sections."
-        )
-        plan_prompt = (
-            f"Schema:\n{self.schema}\n\n"
-            f"Question: {question}\n\n"
-            "Produce INTENT and PLAN now."
-        )
-        plan_resp = self.llm(plan_prompt, system=plan_system, temperature=0.0, n=1)
-        plan_text = plan_resp if isinstance(plan_resp, str) else str(plan_resp)
+        candidates = []
+        n_samples = 5
+        for _ in range(n_samples):
+            prompt = (
+                f"You are an expert SQL generator. Given the schema and question, "
+                f"produce a single SQLite SQL statement.\n\n"
+                f"Schema:\n{self.schema}\n\n"
+                f"Question:\n{question}\n\n"
+                f"Return ONLY the SQL."
+            )
+            raw = self.llm(prompt, system="", temperature=0.7, n=1)
+            sql = bridge.extract_sql(raw)
+            if sql:
+                candidates.append(sql)
 
-        # Stage 2: ask the LLM to convert the plan into executable SQL
-        sql_system = (
-            "You are a Text-to-SQL generator. You will receive a database schema, a "
-            "natural language question, and an INTENT/PLAN produced by a planner. "
-            "Your job is to write a SINGLE executable SQL query that realises the plan. "
-            "Return ONLY the SQL statement (no markdown fences, no commentary)."
-        )
-        sql_prompt = (
-            f"Schema:\n{self.schema}\n\n"
-            f"Question: {question}\n\n"
-            f"Planner output:\n{plan_text}\n\n"
-            "Now write the final SQL query."
-        )
-        sql_resp = self.llm(sql_prompt, system=sql_system, temperature=0.0, n=1)
-        raw_sql = sql_resp if isinstance(sql_resp, str) else str(sql_resp)
+        if not candidates:
+            prompt = (
+                f"Schema:\n{self.schema}\n\nQuestion:\n{question}\n\n"
+                f"Write a single SQLite SQL query. Return only SQL."
+            )
+            raw = self.llm(prompt, system="", temperature=0.0, n=1)
+            return bridge.extract_sql(raw) or ""
 
-        # Best-effort recovery if the model wraps the SQL in a code fence.
-        final_sql = bridge.extract_sql(raw_sql) or raw_sql.strip()
-        return final_sql
+        # First, try deterministic greedy for tie-breaking
+        greedy_prompt = (
+            f"Schema:\n{self.schema}\n\nQuestion:\n{question}\n\n"
+            f"Write a single SQLite SQL query. Return only SQL."
+        )
+        greedy_raw = self.llm(greedy_prompt, system="", temperature=0.0, n=1)
+        greedy_sql = bridge.extract_sql(greedy_raw)
+        if greedy_sql:
+            candidates.append(greedy_sql)
+
+        # Execute each candidate and group by result equivalence
+        buckets = {}
+        for sql in candidates:
+            res = self.execute(sql)
+            if not res.get("ok", False):
+                key = ("ERROR", res.get("error", ""))
+            else:
+                rows = res.get("rows", [])
+                key = ("ROWS", repr(rows))
+            buckets.setdefault(key, []).append(sql)
+
+        # Pick the bucket with most votes; prefer one that executed successfully
+        best_key = None
+        best_count = -1
+        for key, sqls in buckets.items():
+            if key[0] == "ERROR":
+                continue
+            if len(sqls) > best_count:
+                best_count = len(sqls)
+                best_key = key
+
+        if best_key is None:
+            # All candidates errored; fall back to greedy if present, else first candidate
+            return greedy_sql if greedy_sql else candidates[0]
+
+        chosen = buckets[best_key][0]
+        return chosen

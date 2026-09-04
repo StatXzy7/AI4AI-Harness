@@ -1,49 +1,38 @@
-# Harness that runs a single plan-then-SQL generation: first stage drafts a query plan/intent, second stage produces SQL conditioned on it.
-"""Two-stage harness: stage 1 drafts a textual plan/intent, stage 2 generates SQL conditioned on the plan."""
+# Docstring: Two-stage harness where a planner LLM drafts a skeleton and the main LLM fills in the full SQL.
 # MECHANISM: twostage
-
 from ..harness_base import SQLHarness
 from .. import bridge
 
 
 class P2P2BMinimaxS2G3(SQLHarness):
     def solve(self, question: str) -> str:
-        # Stage 1: ask the LLM to produce a concise, schema-aware plan/intent.
-        # This step is a real control-flow addition (not just prompt decoration) because its
-        # output is fed verbatim into the stage-2 prompt, changing the conditioning context.
-        plan_system = (
-            "You are a query planner for a text-to-SQL system. Read the schema and the user's "
-            "question, then produce a short, focused plan describing which tables/columns are "
-            "involved, the relevant join conditions, any filters/aggregations, and the expected "
-            "shape of the result. Do NOT write SQL. Output only the plan."
-        )
+        # Stage 1: planner produces a skeleton of the query (FROM/JOIN/aliases and intent)
         plan_prompt = (
+            "You are a SQL planner. Given the schema and a natural language question, "
+            "produce a short JSON-like plan listing: needed_tables, joins (with conditions), "
+            "filters_in_intent, grouping_in_intent, metrics_in_intent. Do not write the full SQL yet.\n\n"
             f"Schema:\n{self.schema}\n\n"
             f"Question: {question}\n\n"
-            "Plan (no SQL):"
+            "Plan:"
         )
-        plan_text = self.llm(plan_prompt, system=plan_system, temperature=0.0, n=1).strip()
+        plan_text = self.llm(plan_prompt, system="You are a precise SQL planner.", temperature=0.0, n=1)
 
-        # Stage 2: generate SQL conditioned on both the schema and the drafted plan.
-        sql_system = (
-            "You are a careful text-to-SQL generator. Follow the provided plan exactly. "
-            "Output only a single SQL query (no prose, no markdown)."
-        )
-        sql_prompt = (
+        # Stage 2: main LLM consumes the plan and writes the final SQL
+        main_prompt = (
+            "You are an expert SQL writer. Using the provided schema and the planner's notes, "
+            "write a single SQLite-compatible SQL query that answers the question. "
+            "Return ONLY the SQL, with no markdown, no commentary, no explanation.\n\n"
             f"Schema:\n{self.schema}\n\n"
+            f"Planner notes:\n{plan_text}\n\n"
             f"Question: {question}\n\n"
-            f"Plan:\n{plan_text}\n\n"
             "SQL:"
         )
-        raw_sql = self.llm(sql_prompt, system=sql_system, temperature=0.0, n=1)
-        final_sql = bridge.extract_sql(raw_sql)
+        raw = self.llm(main_prompt, system="You write correct SQLite SQL.", temperature=0.0, n=1)
 
-        # Fallback: if extraction yielded nothing (rare), retry stage 2 once without the plan.
-        if not final_sql:
-            fallback_prompt = (
-                f"Schema:\n{self.schema}\n\nQuestion: {question}\n\nSQL:"
-            )
-            raw_sql = self.llm(fallback_prompt, system=sql_system, temperature=0.0, n=1)
-            final_sql = bridge.extract_sql(raw_sql)
+        sql = bridge.extract_sql(raw)
 
-        return final_sql
+        # Light sanity: strip stray trailing semicolons/spaces
+        if sql.endswith(";"):
+            sql = sql[:-1].rstrip()
+
+        return sql

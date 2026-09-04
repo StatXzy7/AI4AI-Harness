@@ -1,34 +1,34 @@
-"""This harness uses a repair mechanism that executes generated SQL and feeds errors back to the LLM for correction."""
+"""Repair mechanism: execute generated SQL and iteratively fix errors by feeding them back to the LLM."""
 # MECHANISM: repair
-
 from ..harness_base import SQLHarness
 from .. import bridge
 
 class P2P2AErnieS2G7(SQLHarness):
     def solve(self, question: str) -> str:
-        max_repairs = 2
-        
-        # Initial SQL generation
-        prompt = f"Given the following database schema:\n\n{self.schema}\n\nQuestion: {question}\n\nWrite a SQL query to answer the question."
-        response = self.llm(prompt, system="", temperature=0.0, n=1)
-        sql = bridge.extract_sql(response)
-        
-        # Execute and check
-        result = self.execute(sql)
-        if result["ok"]:
-            return sql
-        
-        # Repair loop
-        for attempt in range(max_repairs):
-            # Create repair prompt with error feedback
-            repair_prompt = f"Given the following database schema:\n\n{self.schema}\n\nQuestion: {question}\n\nYour previous SQL query:\n{sql}\n\nError message: {result['error']}\n\nPlease fix the SQL query to resolve the error."
-            repair_response = self.llm(repair_prompt, system="", temperature=0.0, n=1)
-            sql = bridge.extract_sql(repair_response)
+        max_attempts = 3
+        for attempt in range(max_attempts):
+            # Generate initial SQL
+            prompt = f"Question: {question}\nSchema: {self.schema}\nGenerate SQL:"
+            response = self.llm(prompt, system="", temperature=0.0, n=1)
+            sql = bridge.extract_sql(response)
             
-            # Execute repaired SQL
+            # Execute SQL
             result = self.execute(sql)
             if result["ok"]:
                 return sql
+            
+            # If error and not last attempt, repair
+            if attempt < max_attempts - 1:
+                error_msg = result.get("error", "Unknown error")
+                repair_prompt = (
+                    f"Question: {question}\n"
+                    f"Schema: {self.schema}\n"
+                    f"Previous SQL: {sql}\n"
+                    f"Error: {error_msg}\n"
+                    f"Fix the SQL to resolve the error:"
+                )
+                response = self.llm(repair_prompt, system="", temperature=0.0, n=1)
+                sql = bridge.extract_sql(response)
         
-        # Return last attempt even if failed (as per requirement to return a string)
+        # Return last attempt even if failed (as per requirement to return final_sql_string)
         return sql

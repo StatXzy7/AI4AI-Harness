@@ -1,23 +1,41 @@
-"""Repair mechanism that iteratively refines SQL by executing and feeding back errors to the LLM."""
+"""Uses error-driven repair: executes generated SQL, feeds execution errors back for regeneration up to 3 attempts."""
 # MECHANISM: repair
+
 from ..harness_base import SQLHarness
 from .. import bridge
 
 class P2P2AErnieS2G3(SQLHarness):
     def solve(self, question: str) -> str:
-        max_attempts = 3
-        prompt = f"Given the following database schema:\n{self.schema}\n\nQuestion: {question}\n\nGenerate a SQL query to answer the question. Only output the SQL query."
+        max_retries = 3
+        current_sql = None
+        error_msg = None
         
-        for attempt in range(max_attempts):
-            response = self.llm(prompt, system="", temperature=0.0, n=1)
-            sql = bridge.extract_sql(response)
-            result = self.execute(sql)
+        for attempt in range(max_retries + 1):
+            if attempt == 0:
+                # First attempt: generate SQL from question alone
+                prompt = f"Generate SQL for: {question}\nSQL:"
+                response = self.llm(prompt, system="", temperature=0.0, n=1)
+                current_sql = bridge.extract_sql(response)
+            else:
+                # Repair attempt: include previous SQL and error
+                prompt = (
+                    f"The following SQL failed with error:\n"
+                    f"SQL: {current_sql}\n"
+                    f"Error: {error_msg}\n"
+                    f"Fix the SQL for: {question}\n"
+                    f"SQL:"
+                )
+                response = self.llm(prompt, system="", temperature=0.0, n=1)
+                current_sql = bridge.extract_sql(response)
             
+            # Execute the current SQL
+            result = self.execute(current_sql)
             if result["ok"]:
-                return sql
+                return current_sql
             
-            if attempt < max_attempts - 1:
+            # Prepare for next attempt if not last
+            if attempt < max_retries:
                 error_msg = result.get("error", "Unknown error")
-                prompt = f"{prompt}\n\nThe previous SQL query failed with error: {error_msg}\nPlease generate a corrected SQL query."
         
-        return sql
+        # If all retries failed, return the last attempted SQL
+        return current_sql

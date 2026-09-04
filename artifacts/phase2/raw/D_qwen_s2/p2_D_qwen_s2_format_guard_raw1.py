@@ -1,0 +1,1 @@
+"""Harness that forces a frozen weak solver to produce schema-faithful SQL by validating and retrying until the answer is an executable single

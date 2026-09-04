@@ -1,124 +1,83 @@
-# Harness that draws several SQL candidates and selects the one whose execution produces the most frequent non-empty result set.
+"""Voting harness: draw multiple SQL samples, execute each, and return the query producing the most non-null result rows."""
 # MECHANISM: vote
-from __future__ import annotations
-
-import json
-import re
-from collections import Counter
-from typing import Any
-
 from ..harness_base import SQLHarness
 from .. import bridge
 
 
 class P2P2AMinimaxS2G5(SQLHarness):
     def solve(self, question: str) -> str:
-        # ---------- 1. Build prompts ----------
-        system_prompt = (
-            "You are an expert SQL engineer. Given a schema and a natural language "
-            "question, write a single SQLite query that answers it. "
-            "Output ONLY the SQL statement, with no markdown fences and no commentary."
-        )
-        user_prompt = (
-            f"Schema:\n{self.schema}\n\n"
-            f"Question: {question}\n\n"
-            "Return a single SQL statement and nothing else."
+        if not hasattr(self, "_system_prompt"):
+            self._system_prompt = (
+                "You are an expert SQL generator. Given the schema and a natural "
+                "language question, produce a single executable SQL query. "
+                "Return ONLY the SQL statement, no prose, no markdown fences."
+            )
+
+        schema = getattr(self, "schema", "")
+
+        prompt = (
+            f"### Schema\n{schema}\n\n"
+            f"### Question\n{question}\n\n"
+            f"### SQL\n"
         )
 
-        # ---------- 2. Draw several candidate SQLs ----------
-        n_samples = 5
-        raw_outputs = self.llm(
-            user_prompt,
-            system=system_prompt,
-            temperature=0.7,
+        n_samples = 6
+        temperature = 0.7
+
+        raw_responses = self.llm(
+            prompt,
+            system=self._system_prompt,
+            temperature=temperature,
             n=n_samples,
         )
 
-        # Normalise LLM return into a list of strings
-        if isinstance(raw_outputs, str):
-            candidates_text = [raw_outputs]
-        elif isinstance(raw_outputs, list):
-            candidates_text = [str(x) for x in raw_outputs]
-        else:
-            candidates_text = [str(raw_outputs)]
+        if isinstance(raw_responses, str):
+            raw_responses = [raw_responses]
 
-        # Extract a clean SQL string from each candidate
-        candidates: list[str] = []
-        for text in candidates_text:
+        candidates = []
+        for text in raw_responses:
             sql = bridge.extract_sql(text)
-            if sql and sql.strip():
-                candidates.append(sql.strip())
+            if not sql:
+                continue
+            sql = sql.strip()
+            if sql.endswith(";"):
+                sql = sql[:-1].strip()
+            if sql and sql not in candidates:
+                candidates.append(sql)
 
-        # Fall back to whatever we have if extraction failed for everything
         if not candidates:
-            for text in candidates_text:
-                if text and text.strip():
-                    candidates.append(text.strip())
-        if not candidates:
-            return ""
+            fallback = bridge.extract_sql(raw_responses[0])
+            if fallback:
+                if fallback.endswith(";"):
+                    fallback = fallback[:-1]
+                return fallback.strip()
+            return "SELECT 1"
 
-        # ---------- 3. Execute each candidate ----------
-        executed: list[tuple[str, dict]] = []
+        best_sql = None
+        best_score = -1
+
         for sql in candidates:
-            try:
-                result = self.execute(sql)
-            except Exception as exc:  # defensive
-                result = {"ok": False, "rows": [], "error": str(exc)}
-            executed.append((sql, result))
+            res = self.execute(sql)
+            if not res.get("ok"):
+                continue
+            rows = res.get("rows") or []
+            non_null_rows = 0
+            for row in rows:
+                if any(v is not None for v in row):
+                    non_null_rows += 1
+            score = non_null_rows
+            if score > best_score:
+                best_score = score
+                best_sql = sql
 
-        # ---------- 4. Vote among execution results ----------
-        # We key on a canonicalised representation of the row set so identical
-        # result tables collapse even if the SQL strings differ syntactically.
-        def canonicalise(result: dict) -> Any:
-            if not result.get("ok"):
-                return ("ERROR", result.get("error", ""))
-            rows = result.get("rows", [])
-            try:
-                normalised = json.dumps(rows, sort_keys=True, default=str)
-            except TypeError:
-                normalised = repr(rows)
-            return ("OK", normalised)
+        if best_sql is None:
+            for sql in candidates:
+                res = self.execute(sql)
+                if res.get("ok"):
+                    best_sql = sql
+                    break
 
-        buckets: dict[Any, list[str]] = {}
-        for sql, result in executed:
-            key = canonicalise(result)
-            buckets.setdefault(key, []).append(sql)
-
-        # Prefer a non-error bucket if one exists.
-        ordered_keys = sorted(
-            buckets.keys(),
-            key=lambda k: (0 if k[0] == "OK" else 1, -len(buckets[k])),
-        )
-
-        best_sql = buckets[ordered_keys[0]][0]
-
-        # ---------- 5. Optional self-repair for the chosen winner ----------
-        # If the winner is an error, try one quick repair pass.
-        chosen_result = next(r for s, r in executed if s == best_sql)
-        if not chosen_result.get("ok"):
-            repair_prompt = (
-                f"Schema:\n{self.schema}\n\n"
-                f"Question: {question}\n\n"
-                f"The following SQL failed with this error:\n"
-                f"{chosen_result.get('error', '')}\n\n"
-                f"SQL:\n{best_sql}\n\n"
-                "Return a corrected SQL statement and nothing else."
-            )
-            repaired_text = self.llm(
-                repair_prompt,
-                system=system_prompt,
-                temperature=0.0,
-                n=1,
-            )
-            if isinstance(repaired_text, list):
-                repaired_text = repaired_text[0] if repaired_text else ""
-            repaired_sql = bridge.extract_sql(repaired_text or "")
-            if repaired_sql:
-                try:
-                    repaired_result = self.execute(repaired_sql)
-                except Exception as exc:
-                    repaired_result = {"ok": False, "rows": [], "error": str(exc)}
-                if repaired_result.get("ok"):
-                    best_sql = repaired_sql.strip()
+        if best_sql is None:
+            best_sql = candidates[0]
 
         return best_sql

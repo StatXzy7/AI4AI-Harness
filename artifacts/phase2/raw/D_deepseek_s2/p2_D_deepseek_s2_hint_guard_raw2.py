@@ -1,4 +1,5 @@
-"""Parses a `Hint:` line from the question and converts it into explicit hard constraints before generating SQL."""
+"""Parses the question's Hint line and restates it as non-negotiable hard requirements before SQL generation."""
+import re
 
 from ..harness_base import SQLHarness
 from .. import bridge
@@ -6,49 +7,70 @@ from .. import bridge
 
 class P2P2DDeepseekS2HintGuard(SQLHarness):
     def solve(self, question: str) -> str:
-        hints = self._extract_hints(question)
-        hard_requirements = self._format_hard_requirements(hints)
+        schema = self.schema or ""
+        hint = self._extract_hint(question)
 
-        system = (
-            "You are a disciplined SQL writer. Treat every stated hard requirement as "
-            "a mandatory constraint. Do not ignore or weaken any constraint."
-        )
-        prompt = (
-            f"Database schema:\n{self.schema}\n\n"
-            f"Question:\n{question}\n\n"
-            f"{hard_requirements}"
-            "Write a single SQL query that answers the question and satisfies all hard requirements. "
-            "Return only the SQL query."
+        system_prompt = (
+            "You are an expert text-to-SQL assistant. "
+            "Translate the question into a single valid SQL query for the provided schema. "
+            "Treat any stated hard requirements as mandatory constraints."
         )
 
-        raw = self.llm(prompt, system=system, temperature=0.0, n=1)
-        if isinstance(raw, list):
-            raw = raw[0] if raw else ""
-        if isinstance(raw, dict):
-            raw = raw.get("text") or raw.get("content") or ""
+        if hint:
+            user_prompt = (
+                f"Database schema:\n{schema}\n\n"
+                f"Question:\n{question}\n\n"
+                f"Hard requirements extracted from the Hint line (MUST be satisfied):\n{hint}\n\n"
+                "Write the SQL query. Ensure the query satisfies every hard requirement above."
+            )
+        else:
+            user_prompt = (
+                f"Database schema:\n{schema}\n\n"
+                f"Question:\n{question}\n\n"
+                "Write the SQL query."
+            )
 
-        sql = bridge.extract_sql(str(raw or ""))
-        return sql if sql else str(raw or "").strip()
+        response = self.llm(
+            prompt=user_prompt,
+            system=system_prompt,
+            temperature=0.0,
+            n=1,
+        )
 
-    def _extract_hints(self, question: str):
-        hints = []
-        for line in question.splitlines():
-            stripped = line.strip()
-            if not stripped:
-                continue
-            lower = stripped.lower()
-            for prefix in ("hint:", "hints:"):
-                if lower.startswith(prefix):
-                    hint = stripped[len(prefix):].strip()
-                    if hint:
-                        hints.append(hint)
-                    break
-        return hints
+        return bridge.extract_sql(self._as_text(response))
 
-    def _format_hard_requirements(self, hints):
-        if not hints:
+    @staticmethod
+    def _extract_hint(question: str) -> str:
+        """Return the content of a Hint: line, if present."""
+        if not question:
             return ""
-        lines = ["HARD REQUIREMENTS (must satisfy all):"]
-        lines += [f"- {hint}" for hint in hints]
-        lines.append("")
-        return "\n".join(lines)
+
+        # First, match a line beginning with Hint:
+        for raw_line in question.splitlines():
+            line = raw_line.strip()
+            match = re.match(r"^Hint\s*:\s*(.+?)\s*$", line, flags=re.IGNORECASE)
+            if match:
+                return match.group(1).strip()
+
+        # Fallback: match inline "Hint:" anywhere in a line.
+        for raw_line in question.splitlines():
+            line = raw_line.strip()
+            match = re.search(r"(?:^|\s)Hint\s*:\s*(.+?)\s*$", line, flags=re.IGNORECASE)
+            if match:
+                return match.group(1).strip()
+
+        return ""
+
+    @staticmethod
+    def _as_text(response):
+        """Normalize an LLM response into a string."""
+        if isinstance(response, dict):
+            for key in ("text", "content", "message"):
+                if response.get(key):
+                    return P2P2DDeepseekS2HintGuard._as_text(response[key])
+            return ""
+        if isinstance(response, (list, tuple)):
+            return P2P2DDeepseekS2HintGuard._as_text(response[0]) if response else ""
+        if response is None:
+            return ""
+        return str(response)

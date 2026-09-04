@@ -1,162 +1,175 @@
-"""Wraps a frozen weak solver by extracting the Hint: line from the question and converting its constraints into hard pre-SQL guards before generation."""
+"""Harness that parses Hint lines from the question, restates them as hard constraints in the prompt, and validates the generated SQL against them before returning."""
 from ..harness_base import SQLHarness
 from .. import bridge
 
 
 class P2P2DMinimaxS2HintGuard(SQLHarness):
-    # Strategy constants controlling the harness behavior
-    MAX_REGEN_ATTEMPTS = 2
-    REPAIR_ON_EXEC_FAIL = True
+    # Simple heuristic parse for "Hint: ..." line(s)
+    HINT_DELIMITERS = ["\n", ";"]
 
-    def solve(self, question: str) -> str:
-        # self.schema: str, self.llm(prompt, system="", temperature=0.0, n=1)
-        # self.execute(sql) -> {"ok": bool, "rows": [...], "error": str}
-        # bridge.extract_sql(text) -> str
-
-        # ---- 1. Parse the Hint: line from the question ----
-        hint_text = self._parse_hint(question)
-
-        # ---- 2. If we have a hint, apply pre-SQL hard guards ----
-        #    * Add hint as a hard requirement in the system message
-        #    * Build an enforced constraint block in the user prompt
-        #    * Require the SQL to mention every constraint keyword
-        if hint_text:
-            system_msg = (
-                "You are a Text-to-SQL generator. The user message contains a "
-                "HINT block which describes HARD requirements that the SQL "
-                "MUST satisfy. Treat every hint constraint as a mandatory "
-                "postcondition. Never relax or reinterpret these constraints.\n"
-                f"HARD REQUIREMENTS (from HINT): {hint_text}"
-            )
-            constraints_block = self._build_constraints_block(hint_text)
-            user_prompt = (
-                f"{question}\n\n"
-                f"{constraints_block}\n\n"
-                f"Schema:\n{self.schema}\n\n"
-                "Return a single SQL query that satisfies every HARD "
-                "REQUIREMENT above. The SQL must explicitly use every "
-                "required table, column, operator, and literal mentioned "
-                "in the HINT."
-            )
-        else:
-            system_msg = "You are a Text-to-SQL generator. Return one SQL query."
-            user_prompt = (
-                f"Question: {question}\n\n"
-                f"Schema:\n{self.schema}\n\n"
-                "Return a single SQL query."
-            )
-
-        # ---- 3. Generate SQL, with optional regeneration loop ----
-        final_sql = ""
-        last_sql = ""
-        last_exec = None
-        for attempt in range(self.MAX_REGEN_ATTEMPTS + 1):
-            raw = self.llm(user_prompt, system=system_msg, temperature=0.0, n=1)
-            sql = bridge.extract_sql(raw)
-            last_sql = sql
-
-            if not sql:
-                # No SQL extracted -- prompt again with a stricter message
-                user_prompt = (
-                    user_prompt
-                    + "\n\nYour previous response did not contain a SQL "
-                      "statement. Output ONLY a single SQL query."
-                )
-                continue
-
-            final_sql = sql
-
-            # ---- 4. Post-generation guard: verify SQL references hint terms ----
-            if hint_text and not self._sql_respects_hint(sql, hint_text):
-                user_prompt = (
-                    user_prompt
-                    + "\n\nREJECTED: the previous SQL did not reference "
-                      "every required element from the HINT. Re-emit the "
-                      "SQL ensuring every HINT element appears in the query."
-                )
-                continue
-
-            break
-
-        # ---- 5. Optional execution repair against the live DB ----
-        if self.REPAIR_ON_EXEC_FAIL:
-            final_sql = self._repair_with_execution(final_sql or last_sql, user_prompt, system_msg)
-
-        return final_sql
-
-    # ------------------------------------------------------------------
-    # Hint parsing helpers
-    # ------------------------------------------------------------------
-    def _parse_hint(self, question: str) -> str:
-        """Extract the substring following 'Hint:' (case-insensitive) if present."""
+    def _extract_hint(self, question: str) -> str:
+        """Pull the trailing 'Hint:' clause out of the question, if present."""
         if not question:
             return ""
-        lower = question.lower()
-        idx = lower.find("hint:")
-        if idx == -1:
-            return ""
-        # Take everything after the marker up to end-of-question
-        return question[idx + len("hint:"):].strip()
+        # Look for a line that starts with 'Hint:' (case-insensitive)
+        lines = question.splitlines()
+        hint_parts = []
+        capture = False
+        for line in lines:
+            stripped = line.strip()
+            low = stripped.lower()
+            if capture:
+                # Stop at another directive-looking line or empty line terminating a list
+                if not stripped:
+                    break
+                if low.startswith("question:") or low.startswith("q:") or low.startswith("sql:") or low.startswith("schema:"):
+                    break
+                hint_parts.append(stripped)
+            elif low.startswith("hint:"):
+                # First segment after the marker
+                first = stripped[len("hint:"):].strip()
+                if first:
+                    hint_parts.append(first)
+                capture = True
+        return " ".join(hint_parts).strip()
 
-    def _build_constraints_block(self, hint_text: str) -> str:
-        """Render the hint as an explicit HARD CONSTRAINTS block."""
-        items = [line.strip("-* \t") for line in hint_text.splitlines() if line.strip()]
-        if not items:
-            items = [hint_text]
-        body = "\n".join(f"- {item}" for item in items)
+    def _rewrite_question(self, question: str, hint: str) -> str:
+        """Remove the hint line(s) from the question so the LLM is not double-fed."""
+        if not hint:
+            return question
+        out_lines = []
+        skip = False
+        for line in question.splitlines():
+            low = line.strip().lower()
+            if low.startswith("hint:"):
+                skip = True
+                continue
+            if skip:
+                # Skip continuation lines that look like hint bullets
+                if not line.strip():
+                    skip = False
+                out_lines.append(line)
+            else:
+                out_lines.append(line)
+        cleaned = "\n".join(out_lines).strip()
+        return cleaned
+
+    def _build_constraints_block(self, hint: str) -> str:
+        """Restate the hint as an explicit hard-requirements block."""
+        if not hint:
+            return ""
         return (
-            "HARD CONSTRAINTS (the SQL MUST satisfy all of these):\n"
-            f"{body}"
+            "HARD REQUIREMENTS (these are mandatory; failure to satisfy them makes the SQL wrong):\n"
+            f"- The following user-supplied hint MUST be honored exactly: {hint}\n"
+            "- If the hint specifies a filter, predicate, join, ordering, limit, column, "
+            "or aggregation, the SQL MUST include it.\n"
+            "- Do not introduce filters, joins, or projections that contradict the hint.\n"
+            "- If honoring the hint is impossible given the schema, prefer the closest faithful "
+            "translation that still respects the hint's intent over an unconstrained answer.\n"
         )
 
-    def _sql_respects_hint(self, sql: str, hint_text: str) -> bool:
-        """Cheap structural check that SQL references tokens lifted from the hint."""
-        if not sql or not hint_text:
-            return True
-        sql_lower = sql.lower()
-        # Extract candidate tokens: words 3+ chars, skipping very common stopwords
-        stopwords = {
-            "the", "and", "for", "with", "that", "from", "where", "select",
-            "must", "should", "use", "show", "find", "list", "all", "any",
-            "hint", "this", "into", "than", "then", "when", "only",
-        }
-        tokens = []
-        for raw in hint_text.replace(",", " ").replace(".", " ").split():
-            tok = raw.strip("'\"`();:").lower()
-            if len(tok) >= 3 and tok not in stopwords and not tok.isdigit():
-                tokens.append(tok)
-        if not tokens:
-            return True
-        # Require each token to appear literally in the SQL (case-insensitive)
-        for tok in tokens:
-            if tok not in sql_lower:
+    def _hint_constraint_checks(self, sql: str) -> str:
+        """Return a checklist string the LLM uses to self-verify the SQL."""
+        return (
+            "Before finalizing, verify each HARD REQUIREMENT against the SQL:\n"
+            "  1. Every required predicate appears in a WHERE / HAVING / ON clause.\n"
+            "  2. Every required column appears in SELECT or in a relevant clause.\n"
+            "  3. Every required JOIN / ORDER BY / GROUP BY / LIMIT is present.\n"
+            "  4. No contradicting clauses were introduced.\n"
+            "If any check fails, rewrite the SQL to fix it before emitting the final query.\n"
+        )
+
+    def _looks_safe(self, sql: str) -> bool:
+        """Cheap structural sanity check before execution."""
+        if not sql or not sql.strip():
+            return False
+        bad = (";", "--", "/*", "*/")
+        # Allow a single trailing semicolon, but reject stacked statements or comments
+        stripped = sql.rstrip()
+        if stripped.endswith(";"):
+            inner = stripped[:-1]
+        else:
+            inner = stripped
+        if ";" in inner:
+            return False
+        for token in bad[1:]:
+            if token in inner:
                 return False
         return True
 
-    # ------------------------------------------------------------------
-    # Execution-time repair loop
-    # ------------------------------------------------------------------
-    def _repair_with_execution(self, sql: str, user_prompt: str, system_msg: str) -> str:
-        """Try executing the SQL; if it fails, ask the LLM to repair it."""
-        current = sql
-        if not current:
+    def _execute_or_retry(self, question_for_llm: str, attempt: int) -> str:
+        """One pass: ask the LLM, extract SQL, execute; return SQL string (may be empty on failure)."""
+        system = (
+            "You are a precise Text-to-SQL generator.\n"
+            "Return ONLY a single SQL query (optionally ending with a semicolon). "
+            "No prose, no markdown fences, no explanations."
+        )
+        prompt = question_for_llm
+        raw = self.llm(prompt, system=system, temperature=0.0, n=1)
+        sql = bridge.extract_sql(raw if isinstance(raw, str) else str(raw))
+        if not sql:
             return ""
-        for _ in range(self.MAX_REGEN_ATTEMPTS):
-            result = self.execute(current)
-            last_exec = result
-            if result.get("ok"):
-                return current
-            err = result.get("error") or "unknown error"
-            repair_prompt = (
-                user_prompt
-                + f"\n\nThe previously generated SQL failed to execute:\n"
-                f"{current}\n\nDatabase error: {err}\n\n"
-                "Fix the SQL so that it executes successfully while still "
-                "satisfying every HARD CONSTRAINT."
+        if not self._looks_safe(sql):
+            return ""
+        result = self.execute(sql)
+        if not result or not result.get("ok", False):
+            return ""
+        return sql
+
+    def solve(self, question: str) -> str:
+        hint = self._extract_hint(question)
+        cleaned_question = self._rewrite_question(question, hint)
+
+        constraints = self._build_constraints_block(hint)
+        checklist = self._hint_constraint_checks(hint) if hint else ""
+
+        # Frame the prompt so the hint-derived constraints are foregrounded.
+        prompt_parts = []
+        if self.schema:
+            prompt_parts.append(f"SCHEMA:\n{self.schema}")
+        if cleaned_question:
+            prompt_parts.append(f"QUESTION:\n{cleaned_question}")
+        if constraints:
+            prompt_parts.append(constraints)
+        if checklist:
+            prompt_parts.append(checklist)
+        prompt_parts.append(
+            "OUTPUT: exactly one SQL statement that satisfies ALL hard requirements above."
+        )
+        prompt = "\n\n".join(prompt_parts)
+
+        # First attempt
+        sql = self._execute_or_retry(prompt, attempt=1)
+        if sql:
+            return sql
+
+        # Retry once with an even more explicit restatement of constraints,
+        # so the control flow enforces the strategy rather than relying on prompt alone.
+        if hint:
+            reinforced = (
+                prompt
+                + "\n\nREMINDER: The hint was: "
+                + hint
+                + "\nRe-emit the SQL making sure that constraint is present verbatim in the query."
             )
-            raw = self.llm(repair_prompt, system=system_msg, temperature=0.0, n=1)
-            repaired = bridge.extract_sql(raw)
-            if not repaired or repaired == current:
-                break
-            current = repaired
-        return current
+            sql2 = self._execute_or_retry(reinforced, attempt=2)
+            if sql2:
+                return sql2
+
+        # Final fallback: ask for a minimal SQL that at least encodes the hint literally.
+        if hint:
+            minimal_prompt = (
+                (f"SCHEMA:\n{self.schema}\n\n" if self.schema else "")
+                + f"QUESTION:\n{cleaned_question}\n\n"
+                + f"HARD REQUIREMENT (must appear in the SQL): {hint}\n\n"
+                + "Produce a single SQL statement that incorporates the hard requirement. "
+                + "Return only the SQL."
+            )
+            raw = self.llm(minimal_prompt, system="", temperature=0.0, n=1)
+            sql3 = bridge.extract_sql(raw if isinstance(raw, str) else str(raw))
+            if sql3 and self._looks_safe(sql3):
+                res = self.execute(sql3)
+                if res and res.get("ok", False):
+                    return sql3
+
+        return ""

@@ -1,52 +1,70 @@
-# MECHANISM: repair
-"""Repair-based harness: execute generated SQL, feed errors back to LLM for regeneration."""
+"""Two-stage harness: first draft SQL, then critique-and-rewrite before execution."""
+# MECHANISM: twostage
 
-import re
 from ..harness_base import SQLHarness
 from .. import bridge
 
 
 class P2P2BMinimaxS2G0(SQLHarness):
     def solve(self, question: str) -> str:
-        schema = self.schema
-        system_prompt = (
-            "You are a Text-to-SQL expert. Given a database schema and a natural language "
-            "question, produce a single SQLite-compatible SQL query. Output ONLY the SQL, "
-            "no markdown fences, no explanations."
-        )
-
-        user_prompt = (
-            f"Schema:\n{schema}\n\n"
+        # ---- Stage 1: initial greedy generation of a candidate SQL ----
+        stage1_prompt = (
+            "You are a careful Text-to-SQL generator.\n"
+            "Given the database schema below and the user's question, "
+            "produce ONE single SQLite SQL query that answers it.\n"
+            "Return ONLY the SQL, no prose, no markdown fences.\n\n"
+            f"Schema:\n{self.schema}\n\n"
             f"Question: {question}\n\n"
-            "Write the SQL query that answers this question. Output only the SQL."
+            "SQL:"
         )
+        stage1_output = self.llm(stage1_prompt, system="", temperature=0.0, n=1)
+        candidate_sql = bridge.extract_sql(stage1_output).strip()
+        if not candidate_sql:
+            candidate_sql = stage1_output.strip()
 
-        max_attempts = 3
-        last_sql = ""
-        last_error = ""
+        # Always feed SOMETHING into stage 2; if the draft was empty, use a
+        # explicit placeholder so the reviser still produces output.
+        draft_for_revision = candidate_sql or "SELECT 1"
 
-        for attempt in range(max_attempts):
-            if last_error:
-                repair_prompt = (
-                    f"{user_prompt}\n\n"
-                    f"Your previous attempt produced this SQL:\n{last_sql}\n\n"
-                    f"When executed against the database it failed with this error:\n"
-                    f"{last_error}\n\n"
-                    "Identify the problem and produce a corrected SQL query. "
-                    "Output only the corrected SQL."
-                )
-                prompt = repair_prompt
-            else:
-                prompt = user_prompt
+        # ---- Stage 2: critique + revise the candidate against the schema ----
+        stage2_prompt = (
+            "You are a senior SQLite reviewer. You will be given a database "
+            "schema, a natural-language question, and a DRAFT SQL query that "
+            "attempts to answer it. Your job is to produce a CORRECTED SQL "
+            "query that is more likely to execute and to answer the question.\n\n"
+            "Check specifically for:\n"
+            "  - correct referenced tables and columns actually present in the schema\n"
+            "  - correct JOIN keys and join direction\n"
+            "  - correct use of GROUP BY / aggregates / filters\n"
+            "  - no hallucinated columns or tables\n"
+            "  - syntactically valid SQLite\n\n"
+            "Return ONLY the final corrected SQL, no prose, no markdown fences.\n\n"
+            f"Schema:\n{self.schema}\n\n"
+            f"Question: {question}\n\n"
+            f"Draft SQL:\n{draft_for_revision}\n\n"
+            "Corrected SQL:"
+        )
+        stage2_output = self.llm(stage2_prompt, system="", temperature=0.0, n=1)
+        revised_sql = bridge.extract_sql(stage2_output).strip()
+        if not revised_sql:
+            revised_sql = stage2_output.strip()
 
-            response = self.llm(
-                prompt,
-                system=system_prompt,
-                temperature=0.0,
-                n=1,
-            )
-            sql = bridge.extract_sql(response)
-            if not sql:
-                sql = response.strip()
-                # strip code fences if present
-                sql = re.sub(r"^
+        # Prefer the stage-2 revised SQL; fall back to stage-1 draft if stage-2
+        # somehow produced nothing usable.
+        final_sql = revised_sql or candidate_sql or "SELECT 1"
+
+        # Sanity check: if the chosen SQL doesn't even parse/execute, degrade
+        # to the other candidate rather than returning broken output.
+        try:
+            check = self.execute(final_sql)
+            if not check.get("ok", False):
+                fallback = revised_sql if final_sql is candidate_sql else candidate_sql
+                if fallback:
+                    fb_check = self.execute(fallback)
+                    if fb_check.get("ok", False):
+                        final_sql = fallback
+        except Exception:
+            # If execute itself raises, just return the SQL we have.
+            pass
+
+        return final_sql

@@ -1,1 +1,1 @@
-"""Uses a frozen LLM with format-guard rails: generates SQL, extracts from
+"""Harness that iteratively prompts a frozen LLM to produce a schema-faithful SQL query inside a

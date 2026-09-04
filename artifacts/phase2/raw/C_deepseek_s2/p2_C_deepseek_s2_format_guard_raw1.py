@@ -1,0 +1,1 @@
+"""Enforces a strict single

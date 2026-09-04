@@ -1,4 +1,5 @@
-"""First performs schema linking to identify relevant tables and columns, then generates SQL using only the linked subset."""
+"""Two-phase schema linking: first identify relevant tables and columns, then generate SQL against only the linked schema subset."""
+
 import json
 import re
 
@@ -8,63 +9,35 @@ from .. import bridge
 
 class P2P2DDeepseekS2SchemaLink(SQLHarness):
     def solve(self, question: str) -> str:
-        linked_schema = self._link_schema(question)
-        sql = self._generate_sql(question, linked_schema)
-        return sql
+        # Phase 1: identify mentioned/necessary tables and columns.
+        link_prompt = self._build_link_prompt(question)
+        link_response = self.llm(link_prompt)
+        links = self._parse_links(link_response)
 
-    def _call_llm(self, prompt: str, system: str = "") -> str:
-        result = self.llm(prompt, system=system, temperature=0.0, n=1)
-        if isinstance(result, list):
-            return result[0] if result else ""
-        if isinstance(result, dict):
-            for key in ("text", "content", "completion", "message"):
-                if key in result:
-                    value = result[key]
-                    if isinstance(value, list):
-                        return value[0] if value else ""
-                    return str(value)
-        return str(result)
+        # Build the linked schema subset used by the SQL generation phase.
+        linked_schema = self._build_linked_schema(links)
 
-    def _link_schema(self, question: str) -> str:
-        system = (
-            "You are a precise database schema linker. "
-            "Given a database schema and a natural-language question, identify only the tables and columns "
-            "that are necessary to answer the question. Do not include irrelevant tables or columns."
-        )
-        prompt = (
-            "Database schema:\n"
-            f"{self.schema}\n\n"
-            f"Question: {question}\n\n"
-            'Return a JSON object with the following structure:\n'
-            '{"tables": [{"name": "table_name", "columns": ["col1", "col2"]}]}\n'
-            'Include only columns that are explicitly needed or highly likely to be needed.'
-        )
-        raw = self._call_llm(prompt, system)
-        linked = self._parse_json(raw)
-        if linked is None:
-            return self.schema
-        return self._format_linked_schema(linked)
+        # Phase 2: generate SQL using only the linked subset.
+        sql_prompt = self._build_sql_prompt(question, linked_schema)
+        sql_response = self.llm(sql_prompt)
 
-    def _generate_sql(self, question: str, linked_schema: str) -> str:
-        system = (
-            "You are an expert SQL writer. "
-            "Write a correct SQLite query for the given question using only the linked schema provided."
-        )
-        prompt = (
-            "Linked schema:\n"
-            f"{linked_schema}\n\n"
-            f"Question: {question}\n\n"
-            "Return only the SQL query, without markdown fences or extra explanation."
-        )
-        raw = self._call_llm(prompt, system)
-        sql = bridge.extract_sql(raw)
+        sql = bridge.extract_sql(sql_response)
         if not sql:
-            sql = raw.strip()
-        return sql
+            sql = self._fallback_extract_sql(sql_response)
 
-    def _parse_json(self, text: str):
-        if not text:
-            return None
+        return sql.strip()
 
-        cleaned = text.strip()
-        if cleaned.startswith("
+    def _build_link_prompt(self, question: str) -> str:
+        return (
+            "You are a schema linker for Text-to-SQL. Given a database schema and a natural-language question, "
+            "identify the tables and columns that are mentioned in the question or clearly necessary for joins, filters, grouping, or selection.\n\n"
+            f"Database schema:\n{self.schema}\n\n"
+            f"Question: {question}\n\n"
+            "Return a JSON object whose keys are relevant table names and whose values are arrays of relevant column names. "
+            "Return only JSON. Example: {\"users\": [\"id\", \"name\"], \"orders\": [\"user_id\"]}"
+        )
+
+    def _parse_links(self, raw: str) -> dict:
+        text = raw.strip()
+        # Remove markdown code fences if present.
+        text = re.sub(r'

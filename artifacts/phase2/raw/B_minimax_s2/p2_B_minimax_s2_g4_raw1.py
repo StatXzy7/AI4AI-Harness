@@ -1,44 +1,46 @@
-"""Two-stage harness: first stage produces skeleton/draft SQL, second stage refines with execution feedback."""
-# MECHANISM: twostage
+# Single-pass generation: produce an initial draft, validate via execution, then iteratively repair using error feedback.
+# MECHANISM: repair
 from ..harness_base import SQLHarness
 from .. import bridge
 
 
 class P2P2BMinimaxS2G4(SQLHarness):
     def solve(self, question: str) -> str:
-        # Stage 1: generate a skeleton query with high temperature to get diverse approach
-        skeleton_prompt = (
-            f"Given the schema:\n{self.schema}\n\n"
-            f"Question: {question}\n\n"
-            "Produce a SQL skeleton with the main FROM/JOIN/WHERE structure filled in. "
-            "Use placeholders like <COL> or <EXPR> where you're unsure. Output ONLY the skeleton SQL."
-        )
-        skeleton_text = self.llm(skeleton_prompt, system="You draft SQL skeletons.", temperature=0.4, n=1)
-        skeleton_sql = bridge.extract_sql(skeleton_text) or skeleton_text.strip()
-
-        # Stage 2: refine the skeleton into a final query, using skeleton as guidance
-        refine_prompt = (
+        draft_prompt = (
+            "You are an expert SQLite engineer. Given the schema and the user's "
+            "question, write exactly one valid SQL query that answers it. "
+            "Output only the SQL statement, no commentary, no markdown fences.\n\n"
             f"Schema:\n{self.schema}\n\n"
             f"Question: {question}\n\n"
-            f"Draft skeleton:\n{skeleton_sql}\n\n"
-            "Refine the skeleton into a complete, correct SQL query. "
-            "Replace any placeholders with the appropriate columns or expressions. "
-            "Output ONLY the final SQL."
+            "SQL:"
         )
-        refined_text = self.llm(refine_prompt, system="You produce executable SQL.", temperature=0.0, n=1)
-        candidate = bridge.extract_sql(refined_text) or refined_text.strip()
 
-        # Optional repair: if execution fails, retry once with error feedback
-        result = self.execute(candidate)
-        if not result["ok"]:
+        raw = self.llm(draft_prompt, system="", temperature=0.0, n=1)
+        sql = bridge.extract_sql(raw)
+        if not sql:
+            return ""
+
+        max_repairs = 3
+        for attempt in range(max_repairs):
+            result = self.execute(sql)
+            if result.get("ok"):
+                return sql
+
+            err = result.get("error") or "unknown execution error"
             repair_prompt = (
+                "The following SQL produced an execution error. Fix it so it runs "
+                "correctly against SQLite. Output only the corrected SQL statement, "
+                "no commentary, no markdown fences.\n\n"
+                f"Original SQL:\n{sql}\n\n"
+                f"Error:\n{err}\n\n"
                 f"Schema:\n{self.schema}\n\n"
                 f"Question: {question}\n\n"
-                f"Failed SQL:\n{candidate}\n\n"
-                f"Execution error:\n{result.get('error', '')}\n\n"
-                "Fix the error and output ONLY the corrected SQL."
+                "Corrected SQL:"
             )
-            repaired_text = self.llm(repair_prompt, system="You repair SQL.", temperature=0.0, n=1)
-            candidate = bridge.extract_sql(repaired_text) or candidate
+            raw_repair = self.llm(repair_prompt, system="", temperature=0.0, n=1)
+            repaired = bridge.extract_sql(raw_repair)
+            if not repaired or repaired.strip() == sql.strip():
+                break
+            sql = repaired
 
-        return candidate
+        return sql

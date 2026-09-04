@@ -1,4 +1,4 @@
-"""Execution-feedback repair harness: generate SQL, execute it, and feed database errors back into iterative regeneration."""
+"""Execution-feedback repair harness: generate SQL greedily, execute it, and feed any database error back to the LLM for correction, repeating until success or budget exhaustion."""
 # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration
 
 from ..harness_base import SQLHarness
@@ -6,76 +6,79 @@ from .. import bridge
 
 
 class P2P2BKimiS2G2(SQLHarness):
-    """Repair loop harness.
+    """Text-to-SQL harness with an execution-driven repair loop.
 
-    Improvement over single greedy generation: instead of returning the
-    first decoded SQL string, the harness executes it against the database.
-    If execution fails, the faulty SQL and the database's error message are
-    appended to the prompt and the model is asked to produce a corrected
-    query. The loop repeats until a query executes successfully or the
-    attempt budget is exhausted, in which case the most recent candidate is
-    returned as a best effort.
+    Control flow:
+      1. The frozen LLM greedily produces a candidate SQL query.
+      2. The harness executes the candidate against the database.
+      3. If execution succeeds, the SQL is returned immediately.
+      4. If execution fails, the failing SQL and the database error message
+         are fed back into a repair prompt, and the LLM regenerates a
+         corrected query. This repeats up to MAX_REPAIRS times.
+      5. If the repair loop plateaus (identical SQL regenerated) or the
+         budget is exhausted, the most recent candidate is returned as the
+         best-effort answer.
     """
 
-    MAX_ATTEMPTS = 4
+    MAX_REPAIRS = 3
+
+    SYSTEM_PROMPT = (
+        "You are an expert SQLite developer. Translate the user's natural "
+        "language question into a single valid SQL query for the given "
+        "schema. Output ONLY the SQL query, with no explanations or prose."
+    )
+
+    def _initial_prompt(self, question: str) -> str:
+        return (
+            f"Database schema:\n{self.schema}\n\n"
+            f"Question: {question}\n\n"
+            "Write a single SQL query that answers the question."
+        )
+
+    def _repair_prompt(self, question: str, bad_sql: str, error: str) -> str:
+        return (
+            f"Database schema:\n{self.schema}\n\n"
+            f"Question: {question}\n\n"
+            "The following SQL query was generated to answer the question:\n"
+            f"{bad_sql}\n\n"
+            f"Executing it against the database failed with this error:\n{error}\n\n"
+            "Diagnose the cause of the error (check table names, column names, "
+            "join conditions, and syntax against the schema) and rewrite the "
+            "query so that it executes correctly while still answering the "
+            "original question. Output ONLY the corrected SQL query."
+        )
+
+    def _generate_sql(self, prompt: str, temperature: float = 0.0) -> str:
+        text = self.llm(prompt, system=self.SYSTEM_PROMPT, temperature=temperature)
+        return bridge.extract_sql(text)
 
     def solve(self, question: str) -> str:
-        system = (
-            "You are an expert Text-to-SQL engine for SQLite databases. "
-            "You write exactly one correct SQLite query per answer. "
-            "You output only SQL: no explanations, no comments, no markdown fences."
-        )
-        base_prompt = (
-            "You are given a database schema and a question.\n\n"
-            "Database schema:\n"
-            f"{self.schema}\n\n"
-            f"Question: {question}\n\n"
-            "Write one SQLite query that answers the question. "
-            "Use only tables and columns that appear in the schema. Output only the SQL."
-        )
+        # Step 1: initial greedy generation.
+        sql = self._generate_sql(self._initial_prompt(question))
+        if not sql:
+            # Extraction failed; retry once with sampling to get usable text.
+            sql = self._generate_sql(self._initial_prompt(question), temperature=0.5)
+        if not sql:
+            return ""
 
-        prompt = base_prompt
-        last_sql = ""
-
-        for attempt in range(self.MAX_ATTEMPTS):
-            # Greedy first try; slight diversity on retries to escape repeated mistakes.
-            temperature = 0.0 if attempt == 0 else 0.4
-            raw = self.llm(prompt, system=system, temperature=temperature)
-            if isinstance(raw, (list, tuple)):
-                raw = raw[0] if raw else ""
-
-            sql = self._to_sql(str(raw))
-            if not sql:
-                prompt = (
-                    base_prompt
-                    + "\n\nYour previous reply contained no SQL. "
-                      "Reply with exactly one SQLite query and nothing else."
-                )
-                continue
-
-            last_sql = sql
-            outcome = self.execute(sql)
-
-            if outcome.get("ok"):
+        # Steps 2-4: execute-and-repair loop.
+        for _ in range(self.MAX_REPAIRS):
+            result = self.execute(sql)
+            if result.get("ok"):
                 return sql
 
-            error = str(outcome.get("error", "unknown execution error"))
-            prompt = (
-                f"{base_prompt}\n\n"
-                "A previous attempt produced SQL that failed to execute.\n"
-                f"Faulty SQL:\n{sql}\n\n"
-                f"The database returned this error:\n{error}\n\n"
-                "Diagnose the cause: verify every table and column name against the "
-                "schema, check JOIN keys, quote string literals, and fix any syntax "
-                "problem. Then output only the corrected SQLite query."
-            )
+            error = result.get("error") or "unknown execution error"
+            repaired = self._generate_sql(self._repair_prompt(question, sql, error))
 
-        return last_sql or "SELECT 1"
+            if not repaired or repaired.strip() == sql.strip():
+                # Repair plateau: escape with a non-zero-temperature retry.
+                repaired = self._generate_sql(
+                    self._repair_prompt(question, sql, error), temperature=0.4
+                )
+                if not repaired or repaired.strip() == sql.strip():
+                    break
 
-    def _to_sql(self, raw_text: str) -> str:
-        """Extract SQL from model output, with a markdown-fence fallback."""
-        sql = bridge.extract_sql(raw_text)
-        if sql and sql.strip():
-            return sql.strip()
-        text = raw_text.strip()
-        if text.startswith("
+            sql = repaired
+
+        # Step 5: budget exhausted or plateau; return best-effort candidate.
+        return sql

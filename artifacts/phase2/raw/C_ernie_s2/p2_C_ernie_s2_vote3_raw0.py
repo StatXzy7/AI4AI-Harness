@@ -1,23 +1,39 @@
-"""Executes three independent SQL generations and returns the majority result among those that parse."""
+"""Generates 3 independent SQL attempts via LLM, executes valid ones, and returns the majority SQL string."""
 from ..harness_base import SQLHarness
 from .. import bridge
 
+
 class P2P2CErnieS2Vote3(SQLHarness):
     def solve(self, question: str) -> str:
-        prompt = f"Given the following database schema:\n{self.schema}\n\nQuestion: {question}\n\nGenerate a SQL query to answer the question."
-        responses = self.llm(prompt, system="", temperature=0.7, n=3)
-        successful_sqls = []
-        for text in responses:
+        # Build prompt requesting 3 independent SQL attempts
+        prompt = (
+            f"Given the following database schema:\n{self.schema}\n\n"
+            f"Question: {question}\n\n"
+            f"Generate 3 independent SQL queries that answer the question. "
+            f"Return each query on a separate line."
+        )
+        
+        # Get 3 independent attempts with temperature 0.7
+        attempts = self.llm(prompt, system="", temperature=0.7, n=3)
+        
+        # Extract SQL from each attempt and track valid ones
+        valid_sqls = []
+        for text in attempts:
             sql = bridge.extract_sql(text)
-            if sql:  # ignore empty extractions
+            if sql:
                 result = self.execute(sql)
                 if result["ok"]:
-                    successful_sqls.append(sql)
-        if not successful_sqls:
+                    valid_sqls.append(sql)
+        
+        # If no valid SQLs, return empty string
+        if not valid_sqls:
             return ""
-        # Count occurrences and pick the majority (first encountered in case of tie)
-        counts = {}
-        for sql in successful_sqls:
-            counts[sql] = counts.get(sql, 0) + 1
-        majority_sql = max(counts, key=counts.get)
+        
+        # Count frequencies and find majority
+        freq = {}
+        for sql in valid_sqls:
+            freq[sql] = freq.get(sql, 0) + 1
+        
+        # Find SQL with highest frequency (majority)
+        majority_sql = max(freq.items(), key=lambda x: x[1])[0]
         return majority_sql

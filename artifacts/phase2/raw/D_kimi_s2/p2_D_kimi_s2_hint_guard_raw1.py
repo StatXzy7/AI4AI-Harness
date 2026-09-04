@@ -1,121 +1,71 @@
-"""Parse the question's 'Hint:' line, restate its constraints as hard requirements in the control flow, and guard SQL generation, verification, and repair against them."""
+"""Harness that parses the 'Hint:' line from the question, restates it as hard requirements in the prompt, and enforces those requirements in the control flow by rejecting/repairing candidate SQL that omits required hint elements or fails execution."""
 
 import re
+from typing import List, Optional
 
 from ..harness_base import SQLHarness
 from .. import bridge
 
 
 class P2P2DKimiS2HintGuard(SQLHarness):
-    """Hint-Guard harness around a frozen weak Text-to-SQL solver.
+    """Hint-Guard Text-to-SQL harness.
 
-    Mechanism:
-      1. Parse the 'Hint:' line out of the question (in code, not the prompt).
-      2. Restate the hint as an explicit, numbered list of HARD REQUIREMENTS.
-      3. Generate SQL only after those requirements are injected into the prompt.
-      4. Guard: verify the candidate SQL against the requirements and against
-         live execution; repair under the same requirements if either fails.
+    Control-flow strategy:
+      1. Parse the 'Hint:' line out of the raw question string.
+      2. Split the hint into individual constraint clauses and restate them
+         verbatim as a numbered HARD REQUIREMENTS block placed *before* the
+         SQL-writing instruction in the prompt.
+      3. Derive a concrete token checklist from the hint (quoted literals,
+         numbers, backticked names, and schema identifiers mentioned in the
+         hint).
+      4. Generate SQL, then GUARD it in code: any candidate missing a
+         required token, or failing execution, is rejected and regenerated
+         with explicit feedback until compliant or attempts are exhausted.
     """
 
-    MAX_ATTEMPTS = 3  # 1 initial generation + up to 2 guarded repairs.
+    MAX_ATTEMPTS: int = 3
+    MAX_REQUIRED_TOKENS: int = 10
 
-    # ------------------------------------------------------------------ API
+    _HINT_LINE_RE = re.compile(r"(?im)^\s*hint\s*:\s*(.+?)\s*$")
+    _HINT_INLINE_RE = re.compile(r"(?is)\bhint\s*:\s*(.+)")
+    _QUOTED_RE = re.compile(r"'([^']+)'|\"([^\"]+)\"|`([^`]+)`")
+    _NUMBER_RE = re.compile(r"(?<![\w.])(\d+(?:\.\d+)?)(?![\w.])")
+    _IDENT_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_]*")
+
+    _STOPWORDS = frozenset({
+        "the", "a", "an", "of", "and", "or", "by", "to", "in", "on", "for",
+        "with", "is", "are", "was", "were", "that", "this", "these", "those",
+        "hint", "sql", "query", "select", "from", "where", "group", "order",
+        "limit", "as", "how", "what", "which", "many", "much", "list", "show",
+        "find", "give", "name", "number", "total",
+    })
+
+    # ------------------------------------------------------------------ #
+    # Main entry point                                                    #
+    # ------------------------------------------------------------------ #
     def solve(self, question: str) -> str:
-        # Step 1 (control flow): isolate the Hint line from the question.
-        hint = self._extract_hint(question)
+        hint_text = self._extract_hint(question)
+        constraints = self._split_constraints(hint_text)
+        required_tokens = self._requirement_tokens(hint_text)
+        requirement_block = self._format_requirements(constraints)
 
-        # Step 2 (control flow): restate the hint as hard requirements BEFORE
-        # any SQL is written. No hint -> empty block -> plain generation.
-        requirements = self._restate_requirements(hint) if hint else ""
-        hard_block = self._format_hard_requirements(requirements)
+        feedback = ""
+        last_sql = ""
+        executable_sql = ""
 
-        # Step 3: constrained generation.
-        raw = self.llm(
-            self._generation_prompt(question, hard_block),
-            system=(
-                "You are a careful Text-to-SQL engine. You must satisfy every "
-                "HARD REQUIREMENT exactly. Output only the SQL query."
-            ),
-            temperature=0.0,
-        )
-        sql = bridge.extract_sql(raw) or raw.strip()
-
-        # Step 4: guard loop — verify requirements + execution, repair if needed.
-        for attempt in range(1, self.MAX_ATTEMPTS):
-            violation = (
-                self._check_requirements(question, hard_block, sql)
-                if hard_block
-                else ""
+        for _ in range(self.MAX_ATTEMPTS):
+            prompt = self._build_prompt(question, requirement_block, feedback)
+            raw = self.llm(
+                prompt,
+                system=self._system_prompt(),
+                temperature=0.0,
+                n=1,
             )
-            if violation:
-                sql = self._repair(question, hard_block, sql, violation)
-                continue
+            if isinstance(raw, (list, tuple)):
+                raw = raw[0] if raw else ""
+            sql = bridge.extract_sql(raw or "")
 
-            result = self.execute(sql)
-            if result.get("ok"):
-                return sql
-
-            sql = self._repair(
-                question,
-                hard_block,
-                sql,
-                "The SQL failed to execute. Database error: "
-                + str(result.get("error", "unknown error")),
-            )
-
-        return sql
-
-    # ------------------------------------------------------- hint handling
-    @staticmethod
-    def _extract_hint(question: str) -> str:
-        """Return the text of the 'Hint:' line, or '' if none exists."""
-        match = re.search(r"(?is)\bhint\s*[:\-]\s*(.+)", question)
-        if not match:
-            return ""
-        hint = match.group(1)
-        # The hint ends at the first blank line (or end of string).
-        hint = re.split(r"\n\s*\n", hint, maxsplit=1)[0]
-        return hint.strip()
-
-    def _restate_requirements(self, hint: str) -> str:
-        """Turn raw hint text into a numbered list of hard requirements."""
-        prompt = (
-            "Rewrite the following Text-to-SQL hint as a numbered list of "
-            "HARD REQUIREMENTS that the SQL query MUST satisfy.\n"
-            "Rules:\n"
-            "- One requirement per line, numbered '1.', '2.', ...\n"
-            "- Preserve every table, column, value, and condition mentioned.\n"
-            "- Do not add new assumptions and do not drop any constraint.\n"
-            "- Output only the numbered list.\n\n"
-            f"HINT:\n{hint}\n\n"
-            "HARD REQUIREMENTS:"
-        )
-        out = self.llm(
-            prompt,
-            system="You restate hints as precise, binding SQL requirements.",
-            temperature=0.0,
-        )
-        return out.strip()
-
-    @staticmethod
-    def _format_hard_requirements(requirements: str) -> str:
-        if not requirements:
-            return ""
-        return (
-            "HARD REQUIREMENTS (derived from the hint; every one is MANDATORY "
-            "and overrides any conflicting instinct):\n"
-            f"{requirements}\n"
-        )
-
-    # ------------------------------------------------------------- prompts
-    def _generation_prompt(self, question: str, hard_block: str) -> str:
-        parts = [
-            "Given the database schema, write a single SQL query that answers "
-            "the question.",
-            f"SCHEMA:\n{self.schema}",
-        ]
-        if hard_block:
-            parts.append(hard_block)
-        parts.append(f"QUESTION:\n{question}")
-        parts.append(
-            "Write the SQL now. Return only the SQL, wrapped in a
+            if not sql:
+                feedback = (
+                    "Your previous reply contained no extractable SQL. "
+                    "Return exactly one SQL query inside a single

@@ -1,99 +1,228 @@
-"""Parse the 'Hint:' line from the question and enforce its constraints as hard requirements before generating SQL."""
-from __future__ import annotations
-
+"""Wraps a frozen weak Text-to-SQL solver by extracting Hint constraints and enforcing them as hard guards in the generated SQL."""
 import re
-from typing import List, Optional, Tuple
-
 from ..harness_base import SQLHarness
 from .. import bridge
 
 
 class P2P2DMinimaxS2HintGuard(SQLHarness):
-    """
-    Harness that parses a 'Hint:' line from the natural-language question and
-    treats the extracted constraints as HARD requirements that must be reflected
-    in the final SQL. The control flow checks compliance by parsing the
-    generated SQL, and falls back / re-prompts if any hard constraint is violated.
-    """
-
-    # ------------------------------------------------------------------ #
-    # Public API
-    # ------------------------------------------------------------------ #
     def solve(self, question: str) -> str:
-        """Solve the text-to-SQL task with hint-aware guard logic."""
-        hard_constraints, cleaned_question = self._extract_hint(question)
+        # Extract hint line if present
+        hint_constraints = []
+        hint_match = re.search(r'(?im)^\s*Hint\s*:\s*(.+)$', question)
+        if hint_match:
+            hint_text = hint_match.group(1).strip()
+            hint_constraints = self._parse_hint_constraints(hint_text)
 
-        # Build a system prompt that frames the hint as non-negotiable.
-        system_prompt = self._build_system_prompt(hard_constraints)
+        # Build a guarded prompt that restates hints as hard requirements
+        guarded_question = self._inject_hint_guards(question, hint_constraints)
 
-        # Build the user prompt (the cleaned question, plus a reminder block).
-        user_prompt = self._build_user_prompt(cleaned_question, hard_constraints)
-
-        # Try / verify / retry loop.
-        sql = self._generate_with_guard(
-            user_prompt=user_prompt,
-            system_prompt=system_prompt,
-            hard_constraints=hard_constraints,
-            max_retries=2,
+        system_prompt = (
+            "You are a precise Text-to-SQL generator. "
+            "Treat any HINT constraints as HARD REQUIREMENTS that must be satisfied "
+            "in the generated SQL (use WHERE, JOIN, GROUP BY, ORDER BY, LIMIT as needed). "
+            "Return only a single SQL statement, no commentary."
         )
 
-        # Final normalization pass.
-        sql = bridge.extract_sql(sql)
-        if sql is None:
-            sql = ""
-        return sql.strip()
+        raw = self.llm(guarded_question, system=system_prompt, temperature=0.0, n=1)
+        sql = bridge.extract_sql(raw)
 
-    # ------------------------------------------------------------------ #
+        # Validate / enforce: re-run with a repair pass if constraints appear violated
+        for attempt in range(2):
+            violation = self._find_constraint_violation(sql, hint_constraints)
+            if violation is None:
+                break
+            repair_prompt = self._build_repair_prompt(
+                guarded_question, sql, violation, hint_constraints
+            )
+            raw2 = self.llm(repair_prompt, system=system_prompt, temperature=0.0, n=1)
+            sql = bridge.extract_sql(raw2)
+
+        # Final mechanical guard: if we can, append a defensive clause
+        sql = self._apply_mechanical_guards(sql, hint_constraints)
+        return sql
+
+    # ------------------------------------------------------------------
     # Hint parsing
-    # ------------------------------------------------------------------ #
-    _HINT_RE = re.compile(
-        r"(?P<full>^\s*Hint\s*:\s*(?P<body>.*?))(?=\n\s*\n|\Z)",
-        re.IGNORECASE | re.DOTALL | re.MULTILINE,
-    )
+    # ------------------------------------------------------------------
+    def _parse_hint_constraints(self, hint_text: str) -> list:
+        """Return a list of structured constraint dicts parsed from the hint line."""
+        constraints = []
+        ht = hint_text.lower()
 
-    def _extract_hint(self, question: str) -> Tuple[List[str], str]:
-        """
-        Pull out the 'Hint: ...' line/block from the question.
+        # LIMIT N
+        m = re.search(r'top\s+(\d+)|first\s+(\d+)|limit\s+(\d+)|only\s+(\d+)', ht)
+        if m:
+            n = next(g for g in m.groups() if g)
+            constraints.append({'type': 'limit', 'value': int(n), 'raw': m.group(0)})
 
-        Returns:
-            (hard_constraints, cleaned_question)
-            - hard_constraints: list of constraint strings parsed from the hint.
-            - cleaned_question: the question with the hint block stripped
-              (the constraints are still re-injected as an explicit reminder).
-        """
-        if not question:
-            return [], question or ""
+        # ORDER BY ... ASC/DESC
+        m = re.search(
+            r'sort(?:ed)?\s+by\s+([\w\."]+)(?:\s+(asc|desc))?',
+            hint_text, re.IGNORECASE
+        )
+        if m:
+            constraints.append({
+                'type': 'order',
+                'column': m.group(1).strip(),
+                'direction': (m.group(2) or 'asc').lower(),
+                'raw': m.group(0),
+            })
 
-        m = self._HINT_RE.search(question)
-        if not m:
-            return [], question
+        # DISTINCT
+        if re.search(r'\bdistinct\b|\bunique\b|\bno duplicates?\b|\bdedup', ht):
+            constraints.append({'type': 'distinct', 'raw': 'distinct'})
 
-        hint_body = (m.group("body") or "").strip()
-        cleaned = (question[: m.start()] + question[m.end():]).strip()
+        # WHERE-like equality / IN
+        for eq in re.finditer(
+            r'(?:where\s+)?([\w\."]+)\s*(=|is|in)\s*([\w\'"\(\),\- ]+)',
+            hint_text, re.IGNORECASE
+        ):
+            constraints.append({
+                'type': 'where_eq',
+                'column': eq.group(1).strip(),
+                'op': eq.group(2).lower(),
+                'value': eq.group(3).strip(),
+                'raw': eq.group(0),
+            })
 
-        hard_constraints = self._parse_constraints(hint_body)
-        return hard_constraints, cleaned
+        # GROUP BY
+        m = re.search(r'group(?:ed)?\s+by\s+([\w\."]+(?:\s*,\s*[\w\."]+)*)', hint_text, re.IGNORECASE)
+        if m:
+            constraints.append({
+                'type': 'group',
+                'columns': [c.strip() for c in m.group(1).split(',')],
+                'raw': m.group(0),
+            })
 
-    def _parse_constraints(self, hint_body: str) -> List[str]:
-        """
-        Convert a free-form hint body into a list of hard-constraint strings.
+        # HAVING aggregate
+        m = re.search(
+            r'(count|sum|avg|min|max)\s*\(\s*([\w\."]+)\s*\)\s*(=|>|<|>=|<=)\s*(\d+)',
+            hint_text, re.IGNORECASE
+        )
+        if m:
+            constraints.append({
+                'type': 'having',
+                'func': m.group(1).upper(),
+                'column': m.group(2).strip(),
+                'op': m.group(3),
+                'value': m.group(4),
+                'raw': m.group(0),
+            })
 
-        We split on sentence-ish punctuation so that each atomic claim
-        becomes its own guard rail.
-        """
-        if not hint_body:
-            return []
-
-        # Split on '.', ';', or newlines. Keep non-empty fragments.
-        raw_parts = re.split(r"[.;\n]+", hint_body)
-        constraints = [p.strip(" \t-•*") for p in raw_parts]
-        constraints = [c for c in constraints if c]
         return constraints
 
-    # ------------------------------------------------------------------ #
+    # ------------------------------------------------------------------
     # Prompt construction
-    # ------------------------------------------------------------------ #
-    def _build_system_prompt(self, hard_constraints: List[str]) -> str:
-        base = (
-            "You are a precise Text-to-SQL generator. "
-            "Only output a single SQL query inside a
+    # ------------------------------------------------------------------
+    def _inject_hint_guards(self, question: str, constraints: list) -> str:
+        if not constraints:
+            return question
+        guard_lines = ["HARD REQUIREMENTS (must be satisfied in the SQL):"]
+        for c in constraints:
+            if c['type'] == 'limit':
+                guard_lines.append(f"- Use LIMIT {c['value']}.")
+            elif c['type'] == 'order':
+                guard_lines.append(
+                    f"- ORDER BY {c['column']} {c['direction'].upper()}."
+                )
+            elif c['type'] == 'distinct':
+                guard_lines.append("- Use SELECT DISTINCT.")
+            elif c['type'] == 'where_eq':
+                guard_lines.append(
+                    f"- Include WHERE {c['column']} {c['op'].upper()} {c['value']}."
+                )
+            elif c['type'] == 'group':
+                cols = ', '.join(c['columns'])
+                guard_lines.append(f"- Include GROUP BY {cols}.")
+            elif c['type'] == 'having':
+                guard_lines.append(
+                    f"- Include HAVING {c['func']}({c['column']}) "
+                    f"{c['op']} {c['value']}."
+                )
+        return question + "\n\n" + "\n".join(guard_lines)
+
+    def _build_repair_prompt(self, original: str, sql: str, violation: str,
+                             constraints: list) -> str:
+        return (
+            original
+            + "\n\nYour previous SQL:\n" + sql
+            + "\n\nIt violates this HARD REQUIREMENT: " + violation
+            + "\n\nRewrite the SQL so it satisfies ALL hard requirements. "
+            + "Return only the corrected SQL."
+        )
+
+    # ------------------------------------------------------------------
+    # Constraint validation against generated SQL
+    # ------------------------------------------------------------------
+    def _find_constraint_violation(self, sql: str, constraints: list) -> str | None:
+        if not sql:
+            return "empty SQL"
+        sql_l = sql.lower()
+        for c in constraints:
+            if c['type'] == 'limit':
+                if not re.search(rf'\blimit\s+{c["value"]}\b', sql_l):
+                    return f"missing LIMIT {c['value']}"
+            elif c['type'] == 'order':
+                col = re.escape(c['column'].lower())
+                pat = rf'\border\s+by\s+{col}\b'
+                if not re.search(pat, sql_l):
+                    return f"missing ORDER BY {c['column']} {c['direction'].upper()}"
+                else:
+                    if c['direction'] == 'desc' and 'desc' not in sql_l:
+                        return f"missing DESC in ORDER BY {c['column']}"
+            elif c['type'] == 'distinct':
+                if 'distinct' not in sql_l:
+                    return "missing DISTINCT"
+            elif c['type'] == 'where_eq':
+                col = re.escape(c['column'].lower())
+                val = re.escape(c['value'].lower())
+                if not re.search(rf'{col}\s*{re.escape(c["op"].lower())}\s*{val}', sql_l):
+                    return f"missing WHERE {c['column']} {c['op'].upper()} {c['value']}"
+            elif c['type'] == 'group':
+                cols = [re.escape(c.lower()) for c in c['columns']]
+                if not all(re.search(rf'\bgroup\s+by\b.*\b{col}\b', sql_l) for col in cols):
+                    return f"missing GROUP BY {', '.join(c['columns'])}"
+            elif c['type'] == 'having':
+                fpat = rf'\b{re.escape(c["func"].lower())}\s*\(\s*{re.escape(c["column"].lower())}\s*\)\s*{re.escape(c["op"])}\s*{re.escape(c["value"])}'
+                if not re.search(fpat, sql_l):
+                    return (f"missing HAVING {c['func']}({c['column']}) "
+                             f"{c['op']} {c['value']}")
+        return None
+
+    # ------------------------------------------------------------------
+    # Mechanical (post-LLM) guards — last-resort enforcement
+    # ------------------------------------------------------------------
+    def _apply_mechanical_guards(self, sql: str, constraints: list) -> str:
+        if not sql or not constraints:
+            return sql
+        sql_l = sql.lower()
+
+        for c in constraints:
+            if c['type'] == 'limit' and not re.search(rf'\blimit\s+\d+\b', sql_l):
+                sql = sql.rstrip(';') + f" LIMIT {c['value']}"
+
+            elif c['type'] == 'distinct' and 'distinct' not in sql_l:
+                sql = re.sub(r'(?i)\bselect\s+', 'SELECT DISTINCT ', sql, count=1)
+
+            elif c['type'] == 'order':
+                if not re.search(rf'\border\s+by\s+{re.escape(c["column"].lower())}\b', sql_l):
+                    sql = sql.rstrip(';') + f" ORDER BY {c['column']} {c['direction'].upper()}"
+                elif c['direction'] == 'desc' and 'desc' not in sql_l:
+                    sql = re.sub(
+                        rf'(?i)(\border\s+by\s+{re.escape(c["column"])})',
+                        r'\1 DESC',
+                        sql,
+                    )
+
+            elif c['type'] == 'where_eq':
+                col = c['column']
+                op = c['op'].upper()
+                val = c['value']
+                if not re.search(rf'{re.escape(col.lower())}\s*{re.escape(c["op"].lower())}\s*{re.escape(val.lower())}', sql_l):
+                    clause = f" WHERE {col} {op} {val}" if 'where' not in sql_l else f" AND {col} {op} {val}"
+                    if not sql_l.strip().endswith(';'):
+                        sql = sql + clause
+                    else:
+                        sql = sql[:-1] + clause + ';'
+
+        return sql

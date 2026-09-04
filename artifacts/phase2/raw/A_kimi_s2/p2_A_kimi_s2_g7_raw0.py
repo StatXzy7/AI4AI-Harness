@@ -1,61 +1,47 @@
-"""Two-stage Text-to-SQL: first generate a structured query plan, then generate SQL from the plan."""
-# MECHANISM: twostage
+"""Iterative repair harness: generate SQL greedily, execute it, and feed execution errors back to the frozen solver for regeneration until the query runs or the attempt budget is exhausted."""
+# MECHANISM: repair
 
 from ..harness_base import SQLHarness
 from .. import bridge
-import json
-import re
 
 
 class P2P2AKimiS2G7(SQLHarness):
+    """Generate -> execute -> repair loop wrapping the frozen weak solver.
+
+    The improvement over a single greedy call is a closed feedback loop:
+    every candidate query is actually executed, and any database error is
+    handed back to the solver together with the failing query so it can
+    produce a corrected rewrite. A repeated-identical-query detector breaks
+    repair stalls by escalating temperature once before giving up.
+    """
+
+    MAX_ATTEMPTS = 4
+
+    SYSTEM_PROMPT = (
+        "You are an expert SQL query writer. Given a database schema and a "
+        "natural-language question, you write a single syntactically valid SQL "
+        "query that answers the question. You output only the SQL query."
+    )
+
     def solve(self, question: str) -> str:
-        # Stage 1: Generate a structured query plan as an intermediate artifact
-        plan_system = (
-            "You are a SQL query planning assistant. Your job is to analyze a database schema "
-            "and a natural language question, then produce a structured query plan in JSON format. "
-            "The plan must include these fields:\n"
-            "- 'select': list of columns/expressions to select\n"
-            "- 'from': list of tables\n"
-            "- 'joins': list of join descriptions (e.g., 'tableA.id = tableB.fk_id')\n"
-            "- 'where': list of filter conditions\n"
-            "- 'aggregations': list of aggregation expressions (e.g., 'COUNT(*)')\n"
-            "- 'group_by': list of columns\n"
-            "- 'order_by': list of columns with optional ASC/DESC\n"
-            "- 'limit': integer or null\n"
-            "Output ONLY valid JSON, no markdown, no explanation."
-        )
+        schema = self.schema
 
-        plan_prompt = (
-            f"Schema:\n{self.schema}\n\n"
+        initial_prompt = (
+            "Database schema:\n"
+            f"{schema}\n\n"
             f"Question: {question}\n\n"
-            "Produce the query plan JSON."
+            "Write a single SQL query that answers the question. "
+            "Output only the SQL, no explanation."
         )
 
-        plan_response = self.llm(plan_prompt, system=plan_system, temperature=0.0, n=1)
-
-        # Parse the plan from the response
-        plan = self._extract_json_plan(plan_response)
-
-        # Stage 2: Generate SQL using the plan as a guide
-        sql_system = (
-            "You are a SQL generation assistant. Given a database schema, a question, and a "
-            "structured query plan, write the correct SQL query. Follow the plan precisely. "
-            "Output ONLY the SQL query, no markdown, no explanation."
+        # Step 1: initial greedy generation.
+        sql = bridge.extract_sql(
+            self.llm(initial_prompt, system=self.SYSTEM_PROMPT, temperature=0.0, n=1)
         )
 
-        sql_prompt = (
-            f"Schema:\n{self.schema}\n\n"
-            f"Question: {question}\n\n"
-            f"Query Plan:\n{json.dumps(plan, indent=2)}\n\n"
-            "Generate the SQL query."
-        )
-
-        sql_response = self.llm(sql_prompt, system=sql_system, temperature=0.0, n=1)
-
-        final_sql = bridge.extract_sql(sql_response)
-        return final_sql
-
-    def _extract_json_plan(self, text: str) -> dict:
-        """Extract a JSON plan from LLM output, with fallback."""
-        # Strip markdown code blocks if present
-        text = re.sub(r'^
+        if not sql:
+            # Extraction failed entirely: re-ask with an explicit format demand.
+            sql = bridge.extract_sql(
+                self.llm(
+                    initial_prompt
+                    + "\n\nRespond with ONLY the SQL query inside a

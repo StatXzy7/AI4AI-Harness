@@ -1,68 +1,58 @@
-"""Wraps a frozen weak solver with a two-view harness that generates join-based and subquery-based SQL, executes both, and returns the first non-empty result."""
-import re
+"""Two-view SQL harness: generates two independent SQL formulations, executes both, returns the one that yields rows."""
 from ..harness_base import SQLHarness
 from .. import bridge
 
 
 class P2P2CMinimaxS2TwoView(SQLHarness):
     def solve(self, question: str) -> str:
-        # Step 1: Generate join-based formulation via the frozen weak solver.
-        join_prompt = (
-            "You are a SQL expert. Given the schema and the question below, "
-            "write a single SQL query that uses explicit JOIN syntax (INNER JOIN, "
-            "LEFT JOIN, etc.) to combine tables.\n\n"
-            f"Schema:\n{self.schema}\n\n"
-            f"Question: {question}\n\n"
-            "Return ONLY the SQL query, no explanation."
+        # Build two distinct system prompts encouraging different formulations
+        schema = self.schema or ""
+
+        system_join = (
+            "You are a SQL expert. Given the database schema and the user's question, "
+            "produce exactly one SQL query using JOINs to combine relevant tables. "
+            "Return only the SQL statement with no explanation and no markdown."
         )
-        join_response = self.llm(join_prompt, system="", temperature=0.0, n=1)
-        join_sql = bridge.extract_sql(join_response)
 
-        # Step 2: Generate subquery-based formulation via the frozen weak solver.
-        subquery_prompt = (
-            "You are a SQL expert. Given the schema and the question below, "
-            "write a single SQL query that uses subqueries (WHERE ... IN (SELECT ...) "
-            "or nested SELECT) to combine tables, instead of explicit JOINs.\n\n"
-            f"Schema:\n{self.schema}\n\n"
-            f"Question: {question}\n\n"
-            "Return ONLY the SQL query, no explanation."
+        system_subq = (
+            "You are a SQL expert. Given the database schema and the user's question, "
+            "produce exactly one SQL query using subqueries (WHERE IN / SELECT subquery) "
+            "rather than JOINs to retrieve the answer. "
+            "Return only the SQL statement with no explanation and no markdown."
         )
-        subquery_response = self.llm(subquery_prompt, system="", temperature=0.0, n=1)
-        subquery_sql = bridge.extract_sql(subquery_response)
 
-        # Fallback: if extraction produced nothing, retry once on the raw response.
-        if not join_sql and join_response:
-            join_sql = self._fallback_extract(join_response)
-        if not subquery_sql and subquery_response:
-            subquery_sql = self._fallback_extract(subquery_response)
+        # Generate view A: join-based
+        view_a_raw = self.llm(question, system=system_join, temperature=0.0, n=1)
+        sql_a = bridge.extract_sql(view_a_raw)
 
-        # Step 3: Execute both candidates independently.
-        join_result = self._safe_execute(join_sql)
-        subquery_result = self._safe_execute(subquery_sql)
+        # Generate view B: subquery-based
+        view_b_raw = self.llm(question, system=system_subq, temperature=0.0, n=1)
+        sql_b = bridge.extract_sql(view_b_raw)
 
-        # Step 4: Selection rule — prefer the formulation with non-empty rows;
-        # if both are non-empty, return the first (join-based) one.
-        if join_result["ok"] and join_result["rows"]:
-            return join_sql
-        if subquery_result["ok"] and subquery_result["rows"]:
-            return subquery_sql
-        if join_sql:
-            return join_sql
-        if subquery_sql:
-            return subquery_sql
-        # Last resort: return the join response cleaned up, or empty string.
-        return join_sql or subquery_sql or ""
+        # Execute both; prefer the non-empty result, fall back to sql_a if both empty/error
+        res_a = None
+        res_b = None
 
-    def _safe_execute(self, sql: str):
-        if not sql or not sql.strip():
-            return {"ok": False, "rows": [], "error": "empty sql"}
-        try:
-            return self.execute(sql)
-        except Exception as e:  # harness must never propagate executor errors
-            return {"ok": False, "rows": [], "error": str(e)}
+        if sql_a:
+            res_a = self.execute(sql_a)
+        if sql_b:
+            res_b = self.execute(sql_b)
 
-    def _fallback_extract(self, text: str) -> str:
-        # Strip code fences and grab the first plausible SQL-looking statement.
-        if not text:
-            return ""
-        cleaned = re.sub(r"
+        a_ok = bool(res_a and res_a.get("ok") and res_a.get("rows"))
+        b_ok = bool(res_b and res_b.get("ok") and res_b.get("rows"))
+
+        if a_ok and not b_ok:
+            return sql_a
+        if b_ok and not a_ok:
+            return sql_b
+        # Both non-empty: return first
+        if a_ok and b_ok:
+            return sql_a
+
+        # Both empty or only one was extractable: fall back to whichever we have
+        if sql_a:
+            return sql_a
+        if sql_b:
+            return sql_b
+        # Last resort: return whatever raw text we got
+        return view_a_raw or view_b_raw or ""

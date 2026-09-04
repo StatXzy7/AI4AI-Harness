@@ -6,3 +6,284 @@
   p2_A_glm_s2_g3                           ADMIT  nv=1/2 mech=0 
   p2_A_glm_s2_g4                           empty  nv=0/3 mech=0 
   p2_A_glm_s2_g5                           empty  nv=0/3 mech=0 
+  p2_A_glm_s2_g6                           empty  nv=0/3 mech=0 
+  p2_A_glm_s2_g7                           empty  nv=0/3 mech=0 
+[gen] K=2/8 admitted | R_artifact=0.0952 R_contract=0.0 R_fidelity=0.0 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\.tmp.A_glm_s2.248
+[done] /e/projects/AI4AI-Harness/artifacts/phase2/gen/A_glm_s2.json
+[run ] A/qwen/s2
+[gen] builder=qwen(Qwen3.8-Max) arm=A seed=2 gate=False forced=False slots=8 raw_budget=3/slot
+  p2_A_qwen_s2_g0                          empty  nv=0/3 mech=0 no python fence
+  p2_A_qwen_s2_g1                          empty  nv=0/3 mech=0 no python fence
+  p2_A_qwen_s2_g2                          ADMIT  nv=1/2 mech=0 
+  p2_A_qwen_s2_g3                          empty  nv=0/3 mech=0 no python fence
+  p2_A_qwen_s2_g4                          empty  nv=0/3 mech=0 
+  p2_A_qwen_s2_g5                          empty  nv=0/3 mech=0 no python fence
+  p2_A_qwen_s2_g6                          empty  nv=0/3 mech=0 no python fence
+  p2_A_qwen_s2_g7                          ADMIT  nv=1/3 mech=0 
+[gen] K=2/8 admitted | R_artifact=0.087 R_contract=0.0 R_fidelity=0.0 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\.tmp.A_qwen_s2.248
+[done] /e/projects/AI4AI-Harness/artifacts/phase2/gen/A_qwen_s2.json
+[run ] A/deepseek/s2
+[gen] builder=deepseek(DeepSeek-V4-Pro) arm=A seed=2 gate=False forced=False slots=8 raw_budget=3/slot
+  p2_A_deepseek_s2_g0                      ADMIT  nv=1/1 mech=0 
+  p2_A_deepseek_s2_g1                      ADMIT  nv=1/1 mech=0 
+  p2_A_deepseek_s2_g2                      ADMIT  nv=1/1 mech=0 
+  p2_A_deepseek_s2_g3                      ADMIT  nv=1/1 mech=0 
+  p2_A_deepseek_s2_g4                      ADMIT  nv=1/1 mech=0 
+  p2_A_deepseek_s2_g5                      ADMIT  nv=1/1 mech=0 
+  p2_A_deepseek_s2_g6                      ADMIT  nv=1/1 mech=0 
+  p2_A_deepseek_s2_g7                      ADMIT  nv=1/1 mech=0 
+[gen] K=8/8 admitted | R_artifact=1.0 R_contract=0.0 R_fidelity=0.0 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\.tmp.A_deepseek_s2.248
+[done] /e/projects/AI4AI-Harness/artifacts/phase2/gen/A_deepseek_s2.json
+[run ] A/kimi/s2
+[gen] builder=kimi(Kimi-K3) arm=A seed=2 gate=False forced=False slots=8 raw_budget=3/slot
+  p2_A_kimi_s2_g0                          empty  nv=0/3 mech=0 no python fence
+  p2_A_kimi_s2_g1                          ADMIT  nv=1/1 mech=0 
+  p2_A_kimi_s2_g2                          ADMIT  nv=1/1 mech=0 
+  p2_A_kimi_s2_g3                          ADMIT  nv=1/1 mech=0 
+  p2_A_kimi_s2_g4                          ADMIT  nv=1/2 mech=0 
+  p2_A_kimi_s2_g5                          ADMIT  nv=1/3 mech=0 
+  p2_A_kimi_s2_g6                          ADMIT  nv=1/1 mech=0 
+  p2_A_kimi_s2_g7                          ADMIT  nv=1/2 mech=0 
+[gen] K=7/8 admitted | R_artifact=0.5 R_contract=0.0 R_fidelity=0.0 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\.tmp.A_kimi_s2.248
+[done] /e/projects/AI4AI-Harness/artifacts/phase2/gen/A_kimi_s2.json
+[run ] A/minimax/s2
+[gen] builder=minimax(MiniMax-M3) arm=A seed=2 gate=False forced=False slots=8 raw_budget=3/slot
+  p2_A_minimax_s2_g0                       ADMIT  nv=1/1 mech=0 
+  p2_A_minimax_s2_g1                       ADMIT  nv=1/2 mech=0 
+  p2_A_minimax_s2_g2                       empty  nv=0/3 mech=0 no python fence
+  p2_A_minimax_s2_g3                       ADMIT  nv=1/1 mech=0 
+  p2_A_minimax_s2_g4                       ADMIT  nv=1/1 mech=0 
+  p2_A_minimax_s2_g5                       ADMIT  nv=1/1 mech=0 
+  p2_A_minimax_s2_g6                       ADMIT  nv=1/2 mech=0 
+  p2_A_minimax_s2_g7                       ADMIT  nv=1/2 mech=0 
+[gen] K=7/8 admitted | R_artifact=0.5385 R_contract=0.0 R_fidelity=0.0 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\.tmp.A_minimax_s2.248
+[done] /e/projects/AI4AI-Harness/artifacts/phase2/gen/A_minimax_s2.json
+[run ] A/ernie/s2
+[gen] builder=ernie(ERNIE-5.0-Thinking-Preview) arm=A seed=2 gate=False forced=False slots=8 raw_budget=3/slot
+  p2_A_ernie_s2_g0                         ADMIT  nv=1/1 mech=0 
+  p2_A_ernie_s2_g1                         ADMIT  nv=1/1 mech=0 
+  p2_A_ernie_s2_g2                         ADMIT  nv=1/1 mech=0 
+  p2_A_ernie_s2_g3                         ADMIT  nv=1/1 mech=0 
+  p2_A_ernie_s2_g4                         ADMIT  nv=1/1 mech=0 
+  p2_A_ernie_s2_g5                         ADMIT  nv=1/1 mech=0 
+  p2_A_ernie_s2_g6                         ADMIT  nv=1/1 mech=0 
+  p2_A_ernie_s2_g7                         ADMIT  nv=1/1 mech=0 
+[gen] K=8/8 admitted | R_artifact=1.0 R_contract=0.0 R_fidelity=0.0 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\.tmp.A_ernie_s2.248
+[done] /e/projects/AI4AI-Harness/artifacts/phase2/gen/A_ernie_s2.json
+[run ] B/glm/s2
+[gen] builder=glm(GLM-5.3) arm=B seed=2 gate=True forced=False slots=8 raw_budget=3/slot
+  p2_B_glm_s2_g0                           empty  nv=0/3 mech=0 no python fence
+  p2_B_glm_s2_g1                           ADMIT  nv=1/1 mech=1 PASS
+  p2_B_glm_s2_g2                           empty  nv=0/3 mech=0 
+  p2_B_glm_s2_g3                           empty  nv=0/3 mech=0 
+  p2_B_glm_s2_g4                           ADMIT  nv=1/1 mech=1 PASS
+  p2_B_glm_s2_g5                           empty  nv=0/3 mech=0 
+  p2_B_glm_s2_g6                           ADMIT  nv=1/2 mech=1 PASS
+  p2_B_glm_s2_g7                           empty  nv=0/3 mech=0 no python fence
+[gen] K=3/8 admitted | R_artifact=0.1579 R_contract=0.1579 R_fidelity=1.0 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\.tmp.B_glm_s2.248
+[done] /e/projects/AI4AI-Harness/artifacts/phase2/gen/B_glm_s2.json
+[run ] B/qwen/s2
+[gen] builder=qwen(Qwen3.8-Max) arm=B seed=2 gate=True forced=False slots=8 raw_budget=3/slot
+  p2_B_qwen_s2_g0                          empty  nv=0/3 mech=0 no python fence
+  p2_B_qwen_s2_g1                          empty  nv=0/3 mech=0 no python fence
+  p2_B_qwen_s2_g2                          empty  nv=0/3 mech=0 no python fence
+  p2_B_qwen_s2_g3                          ADMIT  nv=1/1 mech=1 PASS
+  p2_B_qwen_s2_g4                          empty  nv=0/3 mech=0 no python fence
+  p2_B_qwen_s2_g5                          empty  nv=0/3 mech=0 no python fence
+  p2_B_qwen_s2_g6                          empty  nv=1/3 mech=0 no python fence
+  p2_B_qwen_s2_g7                          empty  nv=1/3 mech=0 no python fence
+[gen] K=1/8 admitted | R_artifact=0.1364 R_contract=0.1364 R_fidelity=0.3333 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\.tmp.B_qwen_s2.248
+[done] /e/projects/AI4AI-Harness/artifacts/phase2/gen/B_qwen_s2.json
+[run ] B/deepseek/s2
+[gen] builder=deepseek(DeepSeek-V4-Pro) arm=B seed=2 gate=True forced=False slots=8 raw_budget=3/slot
+  p2_B_deepseek_s2_g0                      ADMIT  nv=1/1 mech=1 PASS
+  p2_B_deepseek_s2_g1                      ADMIT  nv=1/1 mech=1 PASS
+  p2_B_deepseek_s2_g2                      ADMIT  nv=1/1 mech=1 PASS
+  p2_B_deepseek_s2_g3                      ADMIT  nv=1/3 mech=1 PASS
+  p2_B_deepseek_s2_g4                      ADMIT  nv=2/2 mech=1 PASS
+  p2_B_deepseek_s2_g5                      ADMIT  nv=1/1 mech=1 PASS
+  p2_B_deepseek_s2_g6                      ADMIT  nv=1/1 mech=1 PASS
+  p2_B_deepseek_s2_g7                      ADMIT  nv=1/2 mech=1 PASS
+[gen] K=8/8 admitted | R_artifact=0.75 R_contract=0.75 R_fidelity=0.8889 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\.tmp.B_deepseek_s2.248
+[done] /e/projects/AI4AI-Harness/artifacts/phase2/gen/B_deepseek_s2.json
+[run ] B/kimi/s2
+[gen] builder=kimi(Kimi-K3) arm=B seed=2 gate=True forced=False slots=8 raw_budget=3/slot
+  p2_B_kimi_s2_g0                          ADMIT  nv=1/1 mech=1 PASS
+  p2_B_kimi_s2_g1                          ADMIT  nv=1/1 mech=1 PASS
+  p2_B_kimi_s2_g2                          ADMIT  nv=1/1 mech=1 PASS
+  p2_B_kimi_s2_g3                          ADMIT  nv=1/1 mech=1 PASS
+  p2_B_kimi_s2_g4                          ADMIT  nv=1/1 mech=1 PASS
+  p2_B_kimi_s2_g5                          ADMIT  nv=1/3 mech=1 PASS
+  p2_B_kimi_s2_g6                          ADMIT  nv=1/2 mech=1 PASS
+  p2_B_kimi_s2_g7                          ADMIT  nv=1/1 mech=1 PASS
+[gen] K=8/8 admitted | R_artifact=0.7273 R_contract=0.7273 R_fidelity=1.0 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\.tmp.B_kimi_s2.248
+[done] /e/projects/AI4AI-Harness/artifacts/phase2/gen/B_kimi_s2.json
+[run ] B/minimax/s2
+[gen] builder=minimax(MiniMax-M3) arm=B seed=2 gate=True forced=False slots=8 raw_budget=3/slot
+  p2_B_minimax_s2_g0                       ADMIT  nv=1/1 mech=1 PASS
+  p2_B_minimax_s2_g1                       ADMIT  nv=1/1 mech=1 PASS
+  p2_B_minimax_s2_g2                       ADMIT  nv=2/2 mech=1 PASS
+  p2_B_minimax_s2_g3                       ADMIT  nv=1/1 mech=1 PASS
+  p2_B_minimax_s2_g4                       ADMIT  nv=1/2 mech=1 PASS
+  p2_B_minimax_s2_g5                       ADMIT  nv=1/1 mech=1 PASS
+  p2_B_minimax_s2_g6                       ADMIT  nv=1/2 mech=1 PASS
+  p2_B_minimax_s2_g7                       ADMIT  nv=1/2 mech=1 PASS
+[gen] K=8/8 admitted | R_artifact=0.75 R_contract=0.75 R_fidelity=0.8889 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\.tmp.B_minimax_s2.248
+[done] /e/projects/AI4AI-Harness/artifacts/phase2/gen/B_minimax_s2.json
+[run ] B/ernie/s2
+[gen] builder=ernie(ERNIE-5.0-Thinking-Preview) arm=B seed=2 gate=True forced=False slots=8 raw_budget=3/slot
+  p2_B_ernie_s2_g0                         ADMIT  nv=1/1 mech=1 PASS
+  p2_B_ernie_s2_g1                         ADMIT  nv=1/1 mech=1 PASS
+  p2_B_ernie_s2_g2                         ADMIT  nv=1/1 mech=1 PASS
+  p2_B_ernie_s2_g3                         ADMIT  nv=1/1 mech=1 PASS
+  p2_B_ernie_s2_g4                         ADMIT  nv=1/2 mech=1 PASS
+  p2_B_ernie_s2_g5                         ADMIT  nv=1/1 mech=1 PASS
+  p2_B_ernie_s2_g6                         ADMIT  nv=1/1 mech=1 PASS
+  p2_B_ernie_s2_g7                         ADMIT  nv=1/1 mech=1 PASS
+[gen] K=8/8 admitted | R_artifact=0.8889 R_contract=0.8889 R_fidelity=1.0 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\.tmp.B_ernie_s2.248
+[done] /e/projects/AI4AI-Harness/artifacts/phase2/gen/B_ernie_s2.json
+[run ] C/glm/s2
+[gen] builder=glm(GLM-5.3) arm=C seed=2 gate=False forced=True slots=8 raw_budget=3/slot
+  p2_C_glm_s2_repair                       ADMIT  nv=1/2 mech=0 
+  p2_C_glm_s2_vote3                        ADMIT  nv=1/1 mech=0 
+  p2_C_glm_s2_schema_link                  empty  nv=0/3 mech=0 no python fence
+  p2_C_glm_s2_hint_guard                   empty  nv=0/3 mech=0 no python fence
+  p2_C_glm_s2_two_view                     ADMIT  nv=1/1 mech=0 
+  p2_C_glm_s2_decompose                    ADMIT  nv=1/2 mech=0 
+  p2_C_glm_s2_error_classify               empty  nv=0/3 mech=0 no python fence
+  p2_C_glm_s2_format_guard                 empty  nv=0/3 mech=0 no python fence
+[gen] K=4/8 admitted | R_artifact=0.2222 R_contract=0.0 R_fidelity=0.0 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\.tmp.C_glm_s2.248
+[done] /e/projects/AI4AI-Harness/artifacts/phase2/gen/C_glm_s2.json
+[run ] C/qwen/s2
+[gen] builder=qwen(Qwen3.8-Max) arm=C seed=2 gate=False forced=True slots=8 raw_budget=3/slot
+  p2_C_qwen_s2_repair                      ADMIT  nv=1/1 mech=0 
+  p2_C_qwen_s2_vote3                       ADMIT  nv=1/1 mech=0 
+  p2_C_qwen_s2_schema_link                 empty  nv=0/3 mech=0 no python fence
+  p2_C_qwen_s2_hint_guard                  ADMIT  nv=1/2 mech=0 
+  p2_C_qwen_s2_two_view                    ADMIT  nv=1/1 mech=0 
+  p2_C_qwen_s2_decompose                   empty  nv=0/3 mech=0 no python fence
+  p2_C_qwen_s2_error_classify              empty  nv=0/3 mech=0 
+  p2_C_qwen_s2_format_guard                empty  nv=0/3 mech=0 no python fence
+[gen] K=4/8 admitted | R_artifact=0.2353 R_contract=0.0 R_fidelity=0.0 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\.tmp.C_qwen_s2.248
+[done] /e/projects/AI4AI-Harness/artifacts/phase2/gen/C_qwen_s2.json
+[run ] C/deepseek/s2
+[gen] builder=deepseek(DeepSeek-V4-Pro) arm=C seed=2 gate=False forced=True slots=8 raw_budget=3/slot
+  p2_C_deepseek_s2_repair                  ADMIT  nv=1/3 mech=0 
+  p2_C_deepseek_s2_vote3                   ADMIT  nv=1/1 mech=0 
+  p2_C_deepseek_s2_schema_link             ADMIT  nv=1/1 mech=0 
+  p2_C_deepseek_s2_hint_guard              ADMIT  nv=1/1 mech=0 
+  p2_C_deepseek_s2_two_view                ADMIT  nv=1/1 mech=0 
+  p2_C_deepseek_s2_decompose               ADMIT  nv=1/2 mech=0 
+  p2_C_deepseek_s2_error_classify          ADMIT  nv=1/2 mech=0 
+  p2_C_deepseek_s2_format_guard            empty  nv=0/3 mech=0 
+[gen] K=7/8 admitted | R_artifact=0.5 R_contract=0.0 R_fidelity=0.0 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\.tmp.C_deepseek_s2.248
+[done] /e/projects/AI4AI-Harness/artifacts/phase2/gen/C_deepseek_s2.json
+[run ] C/kimi/s2
+[gen] builder=kimi(Kimi-K3) arm=C seed=2 gate=False forced=True slots=8 raw_budget=3/slot
+  p2_C_kimi_s2_repair                      ADMIT  nv=1/1 mech=0 
+  p2_C_kimi_s2_vote3                       ADMIT  nv=1/1 mech=0 
+  p2_C_kimi_s2_schema_link                 ADMIT  nv=1/3 mech=0 
+  p2_C_kimi_s2_hint_guard                  empty  nv=0/3 mech=0 
+  p2_C_kimi_s2_two_view                    ADMIT  nv=1/1 mech=0 
+  p2_C_kimi_s2_decompose                   ADMIT  nv=1/3 mech=0 
+  p2_C_kimi_s2_error_classify              ADMIT  nv=1/2 mech=0 
+  p2_C_kimi_s2_format_guard                empty  nv=0/3 mech=0 
+[gen] K=6/8 admitted | R_artifact=0.3529 R_contract=0.0 R_fidelity=0.0 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\.tmp.C_kimi_s2.248
+[done] /e/projects/AI4AI-Harness/artifacts/phase2/gen/C_kimi_s2.json
+[run ] C/minimax/s2
+[gen] builder=minimax(MiniMax-M3) arm=C seed=2 gate=False forced=True slots=8 raw_budget=3/slot
+  p2_C_minimax_s2_repair                   ADMIT  nv=1/3 mech=0 
+  p2_C_minimax_s2_vote3                    ADMIT  nv=1/1 mech=0 
+  p2_C_minimax_s2_schema_link              ADMIT  nv=1/1 mech=0 
+  p2_C_minimax_s2_hint_guard               ADMIT  nv=1/1 mech=0 
+  p2_C_minimax_s2_two_view                 ADMIT  nv=1/1 mech=0 
+  p2_C_minimax_s2_decompose                ADMIT  nv=1/1 mech=0 
+  p2_C_minimax_s2_error_classify           ADMIT  nv=1/1 mech=0 
+  p2_C_minimax_s2_format_guard             empty  nv=0/3 mech=0 
+[gen] K=7/8 admitted | R_artifact=0.5833 R_contract=0.0 R_fidelity=0.0 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\.tmp.C_minimax_s2.248
+[done] /e/projects/AI4AI-Harness/artifacts/phase2/gen/C_minimax_s2.json
+[run ] C/ernie/s2
+[gen] builder=ernie(ERNIE-5.0-Thinking-Preview) arm=C seed=2 gate=False forced=True slots=8 raw_budget=3/slot
+  p2_C_ernie_s2_repair                     ADMIT  nv=1/1 mech=0 
+  p2_C_ernie_s2_vote3                      ADMIT  nv=1/1 mech=0 
+  p2_C_ernie_s2_schema_link                ADMIT  nv=1/1 mech=0 
+  p2_C_ernie_s2_hint_guard                 ADMIT  nv=1/1 mech=0 
+  p2_C_ernie_s2_two_view                   ADMIT  nv=1/1 mech=0 
+  p2_C_ernie_s2_decompose                  ADMIT  nv=1/1 mech=0 
+  p2_C_ernie_s2_error_classify             ADMIT  nv=1/1 mech=0 
+  p2_C_ernie_s2_format_guard               empty  nv=0/3 mech=0 
+[gen] K=7/8 admitted | R_artifact=0.7 R_contract=0.0 R_fidelity=0.0 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\.tmp.C_ernie_s2.248
+[done] /e/projects/AI4AI-Harness/artifacts/phase2/gen/C_ernie_s2.json
+[run ] D/glm/s2
+[gen] builder=glm(GLM-5.3) arm=D seed=2 gate=True forced=True slots=8 raw_budget=3/slot
+  p2_D_glm_s2_repair                       ADMIT  nv=1/2 mech=1 PASS
+  p2_D_glm_s2_vote3                        ADMIT  nv=1/2 mech=1 PASS
+  p2_D_glm_s2_schema_link                  empty  nv=0/3 mech=0 no python fence
+  p2_D_glm_s2_hint_guard                   empty  nv=0/3 mech=0 no python fence
+  p2_D_glm_s2_two_view                     empty  nv=0/3 mech=0 
+  p2_D_glm_s2_decompose                    empty  nv=1/3 mech=0 no python fence
+  p2_D_glm_s2_error_classify               empty  nv=0/3 mech=0 no python fence
+  p2_D_glm_s2_format_guard                 empty  nv=0/3 mech=0 no python fence
+[gen] K=2/8 admitted | R_artifact=0.1364 R_contract=0.1364 R_fidelity=0.6667 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\.tmp.D_glm_s2.248
+[done] /e/projects/AI4AI-Harness/artifacts/phase2/gen/D_glm_s2.json
+[run ] D/qwen/s2
+[gen] builder=qwen(Qwen3.8-Max) arm=D seed=2 gate=True forced=True slots=8 raw_budget=3/slot
+  p2_D_qwen_s2_repair                      ADMIT  nv=1/1 mech=1 PASS
+  p2_D_qwen_s2_vote3                       ADMIT  nv=1/1 mech=1 PASS
+  p2_D_qwen_s2_schema_link                 empty  nv=0/3 mech=0 no python fence
+  p2_D_qwen_s2_hint_guard                  empty  nv=1/3 mech=0 no python fence
+  p2_D_qwen_s2_two_view                    ADMIT  nv=1/1 mech=1 PASS
+  p2_D_qwen_s2_decompose                   empty  nv=0/3 mech=0 no python fence
+  p2_D_qwen_s2_error_classify              empty  nv=0/3 mech=0 
+  p2_D_qwen_s2_format_guard                empty  nv=0/3 mech=0 no python fence
+[gen] K=3/8 admitted | R_artifact=0.2222 R_contract=0.2222 R_fidelity=0.75 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\.tmp.D_qwen_s2.248
+[done] /e/projects/AI4AI-Harness/artifacts/phase2/gen/D_qwen_s2.json
+[run ] D/deepseek/s2
+[gen] builder=deepseek(DeepSeek-V4-Pro) arm=D seed=2 gate=True forced=True slots=8 raw_budget=3/slot
+  p2_D_deepseek_s2_repair                  ADMIT  nv=1/1 mech=1 PASS
+  p2_D_deepseek_s2_vote3                   ADMIT  nv=1/1 mech=1 PASS
+  p2_D_deepseek_s2_schema_link             empty  nv=0/3 mech=0 
+  p2_D_deepseek_s2_hint_guard              empty  nv=2/3 mech=0 NO_MECHANISM_declared
+  p2_D_deepseek_s2_two_view                ADMIT  nv=1/1 mech=1 PASS
+  p2_D_deepseek_s2_decompose               empty  nv=0/3 mech=0 
+  p2_D_deepseek_s2_error_classify          ADMIT  nv=2/3 mech=1 PASS
+  p2_D_deepseek_s2_format_guard            empty  nv=0/3 mech=0 
+[gen] K=4/8 admitted | R_artifact=0.3889 R_contract=0.3889 R_fidelity=0.5714 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\.tmp.D_deepseek_s2.248
+[done] /e/projects/AI4AI-Harness/artifacts/phase2/gen/D_deepseek_s2.json
+[run ] D/kimi/s2
+[gen] builder=kimi(Kimi-K3) arm=D seed=2 gate=True forced=True slots=8 raw_budget=3/slot
+  p2_D_kimi_s2_repair                      ADMIT  nv=1/1 mech=1 PASS
+  p2_D_kimi_s2_vote3                       empty  nv=0/3 mech=0 
+  p2_D_kimi_s2_schema_link                 empty  nv=0/3 mech=0 
+  p2_D_kimi_s2_hint_guard                  empty  nv=1/3 mech=0 NO_MECHANISM_declared
+  p2_D_kimi_s2_two_view                    ADMIT  nv=1/2 mech=1 PASS
+  p2_D_kimi_s2_decompose                   ADMIT  nv=1/1 mech=1 PASS
+  p2_D_kimi_s2_error_classify              empty  nv=0/3 mech=0 
+  p2_D_kimi_s2_format_guard                empty  nv=0/3 mech=0 
+[gen] K=3/8 admitted | R_artifact=0.2105 R_contract=0.2105 R_fidelity=0.75 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\.tmp.D_kimi_s2.248
+[done] /e/projects/AI4AI-Harness/artifacts/phase2/gen/D_kimi_s2.json
+[run ] D/minimax/s2
+[gen] builder=minimax(MiniMax-M3) arm=D seed=2 gate=True forced=True slots=8 raw_budget=3/slot
+  p2_D_minimax_s2_repair                   ADMIT  nv=1/1 mech=1 PASS
+  p2_D_minimax_s2_vote3                    ADMIT  nv=1/1 mech=1 PASS
+  p2_D_minimax_s2_schema_link              empty  nv=0/3 mech=0 
+  p2_D_minimax_s2_hint_guard               empty  nv=2/3 mech=0 
+  p2_D_minimax_s2_two_view                 ADMIT  nv=1/1 mech=1 PASS
+  p2_D_minimax_s2_decompose                ADMIT  nv=2/3 mech=1 PASS
+  p2_D_minimax_s2_error_classify           ADMIT  nv=1/1 mech=1 PASS
+  p2_D_minimax_s2_format_guard             empty  nv=0/3 mech=0 no python fence
+[gen] K=5/8 admitted | R_artifact=0.5 R_contract=0.5 R_fidelity=0.625 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\.tmp.D_minimax_s2.248
+[done] /e/projects/AI4AI-Harness/artifacts/phase2/gen/D_minimax_s2.json
+[run ] D/ernie/s2
+[gen] builder=ernie(ERNIE-5.0-Thinking-Preview) arm=D seed=2 gate=True forced=True slots=8 raw_budget=3/slot
+  p2_D_ernie_s2_repair                     ADMIT  nv=1/1 mech=1 PASS
+  p2_D_ernie_s2_vote3                      ADMIT  nv=1/1 mech=1 PASS
+  p2_D_ernie_s2_schema_link                ADMIT  nv=3/3 mech=1 PASS
+  p2_D_ernie_s2_hint_guard                 empty  nv=3/3 mech=0 NO_MECHANISM_declared
+  p2_D_ernie_s2_two_view                   ADMIT  nv=1/2 mech=1 PASS
+  p2_D_ernie_s2_decompose                  empty  nv=3/3 mech=0 T2_stage1_output_discarded
+  p2_D_ernie_s2_error_classify             ADMIT  nv=1/1 mech=1 PASS
+  p2_D_ernie_s2_format_guard               empty  nv=0/3 mech=0 
+[gen] K=5/8 admitted | R_artifact=0.7647 R_contract=0.7647 R_fidelity=0.3846 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\.tmp.D_ernie_s2.248
+[done] /e/projects/AI4AI-Harness/artifacts/phase2/gen/D_ernie_s2.json
+=== seed-2 sweep: 24/24 units OK, 0 failed ===

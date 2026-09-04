@@ -1,136 +1,182 @@
-"""Decompose the question into ordered sub-questions, answer each with a small LLM call, then assemble and validate the final SQL."""
-
-from __future__ import annotations
+"""Break the question into ordered sub-questions, answer each with a small LLM call against the schema, then assemble, extract, and execution-verify the final SQL."""
 
 import re
-from typing import List, Tuple
 
 from ..harness_base import SQLHarness
 from .. import bridge
 
 
 class P2P2DKimiS2Decompose(SQLHarness):
-    """Plan-then-solve harness around a frozen weak solver.
+    """Decompose-and-assemble Text-to-SQL harness.
 
-    The decomposition strategy lives in the control flow, not only in prompts:
-
-      1. ``_decompose`` issues one LLM call that breaks the natural-language
-         question into an ordered list of simpler sub-questions, parsed
-         structurally from a numbered list in the model output.
-      2. ``_solve_subquestion`` issues one small LLM call per sub-question,
-         in order, each conditioned on every previously solved step, yielding
-         a short rationale plus an optional SQL fragment.
-      3. ``_assemble`` issues one LLM call that merges the fragments into a
-         single final SQL query over ``self.schema``.
-      4. ``_validate_and_repair`` runs the query via ``self.execute`` and, on
-         database errors, requests a bounded number of corrected rewrites.
+    Control flow:
+      1. One LLM call decomposes the question into ordered sub-questions.
+      2. Each sub-question is answered by an individual small LLM call,
+         conditioned on the schema and the answers to previous sub-questions.
+      3. A final LLM call assembles all sub-answers into one SQL query.
+      4. The SQL is executed; on failure a single repair call is attempted.
     """
 
     MAX_SUBQUESTIONS = 6
-    MAX_REPAIRS = 2
 
     # ------------------------------------------------------------------ #
-    # entry point
+    # Entry point
     # ------------------------------------------------------------------ #
     def solve(self, question: str) -> str:
-        # Step 1: ordered decomposition of the question.
         sub_questions = self._decompose(question)
 
-        # Step 2: answer each sub-question with its own small LLM call,
-        # threading prior answers forward so later steps build on earlier ones.
-        solved: List[Tuple[str, str, str]] = []  # (sub_q, note, fragment)
-        for sub_q in sub_questions:
-            note, fragment = self._solve_subquestion(question, sub_q, solved)
-            solved.append((sub_q, note, fragment))
+        qa_pairs = []
+        for sq in sub_questions:
+            answer = self._answer_subquestion(question, sq, qa_pairs)
+            qa_pairs.append((sq, answer))
 
-        # Step 3: assemble the final SQL from all sub-answers.
-        sql = self._assemble(question, solved)
+        sql = self._assemble(question, qa_pairs)
+        if not sql:
+            sql = self._fallback_direct(question)
 
-        # Step 4: execute and, if necessary, repair within a bounded loop.
-        sql = self._validate_and_repair(question, sql)
+        # Execution verification with a single repair attempt.
+        result = self.execute(sql)
+        if not result.get("ok"):
+            repaired = self._repair(question, qa_pairs, sql, result.get("error", ""))
+            if repaired:
+                check = self.execute(repaired)
+                if check.get("ok"):
+                    sql = repaired
+
         return sql
 
     # ------------------------------------------------------------------ #
-    # step 1: decomposition
+    # Step 1: decomposition
     # ------------------------------------------------------------------ #
-    def _decompose(self, question: str) -> List[str]:
-        system = (
-            "You are a careful query planner for Text-to-SQL. You break a "
-            "complex question into a short ordered list of simpler "
-            "sub-questions that can be solved one at a time."
-        )
+    def _decompose(self, question: str):
         prompt = (
-            "Database schema:\n"
-            f"{self.schema}\n\n"
-            f"Question: {question}\n\n"
-            f"Break the question into an ordered list of at most "
-            f"{self.MAX_SUBQUESTIONS} sub-questions such that solving them in "
-            "order yields the final SQL query. Requirements:\n"
-            "- Each sub-question must be self-contained and reference "
-            "concrete tables/columns from the schema where possible.\n"
-            "- Each sub-question should be answerable with a small SQL "
-            "fragment.\n"
-            "- If the question is already simple, output a single "
-            "sub-question that restates it.\n\n"
+            "You are given a database schema and a natural-language question.\n\n"
+            f"SCHEMA:\n{self.schema}\n\n"
+            f"QUESTION: {question}\n\n"
+            "Break the question into an ordered list of at most "
+            f"{self.MAX_SUBQUESTIONS} simple sub-questions such that answering "
+            "them in order yields everything needed to write the final SQL query. "
+            "Each sub-question must be self-contained, answerable from the schema, "
+            "and focused on one step (identify tables/columns, filter values, "
+            "compute aggregates, order/limit, etc.).\n"
             "Output ONLY a numbered list, one sub-question per line, e.g.:\n"
-            "1. <first sub-question>\n"
-            "2. <second sub-question>"
+            "1. ...\n2. ...\n3. ..."
         )
-        text = self._call_llm(prompt, system=system)
-        sub_questions = self._parse_numbered_list(text)
+        text = self.llm(
+            prompt,
+            system="You decompose database questions into ordered sub-questions.",
+            temperature=0.0,
+        )
+        sub_questions = self._parse_subquestions(text)
         if not sub_questions:
-            # Never run with an empty plan: fall back to the raw question.
             sub_questions = [question]
         return sub_questions[: self.MAX_SUBQUESTIONS]
 
     @staticmethod
-    def _parse_numbered_list(text: str) -> List[str]:
-        items: List[str] = []
-        for raw_line in text.splitlines():
-            line = raw_line.strip()
-            if not line:
-                continue
-            m = re.match(r"^(?:\d+\s*[\.\):\-]|[-*•])\s*(.+)$", line)
+    def _parse_subquestions(text: str):
+        subs = []
+        for line in (text or "").splitlines():
+            line = line.strip()
+            m = re.match(r"^(?:\d+[\.\):\-]?|[-*•])\s*(.+)$", line)
             if m:
                 item = m.group(1).strip()
                 if item:
-                    items.append(item)
-        return items
+                    subs.append(item)
+        if not subs:
+            # Fallback: treat non-empty lines as sub-questions.
+            subs = [ln.strip() for ln in (text or "").splitlines() if ln.strip()]
+        return subs
 
     # ------------------------------------------------------------------ #
-    # step 2: per-sub-question solving
+    # Step 2: per-sub-question answering
     # ------------------------------------------------------------------ #
-    def _solve_subquestion(
-        self,
-        question: str,
-        sub_q: str,
-        solved: List[Tuple[str, str, str]],
-    ) -> Tuple[str, str]:
-        system = (
-            "You are a precise Text-to-SQL assistant. You answer exactly one "
-            "sub-question at a time using the given schema, concisely."
-        )
-        prior_block = ""
-        if solved:
-            lines = []
-            for i, (prev_q, prev_note, prev_frag) in enumerate(solved, 1):
-                entry = f"  {i}. {prev_q}\n     Answer: {prev_note}"
-                if prev_frag:
-                    entry += f"\n     SQL fragment:\n{prev_frag}"
-                lines.append(entry)
-            prior_block = (
-                "Sub-questions already solved (reuse their results):\n"
-                + "\n".join(lines)
-                + "\n\n"
+    def _answer_subquestion(self, question: str, sub_question: str, prior_qa) -> str:
+        history = ""
+        if prior_qa:
+            lines = [
+                f"Q{i+1}: {sq}\nA{i+1}: {ans}" for i, (sq, ans) in enumerate(prior_qa)
+            ]
+            history = (
+                "PREVIOUS SUB-QUESTIONS AND ANSWERS:\n" + "\n".join(lines) + "\n\n"
             )
         prompt = (
-            "Database schema:\n"
-            f"{self.schema}\n\n"
-            f"Original question: {question}\n\n"
-            f"{prior_block}"
-            f"Current sub-question: {sub_q}\n\n"
-            "Answer ONLY this sub-question in 1-3 short sentences, naming the "
-            "tables, columns, join keys, filters or aggregations it requires. "
-            "Then provide a minimal SQL fragment implementing JUST this step "
-            "(a standalone SELECT if possible, otherwise the relevant clause). "
-            "Wrap the SQL in
+            "You are given a database schema, an overall question, and one "
+            "sub-question to answer as a step toward the final SQL query.\n\n"
+            f"SCHEMA:\n{self.schema}\n\n"
+            f"OVERALL QUESTION: {question}\n\n"
+            f"{history}"
+            f"SUB-QUESTION: {sub_question}\n\n"
+            "Answer concisely and concretely: name the exact tables/columns/values "
+            "involved and, if applicable, provide the corresponding SQL fragment "
+            "(e.g., a WHERE condition, JOIN clause, aggregation, or ORDER BY). "
+            "Do NOT write the full query."
+        )
+        return self.llm(
+            prompt,
+            system="You answer one database sub-question at a time, precisely.",
+            temperature=0.0,
+        ).strip()
+
+    # ------------------------------------------------------------------ #
+    # Step 3: assembly
+    # ------------------------------------------------------------------ #
+    def _assemble(self, question: str, qa_pairs) -> str:
+        steps = "\n".join(
+            f"{i+1}. {sq}\n   Answer: {ans}" for i, (sq, ans) in enumerate(qa_pairs)
+        )
+        prompt = (
+            "You are given a database schema, a question, and the resolved answers "
+            "to its ordered sub-questions. Assemble them into ONE final SQL query.\n\n"
+            f"SCHEMA:\n{self.schema}\n\n"
+            f"QUESTION: {question}\n\n"
+            f"RESOLVED SUB-STEPS:\n{steps}\n\n"
+            "Write a single syntactically valid SQL query that answers the question. "
+            "Output ONLY the SQL query, no explanation, no markdown."
+        )
+        text = self.llm(
+            prompt,
+            system="You assemble sub-answers into one correct SQL query.",
+            temperature=0.0,
+        )
+        return bridge.extract_sql(text).strip()
+
+    # ------------------------------------------------------------------ #
+    # Repair on execution failure
+    # ------------------------------------------------------------------ #
+    def _repair(self, question: str, qa_pairs, bad_sql: str, error: str) -> str:
+        steps = "\n".join(
+            f"{i+1}. {sq}\n   Answer: {ans}" for i, (sq, ans) in enumerate(qa_pairs)
+        )
+        prompt = (
+            "The following SQL query failed. Fix it using the schema and the "
+            "resolved sub-steps.\n\n"
+            f"SCHEMA:\n{self.schema}\n\n"
+            f"QUESTION: {question}\n\n"
+            f"RESOLVED SUB-STEPS:\n{steps}\n\n"
+            f"FAILING SQL:\n{bad_sql}\n\n"
+            f"DATABASE ERROR:\n{error}\n\n"
+            "Output ONLY the corrected SQL query, no explanation, no markdown."
+        )
+        text = self.llm(
+            prompt,
+            system="You repair SQL queries based on database error messages.",
+            temperature=0.0,
+        )
+        return bridge.extract_sql(text).strip()
+
+    # ------------------------------------------------------------------ #
+    # Fallback: direct single-shot SQL
+    # ------------------------------------------------------------------ #
+    def _fallback_direct(self, question: str) -> str:
+        prompt = (
+            f"SCHEMA:\n{self.schema}\n\n"
+            f"QUESTION: {question}\n\n"
+            "Write ONE SQL query answering the question. "
+            "Output ONLY the SQL, no explanation, no markdown."
+        )
+        text = self.llm(
+            prompt,
+            system="You write correct SQL queries.",
+            temperature=0.0,
+        )
+        return bridge.extract_sql(text).strip()

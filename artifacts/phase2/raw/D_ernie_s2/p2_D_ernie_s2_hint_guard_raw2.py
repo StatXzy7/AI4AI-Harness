@@ -1,37 +1,36 @@
-"""This harness parses a 'Hint:' line from the question and restates its constraints as hard requirements in the prompt before generating SQL."""
+"""This harness extracts and restates a 'Hint:' line from the question as hard constraints in the prompt to a frozen LLM for Text-to-SQL generation."""
+
 from ..harness_base import SQLHarness
 from .. import bridge
 
+
 class P2P2DErnieS2HintGuard(SQLHarness):
     def solve(self, question: str) -> str:
-        # Parse the hint line from the question
-        lines = question.split('\n')
-        hint_text = ""
-        filtered_lines = []
-        for line in lines:
-            stripped = line.strip()
-            if stripped.startswith("Hint:"):
-                hint_text = stripped[len("Hint:"):].strip()
-            else:
-                filtered_lines.append(line)
-        question_without_hint = '\n'.join(filtered_lines).strip()
-        
-        # Construct the prompt with hard requirements if hint exists
-        if hint_text:
-            hard_req = f"Hard requirements from hint: {hint_text}"
+        # Parse the hint from the question
+        hint_text = None
+        question_lines = question.strip().split('\n')
+        for i, line in enumerate(question_lines):
+            if line.strip().startswith("Hint:"):
+                hint_text = line.strip()[len("Hint:"):].strip()
+                # Remove the hint line from the question for the LLM
+                question_without_hint = '\n'.join(
+                    question_lines[:i] + question_lines[i+1:]
+                ).strip()
+                break
         else:
-            hard_req = ""
-        
-        prompt = (
-            f"Given the following database schema:\n{self.schema}\n\n"
-            f"Question: {question_without_hint}\n\n"
-            f"{hard_req}\n\n"
-            f"Write a SQL query that answers the question and satisfies the hard requirements. "
-            f"Only output the SQL query."
-        )
-        
-        # Generate SQL using the LLM
+            question_without_hint = question.strip()
+
+        # Build prompt with hard requirements from hint
+        prompt = f"Given the following database schema:\n{self.schema}\n\n"
+        prompt += f"Answer the following question: {question_without_hint}\n"
+        if hint_text:
+            prompt += f"\nHARD REQUIREMENTS (must be satisfied): {hint_text}\n"
+        prompt += "\nWrite a SQL query that satisfies all hard requirements and answers the question. Return only the SQL query."
+
+        # Generate SQL with frozen LLM
         response = self.llm(prompt, system="", temperature=0.0, n=1)
+        
+        # Extract SQL from response
         sql = bridge.extract_sql(response)
         
         return sql

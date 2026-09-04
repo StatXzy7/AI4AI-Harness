@@ -1,93 +1,199 @@
-"""Break a Text-to-SQL question into ordered sub-questions, answer each by generating and executing a small SQL query, then assemble the final SQL query."""
+"""Break a Text-to-SQL question into ordered sub-questions, solve each with a small LLM call, and assemble the final SQL."""
+
+from __future__ import annotations
+
 import json
-import re
+from typing import Any, List
+
 from ..harness_base import SQLHarness
 from .. import bridge
 
+
 class P2P2DDeepseekS2Decompose(SQLHarness):
     def solve(self, question: str) -> str:
-        subquestions = self._decompose(question)
-        intermediate = []
-        for subq in subquestions:
-            sql = self._generate_sub_sql(subq)
-            result = self._execute_sql(sql)
-            intermediate.append({
-                "subquestion": subq,
-                "sql": sql,
-                "result": result,
-            })
-        return self._assemble_final_sql(question, intermediate)
+        sub_questions = self._decompose(question)
+        sub_questions = self._order_subquestions(sub_questions)
 
-    def _decompose(self, question: str):
-        prompt = (
-            "You are a Text-to-SQL planner. Break the original question into a list of ordered, "
-            "simple sub-questions, each independently answerable with a single SQL SELECT query. "
-            "Return ONLY a JSON array of strings, with no surrounding text.\n\n"
-            f"Database schema:\n{self.schema}\n\n"
-            f"Original question: {question}\n\n"
-            "Ordered sub-questions (JSON array):"
-        )
-        raw = self.llm(prompt, system="You are a concise JSON planner.", temperature=0.0, n=1)
-        subqs = self._parse_json_list(raw)
-        return subqs if subqs else [question]
+        if not sub_questions:
+            sub_questions = [{"step": 1, "question": question, "hint": ""}]
 
-    def _generate_sub_sql(self, subq: str) -> str:
-        prompt = (
-            "Write a single SQL query that answers the sub-question below.\n"
-            "Return ONLY the SQL query, with no explanation or markdown fences.\n\n"
-            f"Database schema:\n{self.schema}\n\n"
-            f"Sub-question: {subq}"
-        )
-        raw = self.llm(prompt, system="You are an expert SQLite SQL writer.", temperature=0.0, n=1)
-        sql = bridge.extract_sql(raw)
-        return sql or "SELECT 1;"
+        fragments: List[str] = []
+        previous: List[str] = []
 
-    def _execute_sql(self, sql: str):
-        if not sql:
-            return {"ok": False, "rows": [], "error": "Empty SQL"}
-        try:
-            result = self.execute(sql)
-            if not isinstance(result, dict):
-                return {"ok": False, "rows": [], "error": f"Unexpected execute result: {result}"}
-            return result
-        except Exception as exc:
-            return {"ok": False, "rows": [], "error": str(exc)}
+        for idx, sq in enumerate(sub_questions, start=1):
+            if isinstance(sq, str):
+                sq = {"question": sq, "hint": ""}
+            if not isinstance(sq, dict):
+                continue
 
-    def _assemble_final_sql(self, question: str, intermediate):
-        prompt = (
-            "You are an expert Text-to-SQL writer. Use the original question, the database schema, "
-            "and the intermediate sub-question SQL queries and their results to write one final SQL query "
-            "that answers the original question. Prefer composing the intermediate SQL as subqueries/CTEs "
-            "rather than hard-coding values. Return ONLY the final SQL query.\n\n"
-            f"Database schema:\n{self.schema}\n\n"
-            f"Original question: {question}\n\n"
-        )
-        for item in intermediate:
-            result = item["result"]
-            if result.get("ok"):
-                rows = str(result.get("rows", []))[:2000]
-                error = ""
-            else:
-                rows = ""
-                error = result.get("error", "")
-            prompt += (
-                f"Sub-question: {item['subquestion']}\n"
-                f"Generated SQL: {item['sql']}\n"
-                f"Execution rows: {rows}\n"
-                f"Execution error: {error}\n\n"
-            )
-        prompt += "Final SQL:"
-        raw = self.llm(prompt, system="You are an expert SQLite SQL writer.", temperature=0.0, n=1)
-        final_sql = bridge.extract_sql(raw)
+            sub_q = sq.get("question") or sq.get("text") or question
+            hint = sq.get("hint") or sq.get("sql_hint") or ""
+            sql = self._solve_subquestion(question, sub_q, hint, previous)
+
+            if sql:
+                fragments.append(sql)
+                previous.append(sql)
+
+        if not fragments:
+            return self._single_shot(question)
+
+        final_sql = self._assemble(question, fragments)
         if not final_sql:
-            for item in intermediate:
-                if item.get("sql"):
-                    return item["sql"]
-            return "SELECT 1;"
+            return self._single_shot(question)
+
+        result = self.execute(final_sql)
+        if result.get("ok"):
+            return final_sql
+
+        repaired = self._repair(question, final_sql, result.get("error"))
+        if repaired:
+            return repaired
+
         return final_sql
 
-    @staticmethod
-    def _parse_json_list(text):
-        if not isinstance(text, str):
-            return []
-        text = re.sub(r"^
+    def _decompose(self, question: str) -> List[Any]:
+        prompt = f"""You are an expert SQL analyst. Given a database schema and a complex user question, break the question into 3-6 ordered sub-questions. Each sub-question must be answerable by a single SQL SELECT over the schema or over previously computed sub-questions (refer to previous CTEs as step_1, step_2, etc. if needed).
+
+Schema:
+{self.schema}
+
+Question:
+{question}
+
+Return only a JSON array of objects with keys:
+- "step": integer position starting at 1
+- "question": the sub-question in plain English
+- "hint": a short SQL hint for that sub-question
+
+Example:
+[{{"step": 1, "question": "Find ...", "hint": "SELECT ... FROM ..."}}]
+"""
+        raw = self._call_llm(prompt, system="You return only valid JSON.")
+        return self._parse_json_list(raw)
+
+    def _solve_subquestion(
+        self,
+        original_question: str,
+        sub_question: str,
+        hint: str,
+        previous_fragments: List[str],
+    ) -> str:
+        previous_text = "None"
+        if previous_fragments:
+            previous_text = "\n\n".join(
+                f"step_{i}:\n{f}" for i, f in enumerate(previous_fragments, start=1)
+            )
+
+        prompt = f"""Given the database schema:
+{self.schema}
+
+Previous sub-query CTEs (already computed, use these names if needed):
+{previous_text}
+
+Original question:
+{original_question}
+
+Current sub-question:
+{sub_question}
+
+SQL hint:
+{hint or "None"}
+
+Write a single SQL SELECT statement that answers the current sub-question. It may reference previous CTEs by name. Return only the SQL SELECT statement, without explanation."""
+        raw = self._call_llm(prompt)
+        sql = bridge.extract_sql(raw)
+        if not sql:
+            sql = raw.strip().strip(";")
+        return sql
+
+    def _assemble(self, question: str, fragments: List[str]) -> str:
+        numbered = "\n\n".join(
+            f"Sub-query {i}:\n{f}" for i, f in enumerate(fragments, start=1)
+        )
+
+        prompt = f"""Given the database schema:
+{self.schema}
+
+Original question:
+{question}
+
+Ordered sub-queries:
+{numbered}
+
+Write one final SQL SELECT statement that combines these sub-queries as CTEs named step_1, step_2, ... to answer the original question. Use the CTEs exactly as provided; do not modify their SQL. Return only the final SQL SELECT statement, without explanation."""
+        raw = self._call_llm(prompt)
+        sql = bridge.extract_sql(raw)
+        if not sql:
+            sql = raw.strip().strip(";")
+        return sql
+
+    def _single_shot(self, question: str) -> str:
+        prompt = f"""Given the database schema:
+{self.schema}
+
+Question:
+{question}
+
+Write a SQL SELECT statement that answers the question. Return only the SQL SELECT statement, without explanation."""
+        raw = self._call_llm(prompt)
+        sql = bridge.extract_sql(raw)
+        if not sql:
+            sql = raw.strip().strip(";")
+        return sql or ""
+
+    def _repair(self, question: str, bad_sql: str, error: str) -> str:
+        if not bad_sql:
+            return ""
+
+        prompt = f"""The following SQL query failed:
+{bad_sql}
+
+Error:
+{error}
+
+Database schema:
+{self.schema}
+
+Original question:
+{question}
+
+Return a corrected SQL SELECT statement. Return only the SQL SELECT statement, without explanation."""
+        raw = self._call_llm(prompt)
+        sql = bridge.extract_sql(raw)
+        if not sql:
+            sql = raw.strip().strip(";")
+        if not sql:
+            return ""
+
+        check = self.execute(sql)
+        if check.get("ok"):
+            return sql
+        return ""
+
+    def _call_llm(self, prompt: str, system: str = "") -> str:
+        out = self.llm(prompt, system=system, temperature=0.0, n=1)
+        if isinstance(out, list):
+            out = out[0] if out else ""
+        return str(out)
+
+    def _parse_json_list(self, text: str) -> List[Any]:
+        text = self._strip_code_fence(text)
+
+        try:
+            data = json.loads(text)
+            return self._normalize_subquestions(data)
+        except Exception:
+            for start_char, end_char in (("[", "]"), ("{", "}")):
+                start = text.find(start_char)
+                end = text.rfind(end_char)
+                if start != -1 and end != -1 and end > start:
+                    try:
+                        data = json.loads(text[start : end + 1])
+                        return self._normalize_subquestions(data)
+                    except Exception:
+                        continue
+        return []
+
+    def _strip_code_fence(self, text: str) -> str:
+        text = text.strip()
+        if text.startswith("

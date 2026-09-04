@@ -1,80 +1,60 @@
-"""Samples three SQL queries from the LLM, executes each parsed SQL, and returns the SQL whose execution result is the majority."""
+"""Ask the frozen solver for three SQL candidates, execute each, and return the SQL whose result set is the majority."""
+import json
+
 from ..harness_base import SQLHarness
 from .. import bridge
-import json
-from collections import Counter
 
 
 class P2P2DDeepseekS2Vote3(SQLHarness):
     def solve(self, question: str) -> str:
-        prompt = self._build_prompt(question)
-        responses = self.llm(prompt, system="", temperature=0.7, n=3)
-
-        # Normalize the LLM response into a list of strings.
-        if isinstance(responses, str):
-            responses = [responses]
-        elif isinstance(responses, dict):
-            choices = responses.get("choices", [])
-            responses = []
-            for choice in choices:
-                if isinstance(choice, dict):
-                    text = choice.get("text", "")
-                    if not text:
-                        message = choice.get("message", {})
-                        if isinstance(message, dict):
-                            text = message.get("content", "")
-                    responses.append(text)
-                else:
-                    responses.append(str(choice))
-        elif not isinstance(responses, list):
-            responses = [str(responses)]
-
-        parsed_sqls = []
-        for text in responses:
-            sql = bridge.extract_sql(text)
-            if sql:
-                parsed_sqls.append(sql)
-
-        successful = []
-        for sql in parsed_sqls:
-            exec_result = self.execute(sql)
-            if exec_result.get("ok"):
-                rows = exec_result.get("rows", [])
-                signature = self._result_signature(rows)
-                successful.append((sql, signature))
-
-        if not successful:
-            return parsed_sqls[0] if parsed_sqls else ""
-
-        counts = Counter(signature for _, signature in successful)
-        majority_signature, majority_count = counts.most_common(1)[0]
-
-        # With three attempts, two or more identical results constitute a majority.
-        if majority_count >= 2:
-            for sql, signature in successful:
-                if signature == majority_signature:
-                    return sql
-
-        # Fallback if no majority is present.
-        return successful[0][0]
-
-    def _build_prompt(self, question: str) -> str:
-        return (
-            "Given the following database schema:\n"
-            f"{self.schema}\n\n"
-            f"Question: {question}\n\n"
-            "Write a SQL query that answers the question. Return only the SQL query, without explanation."
+        prompt = (
+            "Write a SQL query to answer the question.\n"
+            f"Database schema:\n{self.schema}\n\n"
+            f"Question: {question}\n"
+            "Return only the SQL query."
         )
 
-    @staticmethod
-    def _result_signature(rows) -> str:
-        """Create a canonical, order-insensitive signature for a result set."""
-        serialized = []
-        for row in rows:
-            if isinstance(row, dict):
-                normalized = json.dumps(row, sort_keys=True, default=str)
-            else:
-                normalized = json.dumps(row, sort_keys=True, default=str)
-            serialized.append(normalized)
-        serialized.sort()
-        return json.dumps(serialized, sort_keys=True)
+        raw_responses = self.llm(prompt, temperature=0.7, n=3)
+        if isinstance(raw_responses, str):
+            raw_responses = [raw_responses]
+        elif raw_responses is None:
+            raw_responses = []
+
+        sql_candidates = []
+        for raw in raw_responses:
+            if not isinstance(raw, str):
+                raw = str(raw)
+            sql = bridge.extract_sql(raw)
+            if sql:
+                sql_candidates.append(sql)
+
+        executed = []
+        for sql in sql_candidates:
+            result = self.execute(sql)
+            if result.get("ok"):
+                executed.append((sql, result.get("rows")))
+
+        if not executed:
+            return sql_candidates[0] if sql_candidates else ""
+
+        def result_key(rows):
+            if rows is None:
+                return "null"
+            items = rows if isinstance(rows, list) else [rows]
+            serialized_items = []
+            for item in items:
+                try:
+                    serialized_items.append(
+                        json.dumps(item, sort_keys=True, default=str)
+                    )
+                except Exception:
+                    serialized_items.append(repr(item))
+            return json.dumps(sorted(serialized_items))
+
+        groups = {}
+        for sql, rows in executed:
+            key = result_key(rows)
+            groups.setdefault(key, []).append(sql)
+
+        majority_key = max(groups, key=lambda k: len(groups[k]))
+        return groups[majority_key][0]

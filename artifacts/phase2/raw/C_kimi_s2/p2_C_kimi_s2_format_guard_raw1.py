@@ -1,0 +1,1 @@
+"""Format-guard harness that forces the frozen solver to answer with exactly one
