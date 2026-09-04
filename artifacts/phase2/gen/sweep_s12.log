@@ -1,1 +1,44 @@
 [gen] arm=A builder=glm seed=1
+  p2_A_glm_s1_g5                           ADMIT  nv=1/3 mech=0 
+  p2_A_glm_s1_g6                           empty  nv=0/3 mech=0 
+  p2_A_glm_s1_g7                           empty  nv=0/3 mech=0 no python fence
+[gen] K=3/8 admitted | R_artifact=0.1304 R_contract=0.0 R_fidelity=0.0 -> E:\projects\AI4AI-Harness\..\..\artifacts\phase2\gen\A_glm_s1.json
+[gen] arm=B builder=glm seed=1
+  p2_B_glm_s1_g5                           empty  nv=0/3 mech=0 
+  p2_B_glm_s1_g6                           ADMIT  nv=1/1 mech=1 PASS
+  p2_B_glm_s1_g7                           empty  nv=0/3 mech=0 
+[gen] K=4/8 admitted | R_artifact=0.1905 R_contract=0.1905 R_fidelity=1.0 -> E:\projects\AI4AI-Harness\..\..\artifacts\phase2\gen\B_glm_s1.json
+[gen] arm=C builder=glm seed=1
+  p2_C_glm_s1_decompose                    empty  nv=0/3 mech=0 
+  p2_C_glm_s1_error_classify               empty  nv=0/3 mech=0 no python fence
+  p2_C_glm_s1_format_guard                 empty  nv=0/3 mech=0 no python fence
+[gen] K=2/8 admitted | R_artifact=0.0952 R_contract=0.0 R_fidelity=0.0 -> E:\projects\AI4AI-Harness\..\..\artifacts\phase2\gen\C_glm_s1.json
+[gen] arm=D builder=glm seed=1
+  p2_D_glm_s1_decompose                    empty  nv=0/3 mech=0 no python fence
+  p2_D_glm_s1_error_classify               empty  nv=0/3 mech=0 no python fence
+  p2_D_glm_s1_format_guard                 empty  nv=0/3 mech=0 no python fence
+[gen] K=3/8 admitted | R_artifact=0.15 R_contract=0.15 R_fidelity=1.0 -> E:\projects\AI4AI-Harness\..\..\artifacts\phase2\gen\D_glm_s1.json
+[skip] ../../artifacts/phase2/gen/A_qwen_s1.json exists
+[skip] ../../artifacts/phase2/gen/B_qwen_s1.json exists
+[skip] ../../artifacts/phase2/gen/C_qwen_s1.json exists
+[skip] ../../artifacts/phase2/gen/D_qwen_s1.json exists
+[skip] ../../artifacts/phase2/gen/A_deepseek_s1.json exists
+[skip] ../../artifacts/phase2/gen/B_deepseek_s1.json exists
+[skip] ../../artifacts/phase2/gen/C_deepseek_s1.json exists
+[skip] ../../artifacts/phase2/gen/D_deepseek_s1.json exists
+[skip] ../../artifacts/phase2/gen/A_kimi_s1.json exists
+[skip] ../../artifacts/phase2/gen/B_kimi_s1.json exists
+[skip] ../../artifacts/phase2/gen/C_kimi_s1.json exists
+[skip] ../../artifacts/phase2/gen/D_kimi_s1.json exists
+[skip] ../../artifacts/phase2/gen/A_minimax_s1.json exists
+[skip] ../../artifacts/phase2/gen/B_minimax_s1.json exists
+[skip] ../../artifacts/phase2/gen/C_minimax_s1.json exists
+[skip] ../../artifacts/phase2/gen/D_minimax_s1.json exists
+[skip] ../../artifacts/phase2/gen/A_ernie_s1.json exists
+[skip] ../../artifacts/phase2/gen/B_ernie_s1.json exists
+[skip] ../../artifacts/phase2/gen/C_ernie_s1.json exists
+[skip] ../../artifacts/phase2/gen/D_ernie_s1.json exists
+[gen] arm=A builder=glm seed=2
+[gen] builder=glm(GLM-5.3) arm=A seed=2 gate=False forced=False slots=8 raw_budget=3/slot
+  p2_A_glm_s2_g0                           empty  nv=0/3 mech=0 
+  p2_A_glm_s2_g1                           ADMIT  nv=1/2 mech=0 

@@ -1,0 +1,1 @@
+"""Strict-format Text-to-SQL harness: it forces the frozen solver to answer with exactly one fenced

@@ -1,0 +1,1 @@
+"""P2P2DGlmS1FormatGuard enforces, in control flow, a strict output contract on the frozen solver -- the entire reply must be exactly one

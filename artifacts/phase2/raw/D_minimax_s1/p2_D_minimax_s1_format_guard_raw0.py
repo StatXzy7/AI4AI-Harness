@@ -1,0 +1,1 @@
+"""Wraps a frozen Text-to-SQL solver with strict format guarding requiring fenced

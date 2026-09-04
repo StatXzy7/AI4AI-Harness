@@ -1,0 +1,1 @@
+"""Wraps a frozen weak Text-to-SQL solver with a strict output-format guard that mandates a fenced

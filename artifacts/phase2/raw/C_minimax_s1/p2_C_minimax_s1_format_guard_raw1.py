@@ -1,0 +1,1 @@
+"""Format-guard harness enforcing strict

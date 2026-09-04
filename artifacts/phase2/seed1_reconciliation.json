@@ -1,0 +1,314 @@
+[
+ {
+  "unit": "A_deepseek_s1.json",
+  "src": {
+   "size": 4915,
+   "mtime": 1788506548.1666546,
+   "sha": "979e95ac73e12819"
+  },
+  "repo": {
+   "size": 4915,
+   "mtime": 1788506548.1666546,
+   "sha": "979e95ac73e12819"
+  }
+ },
+ {
+  "unit": "A_ernie_s1.json",
+  "src": {
+   "size": 4188,
+   "mtime": 1788507875.3278215,
+   "sha": "734c03b28e83565d"
+  },
+  "repo": {
+   "size": 4188,
+   "mtime": 1788507875.3278215,
+   "sha": "734c03b28e83565d"
+  }
+ },
+ {
+  "unit": "A_glm_s1.json",
+  "src": {
+   "size": 7990,
+   "mtime": 1788504355.0550914,
+   "sha": "c5b0678157116ac7"
+  },
+  "repo": {
+   "size": 7990,
+   "mtime": 1788504355.0550914,
+   "sha": "c5b0678157116ac7"
+  }
+ },
+ {
+  "unit": "A_kimi_s1.json",
+  "src": {
+   "size": 4877,
+   "mtime": 1788507346.6247246,
+   "sha": "4c4d3a07d8f8963d"
+  },
+  "repo": {
+   "size": 4877,
+   "mtime": 1788507346.6247246,
+   "sha": "4c4d3a07d8f8963d"
+  }
+ },
+ {
+  "unit": "A_minimax_s1.json",
+  "src": {
+   "size": 5503,
+   "mtime": 1788507525.0772278,
+   "sha": "deec0228dff6c78f"
+  },
+  "repo": {
+   "size": 5503,
+   "mtime": 1788507525.0772278,
+   "sha": "deec0228dff6c78f"
+  }
+ },
+ {
+  "unit": "A_qwen_s1.json",
+  "src": {
+   "size": 6774,
+   "mtime": 1788506261.6217704,
+   "sha": "22ee0d7b8796e8bc"
+  },
+  "repo": {
+   "size": 6774,
+   "mtime": 1788506261.6217704,
+   "sha": "22ee0d7b8796e8bc"
+  }
+ },
+ {
+  "unit": "B_deepseek_s1.json",
+  "src": {
+   "size": 5118,
+   "mtime": 1788506509.1605318,
+   "sha": "9e7014cc7b256cf2"
+  },
+  "repo": {
+   "size": 5118,
+   "mtime": 1788506509.1605318,
+   "sha": "9e7014cc7b256cf2"
+  }
+ },
+ {
+  "unit": "B_ernie_s1.json",
+  "src": {
+   "size": 5102,
+   "mtime": 1788507840.1849952,
+   "sha": "e3f2ca01bf742272"
+  },
+  "repo": {
+   "size": 5102,
+   "mtime": 1788507840.1849952,
+   "sha": "e3f2ca01bf742272"
+  }
+ },
+ {
+  "unit": "B_glm_s1.json",
+  "src": {
+   "size": 7711,
+   "mtime": 1788505756.2646248,
+   "sha": "72eafaab20df7e44"
+  },
+  "repo": {
+   "size": 7711,
+   "mtime": 1788505756.2646248,
+   "sha": "72eafaab20df7e44"
+  }
+ },
+ {
+  "unit": "B_kimi_s1.json",
+  "src": {
+   "size": 6157,
+   "mtime": 1788507402.879813,
+   "sha": "33e94aaf8e528b9b"
+  },
+  "repo": {
+   "size": 6157,
+   "mtime": 1788507402.879813,
+   "sha": "33e94aaf8e528b9b"
+  }
+ },
+ {
+  "unit": "B_minimax_s1.json",
+  "src": {
+   "size": 5869,
+   "mtime": 1788507595.544661,
+   "sha": "cf781d4f7bf6f80f"
+  },
+  "repo": {
+   "size": 5869,
+   "mtime": 1788507595.544661,
+   "sha": "cf781d4f7bf6f80f"
+  }
+ },
+ {
+  "unit": "B_qwen_s1.json",
+  "src": {
+   "size": 6801,
+   "mtime": 1788506340.859679,
+   "sha": "85b64cfb40adef52"
+  },
+  "repo": {
+   "size": 6801,
+   "mtime": 1788506340.859679,
+   "sha": "85b64cfb40adef52"
+  }
+ },
+ {
+  "unit": "C_deepseek_s1.json",
+  "src": {
+   "size": 5810,
+   "mtime": 1788506948.4210734,
+   "sha": "d3a20e92d5e47711"
+  },
+  "repo": {
+   "size": 5810,
+   "mtime": 1788506948.4210734,
+   "sha": "d3a20e92d5e47711"
+  }
+ },
+ {
+  "unit": "C_ernie_s1.json",
+  "src": {
+   "size": 5132,
+   "mtime": 1788508073.7600634,
+   "sha": "996d2081c96b183c"
+  },
+  "repo": {
+   "size": 5132,
+   "mtime": 1788508073.7600634,
+   "sha": "996d2081c96b183c"
+  }
+ },
+ {
+  "unit": "C_glm_s1.json",
+  "src": {
+   "size": 7062,
+   "mtime": 1788507559.5344949,
+   "sha": "023619aa475ebbf3"
+  },
+  "repo": {
+   "size": 7062,
+   "mtime": 1788507559.5344949,
+   "sha": "023619aa475ebbf3"
+  }
+ },
+ {
+  "unit": "C_kimi_s1.json",
+  "src": {
+   "size": 6389,
+   "mtime": 1788508248.1210473,
+   "sha": "c8cb7bf4b6b25b65"
+  },
+  "repo": {
+   "size": 6389,
+   "mtime": 1788508248.1210473,
+   "sha": "c8cb7bf4b6b25b65"
+  }
+ },
+ {
+  "unit": "C_minimax_s1.json",
+  "src": {
+   "size": 5793,
+   "mtime": 1788507763.797752,
+   "sha": "be1daedca67b2ea1"
+  },
+  "repo": {
+   "size": 5793,
+   "mtime": 1788507763.797752,
+   "sha": "be1daedca67b2ea1"
+  }
+ },
+ {
+  "unit": "C_qwen_s1.json",
+  "src": {
+   "size": 6598,
+   "mtime": 1788507153.7423542,
+   "sha": "9936c9ed28dc7655"
+  },
+  "repo": {
+   "size": 6598,
+   "mtime": 1788507153.7423542,
+   "sha": "9936c9ed28dc7655"
+  }
+ },
+ {
+  "unit": "D_deepseek_s1.json",
+  "src": {
+   "size": 6805,
+   "mtime": 1788506989.2400022,
+   "sha": "7b3ccc591d27f1d2"
+  },
+  "repo": {
+   "size": 6805,
+   "mtime": 1788506989.2400022,
+   "sha": "7b3ccc591d27f1d2"
+  }
+ },
+ {
+  "unit": "D_ernie_s1.json",
+  "src": {
+   "size": 7437,
+   "mtime": 1788508369.786045,
+   "sha": "3bf5cbe1d1aa5692"
+  },
+  "repo": {
+   "size": 7437,
+   "mtime": 1788508369.786045,
+   "sha": "3bf5cbe1d1aa5692"
+  }
+ },
+ {
+  "unit": "D_glm_s1.json",
+  "src": {
+   "size": 6976,
+   "mtime": 1788509346.6320536,
+   "sha": "26d7cd35489a65ca"
+  },
+  "repo": {
+   "size": 7501,
+   "mtime": 1788504615.4178584,
+   "sha": "059a410001326ed3"
+  }
+ },
+ {
+  "unit": "D_kimi_s1.json",
+  "src": {
+   "size": 7946,
+   "mtime": 1788508878.9048772,
+   "sha": "db9fe144282c9a83"
+  },
+  "repo": {
+   "size": 7946,
+   "mtime": 1788508878.9048772,
+   "sha": "db9fe144282c9a83"
+  }
+ },
+ {
+  "unit": "D_minimax_s1.json",
+  "src": {
+   "size": 7003,
+   "mtime": 1788507751.0779238,
+   "sha": "bda21251b649fe9c"
+  },
+  "repo": {
+   "size": 7003,
+   "mtime": 1788507751.0779238,
+   "sha": "bda21251b649fe9c"
+  }
+ },
+ {
+  "unit": "D_qwen_s1.json",
+  "src": {
+   "size": 7203,
+   "mtime": 1788507575.2590823,
+   "sha": "50cd569fbd2d82c2"
+  },
+  "repo": {
+   "size": 7203,
+   "mtime": 1788507575.2590823,
+   "sha": "50cd569fbd2d82c2"
+  }
+ }
+]

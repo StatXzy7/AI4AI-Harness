@@ -1,25 +1,27 @@
-"""Execution-feedback repair harness: generate a SQL candidate, execute it against the SQLite database, and on failure feed the exact SQLite error message back to the frozen solver to regenerate the query up to two times."""
+"""Generate SQL with the frozen solver, execute it, and on failure feed the exact SQLite error back to regenerate, up to 2 repair rounds."""
 
 from ..harness_base import SQLHarness
 from .. import bridge
 
 
 class P2P2CGlmS1Repair(SQLHarness):
-    """Weak-solver wrapper that repairs SQL using execution feedback.
+    """Weak-solver wrapper implementing a generate -> execute -> repair loop.
 
-    Control flow (the strategy is realized here, not just in the prompt):
-      1. Ask the frozen solver for one SQLite query (schema + question).
-      2. Execute the extracted query via self.execute().
-      3. If execution fails, show the solver the failed query together with
-         the exact SQLite error string and ask it to regenerate.
-      4. Repeat step 3 at most MAX_REPAIRS times.
-      5. Return the first query that executes successfully, otherwise the
-         last generated query.
+    Control flow (the strategy lives here, not only in the prompt):
+
+      1. Ask the frozen LLM solver for a SQL query given the schema + question.
+      2. Extract the SQL and execute it via ``self.execute()``.
+      3. If execution fails, build a repair prompt containing the failed SQL
+         and the *exact* SQLite error string, and ask the solver to regenerate.
+      4. Repeat the repair round up to ``MAX_REPAIRS`` (2) times.
+      5. Return the first SQL that executes cleanly; otherwise return the last
+         attempt as a best effort.
     """
 
-    MAX_REPAIRS: int = 2  # initial generation + up to 2 repair regenerations
+    MAX_REPAIRS = 2
 
     SYSTEM_PROMPT = (
         "You are an expert SQLite programmer. Given a database schema and a "
-        "natural-language question, write exactly one SQLite query that answers "
-        "the question. Output the query inside a single
+        "natural-language question, write a single valid SQLite query that "
+        "answers the question. Use only tables and columns that appear in the "
+        "schema. Respond with exactly one SQL statement inside a

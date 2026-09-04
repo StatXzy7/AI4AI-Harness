@@ -1,0 +1,1 @@
+"""A format-guarded Text-to-SQL harness that enforces schema fidelity and extracts SQL from a

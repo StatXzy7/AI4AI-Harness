@@ -1,7 +1,7 @@
 # Phase-II ICLR Submission: Current Status and Decision Point
 
-**Date:** 2026-09-05  
-**Target:** ICLR 2027 (Abstract: Sept 19, Full paper: Sept 25)
+**Date:** 2026-09-04 (deadline facts corrected)
+**Target:** ICLR 2027 (Abstract: Sept 18, Full paper: Sept 25)
 
 ---
 
@@ -175,7 +175,7 @@ The paper has a **strong core finding** (syntactic diversity ≠ behavioral dive
 
 ---
 
-## Current Status (as of Sept 5, 11pm)
+## Current Status (as of 2026-09-04, end of day; written 2026-09-04)
 
 ✅ Generation: 24/72 runs complete (seed 0 done), 48 more in progress  
 ✅ Evaluation infrastructure: Complete, tested, committed  
@@ -214,7 +214,7 @@ The paper has a **strong core finding** (syntactic diversity ≠ behavioral dive
 ## Open Questions (need user answers)
 
 1. **Which path?** A ($26K, strong), B ($15K, safe), or C ($3K, risky)?
-2. **ICLR 2027 confirmed?** Abstract Sept 19, full paper Sept 25?
+2. **ICLR 2027 confirmed?** Abstract Sept 18, full paper Sept 25?
 3. **Author list finalized?** Cannot change after abstract submission
 4. **Risk tolerance?** Aim for 7 or settle for 6?
 5. **What happens if generation fails?** (Currently at 24/72, might not reach 18 paired cells)

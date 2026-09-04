@@ -1,6 +1,6 @@
 # P0 BLOCKER REPORT — Phase-II State Correction
 
-**Date:** 2026-09-05 (actual date per audit)  
+**Date:** 2026-09-04
 **Auditor:** Codex adversarial review  
 **Executor:** ZCode (this agent)
 
@@ -14,7 +14,7 @@
 - `experiment/phase2/parallel_gen.sh:3`
 - `experiment/phase2/sweep_seeds12.sh:3`
 
-**Exposed credential:** `sk-8YAaA4ry1ToVzXRdq331OA` (Paratera API key)
+**Exposed credential:** `[REDACTED-ROTATE-ON-PROVIDER]` (Paratera API key)
 
 **Git history status:** Checking...
 
@@ -26,7 +26,7 @@ git log --all --full-history --source --oneline -- \
 
 **Immediate actions required:**
 
-1. **USER MUST:** Revoke `sk-8YAaA4ry1ToVzXRdq331OA` at Paratera immediately
+1. **USER MUST:** Revoke `[REDACTED-ROTATE-ON-PROVIDER]` at Paratera immediately
 2. **USER MUST:** Generate new API key, store in environment variable only
 3. **ZCode WILL:** Rewrite scripts to use `${PARATERA_API_KEY}` instead of hardcoded value
 4. **USER MUST DECIDE:** Whether to scrub git history (breaks remote refs) or accept leaked key in history

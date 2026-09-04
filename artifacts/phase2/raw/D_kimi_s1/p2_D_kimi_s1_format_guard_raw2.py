@@ -1,0 +1,1 @@
+"""Format-guard harness that forces a weak Text-to-SQL solver to emit schema-faithful SQL inside a single

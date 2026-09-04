@@ -1,6 +1,6 @@
 # Phase-II Immediate Action Items
 
-## Current Status (2026-09-05 evening)
+## Current Status (2026-09-04, evening — factual)
 
 **Generation:** 24/72 runs complete (seed 0 done for 6 builders × 4 arms)
 - Running in background via `parallel_gen.sh` (4 workers)
@@ -110,7 +110,7 @@ The reviewer attack surface requires ~$26K to fully address:
 - Human positive control ($600)
 - Cross-domain table
 
-**Day 14 (Sept 19):**
+**Day 14 (Sept 18):**
 - ICLR abstract submission (DEADLINE)
 
 ---
@@ -179,7 +179,7 @@ Cross-domain replication
 ## Open Questions for User
 
 1. **Budget approval:** Full $26K, blocking $15K, or minimal $3K?
-2. **Submission target:** Definitely ICLR 2027 (abstract due Sept 19, full paper Sept 25)?
+2. **Submission target:** Definitely ICLR 2027 (abstract due Sept 18, full paper Sept 25)?
 3. **Author list:** Finalized? (Cannot change after abstract submission)
 4. **Cross-domain priority:** Must-have or nice-to-have?
 5. **Risk tolerance:** Willing to submit with acknowledged limitations, or hold for perfect defense?
