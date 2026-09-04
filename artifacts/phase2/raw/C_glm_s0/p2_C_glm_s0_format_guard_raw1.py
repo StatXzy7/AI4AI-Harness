@@ -1,0 +1,1 @@
+"""A format-guarded harness that locks a frozen text-to-SQL solver behind a strict one-

@@ -57,8 +57,12 @@ CONTRACT_KEYS = {
 
 # Paired probes. S_FAIL and S_OK differ ONLY in whether the first query executes cleanly,
 # which is what makes a branch-on-execution claim falsifiable.
+# TRUE counterfactual: byte-identical scripted responses, differing ONLY in whether the DB
+# fails the first query. The earlier pair also changed the first response text, so a harness
+# that merely returns its first answer showed a "difference" and appeared to branch -- bare
+# itself passed. Holding the script fixed makes execution outcome the only varying cause.
 S_FAIL = ([BROKEN_SQL, FIX_A, FIX_A, FIX_A], "broken_col")
-S_OK = ([FIX_B, FIX_A, FIX_A, FIX_A], None)
+S_OK = ([BROKEN_SQL, FIX_A, FIX_A, FIX_A], None)
 S_CARRY = ([f"stage one says {LINK_A}", FIX_A, FIX_A, FIX_A], None)
 # Carry probe under FAILURE. A conditional repair harness only carries data forward when
 # something failed, so testing carry only in a success world makes the property unfalsifiable
@@ -214,12 +218,66 @@ def verify(harness: str, contract: dict) -> dict:
     }
 
 
+# --------------------------------------------------------------------- calibration invariant
+# Encoded as an executable test rather than a habit. Three classes of bug have already been
+# caught here, in BOTH directions -- probes too strict (a known-good harness rejected) and
+# probes too lenient (bare spuriously satisfying a property because the paired scenarios
+# differed in more than one respect). `--calibrate` must pass before any arm-E generation runs.
+POSITIVE = [
+    ("hpc_repair", {"name": "x", "min_llm_calls": 1, "min_executions": 1,
+                    "branches_on_execution": True, "carries_data_forward": True}),
+    ("hpc_vote3", {"name": "x", "min_distinct_samples": 3, "branches_on_execution": True}),
+    ("hpc_schema", {"name": "x", "min_llm_calls": 2, "carries_data_forward": True}),
+]
+NEGATIVE = [
+    ("neg_uncond_twocall", {"name": "x", "min_llm_calls": 1, "min_executions": 1,
+                            "branches_on_execution": True}),
+    ("neg_selectfirst", {"name": "x", "min_distinct_samples": 3,
+                         "final_invariant_to_sample_order": True}),
+]
+DISCRIMINATING = ["branches_on_execution", "carries_data_forward",
+                  "final_invariant_to_sample_order"]
+
+
+def calibrate(verbose: bool = True) -> bool:
+    ok_all = True
+    rows = []
+    for h, c in POSITIVE:
+        v = verify(h, c)["verdict"]
+        ok = v == "PASS"
+        rows.append((ok, f"known-good {h}", v, "PASS"))
+        ok_all &= ok
+    for h, c in NEGATIVE:
+        v = verify(h, c)["verdict"]
+        ok = v == "E_CONTRACT_VIOLATED"
+        rows.append((ok, f"impostor {h}", v, "E_CONTRACT_VIOLATED"))
+        ok_all &= ok
+    v = verify("hpc_repair", {"name": "vac", "min_llm_calls": 1})["verdict"]
+    ok = v == "E_VACUOUS_CONTRACT"
+    rows.append((ok, "vacuous contract", v, "E_VACUOUS_CONTRACT"))
+    ok_all &= ok
+    # every conditional/content property must be VIOLATED by bare, or it does not discriminate
+    for prop in DISCRIMINATING:
+        nv, _ = non_vacuous({"name": "b", prop: True})
+        rows.append((nv, f"bare violates {prop}", str(nv), "True"))
+        ok_all &= nv
+    if verbose:
+        for ok, what, got, exp in rows:
+            print(f"  {'ok  ' if ok else 'MISS'} {what:44s} {got:22s} exp {exp}")
+        print(f"[calibrate] {'OK' if ok_all else 'FAILED'} ({sum(r[0] for r in rows)}/{len(rows)})")
+    return ok_all
+
+
 if __name__ == "__main__":
     import argparse
 
     ap = argparse.ArgumentParser()
-    ap.add_argument("--harness", required=True)
-    ap.add_argument("--contract", required=True, help="JSON string or path")
+    ap.add_argument("--harness")
+    ap.add_argument("--contract", help="JSON string or path")
+    ap.add_argument("--calibrate", action="store_true",
+                    help="run the calibration invariant and exit nonzero on failure")
     a = ap.parse_args()
+    if a.calibrate:
+        raise SystemExit(0 if calibrate() else 1)
     raw = Path(a.contract).read_text(encoding="utf-8") if Path(a.contract).exists() else a.contract
     print(json.dumps(verify(a.harness, json.loads(raw)), indent=2))

@@ -401,6 +401,28 @@ on the day-1 population: 14 harnesses, 14 distinct source hashes, 14–135 lines
   question. The gate is now frozen; any further change requires a calibration-invariant violation,
   logged here, plus regeneration.
 
+- **2026-09-04 v1.5 — paired-probe confound removed; calibration invariant made executable.**
+  Re-running the E2 self-audit on known-good harnesses under the v1.4 verifier returned
+  `E_VACUOUS_CONTRACT` for `hpc_vote3`. Tracing it showed a **false positive**: `bare` itself
+  satisfied `branches_on_execution`, so no property established non-vacuity. Cause — the paired
+  probes differed in *two* respects, the first scripted response (`BROKEN_SQL` vs `FIX_B`) **and**
+  the execution outcome, so any harness that simply returns its first answer displayed a
+  "difference" and appeared to branch. `S_OK` now uses **byte-identical scripted responses** to
+  `S_FAIL`, differing only in whether the database fails the first query, which is what a true
+  counterfactual requires and what the docstring already claimed.
+
+  Note the direction: v1.3 and v1.4 were probes too **strict**; this was a probe too **lenient**.
+  An instrument miscalibrated in both directions is what an unbiased calibration process looks
+  like, but it is also why no arm-E number may be reported until the invariant passes.
+
+  The invariant is now an **executable gate**, `contract.py --calibrate`, run before any arm-E
+  generation and exiting nonzero on failure. It asserts 9 conditions: three known-good human
+  harnesses pass, two impostors are rejected, a vacuous contract is rejected, and — the check
+  that would have caught this bug immediately — **`bare` must violate every conditional or
+  content-based property**, since a property `bare` satisfies cannot discriminate. Encoding it as
+  a test rather than a habit is the actual fix; the three preceding rounds were all found by
+  controls, but only after results had already been produced and reported.
+
   **A–D are unaffected.** Their admission rule (`neutral-valid ∧ (mechanism-pass ∨ ungated)`) and
   the conformance semantics they use are byte-identical to the frozen version; the arm-E work is
   confined to an `arm == "E"` branch and an E-specific prompt pair. A–D generation ran, and

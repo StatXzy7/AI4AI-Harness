@@ -1,0 +1,303 @@
+{
+ "builder": "qwen",
+ "model": "Qwen3.8-Max",
+ "arm": "B",
+ "seed": 0,
+ "gate": true,
+ "forced": false,
+ "raw_attempts_per_slot": 3,
+ "n_slots": 8,
+ "K_admitted": 5,
+ "raw_total": 17,
+ "R_artifact": 0.4118,
+ "R_contract": 0.4118,
+ "R_fidelity": 0.7143,
+ "p_neutral_valid": 0.4118,
+ "p_mechanism_pass": 0.2941,
+ "results": [
+  {
+   "harness": "p2_B_qwen_s0_g0",
+   "arm": "B",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "vote"
+     },
+     "secs": 319.7
+    }
+   ]
+  },
+  {
+   "harness": "p2_B_qwen_s0_g1",
+   "arm": "B",
+   "strategy": null,
+   "seed": 0,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 376.2
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 357.2
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 122.7
+    }
+   ]
+  },
+  {
+   "harness": "p2_B_qwen_s0_g2",
+   "arm": "B",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 1,
+   "contract": null,
+   "n_raw": 2,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 345.7
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "vote"
+     },
+     "secs": 304.3
+    }
+   ]
+  },
+  {
+   "harness": "p2_B_qwen_s0_g3",
+   "arm": "B",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 1,
+   "contract": null,
+   "n_raw": 2,
+   "n_neutral_valid": 2,
+   "n_contract_valid": 2,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "mechanism_detail": {
+      "verdict": "T3_selection_broken",
+      "scenario": "vote"
+     },
+     "secs": 343.5
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "repair"
+     },
+     "secs": 133.2
+    }
+   ]
+  },
+  {
+   "harness": "p2_B_qwen_s0_g4",
+   "arm": "B",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "vote"
+     },
+     "secs": 277.9
+    }
+   ]
+  },
+  {
+   "harness": "p2_B_qwen_s0_g5",
+   "arm": "B",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 1,
+   "contract": null,
+   "n_raw": 2,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 136.2
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (89 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "vote"
+     },
+     "secs": 293.6
+    }
+   ]
+  },
+  {
+   "harness": "p2_B_qwen_s0_g6",
+   "arm": "B",
+   "strategy": null,
+   "seed": 0,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "mechanism_detail": {
+      "verdict": "T3_selection_broken",
+      "scenario": "vote"
+     },
+     "secs": 198.5
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 515.8
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 253.6
+    }
+   ]
+  },
+  {
+   "harness": "p2_B_qwen_s0_g7",
+   "arm": "B",
+   "strategy": null,
+   "seed": 0,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 486.4
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 222.8
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 87.5
+    }
+   ]
+  }
+ ]
+}
