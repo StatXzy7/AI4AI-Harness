@@ -1,19 +1,13 @@
 PHASE-II PROTOCOL FREEZE ANCHOR
 
 The authoritative protocol is PHASE2_PROTOCOL.md in this repository.
-It was frozen at commit:
+Initial freeze: 98b95bf998b20de933f7f09008996b78b503c559
+Current anchor (deviation D12 logged, instruments unchanged): 661802fb94884d14537e4b84882742adabcfa3c3
 
-  98b95bf998b20de933f7f09008996b78b503c559
+Instruments (splits, registry, judges, conformance suite, contract verifier,
+gen_seed2.sh) are unchanged since 98b95bf. Any instrument change requires a
+numbered deviation entry in PHASE2_PROTOCOL.md section 10 and a re-anchor.
 
-"Frozen at" means: this commit is the state of PHASE2_PROTOCOL.md and all
-referenced instruments (splits, registry, judges, conformance suite, contract
-verifier, gen_seed2.sh) as of the freeze. Any later change to any of these
-requires a numbered deviation entry in PHASE2_PROTOCOL.md section 10 and a
-re-anchoring commit updating this file.
-
-Pre-outcome affirmation at freeze: no split_p2_test evaluation has been run
-and no confirmatory outcome has been read (contact limited to the 18-item
-smoke disclosed as deviation D1). Generation state at freeze: A-D = 48/72
-units (seeds 0-1 complete, seed 2 pending), Arm E separate (1 dev-side run).
-
-Freeze date: 2026-09-04.
+Pre-outcome affirmation: no split_p2_test analysis or aggregate metric has
+been computed; mechanical collection of frozen seed-0/1 harnesses is in
+progress (D12). Date: 2026-09-04.
