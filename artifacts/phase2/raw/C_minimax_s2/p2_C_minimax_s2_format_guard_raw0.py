@@ -1,0 +1,1 @@
+"""Wrap a frozen weak solver with strict formatting and schema-fidelity guardrails to produce a clean

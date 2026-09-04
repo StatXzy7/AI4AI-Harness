@@ -1,0 +1,1 @@
+"""A harness that enforces strict SQL output formatting via a

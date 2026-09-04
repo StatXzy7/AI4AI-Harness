@@ -1,0 +1,1 @@
+"""Format-and-schema-fidelity harness: it forces the frozen solver to answer with a single

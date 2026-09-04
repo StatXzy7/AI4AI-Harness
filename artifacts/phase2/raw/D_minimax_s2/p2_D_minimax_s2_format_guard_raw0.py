@@ -1,0 +1,1 @@
+"""Harness wrapping a weak solver with strict output-format gating: extracts and validates a

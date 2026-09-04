@@ -1,0 +1,1 @@
+"""Uses a weak LLM solver to generate SQL from a question and schema, enforcing output format via a

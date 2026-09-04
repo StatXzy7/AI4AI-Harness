@@ -258,6 +258,17 @@ population: 14 distinct sources, 12 PASS / 4 M1 / 3 M2 / 1 M3).
   still being rewritten; and misstated the ICLR abstract deadline as Sept 19 (correct:
   **2026-09-18 11:59 PM AoE**; full paper 2026-09-25 AoE; no author changes after the
   abstract deadline). Corrected in this document.
+- **D12 (collection timing; no analysis impact).** Mechanical outcome collection for the
+  seed-0/1 A/D harnesses (119 harnesses + bare, frozen and hashed at anchor `98b95bf`)
+  started on `split_p2_test` while seed-2 generation was still running. This deviates from
+  the letter of "evaluation happens once, after generation completes" in order to overlap
+  wall-clock. Scientific integrity is unaffected: the seed-2 generation process and its
+  frozen gate cannot be influenced by these outcomes; the collected harnesses are exactly
+  the frozen ones; **no aggregate metric, contrast, or analysis is computed until all 18
+  paired cells are collected**. Exposure assessment was also corrected: the repository has
+  **no remote** — the leaked key never left the local machine, so revocation is hygiene
+  rather than an active breach (the earlier "already pushed" statement was unverified and
+  wrong).
 
 ## 11. Residual blockers (owned, not claimed solved)
 
