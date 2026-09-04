@@ -1,0 +1,7 @@
+{
+  "name": "multi_sample_execute_repair",
+  "min_llm_calls": 4,
+  "min_executions": 4,
+  "branches_on_execution": true,
+  "carries_data_forward": true
+}
