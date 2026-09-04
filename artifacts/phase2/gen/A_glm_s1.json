@@ -1,0 +1,323 @@
+{
+ "builder": "glm",
+ "model": "GLM-5.3",
+ "arm": "A",
+ "seed": 1,
+ "gate": false,
+ "forced": false,
+ "raw_attempts_per_slot": 3,
+ "n_slots": 8,
+ "K_admitted": 3,
+ "raw_total": 23,
+ "R_artifact": 0.1304,
+ "R_contract": 0.0,
+ "R_fidelity": 0.0,
+ "p_neutral_valid": 0.1304,
+ "p_mechanism_pass": 0.0,
+ "results": [
+  {
+   "harness": "p2_A_glm_s1_g0",
+   "arm": "A",
+   "strategy": null,
+   "seed": 1,
+   "admitted": true,
+   "admitted_attempt": 1,
+   "contract": null,
+   "n_raw": 2,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 34) (p2_A_glm_s1_g0.py, line 34)",
+     "secs": 185.8
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "secs": 216.5
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_glm_s1_g1",
+   "arm": "A",
+   "strategy": null,
+   "seed": 1,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 86) (p2_A_glm_s1_g1.py, line 86)",
+     "secs": 197.3
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 31) (p2_A_glm_s1_g1.py, line 31)",
+     "secs": 110.6
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 66) (p2_A_glm_s1_g1.py, line 66)",
+     "secs": 245.2
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_glm_s1_g2",
+   "arm": "A",
+   "strategy": null,
+   "seed": 1,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 61) (p2_A_glm_s1_g2.py, line 61)",
+     "secs": 93.2
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 339.4
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 246.1
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_glm_s1_g3",
+   "arm": "A",
+   "strategy": null,
+   "seed": 1,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 53) (p2_A_glm_s1_g3.py, line 53)",
+     "secs": 305.2
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 68) (p2_A_glm_s1_g3.py, line 68)",
+     "secs": 75.3
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": true,
+     "neutral_detail": "SyntaxError: invalid syntax (p2_A_glm_s1_g3.py, line 182)",
+     "secs": 254.3
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_glm_s1_g4",
+   "arm": "A",
+   "strategy": null,
+   "seed": 1,
+   "admitted": true,
+   "admitted_attempt": 2,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 41) (p2_A_glm_s1_g4.py, line 41)",
+     "secs": 98.7
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 335.6
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "secs": 214.8
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_glm_s1_g5",
+   "arm": "A",
+   "strategy": null,
+   "seed": 1,
+   "admitted": true,
+   "admitted_attempt": 2,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 31) (p2_A_glm_s1_g5.py, line 31)",
+     "secs": 105.2
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 255.7
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (85 chars)",
+     "secs": 132.5
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_glm_s1_g6",
+   "arm": "A",
+   "strategy": null,
+   "seed": 1,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 30) (p2_A_glm_s1_g6.py, line 30)",
+     "secs": 190.1
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 34) (p2_A_glm_s1_g6.py, line 34)",
+     "secs": 96.2
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 33) (p2_A_glm_s1_g6.py, line 33)",
+     "secs": 161.5
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_glm_s1_g7",
+   "arm": "A",
+   "strategy": null,
+   "seed": 1,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 200) (p2_A_glm_s1_g7.py, line 200)",
+     "secs": 165.3
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 174) (p2_A_glm_s1_g7.py, line 174)",
+     "secs": 200.0
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 482.0
+    }
+   ]
+  }
+ ]
+}

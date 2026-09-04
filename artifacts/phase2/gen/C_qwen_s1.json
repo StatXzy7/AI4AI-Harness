@@ -1,0 +1,283 @@
+{
+ "builder": "qwen",
+ "model": "Qwen3.8-Max",
+ "arm": "C",
+ "seed": 1,
+ "gate": false,
+ "forced": true,
+ "raw_attempts_per_slot": 3,
+ "n_slots": 8,
+ "K_admitted": 4,
+ "raw_total": 18,
+ "R_artifact": 0.2222,
+ "R_contract": 0.0,
+ "R_fidelity": 0.0,
+ "p_neutral_valid": 0.2222,
+ "p_mechanism_pass": 0.0,
+ "results": [
+  {
+   "harness": "p2_C_qwen_s1_repair",
+   "arm": "C",
+   "strategy": "repair",
+   "seed": 1,
+   "admitted": true,
+   "admitted_attempt": 1,
+   "contract": null,
+   "n_raw": 2,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 230.2
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "secs": 349.5
+    }
+   ]
+  },
+  {
+   "harness": "p2_C_qwen_s1_vote3",
+   "arm": "C",
+   "strategy": "vote3",
+   "seed": 1,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "secs": 261.8
+    }
+   ]
+  },
+  {
+   "harness": "p2_C_qwen_s1_schema_link",
+   "arm": "C",
+   "strategy": "schema_link",
+   "seed": 1,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 13) (p2_C_qwen_s1_schema_link.py, line 13)",
+     "secs": 656.7
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 342) (p2_C_qwen_s1_schema_link.py, line 342)",
+     "secs": 810.8
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 707.6
+    }
+   ]
+  },
+  {
+   "harness": "p2_C_qwen_s1_hint_guard",
+   "arm": "C",
+   "strategy": "hint_guard",
+   "seed": 1,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "secs": 346.7
+    }
+   ]
+  },
+  {
+   "harness": "p2_C_qwen_s1_two_view",
+   "arm": "C",
+   "strategy": "two_view",
+   "seed": 1,
+   "admitted": true,
+   "admitted_attempt": 1,
+   "contract": null,
+   "n_raw": 2,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 190.0
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": null,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (129 chars)",
+     "secs": 238.1
+    }
+   ]
+  },
+  {
+   "harness": "p2_C_qwen_s1_decompose",
+   "arm": "C",
+   "strategy": "decompose",
+   "seed": 1,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 140) (p2_C_qwen_s1_decompose.py, line 140)",
+     "secs": 377.1
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 107) (p2_C_qwen_s1_decompose.py, line 107)",
+     "secs": 535.4
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 383.3
+    }
+   ]
+  },
+  {
+   "harness": "p2_C_qwen_s1_error_classify",
+   "arm": "C",
+   "strategy": "error_classify",
+   "seed": 1,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 424) (p2_C_qwen_s1_error_classify.py, line 424)",
+     "secs": 641.7
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 348) (p2_C_qwen_s1_error_classify.py, line 348)",
+     "secs": 627.6
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 688.4
+    }
+   ]
+  },
+  {
+   "harness": "p2_C_qwen_s1_format_guard",
+   "arm": "C",
+   "strategy": "format_guard",
+   "seed": 1,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 282.6
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 509.5
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 448.6
+    }
+   ]
+  }
+ ]
+}

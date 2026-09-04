@@ -1,0 +1,322 @@
+{
+ "builder": "kimi",
+ "model": "Kimi-K3",
+ "arm": "D",
+ "seed": 1,
+ "gate": true,
+ "forced": true,
+ "raw_attempts_per_slot": 3,
+ "n_slots": 8,
+ "K_admitted": 3,
+ "raw_total": 20,
+ "R_artifact": 0.3,
+ "R_contract": 0.3,
+ "R_fidelity": 0.5,
+ "p_neutral_valid": 0.3,
+ "p_mechanism_pass": 0.15,
+ "results": [
+  {
+   "harness": "p2_D_kimi_s1_repair",
+   "arm": "D",
+   "strategy": "repair",
+   "seed": 1,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated f-string literal (detected at line 46) (p2_D_kimi_s1_repair.py, line 46)",
+     "secs": 68.0
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 43.7
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 70.9
+    }
+   ]
+  },
+  {
+   "harness": "p2_D_kimi_s1_vote3",
+   "arm": "D",
+   "strategy": "vote3",
+   "seed": 1,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "vote"
+     },
+     "secs": 60.8
+    }
+   ]
+  },
+  {
+   "harness": "p2_D_kimi_s1_schema_link",
+   "arm": "D",
+   "strategy": "schema_link",
+   "seed": 1,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 259) (p2_D_kimi_s1_schema_link.py, line 259)",
+     "secs": 289.1
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "mechanism_detail": {
+      "verdict": "T2_stage1_output_discarded",
+      "scenario": "twostage"
+     },
+     "secs": 335.7
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 94) (p2_D_kimi_s1_schema_link.py, line 94)",
+     "secs": 170.4
+    }
+   ]
+  },
+  {
+   "harness": "p2_D_kimi_s1_hint_guard",
+   "arm": "D",
+   "strategy": "hint_guard",
+   "seed": 1,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 194.2
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (97 chars)",
+     "mechanism_detail": {
+      "verdict": "NO_MECHANISM_declared",
+      "scenario": "plain"
+     },
+     "secs": 226.0
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 129.8
+    }
+   ]
+  },
+  {
+   "harness": "p2_D_kimi_s1_two_view",
+   "arm": "D",
+   "strategy": "two_view",
+   "seed": 1,
+   "admitted": true,
+   "admitted_attempt": 1,
+   "contract": null,
+   "n_raw": 2,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 53.7
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (138 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "vote2"
+     },
+     "secs": 99.5
+    }
+   ]
+  },
+  {
+   "harness": "p2_D_kimi_s1_decompose",
+   "arm": "D",
+   "strategy": "decompose",
+   "seed": 1,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "reason": "BadRequestError('Error code: 400 - {\\'error\\': {\\'message\\': \"OpenAIException - <400> InternalError.Algo.InvalidParameter: Parameter \\'temperature\\'=0.7 is not supported for kimi-k",
+     "secs": 15.8
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (118 chars)",
+     "mechanism_detail": {
+      "verdict": "T2_stage1_output_discarded",
+      "scenario": "twostage"
+     },
+     "secs": 231.4
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 92) (p2_D_kimi_s1_decompose.py, line 92)",
+     "secs": 210.0
+    }
+   ]
+  },
+  {
+   "harness": "p2_D_kimi_s1_error_classify",
+   "arm": "D",
+   "strategy": "error_classify",
+   "seed": 1,
+   "admitted": true,
+   "admitted_attempt": 1,
+   "contract": null,
+   "n_raw": 2,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 231) (p2_D_kimi_s1_error_classify.py, line 231)",
+     "secs": 252.6
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (100 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "repair"
+     },
+     "secs": 147.2
+    }
+   ]
+  },
+  {
+   "harness": "p2_D_kimi_s1_format_guard",
+   "arm": "D",
+   "strategy": "format_guard",
+   "seed": 1,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 13) (p2_D_kimi_s1_format_guard.py, line 10)",
+     "secs": 228.7
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_kimi_s1_format_guard.py, line 1)",
+     "secs": 394.3
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_kimi_s1_format_guard.py, line 1)",
+     "secs": 358.4
+    }
+   ]
+  }
+ ]
+}

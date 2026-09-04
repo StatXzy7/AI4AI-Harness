@@ -1,0 +1,323 @@
+{
+ "builder": "ernie",
+ "model": "ERNIE-5.0-Thinking-Preview",
+ "arm": "D",
+ "seed": 1,
+ "gate": true,
+ "forced": true,
+ "raw_attempts_per_slot": 3,
+ "n_slots": 8,
+ "K_admitted": 5,
+ "raw_total": 17,
+ "R_artifact": 0.7059,
+ "R_contract": 0.7059,
+ "R_fidelity": 0.4167,
+ "p_neutral_valid": 0.7059,
+ "p_mechanism_pass": 0.2941,
+ "results": [
+  {
+   "harness": "p2_D_ernie_s1_repair",
+   "arm": "D",
+   "strategy": "repair",
+   "seed": 1,
+   "admitted": true,
+   "admitted_attempt": 1,
+   "contract": null,
+   "n_raw": 2,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 26.7
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "repair"
+     },
+     "secs": 45.8
+    }
+   ]
+  },
+  {
+   "harness": "p2_D_ernie_s1_vote3",
+   "arm": "D",
+   "strategy": "vote3",
+   "seed": 1,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (91 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "vote"
+     },
+     "secs": 123.0
+    }
+   ]
+  },
+  {
+   "harness": "p2_D_ernie_s1_schema_link",
+   "arm": "D",
+   "strategy": "schema_link",
+   "seed": 1,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 3,
+   "n_contract_valid": 3,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (89 chars)",
+     "mechanism_detail": {
+      "verdict": "T2_stage1_output_discarded",
+      "scenario": "twostage"
+     },
+     "secs": 103.6
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (89 chars)",
+     "mechanism_detail": {
+      "verdict": "T1_single_stage",
+      "scenario": "twostage"
+     },
+     "secs": 98.6
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "mechanism_detail": {
+      "verdict": "T2_stage1_output_discarded",
+      "scenario": "twostage"
+     },
+     "secs": 122.4
+    }
+   ]
+  },
+  {
+   "harness": "p2_D_ernie_s1_hint_guard",
+   "arm": "D",
+   "strategy": "hint_guard",
+   "seed": 1,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 2,
+   "n_contract_valid": 2,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (89 chars)",
+     "mechanism_detail": {
+      "verdict": "NO_MECHANISM_declared",
+      "scenario": "plain"
+     },
+     "secs": 21.2
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 51.6
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (91 chars)",
+     "mechanism_detail": {
+      "verdict": "NO_MECHANISM_declared",
+      "scenario": "plain"
+     },
+     "secs": 74.4
+    }
+   ]
+  },
+  {
+   "harness": "p2_D_ernie_s1_two_view",
+   "arm": "D",
+   "strategy": "two_view",
+   "seed": 1,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (89 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "vote2"
+     },
+     "secs": 75.1
+    }
+   ]
+  },
+  {
+   "harness": "p2_D_ernie_s1_decompose",
+   "arm": "D",
+   "strategy": "decompose",
+   "seed": 1,
+   "admitted": true,
+   "admitted_attempt": 2,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 3,
+   "n_contract_valid": 3,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (89 chars)",
+     "mechanism_detail": {
+      "verdict": "T2_stage1_output_discarded",
+      "scenario": "twostage"
+     },
+     "secs": 122.0
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "mechanism_detail": {
+      "verdict": "T2_stage1_output_discarded",
+      "scenario": "twostage"
+     },
+     "secs": 130.9
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (88 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "twostage"
+     },
+     "secs": 117.6
+    }
+   ]
+  },
+  {
+   "harness": "p2_D_ernie_s1_error_classify",
+   "arm": "D",
+   "strategy": "error_classify",
+   "seed": 1,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "contract": null,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (89 chars)",
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "scenario": "repair"
+     },
+     "secs": 45.9
+    }
+   ]
+  },
+  {
+   "harness": "p2_D_ernie_s1_format_guard",
+   "arm": "D",
+   "strategy": "format_guard",
+   "seed": 1,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "n_contract_valid": 0,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_ernie_s1_format_guard.py, line 1)",
+     "secs": 23.7
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 103.4
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_ernie_s1_format_guard.py, line 1)",
+     "secs": 33.8
+    }
+   ]
+  }
+ ]
+}
