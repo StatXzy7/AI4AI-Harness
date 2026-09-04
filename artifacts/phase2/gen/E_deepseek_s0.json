@@ -1,0 +1,344 @@
+{
+ "builder": "deepseek",
+ "model": "DeepSeek-V4-Pro",
+ "arm": "E",
+ "seed": 0,
+ "gate": true,
+ "forced": false,
+ "raw_attempts_per_slot": 3,
+ "n_slots": 4,
+ "K_admitted": 3,
+ "raw_total": 10,
+ "R_artifact": 0.6,
+ "R_contract": 0.6,
+ "R_fidelity": 0.5,
+ "p_neutral_valid": 0.6,
+ "p_mechanism_pass": 0.3,
+ "results": [
+  {
+   "harness": "p2_E_deepseek_s0_g0",
+   "arm": "E",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 1,
+   "contract": {
+    "name": "plan_generate_execute_repair",
+    "min_llm_calls": 2,
+    "branches_on_execution": true,
+    "carries_data_forward": true
+   },
+   "n_raw": 2,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 70) (p2_E_deepseek_s0_g0.py, line 70)",
+     "secs": 142.7
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (95 chars)",
+     "contract": {
+      "name": "plan_generate_execute_repair",
+      "min_llm_calls": 2,
+      "branches_on_execution": true,
+      "carries_data_forward": true
+     },
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "reason": "bare violates ['min_llm_calls', 'branches_on_execution', 'carries_data_forward']",
+      "checks": [
+       {
+        "property": "min_llm_calls",
+        "ok": true,
+        "detail": "declared >=2, observed 2/2"
+       },
+       {
+        "property": "branches_on_execution",
+        "ok": true,
+        "detail": "fail/ok 2calls/'select id from t1' vs 2calls/'select id from t1' (differs=False); failing-majority probe -> 'select id from t1' (filtered=True)"
+       },
+       {
+        "property": "carries_data_forward",
+        "ok": true,
+        "detail": "marker reached a later prompt (success-world=True, failure-world=True)"
+       }
+      ]
+     },
+     "secs": 237.8
+    }
+   ]
+  },
+  {
+   "harness": "p2_E_deepseek_s0_g1",
+   "arm": "E",
+   "strategy": null,
+   "seed": 0,
+   "admitted": false,
+   "admitted_attempt": null,
+   "contract": null,
+   "n_raw": 3,
+   "n_neutral_valid": 1,
+   "n_contract_valid": 1,
+   "n_mechanism_pass": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (91 chars)",
+     "contract": {
+      "name": "P2P2EDeepseekS0G1",
+      "branches_on_execution": true,
+      "carries_data_forward": true
+     },
+     "mechanism_detail": {
+      "verdict": "E_CONTRACT_VIOLATED",
+      "reason": "violated ['carries_data_forward']",
+      "checks": [
+       {
+        "property": "branches_on_execution",
+        "ok": true,
+        "detail": "fail/ok 1calls/'select id from t1' vs 1calls/'select broken_col ' (differs=True); failing-majority probe -> 'select id from t1' (filtered=True)"
+       },
+       {
+        "property": "carries_data_forward",
+        "ok": false,
+        "detail": "marker reached a later prompt (success-world=False, failure-world=False)"
+       }
+      ]
+     },
+     "secs": 146.9
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 95.3
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 90.0
+    }
+   ]
+  },
+  {
+   "harness": "p2_E_deepseek_s0_g2",
+   "arm": "E",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 2,
+   "contract": {
+    "name": "P2P2EDeepseekS0G2",
+    "min_llm_calls": 1,
+    "min_executions": 0,
+    "branches_on_execution": true,
+    "carries_data_forward": true
+   },
+   "n_raw": 3,
+   "n_neutral_valid": 2,
+   "n_contract_valid": 2,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (89 chars)",
+     "contract": {
+      "name": "P2P2EDeepseekS0G2",
+      "min_llm_calls": 1,
+      "branches_on_execution": true,
+      "carries_data_forward": true
+     },
+     "mechanism_detail": {
+      "verdict": "E_CONTRACT_VIOLATED",
+      "reason": "violated ['carries_data_forward']",
+      "checks": [
+       {
+        "property": "min_llm_calls",
+        "ok": true,
+        "detail": "declared >=1, observed 2/1"
+       },
+       {
+        "property": "branches_on_execution",
+        "ok": true,
+        "detail": "fail/ok 2calls/'select id from t1' vs 1calls/'select broken_col ' (differs=True); failing-majority probe -> 'select id from t1' (filtered=True)"
+       },
+       {
+        "property": "carries_data_forward",
+        "ok": false,
+        "detail": "marker reached a later prompt (success-world=False, failure-world=False)"
+       }
+      ]
+     },
+     "secs": 252.1
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "SyntaxError: unterminated string literal (detected at line 192) (p2_E_deepseek_s0_g2.py, line 192)",
+     "secs": 92.1
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (89 chars)",
+     "contract": {
+      "name": "P2P2EDeepseekS0G2",
+      "min_llm_calls": 1,
+      "min_executions": 0,
+      "branches_on_execution": true,
+      "carries_data_forward": true
+     },
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "reason": "bare violates ['branches_on_execution', 'carries_data_forward']",
+      "checks": [
+       {
+        "property": "min_llm_calls",
+        "ok": true,
+        "detail": "declared >=1, observed 2/1"
+       },
+       {
+        "property": "min_executions",
+        "ok": true,
+        "detail": "declared >=0, observed 2/1"
+       },
+       {
+        "property": "branches_on_execution",
+        "ok": true,
+        "detail": "fail/ok 2calls/'select id from t1' vs 1calls/'select broken_col ' (differs=True); failing-majority probe -> 'select id from t1' (filtered=True)"
+       },
+       {
+        "property": "carries_data_forward",
+        "ok": true,
+        "detail": "marker reached a later prompt (success-world=False, failure-world=True)"
+       }
+      ]
+     },
+     "secs": 209.4
+    }
+   ]
+  },
+  {
+   "harness": "p2_E_deepseek_s0_g3",
+   "arm": "E",
+   "strategy": null,
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 1,
+   "contract": {
+    "name": "iterative_sql_repair",
+    "min_llm_calls": 1,
+    "min_executions": 0,
+    "branches_on_execution": true,
+    "carries_data_forward": true
+   },
+   "n_raw": 2,
+   "n_neutral_valid": 2,
+   "n_contract_valid": 2,
+   "n_mechanism_pass": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "mechanism_pass": false,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (89 chars)",
+     "contract": {
+      "name": "iterative_repair_sql",
+      "min_llm_calls": 3,
+      "branches_on_execution": true,
+      "carries_data_forward": true
+     },
+     "mechanism_detail": {
+      "verdict": "E_CONTRACT_VIOLATED",
+      "reason": "violated ['carries_data_forward']",
+      "checks": [
+       {
+        "property": "min_llm_calls",
+        "ok": true,
+        "detail": "declared >=3, observed 3/3"
+       },
+       {
+        "property": "branches_on_execution",
+        "ok": true,
+        "detail": "fail/ok 3calls/'select id from t1' vs 3calls/'select broken_col ' (differs=True); failing-majority probe -> 'select id from t1' (filtered=True)"
+       },
+       {
+        "property": "carries_data_forward",
+        "ok": false,
+        "detail": "marker reached a later prompt (success-world=False, failure-world=False)"
+       }
+      ]
+     },
+     "secs": 263.0
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "mechanism_pass": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid (89 chars)",
+     "contract": {
+      "name": "iterative_sql_repair",
+      "min_llm_calls": 1,
+      "min_executions": 0,
+      "branches_on_execution": true,
+      "carries_data_forward": true
+     },
+     "mechanism_detail": {
+      "verdict": "PASS",
+      "reason": "bare violates ['branches_on_execution', 'carries_data_forward']",
+      "checks": [
+       {
+        "property": "min_llm_calls",
+        "ok": true,
+        "detail": "declared >=1, observed 2/1"
+       },
+       {
+        "property": "min_executions",
+        "ok": true,
+        "detail": "declared >=0, observed 2/1"
+       },
+       {
+        "property": "branches_on_execution",
+        "ok": true,
+        "detail": "fail/ok 2calls/'select id from t1' vs 1calls/'select broken_col ' (differs=True); failing-majority probe -> 'select broken_col ' (filtered=False)"
+       },
+       {
+        "property": "carries_data_forward",
+        "ok": true,
+        "detail": "marker reached a later prompt (success-world=False, failure-world=True)"
+       }
+      ]
+     },
+     "secs": 249.8
+    }
+   ]
+  }
+ ]
+}

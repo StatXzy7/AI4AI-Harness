@@ -1,0 +1,1 @@
+"""FormatGuard harness that enforces, in control flow, a strict output contract: it re-prompts a frozen weak Text-to-SQL solver until its entire reply is exactly one

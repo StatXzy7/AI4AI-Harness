@@ -20,3 +20,4 @@
 [gen] K=5/8 admitted | R_artifact=0.4118 R_contract=0.4118 R_fidelity=0.7143 -> E:\projects\AI4AI-Harness\artifacts\phase2\gen\B_qwen_s0.json
 [gen] builder=qwen(Qwen3.8-Max) arm=C seed=0 gate=False forced=True slots=8 raw_budget=3/slot
   p2_C_qwen_s0_repair                      empty  nv=0/3 mech=0 no python fence
+  p2_C_qwen_s0_vote3                       ADMIT  nv=1/2 mech=0 

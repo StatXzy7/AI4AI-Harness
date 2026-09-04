@@ -1,73 +1,79 @@
-"""Harness that drafts SQL, executes it against the database, and repairs errors iteratively for up to three attempts."""
-
+"""Execution-guided multi-candidate SQL generation with error-based repair for Text-to-SQL."""
 from ..harness_base import SQLHarness
 from .. import bridge
 
 
 class P2P2EDeepseekS0G2(SQLHarness):
-    MAX_ATTEMPTS = 3
-
-    def solve(self, question: str) -> str:
-        prompt = self._build_initial_prompt(question)
-        raw = self._call_llm(prompt)
-        sql = bridge.extract_sql(raw) or raw.strip()
-        last_sql = sql.strip()
-
-        for _ in range(self.MAX_ATTEMPTS):
-            if not last_sql:
-                prompt = self._build_repair_prompt(
-                    question,
-                    last_sql or "(empty)",
-                    "The previous response did not contain a SQL query.",
-                )
-                raw = self._call_llm(prompt)
-                last_sql = (bridge.extract_sql(raw) or raw).strip()
-                continue
-
-            result = self._safe_execute(last_sql)
-            if result.get("ok"):
-                return last_sql
-
-            error = result.get("error") or "Unknown execution error"
-            prompt = self._build_repair_prompt(question, last_sql, error)
-            raw = self._call_llm(prompt)
-            extracted = (bridge.extract_sql(raw) or raw).strip()
-            if extracted:
-                last_sql = extracted
-
-        return last_sql
-
-    def _call_llm(self, prompt: str) -> str:
-        response = self.llm(
-            prompt,
-            system="You are a careful SQLite query generator.",
-            temperature=0.0,
-            n=1,
-        )
+    @staticmethod
+    def _response_to_str(response):
         if isinstance(response, list):
             return response[0] if response else ""
-        return str(response)
+        return response or ""
 
-    def _safe_execute(self, sql: str):
-        try:
-            return self.execute(sql)
-        except Exception as exc:  # defensive: some harnesses may raise
-            return {"ok": False, "rows": [], "error": str(exc)}
+    def solve(self, question: str) -> str:
+        schema = self.schema
+        system = "You are an expert SQLite query writer."
 
-    def _build_initial_prompt(self, question: str) -> str:
-        return (
-            "Write a single SQLite query that answers the question.\n\n"
-            f"Database schema:\n{self.schema}\n\n"
-            f"Question:\n{question}\n\n"
-            "Return only the SQL query and no additional text."
+        def build_prompt(error_block=None):
+            if error_block:
+                return (
+                    f"### Database schema\n{schema}\n\n"
+                    f"### Question\n{question}\n\n"
+                    "Previous attempts failed:\n"
+                    f"{error_block}\n\n"
+                    "Write a corrected SQLite SELECT query that answers the question.\n"
+                    "Output only the raw SQL query, no explanation."
+                )
+            return (
+                f"### Database schema\n{schema}\n\n"
+                f"### Question\n{question}\n\n"
+                "Write a SQLite SELECT query that answers the question.\n"
+                "Output only the raw SQL query, no explanation."
+            )
+
+        candidates = []
+        ok_without_rows = None
+
+        # Phase 1: diverse candidate generation and execution
+        for _ in range(3):
+            raw = self._response_to_str(
+                self.llm(build_prompt(), system=system, temperature=0.2, n=1)
+            )
+            sql = bridge.extract_sql(raw)
+            if not sql:
+                continue
+            result = self.execute(sql)
+            candidates.append((sql, result))
+            if result.get("ok"):
+                if result.get("rows"):
+                    return sql
+                if ok_without_rows is None:
+                    ok_without_rows = sql
+
+        # If one query was valid but returned no rows, return it rather than repairing.
+        if ok_without_rows is not None:
+            return ok_without_rows
+
+        # Phase 2: error-aware repair
+        error_block = "\n\n".join(
+            f"SQL: {sql}\nError: {res.get('error')}"
+            for sql, res in candidates
+            if res and not res.get("ok")
         )
+        if not error_block:
+            # No failed SQL generated; fall back to first candidate or empty.
+            return candidates[0][0] if candidates else ""
 
-    def _build_repair_prompt(self, question: str, previous_sql: str, error: str) -> str:
-        return (
-            "The following SQLite query generated for the question is invalid or produced an error.\n\n"
-            f"Previous SQL:\n{previous_sql}\n\n"
-            f"Error:\n{error}\n\n"
-            f"Database schema:\n{self.schema}\n\n"
-            f"Question:\n{question}\n\n"
-            "Write a corrected SQLite query. Return only the SQL query and no additional text."
+        raw = self._response_to_str(
+            self.llm(build_prompt(error_block), system=system, temperature=0.0, n=1)
         )
+        sql = bridge.extract_sql(raw)
+        if not sql:
+            return candidates[0][0] if candidates else ""
+
+        result = self.execute(sql)
+        if result.get("ok"):
+            return sql
+
+        # Return repaired SQL even if execution failed, to provide a best-effort answer.
+        return sql
