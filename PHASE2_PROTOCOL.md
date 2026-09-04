@@ -270,6 +270,20 @@ population: 14 distinct sources, 12 PASS / 4 M1 / 3 M2 / 1 M3).
   rather than an active breach (the earlier "already pushed" statement was unverified and
   wrong).
 
+- **D13 (cache concurrency bug; instrument fix preserving frozen semantics).** Multi-process
+  collection (4 AD shards + 1 BC collector) exposed that `SolverCache.get_or_call` wrote the
+  process's whole in-memory dict, so each write clobbered every entry the other processes had
+  added — silently dropping cache entries, which would let the same prompt be re-called and
+  answered differently, violating the common-random-numbers property §4 promises. Fixed with a
+  cross-process file lock and read-merge-write (network call outside the lock); the seek(0)
+  before locking is load-bearing, since "a+" mode leaves the handle at EOF and locking
+  different bytes per process excludes nobody. Verified: 4×30, 8×100 and repeated stress runs
+  persist 100% of entries. All collectors were restarted under the fixed cache (JSONL
+  collection is resumable; no cell lost). This is an implementation fix toward the frozen
+  semantics, not a change of them. Also recorded: throughput reality — a single 24-worker
+  collector needed ~230 h for the primary matrix; the run now uses 4 AD shards × 32 workers +
+  1 BC × 32 (≈ 83 rows/min measured), ETA ≈ 28 h for AD, ≈ 15 h for BC.
+
 ## 11. Residual blockers (owned, not claimed solved)
 
 1. **Credential revocation — user action, outstanding.** Until the exposed key is revoked
