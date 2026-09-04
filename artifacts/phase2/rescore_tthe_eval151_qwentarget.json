@@ -1,0 +1,123 @@
+{
+  "parquet": "artifacts\\outcomes\\tthe_eval151_qwentarget.parquet",
+  "n_cells": 2718,
+  "agreement": 0.9746,
+  "n_disagree": 69,
+  "ours_1_official_0": 0,
+  "ours_0_official_1": 69,
+  "mean_acc_ours": 0.5324,
+  "mean_acc_official": 0.5578,
+  "per_harness": {
+    "bare": {
+      "harness_correct": 0.5364,
+      "official_correct": 0.5497
+    },
+    "c2_b2dexp_decompose": {
+      "harness_correct": 0.5033,
+      "official_correct": 0.5232
+    },
+    "c2_b2dexp_error_classify": {
+      "harness_correct": 0.5497,
+      "official_correct": 0.5629
+    },
+    "c2_b2dexp_format_guard": {
+      "harness_correct": 0.5563,
+      "official_correct": 0.5629
+    },
+    "c2_b2dexp_repair": {
+      "harness_correct": 0.5364,
+      "official_correct": 0.5497
+    },
+    "c2_b2dexp_two_view": {
+      "harness_correct": 0.5232,
+      "official_correct": 0.5364
+    },
+    "c2_b2dexp_vote3": {
+      "harness_correct": 0.5364,
+      "official_correct": 0.5497
+    },
+    "cand_bird_g1_b1r0_g1": {
+      "harness_correct": 0.5563,
+      "official_correct": 0.5695
+    },
+    "cand_bird_g1_b1r1_g0": {
+      "harness_correct": 0.5232,
+      "official_correct": 0.5364
+    },
+    "cand_bird_g1_b1r1_g1": {
+      "harness_correct": 0.5762,
+      "official_correct": 0.5828
+    },
+    "cand_bird_g1_b2r0_g1": {
+      "harness_correct": 0.5762,
+      "official_correct": 0.5894
+    },
+    "cand_bird_pop1_b0r0_g0": {
+      "harness_correct": 0.5364,
+      "official_correct": 0.5497
+    },
+    "cand_bird_pop1_b0r0_g1": {
+      "harness_correct": 0.5828,
+      "official_correct": 0.596
+    },
+    "hpc_hint": {
+      "harness_correct": 0.2848,
+      "official_correct": 0.5232
+    },
+    "hpc_repair": {
+      "harness_correct": 0.5563,
+      "official_correct": 0.5695
+    },
+    "hpc_schema": {
+      "harness_correct": 0.5695,
+      "official_correct": 0.5828
+    },
+    "hpc_vote3": {
+      "harness_correct": 0.543,
+      "official_correct": 0.5563
+    },
+    "react": {
+      "harness_correct": 0.5364,
+      "official_correct": 0.5497
+    }
+  },
+  "disagreeing_tasks": [
+    "card_games#110",
+    "card_games#127",
+    "card_games#139",
+    "card_games#147",
+    "card_games#152",
+    "card_games#153",
+    "card_games#155",
+    "card_games#162",
+    "card_games#176",
+    "card_games#178",
+    "card_games#186",
+    "card_games#22",
+    "card_games#26",
+    "card_games#41",
+    "card_games#5",
+    "card_games#57",
+    "card_games#60",
+    "card_games#61",
+    "card_games#64",
+    "card_games#70",
+    "card_games#74",
+    "card_games#8",
+    "card_games#82",
+    "card_games#86",
+    "card_games#87",
+    "card_games#94",
+    "formula_1#114",
+    "formula_1#135",
+    "formula_1#144",
+    "formula_1#173",
+    "formula_1#23",
+    "formula_1#29",
+    "formula_1#31",
+    "formula_1#51",
+    "formula_1#89",
+    "formula_1#94",
+    "formula_1#96"
+  ]
+}

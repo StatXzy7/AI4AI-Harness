@@ -1,0 +1,68 @@
+{
+  "parquet": "artifacts\\outcomes\\tthe_eval151_matrix_round4.parquet",
+  "n_cells": 1963,
+  "agreement": 0.9868,
+  "n_disagree": 26,
+  "ours_1_official_0": 0,
+  "ours_0_official_1": 26,
+  "mean_acc_ours": 0.5099,
+  "mean_acc_official": 0.5232,
+  "per_harness": {
+    "bare": {
+      "harness_correct": 0.5099,
+      "official_correct": 0.5232
+    },
+    "cand_oldds_b3r1_g0": {
+      "harness_correct": 0.5099,
+      "official_correct": 0.5232
+    },
+    "cand_oldds_b3r1_g1": {
+      "harness_correct": 0.5099,
+      "official_correct": 0.5232
+    },
+    "cand_oldds_b4r0_g0": {
+      "harness_correct": 0.5099,
+      "official_correct": 0.5232
+    },
+    "cand_oldds_b4r0_g1": {
+      "harness_correct": 0.5099,
+      "official_correct": 0.5232
+    },
+    "cand_oldds_b4r1_g0": {
+      "harness_correct": 0.5099,
+      "official_correct": 0.5232
+    },
+    "cand_oldds_b4r1_g1": {
+      "harness_correct": 0.5099,
+      "official_correct": 0.5232
+    },
+    "cand_oldqwen_b3r1_g0": {
+      "harness_correct": 0.5099,
+      "official_correct": 0.5232
+    },
+    "cand_oldqwen_b3r1_g1": {
+      "harness_correct": 0.5099,
+      "official_correct": 0.5232
+    },
+    "cand_oldqwen_b4r0_g0": {
+      "harness_correct": 0.5099,
+      "official_correct": 0.5232
+    },
+    "cand_oldqwen_b4r0_g1": {
+      "harness_correct": 0.5099,
+      "official_correct": 0.5232
+    },
+    "cand_oldqwen_b4r1_g0": {
+      "harness_correct": 0.5099,
+      "official_correct": 0.5232
+    },
+    "cand_oldqwen_b4r1_g1": {
+      "harness_correct": 0.5099,
+      "official_correct": 0.5232
+    }
+  },
+  "disagreeing_tasks": [
+    "card_games#178",
+    "card_games#41"
+  ]
+}
