@@ -1,8 +1,6 @@
 {
-  "name": "p2p2e_deepseek_s0g1",
+  "name": "p2p2e-deepseek-s0g3",
   "min_llm_calls": 2,
-  "min_executions": 1,
-  "min_distinct_samples": 1,
   "branches_on_execution": true,
   "carries_data_forward": true
 }

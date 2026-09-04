@@ -1,7 +1,8 @@
 {
   "name": "P2P2EDeepseekS0G2",
-  "min_llm_calls": 2,
-  "min_executions": 1,
+  "min_llm_calls": 1,
+  "min_executions": 0,
+  "min_distinct_samples": 0,
   "branches_on_execution": true,
   "carries_data_forward": true
 }

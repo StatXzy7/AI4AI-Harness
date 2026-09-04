@@ -1,80 +1,98 @@
-"""Harness that generates a plan, uses it to produce SQL, then iteratively repairs failed queries using execution feedback."""
+"""Two-phase plan-then-SQL generation with execution-guided repair for text-to-SQL."""
 from ..harness_base import SQLHarness
 from .. import bridge
 
+
 class P2P2EDeepseekS0G1(SQLHarness):
     def solve(self, question: str) -> str:
-        # Step 1: Generate a natural language plan for the SQL query
-        plan_prompt = f"""Given the following database schema:
-{self.schema}
+        schema = self.schema
 
-Question: {question}
+        def ask(prompt: str, system: str = "", temperature: float = 0.0, n: int = 1) -> str:
+            response = self.llm(prompt, system=system, temperature=temperature, n=n)
+            if isinstance(response, list):
+                return response[0] if response else ""
+            return response
 
-Provide a step-by-step plan for writing a SQL query to answer the question. Describe the tables, columns, joins, filters, aggregations, and any other relevant details. Do not write the actual SQL query yet."""
-
-        plan_response = self.llm(plan_prompt, system="You are an expert SQL query planner.", temperature=0.2, n=1).strip()
-        if not plan_response:
-            plan_response = "No plan generated."
-
-        # Step 2: Generate SQL using the plan
-        sql_prompt = f"""Given the database schema:
-{self.schema}
-
-Question: {question}
-
-Plan:
-{plan_response}
-
-Now write the SQL query that implements this plan. Output only the SQL query, nothing else."""
-
-        sql_response = self.llm(sql_prompt, system="You are an expert SQL writer.", temperature=0.0, n=1)
-        sql = bridge.extract_sql(sql_response)
-
-        # Fallback: if no SQL generated, try direct generation without plan
-        if not sql:
-            direct_prompt = f"""Given schema:
-{self.schema}
-
-Question: {question}
-
-Write a SQL query for SQLite. Output only the SQL query."""
-            sql_response = self.llm(direct_prompt, system="You are a SQL expert.", temperature=0.0, n=1)
-            sql = bridge.extract_sql(sql_response)
-        if not sql:
-            return ""
-
-        # Execute initial SQL
-        result = self.execute(sql)
-        if result["ok"]:
-            return sql
-
-        # Repair loop with execution feedback
-        max_retries = 3
-        prev_sql = sql
-        for attempt in range(1, max_retries + 1):
-            error_msg = result.get("error", "Unknown error")
-            repair_prompt = f"""The following SQL query for SQLite produced an error.
+        # Phase 1: produce a short execution plan before writing SQL.
+        plan_prompt = f"""You are an expert SQL planner.
 
 Database schema:
-{self.schema}
+{schema}
 
 Question: {question}
 
-Previous SQL:
-{prev_sql}
+Write a concise step-by-step plan for the SQL query that answers the question.
+Do not write SQL yet."""
+        plan = ask(
+            plan_prompt,
+            system="You are a helpful assistant that plans SQL queries.",
+            temperature=0.0,
+        )
 
-Error:
-{error_msg}
+        # Phase 2: generate SQL conditioned on the plan.
+        sql_prompt = f"""You are an expert SQL developer.
 
-Please fix the SQL query. Output only the corrected SQL query."""
-            repair_response = self.llm(repair_prompt, system="You are an expert SQL repair assistant.", temperature=0.0, n=1)
-            repaired_sql = bridge.extract_sql(repair_response)
-            if not repaired_sql:
+Database schema:
+{schema}
+
+Question: {question}
+
+Step-by-step plan:
+{plan}
+
+Write a single SQLite SQL query that answers the question.
+Return only the SQL query."""
+        sql_response = ask(
+            sql_prompt,
+            system="You are a helpful assistant that writes SQL queries.",
+            temperature=0.0,
+        )
+
+        sql = bridge.extract_sql(sql_response)
+        if not sql:
+            # Last-resort fallback if the SQL extractor cannot find a query.
+            sql = sql_response.strip()
+
+        # Execution-guided repair loop.
+        max_repairs = 2
+        for attempt in range(max_repairs + 1):
+            try:
+                result = self.execute(sql)
+            except Exception as exc:  # pragma: no cover - defensive
+                result = {"ok": False, "error": str(exc)}
+
+            if result.get("ok"):
+                return sql
+
+            if attempt == max_repairs:
                 break
-            result = self.execute(repaired_sql)
-            if result["ok"]:
-                return repaired_sql
-            prev_sql = repaired_sql
 
-        # If all retries fail, return the last attempted SQL
-        return prev_sql
+            error = result.get("error", "unknown execution error")
+            repair_prompt = f"""You are an expert SQL developer. Fix the SQLite query.
+
+Database schema:
+{schema}
+
+Question: {question}
+
+Current SQL:
+{sql}
+
+Execution error:
+{error}
+
+Return only the corrected SQL query."""
+            repair_response = ask(
+                repair_prompt,
+                system="You are a helpful assistant that fixes SQL queries.",
+                temperature=0.0,
+            )
+
+            repaired_sql = bridge.extract_sql(repair_response)
+            if repaired_sql:
+                sql = repaired_sql
+            else:
+                # If no SQL can be extracted from the repair response, stop early.
+                break
+
+        return sql

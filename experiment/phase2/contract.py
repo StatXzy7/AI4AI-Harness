@@ -60,6 +60,16 @@ CONTRACT_KEYS = {
 S_FAIL = ([BROKEN_SQL, FIX_A, FIX_A, FIX_A], "broken_col")
 S_OK = ([FIX_B, FIX_A, FIX_A, FIX_A], None)
 S_CARRY = ([f"stage one says {LINK_A}", FIX_A, FIX_A, FIX_A], None)
+# Carry probe under FAILURE. A conditional repair harness only carries data forward when
+# something failed, so testing carry only in a success world makes the property unfalsifiable
+# for exactly the mechanisms most likely to assert it. The marker rides on the failing query so
+# a harness that echoes the previous SQL, or the error, propagates it.
+S_CARRY_FAIL = ([f"SELECT broken_col FROM t1 -- {LINK_A}", FIX_A, FIX_A, FIX_A], "broken_col")
+# Filter probe: the MAJORITY of candidates fails to execute. A harness whose control flow
+# depends on execution outcome discards them and returns the survivor; one that ignores
+# execution returns the failing majority. This detects execution-dependent selection, which
+# S_FAIL/S_OK cannot see when both paths happen to converge on the same answer.
+S_FILTER = ([BROKEN_SQL, BROKEN_SQL, FIX_A, FIX_A], "broken_col")
 
 # Selection probes. Q1 and Q2 are PERMUTATIONS of the same sample multiset; Q3 changes the
 # multiset. A harness that selects by content is invariant to the first and sensitive to the
@@ -87,6 +97,7 @@ def observe(harness: str) -> dict:
     """Run the three probes once and reduce each trace to the observables the DSL talks about."""
     out = {}
     for tag, (resp, fail_on) in (("fail", S_FAIL), ("ok", S_OK), ("carry", S_CARRY),
+                                 ("carry_fail", S_CARRY_FAIL), ("filter", S_FILTER),
                                  ("q1", (Q1, None)), ("q2", (Q2, None)), ("q3", (Q3, None))):
         r = run_variant(harness, resp, fail_on)
         llm = [s for s in r["trace"] if s["step"] == "coder_llm"]
@@ -140,15 +151,23 @@ def check(contract: dict, obs: dict) -> list[tuple[str, bool, str]]:
         # grade a stricter property than the one the builder was asked to assert, and would fail
         # a legitimate "if it failed, fall back to a different candidate" branch.
         differs = (f["n_llm"] != k["n_llm"]) or (norm(f["final"]) != norm(k["final"]))
-        res.append(("branches_on_execution", bool(differs),
-                    f"fail-trace {f['n_llm']}calls/{norm(f['final'])[:24]!r} vs "
-                    f"ok-trace {k['n_llm']}calls/{norm(k['final'])[:24]!r} "
-                    f"(error_text_fed_back={f['err_fed_back']}, not required)"))
+        # Second, independent route: the majority of candidates fails to execute. Returning the
+        # survivor rather than the failing majority is itself proof that control flow consulted
+        # the execution outcome. Needed because S_FAIL/S_OK are blind to execution-dependent
+        # FILTERING whenever both paths converge on the same answer.
+        flt = obs["filter"]
+        filtered = norm(flt["final"]) not in (norm(BROKEN_SQL), "")
+        res.append(("branches_on_execution", bool(differs or filtered),
+                    f"fail/ok {f['n_llm']}calls/{norm(f['final'])[:18]!r} vs "
+                    f"{k['n_llm']}calls/{norm(k['final'])[:18]!r} (differs={differs}); "
+                    f"failing-majority probe -> {norm(flt['final'])[:18]!r} (filtered={filtered})"))
 
     if contract.get("carries_data_forward"):
-        res.append(("carries_data_forward", c["marker_fed_back"],
-                    "stage-1 marker reached a later prompt" if c["marker_fed_back"]
-                    else "stage-1 output never reached a later prompt"))
+        cf = obs["carry_fail"]
+        carried = c["marker_fed_back"] or cf["marker_fed_back"]
+        res.append(("carries_data_forward", carried,
+                    f"marker reached a later prompt (success-world={c['marker_fed_back']}, "
+                    f"failure-world={cf['marker_fed_back']})"))
 
     if contract.get("final_invariant_to_sample_order"):
         q1, q2, q3 = obs["q1"], obs["q2"], obs["q3"]

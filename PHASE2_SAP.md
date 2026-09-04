@@ -375,6 +375,32 @@ on the day-1 population: 14 harnesses, 14 distinct source hashes, 14–135 lines
   and the A–D repair scenario legitimately requires error feedback because the assigned `repair`
   strategy explicitly instructs the builder to feed the error back.
 
+- **2026-09-04 v1.4 — arm-E probe coverage corrected; gate re-frozen after full calibration.**
+  Running the E2 self-audit against the three **known-good human harnesses** — the pre-registered
+  calibration invariant that known-good implementations must pass — showed two of three failing:
+
+  * `hpc_repair` failed `carries_data_forward`. The carry probe ran only a **success** world, and a
+    conditional repair harness correctly carries nothing forward when nothing failed. The property
+    was therefore unfalsifiable for exactly the mechanisms most likely to assert it. Added a
+    failure-world carry probe.
+  * `hpc_vote3` failed `branches_on_execution`. The scripted responses made the filtered and
+    unfiltered paths converge on the same answer, so execution-dependent **filtering** was
+    invisible. Added a failing-majority probe: when most candidates fail to execute, returning the
+    survivor rather than the failing majority is itself proof that control flow consulted the
+    execution outcome.
+
+  Both were **insufficient probe power**, not thresholds tuned to candidate scores; both were
+  detected by known-good controls rather than by looking at arm-E candidates. Full calibration
+  matrix now passes 6/6: `hpc_repair`, `hpc_vote3`, `hpc_schema` pass; `neg_uncond_twocall` and
+  `neg_selectfirst` are rejected; a vacuous contract is rejected.
+
+  **Consequence for the M4 claim: it is NOT established.** The arm-E results reported earlier in
+  this log (K=0/4 twice, `R_fidelity` 0.00) were produced by an under-powered gate and are void.
+  Arm E is regenerated from seed 0 under the 6/6-calibrated verifier, and the earlier candidates
+  are discarded. Whether builders over-assert their own contracts is re-opened as an empirical
+  question. The gate is now frozen; any further change requires a calibration-invariant violation,
+  logged here, plus regeneration.
+
   **A–D are unaffected.** Their admission rule (`neutral-valid ∧ (mechanism-pass ∨ ungated)`) and
   the conformance semantics they use are byte-identical to the frozen version; the arm-E work is
   confined to an `arm == "E"` branch and an E-specific prompt pair. A–D generation ran, and
