@@ -19,14 +19,30 @@ must pass the frozen conformance suite (G=1) or only neutral validity (G=0).
 | **S=1 forced** | **C** | **D** |
 
 **Arm E — open mechanism discovery.** The builder receives *no mechanism vocabulary at all*:
-no repair, voting, schema-linking, critique or decomposition. It emits (i) a behavioural
-contract in a generic trace DSL and (ii) an implementation, and is gated on whether the
-implementation honours **its own** contract.
+no repair, voting, schema-linking, critique or decomposition. It is gated on whether its
+implementation honours **its own** declared contract.
 
 E is a **pre-specified secondary arm and is deliberately not a fifth factorial cell.** It
-answers a different question — whether builders can autonomously discover and faithfully
-implement behaviourally distinct mechanisms without author-supplied strategy labels — and
-must not contaminate the A–D causal design.
+answers a different question — whether builders can autonomously discover, faithfully
+implement, and *accurately describe* behaviourally distinct mechanisms without author-supplied
+strategy labels — and must not contaminate the A–D causal design.
+
+### E is elicited in two stages
+
+A single call asking for code *and* a contract requires the builder to predict its own
+behaviour before writing it, which is both unfair and confounded. Instead:
+
+- **E1 — free generation.** No mechanism vocabulary, and the contract DSL is withheld, so the
+  implementation cannot be steered by the language it will later be audited in. The emitted code
+  is written to disk and **frozen**.
+- **E2 — self-audit.** The same builder is shown its own frozen implementation and the generic
+  trace DSL, and asked for the **minimal** set of assertions the code actually guarantees:
+  *omit anything you cannot establish; an omitted assertion costs nothing, a false assertion
+  causes rejection.* E1 is never regenerated in response to E2, and the gate never edits the
+  contract it is handed.
+
+This separates three abilities that a one-shot protocol conflates: discovering a mechanism,
+implementing it, and describing it accurately.
 
 ### The contract DSL (the entire vocabulary arm E receives)
 
@@ -37,17 +53,37 @@ These are instrumentation primitives — an LLM call, an execution, an ordering,
 dependency, a branch, a permutation invariance — not mechanism names. Some such ontology is
 unavoidable for any trace-based verification; what is avoided is naming the mechanisms.
 
-Two admission conditions, both enforced automatically:
+Contracts are **sparse**: an unasserted property is neither false nor a failure. Only asserted
+properties are checked.
 
-- **Non-vacuity.** The contract must be *violated by the bare baseline*, enforced by literally
-  running the contract against `bare.py`. This is the `C(H) ≠ C(H₀)` condition; a contract the
-  baseline already satisfies describes nothing.
-- **Counterfactual discriminability.** Any claimed behaviour is verified by flipping the
-  relevant condition and re-running. `branches_on_execution` is checked against a probe pair
-  differing *only* in whether the first query executes cleanly, so an unconditional second call
-  cannot impersonate conditional repair. `final_invariant_to_sample_order` is checked against a
-  permutation of one sample multiset plus a changed multiset, so returning a fixed position
-  cannot impersonate selection.
+### Three-layer gate
+
+1. **Contract validity** — well-formed, keys drawn only from the DSL, at least one assertion.
+2. **Non-vacuity** — the contract must be violated by `bare.py`, enforced by literally running it.
+   This is a **generic trace difference**, `C(H) ≠ C(H₀)`; it does *not* require conditional
+   branching, since a multi-sample mechanism can be non-vacuous through `min_distinct_samples`
+   alone.
+3. **Conformance** — every **asserted** property is verified. Conditional and content-based
+   assertions trigger paired counterfactual probes: `branches_on_execution` is tested against a
+   probe pair differing only in whether the first query executes cleanly, so an unconditional
+   second call cannot impersonate conditional repair; `final_invariant_to_sample_order` is tested
+   against a permutation of one sample multiset plus a changed multiset, so returning a fixed
+   position cannot impersonate selection.
+
+Admission is `neutral-valid ∧ contract-valid ∧ non-vacuous ∧ all asserted claims conform`.
+
+**Failed properties are never dropped automatically.** Narrowing a contract to the subset a
+harness happens to satisfy would let the evaluator repair the builder's declaration after
+reading the trace, which is relabelling a mechanism after seeing how it behaved.
+
+### Arm E reports three rates, not one admission number
+
+    R_artifact   neutral-valid code (parses, imports, returns SQL)
+    R_contract   contract valid and non-vacuous
+    R_fidelity   all asserted properties verified, CONDITIONAL on a valid contract
+
+"artifact validity 95%, mechanism present 80%, self-contract fidelity 25%" is a research
+finding; "E admitted 2/8" is not.
 
 ## 2. Equal raw generation budget
 
@@ -178,26 +214,61 @@ what rules out a population-size artifact.
 
 ## 9. Revised failure taxonomy
 
-Phase-I collapsed two qualitatively different failures into one. They are now separated:
+Phase-I collapsed several qualitatively different failures into one. They are now separated
+into a ladder, where each rung requires everything below it to have succeeded:
 
-- **G0 — generation null.** The builder produces no distinct artifact: `SHA256(H_i) = SHA256(H₀)`.
-  This is a *generation* failure, not behavioural collapse. All 40 old-protocol
-  `cand_oldds_*`/`cand_oldqwen_*` harnesses are G0. **The Phase-I claim that this run demonstrates
-  builder-independent behavioural collapse is retracted**: with byte-identical code, "780/780 pairs
-  identical, 0 repairs" is a tautology. The data are kept and reported as G0.
-- **G1 — behavioural collapse.** Genuinely distinct artifacts with collapsed outcomes. This is the
-  paper's headline claim, and it rests on the day-1 population: 14 harnesses, 14 distinct source
-  hashes, 14–135 lines, scored 12 PASS / 4 T1 / 3 T2 / 1 T3 by the corrected suite.
+- **M0 — generation null.** No distinct artifact: `SHA256(H_i) = SHA256(H₀)`. All 40
+  old-protocol `cand_oldds_*`/`cand_oldqwen_*` harnesses are M0. **The Phase-I claim that this
+  run demonstrates builder-independent behavioural collapse is retracted**: with byte-identical
+  code, "780/780 pairs identical, 0 repairs" is a tautology. The data are kept, reported as M0.
+- **M1 — mechanism absent.** Distinct code, but the described mechanism never executes
+  (Phase-I *T1*).
+- **M2 — mechanism present, causal effect absent.** It executes and observes feedback, but
+  nothing downstream depends on it (Phase-I *T2*).
+- **M3 — mechanism present but broken.** A real multi-step path with a faulty implementation
+  (Phase-I *T3*).
+- **M4 — mechanism present, self-specification unfaithful.** The mechanism is genuinely
+  implemented and non-vacuous, but the builder's own description of its behaviour asserts
+  properties the implementation does not have.
 
-T1/T2/T3 are a trace-level diagnosis **within G1 only**.
+M4 is new, and was surfaced by the arm-E calibration pilot (§10). It matters because it is the
+same thesis one level up: **LLM-generated artifacts can look richer in their descriptions than
+they are in their behaviour.** Whether M4 replicates across builders and seeds is left to the
+confirmatory data; no directional hypothesis is registered for it.
 
-This split strengthens the paper: naive harness generation has two distinct failure modes, and
-the more primitive one was previously being reported as evidence for the subtler one.
+The headline collapse claim concerns **M1–M3 within genuinely distinct artifacts**, and rests
+on the day-1 population: 14 harnesses, 14 distinct source hashes, 14–135 lines, scored 12 PASS /
+4 M1 / 3 M2 / 1 M3 by the corrected suite.
 
 ## 10. Changelog
 
 - **2026-09-04 v1** — initial freeze. Primary estimand (oracle headroom, D−A, paired by
   builder×seed, official judge), confirmatory secondary hierarchy, equal raw generation budget
   R=3, slot-failure and K-matching rules, hierarchical paired bootstrap, gate freeze with
-  positive- and negative-control calibration, G0/G1 taxonomy revision. No confirmatory outcome
+  positive- and negative-control calibration, taxonomy revision. No confirmatory outcome
   observed at time of writing.
+- **2026-09-04 v1.1 — arm E contract-elicitation protocol replaced; A–D untouched.**
+  The first arm-E protocol asked for code and contract in one call and admitted 0 of 4 slots
+  (`R_artifact` 0.92, mechanism pass 0.00). Diagnosis showed this was **neither a gate failure
+  nor an implementation failure**: the implementations were real and non-vacuous, and the
+  builder systematically **over-asserted** its own contract — one candidate declared all seven
+  DSL properties, including `branches_on_execution`, while making four LLM calls and returning
+  the same answer whether or not the first query executed cleanly.
+
+  To confirm the gate was discriminating rather than merely strict, one contract was **manually**
+  reduced to the five properties the implementation satisfies; it then passed, and the reduced
+  contract was still non-vacuous. **That reduction was a gate-calibration measurement only.** It
+  is not an admission decision, no automatic property-dropping exists, and the candidate is not
+  admitted — letting the evaluator narrow a contract after reading the trace would be relabelling
+  a mechanism after observing its behaviour.
+
+  Consequently: the four pilot candidates and the three pre-freeze smoke runs are quarantined in
+  `artifacts/phase2/calibration_pilot/` and **excluded from every quantitative table**; arm E is
+  regenerated from seed 0 under two-stage elicitation with the three-layer gate; and the pilot's
+  finding is recorded as the new taxonomy rung **M4**. This change is based on measurement
+  calibration, not on any confirmatory outcome.
+
+  **A–D are unaffected.** Their admission rule (`neutral-valid ∧ (mechanism-pass ∨ ungated)`) and
+  the conformance semantics they use are byte-identical to the frozen version; the arm-E work is
+  confined to an `arm == "E"` branch and an E-specific prompt pair. A–D generation ran, and
+  continues to run, under gate commit `a87ced4`.

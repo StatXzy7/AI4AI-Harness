@@ -121,38 +121,51 @@ Write the COMPLETE Python file. First line: a one-sentence docstring describing 
 Class name MUST be exactly {cls}.
 """
 
-# Arm E. No mechanism is named anywhere in this prompt -- not repair, voting, schema linking,
-# critique or decomposition. The builder receives only instrumentation primitives, which are
-# unavoidable in any trace-based verification, and must state its own contract in them.
-PROMPT_OPEN = """You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.
+# Arm E, STAGE 1. No mechanism is named anywhere -- not repair, voting, schema linking,
+# critique or decomposition -- and the contract DSL is withheld until stage 2, so the
+# implementation cannot be steered by the vocabulary it will later be audited in.
+PROMPT_OPEN_GEN = """You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.
 
 {skeleton}
 Design a harness that changes the target model's solving procedure in a way you judge useful.
-The design is entirely yours.
+The design is entirely yours: no mechanism is prescribed. Make it a real change to the control
+flow, not only a longer prompt.
 
-STEP 1 -- BEHAVIOURAL CONTRACT. State what observable execution behaviour makes your harness
-different from a baseline that calls the model once and returns the answer. Emit a JSON object
-in a ```json fence using ONLY these keys (omit any that do not apply):
+Write the COMPLETE Python file. First line: a one-sentence docstring describing what it does.
+Class name MUST be exactly {cls}.
+"""
+
+# Arm E, STAGE 2. The implementation is already frozen on disk; the builder now audits its own
+# code. The instruction is MINIMALITY: an unasserted property is not a failure, but a false
+# assertion is. Stage 1 is never regenerated in response to this.
+PROMPT_SELF_AUDIT = """Below is a harness implementation you produced. It is now FROZEN and cannot be changed.
+
+```python
+{code}
+```
+
+Emit the MINIMAL set of observable behavioural assertions that this implementation actually
+guarantees, as a JSON object in a ```json fence, using ONLY these keys:
 
     "name"                              short identifier you choose
-    "min_llm_calls"        int          at least this many generation calls
-    "min_executions"       int          at least this many SQL executions
-    "min_distinct_samples" int          at least this many sampled candidate answers
-    "branches_on_execution"      bool   your control flow depends on WHETHER a query executed cleanly
+    "min_llm_calls"        int          it always makes at least this many generation calls
+    "min_executions"       int          it always runs at least this many SQL executions
+    "min_distinct_samples" int          it always draws at least this many candidate answers
+    "branches_on_execution"      bool   its control flow depends on WHETHER a query executed
+                                        cleanly -- i.e. it does something DIFFERENT when the
+                                        first query succeeds than when it fails
     "carries_data_forward"       bool   output of an earlier step appears in a later step's prompt
-    "final_from_last_generation" bool   you return the most recent generation
-    "final_invariant_to_sample_order" bool  your returned answer is unchanged if the candidate
-                                            answers are permuted, but changes if the set of
-                                            candidate answers changes
+    "final_from_last_generation" bool   it returns the most recent generation
+    "final_invariant_to_sample_order" bool  its answer is unchanged if the candidate answers are
+                                            permuted, but changes if the SET of candidates changes
 
-Two rules your contract must satisfy, both checked automatically:
-  * It must be VIOLATED by the one-call baseline. A contract that baseline already satisfies
-    describes nothing.
-  * Any behaviour you claim is verified by flipping the relevant condition and re-running you.
-    Claiming "branches_on_execution" when you always make the same calls regardless will fail.
+Rules:
+  * OMIT any key you cannot establish from the code. An omitted assertion costs you nothing.
+  * A FALSE assertion causes rejection. Do not assert a property you merely intended.
+  * At least one assertion must be something a harness that calls the model once and returns
+    the answer would violate.
 
-STEP 2 -- IMPLEMENTATION. Emit the COMPLETE Python file in a ```python fence, implementing
-EXACTLY the contract you declared. Class name MUST be exactly {cls}.
+Emit only the JSON object.
 """
 
 
@@ -222,10 +235,26 @@ def mechanism_pass(fname: str, code: str, arm: str, strategy: str | None,
 def build_prompt(arm, cls, strategy):
     sk = SKELETON.format(cls=cls)
     if arm == "E":
-        return PROMPT_OPEN.format(skeleton=sk, cls=cls)
+        return PROMPT_OPEN_GEN.format(skeleton=sk, cls=cls)
     if strategy is not None:
         return PROMPT_FORCED.format(skeleton=sk, strategy=STRATEGIES[strategy], cls=cls)
     return PROMPT_FREE.format(skeleton=sk, declare=DECLARE, cls=cls)
+
+
+def self_audit(client, model, code: str, seed: int):
+    """Arm E stage 2. Hand the frozen implementation back to the SAME builder and ask for the
+    minimal set of assertions it can actually guarantee. Returns (contract, raw_json_text)."""
+    try:
+        resp = client.chat.completions.create(
+            model=model, temperature=TEMPERATURE, n=1, max_tokens=2048, seed=seed,
+            messages=[{"role": "system", "content": "You audit code and emit only JSON."},
+                      {"role": "user", "content": PROMPT_SELF_AUDIT.format(code=code)}])
+        raw, _ = extract_block(resp.choices[0].message.content or "", "json")
+        if not raw:
+            return None, ""
+        return json.loads(raw), raw
+    except Exception:
+        return None, ""
 
 
 def run_slot(client, model, fname, cls, arm, strategy, seed, gate, raw_dir) -> dict:
@@ -251,19 +280,20 @@ def run_slot(client, model, fname, cls, arm, strategy, seed, gate, raw_dir) -> d
                 continue
             (raw_dir / f"{fname}_raw{i}.py").write_text(code, encoding="utf-8")
 
-            contract = None
-            if arm == "E":
-                cj, _ = extract_block(text, "json")
-                if cj:
-                    try:
-                        contract = json.loads(cj)
-                    except Exception:
-                        rec["reason"] = "contract is not valid JSON"
-                    (raw_dir / f"{fname}_raw{i}.contract.json").write_text(cj, encoding="utf-8")
-                rec["contract"] = contract
-
             ok_n, why_n = neutral_valid(fname, code)
             rec["neutral_valid"], rec["neutral_detail"] = ok_n, why_n
+
+            # Arm E stage 2: the implementation is now frozen on disk; the same builder audits
+            # it in the generic trace DSL. Stage 1 is never regenerated in response to stage 2,
+            # and the gate never edits the contract it is handed.
+            contract = None
+            if arm == "E" and ok_n:
+                contract, craw = self_audit(client, model, code, seed * 100 + i)
+                if craw:
+                    (raw_dir / f"{fname}_raw{i}.contract.json").write_text(craw, encoding="utf-8")
+                rec["contract"] = contract
+                if contract is None:
+                    rec["reason"] = "self-audit produced no valid JSON contract"
             if ok_n and gate:
                 ok_m, det = mechanism_pass(fname, code, arm, strategy, contract)
                 rec["mechanism_pass"], rec["mechanism_detail"] = ok_m, det
@@ -285,12 +315,20 @@ def run_slot(client, model, fname, cls, arm, strategy, seed, gate, raw_dir) -> d
     else:
         (AGENTS_DIR / f"{fname}.py").unlink(missing_ok=True)   # slot failure is final
 
+    # Three rates, reported separately: a builder that writes valid code, states a valid
+    # non-vacuous contract, and then honours it is doing three different things, and collapsing
+    # them into one admission number hides which one failed.
+    n_contract_ok = sum(1 for a in attempts
+                        if (a.get("mechanism_detail") or {}).get("verdict")
+                        not in ("E_INVALID_CONTRACT", "E_VACUOUS_CONTRACT", None)
+                        or a.get("mechanism_pass") is True)
     return {"harness": fname, "arm": arm, "strategy": strategy, "seed": seed,
             "admitted": admitted is not None,
             "admitted_attempt": admitted["attempt"] if admitted else None,
             "contract": admitted["contract"] if admitted else None,
             "n_raw": len(attempts),
             "n_neutral_valid": sum(1 for a in attempts if a["neutral_valid"]),
+            "n_contract_valid": n_contract_ok,
             "n_mechanism_pass": sum(1 for a in attempts if a["mechanism_pass"] is True),
             "attempts": attempts}
 
@@ -346,6 +384,13 @@ def main() -> None:
         "gate": gate, "forced": forced, "raw_attempts_per_slot": RAW_ATTEMPTS,
         "n_slots": len(results), "K_admitted": K,
         "raw_total": tot_raw,
+        # R_artifact: parses, imports, produces SQL.  R_contract: contract valid AND non-vacuous
+        # (arm E only).  R_fidelity: every ASSERTED property verified, conditional on a valid
+        # contract -- this is the self-description fidelity rate.
+        "R_artifact": round(sum(r["n_neutral_valid"] for r in results) / max(1, tot_raw), 4),
+        "R_contract": round(sum(r.get("n_contract_valid", 0) for r in results) / max(1, tot_raw), 4),
+        "R_fidelity": round(sum(r["n_mechanism_pass"] for r in results)
+                            / max(1, sum(r.get("n_contract_valid", 0) for r in results)), 4),
         "p_neutral_valid": round(sum(r["n_neutral_valid"] for r in results) / max(1, tot_raw), 4),
         "p_mechanism_pass": round(sum(r["n_mechanism_pass"] for r in results) / max(1, tot_raw), 4),
         "results": results,
@@ -354,8 +399,8 @@ def main() -> None:
     out = out if out.is_absolute() else ROOT / out
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(summary, indent=1), encoding="utf-8")
-    print(f"[gen] K={K}/{len(results)} admitted | P(neutral valid)={summary['p_neutral_valid']} "
-          f"P(mechanism pass)={summary['p_mechanism_pass']} -> {out}")
+    print(f"[gen] K={K}/{len(results)} admitted | R_artifact={summary['R_artifact']} "
+          f"R_contract={summary['R_contract']} R_fidelity={summary['R_fidelity']} -> {out}")
 
 
 if __name__ == "__main__":
