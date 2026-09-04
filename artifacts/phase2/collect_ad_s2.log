@@ -1,0 +1,6 @@
+[collect] 0 cells already recorded in ad_s2.jsonl
+[collect] 1169 tasks over 9 databases | target=GLM-5.3-Flash
+    p2_A_deepseek_s2_g0: 100/1169 acc=0.570
+    p2_A_deepseek_s2_g0: 200/1169 acc=0.620
+    p2_A_deepseek_s2_g0: 300/1169 acc=0.647
+    p2_A_deepseek_s2_g0: 400/1169 acc=0.662

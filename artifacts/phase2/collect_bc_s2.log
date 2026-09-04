@@ -1,0 +1,3 @@
+[collect] 0 cells already recorded in bc_s2.jsonl
+[collect] 400 tasks over 9 databases | target=GLM-5.3-Flash
+    p2_B_deepseek_s2_g0: 100/400 acc=0.640
