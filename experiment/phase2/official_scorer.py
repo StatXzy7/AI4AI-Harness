@@ -30,6 +30,7 @@ from __future__ import annotations
 import argparse
 import json
 import sqlite3
+import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -44,19 +45,32 @@ def _db_path(db_id: str) -> Path:
 
 
 def _fetch(db_id: str, sql: str):
-    """Run SQL exactly as the official scorer does. Returns None on any failure."""
+    """Run SQL as the official scorer does, under a real wall-clock limit. Returns None on failure.
+
+    sqlite3's `timeout=` only bounds waiting for a LOCK, not execution, so a generated query with a
+    runaway join will otherwise hang a worker forever. set_progress_handler fires every N VM steps
+    and aborts the statement when it returns non-zero, which is the only in-process way to interrupt
+    a long-running SQLite query.
+    """
     if not (sql or "").strip():
         return None
+    conn = None
     try:
         conn = sqlite3.connect(str(_db_path(db_id)), timeout=TIMEOUT_S)
         conn.text_factory = lambda b: b.decode("utf-8", "ignore")
+        deadline = time.monotonic() + TIMEOUT_S
+        conn.set_progress_handler(lambda: 1 if time.monotonic() > deadline else 0, 10000)
         cur = conn.cursor()
         cur.execute(sql)
-        rows = cur.fetchall()
-        conn.close()
-        return rows
+        return cur.fetchall()
     except Exception:
         return None
+    finally:
+        if conn is not None:
+            try:
+                conn.close()
+            except Exception:
+                pass
 
 
 def official_correct(db_id: str, predicted_sql: str, gold_sql: str) -> int:

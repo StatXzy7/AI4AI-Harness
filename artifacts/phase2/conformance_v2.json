@@ -1,0 +1,3172 @@
+{
+  "bare": {
+    "scenario": "plain",
+    "weak_probe": true,
+    "variants": [
+      {
+        "variant": "single",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      }
+    ],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "verdict": "NO_MECHANISM_declared"
+  },
+  "c2_b2dexp_decompose": {
+    "scenario": "twostage",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "marker_A",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 4,
+        "n_samples": 4,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": false,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "marker_B",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 4,
+        "n_samples": 4,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": false,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 4,
+    "n_execs": 1,
+    "verdict": "T2_stage1_output_discarded"
+  },
+  "c2_b2dexp_error_classify": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 3,
+        "n_samples": 3,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 3,
+        "n_samples": 3,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 3,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "c2_b2dexp_format_guard": {
+    "scenario": "plain",
+    "weak_probe": true,
+    "variants": [
+      {
+        "variant": "single",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      }
+    ],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "verdict": "NO_MECHANISM_declared"
+  },
+  "c2_b2dexp_hint_guard": {
+    "scenario": "plain",
+    "weak_probe": true,
+    "variants": [
+      {
+        "variant": "single",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      }
+    ],
+    "n_llm_calls": 1,
+    "n_execs": 1,
+    "verdict": "NO_MECHANISM_declared"
+  },
+  "c2_b2dexp_repair": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "c2_b2dexp_schema_link": {
+    "scenario": "twostage",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "marker_A",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "marker_B",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 0,
+    "verdict": "PASS"
+  },
+  "c2_b2dexp_two_view": {
+    "scenario": "vote2",
+    "weak_probe": true,
+    "variants": [
+      {
+        "variant": "both_A",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "both_B",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 1,
+    "verdict": "PASS"
+  },
+  "c2_b2dexp_vote3": {
+    "scenario": "vote",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "maj_late_B",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 3,
+        "n_execs": 3,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "maj_late_A",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 3,
+        "n_execs": 3,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "maj_early_A",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 3,
+        "n_execs": 3,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      }
+    ],
+    "n_llm_calls": 1,
+    "n_execs": 3,
+    "verdict": "PASS"
+  },
+  "c2_b2qwen_decompose": {
+    "scenario": "twostage",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "marker_A",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 3,
+        "n_samples": 3,
+        "n_execs": 4,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1"
+      },
+      {
+        "variant": "marker_B",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 3,
+        "n_samples": 3,
+        "n_execs": 4,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1"
+      }
+    ],
+    "n_llm_calls": 3,
+    "n_execs": 4,
+    "verdict": "PASS"
+  },
+  "c2_b2qwen_error_classify": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 3,
+        "n_samples": 3,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 3,
+        "n_samples": 3,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1"
+      }
+    ],
+    "n_llm_calls": 3,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "c2_b2qwen_format_guard": {
+    "scenario": "plain",
+    "weak_probe": true,
+    "variants": [
+      {
+        "variant": "single",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1"
+      }
+    ],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "verdict": "NO_MECHANISM_declared"
+  },
+  "c2_b2qwen_hint_guard": {
+    "scenario": "plain",
+    "weak_probe": true,
+    "variants": [
+      {
+        "variant": "single",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1"
+      }
+    ],
+    "n_llm_calls": 1,
+    "n_execs": 2,
+    "verdict": "NO_MECHANISM_declared"
+  },
+  "c2_b2qwen_repair": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "c2_b2qwen_schema_link": {
+    "scenario": "twostage",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "marker_A",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1"
+      },
+      {
+        "variant": "marker_B",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 0,
+    "verdict": "PASS"
+  },
+  "c2_b2qwen_two_view": {
+    "scenario": "vote2",
+    "weak_probe": true,
+    "variants": [
+      {
+        "variant": "both_A",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1"
+      },
+      {
+        "variant": "both_B",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "c2_b3glm_decompose": {
+    "scenario": "twostage",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "marker_A",
+        "crashed": true,
+        "error": "Traceback (most recent call last):\n  File \"E:\\projects\\AI4AI-Harness\\experiment\\phase2\\conformance.py\", line 182, in run_variant\n    mod = importlib.import_module(f\"text_to_sql.agents.{harness_name}\")\n  File \"D:\\anaconda3\\Lib\\importlib\\__init__.py\", line 88, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen importlib._bootstrap>\", line 1387, in _gcd_import\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"E:\\projects\\AI4AI-Harness\\external\\TTHE\\text_to_sql\\agents\\c2_b3glm_decompose.py\", line 56\n    fences = re.findall(r\"\n                        ^\nSyntaxError: unterminated string literal (detected at line 56)\n",
+        "n_llm_calls": 0,
+        "n_samples": 0,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": false,
+        "tracks_expected": false,
+        "final": ""
+      },
+      {
+        "variant": "marker_B",
+        "crashed": true,
+        "error": "Traceback (most recent call last):\n  File \"E:\\projects\\AI4AI-Harness\\experiment\\phase2\\conformance.py\", line 182, in run_variant\n    mod = importlib.import_module(f\"text_to_sql.agents.{harness_name}\")\n  File \"D:\\anaconda3\\Lib\\importlib\\__init__.py\", line 88, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen importlib._bootstrap>\", line 1387, in _gcd_import\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"E:\\projects\\AI4AI-Harness\\external\\TTHE\\text_to_sql\\agents\\c2_b3glm_decompose.py\", line 56\n    fences = re.findall(r\"\n                        ^\nSyntaxError: unterminated string literal (detected at line 56)\n",
+        "n_llm_calls": 0,
+        "n_samples": 0,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": false,
+        "tracks_expected": false,
+        "final": ""
+      }
+    ],
+    "n_llm_calls": 0,
+    "n_execs": 0,
+    "verdict": "INVALID_uncallable",
+    "error": "Traceback (most recent call last):\n  File \"E:\\projects\\AI4AI-Harness\\experiment\\phase2\\conformance.py\", line 182, in run_variant\n    mod = importlib.import_module(f\"text_to_sql.agents.{harness_name}\")\n  File \"D:\\anaconda3\\Lib\\importlib\\__init__.py\", line 88, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen importlib._bootstrap>\", line 1387, in _gcd_import\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"E:\\projects\\AI4AI-Harness\\external\\TTHE\\text_to_sql\\agents\\c2_b3glm_decompose.py\", line 56\n    fences = re.findall(r\"\n                        ^\nSyntaxError: unterminated string literal (detected at line 56)\n"
+  },
+  "c2_b3glm_format_guard": {
+    "scenario": "plain",
+    "weak_probe": true,
+    "variants": [
+      {
+        "variant": "single",
+        "crashed": true,
+        "error": "Traceback (most recent call last):\n  File \"E:\\projects\\AI4AI-Harness\\experiment\\phase2\\conformance.py\", line 182, in run_variant\n    mod = importlib.import_module(f\"text_to_sql.agents.{harness_name}\")\n  File \"D:\\anaconda3\\Lib\\importlib\\__init__.py\", line 88, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen importlib._bootstrap>\", line 1387, in _gcd_import\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"E:\\projects\\AI4AI-Harness\\external\\TTHE\\text_to_sql\\agents\\c2_b3glm_format_guard.py\", line 1\n    \"\"\"Wraps the frozen solver in a strict output-format guard: every reply must be a single\n    ^\nSyntaxError: unterminated triple-quoted string literal (detected at line 1)\n",
+        "n_llm_calls": 0,
+        "n_samples": 0,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": false,
+        "final": ""
+      }
+    ],
+    "n_llm_calls": 0,
+    "n_execs": 0,
+    "verdict": "INVALID_uncallable",
+    "error": "Traceback (most recent call last):\n  File \"E:\\projects\\AI4AI-Harness\\experiment\\phase2\\conformance.py\", line 182, in run_variant\n    mod = importlib.import_module(f\"text_to_sql.agents.{harness_name}\")\n  File \"D:\\anaconda3\\Lib\\importlib\\__init__.py\", line 88, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen importlib._bootstrap>\", line 1387, in _gcd_import\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"E:\\projects\\AI4AI-Harness\\external\\TTHE\\text_to_sql\\agents\\c2_b3glm_format_guard.py\", line 1\n    \"\"\"Wraps the frozen solver in a strict output-format guard: every reply must be a single\n    ^\nSyntaxError: unterminated triple-quoted string literal (detected at line 1)\n"
+  },
+  "c2_b3glm_hint_guard": {
+    "scenario": "plain",
+    "weak_probe": true,
+    "variants": [
+      {
+        "variant": "single",
+        "crashed": true,
+        "error": "Traceback (most recent call last):\n  File \"E:\\projects\\AI4AI-Harness\\experiment\\phase2\\conformance.py\", line 182, in run_variant\n    mod = importlib.import_module(f\"text_to_sql.agents.{harness_name}\")\n  File \"D:\\anaconda3\\Lib\\importlib\\__init__.py\", line 88, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen importlib._bootstrap>\", line 1387, in _gcd_import\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"E:\\projects\\AI4AI-Harness\\external\\TTHE\\text_to_sql\\agents\\c2_b3glm_hint_guard.py\", line 20\n    _FENCE_RE = re.compile(r\"\n                           ^\nSyntaxError: unterminated string literal (detected at line 20)\n",
+        "n_llm_calls": 0,
+        "n_samples": 0,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": false,
+        "final": ""
+      }
+    ],
+    "n_llm_calls": 0,
+    "n_execs": 0,
+    "verdict": "INVALID_uncallable",
+    "error": "Traceback (most recent call last):\n  File \"E:\\projects\\AI4AI-Harness\\experiment\\phase2\\conformance.py\", line 182, in run_variant\n    mod = importlib.import_module(f\"text_to_sql.agents.{harness_name}\")\n  File \"D:\\anaconda3\\Lib\\importlib\\__init__.py\", line 88, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen importlib._bootstrap>\", line 1387, in _gcd_import\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"E:\\projects\\AI4AI-Harness\\external\\TTHE\\text_to_sql\\agents\\c2_b3glm_hint_guard.py\", line 20\n    _FENCE_RE = re.compile(r\"\n                           ^\nSyntaxError: unterminated string literal (detected at line 20)\n"
+  },
+  "c2_b3glm_repair": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "c2_b3glm_schema_link": {
+    "scenario": "twostage",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "marker_A",
+        "crashed": true,
+        "error": "Traceback (most recent call last):\n  File \"E:\\projects\\AI4AI-Harness\\experiment\\phase2\\conformance.py\", line 182, in run_variant\n    mod = importlib.import_module(f\"text_to_sql.agents.{harness_name}\")\n  File \"D:\\anaconda3\\Lib\\importlib\\__init__.py\", line 88, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen importlib._bootstrap>\", line 1387, in _gcd_import\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"E:\\projects\\AI4AI-Harness\\external\\TTHE\\text_to_sql\\agents\\c2_b3glm_schema_link.py\", line 339\n    m = re.search(r\"\n                  ^\nSyntaxError: unterminated string literal (detected at line 339)\n",
+        "n_llm_calls": 0,
+        "n_samples": 0,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": false,
+        "tracks_expected": false,
+        "final": ""
+      },
+      {
+        "variant": "marker_B",
+        "crashed": true,
+        "error": "Traceback (most recent call last):\n  File \"E:\\projects\\AI4AI-Harness\\experiment\\phase2\\conformance.py\", line 182, in run_variant\n    mod = importlib.import_module(f\"text_to_sql.agents.{harness_name}\")\n  File \"D:\\anaconda3\\Lib\\importlib\\__init__.py\", line 88, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen importlib._bootstrap>\", line 1387, in _gcd_import\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"E:\\projects\\AI4AI-Harness\\external\\TTHE\\text_to_sql\\agents\\c2_b3glm_schema_link.py\", line 339\n    m = re.search(r\"\n                  ^\nSyntaxError: unterminated string literal (detected at line 339)\n",
+        "n_llm_calls": 0,
+        "n_samples": 0,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": false,
+        "tracks_expected": false,
+        "final": ""
+      }
+    ],
+    "n_llm_calls": 0,
+    "n_execs": 0,
+    "verdict": "INVALID_uncallable",
+    "error": "Traceback (most recent call last):\n  File \"E:\\projects\\AI4AI-Harness\\experiment\\phase2\\conformance.py\", line 182, in run_variant\n    mod = importlib.import_module(f\"text_to_sql.agents.{harness_name}\")\n  File \"D:\\anaconda3\\Lib\\importlib\\__init__.py\", line 88, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen importlib._bootstrap>\", line 1387, in _gcd_import\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"E:\\projects\\AI4AI-Harness\\external\\TTHE\\text_to_sql\\agents\\c2_b3glm_schema_link.py\", line 339\n    m = re.search(r\"\n                  ^\nSyntaxError: unterminated string literal (detected at line 339)\n"
+  },
+  "c2_b3glm_two_view": {
+    "scenario": "vote2",
+    "weak_probe": true,
+    "variants": [
+      {
+        "variant": "both_A",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "both_B",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 1,
+    "verdict": "PASS"
+  },
+  "c2_b3glm_vote3": {
+    "scenario": "vote",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "maj_late_B",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 3,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": false,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "maj_late_A",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 3,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": false,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "maj_early_A",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 3,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      }
+    ],
+    "n_llm_calls": 1,
+    "n_execs": 2,
+    "verdict": "T3_selection_broken",
+    "failed_variants": [
+      "maj_late_B",
+      "maj_late_A"
+    ]
+  },
+  "c3ir_ir_hint_repair": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "c3ir_ir_link_vote3": {
+    "scenario": "vote",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "maj_late_B",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 4,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "maj_late_A",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 4,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "maj_early_A",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 4,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 1,
+    "verdict": "PASS"
+  },
+  "c3ir_ir_plain": {
+    "scenario": "plain",
+    "weak_probe": true,
+    "variants": [
+      {
+        "variant": "single",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      }
+    ],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "verdict": "NO_MECHANISM_declared"
+  },
+  "c3ir_ir_repair": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "c3ir_ir_schema_repair": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": false,
+        "final": "SELECT id FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 1,
+    "verdict": "T2_feedback_no_causal_path"
+  },
+  "c3ir_ir_vote3": {
+    "scenario": "vote",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "maj_late_B",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 3,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": false,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "maj_late_A",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 3,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": false,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "maj_early_A",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 3,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      }
+    ],
+    "n_llm_calls": 1,
+    "n_execs": 1,
+    "verdict": "T3_selection_broken",
+    "failed_variants": [
+      "maj_late_B",
+      "maj_late_A"
+    ]
+  },
+  "cand_bird_g1_b0r0_g0": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": false,
+        "final": "SELECT broken_col FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": false,
+        "final": "SELECT broken_col FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "verdict": "T1_not_executed"
+  },
+  "cand_bird_g1_b0r0_g1": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "cand_bird_g1_b0r1_g0": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": false,
+        "final": "SELECT broken_col FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": false,
+        "final": "SELECT broken_col FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "verdict": "T1_not_executed"
+  },
+  "cand_bird_g1_b0r1_g1": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 4,
+        "n_samples": 4,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 4,
+        "n_samples": 4,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 4,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "cand_bird_g1_b1r0_g0": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "cand_bird_g1_b1r0_g1": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "cand_bird_g1_b1r1_g0": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": false,
+        "final": "SELECT id FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 1,
+    "verdict": "T2_feedback_no_causal_path"
+  },
+  "cand_bird_g1_b1r1_g1": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "cand_bird_g1_b2r0_g0": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 1,
+    "verdict": "PASS"
+  },
+  "cand_bird_g1_b2r0_g1": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": false,
+        "final": "SELECT broken_col FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": false,
+        "final": "SELECT broken_col FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 1,
+    "n_execs": 1,
+    "verdict": "T2_feedback_no_causal_path"
+  },
+  "cand_bird_pop1_b0r0_g0": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "cand_bird_pop1_b0r0_g1": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "cand_oldds_b0r0_g0": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldds_b0r0_g1": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldds_b0r1_g0": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldds_b0r1_g1": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldds_b1r0_g0": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldds_b1r0_g1": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldds_b1r1_g0": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldds_b1r1_g1": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldds_b2r0_g0": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldds_b2r0_g1": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldds_b2r1_g0": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldds_b2r1_g1": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldds_b3r0_g0": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldds_b3r0_g1": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldds_b3r1_g0": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldds_b3r1_g1": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldds_b4r0_g0": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldds_b4r0_g1": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldds_b4r1_g0": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldds_b4r1_g1": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldqwen_b0r0_g0": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldqwen_b0r0_g1": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldqwen_b0r1_g0": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldqwen_b0r1_g1": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldqwen_b1r0_g0": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldqwen_b1r0_g1": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldqwen_b1r1_g0": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldqwen_b1r1_g1": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldqwen_b2r0_g0": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldqwen_b2r0_g1": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldqwen_b2r1_g0": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldqwen_b2r1_g1": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldqwen_b3r0_g0": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldqwen_b3r0_g1": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldqwen_b3r1_g0": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldqwen_b3r1_g1": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldqwen_b4r0_g0": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldqwen_b4r0_g1": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldqwen_b4r1_g0": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_oldqwen_b4r1_g1": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "cand_smoke_glm5_b0r0_g0": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": false,
+        "final": "SELECT broken_col FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": false,
+        "final": "SELECT broken_col FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "verdict": "T1_not_executed"
+  },
+  "cand_smoke_glm5_b0r1_g0": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "cand_smoke_glm5_b0r1_g1": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": false,
+        "final": "SELECT broken_col FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": false,
+        "final": "SELECT broken_col FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 1,
+    "n_execs": 1,
+    "verdict": "T2_feedback_no_causal_path"
+  },
+  "cand_smoke_glm5_b1r1_g0": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "cand_smoke_glm5_b1r1_g1": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": false,
+        "final": "SELECT id FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 2,
+    "verdict": "T3_ignores_feedback",
+    "failed_variants": [
+      "first_is_ok"
+    ]
+  },
+  "cand_smoke_glm5_b2r0_g0": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "cand_smoke_glm5_b2r0_g1": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 3,
+        "n_samples": 3,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 3,
+        "n_samples": 3,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 3,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "cand_smoke_glm6_b0r0_g0": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": false,
+        "final": "SELECT broken_col FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": false,
+        "final": "SELECT broken_col FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "verdict": "T1_not_executed"
+  },
+  "cand_smoke_glm6_b0r0_g1": {
+    "scenario": "repair",
+    "verdict": "COPY_OF_BASELINE",
+    "variants": [],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "weak_probe": false
+  },
+  "hpc_hint": {
+    "scenario": "plain",
+    "weak_probe": true,
+    "variants": [
+      {
+        "variant": "single",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      }
+    ],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "verdict": "NO_MECHANISM_declared"
+  },
+  "hpc_repair": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "hpc_schema": {
+    "scenario": "twostage",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "marker_A",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "marker_B",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 0,
+    "verdict": "PASS"
+  },
+  "hpc_vote3": {
+    "scenario": "vote",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "maj_late_B",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 3,
+        "n_execs": 3,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "maj_late_A",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 3,
+        "n_execs": 3,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "maj_early_A",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 3,
+        "n_execs": 3,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      }
+    ],
+    "n_llm_calls": 1,
+    "n_execs": 3,
+    "verdict": "PASS"
+  },
+  "p2_A_deepseek_s0_g0": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "p2_A_deepseek_s0_g1": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "p2_A_deepseek_s0_g2": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "p2_D_deepseek_s0_decompose": {
+    "scenario": "twostage",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "marker_A",
+        "crashed": true,
+        "error": "Traceback (most recent call last):\n  File \"E:\\projects\\AI4AI-Harness\\experiment\\phase2\\conformance.py\", line 182, in run_variant\n    mod = importlib.import_module(f\"text_to_sql.agents.{harness_name}\")\n  File \"D:\\anaconda3\\Lib\\importlib\\__init__.py\", line 88, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen importlib._bootstrap>\", line 1387, in _gcd_import\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"E:\\projects\\AI4AI-Harness\\external\\TTHE\\text_to_sql\\agents\\p2_D_deepseek_s0_decompose.py\", line 77\n    cleaned = re.sub(r\"\n                     ^\nSyntaxError: unterminated string literal (detected at line 77)\n",
+        "n_llm_calls": 0,
+        "n_samples": 0,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": false,
+        "tracks_expected": false,
+        "final": ""
+      },
+      {
+        "variant": "marker_B",
+        "crashed": true,
+        "error": "Traceback (most recent call last):\n  File \"E:\\projects\\AI4AI-Harness\\experiment\\phase2\\conformance.py\", line 182, in run_variant\n    mod = importlib.import_module(f\"text_to_sql.agents.{harness_name}\")\n  File \"D:\\anaconda3\\Lib\\importlib\\__init__.py\", line 88, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen importlib._bootstrap>\", line 1387, in _gcd_import\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"E:\\projects\\AI4AI-Harness\\external\\TTHE\\text_to_sql\\agents\\p2_D_deepseek_s0_decompose.py\", line 77\n    cleaned = re.sub(r\"\n                     ^\nSyntaxError: unterminated string literal (detected at line 77)\n",
+        "n_llm_calls": 0,
+        "n_samples": 0,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": false,
+        "tracks_expected": false,
+        "final": ""
+      }
+    ],
+    "n_llm_calls": 0,
+    "n_execs": 0,
+    "verdict": "INVALID_uncallable",
+    "error": "Traceback (most recent call last):\n  File \"E:\\projects\\AI4AI-Harness\\experiment\\phase2\\conformance.py\", line 182, in run_variant\n    mod = importlib.import_module(f\"text_to_sql.agents.{harness_name}\")\n  File \"D:\\anaconda3\\Lib\\importlib\\__init__.py\", line 88, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen importlib._bootstrap>\", line 1387, in _gcd_import\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"E:\\projects\\AI4AI-Harness\\external\\TTHE\\text_to_sql\\agents\\p2_D_deepseek_s0_decompose.py\", line 77\n    cleaned = re.sub(r\"\n                     ^\nSyntaxError: unterminated string literal (detected at line 77)\n"
+  },
+  "p2_D_deepseek_s0_error_classify": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 3,
+        "n_samples": 3,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 3,
+        "n_samples": 3,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 3,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "p2_D_deepseek_s0_format_guard": {
+    "scenario": "plain",
+    "weak_probe": true,
+    "variants": [
+      {
+        "variant": "single",
+        "crashed": true,
+        "error": "Traceback (most recent call last):\n  File \"E:\\projects\\AI4AI-Harness\\experiment\\phase2\\conformance.py\", line 182, in run_variant\n    mod = importlib.import_module(f\"text_to_sql.agents.{harness_name}\")\n  File \"D:\\anaconda3\\Lib\\importlib\\__init__.py\", line 88, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen importlib._bootstrap>\", line 1387, in _gcd_import\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"E:\\projects\\AI4AI-Harness\\external\\TTHE\\text_to_sql\\agents\\p2_D_deepseek_s0_format_guard.py\", line 12\n    \"Return exactly one SQL query inside a\n    ^\nSyntaxError: unterminated string literal (detected at line 12)\n",
+        "n_llm_calls": 0,
+        "n_samples": 0,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": false,
+        "final": ""
+      }
+    ],
+    "n_llm_calls": 0,
+    "n_execs": 0,
+    "verdict": "INVALID_uncallable",
+    "error": "Traceback (most recent call last):\n  File \"E:\\projects\\AI4AI-Harness\\experiment\\phase2\\conformance.py\", line 182, in run_variant\n    mod = importlib.import_module(f\"text_to_sql.agents.{harness_name}\")\n  File \"D:\\anaconda3\\Lib\\importlib\\__init__.py\", line 88, in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen importlib._bootstrap>\", line 1387, in _gcd_import\n  File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n  File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n  File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n  File \"E:\\projects\\AI4AI-Harness\\external\\TTHE\\text_to_sql\\agents\\p2_D_deepseek_s0_format_guard.py\", line 12\n    \"Return exactly one SQL query inside a\n    ^\nSyntaxError: unterminated string literal (detected at line 12)\n"
+  },
+  "p2_D_deepseek_s0_hint_guard": {
+    "scenario": "plain",
+    "weak_probe": true,
+    "variants": [
+      {
+        "variant": "single",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      }
+    ],
+    "n_llm_calls": 1,
+    "n_execs": 0,
+    "verdict": "NO_MECHANISM_declared"
+  },
+  "p2_D_deepseek_s0_repair": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "p2_D_deepseek_s0_schema_link": {
+    "scenario": "twostage",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "marker_A",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "marker_B",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 0,
+        "executed": false,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 0,
+    "verdict": "PASS"
+  },
+  "p2_D_deepseek_s0_two_view": {
+    "scenario": "vote2",
+    "weak_probe": true,
+    "variants": [
+      {
+        "variant": "both_A",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "both_B",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 2,
+    "verdict": "PASS"
+  },
+  "p2_D_deepseek_s0_vote3": {
+    "scenario": "vote",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "maj_late_B",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 3,
+        "n_execs": 3,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "maj_late_A",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 3,
+        "n_execs": 3,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "maj_early_A",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 3,
+        "n_execs": 3,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      }
+    ],
+    "n_llm_calls": 1,
+    "n_execs": 3,
+    "verdict": "PASS"
+  },
+  "react": {
+    "scenario": "repair",
+    "weak_probe": false,
+    "variants": [
+      {
+        "variant": "fail_fixA",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT id FROM t1;"
+      },
+      {
+        "variant": "fail_fixB",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 2,
+        "n_samples": 2,
+        "n_execs": 2,
+        "executed": true,
+        "observed_failure": true,
+        "feedback_in_later_prompt": true,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      },
+      {
+        "variant": "first_is_ok",
+        "crashed": false,
+        "error": null,
+        "n_llm_calls": 1,
+        "n_samples": 1,
+        "n_execs": 1,
+        "executed": true,
+        "observed_failure": false,
+        "feedback_in_later_prompt": false,
+        "marker_carried": true,
+        "tracks_expected": true,
+        "final": "SELECT name FROM t1;"
+      }
+    ],
+    "n_llm_calls": 2,
+    "n_execs": 2,
+    "verdict": "PASS"
+  }
+}

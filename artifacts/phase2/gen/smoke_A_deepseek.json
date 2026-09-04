@@ -1,0 +1,76 @@
+{
+ "builder": "deepseek",
+ "model": "DeepSeek-V4-Pro",
+ "arm": "A",
+ "seed": 0,
+ "gate": false,
+ "forced": false,
+ "accepted": 3,
+ "n": 3,
+ "results": [
+  {
+   "harness": "p2_A_deepseek_s0_g0",
+   "arm": "A",
+   "strategy": null,
+   "seed": 0,
+   "accepted": true,
+   "attempts": [
+    {
+     "attempt": 1,
+     "stage": "extract",
+     "ok": false,
+     "reason": "no python fence",
+     "secs": 107.3
+    },
+    {
+     "attempt": 2,
+     "ok": true,
+     "truncated": false,
+     "spec": null,
+     "chars": 1958,
+     "stage": "smoke",
+     "reason": "ungated: import+smoke passed",
+     "secs": 43.6
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_deepseek_s0_g1",
+   "arm": "A",
+   "strategy": null,
+   "seed": 0,
+   "accepted": true,
+   "attempts": [
+    {
+     "attempt": 1,
+     "ok": true,
+     "truncated": false,
+     "spec": null,
+     "chars": 2313,
+     "stage": "smoke",
+     "reason": "ungated: import+smoke passed",
+     "secs": 59.3
+    }
+   ]
+  },
+  {
+   "harness": "p2_A_deepseek_s0_g2",
+   "arm": "A",
+   "strategy": null,
+   "seed": 0,
+   "accepted": true,
+   "attempts": [
+    {
+     "attempt": 1,
+     "ok": true,
+     "truncated": false,
+     "spec": null,
+     "chars": 1800,
+     "stage": "smoke",
+     "reason": "ungated: import+smoke passed",
+     "secs": 34.5
+    }
+   ]
+  }
+ ]
+}

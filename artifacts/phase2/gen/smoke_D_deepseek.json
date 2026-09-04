@@ -1,0 +1,270 @@
+{
+ "builder": "deepseek",
+ "model": "DeepSeek-V4-Pro",
+ "arm": "D",
+ "seed": 0,
+ "gate": true,
+ "forced": true,
+ "accepted": 5,
+ "n": 8,
+ "results": [
+  {
+   "harness": "p2_D_deepseek_s0_repair",
+   "arm": "D",
+   "strategy": "repair",
+   "seed": 0,
+   "accepted": true,
+   "attempts": [
+    {
+     "attempt": 1,
+     "ok": false,
+     "truncated": false,
+     "spec": null,
+     "chars": 2053,
+     "stage": "import_or_smoke",
+     "reason": "SyntaxError: unterminated f-string literal (detected at line 50) (p2_D_deepseek_s0_repair.py, line 50)",
+     "secs": 33.9
+    },
+    {
+     "attempt": 2,
+     "ok": true,
+     "truncated": false,
+     "spec": null,
+     "chars": 2001,
+     "stage": "gate",
+     "declared": null,
+     "scenario": "repair",
+     "verdict": "PASS",
+     "secs": 41.0
+    }
+   ]
+  },
+  {
+   "harness": "p2_D_deepseek_s0_vote3",
+   "arm": "D",
+   "strategy": "vote3",
+   "seed": 0,
+   "accepted": true,
+   "attempts": [
+    {
+     "attempt": 1,
+     "ok": true,
+     "truncated": false,
+     "spec": null,
+     "chars": 2382,
+     "stage": "gate",
+     "declared": null,
+     "scenario": "vote",
+     "verdict": "PASS",
+     "secs": 82.4
+    }
+   ]
+  },
+  {
+   "harness": "p2_D_deepseek_s0_schema_link",
+   "arm": "D",
+   "strategy": "schema_link",
+   "seed": 0,
+   "accepted": true,
+   "attempts": [
+    {
+     "attempt": 1,
+     "ok": false,
+     "truncated": false,
+     "spec": null,
+     "chars": 3834,
+     "stage": "import_or_smoke",
+     "reason": "SyntaxError: unterminated string literal (detected at line 108) (p2_D_deepseek_s0_schema_link.py, line 108)",
+     "secs": 145.6
+    },
+    {
+     "attempt": 2,
+     "ok": false,
+     "truncated": false,
+     "spec": null,
+     "chars": 2125,
+     "stage": "import_or_smoke",
+     "reason": "SyntaxError: unterminated string literal (detected at line 48) (p2_D_deepseek_s0_schema_link.py, line 48)",
+     "secs": 116.6
+    },
+    {
+     "attempt": 3,
+     "ok": true,
+     "truncated": false,
+     "spec": null,
+     "chars": 2287,
+     "stage": "gate",
+     "declared": null,
+     "scenario": "twostage",
+     "verdict": "PASS",
+     "secs": 73.4
+    }
+   ]
+  },
+  {
+   "harness": "p2_D_deepseek_s0_hint_guard",
+   "arm": "D",
+   "strategy": "hint_guard",
+   "seed": 0,
+   "accepted": false,
+   "attempts": [
+    {
+     "attempt": 1,
+     "ok": false,
+     "truncated": false,
+     "spec": null,
+     "chars": 1560,
+     "stage": "gate",
+     "declared": null,
+     "scenario": "twostage",
+     "verdict": "T1_single_stage",
+     "secs": 67.2
+    },
+    {
+     "attempt": 2,
+     "ok": false,
+     "truncated": false,
+     "spec": null,
+     "chars": 1741,
+     "stage": "gate",
+     "declared": null,
+     "scenario": "twostage",
+     "verdict": "T1_single_stage",
+     "secs": 49.3
+    },
+    {
+     "attempt": 3,
+     "ok": false,
+     "truncated": false,
+     "spec": null,
+     "chars": 1730,
+     "stage": "gate",
+     "declared": null,
+     "scenario": "twostage",
+     "verdict": "T1_single_stage",
+     "secs": 77.9
+    }
+   ]
+  },
+  {
+   "harness": "p2_D_deepseek_s0_two_view",
+   "arm": "D",
+   "strategy": "two_view",
+   "seed": 0,
+   "accepted": true,
+   "attempts": [
+    {
+     "attempt": 1,
+     "ok": true,
+     "truncated": false,
+     "spec": null,
+     "chars": 2419,
+     "stage": "gate",
+     "declared": null,
+     "scenario": "vote2",
+     "verdict": "PASS",
+     "secs": 132.7
+    }
+   ]
+  },
+  {
+   "harness": "p2_D_deepseek_s0_decompose",
+   "arm": "D",
+   "strategy": "decompose",
+   "seed": 0,
+   "accepted": false,
+   "attempts": [
+    {
+     "attempt": 1,
+     "ok": false,
+     "truncated": false,
+     "spec": null,
+     "chars": 4277,
+     "stage": "import_or_smoke",
+     "reason": "SyntaxError: unterminated string literal (detected at line 103) (p2_D_deepseek_s0_decompose.py, line 103)",
+     "secs": 99.0
+    },
+    {
+     "attempt": 2,
+     "ok": false,
+     "truncated": false,
+     "spec": null,
+     "chars": 7827,
+     "stage": "import_or_smoke",
+     "reason": "SyntaxError: unterminated string literal (detected at line 180) (p2_D_deepseek_s0_decompose.py, line 180)",
+     "secs": 78.1
+    },
+    {
+     "attempt": 3,
+     "ok": false,
+     "truncated": false,
+     "spec": null,
+     "chars": 2852,
+     "stage": "import_or_smoke",
+     "reason": "SyntaxError: unterminated string literal (detected at line 77) (p2_D_deepseek_s0_decompose.py, line 77)",
+     "secs": 82.6
+    }
+   ]
+  },
+  {
+   "harness": "p2_D_deepseek_s0_error_classify",
+   "arm": "D",
+   "strategy": "error_classify",
+   "seed": 0,
+   "accepted": true,
+   "attempts": [
+    {
+     "attempt": 1,
+     "ok": true,
+     "truncated": false,
+     "spec": null,
+     "chars": 3713,
+     "stage": "gate",
+     "declared": null,
+     "scenario": "repair",
+     "verdict": "PASS",
+     "secs": 130.1
+    }
+   ]
+  },
+  {
+   "harness": "p2_D_deepseek_s0_format_guard",
+   "arm": "D",
+   "strategy": "format_guard",
+   "seed": 0,
+   "accepted": false,
+   "attempts": [
+    {
+     "attempt": 1,
+     "ok": false,
+     "truncated": false,
+     "spec": null,
+     "chars": 16,
+     "stage": "import_or_smoke",
+     "reason": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_deepseek_s0_format_guard.py, line 1)",
+     "secs": 94.0
+    },
+    {
+     "attempt": 2,
+     "ok": false,
+     "truncated": false,
+     "spec": null,
+     "chars": 54,
+     "stage": "import_or_smoke",
+     "reason": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_deepseek_s0_format_guard.py, line 1)",
+     "secs": 49.4
+    },
+    {
+     "attempt": 3,
+     "ok": false,
+     "truncated": false,
+     "spec": null,
+     "chars": 475,
+     "stage": "import_or_smoke",
+     "reason": "SyntaxError: unterminated string literal (detected at line 12) (p2_D_deepseek_s0_format_guard.py, line 12)",
+     "secs": 130.0
+    }
+   ]
+  }
+ ]
+}
