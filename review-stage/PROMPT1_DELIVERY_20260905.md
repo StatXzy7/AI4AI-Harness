@@ -83,3 +83,25 @@
 | 图标签缩写 | fig_design.py "9 DBs never opened" → "9 DBs never opened in development",与 caption/附录口径一致;图已重新生成 |
 
 **最终构建:** 12 页(主文 p9),exit 0,0 错误,0 未定义;main.pdf sha256[:16] = `995f2e53a907932f`
+
+## 终审结论(2026-09-05 19:20,Codex 独立复验)
+
+**SCORE: 8.8/10 | VERDICT: READY** — 提示词一验收通过。
+
+四轮审-修循环:6.8(almost)→ 修复 9 项 → 5.9(沙箱故障轮 + 残余项)→ 修复 7 项 → 7.2(4 残余)→ 修复 4 项 → **8.8(ready)**。
+
+Codex 独立验证通过的关键项:
+- ρ 命令完整性(字节级检查 + PDF 文本抽取双重验证)
+- 全部 17 个陈旧构建产物清除,canonical log 一致
+- 图几何零重叠、Phase 标签全限定、新鲜度(源 19:16:32 → 图 19:16:51)
+- 哈希/分页/字节数三方核对(12 页,主文 p9,297157 字节)
+- B1–B9 全部回归检查通过;780 清除、M0 分离、Phase 边界、pending-only、匿名性(含 PDF 元数据)全过
+
+两条记录在案的非阻塞备注:
+1. exit 0 来自执行者构建记录,Codex 未独立重跑构建(验证的是成功输出证据)
+2. 1 overfull hbox + 2 underfull vbox(非阻塞)
+
+下一步 = 提示词二(采集完成后的完整性验收 + 冻结分析),前置条件已就绪:
+- `verify_completeness.py` 门禁(身份键制,部分数据正确拒绝)
+- `analysis_primary.py`(first-write-wins 文档对齐,双 judge 冲突 hard-fail)
+- `PARTIAL_DATA_CONTACT_RECORD.md`(部分数据接触事实记录)
