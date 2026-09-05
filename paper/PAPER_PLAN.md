@@ -1,61 +1,46 @@
-# PAPER_PLAN — Behavior-Aware Harness Generation
+# PAPER_PLAN — v3 (2026-09-05, prompt-1 revision)
 
-> 生成时间:2026-09-02;**2026-09-03 判定后更新**。输入:PROBLEM_FREEZE.md v7/v8、
-> artifacts/day2/DAY2_RESULTS.md。目标:ICLR 2027,主文 9 页。
-> **判定结果:C6/D6 admitted(5.96/7.95pp)→ thesis 走"A 版协议修复 + F4 边界结果"混合版。**
-> 全部占位符已回填;剩余工作 = 跨域加分实验(可选)、LaTeX 化、figures 精修、审稿回环。
+> 本文件取代 2026-09-02/03 版本(该版含旧 GLM 0/6、旧 task split、已完成 LaTeX 化等
+> 过期状态,已被本轮修订超越)。有效协议入口:`PHASE2_PROTOCOL.md` +
+> `PROTOCOL_FREEZE.txt`。状态文档:`review-stage/CLAIM_EVIDENCE_20260905.md`(主张-
+> 证据清单)与本文。
 
-## 0. 一句话贡献(候选,待 eval151 后定稿)
+## 当前论文状态(prompt-1 修订完成)
 
-**Draft A(若 C/D 达标)**:我们证明 AI harness 生成器的失败模式是"句法多样、行为塌缩",
-提出执行路径约束 + Harness IR 两类行为感知协议,使 AI 生成 population 的行为多样性
-(union repair / oracle headroom)追平人工上界,并给出 harness-value prediction 的
-precondition 检查表。
+**标题:** Behavioral Collapse in AI-Generated Harness Populations(短标题,修复断词)
+**主文:** 9 页(§1–8),共 12 页(AI 声明 p10 不计页限、参考文献 p11、附录 p12)
+**构建:** pdfTeX TeX Live 2026;exit 0;0 LaTeX error;0 undefined citation/reference;
+main.pdf sha256[:16] = `1988c3f162ae629b`
 
-**Draft B(若 C/D 全不达标)**:我们对 AI-generated harness population 给出
-"syntactic ≠ behavioral diversity" 的首个系统测量与失败模式分类,证明 headroom 真实存在
-(人工 positive control 6.7pp)、而当前所有自动生成协议(3 Builder × 2 协议)均无法产出
-行为多样性——并把"行为多样性前置检查表"确立为任何 harness-routing 工作的必过门槛。
+## 结构(问题→测量与诊断→Phase-II 设计→结果→边界)
 
-## 1. Claims-Evidence 矩阵
+| § | 内容 | 状态 |
+|---|---|---|
+| 1 | Introduction:前提失败 + M0 分离 + Phase-II 预告;贡献 3 条(无 "first systematic" 笼统声明) | ✅ |
+| 2 | Related Work + 最近邻对照表(HarnessLens/HarnessBank:研究单位/是否测 population collapse/门禁定义/校准/因果分离/确认性 split) | ✅ |
+| 3 | Phase I discovery:三指标 + 塌缩量化(双口径并列)+ T1–T3 + 人工对照 + 协议探针及其三重局限 + M0 报告 | ✅ |
+| 4 | Phase II 设计:II-A/B/C/D 因子臂 + II-E、等预算 R=3、6 builders × 3 seeds、数据隔离、官方 judge、仪器校准、冻结分析计划 | ✅ |
+| 5 | Phase II 结果:三张表骨架,全部 **pending**(未用任何中间数字回填) | ⏳ 等采集 |
+| 6 | 边界结果:LOHO 负结果,严格限定到已测 predictor/split;+6.9pp 收窄表述 | ✅ |
+| 7 | Discussion:headroom 非单调(反例)、checklist 非定理、可靠性/质量分解 | ✅ |
+| 8 | Conclusion:三种条件式结论草案(正/零/负),按冻结分析选择 | ✅ |
+| App A–C | Phase-I 溯源(含 09-01 无日志披露)、Phase-II 协议摘要+偏差日志指针、Phase-I 附加结果 | ✅ |
 
-| # | Claim | Evidence | 状态 | 章节 |
-|---|---|---|---|---|
-| C1 | AI 生成的 harness population 在代码层面多样、行为层面塌缩(syntactic ≠ behavioral) | Day-1:14 harness × 60 题,pairwise disagreement 3.5%(28/78 对=0),react 与 bare 逐字符相同(D=0) | ✅ | §4/§6 |
-| C2 | 塌缩有明确的机制分类:纯 prompt 变体(6/12)/ 无效反馈(react 10/10 final SQL 与 bare 相同)/ buggy 多轮(散文当 SQL) | trace_audit.jsonl,artifacts/day1 | ✅ | §4 |
-| C3 | 行为多样性的 headroom 真实存在(非 benchmark 饱和) | 人工 positive control:hpc×4,60 题 6.67pp;**151 题 7.28pp [3.3,10.0]**;repair 151 题 14.9%(60 题 20.7% 系小样本高估,已披露) | ✅ | §5 |
-| C4 | free-form 长代码生成对弱 Builder 不可靠 | GLM-5.3-Flash B 臂 0/6 生成失败(builder_generate2) | ✅ | §6 |
-| C5 | IR 臂产生 ≥3 个非重复 fix sets | 151 题:6 个 distinct fix sets,repair 16.2%,但 headroom 3.97pp 未过 | ✅(fix sets)/ ❌(headroom) | §6 |
-| C6 | 机制门禁协议 + Builder 轴 → population 质量变化 | C 5.96pp/21.6% admitted;D 7.95pp/24.3% admitted;B 0/6;A 4.64pp 未过(点估计判定,CI 含亚阈值) | ✅ | §6 |
-| C7 | 行为多样性前置检查表是 routing 的必要条件 | 判定线预注册(v6→v7 演化已披露);F3 两 population 达标 | ✅ | §7 |
-| C8 | (负结果)open-set value prediction 不可学 | L1 PASS;L2 MARGINAL FAIL;**L3 FAIL**(且任务级切分 AUROC 0.475=任务记忆证实) | ❌(如实报告为 F4) | §6.1 |
+## 图
 
-## 2. 结构(empirical/diagnostic,9 页)
+- Fig.1 `fig_phenomenon`(p4):14 harness/91 对,ρ=−0.01,图注含样本量/阶段/来源,声明 pair 非独立
+- Fig.2 `fig_design`(p7):Phase-II 设计图
+- 待 §5 数据完成后:主效应 + 分 builder×seed CI 图(`analysis_primary.py` 输出)
 
-| § | 内容 | 页数 | 依赖 |
-|---|---|---|---|
-| 1 | Introduction:AI4AI harness 路线升温 → 但生成的 population 是否行为多样?→ 先测量、再修协议 → 贡献 3 条 | 1.5 | 无,可先写 |
-| 2 | Related Work:harness/agent generation(TTHE、a-evolve、Self-Harness、JIT-Agent);harness 现象层(2607.18235、2605.26731、HELIX、STS、GRASP);behavioral diversity of LLM populations | 1.0 | 无,可先写 |
-| 3 | Setup:Δ 定义、BIRD 域、frozen target、population 构建与冻结、四重切分(D_build∩D_eval=∅) | 1.0 | ✅ |
-| 4 | 测量框架:三指标检查表 + trace audit 分类学(taxonomy 图) | 1.5 | ✅ |
-| 5 | Positive control:4 个人工 harness,headroom 存在性 | 0.5 | ✅ |
-| 6 | 行为感知生成协议(方法细节已补)+ 两嵌套对照;对照表+LOHO 负结果 | 2.0 | ✅ |
-| 7 | Discussion:对 harness routing/value prediction 的含义;precondition checklist 作为社区工具 | 1.0 | ✅ |
-| 8 | Conclusion + limitations | 0.5 | ✅ |
+## 下一步(提示词二,采集完成后)
 
-图预算:hero 图(句法多样 vs 行为塌缩一图流)§1;taxonomy 图 §4;三条件对照条形图 §6;
-IR pipeline 图 §6。表:主对照表 §6;检查表 §7。
+1. 完整性验收(18 A/D cell × 1169 + 四臂 × core-400;重复/冲突/D13 缓存语义核查)
+2. 冻结分析 → 主表/图回填 §5 → 摘要/引言/讨论数字更新 → 按结果选择结论草案
+3. R2/R3 审计入附录
+4. Codex 独立复审(提示词三)→ 9/18 AoE 摘要提交
 
-## 3. 匿名与合规
+## 历史文档状态(不再作为执行依据)
 
-- 双盲:不得出现作者/机构;代码匿名仓准备(appendix)。
-- 预注册纪律:判定线(union repair ≥15-20%,headroom ≥5pp,≥3 非重复 fix sets)在
-  PROBLEM_FREEZE v7 冻结,论文中如实引用,不事后修改。
-- 负结果如实报告(用户纲领:完成 > 完美,结果如实)。
-
-## 4. 写作顺序(不依赖 eval151 的先行)
-
-1. §3 Setup、§4 测量框架(全 ✅);
-2. §2 Related Work(引对手论文清单见 PROBLEM_FREEZE §1);
-3. §1 Introduction 用 Draft B 措辞起稿(若 eval151 翻盘改 Draft A,改动集中在贡献句与 §6);
-4. eval151 完成后:对照表 → 判定 → §5/§6/§7 定稿 + abstract。
+- `PHASE2_FREEZE.md`、`PHASE2_SAP.md`、`experiment/phase2/SAP_v2.md`:tombstone,指向 `PHASE2_PROTOCOL.md`
+- `PHASE2_SUMMARY.md`、`experiment/phase2/NEXT_STEPS.md`、`CURRENT_STATE.md`、`P0_BLOCKER_REPORT.md`:历史快照(含已过期预算/日期表述),仅供追溯
+- 旧版 8.4/10 审稿记录:对应已被超越的旧稿,不作为当前版本放行依据

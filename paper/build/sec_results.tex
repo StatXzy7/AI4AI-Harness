@@ -1,0 +1,80 @@
+% Results are intentionally PENDING: the confirmatory matrix is still being
+% collected. Per the frozen protocol no aggregate metric has been computed
+% and no Phase-I or partial number may be presented as a Phase-II result.
+% The table structures below are final; numbers will be filled by the
+% frozen analysis scripts upon collection-completeness verification.
+
+\subsection{Primary contrast: forced+gated vs.\ free+ungated}\label{sec:results-primary}
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{@{}lcc@{}}
+\toprule
+ & Arm II-A (free/ungated) & Arm II-D (forced/gated) \\
+\midrule
+Oracle headroom $H(P)$, official judge & \textit{pending} & \textit{pending} \\
+Union repair rate & \textit{pending} & \textit{pending} \\
+Union harm rate & \textit{pending} & \textit{pending} \\
+Pairwise disagreement & \textit{pending} & \textit{pending} \\
+Unique outcome-vector fraction $K_{\mathrm{eff}}/K$ & \textit{pending} & \textit{pending} \\
+\midrule
+\multicolumn{3}{@{}l@{}}{Paired contrast $H(\text{II-D}) - H(\text{II-A})$, 18 cells:}\\
+\quad Point estimate & \multicolumn{2}{c}{\textit{pending}} \\
+\quad Two-sided 95\% CI (hierarchical bootstrap) & \multicolumn{2}{c}{\textit{pending}} \\
+\quad Paired permutation $p$ & \multicolumn{2}{c}{\textit{pending}} \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{Primary result (pending).} Bare-inclusive oracle headroom
+per arm and the paired contrast, pooled over 6 builders $\times$ 3 seeds on
+the 1{,}169-question confirmatory set, official BIRD judge. Per-cell
+values, the K-matched sensitivity curve, and the population-conditional
+analysis will appear in Appendix~\ref{app:phase2-protocol} tables and the
+released analysis outputs.}
+\label{tab:primary}
+\end{table}
+
+\subsection{Factorial decomposition (same core-400 items)}\label{sec:results-factorial}
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{@{}lc@{}}
+\toprule
+Contrast & Effect on headroom (95\% CI) \\
+\midrule
+Gate main effect $[(B{-}A)+(D{-}C)]/2$ & \textit{pending} \\
+Strategy main effect $[(C{-}A)+(D{-}B)]/2$ & \textit{pending} \\
+Strategy $\times$ gate interaction $(D{-}C)-(B{-}A)$ & \textit{pending} \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{Confirmatory secondaries (pending)}, Holm-corrected. All
+four arms evaluated on the identical 400-item core.}
+\label{tab:factorial}
+\end{table}
+
+\subsection{Generation reliability and arm II-E}\label{sec:results-yield}
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Arm & $R_{\mathrm{artifact}}$ & $R_{\mathrm{contract}}$ & $R_{\mathrm{fidelity}}$ \\
+\midrule
+II-A / II-C (ungated) & \textit{pending} & --- & --- \\
+II-B / II-D (gated) & \textit{pending} & \textit{pending} & \textit{pending} \\
+II-E (open mechanism) & \textit{pending} & \textit{pending} & \textit{pending} \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{Generation reliability (pending)}, reported separately
+from population quality: a builder that cannot write a valid artifact, one
+that writes but over-asserts its contract, and one whose asserted behavior
+verifies are three different findings.}
+\label{tab:yield}
+\end{table}
+
+\subsection{Robustness audits}\label{sec:results-audits}
+Dual-judge agreement, cache-off replication (arms A and D), and repeat-run
+outcome stability (bare and arm D, three cache-off repeats) will be
+reported per the frozen plan. \textit{Pending.}

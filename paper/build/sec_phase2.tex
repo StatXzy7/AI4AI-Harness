@@ -1,0 +1,117 @@
+Phase II is the confirmatory study. Its protocol was frozen and committed
+before any confirmatory outcome was observed; deviations are logged in the
+protocol changelog (Appendix~\ref{app:phase2-protocol}). The frozen
+estimand, splits, instruments, and analysis plan are summarized here.
+
+\subsection{Design}\label{sec:p2design}
+
+\paragraph{Arms.} Two crossed factors: \emph{strategy forcing} (S=1: the
+builder is assigned a named mechanism from a fixed set of eight; S=0: the
+builder invents an improvement with no mechanism named) and the
+\emph{conformance gate} (G=1: the harness must pass the frozen conformance
+suite; G=0: neutral validity only). This yields four factorial arms, which
+we denote \textbf{II-A} (free/ungated), \textbf{II-B} (free/gated),
+\textbf{II-C} (forced/ungated), \textbf{II-D} (forced/gated). A fifth,
+pre-specified \emph{secondary} arm \textbf{II-E} (open mechanism discovery:
+the builder emits a self-specified behavioral contract over generic trace
+primitives, gated on its own declaration) tests whether mechanism diversity
+requires author-supplied vocabulary at all; it is deliberately outside the
+factorial. These arm names are Phase-II-specific; Phase-I conditions in
+\S\ref{sec:phase1probes} are always referred to with their descriptive
+names.
+
+\paragraph{Equal raw generation budget.} Every slot in every arm receives
+exactly $R{=}3$ raw builder attempts (same model, temperature 0.7, 16{,}384
+token cap). Arms differ \emph{only} in which raw candidate is admitted:
+ungated arms take the first candidate passing neutral validity (parses,
+imports, returns SQL on a development question --- mechanism-blind); gated
+arms take the first additionally passing the conformance suite. Slot failure
+is final; populations are never topped up, so generation reliability is part
+of the treatment. All raw candidates are retained and generation
+reliability is reported separately from population quality via three rates:
+$R_{\mathrm{artifact}}$ (valid artifact), $R_{\mathrm{contract}}$ (valid,
+non-vacuous contract), $R_{\mathrm{fidelity}}$ (asserted properties
+verified, conditional on a valid contract).
+
+\paragraph{Builders and seeds.} Six builders from independent labs (GLM-5.3,
+Qwen3.8-Max, DeepSeek-V4-Pro, Kimi-K3, MiniMax-M3,
+ERNIE-5.0-Thinking-Preview), three seeds each: 18 paired (builder $\times$
+seed) cells. Every cell enters the primary contrast regardless of admitted
+population size, including $K{=}0$ --- excluding low-yield cells would
+condition on a post-treatment outcome.
+
+\paragraph{Data isolation.} A fail-closed contamination registry scans every
+project artifact for observed BIRD questions. Two databases touched during
+development are banned wholesale; the confirmatory evaluation uses
+\textbf{1{,}169 questions from nine never-opened databases}, with a
+stratified 400-item core drawn before any outcome existed. Factorial
+secondary analyses run on the same core items for all four arms.
+
+\paragraph{Judge.} Primary: the official BIRD execution scorer (set
+equality on raw result rows, 30\,s wall-clock timeout). Secondary: the
+Phase-I legacy judge, measured to be uniformly conservative (on Phase-I
+matrices it never credits an answer the official scorer rejects).
+
+\paragraph{Instruments.} The conformance suite drives each harness against
+scripted scenarios and asserts on the recorded execution trace, never on
+task performance, so gating cannot leak outcome supervision. Every mechanism
+is probed with \emph{paired counterfactual variants} whose correct answer
+differs --- including a variant where the first query \emph{succeeds},
+separating conditional repair from an unconditional second call --- and
+answers are compared by exact normalized equality. The suite was calibrated
+before any Phase-II generation against three hand-written positive controls
+(all must pass) and two known-negative impostor harnesses (both must be
+rejected), plus the invariant that the bare baseline must violate every
+conditional property; the calibration is an executable gate re-run before
+each generation batch. Arm II-E additionally enforces non-vacuity (the
+contract must be violated by the bare baseline, checked by running it) and
+verifies only the properties actually asserted.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.98\linewidth]{figures/fig_design.pdf}
+\caption{\textbf{Phase-II confirmatory design} (frozen protocol). Left:
+database-level contamination isolation (the two development databases are
+banned wholesale; evaluation uses nine never-opened databases). Middle:
+the $2{\times}2$ factorial (strategy forcing $\times$ conformance gate)
+with equal raw budgets, plus the open-mechanism arm II-E. Right: the
+three-layer admission pipeline (neutral validity $\rightarrow$
+counterfactual conformance $\rightarrow$ non-vacuity vs.\ bare).}
+\label{fig:design}
+\end{figure}
+
+\subsection{Frozen analysis plan}\label{sec:p2plan}
+The \textbf{primary estimand} is the bare-inclusive oracle headroom $H(P)$
+(Equation in \S\ref{sec:metrics}; $K{=}0$ gives $H=0$, and $K{=}1$ is a
+genuine bare-vs-harness routing problem) of arm II-D minus arm II-A,
+paired by (builder $\times$ seed), on the full 1{,}169-question set under
+the official judge --- a continuous effect with two-sided 95\% CI and a
+paired permutation test, not a pass/fail threshold. The Phase-I thresholds
+(union repair $\geq$15\%, headroom $\geq$5\,pp) are retained only as a
+descriptive operational checklist; threshold-crossing itself is
+statistically uncertain and is never used as a scientific verdict.
+
+\textbf{Confirmatory secondaries} (Holm-corrected, tested after the
+primary, all four arms on the same core-400 items): gate main effect
+$[(B{-}A)+(D{-}C)]/2$; strategy main effect $[(C{-}A)+(D{-}B)]/2$; and the
+strategy $\times$ gate interaction $(D{-}C)-(B{-}A)$ --- the key
+mechanism-level question of whether strategy differentiation requires
+execution fidelity to be realized.
+
+\textbf{Inference} uses a hierarchical paired bootstrap (10{,}000
+replicates): databases resampled with replacement, then tasks within each
+drawn database, with (builder $\times$ seed) cells resampled as paired
+units. K-matched sensitivity ($k{=}1\ldots K_{\min}$) and a
+population-conditional analysis ($K \geq 3$ both arms) are reported as
+sensitivity checks. Note that $H(P)$ is \emph{not} monotone in $K$: oracle
+accuracy is non-decreasing in $K$ by construction, but so may be the best
+fixed accuracy --- adding a harness that answers everything correctly
+drives headroom to zero --- which is why matched-K comparison, not
+monotonicity, licenses cross-population claims.
+
+\textbf{Robustness audits (frozen):} dual-judge scoring on every cell;
+cache-off replication of arms A and D on the core (quantifying how much
+apparent agreement is the shared response cache, i.e.\ common random
+numbers, versus structural); and three independent cache-off repeats of
+bare and arm D on the core, giving an outcome flip rate and repair
+stability rate.

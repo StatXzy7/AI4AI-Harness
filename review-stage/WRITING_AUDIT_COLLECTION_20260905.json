@@ -1,0 +1,67 @@
+{
+  "time": "2026-09-05T13:20:12.536502+08:00",
+  "note": "Counts/identities only; correctness and contrasts not inspected.",
+  "AD": {
+    "unique_expected_cells": 95812,
+    "expected_cells": 205744,
+    "coverage_percent": 46.57,
+    "rows": 98422,
+    "duplicate_cells": 2610,
+    "unparseable_rows": 0,
+    "unexpected_cells": 0,
+    "harnesses_in_manifest_including_bare": 176,
+    "tasks": 1169,
+    "complete_harnesses": 79,
+    "targets": {
+      "GLM-5.3-Flash": 98422
+    },
+    "file_rows": {
+      "ad_shard0.jsonl": 18222,
+      "ad_shard1.jsonl": 24006,
+      "ad_shard2.jsonl": 26304,
+      "ad_shard3.jsonl": 22341,
+      "ad_s2.jsonl": 7549
+    },
+    "file_sizes": {
+      "ad_shard0.jsonl": 8836448,
+      "ad_shard1.jsonl": 11945691,
+      "ad_shard2.jsonl": 12900569,
+      "ad_shard3.jsonl": 11064991,
+      "ad_s2.jsonl": 3666211
+    },
+    "snapshot_prefix_sha256": {
+      "ad_shard0.jsonl": "f11424766d7b88df8b6c8e8a576ee2667c83319b40aead0f53f84d8ccdb817de",
+      "ad_shard1.jsonl": "17c86fc95b0207fd6306d9384b53a2d9b8fcab71c052df92687038f2b1f83aee",
+      "ad_shard2.jsonl": "9c031aa48710650028bf1cf3f2260cddfb6c523e465c79113fb9110542804681",
+      "ad_shard3.jsonl": "6d068aaee6eb6342ce9c009b4058900af51a5595cd367b2835bc75507fc1ee0e",
+      "ad_s2.jsonl": "b80c5dcb535cc23f3c51510d2f6949d37903ef0b9c30364f0850415146ec269d"
+    }
+  },
+  "BC": {
+    "unique_expected_cells": 29884,
+    "expected_cells": 84800,
+    "coverage_percent": 35.24,
+    "rows": 29884,
+    "duplicate_cells": 0,
+    "unparseable_rows": 0,
+    "unexpected_cells": 0,
+    "harnesses_in_manifest_including_bare": 212,
+    "tasks": 400,
+    "complete_harnesses": 74,
+    "targets": {
+      "GLM-5.3-Flash": 29884
+    },
+    "file_rows": {
+      "run_BC_core.jsonl": 23301,
+      "bc_s2.jsonl": 6583
+    },
+    "file_sizes": {
+      "run_BC_core.jsonl": 11444673,
+      "bc_s2.jsonl": 3269877
+    },
+    "snapshot_prefix_sha256": {
+      "run_BC_core.jsonl": "5eb25d548508e22c394d708f52b28b0a499493045fade71941c7f3f991094b20",
+      "bc_s2.jsonl": "77b41b947b29e6fdaad83d248a412eb4d1bd97b77980ead2fda9f17d5f89c427"
+    }
+  }
+}
