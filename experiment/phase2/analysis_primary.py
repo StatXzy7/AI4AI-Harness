@@ -11,8 +11,11 @@ Produces:
   * K-matched sensitivity (k=1..K_min) and the population-conditional (K>=3) sensitivity
   * gate/strategy main effects and interaction on the core-400 (Holm-corrected)
 
-Duplicate cells across shard files (from the seeded resume copies) are collapsed
-last-write-wins; a conflicting duplicate for the same cell key is reported.
+Duplicate cells across shard files (bare was seeded into every shard for resume) are
+collapsed FIRST-WRITE-WINS; a duplicate is only a problem if it CONFLICTS, and
+conflicts are checked on BOTH judges (official_correct and legacy_correct).
+Measured on the live data: 2610 bare duplicates, 0 conflicts on either judge
+(see review-stage and artifacts/phase2/completeness_report.json).
 """
 from __future__ import annotations
 
@@ -49,8 +52,10 @@ def load_cells(paths: list[Path]) -> tuple[dict, list]:
                 continue
             k = (r["target"], r["harness_id"], r["task_id"], r.get("repeat", 0))
             if k in cells:
-                if cells[k]["official_correct"] != r["official_correct"]:
-                    conflicts.append((k, cells[k]["official_correct"], r["official_correct"]))
+                prev = cells[k]
+                if (prev["official_correct"] != r["official_correct"]
+                        or prev.get("legacy_correct") != r.get("legacy_correct")):
+                    conflicts.append((k, prev["official_correct"], r["official_correct"]))
                 continue  # first write wins; identical duplicates are dropped
             cells[k] = r
     return cells, conflicts
@@ -187,7 +192,9 @@ def main():
     cells_bc, conflicts_bc = load_cells(bc_files)
     if conflicts or conflicts_bc:
         print(f"[analysis] WARNING: {len(conflicts) + len(conflicts_bc)} conflicting "
-              f"duplicate cells collapsed (first write kept)")
+              f"duplicate cells on either judge (first write kept); refusing to continue")
+        raise SystemExit("[analysis] conflicting duplicates violate the identity-key contract "
+                         "-- rerun the collectors for the affected cells")
 
     # manifest of admitted harnesses per (arm, builder, seed)
     membership = defaultdict(list)
