@@ -22,6 +22,7 @@
 \citation{grasp2026}
 \citation{cfrouting2026}
 \citation{agenticrouting2026}
+\citation{helix2026}
 \@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}{section.2}\protected@file@percent }
 \newlabel{sec:related}{{2}{2}{Related Work}{section.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Harness generation for LLMs}{2}{subsection.2.1}\protected@file@percent }
@@ -52,19 +53,19 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Design}{5}{subsection.4.1}\protected@file@percent }
 \newlabel{sec:p2design}{{4.1}{5}{Design}{subsection.4.1}{}}
 \@writefile{toc}{\contentsline {paragraph}{Arms.}{5}{section*.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Equal raw generation budget.}{5}{section*.3}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {Phase-II confirmatory design} (frozen protocol). Left: database-level contamination isolation (the two development databases are banned wholesale; evaluation uses nine never-opened databases). Middle: the $2{\times }2$ factorial (strategy forcing $\times $ conformance gate) with equal raw budgets, plus the open-mechanism arm II-E. Right: the three-layer admission pipeline (neutral validity $\rightarrow $ counterfactual conformance $\rightarrow $ non-vacuity vs.\ bare).}}{6}{figure.2}\protected@file@percent }
-\newlabel{fig:design}{{2}{6}{\textbf {Phase-II confirmatory design} (frozen protocol). Left: database-level contamination isolation (the two development databases are banned wholesale; evaluation uses nine never-opened databases). Middle: the $2{\times }2$ factorial (strategy forcing $\times $ conformance gate) with equal raw budgets, plus the open-mechanism arm II-E. Right: the three-layer admission pipeline (neutral validity $\rightarrow $ counterfactual conformance $\rightarrow $ non-vacuity vs.\ bare)}{figure.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Equal raw generation budget.}{6}{section*.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Builders and seeds.}{6}{section*.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Data isolation.}{6}{section*.5}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Judge.}{6}{section*.6}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Instruments.}{6}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Frozen analysis plan}{6}{subsection.4.2}\protected@file@percent }
+\newlabel{sec:p2plan}{{4.2}{6}{Frozen analysis plan}{subsection.4.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {Phase-II confirmatory design} (frozen protocol). Left: database-level contamination isolation (the two development databases are banned wholesale; evaluation uses nine never-opened databases). Middle: the $2{\times }2$ factorial (strategy forcing $\times $ conformance gate) with equal raw budgets, plus the open-mechanism arm II-E. Right: the three-layer admission pipeline (neutral validity $\rightarrow $ counterfactual conformance $\rightarrow $ non-vacuity vs.\ bare).}}{7}{figure.2}\protected@file@percent }
+\newlabel{fig:design}{{2}{7}{\textbf {Phase-II confirmatory design} (frozen protocol). Left: database-level contamination isolation (the two development databases are banned wholesale; evaluation uses nine never-opened databases). Middle: the $2{\times }2$ factorial (strategy forcing $\times $ conformance gate) with equal raw budgets, plus the open-mechanism arm II-E. Right: the three-layer admission pipeline (neutral validity $\rightarrow $ counterfactual conformance $\rightarrow $ non-vacuity vs.\ bare)}{figure.2}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces \textbf  {Primary result (pending).} Bare-inclusive oracle headroom per arm and the paired contrast, pooled over 6 builders $\times $ 3 seeds on the 1{,}169-question confirmatory set, official BIRD judge. Per-cell values, the K-matched sensitivity curve, and the population-conditional analysis will appear in Appendix~\ref {app:phase2-protocol} tables and the released analysis outputs.}}{7}{table.2}\protected@file@percent }
 \newlabel{tab:primary}{{2}{7}{\textbf {Primary result (pending).} Bare-inclusive oracle headroom per arm and the paired contrast, pooled over 6 builders $\times $ 3 seeds on the 1{,}169-question confirmatory set, official BIRD judge. Per-cell values, the K-matched sensitivity curve, and the population-conditional analysis will appear in Appendix~\ref {app:phase2-protocol} tables and the released analysis outputs}{table.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces \textbf  {Confirmatory secondaries (pending)}, Holm-corrected. All four arms evaluated on the identical 400-item core.}}{7}{table.3}\protected@file@percent }
-\newlabel{tab:factorial}{{3}{7}{\textbf {Confirmatory secondaries (pending)}, Holm-corrected. All four arms evaluated on the identical 400-item core}{table.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Frozen analysis plan}{7}{subsection.4.2}\protected@file@percent }
-\newlabel{sec:p2plan}{{4.2}{7}{Frozen analysis plan}{subsection.4.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces \textbf  {Confirmatory secondaries (pending)}, Holm-corrected. All four arms evaluated on the identical 400-item core.}}{8}{table.3}\protected@file@percent }
+\newlabel{tab:factorial}{{3}{8}{\textbf {Confirmatory secondaries (pending)}, Holm-corrected. All four arms evaluated on the identical 400-item core}{table.3}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces \textbf  {Generation reliability (pending)}, reported separately from population quality: a builder that cannot write a valid artifact, one that writes but over-asserts its contract, and one whose asserted behavior verifies are three different findings.}}{8}{table.4}\protected@file@percent }
 \newlabel{tab:yield}{{4}{8}{\textbf {Generation reliability (pending)}, reported separately from population quality: a builder that cannot write a valid artifact, one that writes but over-asserts its contract, and one whose asserted behavior verifies are three different findings}{table.4}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {5}Phase II: Results}{8}{section.5}\protected@file@percent }
@@ -81,8 +82,8 @@
 \newlabel{sec:boundary}{{6}{8}{Boundary Result: Diversity Does Not Imply Learnable Routing}{section.6}{}}
 \@writefile{toc}{\contentsline {paragraph}{Open-set value prediction does not beat the best fixed harness.}{8}{section*.8}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{The one positive result is narrow.}{8}{section*.9}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {7}Discussion}{8}{section.7}\protected@file@percent }
-\newlabel{sec:discussion}{{7}{8}{Discussion}{section.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Discussion}{9}{section.7}\protected@file@percent }
+\newlabel{sec:discussion}{{7}{9}{Discussion}{section.7}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {8}Conclusion}{9}{section.8}\protected@file@percent }
 \newlabel{sec:conclusion}{{8}{9}{Conclusion}{section.8}{}}
 \newlabel{endofmain}{{8}{9}{Conclusion}{section.8}{}}
@@ -98,7 +99,7 @@
 \bibcite{gatedqd2026}{{9}{2026}{{Luo et~al.}}{{Luo, Xue, Wang, Hu, and Deng}}}
 \bibcite{coevolve2026}{{10}{2026}{{Miyai et~al.}}{{Miyai, Aizawa, and Yamasaki}}}
 \bibcite{grasp2026}{{11}{2026}{{Moll et~al.}}{{Moll, Corbeil, Pan, Hadamitzky, Rueckert, and Adams}}}
-\bibcite{tthe2026}{{12}{2026}{{Nie et~al.}}{{Nie, Zhang, Song, Cai, Yu, and Guo}}}
+\bibcite{tthe2026}{{12}{2026}{{Nie et~al.}}{{Nie, Zhang, Song, Cai, Yu, Tian, Han, Guo, et~al.}}}
 \bibcite{handbook2026}{{13}{2026}{{Wang et~al.}}{{Wang, Shi, Li, Li, Yu, and Yang}}}
 \bibcite{harnesslens2026}{{14}{2026}{{Xu et~al.}}{{Xu, Zhang, Chen, Li, Liang, and Yang}}}
 \bibcite{jitagent2026}{{15}{2026{a}}{{Zhang et~al.}}{{Zhang, Lu, Xie, Zhu, Wang, and Xie}}}
@@ -111,8 +112,8 @@
 \@writefile{toc}{\contentsline {paragraph}{Data hygiene.}{11}{section*.13}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Phase-I populations.}{11}{section*.14}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Generation-provenance gaps.}{11}{section*.15}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {B}Phase-II Protocol Summary and Deviation Log}{11}{section.B}\protected@file@percent }
-\newlabel{app:phase2-protocol}{{B}{11}{Phase-II Protocol Summary and Deviation Log}{section.B}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Phase-II Protocol Summary and Deviation Log}{12}{section.B}\protected@file@percent }
+\newlabel{app:phase2-protocol}{{B}{12}{Phase-II Protocol Summary and Deviation Log}{section.B}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {C}Phase-I Additional Results}{12}{section.C}\protected@file@percent }
 \newlabel{app:phase1-results}{{C}{12}{Phase-I Additional Results}{section.C}{}}
 \gdef \@abspage@last{12}

@@ -60,7 +60,7 @@ ax.set_xlabel("pairwise source-code similarity (token-sequence ratio)")
 ax.set_ylabel("pairwise outcome disagreement")
 ax.set_title(f"Syntactically diverse, behaviorally collapsed\n"
              f"(day-1 population, 14 harnesses x 60 tasks; "
-             f"Spearman $\\rho$ = {rho:.2f}, $p$ = {rho_p:.2f})", fontsize=10.5)
+             f"Spearman $\\rho$ = {rho:.2f})", fontsize=10.5)
 ax.grid(alpha=0.25, zorder=1)
 plt.tight_layout()
 plt.savefig(ROOT / "paper" / "figures" / "fig_phenomenon.pdf", bbox_inches="tight")

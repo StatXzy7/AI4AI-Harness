@@ -38,8 +38,8 @@ Minho Kim.
 
 \bibitem[Li et~al.(2023)Li, Hui, Qu, Yang, Li, Li, Wang, Qin, Geng, Huo,
   et~al.]{bird2021}
-Jinyang Li, Binyuan Hui, Ge~Qu, Jia Yang, Binhao Li, Bowen Li, Bailin Wang,
-  Bowen Qin, Binyuan Geng, Nan Huo, et~al.
+Jinyang Li, Binyuan Hui, Ge~Qu, Jiaxi Yang, Binhao Li, Bowen Li, Bailin Wang,
+  Bowen Qin, Ruiying Geng, Nan Huo, et~al.
 \newblock Can {LLM} already serve as a database interface? a {BIRD}'s eye view.
 \newblock In \emph{Advances in Neural Information Processing Systems (NeurIPS)
   Datasets and Benchmarks Track}, 2023.
@@ -78,8 +78,10 @@ Johannes Moll, Jean-Philippe Corbeil, Jiazhen Pan, Martin Hadamitzky, Daniel
   {LLM} agents.
 \newblock \emph{arXiv preprint arXiv:2605.29668}, 2026.
 
-\bibitem[Nie et~al.(2026)Nie, Zhang, Song, Cai, Yu, and Guo]{tthe2026}
-Jun Nie, Yonggang Zhang, Jun Song, Qianshu Cai, Dahai Yu, and Yike Guo.
+\bibitem[Nie et~al.(2026)Nie, Zhang, Song, Cai, Yu, Tian, Han, Guo,
+  et~al.]{tthe2026}
+Jun Nie, Yonggang Zhang, Jun Song, Qianshu Cai, Dahai Yu, Xinmei Tian, Bo~Han,
+  Yike Guo, et~al.
 \newblock {TTHE}: Test-time harness evolution.
 \newblock \emph{arXiv preprint arXiv:2607.08124}, 2026.
 

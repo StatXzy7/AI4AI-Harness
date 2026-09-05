@@ -28,23 +28,23 @@ for routing and value prediction --- applications that presuppose
 population members \emph{disagree} on outcomes. We measure this premise
 directly and find that it fails. On BIRD text-to-SQL with a frozen target,
 the candidates of a standard harness-evolution loop are syntactically
-diverse yet behaviorally collapsed: 36 of 91 harness pairs return identical
-correctness on every task, and pairwise code similarity carries no
-information about outcome disagreement (Spearman $ho=-0.01$).
+diverse yet behaviorally collapsed: 36 of 91 harness pairs (including the bare and ReAct baselines) return identical
+correctness on every task, and pairwise code similarity shows no
+observed rank association with outcome disagreement (Spearman $
+ho=-0.01$).
 Execution-trace auditing explains why: mechanisms are described but absent
 from the control flow, feedback has no causal path to the output, or
 multi-turn paths are broken. A hand-written positive control shows the
 missing routing headroom exists on the task (7.3\,pp), localizing the
 failure to generation; we further document a more primitive failure mode
 in which a deployed pipeline emits candidates byte-identical to the
-baseline. We then froze a confirmatory protocol: a $2{	imes}2$ factorial
-(strategy forcing $	imes$ counterfactual conformance gate) over six
+baseline. We then froze a confirmatory protocol: a $2{\times}2$ factorial
+(strategy forcing $\times$ counterfactual conformance gate) over six
 builders and three seeds, evaluated on 1{,}169 questions from databases
 never opened during development, under the official BIRD scorer, with
 instruments calibrated on positive and negative controls. Phase-I controls
 additionally show open-set harness-value prediction does not beat the best
-fixed harness, so diversity is necessary but not sufficient. Confirmatory
-results are reported under the frozen analysis plan.
+fixed harness, so diversity is necessary but not sufficient. Confirmatory data collection is ongoing; results will be reported under the frozen analysis plan.
 \end{abstract}
 
 \section{Introduction}\label{sec:introduction}
@@ -98,8 +98,8 @@ family from the executor, per our cross-model review discipline).
 
 \textbf{Responsibility.} We take responsibility for the final content of this
 work, including text, claims, and artifacts produced with the aid of generative
-AI. The factual statements in this section are provided by the authors and were
-reviewed by them.
+AI. The factual statements in this section are provided for author verification;
+final responsibility for their accuracy rests with the authors.
 
 \bibliography{references}
 \bibliographystyle{iclr2027_conference}

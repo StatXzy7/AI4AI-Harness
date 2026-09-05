@@ -1,5 +1,7 @@
 Phase II is the confirmatory study. Its protocol was frozen and committed
-before any confirmatory outcome was observed; deviations are logged in the
+before any confirmatory outcome was observed (one exception, disclosed as
+deviation D1 in the protocol changelog: an 18-item pipeline smoke test whose
+aggregate accuracies were observed and whose items were retained); deviations are logged in the
 protocol changelog (Appendix~\ref{app:phase2-protocol}). The frozen
 estimand, splits, instruments, and analysis plan are summarized here.
 
@@ -43,7 +45,9 @@ condition on a post-treatment outcome.
 \paragraph{Data isolation.} A fail-closed contamination registry scans every
 project artifact for observed BIRD questions. Two databases touched during
 development are banned wholesale; the confirmatory evaluation uses
-\textbf{1{,}169 questions from nine never-opened databases}, with a
+\textbf{1{,}169 questions from nine databases never opened during development}
+(the registry's defensible claim is no project-specific adaptive use, not
+pretraining-time isolation; the 18-item smoke contact is the disclosed exception), with a
 stratified 400-item core drawn before any outcome existed. Factorial
 secondary analyses run on the same core items for all four arms.
 

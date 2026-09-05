@@ -36,9 +36,10 @@ The domain is BIRD text-to-SQL (SQLite; execution-accuracy judging), target
 frozen at \textbf{GLM-5.3-Flash} (temperature 0) throughout Phase I. On the
 day-1 population --- 14 harnesses (\bare, \react, and 12 evolution
 candidates) $\times$ 60 tasks --- average pairwise outcome disagreement is
-\textbf{3.5\%} and \textbf{36 of 91 pairs are identical on every task};
-among the 12 generated candidates alone (66 candidate pairs, mean pairwise
-code similarity 0.143), disagreement is 3.8\% with 21 identical pairs.
+\textbf{3.3\%} and \textbf{36 of 91 pairs are identical on every task};
+among the 12 generated candidates alone (66 candidate pairs; mean pairwise
+code similarity 0.143 under the normalized-character metric of the original
+code-difference check), disagreement is 3.8\% with 21 identical pairs.
 Every candidate had passed a code-difference check (``all files distinct,
 non-trivial diffs''). Union repair over bare errors is 7.7\% and oracle
 headroom 3.3\,pp; \react{} differs from \bare{} on zero tasks.

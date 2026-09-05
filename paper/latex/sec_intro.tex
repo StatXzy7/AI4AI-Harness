@@ -15,8 +15,8 @@ Every candidate passes a code-difference check, yet among the 12 generated
 candidates (66 candidate pairs) average pairwise outcome disagreement is
 \textbf{3.8\%} and \textbf{21 pairs are behaviorally identical}; counting the
 shipped \react{} harness and \bare{} baseline as well (91 pairs), 36 pairs
-return identical correctness on every task, and pairwise code similarity is
-uncorrelated with outcome disagreement (Spearman $\rho=-0.01$). The shipped
+return identical correctness on every task, and pairwise code similarity shows no
+observed rank association with outcome disagreement (Spearman $\rho=-0.01$). The shipped
 \react{} variant reproduces \bare's final SQL byte-for-byte on every audited
 task. Execution-trace auditing resolves ``different code'' into three failure
 classes: mechanisms \emph{described} but absent from the control flow,

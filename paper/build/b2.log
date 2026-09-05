@@ -62,29 +62,122 @@ For additional information on amsmath, use the `?' option.
 (./main.out) (./main.out)
 (d:/texlive/2026/texmf-dist/tex/latex/amsfonts/umsa.fd)
 (d:/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd) (./sec_intro.tex
+
+Package natbib Warning: Citation `bird2021' on page 1 undefined on input line 1
+1.
+
 (d:/texlive/2026/texmf-dist/tex/latex/psnfss/ot1pcr.fd)
 (d:/texlive/2026/texmf-dist/tex/latex/psnfss/ts1ptm.fd) [1{d:/texlive/2026/texm
 f-var/fonts/map/pdftex/updmap/pdftex.map}{d:/texlive/2026/texmf-dist/fonts/enc/
-dvips/base/8r.enc}]) (./sec_related.tex [2]
-(d:/texlive/2026/texmf-dist/tex/latex/psnfss/omsptm.fd)) (./sec_phase1.tex
-[3] [4 <./figures/fig_phenomenon.pdf>]) (./sec_phase2.tex [5]) [6]
-(./sec_results.tex) (./sec_boundary.tex [7 <./figures/fig_design.pdf>])
-(./sec_discussion.tex [8]) (./sec_conclusion.tex) [9] (./main.bbl [10])
-(./sec_appendix.tex) [11] [12] (./main.aux) )<d:/texlive/2026/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmex10.pfb><d:/texlive/2026/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmmi10.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmmi7.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
-i9.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><d:
-/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb><d:/texlive/20
-26/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><d:/texlive/2026/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmr7.pfb><d:/texlive/2026/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmr9.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmsy10.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmsy7.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.p
-fb><d:/texlive/2026/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb><d:/texlive/2
-026/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb><d:/texlive/2026/texmf-dist/f
-onts/type1/urw/helvetic/uhvb8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/
-times/utmb8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><
-d:/texlive/2026/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (12 pages, 294461 bytes).
+dvips/base/8r.enc}]) (./sec_related.tex
+
+Package natbib Warning: Citation `tthe2026' on page 2 undefined on input line 4
+.
+
+
+Package natbib Warning: Citation `selfharness2026' on page 2 undefined on input
+ line 4.
+
+
+Package natbib Warning: Citation `jitagent2026' on page 2 undefined on input li
+ne 5.
+
+
+Package natbib Warning: Citation `coevolve2026' on page 2 undefined on input li
+ne 7.
+
+
+Package natbib Warning: Citation `harnesslens2026' on page 2 undefined on input
+ line 9.
+
+
+Package natbib Warning: Citation `harnessfix2026' on page 2 undefined on input 
+line 10.
+
+
+Package natbib Warning: Citation `ahe2026' on page 2 undefined on input line 11
+.
+
+
+Package natbib Warning: Citation `gatedqd2026' on page 2 undefined on input lin
+e 13.
+
+
+Package natbib Warning: Citation `handbook2026' on page 2 undefined on input li
+ne 15.
+
+
+Package natbib Warning: Citation `gatedqd2026' on page 2 undefined on input lin
+e 22.
+
+
+Package natbib Warning: Citation `nouniversal2026' on page 2 undefined on input
+ line 53.
+
+
+Package natbib Warning: Citation `nonmonotone2026' on page 2 undefined on input
+ line 54.
+
+
+Package natbib Warning: Citation `helix2026' on page 2 undefined on input line 
+55.
+
+
+Package natbib Warning: Citation `sts2026' on page 2 undefined on input line 57
+.
+
+
+Package natbib Warning: Citation `grasp2026' on page 2 undefined on input line 
+58.
+
+
+Package natbib Warning: Citation `cfrouting2026' on page 2 undefined on input l
+ine 59.
+
+(d:/texlive/2026/texmf-dist/tex/latex/psnfss/omsptm.fd)
+
+Package natbib Warning: Citation `agenticrouting2026' on page 2 undefined on in
+put line 60.
+
+
+Package natbib Warning: Citation `helix2026' on page 2 undefined on input line 
+62.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active [2])
+(./sec_phase1.tex [3] [4 <./figures/fig_phenomenon.pdf>]) (./sec_phase2.tex
+[5]) (./sec_results.tex [6]) (./sec_boundary.tex
+Underfull \vbox (badness 4266) has occurred while \output is active [7 <./figur
+es/fig_design.pdf>]) (./sec_discussion.tex [8]) (./sec_conclusion.tex) [9]
+(./main.bbl [10]) (./sec_appendix.tex [11])
+
+Package natbib Warning: There were undefined citations.
+
+[12] (./main.aux
+
+Package natbib Warning: Citation(s) may have changed.
+(natbib)                Rerun to get citations correct.
+
+)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ )
+(see the transcript file for additional information)<d:/texlive/2026/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmex10.pfb><d:/texlive/2026/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmmi10.pfb><d:/texlive/2026/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmmi7.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmmi9.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.
+pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb><d:/tex
+live/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><d:/texlive/2026/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><d:/texlive/2026/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmr9.pfb><d:/texlive/2026/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmsy10.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmsy7.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmsy9.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb><d:/te
+xlive/2026/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb><d:/texlive/2026/texmf
+-dist/fonts/type1/urw/helvetic/uhvb8a.pfb><d:/texlive/2026/texmf-dist/fonts/typ
+e1/urw/times/utmb8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/times/utmr8
+a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (12 pages, 296214 bytes).
 Transcript written on main.log.

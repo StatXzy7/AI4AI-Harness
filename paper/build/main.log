@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.29)  5 SEP 2026 14:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.29)  5 SEP 2026 14:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -434,25 +434,27 @@ LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 60.
  [2]) (./sec_phase1.tex
 [3]
-<figures/fig_phenomenon.pdf, id=200, 448.28606pt x 308.48085pt>
+<figures/fig_phenomenon.pdf, id=198, 440.53085pt x 308.48085pt>
 File: figures/fig_phenomenon.pdf Graphic file (type pdf)
 <use figures/fig_phenomenon.pdf>
-Package pdftex.def Info: figures/fig_phenomenon.pdf  used on input line 55.
-(pdftex.def)             Requested size: 310.0378pt x 213.34624pt.
+Package pdftex.def Info: figures/fig_phenomenon.pdf  used on input line 56.
+(pdftex.def)             Requested size: 310.0378pt x 217.11658pt.
  [4 <./figures/fig_phenomenon.pdf>]) (./sec_phase2.tex [5]
-<figures/fig_design.pdf, id=272, 679.33798pt x 332.73108pt>
+<figures/fig_design.pdf, id=272, 679.33798pt x 389.96892pt>
 File: figures/fig_design.pdf Graphic file (type pdf)
 <use figures/fig_design.pdf>
-Package pdftex.def Info: figures/fig_design.pdf  used on input line 72.
-(pdftex.def)             Requested size: 389.53358pt x 190.79086pt.
-
-Underfull \vbox (badness 1237) has occurred while \output is active []
-
- [6 <./figures/fig_design.pdf>]) (./sec_results.tex)
+Package pdftex.def Info: figures/fig_design.pdf  used on input line 76.
+(pdftex.def)             Requested size: 389.53358pt x 223.61153pt.
+ [6])
+(./sec_results.tex
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [7]
-(./sec_boundary.tex) (./sec_discussion.tex [8]) (./sec_conclusion.tex) [9]
+ [7 <./figures/fig_design.pdf>]) (./sec_boundary.tex) (./sec_discussion.tex [8]
+)
+(./sec_conclusion.tex)
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [9]
 (./main.bbl [10]) (./sec_appendix.tex [11]) [12] (./main.aux)
  ***********
 LaTeX2e <2025-11-01>
@@ -464,11 +466,11 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 Here is how much of TeX's memory you used:
  11357 strings out of 467349
  170515 string characters out of 5419862
- 608369 words of memory out of 5000000
+ 608384 words of memory out of 5000000
  40172 multiletter control sequences out of 15000+600000
  654660 words of font info for 91 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,90p,651b,586s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,12n,90p,651b,578s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><d:/tex
 live/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><d:/texlive/2026
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><d:/texlive/2026/texmf-dis
@@ -485,10 +487,10 @@ urw/courier/ucrb8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/courier/ucrr
 ive/2026/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><d:/texlive/2026/texmf-dis
 t/fonts/type1/urw/times/utmr8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/
 times/utmri8a.pfb>
-Output written on main.pdf (12 pages, 295348 bytes).
+Output written on main.pdf (12 pages, 297407 bytes).
 PDF statistics:
- 528 PDF objects out of 1000 (max. 8388607)
- 332 compressed objects within 4 object streams
+ 537 PDF objects out of 1000 (max. 8388607)
+ 334 compressed objects within 4 object streams
  79 named destinations out of 1000 (max. 500000)
  211 words of extra memory for PDF output out of 10000 (max. 10000000)
 

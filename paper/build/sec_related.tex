@@ -35,7 +35,7 @@ rather than reporting end-to-end system gains.
 \midrule
 Unit of study & population outcome matrix & evolution loop & diversity library \\
 Measures population collapse & yes & no & search collapse only \\
-Gate definition & counterfactual traces & rollout allocation & semantic screening \\
+Gate definition & counterfactual traces & attributable-evidence & semantic screening \\
 Gate calibration & pos/neg controls & --- & --- \\
 Causal isolation of gate & $2{\times}2$ factorial & no & no \\
 Confirmatory split & 9 untouched DBs & --- & --- \\
@@ -59,8 +59,12 @@ set; GRASP \citep{grasp2026} gates skill edits into a library at development
 time; \citet{cfrouting2026} learn counterfactual instance-level routing over
 \{no-search, search, abstain\}; \citet{agenticrouting2026} route models
 within a harness. All of these consume a population whose members
-\emph{actually disagree}; none measures whether an automatically generated
-population has this property. We supply the missing precondition analysis,
+\emph{actually disagree}; \citet{helix2026} comes closest, evaluating a
+full candidate outcome matrix and measuring portfolio complementarity beyond
+the best fixed candidate. Our contribution is narrower and different: we
+measure whether \emph{automatically generated} populations collapse as an
+outcome phenomenon, diagnose why at the trace level, and isolate the
+generation-side causes with a controlled factorial.
 show it fails for naively generated populations, and test whether
 generation-side interventions repair it.
 
