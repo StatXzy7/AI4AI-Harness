@@ -1,0 +1,548 @@
+[
+ {
+  "a": "bare",
+  "b": "cand_bird_g1_b0r0_g0",
+  "code_sim": 0.3709,
+  "disagreement": 0.0333
+ },
+ {
+  "a": "bare",
+  "b": "cand_bird_g1_b0r0_g1",
+  "code_sim": 0.1213,
+  "disagreement": 0.0667
+ },
+ {
+  "a": "bare",
+  "b": "cand_bird_g1_b0r1_g0",
+  "code_sim": 0.2081,
+  "disagreement": 0.0
+ },
+ {
+  "a": "bare",
+  "b": "cand_bird_g1_b0r1_g1",
+  "code_sim": 0.1067,
+  "disagreement": 0.0
+ },
+ {
+  "a": "bare",
+  "b": "cand_bird_g1_b1r0_g0",
+  "code_sim": 0.1145,
+  "disagreement": 0.0
+ },
+ {
+  "a": "bare",
+  "b": "cand_bird_g1_b1r0_g1",
+  "code_sim": 0.1429,
+  "disagreement": 0.0333
+ },
+ {
+  "a": "bare",
+  "b": "cand_bird_g1_b1r1_g0",
+  "code_sim": 0.1543,
+  "disagreement": 0.0167
+ },
+ {
+  "a": "bare",
+  "b": "cand_bird_g1_b1r1_g1",
+  "code_sim": 0.2212,
+  "disagreement": 0.1
+ },
+ {
+  "a": "bare",
+  "b": "cand_bird_g1_b2r0_g0",
+  "code_sim": 0.3636,
+  "disagreement": 0.0
+ },
+ {
+  "a": "bare",
+  "b": "cand_bird_g1_b2r0_g1",
+  "code_sim": 0.2022,
+  "disagreement": 0.0
+ },
+ {
+  "a": "bare",
+  "b": "cand_bird_pop1_b0r0_g0",
+  "code_sim": 0.3108,
+  "disagreement": 0.0
+ },
+ {
+  "a": "bare",
+  "b": "cand_bird_pop1_b0r0_g1",
+  "code_sim": 0.1616,
+  "disagreement": 0.0
+ },
+ {
+  "a": "bare",
+  "b": "react",
+  "code_sim": 0.4444,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_g1_b0r0_g0",
+  "b": "cand_bird_g1_b0r0_g1",
+  "code_sim": 0.1737,
+  "disagreement": 0.0667
+ },
+ {
+  "a": "cand_bird_g1_b0r0_g0",
+  "b": "cand_bird_g1_b0r1_g0",
+  "code_sim": 0.1866,
+  "disagreement": 0.0333
+ },
+ {
+  "a": "cand_bird_g1_b0r0_g0",
+  "b": "cand_bird_g1_b0r1_g1",
+  "code_sim": 0.1763,
+  "disagreement": 0.0333
+ },
+ {
+  "a": "cand_bird_g1_b0r0_g0",
+  "b": "cand_bird_g1_b1r0_g0",
+  "code_sim": 0.1509,
+  "disagreement": 0.0333
+ },
+ {
+  "a": "cand_bird_g1_b0r0_g0",
+  "b": "cand_bird_g1_b1r0_g1",
+  "code_sim": 0.207,
+  "disagreement": 0.0333
+ },
+ {
+  "a": "cand_bird_g1_b0r0_g0",
+  "b": "cand_bird_g1_b1r1_g0",
+  "code_sim": 0.1954,
+  "disagreement": 0.05
+ },
+ {
+  "a": "cand_bird_g1_b0r0_g0",
+  "b": "cand_bird_g1_b1r1_g1",
+  "code_sim": 0.1981,
+  "disagreement": 0.1333
+ },
+ {
+  "a": "cand_bird_g1_b0r0_g0",
+  "b": "cand_bird_g1_b2r0_g0",
+  "code_sim": 0.2587,
+  "disagreement": 0.0333
+ },
+ {
+  "a": "cand_bird_g1_b0r0_g0",
+  "b": "cand_bird_g1_b2r0_g1",
+  "code_sim": 0.1922,
+  "disagreement": 0.0333
+ },
+ {
+  "a": "cand_bird_g1_b0r0_g0",
+  "b": "cand_bird_pop1_b0r0_g0",
+  "code_sim": 0.2277,
+  "disagreement": 0.0333
+ },
+ {
+  "a": "cand_bird_g1_b0r0_g0",
+  "b": "cand_bird_pop1_b0r0_g1",
+  "code_sim": 0.1927,
+  "disagreement": 0.0333
+ },
+ {
+  "a": "cand_bird_g1_b0r0_g0",
+  "b": "react",
+  "code_sim": 0.2788,
+  "disagreement": 0.0333
+ },
+ {
+  "a": "cand_bird_g1_b0r0_g1",
+  "b": "cand_bird_g1_b0r1_g0",
+  "code_sim": 0.1257,
+  "disagreement": 0.0667
+ },
+ {
+  "a": "cand_bird_g1_b0r0_g1",
+  "b": "cand_bird_g1_b0r1_g1",
+  "code_sim": 0.2113,
+  "disagreement": 0.0667
+ },
+ {
+  "a": "cand_bird_g1_b0r0_g1",
+  "b": "cand_bird_g1_b1r0_g0",
+  "code_sim": 0.3318,
+  "disagreement": 0.0667
+ },
+ {
+  "a": "cand_bird_g1_b0r0_g1",
+  "b": "cand_bird_g1_b1r0_g1",
+  "code_sim": 0.0979,
+  "disagreement": 0.0667
+ },
+ {
+  "a": "cand_bird_g1_b0r0_g1",
+  "b": "cand_bird_g1_b1r1_g0",
+  "code_sim": 0.1822,
+  "disagreement": 0.0833
+ },
+ {
+  "a": "cand_bird_g1_b0r0_g1",
+  "b": "cand_bird_g1_b1r1_g1",
+  "code_sim": 0.1519,
+  "disagreement": 0.0667
+ },
+ {
+  "a": "cand_bird_g1_b0r0_g1",
+  "b": "cand_bird_g1_b2r0_g0",
+  "code_sim": 0.1497,
+  "disagreement": 0.0667
+ },
+ {
+  "a": "cand_bird_g1_b0r0_g1",
+  "b": "cand_bird_g1_b2r0_g1",
+  "code_sim": 0.1281,
+  "disagreement": 0.0667
+ },
+ {
+  "a": "cand_bird_g1_b0r0_g1",
+  "b": "cand_bird_pop1_b0r0_g0",
+  "code_sim": 0.1159,
+  "disagreement": 0.0667
+ },
+ {
+  "a": "cand_bird_g1_b0r0_g1",
+  "b": "cand_bird_pop1_b0r0_g1",
+  "code_sim": 0.242,
+  "disagreement": 0.0667
+ },
+ {
+  "a": "cand_bird_g1_b0r0_g1",
+  "b": "react",
+  "code_sim": 0.1067,
+  "disagreement": 0.0667
+ },
+ {
+  "a": "cand_bird_g1_b0r1_g0",
+  "b": "cand_bird_g1_b0r1_g1",
+  "code_sim": 0.0957,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_g1_b0r1_g0",
+  "b": "cand_bird_g1_b1r0_g0",
+  "code_sim": 0.1147,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_g1_b0r1_g0",
+  "b": "cand_bird_g1_b1r0_g1",
+  "code_sim": 0.118,
+  "disagreement": 0.0333
+ },
+ {
+  "a": "cand_bird_g1_b0r1_g0",
+  "b": "cand_bird_g1_b1r1_g0",
+  "code_sim": 0.1291,
+  "disagreement": 0.0167
+ },
+ {
+  "a": "cand_bird_g1_b0r1_g0",
+  "b": "cand_bird_g1_b1r1_g1",
+  "code_sim": 0.1325,
+  "disagreement": 0.1
+ },
+ {
+  "a": "cand_bird_g1_b0r1_g0",
+  "b": "cand_bird_g1_b2r0_g0",
+  "code_sim": 0.1826,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_g1_b0r1_g0",
+  "b": "cand_bird_g1_b2r0_g1",
+  "code_sim": 0.1503,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_g1_b0r1_g0",
+  "b": "cand_bird_pop1_b0r0_g0",
+  "code_sim": 0.1587,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_g1_b0r1_g0",
+  "b": "cand_bird_pop1_b0r0_g1",
+  "code_sim": 0.1155,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_g1_b0r1_g0",
+  "b": "react",
+  "code_sim": 0.1646,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_g1_b0r1_g1",
+  "b": "cand_bird_g1_b1r0_g0",
+  "code_sim": 0.1737,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_g1_b0r1_g1",
+  "b": "cand_bird_g1_b1r0_g1",
+  "code_sim": 0.1543,
+  "disagreement": 0.0333
+ },
+ {
+  "a": "cand_bird_g1_b0r1_g1",
+  "b": "cand_bird_g1_b1r1_g0",
+  "code_sim": 0.1345,
+  "disagreement": 0.0167
+ },
+ {
+  "a": "cand_bird_g1_b0r1_g1",
+  "b": "cand_bird_g1_b1r1_g1",
+  "code_sim": 0.1555,
+  "disagreement": 0.1
+ },
+ {
+  "a": "cand_bird_g1_b0r1_g1",
+  "b": "cand_bird_g1_b2r0_g0",
+  "code_sim": 0.1338,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_g1_b0r1_g1",
+  "b": "cand_bird_g1_b2r0_g1",
+  "code_sim": 0.1687,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_g1_b0r1_g1",
+  "b": "cand_bird_pop1_b0r0_g0",
+  "code_sim": 0.1387,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_g1_b0r1_g1",
+  "b": "cand_bird_pop1_b0r0_g1",
+  "code_sim": 0.3081,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_g1_b0r1_g1",
+  "b": "react",
+  "code_sim": 0.0753,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_g1_b1r0_g0",
+  "b": "cand_bird_g1_b1r0_g1",
+  "code_sim": 0.2234,
+  "disagreement": 0.0333
+ },
+ {
+  "a": "cand_bird_g1_b1r0_g0",
+  "b": "cand_bird_g1_b1r1_g0",
+  "code_sim": 0.221,
+  "disagreement": 0.0167
+ },
+ {
+  "a": "cand_bird_g1_b1r0_g0",
+  "b": "cand_bird_g1_b1r1_g1",
+  "code_sim": 0.1144,
+  "disagreement": 0.1
+ },
+ {
+  "a": "cand_bird_g1_b1r0_g0",
+  "b": "cand_bird_g1_b2r0_g0",
+  "code_sim": 0.1437,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_g1_b1r0_g0",
+  "b": "cand_bird_g1_b2r0_g1",
+  "code_sim": 0.1454,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_g1_b1r0_g0",
+  "b": "cand_bird_pop1_b0r0_g0",
+  "code_sim": 0.1342,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_g1_b1r0_g0",
+  "b": "cand_bird_pop1_b0r0_g1",
+  "code_sim": 0.156,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_g1_b1r0_g0",
+  "b": "react",
+  "code_sim": 0.1146,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_g1_b1r0_g1",
+  "b": "cand_bird_g1_b1r1_g0",
+  "code_sim": 0.2244,
+  "disagreement": 0.05
+ },
+ {
+  "a": "cand_bird_g1_b1r0_g1",
+  "b": "cand_bird_g1_b1r1_g1",
+  "code_sim": 0.1451,
+  "disagreement": 0.1333
+ },
+ {
+  "a": "cand_bird_g1_b1r0_g1",
+  "b": "cand_bird_g1_b2r0_g0",
+  "code_sim": 0.1607,
+  "disagreement": 0.0333
+ },
+ {
+  "a": "cand_bird_g1_b1r0_g1",
+  "b": "cand_bird_g1_b2r0_g1",
+  "code_sim": 0.1834,
+  "disagreement": 0.0333
+ },
+ {
+  "a": "cand_bird_g1_b1r0_g1",
+  "b": "cand_bird_pop1_b0r0_g0",
+  "code_sim": 0.1716,
+  "disagreement": 0.0333
+ },
+ {
+  "a": "cand_bird_g1_b1r0_g1",
+  "b": "cand_bird_pop1_b0r0_g1",
+  "code_sim": 0.1468,
+  "disagreement": 0.0333
+ },
+ {
+  "a": "cand_bird_g1_b1r0_g1",
+  "b": "react",
+  "code_sim": 0.1275,
+  "disagreement": 0.0333
+ },
+ {
+  "a": "cand_bird_g1_b1r1_g0",
+  "b": "cand_bird_g1_b1r1_g1",
+  "code_sim": 0.1389,
+  "disagreement": 0.0833
+ },
+ {
+  "a": "cand_bird_g1_b1r1_g0",
+  "b": "cand_bird_g1_b2r0_g0",
+  "code_sim": 0.1624,
+  "disagreement": 0.0167
+ },
+ {
+  "a": "cand_bird_g1_b1r1_g0",
+  "b": "cand_bird_g1_b2r0_g1",
+  "code_sim": 0.1776,
+  "disagreement": 0.0167
+ },
+ {
+  "a": "cand_bird_g1_b1r1_g0",
+  "b": "cand_bird_pop1_b0r0_g0",
+  "code_sim": 0.1863,
+  "disagreement": 0.0167
+ },
+ {
+  "a": "cand_bird_g1_b1r1_g0",
+  "b": "cand_bird_pop1_b0r0_g1",
+  "code_sim": 0.1995,
+  "disagreement": 0.0167
+ },
+ {
+  "a": "cand_bird_g1_b1r1_g0",
+  "b": "react",
+  "code_sim": 0.1494,
+  "disagreement": 0.0167
+ },
+ {
+  "a": "cand_bird_g1_b1r1_g1",
+  "b": "cand_bird_g1_b2r0_g0",
+  "code_sim": 0.3664,
+  "disagreement": 0.1
+ },
+ {
+  "a": "cand_bird_g1_b1r1_g1",
+  "b": "cand_bird_g1_b2r0_g1",
+  "code_sim": 0.271,
+  "disagreement": 0.1
+ },
+ {
+  "a": "cand_bird_g1_b1r1_g1",
+  "b": "cand_bird_pop1_b0r0_g0",
+  "code_sim": 0.2091,
+  "disagreement": 0.1
+ },
+ {
+  "a": "cand_bird_g1_b1r1_g1",
+  "b": "cand_bird_pop1_b0r0_g1",
+  "code_sim": 0.2967,
+  "disagreement": 0.1
+ },
+ {
+  "a": "cand_bird_g1_b1r1_g1",
+  "b": "react",
+  "code_sim": 0.1995,
+  "disagreement": 0.1
+ },
+ {
+  "a": "cand_bird_g1_b2r0_g0",
+  "b": "cand_bird_g1_b2r0_g1",
+  "code_sim": 0.2825,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_g1_b2r0_g0",
+  "b": "cand_bird_pop1_b0r0_g0",
+  "code_sim": 0.2845,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_g1_b2r0_g0",
+  "b": "cand_bird_pop1_b0r0_g1",
+  "code_sim": 0.2346,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_g1_b2r0_g0",
+  "b": "react",
+  "code_sim": 0.3134,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_g1_b2r0_g1",
+  "b": "cand_bird_pop1_b0r0_g0",
+  "code_sim": 0.2816,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_g1_b2r0_g1",
+  "b": "cand_bird_pop1_b0r0_g1",
+  "code_sim": 0.2281,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_g1_b2r0_g1",
+  "b": "react",
+  "code_sim": 0.1862,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_pop1_b0r0_g0",
+  "b": "cand_bird_pop1_b0r0_g1",
+  "code_sim": 0.223,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_pop1_b0r0_g0",
+  "b": "react",
+  "code_sim": 0.2898,
+  "disagreement": 0.0
+ },
+ {
+  "a": "cand_bird_pop1_b0r0_g1",
+  "b": "react",
+  "code_sim": 0.1592,
+  "disagreement": 0.0
+ }
+]
