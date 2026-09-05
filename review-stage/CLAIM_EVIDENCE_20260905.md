@@ -9,7 +9,7 @@
 | C3 | 任务域存在 routing headroom:人工对照 60 题 6.67pp,151 题 7.28pp [3.3,10.0] | `tthe_bird_positive_control.parquet`, eval151 矩阵 | discovery-only(对照设计于查看 day-1 trace 之后,存在性证明而非盲估计,已披露) | §3.4 |
 | C4 | ~~旧协议塌缩是 builder-independent(40 候选 780/780 全同)~~ | 40 个候选 SHA256 = bare 源码 | **retracted**(PHASE2_PROTOCOL §9:同码同结果是同义反复,重新分类为 M0 generation null;只可作生成失败报告,不可作行为塌缩或 builder 归因证据) | 原 §1/§6.4 — 移除,改为 M0 报告 |
 | C5 | Phase-I 下 strategy-forced 群体点估计过线(C6 5.96pp/D6 7.95pp),旧协议 A6 4.64pp 未过;接受率 GLM 3/8 < Qwen 7/8 < DS 8/8 | eval151 矩阵 + 生成日志(09-03 后);C/D 09-01 运行无逐次日志(已披露) | discovery-only(两嵌套对照,无法分离主效应;smoke≠严格 conformance gate;预算记录不完全) | §3.5 |
-| C6 | LOHO/开放集价值预测未超越最佳固定 harness;task-held-out AUROC 0.512≈chance;+6.9pp 零诱导 harm 仅在 24-harness 池的任务重叠设定下 | `loho_exec.py` 输出, `task_split_D6_v2.json` | discovery-only,须限定到已测 predictor/split,不得写成部署保证 | §5 |
+| C6 | LOHO/开放集价值预测未超越最佳固定 harness;task-held-out AUROC 0.512≈chance;+6.9pp 零诱导 harm 仅在 24-harness 池的任务重叠设定下 | `loho_exec.py` 输出, `task_split_D6_v2.json` | discovery-only,须限定到已测 predictor/split,不得写成部署保证 | §6 Boundary(sec_boundary) |
 | C7 | Phase-II 主问题:等预算下 strategy forcing + conformance gate 是否提高可路由空间 | 冻结协议 `PHASE2_PROTOCOL.md`,锚点 `PROTOCOL_FREEZE.txt` | 方法可写,结果 **pending** | §4 |
 | C8 | 因子次要(gate/strategy 主效应+交互,core-400 同题集) | 同上 | **pending** | §4.2(计划)、§5.2(表骨架)|
 | C9 | 生成可靠性分解 R_artifact/R_contract/R_fidelity(Arm E) | 生成日志(E 臂 1 run dev-side) | **pending**(三率框架可写) | §4.2 |

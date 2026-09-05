@@ -71,3 +71,15 @@
 | 工件不一致 | 本次直接从最终 PDF 计算:sha256[:16] = `153299aa7d951263`;分页 fig2 p7、AI 声明 p10(跨 p10)、参考文献 p10–11、附录 p11–12(此前手写分页与哈希有误,本轮以程序读取为准);stale main.log 问题:latex/ 目录的旧构建产物已由本轮 clean build 覆盖 |
 
 **构建:** 12 页(主文 p9 结束),exit 0,0 error,0 undefined。
+
+
+## 复审修订第四轮(Codex 7.2/10 的 4 个残余项全部处置)
+
+| 项 | 处置 |
+|---|---|
+| B9 | 清单 C6 定位改 §6 Boundary(sec_boundary)(前两轮替换串未匹配到真实行,本轮确认替换成功并验证) |
+| 关键:ρ 命令被 CRLF 截断 | main.tex 摘要中 "Spearman $"+CRLF+"ho" → "Spearman $ho"(字节级替换,PDF 现渲染 ρ = −0.01 正确) |
+| 陈旧 main.log | paper/latex/ 下 11 页旧 log 及全部旧构建产物(残留错误的 .txt/.png/.aux 等 17 个文件)删除;canonical 新 log(12 页,0 错误)已同步进 latex/ |
+| 图标签缩写 | fig_design.py "9 DBs never opened" → "9 DBs never opened in development",与 caption/附录口径一致;图已重新生成 |
+
+**最终构建:** 12 页(主文 p9),exit 0,0 错误,0 未定义;main.pdf sha256[:16] = `995f2e53a907932f`
