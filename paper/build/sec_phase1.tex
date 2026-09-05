@@ -45,9 +45,11 @@ non-trivial diffs''). Union repair over bare errors is 7.7\% and oracle
 headroom 3.3\,pp; \react{} differs from \bare{} on zero tasks.
 
 Figure~\ref{fig:phenomenon} makes the central relation quantitative: across
-all 91 pairs, pairwise source-code similarity (token-sequence ratio) has
-Spearman $\rho = -0.010$ with outcome disagreement --- code similarity
-carries \emph{no} information about behavioral similarity in this
+all 91 pairs, pairwise source-code similarity under the figure's token-sequence
+metric (mean 0.190; distinct from the candidates-only normalized-character
+metric of 0.143 above) has Spearman $\rho = -0.010$ with outcome
+disagreement --- code similarity
+shows \emph{no observed rank association} with behavioral similarity in this
 population. (Pairs share harnesses and are not independent samples; we
 report $\rho$ as a descriptive summary, not an inferential test.)
 

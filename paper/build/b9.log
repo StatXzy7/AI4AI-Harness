@@ -55,197 +55,27 @@ For additional information on amsmath, use the `?' option.
 (d:/texlive/2026/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
 (d:/texlive/2026/texmf-dist/tex/latex/psnfss/ot1ptm.fd)
 (d:/texlive/2026/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def)
-No file main.aux.
-(d:/texlive/2026/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+(./main.aux) (d:/texlive/2026/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 ) (d:/texlive/2026/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 (d:/texlive/2026/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg))
+(./main.out) (./main.out)
 (d:/texlive/2026/texmf-dist/tex/latex/amsfonts/umsa.fd)
 (d:/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd) (./sec_intro.tex
-
-Package natbib Warning: Citation `bird2021' on page 1 undefined on input line 1
-1.
-
-
-LaTeX Warning: Reference `fig:phenomenon' on page 1 undefined on input line 13.
-
-
 (d:/texlive/2026/texmf-dist/tex/latex/psnfss/ot1pcr.fd)
-(d:/texlive/2026/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
-
-LaTeX Warning: Reference `sec:phase1' on page 1 undefined on input line 24.
-
-[1{d:/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{d:/texlive/202
-6/texmf-dist/fonts/enc/dvips/base/8r.enc}]
-
-LaTeX Warning: Reference `sec:phase2' on page 2 undefined on input line 51.
-
-
-LaTeX Warning: Reference `sec:boundary' on page 2 undefined on input line 76.
-
-) (./sec_related.tex
-
-Package natbib Warning: Citation `tthe2026' on page 2 undefined on input line 4
-.
-
-
-Package natbib Warning: Citation `selfharness2026' on page 2 undefined on input
- line 4.
-
-
-Package natbib Warning: Citation `jitagent2026' on page 2 undefined on input li
-ne 5.
-
-
-Package natbib Warning: Citation `coevolve2026' on page 2 undefined on input li
-ne 7.
-
-
-Package natbib Warning: Citation `harnesslens2026' on page 2 undefined on input
- line 9.
-
-
-Package natbib Warning: Citation `harnessfix2026' on page 2 undefined on input 
-line 10.
-
-
-Package natbib Warning: Citation `ahe2026' on page 2 undefined on input line 11
-.
-
-
-Package natbib Warning: Citation `gatedqd2026' on page 2 undefined on input lin
-e 13.
-
-
-Package natbib Warning: Citation `handbook2026' on page 2 undefined on input li
-ne 15.
-
-
-LaTeX Warning: Reference `tab:nearest' on page 2 undefined on input line 18.
-
-
-Package natbib Warning: Citation `gatedqd2026' on page 2 undefined on input lin
-e 22.
-
-
+(d:/texlive/2026/texmf-dist/tex/latex/psnfss/ts1ptm.fd) [1{d:/texlive/2026/texm
+f-var/fonts/map/pdftex/updmap/pdftex.map}{d:/texlive/2026/texmf-dist/fonts/enc/
+dvips/base/8r.enc}]) (./sec_related.tex
 Overfull \hbox (15.06163pt too wide) in paragraph at lines 32--47
  [][] 
-
-Package natbib Warning: Citation `nouniversal2026' on page 2 undefined on input
- line 53.
-
-
-Package natbib Warning: Citation `nonmonotone2026' on page 2 undefined on input
- line 54.
-
-
-Package natbib Warning: Citation `helix2026' on page 2 undefined on input line 
-55.
-
-
-Package natbib Warning: Citation `sts2026' on page 2 undefined on input line 57
-.
-
-
-Package natbib Warning: Citation `grasp2026' on page 2 undefined on input line 
-58.
-
-
-Package natbib Warning: Citation `cfrouting2026' on page 2 undefined on input l
-ine 59.
-
-(d:/texlive/2026/texmf-dist/tex/latex/psnfss/omsptm.fd)
-
-Package natbib Warning: Citation `agenticrouting2026' on page 2 undefined on in
-put line 60.
-
-
-Package natbib Warning: Citation `helix2026' on page 2 undefined on input line 
-62.
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active [2])
-(./sec_phase1.tex
-
-LaTeX Warning: Reference `app:phase1-provenance' on page 3 undefined on input l
-ine 6.
-
-[3]
-
-LaTeX Warning: Reference `fig:phenomenon' on page 4 undefined on input line 47.
-
-
-[4 <./figures/fig_phenomenon.pdf>]
-
-LaTeX Warning: Reference `sec:phase2' on page 5 undefined on input line 118.
-
-
-LaTeX Warning: Reference `app:phase1-provenance' on page 5 undefined on input l
-ine 119.
-
-) (./sec_phase2.tex
-
-LaTeX Warning: Reference `app:phase2-protocol' on page 5 undefined on input lin
-e 5.
-
-
-LaTeX Warning: Reference `sec:phase1probes' on page 5 undefined on input line 2
-2.
-
-[5]
-
-LaTeX Warning: Reference `sec:metrics' on page 6 undefined on input line 89.
-
-) [6] (./sec_results.tex
-
-LaTeX Warning: Reference `app:phase2-protocol' on page 7 undefined on input lin
-e 33.
-
-
-LaTeX Warning: Reference `app:phase2-protocol' on page 7 undefined on input lin
-e 33.
-
-)
+(d:/texlive/2026/texmf-dist/tex/latex/psnfss/omsptm.fd) [2]) (./sec_phase1.tex
+[3] [4 <./figures/fig_phenomenon.pdf>]) (./sec_phase2.tex [5] [6])
+(./sec_results.tex
 Underfull \vbox (badness 10000) has occurred while \output is active [7 <./figu
-res/fig_design.pdf>] (./sec_boundary.tex) (./sec_discussion.tex
-
-LaTeX Warning: Reference `sec:metrics' on page 8 undefined on input line 2.
-
-[8]
-
-LaTeX Warning: Reference `app:phase1-provenance' on page 9 undefined on input l
-ine 38.
-
-) (./sec_conclusion.tex)
+res/fig_design.pdf>]) (./sec_boundary.tex) (./sec_discussion.tex [8])
+(./sec_conclusion.tex)
 Underfull \vbox (badness 10000) has occurred while \output is active [9]
-No file main.bbl.
-(./sec_appendix.tex
-
-LaTeX Warning: Reference `sec:phase1' on page 10 undefined on input line 3.
-
-
-LaTeX Warning: Reference `sec:boundary' on page 10 undefined on input line 4.
-
-
-LaTeX Warning: Reference `sec:positive' on page 10 undefined on input line 39.
-
-[10])
-
-Package natbib Warning: There were undefined citations.
-
-[11] (./main.aux)
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package rerunfilecheck Warning: File `main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
- )
+(./main.bbl [10]) (./sec_appendix.tex [11]) [12] (./main.aux) )
 (see the transcript file for additional information)<d:/texlive/2026/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmex10.pfb><d:/texlive/2026/texmf-dist/fonts/ty
 pe1/public/amsfonts/cm/cmmi10.pfb><d:/texlive/2026/texmf-dist/fonts/type1/publi
@@ -262,5 +92,5 @@ xlive/2026/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb><d:/texlive/2026/texmf
 -dist/fonts/type1/urw/helvetic/uhvb8a.pfb><d:/texlive/2026/texmf-dist/fonts/typ
 e1/urw/times/utmb8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/times/utmr8
 a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (11 pages, 285526 bytes).
+Output written on main.pdf (12 pages, 297514 bytes).
 Transcript written on main.log.

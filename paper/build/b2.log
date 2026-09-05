@@ -111,6 +111,9 @@ Package natbib Warning: Citation `gatedqd2026' on page 2 undefined on input lin
 e 22.
 
 
+Overfull \hbox (15.06163pt too wide) in paragraph at lines 32--47
+ [][] 
+
 Package natbib Warning: Citation `nouniversal2026' on page 2 undefined on input
  line 53.
 
@@ -146,9 +149,11 @@ Package natbib Warning: Citation `helix2026' on page 2 undefined on input line
 
 Underfull \vbox (badness 10000) has occurred while \output is active [2])
 (./sec_phase1.tex [3] [4 <./figures/fig_phenomenon.pdf>]) (./sec_phase2.tex
-[5]) (./sec_results.tex [6]) (./sec_boundary.tex
-Underfull \vbox (badness 4266) has occurred while \output is active [7 <./figur
-es/fig_design.pdf>]) (./sec_discussion.tex [8]) (./sec_conclusion.tex) [9]
+[5]) [6] (./sec_results.tex)
+Underfull \vbox (badness 10000) has occurred while \output is active [7 <./figu
+res/fig_design.pdf>] (./sec_boundary.tex) (./sec_discussion.tex [8])
+(./sec_conclusion.tex)
+Underfull \vbox (badness 10000) has occurred while \output is active [9]
 (./main.bbl [10]) (./sec_appendix.tex [11])
 
 Package natbib Warning: There were undefined citations.
@@ -179,5 +184,5 @@ xlive/2026/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb><d:/texlive/2026/texmf
 -dist/fonts/type1/urw/helvetic/uhvb8a.pfb><d:/texlive/2026/texmf-dist/fonts/typ
 e1/urw/times/utmb8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/times/utmr8
 a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (12 pages, 296214 bytes).
+Output written on main.pdf (12 pages, 296328 bytes).
 Transcript written on main.log.

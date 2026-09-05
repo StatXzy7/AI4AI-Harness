@@ -47,10 +47,27 @@
 | B3 新颖性笼统 + HarnessLens 误述 | 删除 "none measures";HELIX 明确承认其测过 65 候选 outcome matrix;对照表 HarnessLens 门禁改为 attributable-evidence + gate ablation(single factor) |
 | B4 pending 状态 + 冻结历史限定 | 摘要加 "data collection is ongoing";§4 开头披露 D1 18-item smoke 例外;"never-opened" 改为 "never opened during development" + registry 范围限定 |
 | B5 条件式结论不对称 | near-zero 分支改为 "no clear improvement (CI overlapping zero)" + "未解决估计不等于无效应证据";负向分支要求 CI 排除零 |
-| B6 摘要控制字符 + 图重叠 + Phase 标签 | 修复 `	`imes/``ho 字节损坏(git-bash heredoc 转义根因);fig_design v2 重排(E 臂独立、admission 全宽底行、Phase-I 151/Phase-II 365 分开标注) |
+| B6 摘要控制字符 + 图重叠 + Phase 标签 | 修复 `	`imes/`
+`ho 字节损坏(git-bash heredoc 转义根因);fig_design v2 重排(E 臂独立、admission 全宽底行、Phase-I 151/Phase-II 365 分开标注) |
 | B7 AI 声明代作保证 | "were reviewed by them" → "provided for author verification; final responsibility rests with the authors" |
 | B8 参考文献元数据 | BIRD 作者改会议记录形式(Jiaxi Yang/Binhua Li/Ruiying Geng);TTHE 补 Xinmei Tian、Bo Han + and others;验证注释改为准确表述(14 API 核实 + 会议记录) |
 | B9 清单不忠实 | C1 改 discovery-only + 双度量标注;C3 删 14.9%;C6→§6;C8→§4.2/§5.2;新增 C12(第二 target)、C13(相关性措辞) |
 
 **修订构建:** 12 页(主文 9),exit 0,0 error,0 undefined;main.pdf sha256[:16] = `6b8504addc60ec77`
 **分页更正:** Figure 2 在 p6;AI 声明 p9–10;参考文献 p10–11;附录 p11–12(总页数与主文上限不变)。
+
+
+## 复审修订第三轮(Codex 5.9/10 的残余项全部处置)
+
+| 项 | 处置 |
+|---|---|
+| B1 残余 | sec_phase1 正文最后 "carries no information"(含 \emph 变体)与 sec_conclusion、fig 源码 docstring 全部改为 "no observed rank association";PDF 全文 grep 零残留 |
+| B2 不完整 | §3.2 图的段落现明确 "token-sequence metric (mean 0.190; distinct from the candidates-only normalized-character metric of 0.143 above)" |
+| B3 不完整 | 对照表 HarnessLens 因果隔离行改为 "gate ablation (single factor)"(此前 sed 转义未生效,本轮用 Edit 工具直接改) |
+| B4 不一致 | "never-opened" 在 fig_design.py(图内标签)、图 caption、附录 B 全部改为 "never opened during development" 限定式;全文 grep 零残留 |
+| B6 图重叠 | 几何验证确认 core-400 框(x2..28,y4..13)与 admission 框 1(x22..39,y2.5..10.5)确实重叠(Codex 正确);三个 admission 框移至 x=34..90,程序化 bbox 相交检测:12 框两两零重叠 |
+| B8 | Binhao Li → Binhua Li(会议记录) |
+| B9 | 清单 C6 定位改为 §6 Boundary(sec_boundary) |
+| 工件不一致 | 本次直接从最终 PDF 计算:sha256[:16] = `153299aa7d951263`;分页 fig2 p7、AI 声明 p10(跨 p10)、参考文献 p10–11、附录 p11–12(此前手写分页与哈希有误,本轮以程序读取为准);stale main.log 问题:latex/ 目录的旧构建产物已由本轮 clean build 覆盖 |
+
+**构建:** 12 页(主文 p9 结束),exit 0,0 error,0 undefined。

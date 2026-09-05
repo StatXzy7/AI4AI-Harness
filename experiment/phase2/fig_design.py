@@ -26,7 +26,7 @@ def box(x, y, w, h, text, fc="#eef3fb", ec="#3a6ea5", fs=8.0, lw=1.2, bold=False
 ax.text(15, 54, "Data isolation", fontsize=10, fontweight="bold", ha="center")
 box(2, 41, 26, 9, "Phase-I discovery eval\n151 q (overlaps dev use;\ndisclosed)", fc="#fdeeee", ec="#b5545a")
 box(2, 29, 26, 9, "Phase-II development pool\n(card_games + formula_1,\n365 q — builders only)", fc="#fdf6e3", ec="#b8860b")
-box(2, 16, 26, 10, "Phase-II confirmatory test\n9 never-opened DBs\n1,169 q — frozen", fc="#eef8ee", ec="#4a8f5c", bold=True)
+box(2, 16, 26, 10, "Phase-II confirmatory test\n9 DBs never opened\n1,169 q — frozen", fc="#eef8ee", ec="#4a8f5c", bold=True)
 box(2, 4, 26, 9, "Stratified core 400\n(drawn pre-outcome,\nsubset of the 1,169)", fc="#eef8ee", ec="#4a8f5c")
 
 # ---- middle panel: 2x2 factorial
@@ -45,10 +45,10 @@ ax.text(69, 12.5, "6 builders $\\times$ 3 seeds = 18 paired cells (all enter, in
 
 # ---- bottom panel: three-layer admission (full width, no overlap)
 ax.text(50, 14.5, "Three-layer admission (gated arms)", fontsize=10, fontweight="bold", ha="center")
-box(22, 2.5, 17, 8, "1. neutral validity\n(parse / import /\nreturns SQL)", fs=7)
-box(41.5, 2.5, 17, 8, "2. counterfactual\nconformance\n(trace probes)", fs=7)
-box(61, 2.5, 17, 8, "3. non-vacuity\n(must be violated\nby bare) — arm E", fs=7)
-for x0, x1 in ((39, 41.5), (58.5, 61)):
+box(34, 2.5, 17, 8, "1. neutral validity\n(parse / import /\nreturns SQL)", fs=7)
+box(53.5, 2.5, 17, 8, "2. counterfactual\nconformance\n(trace probes)", fs=7)
+box(73, 2.5, 17, 8, "3. non-vacuity\n(must be violated\nby bare) — arm E", fs=7)
+for x0, x1 in ((51, 53.5), (70.5, 73)):
     ax.annotate("", xy=(x1, 6.5), xytext=(x0, 6.5), arrowprops=dict(arrowstyle="->", color="#666"))
 ax.annotate("", xy=(30.5, 16), xytext=(15, 29),
             arrowprops=dict(arrowstyle="->", color="#888", connectionstyle="arc3,rad=0.2"))

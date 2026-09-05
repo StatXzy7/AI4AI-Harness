@@ -7,8 +7,8 @@ Each point is a harness pair (h_i, h_j):
     x = pairwise source-code similarity (difflib SequenceMatcher on token streams)
     y = pairwise outcome disagreement (fraction of tasks where correctness differs)
 
-The paper's title claim is the shape of this cloud: code similarity carries almost
-no information about outcome disagreement — pairs at ~0.1 code similarity are just
+The paper's title claim is the shape of this cloud: code similarity shows almost
+no observed rank association with outcome disagreement — pairs at ~0.1 code similarity are just
 as behaviorally identical as pairs at ~0.5.
 """
 import difflib
