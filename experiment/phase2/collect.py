@@ -179,6 +179,10 @@ def main() -> None:
         print(f"  [done] {name}: official_acc={n_ok/len(todo):.3f} on {len(todo)} new cells", flush=True)
 
     fh.close()
+    try:
+        bridge._CACHE.flush()
+    except Exception:
+        pass
     print(f"[collect] wrote {out}")
 
 
