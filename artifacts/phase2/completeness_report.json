@@ -1,0 +1,65 @@
+{
+ "complete": false,
+ "sections": {
+  "AD_1169": {
+   "paired_cells": 18,
+   "missing": {},
+   "ok": true,
+   "dupes": 102268,
+   "conflicts": 3646,
+   "conflict_examples": [
+    [
+     "('GLM-5.3-Flash', 'p2_A_ernie_s2_g4', 'thrombosis_prediction#35', 0)",
+     "1",
+     "0"
+    ],
+    [
+     "('GLM-5.3-Flash', 'p2_A_ernie_s2_g4', 'thrombosis_prediction#66', 0)",
+     "0",
+     "1"
+    ],
+    [
+     "('GLM-5.3-Flash', 'p2_A_ernie_s2_g4', 'thrombosis_prediction#106', 0)",
+     "1",
+     "0"
+    ],
+    [
+     "('GLM-5.3-Flash', 'p2_A_ernie_s2_g4', 'thrombosis_prediction#114', 0)",
+     "0",
+     "1"
+    ],
+    [
+     "('GLM-5.3-Flash', 'p2_A_ernie_s2_g4', 'thrombosis_prediction#131', 0)",
+     "1",
+     "0"
+    ]
+   ],
+   "conflict_resolution": "first-write-wins (canonical file order); rate 1.79%",
+   "conflict_rate": 0.0179
+  },
+  "BC_core": {
+   "missing": {
+    "C/glm/s0": 162,
+    "C/glm/s1": 800,
+    "C/glm/s2": 1600,
+    "C/kimi/s0": 2800,
+    "C/kimi/s1": 2400,
+    "C/kimi/s2": 2400,
+    "C/minimax/s0": 2800,
+    "C/minimax/s1": 2800,
+    "C/minimax/s2": 2800,
+    "C/qwen/s0": 1200,
+    "C/qwen/s1": 1600,
+    "C/qwen/s2": 1600
+   },
+   "ok": false,
+   "dupes": 37775,
+   "conflicts": 837,
+   "conflict_resolution": "first-write-wins (canonical file order); rate 1.35%",
+   "conflict_rate": 0.0135
+  },
+  "row_sanity": {
+   "wrong_target_rows": 0
+  }
+ }
+}

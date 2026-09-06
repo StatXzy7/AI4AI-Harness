@@ -1,0 +1,85 @@
+{
+ "purpose": "primary D-A analysis input freeze",
+ "files": [
+  {
+   "file": "ad_shard0.jsonl",
+   "bytes": 11824642,
+   "sha256_16": "c3827816ee5dd93a"
+  },
+  {
+   "file": "ad_shard1.jsonl",
+   "bytes": 15015704,
+   "sha256_16": "a686de3333afbeac"
+  },
+  {
+   "file": "ad_shard2.jsonl",
+   "bytes": 15672034,
+   "sha256_16": "dfa7085d44b5be40"
+  },
+  {
+   "file": "ad_shard3.jsonl",
+   "bytes": 14236289,
+   "sha256_16": "9d93e05f5053450b"
+  },
+  {
+   "file": "ad_s2.jsonl",
+   "bytes": 9133262,
+   "sha256_16": "ad215ff17fe19194"
+  },
+  {
+   "file": "ad_boost_A1.jsonl",
+   "bytes": 19284665,
+   "sha256_16": "1dc69baed510c4db"
+  },
+  {
+   "file": "ad_boost_A2.jsonl",
+   "bytes": 6258282,
+   "sha256_16": "a6257d256557dcbd"
+  },
+  {
+   "file": "ad_boost_D1.jsonl",
+   "bytes": 1742793,
+   "sha256_16": "81a7d4549d7362b0"
+  },
+  {
+   "file": "ad_resume0.jsonl",
+   "bytes": 7526140,
+   "sha256_16": "1da7702e8f2285f1"
+  },
+  {
+   "file": "ad_resume1.jsonl",
+   "bytes": 10674735,
+   "sha256_16": "b2f739e3e500ef66"
+  },
+  {
+   "file": "ad_resume2.jsonl",
+   "bytes": 12386702,
+   "sha256_16": "5642c09343e9c885"
+  },
+  {
+   "file": "ad_resume3.jsonl",
+   "bytes": 19662117,
+   "sha256_16": "393d6d4d1245a979"
+  },
+  {
+   "file": "ad_final0.jsonl",
+   "bytes": 1132559,
+   "sha256_16": "b0992feb62dceab7"
+  },
+  {
+   "file": "ad_final1.jsonl",
+   "bytes": 2880500,
+   "sha256_16": "265d00aacc20612f"
+  },
+  {
+   "file": "ad_final2.jsonl",
+   "bytes": 2868274,
+   "sha256_16": "0a36631e68820804"
+  },
+  {
+   "file": "ad_last.jsonl",
+   "bytes": 0,
+   "sha256_16": "e3b0c44298fc1c14"
+  }
+ ]
+}
