@@ -1,0 +1,21 @@
+[collect] 7200 cells already recorded in bc_rem2.jsonl
+[collect] 400 tasks over 9 databases | target=GLM-5.3-Flash
+  [have] p2_C_minimax_s2_repair: complete
+  [have] p2_C_minimax_s2_vote3: complete
+  [have] p2_C_minimax_s2_schema_link: complete
+  [have] p2_C_minimax_s2_hint_guard: complete
+  [have] p2_C_minimax_s2_two_view: complete
+  [have] p2_C_minimax_s2_decompose: complete
+  [have] p2_C_minimax_s2_error_classify: complete
+  [have] p2_C_qwen_s0_vote3: complete
+  [have] p2_C_qwen_s0_hint_guard: complete
+  [have] p2_C_qwen_s0_two_view: complete
+  [have] p2_C_qwen_s1_repair: complete
+  [have] p2_C_qwen_s1_vote3: complete
+  [have] p2_C_qwen_s1_hint_guard: complete
+  [have] p2_C_qwen_s1_two_view: complete
+  [have] p2_C_qwen_s2_repair: complete
+  [have] p2_C_qwen_s2_vote3: complete
+  [have] p2_C_qwen_s2_hint_guard: complete
+  [have] p2_C_qwen_s2_two_view: complete
+[collect] wrote E:\projects\AI4AI-Harness\artifacts\phase2\bc_rem2.jsonl

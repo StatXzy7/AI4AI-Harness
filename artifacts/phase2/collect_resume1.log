@@ -1,0 +1,19 @@
+[collect] 18704 cells already recorded in ad_resume1.jsonl
+[collect] 1169 tasks over 9 databases | target=GLM-5.3-Flash
+  [have] p2_A_minimax_s2_g7: complete
+  [have] p2_A_qwen_s2_g2: complete
+  [have] p2_A_qwen_s2_g7: complete
+  [have] p2_D_deepseek_s0_error_classify: complete
+  [have] p2_D_deepseek_s1_two_view: complete
+  [have] p2_D_deepseek_s2_vote3: complete
+  [have] p2_D_deepseek_s2_two_view: complete
+  [have] p2_D_ernie_s0_vote3: complete
+  [have] p2_D_ernie_s1_vote3: complete
+  [have] p2_D_ernie_s2_repair: complete
+  [have] p2_D_ernie_s2_vote3: complete
+  [have] p2_D_ernie_s2_schema_link: complete
+  [have] p2_D_ernie_s2_two_view: complete
+  [have] p2_D_ernie_s2_error_classify: complete
+  [have] p2_D_glm_s0_repair: complete
+  [have] p2_D_glm_s1_two_view: complete
+[collect] wrote E:\projects\AI4AI-Harness\artifacts\phase2\ad_resume1.jsonl

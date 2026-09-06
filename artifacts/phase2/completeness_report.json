@@ -1,5 +1,5 @@
 {
- "complete": false,
+ "complete": true,
  "sections": {
   "AD_1169": {
    "paired_cells": 18,
@@ -38,25 +38,12 @@
    "conflict_rate": 0.0179
   },
   "BC_core": {
-   "missing": {
-    "C/glm/s0": 162,
-    "C/glm/s1": 800,
-    "C/glm/s2": 1600,
-    "C/kimi/s0": 2800,
-    "C/kimi/s1": 2400,
-    "C/kimi/s2": 2400,
-    "C/minimax/s0": 2800,
-    "C/minimax/s1": 2800,
-    "C/minimax/s2": 2800,
-    "C/qwen/s0": 1200,
-    "C/qwen/s1": 1600,
-    "C/qwen/s2": 1600
-   },
-   "ok": false,
-   "dupes": 37775,
-   "conflicts": 837,
-   "conflict_resolution": "first-write-wins (canonical file order); rate 1.35%",
-   "conflict_rate": 0.0135
+   "missing": {},
+   "ok": true,
+   "dupes": 42067,
+   "conflicts": 1191,
+   "conflict_resolution": "first-write-wins (canonical file order); rate 1.40%",
+   "conflict_rate": 0.014
   },
   "row_sanity": {
    "wrong_target_rows": 0

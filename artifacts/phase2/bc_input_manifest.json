@@ -1,0 +1,50 @@
+{
+ "purpose": "factorial secondaries input freeze (BC complete)",
+ "files": [
+  {
+   "file": "run_BC_core.jsonl",
+   "bytes": 13543642,
+   "sha256_16": "8499aad1cb2c9530"
+  },
+  {
+   "file": "bc_boost1.jsonl",
+   "bytes": 20566876,
+   "sha256_16": "d69732275557d975"
+  },
+  {
+   "file": "bc_boost2.jsonl",
+   "bytes": 9524810,
+   "sha256_16": "b5208629eb629596"
+  },
+  {
+   "file": "bc_s2.jsonl",
+   "bytes": 3269877,
+   "sha256_16": "77b41b947b29e6fd"
+  },
+  {
+   "file": "bc_final.jsonl",
+   "bytes": 4257588,
+   "sha256_16": "f84cc0389edcfb78"
+  },
+  {
+   "file": "bc_last.jsonl",
+   "bytes": 1170674,
+   "sha256_16": "e26fa97d0f94a358"
+  },
+  {
+   "file": "bc_rem0.jsonl",
+   "bytes": 3419152,
+   "sha256_16": "aeef96bbf836f9c6"
+  },
+  {
+   "file": "bc_rem1.jsonl",
+   "bytes": 3668861,
+   "sha256_16": "ab184a6e9bbe911e"
+  },
+  {
+   "file": "bc_rem2.jsonl",
+   "bytes": 3555855,
+   "sha256_16": "7dd430299c9b2dcb"
+  }
+ ]
+}

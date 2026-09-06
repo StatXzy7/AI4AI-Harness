@@ -1,0 +1,18 @@
+[collect] 15197 cells already recorded in ad_resume0.jsonl
+[collect] 1169 tasks over 9 databases | target=GLM-5.3-Flash
+  [have] p2_A_ernie_s2_g7: complete
+  [skip] p2_A_glm_s1_g0: uncallable -- FileNotFoundError(2, 'No such file or directory')
+  [skip] p2_A_glm_s1_g4: uncallable -- FileNotFoundError(2, 'No such file or directory')
+  [have] p2_A_glm_s2_g1: complete
+  [have] p2_A_glm_s2_g3: complete
+  [have] p2_A_kimi_s2_g4: complete
+  [have] p2_A_kimi_s2_g5: complete
+  [have] p2_A_kimi_s2_g6: complete
+  [have] p2_A_kimi_s2_g7: complete
+  [have] p2_A_minimax_s2_g0: complete
+  [have] p2_A_minimax_s2_g1: complete
+  [have] p2_A_minimax_s2_g3: complete
+  [have] p2_A_minimax_s2_g4: complete
+  [have] p2_A_minimax_s2_g5: complete
+  [have] p2_A_minimax_s2_g6: complete
+[collect] wrote E:\projects\AI4AI-Harness\artifacts\phase2\ad_resume0.jsonl

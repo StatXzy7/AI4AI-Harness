@@ -1,0 +1,228 @@
+[collect] 30000 cells already recorded in bc_boost1.jsonl
+[collect] 400 tasks over 9 databases | target=GLM-5.3-Flash
+  [have] p2_B_deepseek_s0_g0: complete
+  [have] p2_B_deepseek_s0_g2: complete
+  [have] p2_B_deepseek_s0_g3: complete
+  [have] p2_B_deepseek_s0_g4: complete
+  [have] p2_B_deepseek_s0_g5: complete
+  [have] p2_B_deepseek_s0_g6: complete
+  [have] p2_B_deepseek_s0_g7: complete
+  [have] p2_B_deepseek_s1_g0: complete
+  [have] p2_B_deepseek_s1_g1: complete
+  [have] p2_B_deepseek_s1_g2: complete
+  [have] p2_B_deepseek_s1_g3: complete
+  [have] p2_B_deepseek_s1_g4: complete
+  [have] p2_B_deepseek_s1_g5: complete
+  [have] p2_B_deepseek_s1_g6: complete
+  [have] p2_B_deepseek_s1_g7: complete
+  [have] p2_B_deepseek_s2_g0: complete
+  [have] p2_B_deepseek_s2_g1: complete
+  [have] p2_B_deepseek_s2_g2: complete
+  [have] p2_B_deepseek_s2_g3: complete
+  [have] p2_B_deepseek_s2_g4: complete
+  [have] p2_B_deepseek_s2_g5: complete
+  [have] p2_B_deepseek_s2_g6: complete
+  [have] p2_B_deepseek_s2_g7: complete
+  [have] p2_B_ernie_s0_g0: complete
+  [have] p2_B_ernie_s0_g1: complete
+  [have] p2_B_ernie_s0_g2: complete
+  [have] p2_B_ernie_s0_g3: complete
+  [have] p2_B_ernie_s0_g4: complete
+  [have] p2_B_ernie_s0_g5: complete
+  [have] p2_B_ernie_s0_g6: complete
+  [have] p2_B_ernie_s0_g7: complete
+  [have] p2_B_ernie_s1_g0: complete
+  [have] p2_B_ernie_s1_g1: complete
+  [have] p2_B_ernie_s1_g2: complete
+  [have] p2_B_ernie_s1_g3: complete
+  [have] p2_B_ernie_s1_g4: complete
+  [have] p2_B_ernie_s1_g5: complete
+  [have] p2_B_ernie_s1_g6: complete
+  [have] p2_B_ernie_s1_g7: complete
+  [have] p2_B_ernie_s2_g0: complete
+  [have] p2_B_ernie_s2_g1: complete
+  [have] p2_B_ernie_s2_g2: complete
+  [have] p2_B_ernie_s2_g3: complete
+  [have] p2_B_ernie_s2_g4: complete
+  [have] p2_B_ernie_s2_g5: complete
+  [have] p2_B_ernie_s2_g6: complete
+  [have] p2_B_ernie_s2_g7: complete
+  [have] p2_B_glm_s0_g2: complete
+  [have] p2_B_glm_s0_g3: complete
+  [have] p2_B_glm_s0_g6: complete
+  [have] p2_B_glm_s1_g0: complete
+  [have] p2_B_glm_s1_g2: complete
+  [have] p2_B_glm_s1_g4: complete
+  [have] p2_B_glm_s1_g6: complete
+  [have] p2_B_glm_s2_g1: complete
+  [have] p2_B_glm_s2_g4: complete
+  [have] p2_B_glm_s2_g6: complete
+  [have] p2_B_kimi_s0_g0: complete
+  [have] p2_B_kimi_s0_g1: complete
+  [have] p2_B_kimi_s0_g2: complete
+  [have] p2_B_kimi_s0_g3: complete
+  [have] p2_B_kimi_s0_g4: complete
+  [have] p2_B_kimi_s0_g5: complete
+  [have] p2_B_kimi_s0_g6: complete
+  [have] p2_B_kimi_s0_g7: complete
+  [have] p2_B_kimi_s1_g0: complete
+  [have] p2_B_kimi_s1_g1: complete
+  [have] p2_B_kimi_s1_g2: complete
+  [have] p2_B_kimi_s1_g3: complete
+  [have] p2_B_kimi_s1_g4: complete
+  [have] p2_B_kimi_s1_g5: complete
+  [have] p2_B_kimi_s1_g6: complete
+  [have] p2_B_kimi_s1_g7: complete
+  [have] p2_B_kimi_s2_g0: complete
+  [have] p2_B_kimi_s2_g1: complete
+    p2_B_kimi_s2_g2: 100/400 acc=0.660
+    p2_B_kimi_s2_g2: 200/400 acc=0.645
+    p2_B_kimi_s2_g2: 300/400 acc=0.707
+    p2_B_kimi_s2_g2: 400/400 acc=0.665
+  [done] p2_B_kimi_s2_g2: official_acc=0.665 on 400 new cells
+    p2_B_kimi_s2_g3: 100/400 acc=0.630
+    p2_B_kimi_s2_g3: 200/400 acc=0.640
+    p2_B_kimi_s2_g3: 300/400 acc=0.717
+    p2_B_kimi_s2_g3: 400/400 acc=0.667
+  [done] p2_B_kimi_s2_g3: official_acc=0.667 on 400 new cells
+    p2_B_kimi_s2_g4: 100/400 acc=0.610
+    p2_B_kimi_s2_g4: 200/400 acc=0.610
+    p2_B_kimi_s2_g4: 300/400 acc=0.667
+    p2_B_kimi_s2_g4: 400/400 acc=0.620
+  [done] p2_B_kimi_s2_g4: official_acc=0.620 on 400 new cells
+    p2_B_kimi_s2_g5: 100/400 acc=0.620
+    p2_B_kimi_s2_g5: 200/400 acc=0.615
+    p2_B_kimi_s2_g5: 300/400 acc=0.690
+    p2_B_kimi_s2_g5: 400/400 acc=0.642
+  [done] p2_B_kimi_s2_g5: official_acc=0.642 on 400 new cells
+    p2_B_kimi_s2_g6: 100/400 acc=0.640
+    p2_B_kimi_s2_g6: 200/400 acc=0.635
+    p2_B_kimi_s2_g6: 300/400 acc=0.690
+    p2_B_kimi_s2_g6: 400/400 acc=0.635
+  [done] p2_B_kimi_s2_g6: official_acc=0.635 on 400 new cells
+    p2_B_kimi_s2_g7: 100/400 acc=0.630
+    p2_B_kimi_s2_g7: 200/400 acc=0.630
+    p2_B_kimi_s2_g7: 300/400 acc=0.697
+    p2_B_kimi_s2_g7: 400/400 acc=0.647
+  [done] p2_B_kimi_s2_g7: official_acc=0.647 on 400 new cells
+    p2_B_minimax_s0_g0: 100/400 acc=0.600
+    p2_B_minimax_s0_g0: 200/400 acc=0.635
+    p2_B_minimax_s0_g0: 300/400 acc=0.687
+    p2_B_minimax_s0_g0: 400/400 acc=0.625
+  [done] p2_B_minimax_s0_g0: official_acc=0.625 on 400 new cells
+    p2_B_minimax_s0_g1: 100/400 acc=0.550
+    p2_B_minimax_s0_g1: 200/400 acc=0.560
+    p2_B_minimax_s0_g1: 300/400 acc=0.630
+    p2_B_minimax_s0_g1: 400/400 acc=0.593
+  [done] p2_B_minimax_s0_g1: official_acc=0.593 on 400 new cells
+    p2_B_minimax_s0_g2: 100/400 acc=0.660
+    p2_B_minimax_s0_g2: 200/400 acc=0.635
+    p2_B_minimax_s0_g2: 300/400 acc=0.693
+    p2_B_minimax_s0_g2: 400/400 acc=0.642
+  [done] p2_B_minimax_s0_g2: official_acc=0.642 on 400 new cells
+    p2_B_minimax_s0_g4: 100/400 acc=0.640
+    p2_B_minimax_s0_g4: 200/400 acc=0.625
+    p2_B_minimax_s0_g4: 300/400 acc=0.683
+    p2_B_minimax_s0_g4: 400/400 acc=0.637
+  [done] p2_B_minimax_s0_g4: official_acc=0.637 on 400 new cells
+    p2_B_minimax_s0_g5: 100/400 acc=0.650
+    p2_B_minimax_s0_g5: 200/400 acc=0.645
+    p2_B_minimax_s0_g5: 300/400 acc=0.703
+    p2_B_minimax_s0_g5: 400/400 acc=0.660
+  [done] p2_B_minimax_s0_g5: official_acc=0.660 on 400 new cells
+    p2_B_minimax_s0_g6: 100/400 acc=0.610
+    p2_B_minimax_s0_g6: 200/400 acc=0.600
+    p2_B_minimax_s0_g6: 300/400 acc=0.673
+    p2_B_minimax_s0_g6: 400/400 acc=0.635
+  [done] p2_B_minimax_s0_g6: official_acc=0.635 on 400 new cells
+    p2_B_minimax_s1_g0: 100/400 acc=0.660
+    p2_B_minimax_s1_g0: 200/400 acc=0.660
+    p2_B_minimax_s1_g0: 300/400 acc=0.723
+    p2_B_minimax_s1_g0: 400/400 acc=0.675
+  [done] p2_B_minimax_s1_g0: official_acc=0.675 on 400 new cells
+    p2_B_minimax_s1_g2: 100/400 acc=0.650
+    p2_B_minimax_s1_g2: 200/400 acc=0.635
+    p2_B_minimax_s1_g2: 300/400 acc=0.700
+    p2_B_minimax_s1_g2: 400/400 acc=0.650
+  [done] p2_B_minimax_s1_g2: official_acc=0.650 on 400 new cells
+    p2_B_minimax_s1_g3: 100/400 acc=0.630
+    p2_B_minimax_s1_g3: 200/400 acc=0.635
+    p2_B_minimax_s1_g3: 300/400 acc=0.693
+    p2_B_minimax_s1_g3: 400/400 acc=0.642
+  [done] p2_B_minimax_s1_g3: official_acc=0.642 on 400 new cells
+    p2_B_minimax_s1_g4: 100/400 acc=0.670
+    p2_B_minimax_s1_g4: 200/400 acc=0.635
+    p2_B_minimax_s1_g4: 300/400 acc=0.693
+    p2_B_minimax_s1_g4: 400/400 acc=0.637
+  [done] p2_B_minimax_s1_g4: official_acc=0.637 on 400 new cells
+    p2_B_minimax_s1_g6: 100/400 acc=0.660
+    p2_B_minimax_s1_g6: 200/400 acc=0.660
+    p2_B_minimax_s1_g6: 300/400 acc=0.717
+    p2_B_minimax_s1_g6: 400/400 acc=0.670
+  [done] p2_B_minimax_s1_g6: official_acc=0.670 on 400 new cells
+    p2_B_minimax_s1_g7: 100/400 acc=0.590
+    p2_B_minimax_s1_g7: 200/400 acc=0.595
+    p2_B_minimax_s1_g7: 300/400 acc=0.657
+    p2_B_minimax_s1_g7: 400/400 acc=0.608
+  [done] p2_B_minimax_s1_g7: official_acc=0.608 on 400 new cells
+    p2_B_minimax_s2_g0: 100/400 acc=0.670
+    p2_B_minimax_s2_g0: 200/400 acc=0.680
+    p2_B_minimax_s2_g0: 300/400 acc=0.747
+    p2_B_minimax_s2_g0: 400/400 acc=0.685
+  [done] p2_B_minimax_s2_g0: official_acc=0.685 on 400 new cells
+    p2_B_minimax_s2_g1: 100/400 acc=0.490
+    p2_B_minimax_s2_g1: 200/400 acc=0.510
+    p2_B_minimax_s2_g1: 300/400 acc=0.593
+    p2_B_minimax_s2_g1: 400/400 acc=0.552
+  [done] p2_B_minimax_s2_g1: official_acc=0.552 on 400 new cells
+    p2_B_minimax_s2_g2: 100/400 acc=0.660
+    p2_B_minimax_s2_g2: 200/400 acc=0.650
+    p2_B_minimax_s2_g2: 300/400 acc=0.717
+    p2_B_minimax_s2_g2: 400/400 acc=0.670
+  [done] p2_B_minimax_s2_g2: official_acc=0.670 on 400 new cells
+    p2_B_minimax_s2_g3: 100/400 acc=0.590
+    p2_B_minimax_s2_g3: 200/400 acc=0.600
+    p2_B_minimax_s2_g3: 300/400 acc=0.660
+    p2_B_minimax_s2_g3: 400/400 acc=0.615
+  [done] p2_B_minimax_s2_g3: official_acc=0.615 on 400 new cells
+    p2_B_minimax_s2_g4: 100/400 acc=0.620
+    p2_B_minimax_s2_g4: 200/400 acc=0.630
+    p2_B_minimax_s2_g4: 300/400 acc=0.700
+    p2_B_minimax_s2_g4: 400/400 acc=0.647
+  [done] p2_B_minimax_s2_g4: official_acc=0.647 on 400 new cells
+    p2_B_minimax_s2_g5: 100/400 acc=0.670
+    p2_B_minimax_s2_g5: 200/400 acc=0.655
+    p2_B_minimax_s2_g5: 300/400 acc=0.703
+    p2_B_minimax_s2_g5: 400/400 acc=0.660
+  [done] p2_B_minimax_s2_g5: official_acc=0.660 on 400 new cells
+    p2_B_minimax_s2_g6: 100/400 acc=0.630
+    p2_B_minimax_s2_g6: 200/400 acc=0.645
+    p2_B_minimax_s2_g6: 300/400 acc=0.707
+    p2_B_minimax_s2_g6: 400/400 acc=0.662
+  [done] p2_B_minimax_s2_g6: official_acc=0.662 on 400 new cells
+    p2_B_minimax_s2_g7: 100/400 acc=0.620
+    p2_B_minimax_s2_g7: 200/400 acc=0.630
+    p2_B_minimax_s2_g7: 300/400 acc=0.707
+    p2_B_minimax_s2_g7: 400/400 acc=0.652
+  [done] p2_B_minimax_s2_g7: official_acc=0.652 on 400 new cells
+    p2_B_qwen_s0_g0: 100/400 acc=0.630
+    p2_B_qwen_s0_g0: 200/400 acc=0.620
+    p2_B_qwen_s0_g0: 300/400 acc=0.680
+    p2_B_qwen_s0_g0: 400/400 acc=0.632
+  [done] p2_B_qwen_s0_g0: official_acc=0.632 on 400 new cells
+    p2_B_qwen_s0_g2: 100/400 acc=0.620
+    p2_B_qwen_s0_g2: 200/400 acc=0.640
+    p2_B_qwen_s0_g2: 300/400 acc=0.717
+    p2_B_qwen_s0_g2: 400/400 acc=0.667
+  [done] p2_B_qwen_s0_g2: official_acc=0.667 on 400 new cells
+    p2_B_qwen_s0_g3: 100/400 acc=0.660
+    p2_B_qwen_s0_g3: 200/400 acc=0.645
+    p2_B_qwen_s0_g3: 300/400 acc=0.703
+    p2_B_qwen_s0_g3: 400/400 acc=0.655
+  [done] p2_B_qwen_s0_g3: official_acc=0.655 on 400 new cells
+    p2_B_qwen_s0_g4: 100/400 acc=0.590
+    p2_B_qwen_s0_g4: 200/400 acc=0.610
+    p2_B_qwen_s0_g4: 300/400 acc=0.667
+    p2_B_qwen_s0_g4: 400/400 acc=0.623
+  [done] p2_B_qwen_s0_g4: official_acc=0.623 on 400 new cells
+[collect] wrote E:\projects\AI4AI-Harness\artifacts\phase2\bc_boost1.jsonl

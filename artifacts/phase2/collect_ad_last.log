@@ -1,0 +1,5 @@
+[collect] 0 cells already recorded in ad_last.jsonl
+[collect] 1169 tasks over 9 databases | target=GLM-5.3-Flash
+  [skip] p2_A_glm_s1_g0: uncallable -- SyntaxError('unterminated string literal (detected at line 119)', ('E:\\projects\\AI4AI-Harness\\external\\TTHE\\text_to_sql\\agents\\p2_A_glm_s1_g0.py', 119, 13, '            "- Put the final query in a', 119, 13))
+  [skip] p2_A_glm_s1_g4: uncallable -- SyntaxError('unterminated string literal (detected at line 34)', ('E:\\projects\\AI4AI-Harness\\external\\TTHE\\text_to_sql\\agents\\p2_A_glm_s1_g4.py', 34, 9, '        "question, you output exactly one SQL query inside a', 34, 9))
+[collect] wrote E:\projects\AI4AI-Harness\artifacts\phase2\ad_last.jsonl

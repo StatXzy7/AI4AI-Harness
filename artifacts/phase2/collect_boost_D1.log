@@ -1,0 +1,26 @@
+[collect] 1101 cells already recorded in ad_boost_D1.jsonl
+[collect] 1169 tasks over 9 databases | target=GLM-5.3-Flash
+  [done] p2_D_deepseek_s2_error_classify: official_acc=0.485 on 68 new cells
+    p2_D_deepseek_s2_repair: 100/1169 acc=0.560
+    p2_D_deepseek_s2_repair: 200/1169 acc=0.610
+    p2_D_deepseek_s2_repair: 300/1169 acc=0.627
+    p2_D_deepseek_s2_repair: 400/1169 acc=0.647
+    p2_D_deepseek_s2_repair: 500/1169 acc=0.656
+    p2_D_deepseek_s2_repair: 600/1169 acc=0.650
+    p2_D_deepseek_s2_repair: 700/1169 acc=0.670
+    p2_D_deepseek_s2_repair: 800/1169 acc=0.689
+    p2_D_deepseek_s2_repair: 900/1169 acc=0.699
+    p2_D_deepseek_s2_repair: 1000/1169 acc=0.678
+    p2_D_deepseek_s2_repair: 1100/1169 acc=0.668
+  [done] p2_D_deepseek_s2_repair: official_acc=0.661 on 1169 new cells
+    p2_D_deepseek_s2_two_view: 100/1169 acc=0.530
+    p2_D_deepseek_s2_two_view: 200/1169 acc=0.585
+    p2_D_deepseek_s2_two_view: 300/1169 acc=0.590
+    p2_D_deepseek_s2_two_view: 400/1169 acc=0.603
+    p2_D_deepseek_s2_two_view: 500/1169 acc=0.622
+    p2_D_deepseek_s2_two_view: 600/1169 acc=0.627
+    p2_D_deepseek_s2_two_view: 700/1169 acc=0.646
+    p2_D_deepseek_s2_two_view: 800/1169 acc=0.666
+    p2_D_deepseek_s2_two_view: 900/1169 acc=0.670
+    p2_D_deepseek_s2_two_view: 1000/1169 acc=0.646
+    p2_D_deepseek_s2_two_view: 1100/1169 acc=0.635

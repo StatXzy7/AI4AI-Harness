@@ -1,0 +1,29 @@
+[collect] 0 cells already recorded in ad_final0.jsonl
+[collect] 1169 tasks over 9 databases | target=GLM-5.3-Flash
+  [skip] p2_A_glm_s1_g0: uncallable -- FileNotFoundError(2, 'No such file or directory')
+  [skip] p2_A_glm_s1_g4: uncallable -- FileNotFoundError(2, 'No such file or directory')
+    p2_D_minimax_s0_error_classify: 100/1169 acc=0.560
+    p2_D_minimax_s0_error_classify: 200/1169 acc=0.630
+    p2_D_minimax_s0_error_classify: 300/1169 acc=0.647
+    p2_D_minimax_s0_error_classify: 400/1169 acc=0.640
+    p2_D_minimax_s0_error_classify: 500/1169 acc=0.650
+    p2_D_minimax_s0_error_classify: 600/1169 acc=0.653
+    p2_D_minimax_s0_error_classify: 700/1169 acc=0.673
+    p2_D_minimax_s0_error_classify: 800/1169 acc=0.695
+    p2_D_minimax_s0_error_classify: 900/1169 acc=0.701
+    p2_D_minimax_s0_error_classify: 1000/1169 acc=0.681
+    p2_D_minimax_s0_error_classify: 1100/1169 acc=0.674
+  [done] p2_D_minimax_s0_error_classify: official_acc=0.670 on 1169 new cells
+    p2_D_minimax_s1_repair: 100/1169 acc=0.570
+    p2_D_minimax_s1_repair: 200/1169 acc=0.620
+    p2_D_minimax_s1_repair: 300/1169 acc=0.640
+    p2_D_minimax_s1_repair: 400/1169 acc=0.650
+    p2_D_minimax_s1_repair: 500/1169 acc=0.660
+    p2_D_minimax_s1_repair: 600/1169 acc=0.657
+    p2_D_minimax_s1_repair: 700/1169 acc=0.677
+    p2_D_minimax_s1_repair: 800/1169 acc=0.690
+    p2_D_minimax_s1_repair: 900/1169 acc=0.698
+    p2_D_minimax_s1_repair: 1000/1169 acc=0.678
+    p2_D_minimax_s1_repair: 1100/1169 acc=0.670
+  [done] p2_D_minimax_s1_repair: official_acc=0.665 on 1169 new cells
+[collect] wrote E:\projects\AI4AI-Harness\artifacts\phase2\ad_final0.jsonl

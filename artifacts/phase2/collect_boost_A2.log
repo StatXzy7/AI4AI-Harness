@@ -1,0 +1,40 @@
+[collect] 10142 cells already recorded in ad_boost_A2.jsonl
+[collect] 1169 tasks over 9 databases | target=GLM-5.3-Flash
+  [have] p2_A_kimi_s1_g0: complete
+  [have] p2_A_kimi_s1_g1: complete
+  [have] p2_A_kimi_s1_g2: complete
+  [have] p2_A_kimi_s1_g3: complete
+  [have] p2_A_kimi_s1_g4: complete
+  [have] p2_A_kimi_s1_g5: complete
+  [have] p2_A_kimi_s1_g6: complete
+  [have] p2_A_kimi_s1_g7: complete
+    p2_A_kimi_s2_g1: 100/568 acc=0.820
+    p2_A_kimi_s2_g1: 200/568 acc=0.830
+    p2_A_kimi_s2_g1: 300/568 acc=0.813
+    p2_A_kimi_s2_g1: 400/568 acc=0.743
+    p2_A_kimi_s2_g1: 500/568 acc=0.708
+  [done] p2_A_kimi_s2_g1: official_acc=0.697 on 568 new cells
+    p2_A_kimi_s2_g2: 100/1169 acc=0.660
+    p2_A_kimi_s2_g2: 200/1169 acc=0.675
+    p2_A_kimi_s2_g2: 300/1169 acc=0.683
+    p2_A_kimi_s2_g2: 400/1169 acc=0.675
+    p2_A_kimi_s2_g2: 500/1169 acc=0.682
+    p2_A_kimi_s2_g2: 600/1169 acc=0.675
+    p2_A_kimi_s2_g2: 700/1169 acc=0.699
+    p2_A_kimi_s2_g2: 800/1169 acc=0.718
+    p2_A_kimi_s2_g2: 900/1169 acc=0.729
+    p2_A_kimi_s2_g2: 1000/1169 acc=0.706
+    p2_A_kimi_s2_g2: 1100/1169 acc=0.695
+  [done] p2_A_kimi_s2_g2: official_acc=0.692 on 1169 new cells
+    p2_A_kimi_s2_g3: 100/1169 acc=0.590
+    p2_A_kimi_s2_g3: 200/1169 acc=0.620
+    p2_A_kimi_s2_g3: 300/1169 acc=0.637
+    p2_A_kimi_s2_g3: 400/1169 acc=0.650
+    p2_A_kimi_s2_g3: 500/1169 acc=0.648
+    p2_A_kimi_s2_g3: 600/1169 acc=0.645
+    p2_A_kimi_s2_g3: 700/1169 acc=0.667
+    p2_A_kimi_s2_g3: 800/1169 acc=0.684
+    p2_A_kimi_s2_g3: 900/1169 acc=0.694
+    p2_A_kimi_s2_g3: 1000/1169 acc=0.674
+    p2_A_kimi_s2_g3: 1100/1169 acc=0.661
+  [done] p2_A_kimi_s2_g3: official_acc=0.655 on 1169 new cells

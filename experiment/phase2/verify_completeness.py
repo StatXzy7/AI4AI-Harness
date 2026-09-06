@@ -24,7 +24,8 @@ GEN = P2 / "gen"
 
 AD_FILES = [P2 / f"ad_shard{i}.jsonl" for i in range(4)] + [P2 / "ad_s2.jsonl"] +     [P2 / f"ad_boost_A{i}.jsonl" for i in (1, 2)] + [P2 / "ad_boost_D1.jsonl"] +     [P2 / f"ad_resume{i}.jsonl" for i in range(4)] +     [P2 / f"ad_final{i}.jsonl" for i in range(3)] + [P2 / "ad_last.jsonl"]
 BC_FILES = [P2 / "run_BC_core.jsonl", P2 / "bc_s2.jsonl", P2 / "bc_boost1.jsonl",
-             P2 / "bc_boost2.jsonl", P2 / "bc_final.jsonl", P2 / "bc_last.jsonl"]
+             P2 / "bc_boost2.jsonl", P2 / "bc_final.jsonl", P2 / "bc_last.jsonl",
+             P2 / "bc_rem0.jsonl", P2 / "bc_rem1.jsonl", P2 / "bc_rem2.jsonl"]
 TARGET = "GLM-5.3-Flash"
 
 
