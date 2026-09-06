@@ -284,6 +284,22 @@ population: 14 distinct sources, 12 PASS / 4 M1 / 3 M2 / 1 M3).
   collector needed ~230 h for the primary matrix; the run now uses 4 AD shards × 32 workers +
   1 BC × 32 (≈ 83 rows/min measured), ETA ≈ 28 h for AD, ≈ 15 h for BC.
 
+- **D15 (phantom admissions: GLM A-arm seed-1).** During final completeness assembly,
+  two harnesses recorded as admitted in the `A_glm_s1` generation log (`p2_A_glm_s1_g0`,
+  `p2_A_glm_s1_g4`) proved **uncallable**: every stored raw candidate for both slots fails
+  to parse (GLM string-literal truncation — the same generation-reliability failure mode
+  documented in Phase I), contradicting the log's "neutral-valid" attempt records. Per the
+  frozen exclusion rule ("a harness is excluded only if it is uncallable"), both are
+  excluded as `INVALID_uncallable`; their files are removed from the agents directory. The
+  (glm, seed-1) paired cell survives with A={g5} (K=1) vs D={repair, two-view} (K=2),
+  which the no-K-exclusion rule admits by design. Effect on the primary contrast: the
+  glm/s1 cell contributes H(A) from a K=1 population — exactly the generation-reliability
+  treatment effect the equal-budget design intends to capture. No other arm/builder/seed
+  cell is affected (audited: all other admitted harnesses parse and load).
+  The contradiction between the admission log and the stored artifacts is disclosed
+  rather than resolved silently; root cause is the un-preserved generation tool state of
+  that early run (see D11-era queue incidents).
+
 ## 11. Residual blockers (owned, not claimed solved)
 
 1. **Credential revocation — user action, outstanding.** Until the exposed key is revoked
