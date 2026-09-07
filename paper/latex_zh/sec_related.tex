@@ -1,0 +1,29 @@
+\subsection{面向 LLM 的 harness 生成}\label{related:generation}
+一系列不断增长的工作在冻结模型周围生成任务专属脚手架。TTHE 用一个 LLM 提议者/评判者循环演化 text-to-SQL harness \citep{tthe2026}；Self-Harness \citep{selfharness2026} 证明一个模型可以改进自己的 harness；JIT-Agent \citep{jitagent2026} 训练模型在推理时逐任务生成 harness；Task-CoEvolve \citep{coevolve2026} 让任务与脚手架共同演化。2026 年的一个并行工作簇让 harness 演化\emph{从验证侧开始感知行为}：HarnessLens \citep{harnesslens2026} 在演化过程中用行为级检查分配 rollout 预算；HarnessFix \citep{harnessfix2026} 从轨迹落地的诊断出发修复 harness；AHE \citep{ahe2026} 对照自我声明的行为预测来验证每次提议的编辑；门控语义质量-多样性搜索 \citep{gatedqd2026} 在 LLM 赋予的病理描述符之上演化群体；Harness Handbook \citep{handbook2026} 攻克行为定位与外循环搜索。
+
+我们的工作与其互补，但在分析单元与问题取向上不同。表~\ref{tab:nearest} 对比了两个最邻近的系统。HarnessLens 把行为当作演化循环\emph{内部}的信号来分配算力；我们问的是所得\emph{群体}作为结果属性是否在行为上多样，以及哪些生成侧因素导致或修复其坍缩。HarnessBank \citep{gatedqd2026} 记录了搜索空间坍缩，并用门控筛查维护一个语义多样性库；我们的一致性门控完全不评语义——它通过反事实轨迹探针在机械层面验证所声明的机制确实执行——并且我们的设计通过因子对比分离门控的因果贡献，而不是报告端到端的系统收益。
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+ & \textbf{本工作} & \textbf{HarnessLens} & \textbf{HarnessBank} \\
+\midrule
+研究单元 & 群体结果矩阵 & 演化循环 & 多样性库 \\
+是否测量群体坍缩 & 是 & 否 & 仅搜索坍缩 \\
+门控定义 & 反事实轨迹 & 可归因证据 & 语义筛查 \\
+门控校准 & 正/负控制 & --- & --- \\
+门控的因果隔离 & $2{\times}2$ 因子 & 门控消融（单因子） & 无 \\
+确证性划分 & 9 个未触碰数据库 & --- & --- \\
+\bottomrule
+\end{tabular}
+\caption{最邻近的并行系统。演化系统内部的行为感知验证属于并行的独立工作；我们的贡献是群体级的结果测量、测量工具校准，以及受控的生成侧对比。}
+\label{tab:nearest}
+\end{table}
+
+\subsection{Harness 的条件效用与路由}\label{related:routing}
+近期多篇论文确立了 harness 质量以实例为条件：\citet{nouniversal2026} 与 \citet{nonmonotone2026} 的非单调性分析记录了没有任何单一 harness 在所有实例上占优。HELIX \citep{helix2026} 表明一个兄弟 harness 组合能胜过最优固定 harness，并将 harness 路由器列为未来工作；STS \citep{sts2026} 在封闭集合内的六个人工设计脚手架之间路由；GRASP \citep{grasp2026} 在开发期把技能编辑门控进库；\citet{cfrouting2026} 在 \{不搜索、搜索、弃答\} 之上学习反事实的实例级路由；\citet{agenticrouting2026} 在一个 harness 内部路由模型。这些工作都消费一个成员\emph{确实存在分歧}的群体；\citet{helix2026} 与我们最接近，它评估了完整的候选结果矩阵并测量组合相对最优固定候选的互补性。我们的贡献更窄也更高不同：我们测量\emph{自动生成}的群体是否作为结果现象发生坍缩，在轨迹层面诊断原因，并用受控因子实验分离生成侧成因。我们进一步表明它对天真生成的群体不成立，并检验生成侧干预能否修复它。
+
+\subsection{LLM 群体中的行为多样性}\label{related:diversity}
+LLM 输出的多样性研究大多停留在样本层面（自一致性、多样化解码）或智能体策略层面。语法上不同的程序可以表现出相同行为，这一观察呼应了程序合成与变异测试实践中记录的覆盖缺口；我们的贡献是针对 AI 生成的 harness 群体把这一点实例化并定量化，并给出机制层面的分类法。

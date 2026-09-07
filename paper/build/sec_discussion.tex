@@ -1,14 +1,30 @@
-\textbf{Fidelity--complementarity trade-off.} The confirmatory decomposition is the
-study's central lesson: mechanism-conformance filtering costs headroom
-($-0.67$\,pp, CI excluding zero). A harness that executes exactly what it declares can
-still be behaviorally redundant, while a sloppier candidate can repair items the clean
-ones miss --- and cannot harm, from the selector's perspective, because a router can
-always decline it. Verifying \emph{what a harness says it does} and increasing
-\emph{what a population is worth} are different objectives, and here they conflict.
+\textbf{Protocol sensitivity is the finding.} The confirmatory study's central
+result is that the Phase-I collapse did not reproduce under a clean equal-budget
+protocol: free ungated generation already produced populations with 8.6\,pp oracle
+headroom and 31\% union repair. Collapse is therefore a failure mode of
+\emph{specific} generation pipelines --- and it was invisible to every code-level
+check those pipelines had passed (distinct files, non-trivial diffs, import and
+smoke tests). The practical corollary cuts against the natural instinct: adding
+mechanism-verification did not add routing value here, and its apparent cost was
+largely a population-size artifact. Outcome-level auditing, not stronger
+code-level gating, is what detects collapse.
 
-\textbf{Reliability and quality are different axes.} The yield decomposition shows the
-gate rejecting $\sim$30\% of neutral-valid candidates; the headroom decomposition shows
-those rejections were net-negative for the population. Generation reliability (can the
-builder emit a valid artifact) and population quality (does the admitted set carry
-complementarity) must be reported separately --- collapsing them hides which one failed.
+\textbf{Sub-part-per-point effects need a noise floor.} The bare-outcome
+flip rate under API nondeterminism (14.5\% any-flip across three temperature-0
+repeats) exceeds the effect sizes the factorial estimates ($-0.67$\,pp unmatched,
+$-0.30$\,pp K-matched). We therefore decline to interpret the residual. For
+studies of generation-side interventions, reporting the repeat-run noise floor
+alongside every contrast should be as standard as reporting the CIs themselves.
 
+\textbf{Reliability and quality are different axes.} The yield decomposition
+(gate rejects $\sim$30\% of neutral-valid candidates) and the headroom
+decomposition (oracle accuracy essentially unchanged across arms) must be read
+together: the gate changed \emph{which} candidates survive, not \emph{whether}
+the population can answer. Generation reliability and population complementarity
+need separate reporting.
+
+\textbf{Limitations.} One domain family (text-to-SQL). Phase-I results come
+from a discovery design with disclosed task overlap, a proxy judge, and a human
+control designed after inspecting development traces. Inference on the factorial
+is conditional on the six sampled builders. The cache-off arm replication (R2)
+is in progress; early Phase-I generations lack per-attempt logs.

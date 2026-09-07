@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.29)  7 SEP 2026 10:46
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.29)  7 SEP 2026 12:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -420,11 +420,8 @@ LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 2
 
 (d:/texlive/2026/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-)
-Underfull \vbox (badness 2050) has occurred while \output is active []
-
- [1{d:/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{d:/texlive/20
-26/texmf-dist/fonts/enc/dvips/base/8r.enc}
+) [1{d:/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{d:/texlive/2
+026/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
 ]) (./sec_related.tex [2]
 Overfull \hbox (15.06163pt too wide) in paragraph at lines 32--47
@@ -439,71 +436,67 @@ File: omsptm.fd
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 60.
 ) (./sec_phase1.tex
-[3]
-<figures/fig_phenomenon.pdf, id=197, 440.53085pt x 308.48085pt>
+Underfull \vbox (badness 1320) has occurred while \output is active []
+
+ [3]
+<figures/fig_phenomenon.pdf, id=189, 440.53085pt x 308.48085pt>
 File: figures/fig_phenomenon.pdf Graphic file (type pdf)
 <use figures/fig_phenomenon.pdf>
 Package pdftex.def Info: figures/fig_phenomenon.pdf  used on input line 58.
 (pdftex.def)             Requested size: 310.0378pt x 217.11658pt.
- [4]
-! Too many }'s.
-l.124 }
-        When we later re-ran the
-You've closed more groups than you opened.
-Such booboos are generally harmless, so keep going.
 
-) (./sec_phase2.tex [5 <./figures/fig_phenomenon.pdf>]
-<figures/fig_design.pdf, id=271, 679.33798pt x 389.96892pt>
+[4]) (./sec_phase2.tex [5 <./figures/fig_phenomenon.pdf>]
+<figures/fig_design.pdf, id=263, 679.33798pt x 389.96892pt>
 File: figures/fig_design.pdf Graphic file (type pdf)
 <use figures/fig_design.pdf>
 Package pdftex.def Info: figures/fig_design.pdf  used on input line 76.
 (pdftex.def)             Requested size: 317.9892pt x 182.54161pt.
-) [6] (./sec_results.tex
-<figures/fig_results.pdf, id=285, 751.50954pt x 294.14442pt>
+) [6]
+(./sec_results.tex
+<figures/fig_results.pdf, id=277, 751.50954pt x 294.14442pt>
 File: figures/fig_results.pdf Graphic file (type pdf)
 <use figures/fig_results.pdf>
 Package pdftex.def Info: figures/fig_results.pdf  used on input line 39.
 (pdftex.def)             Requested size: 337.86465pt x 132.24257pt.
-
-[7 <./figures/fig_design.pdf>]) [8 <./figures/fig_results.pdf>]
-(./sec_boundary.tex) (./sec_discussion.tex) (./sec_conclusion.tex) [9]
+ [7 <./figures/fig_design.pdf>] [8 <./figures/fig_results.pdf>]) (./sec_boundar
+y.tex) (./sec_discussion.tex) (./sec_conclusion.tex [9])
 (./main.bbl [10]) (./sec_appendix.tex [11]) [12] (./main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-03-20>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 5F1C81796574AC49BDC7A86589AA4F35;5652.
+(rerunfilecheck)             Checksum: 806C42F2B9BE305F9B2E04370CCC5E57;5335.
  ) 
 Here is how much of TeX's memory you used:
- 11371 strings out of 467349
- 170818 string characters out of 5419862
- 608532 words of memory out of 5000000
- 40184 multiletter control sequences out of 15000+600000
+ 11367 strings out of 467349
+ 170738 string characters out of 5419862
+ 609967 words of memory out of 5000000
+ 40181 multiletter control sequences out of 15000+600000
  655030 words of font info for 95 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,90p,651b,582s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,12n,90p,674b,560s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb><d:/texl
 ive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><d:/texlive/2026/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><d:/texlive/2026/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmmi7.pfb><d:/texlive/2026/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmmi9.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmr10.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmr5.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb
-><d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><d:/texliv
-e/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><d:/texlive/2026/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><d:/texlive/2026/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmsy7.pfb><d:/texlive/2026/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmsy9.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/courie
-r/ucrb8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb><d:
-/texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb><d:/texlive/2026/t
-exmf-dist/fonts/type1/urw/times/utmb8a.pfb><d:/texlive/2026/texmf-dist/fonts/ty
-pe1/urw/times/utmr8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/times/utmr
-i8a.pfb>
-Output written on main.pdf (12 pages, 323264 bytes).
+t/fonts/type1/public/amsfonts/cm/cmmi6.pfb><d:/texlive/2026/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmmi7.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmmi9.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr10.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pf
+b><d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><d:/texli
+ve/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><d:/texlive/2026/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><d:/texlive/2026/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmsy10.pfb><d:/texlive/2026/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmsy7.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmsy9.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/courier/ucrb8a.p
+fb><d:/texlive/2026/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb><d:/texlive/2
+026/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb><d:/texlive/2026/texmf-dist/
+fonts/type1/urw/times/utmb8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/ti
+mes/utmr8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (12 pages, 335442 bytes).
 PDF statistics:
- 598 PDF objects out of 1000 (max. 8388607)
- 337 compressed objects within 4 object streams
- 77 named destinations out of 1000 (max. 500000)
- 216 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 596 PDF objects out of 1000 (max. 8388607)
+ 334 compressed objects within 4 object streams
+ 76 named destinations out of 1000 (max. 500000)
+ 200 words of extra memory for PDF output out of 10000 (max. 10000000)
 

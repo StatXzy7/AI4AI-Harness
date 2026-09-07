@@ -35,7 +35,7 @@ in one deployed pipeline: a widely used optimize loop emitted candidates
 collapse claim, which we support only on genuinely distinct-source
 populations.
 
-\textbf{Phase II (confirmatory): a pre-registered factorial.} Phase I
+\textbf{Phase II (confirmatory): a pre-specified factorial.} Phase I
 suggested that behavioral collapse can be repaired by generation-side
 interventions, but its design --- two nested contrasts, three builders,
 unlogged early runs --- could not separate protocol from builder effects, its
@@ -52,12 +52,15 @@ analyzed as paired continuous effects with hierarchical bootstrap intervals
 hand-written positive controls and known-negative impostor harnesses before
 any candidate is scored.
 
-The confirmatory answer is negative on the primary contrast, and more
-interesting than a null: the combined intervention shows \emph{no clear
-improvement}, and the factorial decomposition isolates the cause --- the
-conformance gate alone \textbf{reduces} headroom (CI excluding zero on the
-negative side), strategy forcing alone is null, and the two components
-substitute for each other.
+The confirmatory answer revises the story twice. The primary contrast is null
+--- and more consequentially, the Phase-I collapse itself did not reproduce:
+under the clean equal-budget protocol, free ungated generation already produced
+headroom-rich populations. Collapse proved protocol-sensitive, a failure mode of
+specific generation pipelines rather than a universal property of AI-generated
+harness populations. The apparent negative effect of the conformance gate was
+substantially size-confounded and not Holm-significant, and the API
+nondeterminism noise floor exceeds the sub-pp effects in question, so we
+report a null on both components.
 
 Our contributions:
 \begin{enumerate}
@@ -69,7 +72,7 @@ Our contributions:
   explaining why code diversity fails to become behavioral diversity, and a
   clean separation between genuine collapse and generation-null failures.
 \item
-  \textbf{Calibrated generation-side instruments and a pre-registered
+  \textbf{Calibrated generation-side instruments and a pre-specified
   factorial study}: a counterfactual conformance suite and self-specified
   behavioral contracts, both calibrated on positive and negative controls;
   a $2{\times}2$ design with equal raw generation budgets that isolates the

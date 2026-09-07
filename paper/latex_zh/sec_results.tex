@@ -1,0 +1,72 @@
+% 第 5 节结果现已解封：所有确证性数字来自冻结的分析脚本
+% （analysis_primary.py、analysis_factorial.py）在完整性已验证矩阵上的运行
+% （见 artifacts/phase2/completeness_report.json 以及分析前提交的输入冻结清单）。
+% 数字如实报告；结论分支按 sec_conclusion 中预先起草的条件性结论选取。
+
+\subsection{主对比：forced+gated vs.\ free+ungated}\label{sec:results-primary}
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{@{}lcc@{}}
+\toprule
+ & 臂 II-A（free/ungated） & 臂 II-D（forced/gated） \\
+\midrule
+Oracle headroom $H(P)$，官方判分器 & 8.6 pp（单元均值） & 8.4 pp（单元均值） \\
+联合修复率 & 31.3\% & 30.0\% \\
+联合伤害率 & 19.8\% & 24.6\% \\
+两两分歧 & 10.4\% & 12.6\% \\
+独特结果向量占比 $K_{\mathrm{eff}}/K$ & 1.00 & 1.00 \\
+\midrule
+\multicolumn{3}{@{}l@{}}{成对对比 $H(\text{II-D}) - H(\text{II-A})$，18 个单元：}\\
+\quad 点估计 & \multicolumn{2}{c}{$-0.16$ pp} \\
+\quad 双侧 95\% CI（分层 bootstrap） & \multicolumn{2}{c}{$[-0.90,\ +0.82]$ pp} \\
+\quad 成对置换 $p$（单侧） & \multicolumn{2}{c}{$0.65$} \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{主结果。}各臂含 bare 的 oracle headroom 及成对 D$-$A 对比，在 1{,}169 题确证性集合（开发期间从未打开的九个数据库）上按 6 构建器 $\times$ 3 种子汇总，官方 BIRD 判分器。CI 跨越零：\textbf{联合干预没有明确改善}。逐单元数值见图~\ref{fig:results}（左）。}
+\label{tab:primary}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\linewidth]{figures/fig_results.pdf}
+\caption{\textbf{确证性结果。}左：逐单元的 D$-$A headroom 差值（已排序；绿色 = D 更好，红色 = A 更好）及汇总 95\% CI 带。右：在完全相同的 400 条核心条目上的因子臂均值；一致性门控的负主效应已加星标（CI 排除零）。两图均来自冻结的分析脚本。}
+\label{fig:results}
+\end{figure}
+
+对主问题的确证性答案是否定的：相对自由、无门控的生成，策略强制加一致性门控的协议没有提高群体 headroom。点估计很小（$-0.16$\,pp），分层 bootstrap CI 舒适地跨越零，置换检验也未提供反对零假设的证据。按照预注册的条件性结论，我们将其报告为\emph{没有明确改善}——一个未决的估计，而非无效应的证据。
+
+两个次级观察限定了这个零结果。第一，两臂都带有\emph{可观}的 headroom（A：各单元 3.1--11.7\,pp；D：4.5--11.9\,pp）：Phase-I 的坍缩状态离``干净协议''状态很远，在当前构建器强度下，仅自由生成就已产出 headroom 丰富的群体。第二，逐单元差值是异质的（$-2.5$ 到 $+2.8$\,pp）：在门控接纳了自由臂所缺 harness 的小 $K$ 单元上呈正趋势（deepseek/s1 $+2.0$、glm/s0 $+2.7$），而在自由臂本已很大的单元上呈负趋势——与下文分解出的替代效应一致。值得注意的是，臂 D 修复的 bare 错误略少（30.0\% vs.\ 31.3\%），而造成的伤害更多（24.6\% vs.\ 19.8\%）：门控的保真过滤并没有转化为更温和的干预。
+
+\subsection{因子分解（相同的 400 条核心条目）}\label{sec:results-factorial}
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{@{}lc@{}}
+\toprule
+对比 & 对 headroom 的效应，95\% CI \\
+\midrule
+门控主效应 $[(B{-}A)+(D{-}C)]/2$ & $\mathbf{-0.67}$ pp $\mathbf{[-1.17,\ -0.13]}$ \\
+策略主效应 $[(C{-}A)+(D{-}B)]/2$ & $+0.41$ pp $[-0.22,\ +1.11]$ \\
+策略 $\times$ 门控交互 $(D{-}C)-(B{-}A)$ & $-0.87$ pp $[-2.22,\ +0.31]$ \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{确证性次级结果}，18 个四臂单元，四臂均在完全相同的 400 条核心集上。门控主效应是唯一 CI 排除零的对比——且在负侧。}
+\label{tab:factorial}
+\end{table}
+
+因子分解从机制上解释了主零结果：
+
+\textbf{一致性门控单独降低 headroom}（$-0.67$\,pp，CI 排除零）。被门控拒绝的候选——中立有效、但所声明机制未能在反事实探测中存活的代码——在该基准上是对群体 headroom 的净贡献者。机制保真与群体互补性此消彼长：一个严格执行其所言的 harness 仍可能在行为上冗余，而一个更粗糙的候选可能修复干净候选漏掉的条目。
+
+\textbf{策略强制单独为零结果}（$+0.41$\,pp，CI 跨越零），且\textbf{交互为负}（$-0.87$\,pp，CI 跨越零）：门控与强制相互\emph{替代}而非互补。无论强制带来什么多样性，门控的过滤都将其移除；两个效应在联合臂 D 中大致抵消——这正是主零结果。
+
+\subsection{生成可靠性}\label{sec:results-yield}
+
+可靠性与质量是不同的维度，本设计将二者分开：在产物率几乎相同的情况下，门控在 C 臂的 101 个槽位中接纳了 69 个——而 headroom 分解表明，这种过滤在产出量与互补性上都要付出代价。
+
+\subsection{稳健性审计}\label{sec:results-audits}
+
+对每个单元做双判分器评分（遗留判分器从不把官方评分器拒绝的答案判对）。并发重复采集在 AD/BC 单元的 1.8\%/1.4\% 上产生了冲突判定，按规范文件顺序以首次写入优先解决并披露；若把所有冲突反向重解，会改变 0.84\% 的判定，且不移动任何已报告的对比。关缓存与重复运行审计（R2/R3）尚待完成。

@@ -1,0 +1,79 @@
+% ============================================================
+% 中文参考译本（仅作者参考/修订中文用，不用于投稿，不计入页数统计）
+% 编译：xelatex（需要 ctex 宏包），例如 latexmk -xelatex main.tex
+% 术语对照：harness（脚手架）、behavioral collapse（行为坍缩）、
+%   headroom（提升空间）、conformance gate（一致性门控）、
+%   strategy forcing（策略强制）、builder（构建器）
+% ============================================================
+\documentclass{article}
+\usepackage{iclr2027_conference,times}
+\usepackage[UTF8]{ctex}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+
+% \iclrfinalcopy  % submission mode: keep OFF until acceptance
+
+\title{AI 生成 Harness 群体中的行为坍缩\\（中文参考译本）}
+
+\author{Anonymous}
+
+\newcommand{\bare}{\texttt{bare}}
+\newcommand{\react}{\texttt{react}}
+\newcommand{\pp}{\,pp}
+
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+自动生成的 LLM harness（脚手架）群体正日益被用于路由与价值预测——这些应用的前提是群体成员在\emph{结果}上彼此分歧。我们直接测量了这一前提，发现它并不成立。在冻结目标模型的 BIRD text-to-SQL 任务上，一个标准 harness 演化循环产出的候选在语法上多样、在行为上却已坍缩：91 对 harness（含 \bare{} 与 \react{} 基线）中有 36 对在每个任务上返回完全相同的正确性，且两两代码相似度与结果分歧之间没有观测到的秩关联（Spearman $\rho=-0.01$）。执行轨迹审计解释了原因：机制被文档描述但不在控制流中执行、反馈到输出之间没有因果通路、或多轮路径损坏。一个手写的正控制表明，任务上确实存在路由所需要的提升空间（7.3\,pp），从而将失败定位到生成侧；我们进一步记录了一种更原始的失败模式：某条已部署管线产出了与基线逐字节相同的候选。随后我们冻结了一份确证性协议：一个 $2{\times}2$ 因子设计（策略强制 $\times$ 反事实一致性门控），覆盖六个构建器与三个种子，在开发期间从未打开过的数据库中抽取的 1{,}169 道题上、以官方 BIRD 评分器评估，测量工具均在正控制与负控制上校准。Phase-I 的对照实验还表明，开集 harness 价值预测无法胜过最优固定 harness，因此多样性必要但不充分。确证性评估给出的答案是否定的：联合干预没有带来明确改善（D$-$A headroom 差值 $-0.16$\,pp，95\% CI $[-0.90, +0.82]$），而因子分解进一步揭示，一致性门控单独\emph{降低} headroom（$-0.67$\,pp，CI $[-1.17, -0.13]$）——机制保真与群体互补性此消彼长。
+\end{abstract}
+
+\section{引言}\label{sec:introduction}
+\input{sec_intro}
+
+\section{相关工作}\label{sec:related}
+\input{sec_related}
+
+\section{Phase I：测量与诊断坍缩（发现性研究）}\label{sec:phase1}
+\input{sec_phase1}
+
+\section{Phase II：确证性生成研究（设计）}\label{sec:phase2}
+\input{sec_phase2}
+
+\section{Phase II：结果}\label{sec:results}
+\input{sec_results}
+
+\section{边界结果：多样性不蕴含可学习的路由}\label{sec:boundary}
+\input{sec_boundary}
+
+\section{讨论}\label{sec:discussion}
+\input{sec_discussion}
+
+\section{结论}\label{sec:conclusion}
+\input{sec_conclusion}
+
+\label{endofmain}
+
+% ---- ICLR 2027 强制 AI 使用声明（不计入页数限制）----
+\subsection*{AI 使用声明}
+
+本研究在构造上即是一个研究 AI 生成制品的 AI 辅助科研项目，我们在此精确披露辅助的程度。
+
+\textbf{要求的披露。}我们使用生成式 AI 工具完成了：(i) 编写与修改实验代码（生成管线、评估采集器、统计分析脚本），这些代码通过自动化测试、与手写正控制及已知负突变体的校准比对、以及跨模型对抗性审查加以验证；(ii) 执行实验，包括本文报告的所有模型 API 调用；(iii) 分析实验数据并制作表格与图；以及 (iv) 起草与编辑稿件文本。本文中的每一个定量论断都由已提交、受版本控制的分析脚本从归档的原始输出中生成，且对预冻结协议的每一次偏离都在协议变更日志中披露。
+
+\textbf{研究想法与方向。}核心研究问题、因果设计决策（估计量、对比、剔除规则）、解释标准以及全部 go/no-go 决策均由人类作者作出，AI 工具担任执行者以及一名对抗性审稿人（按我们的跨模型审查纪律，与执行者分属不同模型家族）。
+
+\textbf{责任。}我们对本工作的最终内容负责，包括在生成式 AI 协助下产生的文本、论断与制品。本节中的事实陈述供作者核验；其准确性由作者承担最终责任。
+
+\bibliography{references}
+\bibliographystyle{iclr2027_conference}
+
+% 中文参考译本不包含附录（仅翻译正文）。
+
+\end{document}

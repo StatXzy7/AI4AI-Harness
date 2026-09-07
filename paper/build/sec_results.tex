@@ -48,7 +48,7 @@ The confirmatory answer to our primary question is negative: the strategy-forced
 conformance-gated protocol does not increase population headroom relative to free,
 ungated generation. The point estimate is small ($-0.16$\,pp), the hierarchical
 bootstrap CI comfortably spans zero, and the permutation test offers no evidence
-against the null. Per the pre-registered conditional conclusions, we report this as
+against the null. Per the pre-specified conditional conclusions, we report this as
 \emph{no clear improvement} --- an unresolved estimate, not evidence of no effect.
 
 Two secondary observations qualify the null. First, both arms carry \emph{substantial}
@@ -57,10 +57,10 @@ regime is far from the clean-protocol regime, where free generation alone alread
 produces headroom-rich populations at these builder strengths. Second, the per-cell
 deltas are heterogeneous ($-2.5$ to $+2.8$\,pp): small-K cells where the gate admits
 harnesses the free arm lacks trend positive (deepseek/s1 $+2.0$, glm/s0 $+2.7$),
-while cells where the free arm is already large trend negative --- consistent with the
-substitution effect decomposed next. Notably, arm D repairs marginally fewer bare
-errors (30.0\% vs.\ 31.3\%) while inducing more harm (24.6\% vs.\ 19.8\%): the
-gate's fidelity filtering does not translate into gentler interventions.
+while cells where the free arm is already large trend negative --- though at these
+magnitudes the noise-floor analysis below cautions against reading the per-cell
+spread structurally. Arm D repairs marginally fewer bare errors (30.0\% vs.\ 31.3\%)
+while inducing more harm (24.6\% vs.\ 19.8\%).
 
 \subsection{Factorial decomposition (same core-400 items)}\label{sec:results-factorial}
 
@@ -82,31 +82,58 @@ zero --- on the negative side.}
 \label{tab:factorial}
 \end{table}
 
-The factorial decomposition explains the primary null mechanistically:
+The factorial decomposition must be read with two corrections the frozen plan
+anticipated and the data now supply.
 
-\textbf{The conformance gate reduces headroom on its own} ($-0.67$\,pp, CI excluding
-zero). Gate-rejected candidates --- neutral-valid code whose declared mechanism did not
-survive counterfactual probing --- were, on this benchmark, net contributors to
-population headroom. Mechanism fidelity and population complementarity trade against
-each other: a harness that executes exactly what it says can still be behaviorally
-redundant, while a sloppier candidate can repair items the clean ones miss.
+\textbf{Size confounding.} The gate admits $\sim$30\% fewer candidates (69 vs.\
+C's 101 slots), and oracle headroom grows with population size, so part of the
+unmatched $-0.67$\,pp is mechanical. At \textbf{matched population size}
+(subsampling each ungated population to its gated arm's $K$, 200 draws), the gate
+main effect shrinks to $-0.30$\,pp, 95\% CI $[-0.73, +0.11]$ --- \emph{not
+distinguishable from zero}. More than half the unmatched effect was population
+size.
 
-\textbf{Strategy forcing alone is null} ($+0.41$\,pp, CI spans zero), and
-\textbf{the interaction is negative} ($-0.87$\,pp, CI spans zero): gate and forcing
-\emph{substitute} rather than complement. Whatever diversity forcing adds, the gate's
-filter removes; the two effects largely cancel in the combined arm D --- which is
-precisely the primary null.
+\textbf{Multiplicity.} The three factorial contrasts form a pre-specified
+Holm family. Raw permutation $p$ for the gate main effect is 0.028, but the
+\textbf{Holm-adjusted} $p$ is 0.084 --- not confirmatory even before
+K-matching. The unmatched CI excluding zero was never pre-specified
+significance.
 
-\subsection{Generation reliability}\label{sec:results-yield}
+\textbf{Noise floor.} Three independent cache-off repeats of \bare{} (R3,
+temperature 0) flip 14.5\% of task outcomes at least once (pairwise
+$\sim$9.7--10.0\%; bare accuracy varies 63.8--65.8\% across repeats). The
+sub-part-per-point effects under interpretation sit an order of magnitude
+below this floor.
 
-Reliability and quality are different axes, and the design separates them: at nearly
-identical artifact rates the gate admits 69 of C's 101 slots --- and the headroom
-decomposition shows the filtering cost both yield and complementarity.
+\textbf{Headroom decomposition.} The gate does not make populations worse:
+oracle accuracy is essentially unchanged (A .761 vs.\ D .757; Table~\ref{tab:decomp}),
+and the unmatched headroom delta is carried by best-fixed accuracy shifting, not
+by a loss of union correctness. ``Less headroom'' here means \emph{less routing
+elbow-room}, not a worse population.
 
-\subsection{Robustness audits}\label{sec:results-audits}
+The honest summary: on this benchmark, neither component moved population headroom
+beyond noise in either direction. We report the unmatched, K-matched, adjusted,
+and decomposition views side by side and decline to interpret the residual.
 
-Dual-judge scoring on every cell (the legacy judge never credits an answer the
-official scorer rejects). Concurrent-duplicate collection produced conflicting verdicts
-on 1.8\%/1.4\% of AD/BC cells, resolved first-write-wins in canonical file order and
-disclosed; re-resolving every conflict the other way changes 0.84\% of verdicts and
-moves no reported contrast. Cache-off and repeat-run audits (R2/R3) are pending.
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+Arm & $K$ & bare & mean$H_i$ & best-fixed & oracle & headroom \\
+\midrule
+A free/ungated  & 6.8 & .653 & .658 & .676 & .761 & .086 \\
+B free/gated    & 7.1 & .632 & .642 & .661 & .744 & .083 \\
+C forced/ung.   & 6.6 & .632 & .624 & .656 & .750 & .094 \\
+D forced/gated  & 4.8 & .653 & .646 & .673 & .757 & .084 \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{Headroom decomposition} (18 quad cells, core-400, official
+judge). Oracle accuracy is essentially unchanged across arms; the unmatched
+headroom differences are carried by best-fixed accuracy, not by population
+utility. Generation reliability per arm (from the per-attempt logs): $K$/144
+slots --- A 104, B 110, C 101, D 69; the gate rejects $\sim$30\% of neutral-valid
+candidates, and builder-level $R_{\mathrm{artifact}}$ spans 0.13 (GLM) to 0.80
+(ERNIE). Reliability is part of the treatment (equal budget, no top-up).}
+\label{tab:decomp}
+\end{table}

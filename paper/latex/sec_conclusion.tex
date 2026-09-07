@@ -1,22 +1,36 @@
 AI-generated harness populations can be exactly what their source files suggest
-and nothing like what routing needs. We measured the syntactic--behavioral gap on a
-genuinely distinct-source population, diagnosed its mechanisms at the trace level, and
-showed the missing headroom exists on the task. A pre-registered factorial study over
-six builders and three seeds, on 1{,}169 questions from databases never opened during
-development under the official BIRD scorer, then delivered a two-fold answer: the
-combined strategy-forced, conformance-gated intervention shows \textbf{no clear
-improvement} ($-0.16$\,pp, CI $[-0.90, +0.82]$), and the decomposition shows
-\textbf{why} --- the conformance gate alone \emph{reduces} headroom ($-0.67$\,pp, CI
-$[-1.17, -0.13]$), strategy forcing alone is null, and the two substitute rather than
-complement. Mechanism fidelity and population complementarity trade against each other,
-and clean-protocol free generation already produces headroom-rich populations at these
-builder strengths.
+and nothing like what routing needs --- and the reverse can also hold. We measured
+the syntactic--behavioral gap in a Phase-I discovery population, traced its
+mechanisms at the trace level, and showed the missing headroom exists on the task.
+A pre-specified confirmatory factorial study --- six builders, three seeds,
+$2{\times}2$ strategy forcing $\times$ conformance gate, 1{,}169 questions from
+databases never opened during development, official BIRD scorer --- then revised
+the story twice.
 
-The practical output stands: measure disagreement, repair, and harm before routing
-over a generated population --- and do not assume that verifying what a harness claims
-to do will make the population more useful.
+First, \textbf{collapse proved protocol-sensitive}. The Phase-I collapse regime
+did not reproduce under the clean equal-budget protocol: free ungated generation
+already produced headroom-rich populations (8.6\,pp mean oracle headroom, 31\%
+union repair, 10\% pairwise disagreement). Collapse is a failure mode of
+\emph{specific} generation pipelines, not a universal property of AI-generated
+harness populations --- which is precisely why code-level checks cannot substitute
+for outcome-level auditing.
 
-	extbf{Limitations.} One domain family (text-to-SQL). Phase-I results come from a
-discovery design with disclosed task overlap and a proxy judge. The routing boundary
-covers the tested predictors and splits only; cache-off and repeat-run audits (R2/R3)
-are pending.
+Second, \textbf{the intervention showed no clear improvement} ($-0.16$\,pp, CI
+$[-0.90, +0.82]$; permutation $p = 0.65$). The apparent negative gate main
+effect ($-0.67$\,pp unmatched) was substantially size-confounded: the gate
+admits $\sim$30\% fewer candidates, and at matched population size the
+residual ($-0.30$\,pp, CI $[-0.73, +0.11]$) is not distinguishable from zero,
+nor Holm-significant before matching ($p_{\mathrm{Holm}} = 0.084$). The
+bare-outcome noise floor under API nondeterminism (14.5\% any-flip rate across
+three temperature-0 repeats) exceeds these sub-part-per-point effects. We
+therefore do not interpret the residual: on this benchmark, neither strategy
+forcing nor conformance gating moved population headroom beyond noise in either
+direction.
+
+\textbf{Limitations.} One domain family (text-to-SQL); Phase-I results come
+from a discovery design with disclosed task overlap and a proxy judge; inference
+is conditional on the six sampled builders; the cache-off arm replication (R2)
+is pending. The practical output stands: measure disagreement, repair, harm, and
+headroom before routing over a generated population, and audit the generation
+protocol --- the collapse we found was invisible to every code-level check the
+pipeline had passed.

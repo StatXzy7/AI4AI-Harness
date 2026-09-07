@@ -23,31 +23,32 @@
 \maketitle
 
 \begin{abstract}
-Populations of automatically generated LLM harnesses are increasingly used
-for routing and value prediction --- applications that presuppose
-population members \emph{disagree} on outcomes. We measure this premise
-directly and find that it fails. On BIRD text-to-SQL with a frozen target,
-the candidates of a standard harness-evolution loop are syntactically
-diverse yet behaviorally collapsed: 36 of 91 harness pairs (including the bare and ReAct baselines) return identical
-correctness on every task, and pairwise code similarity shows no
-observed rank association with outcome disagreement (Spearman $\rho=-0.01$).
-Execution-trace auditing explains why: mechanisms are described but absent
-from the control flow, feedback has no causal path to the output, or
-multi-turn paths are broken. A hand-written positive control shows the
-missing routing headroom exists on the task (7.3\,pp), localizing the
-failure to generation; we further document a more primitive failure mode
-in which a deployed pipeline emits candidates byte-identical to the
-baseline. We then froze a confirmatory protocol: a $2{\times}2$ factorial
-(strategy forcing $\times$ counterfactual conformance gate) over six
-builders and three seeds, evaluated on 1{,}169 questions from databases
-never opened during development, under the official BIRD scorer, with
-instruments calibrated on positive and negative controls. Phase-I controls
-additionally show open-set harness-value prediction does not beat the best
-fixed harness, so diversity is necessary but not sufficient. Confirmatory evaluation answers negatively: the combined intervention shows no clear
-improvement (D$ho$ headroom delta $-0.16$\,pp, 95\% CI $[-0.90, +0.82]$), while
-the factorial decomposition reveals the conformance gate alone \emph{reduces} headroom
-($-0.67$\,pp, CI $[-1.17, -0.13]$) --- mechanism fidelity and population
-complementarity trade against each other.
+Populations of automatically generated LLM harnesses are increasingly used for
+routing and value prediction --- applications that presuppose population members
+\emph{disagree} on outcomes. We audit this premise. In a Phase-I discovery study on
+BIRD text-to-SQL, a standard harness-evolution population proved syntactically diverse
+yet behaviorally collapsed: 36 of 91 harness pairs returned identical correctness on
+every task, code similarity showed no observed rank association with outcome
+disagreement, and execution-trace auditing traced the failure to mechanisms that were
+described but never executed. A hand-written positive control established that the
+routing headroom exists on the task (7.3\,pp) --- the failure was on the generation
+side. We then froze a confirmatory protocol: a $2{	imes}2$ factorial (strategy
+forcing $	imes$ counterfactual conformance gate) over six builders and three seeds,
+evaluated on 1{,}169 questions from databases never opened during development, under
+the official BIRD scorer. The confirmatory results revise the story twice over.
+First, \emph{collapse proved protocol-sensitive}: under the clean equal-budget
+protocol, free ungated generation already produced headroom-rich populations
+(8.6\,pp oracle headroom, 31\% union repair) --- the collapse regime did not
+reproduce. Second, the combined intervention showed \emph{no clear improvement}
+($-0.16$\,pp, 95\% CI $[-0.90, +0.82]$), and the apparent negative effect of the
+conformance gate was substantially size-confounded: at matched population size it is
+not distinguishable from zero ($-0.30$\,pp, CI $[-0.73, +0.11]$), and the API
+nondeterminism noise floor (14.5\% bare-outcome flip rate at temperature 0) exceeds
+the sub-part-per-point effects under interpretation. The stable conclusion is a
+measurement mandate: syntactic diversity is not population utility; report outcome
+disagreement, repair, harm, and headroom before routing over generated populations ---
+and audit generation protocols, since collapse emerged from a deployed pipeline that
+had passed every code-level check.
 \end{abstract}
 
 \section{Introduction}\label{sec:introduction}
