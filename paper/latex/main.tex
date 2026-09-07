@@ -23,32 +23,29 @@
 \maketitle
 
 \begin{abstract}
-Populations of automatically generated LLM harnesses are increasingly used for
-routing and value prediction --- applications that presuppose population members
-\emph{disagree} on outcomes. We audit this premise. In a Phase-I discovery study on
-BIRD text-to-SQL, a standard harness-evolution population proved syntactically diverse
-yet behaviorally collapsed: 36 of 91 harness pairs returned identical correctness on
-every task, code similarity showed no observed rank association with outcome
-disagreement, and execution-trace auditing traced the failure to mechanisms that were
-described but never executed. A hand-written positive control established that the
-routing headroom exists on the task (7.3\,pp) --- the failure was on the generation
-side. We then froze a confirmatory protocol: a $2{	imes}2$ factorial (strategy
-forcing $	imes$ counterfactual conformance gate) over six builders and three seeds,
-evaluated on 1{,}169 questions from databases never opened during development, under
-the official BIRD scorer. The confirmatory results revise the story twice over.
-First, \emph{collapse proved protocol-sensitive}: under the clean equal-budget
-protocol, free ungated generation already produced headroom-rich populations
-(8.6\,pp oracle headroom, 31\% union repair) --- the collapse regime did not
-reproduce. Second, the combined intervention showed \emph{no clear improvement}
-($-0.16$\,pp, 95\% CI $[-0.90, +0.82]$), and the apparent negative effect of the
-conformance gate was substantially size-confounded: at matched population size it is
-not distinguishable from zero ($-0.30$\,pp, CI $[-0.73, +0.11]$), and the API
-nondeterminism noise floor (14.5\% bare-outcome flip rate at temperature 0) exceeds
-the sub-part-per-point effects under interpretation. The stable conclusion is a
-measurement mandate: syntactic diversity is not population utility; report outcome
-disagreement, repair, harm, and headroom before routing over generated populations ---
-and audit generation protocols, since collapse emerged from a deployed pipeline that
-had passed every code-level check.
+Populations of automatically generated LLM harnesses underpin routing and
+value prediction, which presuppose that population members \emph{disagree} on
+outcomes. We audit this premise on BIRD text-to-SQL. A Phase-I discovery
+study found a standard harness-evolution population syntactically diverse yet
+behaviorally collapsed --- 36 of 91 harness pairs identical on every task,
+code similarity unassociated with outcome disagreement --- and traced the failure
+by execution-trace audit to mechanisms described but never executed. A
+hand-written positive control showed the routing headroom exists (7.3\,pp);
+the failure was on the generation side. A pre-specified confirmatory
+factorial study (strategy forcing $	imes$ conformance gate; six builders,
+three seeds; 1{,}169 questions from never-opened databases; official BIRD
+scorer) then revised the story twice. First, collapse proved
+\emph{protocol-sensitive}: under a clean equal-budget protocol, free ungated
+generation already produced headroom-rich populations (8.6\,pp oracle
+headroom, 31\% union repair). Second, the intervention showed \emph{no clear
+improvement} ($-0.16$\,pp, CI $[-0.90, +0.82]$); the apparent negative gate
+effect was substantially size-confounded ($-0.30$\,pp at matched $K$, CI
+spanning zero) and the bare-outcome noise floor (14.5\% flip rate at
+temperature 0) exceeds the effects in question. The stable conclusion is a
+measurement mandate: report outcome disagreement, repair, harm, and headroom
+before routing over generated populations --- and audit the generation
+protocol, since the collapse we found was invisible to every code-level check
+the pipeline had passed.
 \end{abstract}
 
 \section{Introduction}\label{sec:introduction}
@@ -65,9 +62,6 @@ had passed every code-level check.
 
 \section{Phase II: Results}\label{sec:results}
 \input{sec_results}
-
-\section{Boundary Result: Diversity Does Not Imply Learnable Routing}\label{sec:boundary}
-\input{sec_boundary}
 
 \section{Discussion}\label{sec:discussion}
 \input{sec_discussion}
