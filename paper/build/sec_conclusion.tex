@@ -1,32 +1,29 @@
 AI-generated harness populations can be exactly what their source files
 suggest and nothing like what routing needs. We measured that gap on a
-genuinely distinct-source population --- code similarity shows no
-observed rank association with outcome disagreement --- explained its mechanism at the
-trace level, and showed the missing headroom exists on the task. We
-separated genuine collapse from generation-null failures, and froze a
-confirmatory factorial study that isolates the generation-side factors
-under uncontaminated evaluation.
+genuinely distinct-source population --- code similarity shows no observed rank
+association with behavioral similarity --- explained its mechanism at the trace
+level, and showed the missing headroom exists on the task. We separated genuine
+collapse from generation-null failures, and froze a confirmatory protocol: a
+$2{\times}2$ factorial (strategy forcing $\times$ counterfactual conformance
+gate) over six builders and three seeds, evaluated on 1{,}169 questions from
+databases never opened during development, under the official BIRD scorer.
 
-The Phase-II conclusion will be selected from the following
-pre-drafted statements according to the frozen analysis, without
-reference to which is most flattering:
-\begin{itemize}
-\tightlist
-\item \textbf{If the primary contrast is positive with CI excluding
-zero:} explicit strategy assignment plus counterfactual conformance
-gating increases the routing-relevant headroom of generated harness
-populations under equal raw budgets; the factorial decomposition then
-locates the effect (gate, forcing, or interaction).
-\item \textbf{If the contrast shows no clear improvement (CI overlapping
-zero):} the data do not support a claim that the combined intervention
-increases population headroom; Phase-I's positive point estimates would then
-be protocol- or sample-specific, but an unresolved estimate is not itself
-evidence of no effect.
-\item \textbf{If the contrast is negative with CI excluding zero:} the
-gated-forced protocol reduces population headroom (e.g.\ by concentrating quality or costing
-generation yield); the failure mode itself is informative for
-harness-generation design.
-\end{itemize}
-In all cases the practical output stands: measure disagreement, union
-repair, and headroom before routing over a generated population; gate
-generation on verified execution, not on text.
+The confirmatory answer is two-fold. The primary contrast is null: the combined
+strategy-forced, conformance-gated protocol does not increase population headroom
+over free, ungated generation ($-0.16$\,pp, 95\% CI $[-0.90, +0.82]$;
+permutation $p=0.65$). The factorial decomposition explains why, and delivers the
+study's sharpest finding: \textbf{the conformance gate alone reduces headroom}
+($-0.67$\,pp, CI $[-1.17, -0.13]$), strategy forcing alone is null ($+0.41$\,pp,
+CI $[-0.22, +1.11]$), and their interaction is negative ($-0.87$\,pp) --- the two
+components substitute rather than complement. Mechanism fidelity and population
+complementarity trade against each other: gate-rejected candidates --- valid code
+whose declared mechanism did not survive counterfactual probing --- were net
+contributors to headroom. Both arms carry substantial headroom (3.1--11.9\,pp),
+far from the Phase-I collapse regime: under a clean equal-budget protocol, free
+generation already produces headroom-rich populations at these builder strengths.
+
+Phase-I controls additionally showed open-set harness-value prediction does not beat
+the best fixed harness, so diversity is necessary but not sufficient. The practical
+output stands: measure disagreement, union repair, and harm before routing over a
+generated population --- and do not assume that verifying what a harness claims to
+do will make the population more useful.

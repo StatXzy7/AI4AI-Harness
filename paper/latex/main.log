@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.29)  5 SEP 2026 19:16
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.29)  7 SEP 2026 10:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -420,10 +420,13 @@ LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 2
 
 (d:/texlive/2026/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-) [1{d:/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{d:/texlive/2
-026/texmf-dist/fonts/enc/dvips/base/8r.enc}
+)
+Underfull \vbox (badness 2050) has occurred while \output is active []
 
-]) (./sec_related.tex
+ [1{d:/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{d:/texlive/20
+26/texmf-dist/fonts/enc/dvips/base/8r.enc}
+
+]) (./sec_related.tex [2]
 Overfull \hbox (15.06163pt too wide) in paragraph at lines 32--47
  [][] 
  []
@@ -435,65 +438,78 @@ File: omsptm.fd
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 60.
- [2]) (./sec_phase1.tex
+) (./sec_phase1.tex
 [3]
-<figures/fig_phenomenon.pdf, id=198, 440.53085pt x 308.48085pt>
+<figures/fig_phenomenon.pdf, id=197, 440.53085pt x 308.48085pt>
 File: figures/fig_phenomenon.pdf Graphic file (type pdf)
 <use figures/fig_phenomenon.pdf>
 Package pdftex.def Info: figures/fig_phenomenon.pdf  used on input line 58.
 (pdftex.def)             Requested size: 310.0378pt x 217.11658pt.
- [4 <./figures/fig_phenomenon.pdf>]) (./sec_phase2.tex [5]
-<figures/fig_design.pdf, id=272, 679.33798pt x 389.96892pt>
+ [4]) (./sec_phase2.tex
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [5 <./figures/fig_phenomenon.pdf>]
+<figures/fig_design.pdf, id=271, 679.33798pt x 389.96892pt>
 File: figures/fig_design.pdf Graphic file (type pdf)
 <use figures/fig_design.pdf>
 Package pdftex.def Info: figures/fig_design.pdf  used on input line 76.
 (pdftex.def)             Requested size: 389.53358pt x 223.61153pt.
+
+Underfull \vbox (badness 1024) has occurred while \output is active []
+
  [6])
 (./sec_results.tex
+<../figures/fig_results.pdf, id=285, 751.50954pt x 294.14442pt>
+File: ../figures/fig_results.pdf Graphic file (type pdf)
+<use ../figures/fig_results.pdf>
+Package pdftex.def Info: ../figures/fig_results.pdf  used on input line 39.
+(pdftex.def)             Requested size: 397.48499pt x 155.57712pt.
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [7 <./figures/fig_design.pdf>]) (./sec_boundary.tex) (./sec_discussion.tex [8]
-)
-(./sec_conclusion.tex)
+ [7 <./figures/fig_design.pdf>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [9]
-(./main.bbl [10]) (./sec_appendix.tex [11]) [12] (./main.aux)
+ [8 <../figures/fig_results.pdf>]) (./sec_boundary.tex [9]) (./sec_discussion.t
+ex)
+(./sec_conclusion.tex [10]) (./main.bbl [11]) (./sec_appendix.tex [12])
+[13] (./main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-03-20>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 1D587C2ED5657C5BCAA803E555CD2F8A;5726.
+(rerunfilecheck)             Checksum: 5F1C81796574AC49BDC7A86589AA4F35;5652.
  ) 
 Here is how much of TeX's memory you used:
- 11357 strings out of 467349
- 170515 string characters out of 5419862
- 608403 words of memory out of 5000000
- 40172 multiletter control sequences out of 15000+600000
- 654660 words of font info for 91 fonts, out of 8000000 for 9000
+ 11375 strings out of 467349
+ 170873 string characters out of 5419862
+ 608983 words of memory out of 5000000
+ 40184 multiletter control sequences out of 15000+600000
+ 654523 words of font info for 94 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,90p,651b,578s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><d:/tex
-live/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><d:/texlive/2026
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><d:/texlive/2026/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmmi9.pfb><d:/texlive/2026/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmr10.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmr5.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmr6.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb>
-<d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><d:/texlive
-/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><d:/texlive/2026/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><d:/texlive/2026/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmsy9.pfb><d:/texlive/2026/texmf-dist/fonts/type1/
-urw/courier/ucrb8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/courier/ucrr
-8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb><d:/texl
-ive/2026/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><d:/texlive/2026/texmf-dis
-t/fonts/type1/urw/times/utmr8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/
-times/utmri8a.pfb>
-Output written on main.pdf (12 pages, 297157 bytes).
+ 75i,12n,90p,651b,566s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb><d:/texl
+ive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><d:/texlive/2026/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><d:/texlive/2026/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmmi7.pfb><d:/texlive/2026/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmmi9.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmr10.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr5.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb
+><d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><d:/texliv
+e/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><d:/texlive/2026/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><d:/texlive/2026/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmsy7.pfb><d:/texlive/2026/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmsy9.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/courie
+r/ucrb8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb><d:
+/texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb><d:/texlive/2026/t
+exmf-dist/fonts/type1/urw/times/utmb8a.pfb><d:/texlive/2026/texmf-dist/fonts/ty
+pe1/urw/times/utmr8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/times/utmr
+i8a.pfb>
+Output written on main.pdf (13 pages, 331715 bytes).
 PDF statistics:
- 537 PDF objects out of 1000 (max. 8388607)
- 334 compressed objects within 4 object streams
- 79 named destinations out of 1000 (max. 500000)
- 211 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 609 PDF objects out of 1000 (max. 8388607)
+ 347 compressed objects within 4 object streams
+ 81 named destinations out of 1000 (max. 500000)
+ 216 words of extra memory for PDF output out of 10000 (max. 10000000)
 

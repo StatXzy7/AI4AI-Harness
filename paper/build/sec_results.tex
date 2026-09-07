@@ -1,8 +1,9 @@
-% Results are intentionally PENDING: the confirmatory matrix is still being
-% collected. Per the frozen protocol no aggregate metric has been computed
-% and no Phase-I or partial number may be presented as a Phase-II result.
-% The table structures below are final; numbers will be filled by the
-% frozen analysis scripts upon collection-completeness verification.
+% Section 5 results are now UNSEALED: all confirmatory numbers come from the frozen
+% analysis scripts (analysis_primary.py, analysis_factorial.py) run on the
+% completeness-verified matrix (see artifacts/phase2/completeness_report.json and the
+% input freeze manifests committed before analysis). Numbers are reported exactly as
+% measured; the conclusion branch was selected per the pre-drafted conditional
+% conclusions in sec_conclusion.
 
 \subsection{Primary contrast: forced+gated vs.\ free+ungated}\label{sec:results-primary}
 
@@ -13,26 +14,53 @@
 \toprule
  & Arm II-A (free/ungated) & Arm II-D (forced/gated) \\
 \midrule
-Oracle headroom $H(P)$, official judge & \textit{pending} & \textit{pending} \\
-Union repair rate & \textit{pending} & \textit{pending} \\
-Union harm rate & \textit{pending} & \textit{pending} \\
-Pairwise disagreement & \textit{pending} & \textit{pending} \\
-Unique outcome-vector fraction $K_{\mathrm{eff}}/K$ & \textit{pending} & \textit{pending} \\
+Oracle headroom $H(P)$, official judge & 8.6 pp (cell mean) & 8.4 pp (cell mean) \\
+Union repair rate & 31.3\% & 30.0\% \\
+Union harm rate & 19.8\% & 24.6\% \\
+Pairwise disagreement & 10.4\% & 12.6\% \\
+Unique outcome-vector fraction $K_{\mathrm{eff}}/K$ & 1.00 & 1.00 \\
 \midrule
 \multicolumn{3}{@{}l@{}}{Paired contrast $H(\text{II-D}) - H(\text{II-A})$, 18 cells:}\\
-\quad Point estimate & \multicolumn{2}{c}{\textit{pending}} \\
-\quad Two-sided 95\% CI (hierarchical bootstrap) & \multicolumn{2}{c}{\textit{pending}} \\
-\quad Paired permutation $p$ & \multicolumn{2}{c}{\textit{pending}} \\
+\quad Point estimate & \multicolumn{2}{c}{$-0.16$ pp} \\
+\quad Two-sided 95\% CI (hierarchical bootstrap) & \multicolumn{2}{c}{$[-0.90,\ +0.82]$ pp} \\
+\quad Paired permutation $p$ (one-sided) & \multicolumn{2}{c}{$0.65$} \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{Primary result (pending).} Bare-inclusive oracle headroom
-per arm and the paired contrast, pooled over 6 builders $\times$ 3 seeds on
-the 1{,}169-question confirmatory set, official BIRD judge. Per-cell
-values, the K-matched sensitivity curve, and the population-conditional
-analysis will appear in Appendix~\ref{app:phase2-protocol} tables and the
-released analysis outputs.}
+\caption{\textbf{Primary result.} Bare-inclusive oracle headroom per arm and the
+paired D$-$A contrast, pooled over 6 builders $\times$ 3 seeds on the 1{,}169-question
+confirmatory set (nine databases never opened during development), official BIRD judge.
+The CI spans zero: \textbf{the combined intervention shows no clear improvement}.
+Per-cell values are in Figure~\ref{fig:results} (left).}
 \label{tab:primary}
 \end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{../figures/fig_results.pdf}
+\caption{\textbf{Confirmatory results.} Left: per-cell D$-$A headroom deltas (sorted;
+green = D better, red = A better) with the pooled 95\% CI band. Right: factorial arm
+means on the identical core-400 items; the conformance gate's negative main effect is
+starred (CI excludes zero). Both panels derive from the frozen analysis scripts.}
+\label{fig:results}
+\end{figure}
+
+The confirmatory answer to our primary question is negative: the strategy-forced,
+conformance-gated protocol does not increase population headroom relative to free,
+ungated generation. The point estimate is small ($-0.16$\,pp), the hierarchical
+bootstrap CI comfortably spans zero, and the permutation test offers no evidence
+against the null. Per the pre-registered conditional conclusions, we report this as
+\emph{no clear improvement} --- an unresolved estimate, not evidence of no effect.
+
+Two secondary observations qualify the null. First, both arms carry \emph{substantial}
+headroom (A: 3.1--11.7\,pp across cells; D: 4.5--11.9\,pp): the Phase-I collapse
+regime is far from the clean-protocol regime, where free generation alone already
+produces headroom-rich populations at these builder strengths. Second, the per-cell
+deltas are heterogeneous ($-2.5$ to $+2.8$\,pp): small-K cells where the gate admits
+harnesses the free arm lacks trend positive (deepseek/s1 $+2.0$, glm/s0 $+2.7$),
+while cells where the free arm is already large trend negative --- consistent with the
+substitution effect decomposed next. Notably, arm D repairs marginally fewer bare
+errors (30.0\% vs.\ 31.3\%) while inducing more harm (24.6\% vs.\ 19.8\%): the
+gate's fidelity filtering does not translate into gentler interventions.
 
 \subsection{Factorial decomposition (same core-400 items)}\label{sec:results-factorial}
 
@@ -41,40 +69,71 @@ released analysis outputs.}
 \small
 \begin{tabular}{@{}lc@{}}
 \toprule
-Contrast & Effect on headroom (95\% CI) \\
+Contrast & Effect on headroom, 95\% CI \\
 \midrule
-Gate main effect $[(B{-}A)+(D{-}C)]/2$ & \textit{pending} \\
-Strategy main effect $[(C{-}A)+(D{-}B)]/2$ & \textit{pending} \\
-Strategy $\times$ gate interaction $(D{-}C)-(B{-}A)$ & \textit{pending} \\
+Gate main effect $[(B{-}A)+(D{-}C)]/2$ & $\mathbf{-0.67}$ pp $\mathbf{[-1.17,\ -0.13]}$ \\
+Strategy main effect $[(C{-}A)+(D{-}B)]/2$ & $+0.41$ pp $[-0.22,\ +1.11]$ \\
+Strategy $\times$ gate interaction $(D{-}C)-(B{-}A)$ & $-0.87$ pp $[-2.22,\ +0.31]$ \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{Confirmatory secondaries (pending)}, Holm-corrected. All
-four arms evaluated on the identical 400-item core.}
+\caption{\textbf{Confirmatory secondaries}, 18 quad cells, all four arms on the
+identical 400-item core. The gate main effect is the only contrast whose CI excludes
+zero --- on the negative side.}
 \label{tab:factorial}
 \end{table}
 
-\subsection{Generation reliability and arm II-E}\label{sec:results-yield}
+The factorial decomposition explains the primary null mechanistically:
+
+\textbf{The conformance gate reduces headroom on its own} ($-0.67$\,pp, CI excluding
+zero). Gate-rejected candidates --- neutral-valid code whose declared mechanism did not
+survive counterfactual probing --- were, on this benchmark, net contributors to
+population headroom. Mechanism fidelity and population complementarity trade against
+each other: a harness that executes exactly what it says can still be behaviorally
+redundant, while a sloppier candidate can repair items the clean ones miss.
+
+\textbf{Strategy forcing alone is null} ($+0.41$\,pp, CI spans zero), and
+\textbf{the interaction is negative} ($-0.87$\,pp, CI spans zero): gate and forcing
+\emph{substitute} rather than complement. Whatever diversity forcing adds, the gate's
+filter removes; the two effects largely cancel in the combined arm D --- which is
+precisely the primary null.
+
+\subsection{Generation reliability}\label{sec:results-yield}
 
 \begin{table}[t]
 \centering
 \small
 \begin{tabular}{@{}lccc@{}}
 \toprule
-Arm & $R_{\mathrm{artifact}}$ & $R_{\mathrm{contract}}$ & $R_{\mathrm{fidelity}}$ \\
+Arm & $R_{\mathrm{artifact}}$ & Admitted $K$/slots & Note \\
 \midrule
-II-A / II-C (ungated) & \textit{pending} & --- & --- \\
-II-B / II-D (gated) & \textit{pending} & \textit{pending} & \textit{pending} \\
-II-E (open mechanism) & \textit{pending} & \textit{pending} & \textit{pending} \\
+II-A free/ungated & 0.39 & 104/144 & \\
+II-B free/gated & 0.47 & 110/144 & \\
+II-C forced/ungated & 0.37 & 101/144 & \\
+II-D forced/gated & 0.36 & 69/144 & gate rejects $\sim$30\% of valid candidates \\
+II-E open mechanism & 0.60 & 6/8 & $R_{\mathrm{fidelity}} = 0.50$ (dev-side) \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{Generation reliability (pending)}, reported separately
-from population quality: a builder that cannot write a valid artifact, one
-that writes but over-asserts its contract, and one whose asserted behavior
-verifies are three different findings.}
+\caption{\textbf{Generation reliability}, from the per-attempt logs. Reliability is
+part of the treatment (equal raw budget, no top-up): a protocol that produces fewer
+callable artifacts scores accordingly in the headroom analysis. The gate's D-arm
+selectivity ($K{=}69$ at the same artifact rate as C's $K{=}101$) is the yield-side
+face of the negative gate main effect. Builder-level yields span $R_{\mathrm{artifact}}$
+0.13 (GLM) to 0.80 (ERNIE).}
 \label{tab:yield}
 \end{table}
 
+Reliability and quality are different axes, and the design separates them. The gate's
+D-arm selectivity is visible in the yield table: at nearly identical artifact rates,
+the gate admits 69 of C's 101 slots. Combined with the headroom decomposition, the
+consistent picture is that mechanism-conformance filtering costs both yield and
+headroom on this benchmark.
+
 \subsection{Robustness audits}\label{sec:results-audits}
-Dual-judge agreement, cache-off replication (arms A and D), and repeat-run
-outcome stability (bare and arm D, three cache-off repeats) will be
-reported per the frozen plan. \textit{Pending.}
+
+Dual-judge agreement was measured on every cell (the legacy judge never credits an
+answer the official scorer rejects). Concurrent-duplicate collection produced conflicting
+verdicts on 1.8\% of AD cells and 1.4\% of BC cells; these are resolved
+first-write-wins in canonical file order, disclosed in the completeness report, and
+bounded: re-resolving every conflict the other way changes 0.84\% of cell verdicts,
+which does not move any reported contrast. Cache-off replication and repeat-run
+stability (R2/R3) are pending; they are reported when complete.
