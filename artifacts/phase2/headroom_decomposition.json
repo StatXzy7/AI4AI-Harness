@@ -1,0 +1,34 @@
+{
+ "A": {
+  "K": 6.8,
+  "bare_acc": 0.6527,
+  "mean_harness_acc": 0.6577,
+  "best_fixed": 0.6758,
+  "oracle_acc": 0.7614,
+  "headroom": 0.0856
+ },
+ "B": {
+  "K": 7.1,
+  "bare_acc": 0.6325,
+  "mean_harness_acc": 0.6417,
+  "best_fixed": 0.6613,
+  "oracle_acc": 0.744,
+  "headroom": 0.0828
+ },
+ "C": {
+  "K": 6.6,
+  "bare_acc": 0.6325,
+  "mean_harness_acc": 0.624,
+  "best_fixed": 0.6564,
+  "oracle_acc": 0.75,
+  "headroom": 0.0936
+ },
+ "D": {
+  "K": 4.8,
+  "bare_acc": 0.6527,
+  "mean_harness_acc": 0.6463,
+  "best_fixed": 0.673,
+  "oracle_acc": 0.757,
+  "headroom": 0.084
+ }
+}

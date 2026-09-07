@@ -1,0 +1,12 @@
+{
+ "raw_p": {
+  "gate_main": 0.028,
+  "strategy_main": 0.2631,
+  "interaction": 0.2191
+ },
+ "holm_p": {
+  "gate_main": 0.084,
+  "interaction": 0.4382,
+  "strategy_main": 0.4382
+ }
+}

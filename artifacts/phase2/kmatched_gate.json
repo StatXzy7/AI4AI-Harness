@@ -1,0 +1,156 @@
+{
+ "gate_main_km": -0.003,
+ "ci95": [
+  -0.0073,
+  0.0011
+ ],
+ "b_a_km": -0.0054,
+ "d_c_km": -0.0006,
+ "n": 18,
+ "per_cell": [
+  {
+   "builder": "deepseek",
+   "seed": 0,
+   "k_BvA": 8,
+   "k_DvC": 6,
+   "BA_km": -0.0095,
+   "DC_km": -0.0008
+  },
+  {
+   "builder": "deepseek",
+   "seed": 1,
+   "k_BvA": 9,
+   "k_DvC": 7,
+   "BA_km": -0.0117,
+   "DC_km": 0.0149
+  },
+  {
+   "builder": "deepseek",
+   "seed": 2,
+   "k_BvA": 9,
+   "k_DvC": 5,
+   "BA_km": -0.0101,
+   "DC_km": 0.0096
+  },
+  {
+   "builder": "ernie",
+   "seed": 0,
+   "k_BvA": 9,
+   "k_DvC": 5,
+   "BA_km": -0.0147,
+   "DC_km": -0.0231
+  },
+  {
+   "builder": "ernie",
+   "seed": 1,
+   "k_BvA": 9,
+   "k_DvC": 6,
+   "BA_km": 0.0125,
+   "DC_km": 0.0069
+  },
+  {
+   "builder": "ernie",
+   "seed": 2,
+   "k_BvA": 9,
+   "k_DvC": 6,
+   "BA_km": -0.0197,
+   "DC_km": -0.0063
+  },
+  {
+   "builder": "glm",
+   "seed": 0,
+   "k_BvA": 2,
+   "k_DvC": 3,
+   "BA_km": 0.0051,
+   "DC_km": -0.0056
+  },
+  {
+   "builder": "glm",
+   "seed": 1,
+   "k_BvA": 2,
+   "k_DvC": 3,
+   "BA_km": 0.0055,
+   "DC_km": 0.0067
+  },
+  {
+   "builder": "glm",
+   "seed": 2,
+   "k_BvA": 3,
+   "k_DvC": 3,
+   "BA_km": 0.0114,
+   "DC_km": -0.0364
+  },
+  {
+   "builder": "kimi",
+   "seed": 0,
+   "k_BvA": 9,
+   "k_DvC": 6,
+   "BA_km": -0.0075,
+   "DC_km": 0.0157
+  },
+  {
+   "builder": "kimi",
+   "seed": 1,
+   "k_BvA": 9,
+   "k_DvC": 4,
+   "BA_km": -0.0023,
+   "DC_km": 0.018
+  },
+  {
+   "builder": "kimi",
+   "seed": 2,
+   "k_BvA": 8,
+   "k_DvC": 4,
+   "BA_km": -0.002,
+   "DC_km": 0.008
+  },
+  {
+   "builder": "minimax",
+   "seed": 0,
+   "k_BvA": 6,
+   "k_DvC": 6,
+   "BA_km": -0.0126,
+   "DC_km": 0.025
+  },
+  {
+   "builder": "minimax",
+   "seed": 1,
+   "k_BvA": 7,
+   "k_DvC": 6,
+   "BA_km": -0.0134,
+   "DC_km": -0.0115
+  },
+  {
+   "builder": "minimax",
+   "seed": 2,
+   "k_BvA": 8,
+   "k_DvC": 6,
+   "BA_km": -0.021,
+   "DC_km": -0.0111
+  },
+  {
+   "builder": "qwen",
+   "seed": 0,
+   "k_BvA": 6,
+   "k_DvC": 3,
+   "BA_km": -0.0147,
+   "DC_km": -0.0137
+  },
+  {
+   "builder": "qwen",
+   "seed": 1,
+   "k_BvA": 4,
+   "k_DvC": 4,
+   "BA_km": 0.0182,
+   "DC_km": -0.0069
+  },
+  {
+   "builder": "qwen",
+   "seed": 2,
+   "k_BvA": 2,
+   "k_DvC": 4,
+   "BA_km": -0.0101,
+   "DC_km": -0.001
+  }
+ ]
+}
