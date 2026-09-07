@@ -1,0 +1,22 @@
+{
+ "A": {
+  "headroom": 0.0856,
+  "bare_acc": 0.6527,
+  "best_fixed_acc": 0.6758,
+  "oracle_acc": 0.7614,
+  "union_repair": 0.3129,
+  "union_harm": 0.1983,
+  "pairwise_disagreement": 0.1045,
+  "K_eff_frac": 1.0
+ },
+ "D": {
+  "headroom": 0.084,
+  "bare_acc": 0.6527,
+  "best_fixed_acc": 0.673,
+  "oracle_acc": 0.757,
+  "union_repair": 0.3004,
+  "union_harm": 0.2457,
+  "pairwise_disagreement": 0.1263,
+  "K_eff_frac": 1.0
+ }
+}
