@@ -73,7 +73,7 @@ verifies only the properties actually asserted.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.98\linewidth]{figures/fig_design.pdf}
+\includegraphics[width=0.8\linewidth]{figures/fig_design.pdf}
 \caption{\textbf{Phase-II confirmatory design} (frozen protocol). Left:
 database-level contamination isolation (the two development databases are
 banned wholesale; evaluation uses nine databases never opened during development). Middle:
@@ -85,37 +85,19 @@ counterfactual conformance $\rightarrow$ non-vacuity vs.\ bare).}
 \end{figure}
 
 \subsection{Frozen analysis plan}\label{sec:p2plan}
-The \textbf{primary estimand} is the bare-inclusive oracle headroom $H(P)$
-(Equation in \S\ref{sec:metrics}; $K{=}0$ gives $H=0$, and $K{=}1$ is a
-genuine bare-vs-harness routing problem) of arm II-D minus arm II-A,
-paired by (builder $\times$ seed), on the full 1{,}169-question set under
-the official judge --- a continuous effect with two-sided 95\% CI and a
-paired permutation test, not a pass/fail threshold. The Phase-I thresholds
-(union repair $\geq$15\%, headroom $\geq$5\,pp) are retained only as a
-descriptive operational checklist; threshold-crossing itself is
-statistically uncertain and is never used as a scientific verdict.
-
-\textbf{Confirmatory secondaries} (Holm-corrected, tested after the
-primary, all four arms on the same core-400 items): gate main effect
-$[(B{-}A)+(D{-}C)]/2$; strategy main effect $[(C{-}A)+(D{-}B)]/2$; and the
-strategy $\times$ gate interaction $(D{-}C)-(B{-}A)$ --- the key
-mechanism-level question of whether strategy differentiation requires
-execution fidelity to be realized.
-
-\textbf{Inference} uses a hierarchical paired bootstrap (10{,}000
-replicates): databases resampled with replacement, then tasks within each
-drawn database, with (builder $\times$ seed) cells resampled as paired
-units. K-matched sensitivity ($k{=}1\ldots K_{\min}$) and a
-population-conditional analysis ($K \geq 3$ both arms) are reported as
-sensitivity checks. Note that $H(P)$ is \emph{not} monotone in $K$: oracle
-accuracy is non-decreasing in $K$ by construction, but so may be the best
-fixed accuracy --- adding a harness that answers everything correctly
-drives headroom to zero --- which is why matched-K comparison, not
-monotonicity, licenses cross-population claims.
-
-\textbf{Robustness audits (frozen):} dual-judge scoring on every cell;
-cache-off replication of arms A and D on the core (quantifying how much
-apparent agreement is the shared response cache, i.e.\ common random
-numbers, versus structural); and three independent cache-off repeats of
-bare and arm D on the core, giving an outcome flip rate and repair
-stability rate.
+The \textbf{primary estimand} is the paired difference in bare-inclusive oracle
+headroom, $H(\text{II-D}) - H(\text{II-A})$ over (builder $\times$ seed) cells, on
+the full 1{,}169-question set under the official judge --- a continuous effect with
+a two-sided 95\% CI and paired permutation test, never a pass/fail threshold. The
+Phase-I thresholds survive only as a descriptive checklist.
+\textbf{Confirmatory secondaries} (Holm-corrected, all four arms on the same
+core-400 items): gate main effect $[(B{-}A)+(D{-}C)]/2$, strategy main effect
+$[(C{-}A)+(D{-}B)]/2$, and their interaction $(D{-}C)-(B{-}A)$ --- whether strategy
+differentiation requires execution fidelity to be realized.
+\textbf{Inference}: hierarchical paired bootstrap (10{,}000 replicates; databases
+resampled, then tasks within database, cells paired). $H(P)$ is \emph{not} monotone
+in $K$ --- adding a harness that answers everything correctly drives headroom to
+zero --- so matched-$K$ comparison, not monotonicity, licenses cross-population
+claims. K-matched sensitivity, the full estimand definitions, and the robustness
+audits (dual judge, cache-off replication, repeat stability) are specified in
+Appendix~\ref{app:phase2-protocol} together with the protocol deviation log.

@@ -36,7 +36,7 @@ Per-cell values are in Figure~\ref{fig:results} (left).}
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\linewidth]{../figures/fig_results.pdf}
+\includegraphics[width=0.85\linewidth]{figures/fig_results.pdf}
 \caption{\textbf{Confirmatory results.} Left: per-cell D$-$A headroom deltas (sorted;
 green = D better, red = A better) with the pooled 95\% CI band. Right: factorial arm
 means on the identical core-400 items; the conformance gate's negative main effect is
@@ -99,41 +99,14 @@ precisely the primary null.
 
 \subsection{Generation reliability}\label{sec:results-yield}
 
-\begin{table}[t]
-\centering
-\small
-\begin{tabular}{@{}lccc@{}}
-\toprule
-Arm & $R_{\mathrm{artifact}}$ & Admitted $K$/slots & Note \\
-\midrule
-II-A free/ungated & 0.39 & 104/144 & \\
-II-B free/gated & 0.47 & 110/144 & \\
-II-C forced/ungated & 0.37 & 101/144 & \\
-II-D forced/gated & 0.36 & 69/144 & gate rejects $\sim$30\% of valid candidates \\
-II-E open mechanism & 0.60 & 6/8 & $R_{\mathrm{fidelity}} = 0.50$ (dev-side) \\
-\bottomrule
-\end{tabular}
-\caption{\textbf{Generation reliability}, from the per-attempt logs. Reliability is
-part of the treatment (equal raw budget, no top-up): a protocol that produces fewer
-callable artifacts scores accordingly in the headroom analysis. The gate's D-arm
-selectivity ($K{=}69$ at the same artifact rate as C's $K{=}101$) is the yield-side
-face of the negative gate main effect. Builder-level yields span $R_{\mathrm{artifact}}$
-0.13 (GLM) to 0.80 (ERNIE).}
-\label{tab:yield}
-\end{table}
-
-Reliability and quality are different axes, and the design separates them. The gate's
-D-arm selectivity is visible in the yield table: at nearly identical artifact rates,
-the gate admits 69 of C's 101 slots. Combined with the headroom decomposition, the
-consistent picture is that mechanism-conformance filtering costs both yield and
-headroom on this benchmark.
+Reliability and quality are different axes, and the design separates them: at nearly
+identical artifact rates the gate admits 69 of C's 101 slots --- and the headroom
+decomposition shows the filtering cost both yield and complementarity.
 
 \subsection{Robustness audits}\label{sec:results-audits}
 
-Dual-judge agreement was measured on every cell (the legacy judge never credits an
-answer the official scorer rejects). Concurrent-duplicate collection produced conflicting
-verdicts on 1.8\% of AD cells and 1.4\% of BC cells; these are resolved
-first-write-wins in canonical file order, disclosed in the completeness report, and
-bounded: re-resolving every conflict the other way changes 0.84\% of cell verdicts,
-which does not move any reported contrast. Cache-off replication and repeat-run
-stability (R2/R3) are pending; they are reported when complete.
+Dual-judge scoring on every cell (the legacy judge never credits an answer the
+official scorer rejects). Concurrent-duplicate collection produced conflicting verdicts
+on 1.8\%/1.4\% of AD/BC cells, resolved first-write-wins in canonical file order and
+disclosed; re-resolving every conflict the other way changes 0.84\% of verdicts and
+moves no reported contrast. Cache-off and repeat-run audits (R2/R3) are pending.

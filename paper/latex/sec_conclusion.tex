@@ -1,29 +1,22 @@
-AI-generated harness populations can be exactly what their source files
-suggest and nothing like what routing needs. We measured that gap on a
-genuinely distinct-source population --- code similarity shows no observed rank
-association with behavioral similarity --- explained its mechanism at the trace
-level, and showed the missing headroom exists on the task. We separated genuine
-collapse from generation-null failures, and froze a confirmatory protocol: a
-$2{\times}2$ factorial (strategy forcing $\times$ counterfactual conformance
-gate) over six builders and three seeds, evaluated on 1{,}169 questions from
-databases never opened during development, under the official BIRD scorer.
+AI-generated harness populations can be exactly what their source files suggest
+and nothing like what routing needs. We measured the syntactic--behavioral gap on a
+genuinely distinct-source population, diagnosed its mechanisms at the trace level, and
+showed the missing headroom exists on the task. A pre-registered factorial study over
+six builders and three seeds, on 1{,}169 questions from databases never opened during
+development under the official BIRD scorer, then delivered a two-fold answer: the
+combined strategy-forced, conformance-gated intervention shows \textbf{no clear
+improvement} ($-0.16$\,pp, CI $[-0.90, +0.82]$), and the decomposition shows
+\textbf{why} --- the conformance gate alone \emph{reduces} headroom ($-0.67$\,pp, CI
+$[-1.17, -0.13]$), strategy forcing alone is null, and the two substitute rather than
+complement. Mechanism fidelity and population complementarity trade against each other,
+and clean-protocol free generation already produces headroom-rich populations at these
+builder strengths.
 
-The confirmatory answer is two-fold. The primary contrast is null: the combined
-strategy-forced, conformance-gated protocol does not increase population headroom
-over free, ungated generation ($-0.16$\,pp, 95\% CI $[-0.90, +0.82]$;
-permutation $p=0.65$). The factorial decomposition explains why, and delivers the
-study's sharpest finding: \textbf{the conformance gate alone reduces headroom}
-($-0.67$\,pp, CI $[-1.17, -0.13]$), strategy forcing alone is null ($+0.41$\,pp,
-CI $[-0.22, +1.11]$), and their interaction is negative ($-0.87$\,pp) --- the two
-components substitute rather than complement. Mechanism fidelity and population
-complementarity trade against each other: gate-rejected candidates --- valid code
-whose declared mechanism did not survive counterfactual probing --- were net
-contributors to headroom. Both arms carry substantial headroom (3.1--11.9\,pp),
-far from the Phase-I collapse regime: under a clean equal-budget protocol, free
-generation already produces headroom-rich populations at these builder strengths.
+The practical output stands: measure disagreement, repair, and harm before routing
+over a generated population --- and do not assume that verifying what a harness claims
+to do will make the population more useful.
 
-Phase-I controls additionally showed open-set harness-value prediction does not beat
-the best fixed harness, so diversity is necessary but not sufficient. The practical
-output stands: measure disagreement, union repair, and harm before routing over a
-generated population --- and do not assume that verifying what a harness claims to
-do will make the population more useful.
+	extbf{Limitations.} One domain family (text-to-SQL). Phase-I results come from a
+discovery design with disclosed task overlap and a proxy judge. The routing boundary
+covers the tested predictors and splits only; cache-off and repeat-run audits (R2/R3)
+are pending.

@@ -1,39 +1,14 @@
-\textbf{The precondition metrics as a community tool.} The three metrics
-of \S\ref{sec:metrics} are computable from the outcome matrix any
-evaluation already produces. We argue they should be reported alongside
-accuracy wherever populations of generated harnesses (or agents, or
-scaffolds) are consumed by a selector. One caution the definition itself
-supplies: failing an operational threshold does not mean routing is
-impossible --- a population with 4\,pp of headroom fails a 5\,pp checklist
-yet could still support a router that beats the best fixed option by up to
-4\,pp. The checklist tells you which regime you are in; it is a
-measurement convention, not a theorem about what a router can recover.
+\textbf{Fidelity--complementarity trade-off.} The confirmatory decomposition is the
+study's central lesson: mechanism-conformance filtering costs headroom
+($-0.67$\,pp, CI excluding zero). A harness that executes exactly what it declares can
+still be behaviorally redundant, while a sloppier candidate can repair items the clean
+ones miss --- and cannot harm, from the selector's perspective, because a router can
+always decline it. Verifying \emph{what a harness says it does} and increasing
+\emph{what a population is worth} are different objectives, and here they conflict.
 
-\textbf{Implications for AI4AI generation.} The taxonomy implies concrete
-protocol requirements: acceptance defined on \emph{traces}, not docstrings
-or code diffs; feedback mechanisms with a demonstrated causal path; and
-executable-output validation before any capability claim. Phase II tests
-exactly these requirements under controlled conditions: its gate verifies
-mechanism execution via counterfactual probes, and its factorial design
-can attribute effects to the gate, to strategy forcing, and to their
-interaction, rather than to end-to-end system differences.
+\textbf{Reliability and quality are different axes.} The yield decomposition shows the
+gate rejecting $\sim$30\% of neutral-valid candidates; the headroom decomposition shows
+those rejections were net-negative for the population. Generation reliability (can the
+builder emit a valid artifact) and population quality (does the admitted set carry
+complementarity) must be reported separately --- collapsing them hides which one failed.
 
-\textbf{Reliability and quality are different axes.} Phase-I observations
-suggested builder identity governs generation reliability (3/8, 7/8, 8/8
-strategies accepted) more than per-strategy solution quality; Phase II
-makes this decomposition explicit by reporting $R_{\mathrm{artifact}}$,
-$R_{\mathrm{contract}}$, and $R_{\mathrm{fidelity}}$ separately from
-population headroom, under equal raw budgets. A protocol that reliably
-produces nothing and one that produces diverse-but-redundant populations
-are different failures, and the design can tell them apart.
-
-\textbf{Limitations.} One domain family (text-to-SQL); Phase-I results
-come from a discovery design with disclosed task overlap and a proxy
-judge, and the human control was designed after inspecting development
-traces. Phase-II results were pending at the time this draft was
-assembled and will be reported under the frozen analysis plan without
-reference to their direction. The routing boundary result is established
-on the tested predictors, tasks, and splits only. Early Phase-I
-generations lack per-attempt logs (disclosed in
-Appendix~\ref{app:phase1-provenance}); Phase II closes this gap for all
-of its runs.
