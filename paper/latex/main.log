@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.29)  7 SEP 2026 12:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.29)  8 SEP 2026 17:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -423,11 +423,7 @@ File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 ) [1{d:/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{d:/texlive/2
 026/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
-]
-
-LaTeX Warning: Reference `sec:boundary' on page 2 undefined on input line 83.
-
-) (./sec_related.tex [2]
+]) (./sec_related.tex [2]
 Overfull \hbox (15.06163pt too wide) in paragraph at lines 32--47
  [][] 
  []
@@ -441,56 +437,117 @@ LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 60.
 ) (./sec_phase1.tex
 [3]
-<figures/fig_phenomenon.pdf, id=189, 440.53085pt x 308.48085pt>
+<figures/fig_phenomenon.pdf, id=202, 440.53085pt x 308.48085pt>
 File: figures/fig_phenomenon.pdf Graphic file (type pdf)
 <use figures/fig_phenomenon.pdf>
 Package pdftex.def Info: figures/fig_phenomenon.pdf  used on input line 58.
-(pdftex.def)             Requested size: 310.0378pt x 217.11658pt.
-
-Underfull \vbox (badness 4660) has occurred while \output is active []
-
+(pdftex.def)             Requested size: 278.23827pt x 194.84761pt.
  [4 <./figures/fig_phenomenon.pdf>]) (./sec_phase2.tex [5]
-<figures/fig_design.pdf, id=263, 679.33798pt x 389.96892pt>
+<figures/fig_design.pdf, id=276, 679.33798pt x 389.96892pt>
 File: figures/fig_design.pdf Graphic file (type pdf)
 <use figures/fig_design.pdf>
-Package pdftex.def Info: figures/fig_design.pdf  used on input line 76.
-(pdftex.def)             Requested size: 317.9892pt x 182.54161pt.
-) (./sec_results.tex [6]
-<figures/fig_results.pdf, id=276, 751.50954pt x 294.14442pt>
+Package pdftex.def Info: figures/fig_design.pdf  used on input line 78.
+(pdftex.def)             Requested size: 270.28687pt x 155.15768pt.
+)
+(./sec_results.tex [6]
+<figures/fig_results.pdf, id=289, 751.50954pt x 294.14442pt>
 File: figures/fig_results.pdf Graphic file (type pdf)
 <use figures/fig_results.pdf>
 Package pdftex.def Info: figures/fig_results.pdf  used on input line 39.
-(pdftex.def)             Requested size: 337.86465pt x 132.24257pt.
- [7 <./figures/fig_design.pdf>]) [8 <./figures/fig_results.pdf>] (./sec_discuss
-ion.tex)
-(./sec_conclusion.tex)
-Underfull \vbox (badness 1675) has occurred while \output is active []
+(pdftex.def)             Requested size: 286.18967pt x 112.01392pt.
+ [7 <./figures/fig_design.pdf>] [8 <./figures/fig_results.pdf>]) (./sec_discuss
+ion.tex) (./sec_conclusion.tex)
+Underfull \vbox (badness 5446) has occurred while \output is active []
 
  [9]
-(./main.bbl [10]) (./sec_appendix.tex
+(./main.bbl [10]) (./sec_appendix.tex [11]
+Underfull \hbox (badness 1342) in paragraph at lines 90--96
+\OT1/ptm/m/n/10 har-nesses, 4,386 within-cell pairs, core-400 out-comes; script
+s \OT1/pcr/m/n/10 w3[]fingerprint.py \OT1/ptm/m/n/10 and
+ []
 
-LaTeX Warning: Reference `sec:boundary' on page 11 undefined on input line 4.
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 164--165
+[]|\OT1/pcr/m/n/9 GLM-5.3-Flash\OT1/ptm/m/n/9 , \OT1/pcr/m/n/9 Qwen3.8-Flash\OT
+1/ptm/m/n/9 ,
+ []
 
-[11]) [12] (./main.aux)
+
+Underfull \hbox (badness 10000) in paragraph at lines 166--168
+[]|\OT1/pcr/m/n/9 GLM-5.3\OT1/ptm/m/n/9 , \OT1/pcr/m/n/9 Qwen3.8-Max\OT1/ptm/m/
+n/9 ,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 166--168
+\OT1/pcr/m/n/9 DeepSeek-V4-Pro\OT1/ptm/m/n/9 , \OT1/pcr/m/n/9 Kimi-K3\OT1/ptm/m
+/n/9 , \OT1/pcr/m/n/9 MiniMax-M3\OT1/ptm/m/n/9 ,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 188--189
+[]\OT1/pcr/m/n/9 Calculate the percentage of the cards availabe in Chinese
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 192--194
+[]\OT1/pcr/m/n/9 'Chinese Simplified' is the language; percentage =
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 192--194
+\OT1/pcr/m/n/9 Divide(Sum(id where language = 'Chinese Simplified'),
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 198--201
+[]\OT1/pcr/m/n/9 SELECT CAST(SUM(CASE WHEN T2.language = 'Chinese Simplified'
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 198--201
+\OT1/pcr/m/n/9 THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.id) FROM cards
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 204--206
+[]\OT1/pcr/m/n/9 SELECT SUM(CASE WHEN language = 'Chinese Simplified'
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 204--206
+\OT1/pcr/m/n/9 THEN 1 ELSE 0 END) * 100.0 / COUNT(id) AS percentage FROM
+ []
+
+[13]
+LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <9> not available
+(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 236.
+
+Underfull \hbox (badness 10000) in paragraph at lines 235--237
+[]\OT1/pcr/m/n/9 with "only a single read-only SELECT is allowed". The
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 235--237
+\OT1/pcr/m/n/9 previous "query" was actually just prose text (the model
+ []
+
+) [14] (./main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-03-20>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 7E15734F8EAD2200633217073200C582;5258.
+(rerunfilecheck)             Checksum: BD6B1B01192AC8C7D5E8DD0C87951872;6300.
  ) 
 Here is how much of TeX's memory you used:
- 11359 strings out of 467349
- 170580 string characters out of 5419862
- 608883 words of memory out of 5000000
- 40176 multiletter control sequences out of 15000+600000
- 655030 words of font info for 95 fonts, out of 8000000 for 9000
+ 11387 strings out of 467349
+ 170872 string characters out of 5419862
+ 609233 words of memory out of 5000000
+ 40188 multiletter control sequences out of 15000+600000
+ 656476 words of font info for 100 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,90p,674b,578s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,12n,90p,651b,578s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb><d:/texl
 ive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><d:/texlive/2026/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><d:/texlive/2026/texmf-dis
@@ -505,13 +562,14 @@ ts/type1/public/amsfonts/cm/cmsy10.pfb><d:/texlive/2026/texmf-dist/fonts/type1/
 public/amsfonts/cm/cmsy7.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmsy9.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/courier/ucrb8a.p
 fb><d:/texlive/2026/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb><d:/texlive/2
-026/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb><d:/texlive/2026/texmf-dist/
-fonts/type1/urw/times/utmb8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/ti
-mes/utmr8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (12 pages, 333010 bytes).
+026/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb><d:/texlive/2026/texmf-dist/
+fonts/type1/urw/helvetic/uhvb8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw
+/times/utmb8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
+<d:/texlive/2026/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (14 pages, 355446 bytes).
 PDF statistics:
- 594 PDF objects out of 1000 (max. 8388607)
- 332 compressed objects within 4 object streams
- 76 named destinations out of 1000 (max. 500000)
- 200 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 640 PDF objects out of 1000 (max. 8388607)
+ 374 compressed objects within 4 object streams
+ 89 named destinations out of 1000 (max. 500000)
+ 224 words of extra memory for PDF output out of 10000 (max. 10000000)
 

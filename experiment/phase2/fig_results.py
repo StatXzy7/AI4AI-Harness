@@ -44,7 +44,7 @@ bars = ax.bar(arms, vals, color=colors, alpha=0.85, zorder=3)
 for b, v in zip(bars, vals):
     ax.text(b.get_x() + b.get_width()/2, v + 0.15, f"{v:.1f}", ha="center", fontsize=9)
 ax.set_ylabel("mean bare-inclusive headroom (pp)")
-ax.set_title("Factorial arm means (core-400)\ngate main −0.67pp*, strategy +0.41, inter −0.87", fontsize=10)
+ax.set_title("Factorial arm means (core-400)\ngate main −0.67pp unm. (−0.30 K-matched, n.s.)", fontsize=10)
 ax.grid(axis="y", alpha=0.25, zorder=0)
 ax.set_ylim(0, max(vals)*1.25)
 

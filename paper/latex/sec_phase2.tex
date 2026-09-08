@@ -38,7 +38,9 @@ verified, conditional on a valid contract).
 \paragraph{Builders and seeds.} Six builders from independent labs (GLM-5.3,
 Qwen3.8-Max, DeepSeek-V4-Pro, Kimi-K3, MiniMax-M3,
 ERNIE-5.0-Thinking-Preview), three seeds each: 18 paired (builder $\times$
-seed) cells. Every cell enters the primary contrast regardless of admitted
+seed) cells. These were the strongest models available on the project's single API
+gateway; no Anthropic- or OpenAI-family builder was accessible, so frontier
+capability-dependence is untested. Every cell enters the primary contrast regardless of admitted
 population size, including $K{=}0$ --- excluding low-yield cells would
 condition on a post-treatment outcome.
 
@@ -73,7 +75,7 @@ verifies only the properties actually asserted.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.8\linewidth]{figures/fig_design.pdf}
+\includegraphics[width=0.68\linewidth]{figures/fig_design.pdf}
 \caption{\textbf{Phase-II confirmatory design} (frozen protocol). Left:
 database-level contamination isolation (the two development databases are
 banned wholesale; evaluation uses nine databases never opened during development). Middle:

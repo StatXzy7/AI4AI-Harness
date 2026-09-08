@@ -55,7 +55,7 @@ report $\rho$ as a descriptive summary, not an inferential test.)
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.78\linewidth]{figures/fig_phenomenon.pdf}
+\includegraphics[width=0.70\linewidth]{figures/fig_phenomenon.pdf}
 \caption{\textbf{Syntactic diversity vs.\ behavioral collapse} (Phase I,
 discovery; day-1 population: 14 harnesses $\times$ 60 tasks, 91 pairs
 including the \bare{} and \react{} baselines). Each point is a harness
@@ -105,9 +105,11 @@ day-1 runs (API nondeterminism at temperature 0).
 Phase I also probed generation-side fixes --- a strategy-forced free-form protocol
 (assigned mechanism, import/smoke acceptance) and a compiled Harness IR. Under the
 strategy-forced protocol two of three builders produced populations whose point
-estimates exceeded the pre-specified thresholds (Qwen 5.96, DeepSeek 7.95\,pp; the
-old-protocol arm missed at 4.64\,pp), and per-strategy acceptance ordered with
-builder identity (GLM 3/8, Qwen 7/8, DeepSeek 8/8, under the logged tool). These
+estimates exceeded the pre-specified thresholds (Qwen3.8-Flash 5.96,
+DeepSeek-V4-Flash-Vision-Exp 7.95\,pp; the old-protocol arm missed at
+4.64\,pp), and per-strategy acceptance ordered with builder identity
+(GLM-5.3-Flash 3/8, Qwen3.8-Flash 7/8, DeepSeek-V4-Flash-Vision-Exp 8/8,
+under the logged tool). These
 observations motivate Phase II but are not confirmatory, for three disclosed reasons:
 the design was two nested contrasts that cannot separate protocol from builder main
 effects; the early runs lack per-attempt logs, so budget equality cannot be audited;
@@ -115,7 +117,7 @@ and acceptance was an import/smoke check, not the counterfactual conformance gat
 \S\ref{sec:phase2}. Full condition details are in Appendix~\ref{app:phase1-provenance}.
 
 \paragraph{Generation-null failures (M0).} Re-running the original optimize loop
-with Qwen and DeepSeek builders produced 40 candidates byte-identical to the
+with Qwen3.8-Flash and DeepSeek-V4-Flash-Vision-Exp builders produced 40 candidates byte-identical to the
 \bare{} baseline source. Identical code trivially yields identical outcomes, so this
 run provides no evidence about behavioral collapse; it is reported as a distinct,
 more primitive failure mode --- the pipeline produced no distinct population at all.

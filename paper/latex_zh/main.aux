@@ -23,14 +23,14 @@
 \citation{cfrouting2026}
 \citation{agenticrouting2026}
 \citation{helix2026}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces 最邻近的并行系统。演化系统内部的行为感知验证属于并行的独立工作；我们的贡献是群体级的结果测量、测量工具校准，以及受控的生成侧对比。}}{3}{table.1}\protected@file@percent }
+\newlabel{tab:nearest}{{1}{3}{最邻近的并行系统。演化系统内部的行为感知验证属于并行的独立工作；我们的贡献是群体级的结果测量、测量工具校准，以及受控的生成侧对比。}{table.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {2}相关工作}{3}{section.2}\protected@file@percent }
 \newlabel{sec:related}{{2}{3}{相关工作}{section.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1}面向 LLM 的 harness 生成}{3}{subsection.2.1}\protected@file@percent }
 \newlabel{related:generation}{{2.1}{3}{面向 LLM 的 harness 生成}{subsection.2.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Harness 的条件效用与路由}{3}{subsection.2.2}\protected@file@percent }
-\newlabel{related:routing}{{2.2}{3}{Harness 的条件效用与路由}{subsection.2.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces 最邻近的并行系统。演化系统内部的行为感知验证属于并行的独立工作；我们的贡献是群体级的结果测量、测量工具校准，以及受控的生成侧对比。}}{4}{table.1}\protected@file@percent }
-\newlabel{tab:nearest}{{1}{4}{最邻近的并行系统。演化系统内部的行为感知验证属于并行的独立工作；我们的贡献是群体级的结果测量、测量工具校准，以及受控的生成侧对比。}{table.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Harness 的条件效用与路由}{4}{subsection.2.2}\protected@file@percent }
+\newlabel{related:routing}{{2.2}{4}{Harness 的条件效用与路由}{subsection.2.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3}LLM 群体中的行为多样性}{4}{subsection.2.3}\protected@file@percent }
 \newlabel{related:diversity}{{2.3}{4}{LLM 群体中的行为多样性}{subsection.2.3}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Phase I：测量与诊断坍缩（发现性研究）}{4}{section.3}\protected@file@percent }
@@ -74,25 +74,23 @@
 \newlabel{tab:factorial}{{3}{10}{\textbf {确证性次级结果}，18 个四臂单元，四臂均在完全相同的 400 条核心集上。门控主效应是唯一 CI 排除零的对比——且在负侧。}{table.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.2}因子分解（相同的 400 条核心条目）}{10}{subsection.5.2}\protected@file@percent }
 \newlabel{sec:results-factorial}{{5.2}{10}{因子分解（相同的 400 条核心条目）}{subsection.5.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}生成可靠性}{10}{subsection.5.3}\protected@file@percent }
-\newlabel{sec:results-yield}{{5.3}{10}{生成可靠性}{subsection.5.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}稳健性审计}{10}{subsection.5.4}\protected@file@percent }
-\newlabel{sec:results-audits}{{5.4}{10}{稳健性审计}{subsection.5.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6}边界结果：多样性不蕴含可学习的路由}{11}{section.6}\protected@file@percent }
-\newlabel{sec:boundary}{{6}{11}{边界结果：多样性不蕴含可学习的路由}{section.6}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {7}讨论}{11}{section.7}\protected@file@percent }
-\newlabel{sec:discussion}{{7}{11}{讨论}{section.7}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {8}结论}{11}{section.8}\protected@file@percent }
-\newlabel{sec:conclusion}{{8}{11}{结论}{section.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}多样性不蕴含可学习的路由}{11}{subsection.5.3}\protected@file@percent }
+\newlabel{sec:boundary}{{5.3}{11}{多样性不蕴含可学习的路由}{subsection.5.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}讨论}{11}{section.6}\protected@file@percent }
+\newlabel{sec:discussion}{{6}{11}{讨论}{section.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces \textbf  {Headroom 分解}（18 个四臂单元，core-400，官方判分器）。各臂的 oracle 准确率基本不变；未匹配的 headroom 差异由最优固定准确率承载，而非群体效用。各臂生成可靠性（来自逐次尝试日志）：$K$/144 个槽位——A 104、B 110、C 101、D 69；门控拒绝约 30\% 的中立有效候选，构建器层面的 $R_{\mathrm  {artifact}}$ 跨度从 0.13（GLM）到 0.80（ERNIE）。}}{11}{table.4}\protected@file@percent }
+\newlabel{tab:decomp}{{4}{11}{\textbf {Headroom 分解}（18 个四臂单元，core-400，官方判分器）。各臂的 oracle 准确率基本不变；未匹配的 headroom 差异由最优固定准确率承载，而非群体效用。各臂生成可靠性（来自逐次尝试日志）：$K$/144 个槽位——A 104、B 110、C 101、D 69；门控拒绝约 30\% 的中立有效候选，构建器层面的 $R_{\mathrm {artifact}}$ 跨度从 0.13（GLM）到 0.80（ERNIE）。}{table.4}{}}
 \bibdata{references}
 \bibcite{harnessfix2026}{{1}{2026}{{Chen et~al.}}{{Chen, Wang, Liu, Wang, Zheng, and Wang}}}
 \bibcite{nonmonotone2026}{{2}{2026}{{Cho}}{{}}}
 \bibcite{helix2026}{{3}{2026}{{Fan \& Huang}}{{Fan and Huang}}}
 \bibcite{nouniversal2026}{{4}{2026}{{Gupta et~al.}}{{Gupta, Lei, Lu, Anumanchipalli, and Choshen}}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}结论}{12}{section.7}\protected@file@percent }
+\newlabel{sec:conclusion}{{7}{12}{结论}{section.7}{}}
+\newlabel{endofmain}{{7}{12}{结论}{section.7}{}}
 \bibcite{cfrouting2026}{{5}{2026}{{Kim}}{{}}}
 \bibcite{bird2021}{{6}{2023}{{Li et~al.}}{{Li, Hui, Qu, Yang, Li, Li, Wang, Qin, Geng, Huo, et~al.}}}
 \bibcite{ahe2026}{{7}{2026}{{Lin et~al.}}{{Lin, Liu, Pan, Lin, Dou, Xi, Huang, and Yan}}}
-\newlabel{endofmain}{{8}{12}{结论}{section.8}{}}
 \bibcite{agenticrouting2026}{{8}{2026}{{Liu et~al.}}{{Liu, Zhou, Zong, Tian, Song, and Zhang}}}
 \bibcite{gatedqd2026}{{9}{2026}{{Luo et~al.}}{{Luo, Xue, Wang, Hu, and Deng}}}
 \bibcite{coevolve2026}{{10}{2026}{{Miyai et~al.}}{{Miyai, Aizawa, and Yamasaki}}}
@@ -104,4 +102,4 @@
 \bibcite{selfharness2026}{{16}{2026{b}}{{Zhang et~al.}}{{Zhang, Zhang, Li, Zhang, Chen, and Zhang}}}
 \bibcite{sts2026}{{17}{2026}{{Zhou et~al.}}{{Zhou, Tan, Zhang, Fan, Lin, and Kang}}}
 \bibstyle{iclr2027_conference}
-\gdef \@abspage@last{13}
+\gdef \@abspage@last{14}

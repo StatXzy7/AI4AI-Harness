@@ -246,11 +246,6 @@ INPUT sec_results.tex
 INPUT ./figures/fig_results.pdf
 INPUT ./figures/fig_results.pdf
 INPUT ./figures/fig_results.pdf
-INPUT ./sec_boundary.tex
-INPUT ./sec_boundary.tex
-INPUT ./sec_boundary.tex
-INPUT ./sec_boundary.tex
-INPUT sec_boundary.tex
 INPUT ./sec_discussion.tex
 INPUT ./sec_discussion.tex
 INPUT ./sec_discussion.tex

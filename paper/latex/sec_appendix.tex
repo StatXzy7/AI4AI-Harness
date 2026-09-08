@@ -24,10 +24,11 @@ official scorer rejects; agreement 0.97--0.99).
 \paragraph{Phase-I populations.} Seed baselines: \texttt{bare} (single
 call) and \texttt{react} (execution feedback loop, shipped with TTHE).
 \emph{Old proposer protocol}: six candidates selected from TTHE's
-optimize-loop output (GLM builder), selected for behavioral diversity
-using only the 36 questions disjoint from the evaluation set, by a rule
-frozen before evaluation. \emph{Strategy-forced free-form}: GLM, Qwen,
-and DeepSeek builders, eight assigned mechanisms each; the GLM population
+optimize-loop output (GLM-5.3-Flash builder), selected for behavioral
+diversity using only the 36 questions disjoint from the evaluation set, by a
+rule frozen before evaluation. \emph{Strategy-forced free-form}:
+GLM-5.3-Flash, Qwen3.8-Flash, and DeepSeek-V4-Flash-Vision-Exp builders,
+eight assigned mechanisms each; the GLM population
 is the logged re-run (K=3; the original 09-01 run recorded zero accepted
 outputs but its tool was not preserved and the observation is unaudited).
 \emph{Harness IR}: six harnesses compiled deterministically from
@@ -71,6 +72,66 @@ before any confirmatory outcome was observed, the credential-handling
 incident and its remediation, and the artifact-divergence quarantine ---
 each with its rationale and date in the changelog.
 
+\paragraph{R2: cache-off arm replication (detail).}\label{app:r2} Arms A
+and D were re-run cache-off on the 400-item core: 70 harnesses (the first
+two admitted per builder $\times$ seed cell), 28{,}000 cells. Results:
+8.5\% of cell verdicts flip against the cached confirmatory run; two
+independent cache-off passes over arm D (a duplicate collection, disclosed
+as a scheduling artifact and retained as an independent replicate) flip
+8.7\% against each other. Arm-level structure is unchanged --- pairwise
+disagreement A 10.4\%$\to$10.3\%, D 14.3\%$\to$14.4\%; subset headroom A
+4.1$\to$3.6\,pp, D 4.0$\to$4.0\,pp; mean subset D$-$A $-0.1$\,pp cached
+vs.\ $+0.4$\,pp cache-off. Same-harness rerun disagreement is of the same
+order as cross-harness disagreement, so a substantial share of measured
+pairwise diversity is run noise; the shared cache neither manufactured nor
+masked the diversity signal.
+
+\section{Exploratory Fingerprint and Selection Analyses}\label{app:rich}
+Both analyses are post-hoc on the archived confirmatory cells (18
+builder$\times$seed cells, 384 harnesses, 4{,}386 within-cell pairs,
+core-400 outcomes; scripts \texttt{w3\_fingerprint.py} and
+\texttt{w1\_selection.py}, outputs \texttt{w3\_fingerprint.json} and
+\texttt{w1\_selection.json}). They are exploratory: the confirmatory
+set had already been analyzed, and no result here was pre-specified.
+
+\paragraph{Rich fingerprints.} SQL text is normalized by case-folding
+outside string literals (literal case is verdict-relevant: \texttt{'Eur'}
+vs.\ \texttt{'EUR'} flips the official judge), quote and semicolon
+stripping, and whitespace joining. Consistency check: among 365{,}095
+cells where a pair emits identical normalized SQL, verdict disagreement
+is exactly zero --- the artifact channel is verdict-consistent by
+construction under a deterministic judge. Pair-level artifact
+dissimilarity is the mean $(1-$token-Jaccard$)$ over \emph{verdict-agreeing}
+cells only, so it is not mechanically inflated by disagreement cells;
+its Spearman correlation with overall outcome disagreement is $0.59$
+(all within-cell pairs) and $0.57$ (the 1{,}010 within-arm pairs).
+Rerun stability is measured on the R2 cache-off replication (70
+harnesses, 28{,}000 cells): call-count changes 1.8\%, verdicts 8.5\%,
+normalized SQL 70.0\% (mean token Jaccard 0.62 on changed cells) ---
+the richer the channel, the less reproducible a single run of it is,
+which is why the verdict channel anchors the paper's metric and the
+richer channels enter only as correlates. Per-arm cost: mean
+multi-call fraction A .298, B .245, C .422, D .392; mean accuracy A
+.641, B .644, C .620, D .620.
+
+\paragraph{Diversity-aware selection.} Per cell, the pool is all
+admit-confirmed harnesses of that cell (arms mixed). Tasks are split by
+database halves (100 random splits); selection uses dev only, evaluation
+held-out only. Methods: \emph{top-acc} (top-$k$ dev accuracy),
+\emph{random} (mean over 200 draws), \emph{div-only} (greedy
+maximization of dev oracle coverage), \emph{acc+$\lambda$div} (greedy
+dev mean-accuracy $+\,\lambda\cdot$oracle). Inference is a cell-level
+bootstrap (18 cells) over split-averaged paired deltas. At $k{=}8$:
+div-only vs.\ top-acc $+0.82$\,pp $[0.43, 1.31]$, vs.\ random $+0.40$
+$[0.18, 0.66]$, random vs.\ top-acc $+0.41$ $[0.19, 0.68]$; at $k{=}4$:
+$+0.65$ $[0.23, 1.17]$, $+0.24$ $[-0.03, 0.53]$ (not distinguishable
+from random), $+0.41$ $[0.11, 0.74]$. The $\lambda$-blended variants
+interpolate monotonically between top-acc and div-only; the pure
+diversity objective dominates at both $k$. A dev-measured population
+statistic (oracle coverage) transfers across databases; a dev-measured
+per-item signal does not (\S\ref{sec:boundary}) --- which is the
+operational content of the measurement mandate.
+
 \section{Phase-I Additional Results}\label{app:phase1-results}
 Per-harness accuracies, per-fold LOHO tables, bootstrap intervals,
 fix-set audits, K-subsampling curves, the task-held-out control, and the
@@ -78,3 +139,103 @@ second-target replication (Qwen3.8-Flash as frozen target: collapse
 replicates; the strategy-forced population retains headroom; the
 prompt-side human control does not transfer wholesale) are included in
 the anonymous code release with their generating scripts.
+
+\section{Models and Versions}\label{app:models}
+
+Table~\ref{tab:models} lists every model used in this paper with its exact
+version string as sent to the API. All models were accessed through a single
+commercial OpenAI-compatible API aggregator (the same provider for every
+role); the data-collection window is 2026-08-30 through 2026-09-08. The frozen
+target is always called at temperature 0. Phase-II harness generation uses
+temperature 0.7 with a 16{,}384-token budget; Phase-I generation settings are
+recorded per tool in the code release. All correctness verdicts reported in
+both phases come from the deterministic official BIRD execution-accuracy
+scorer (30\,s timeout); no LLM judge produces any reported accuracy.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{p{0.26\linewidth}p{0.50\linewidth}p{0.14\linewidth}}
+\toprule
+Role & Model (exact version string) & Used in \\
+\midrule
+Frozen target solver & \texttt{GLM-5.3-Flash} (temperature 0) & Phases I--II \\
+Second frozen target (replication) & \texttt{Qwen3.8-Flash} & Phase I \\
+Phase-I builders & \texttt{GLM-5.3-Flash}, \texttt{Qwen3.8-Flash},
+\texttt{DeepSeek-V4-Flash-Vision-Exp} & \S\ref{sec:phase1probes} \\
+Phase-II builders & \texttt{GLM-5.3}, \texttt{Qwen3.8-Max},
+\texttt{DeepSeek-V4-Pro}, \texttt{Kimi-K3}, \texttt{MiniMax-M3},
+\texttt{ERNIE-5.0-Thinking-Preview} & Phase II \\
+Judge & official BIRD scorer (deterministic execution accuracy) & all results \\
+\bottomrule
+\end{tabular}
+\caption{Complete model inventory. The target is held frozen within each
+phase; Phase-II builders come from six independent labs.}
+\label{tab:models}
+\end{table}
+
+\section{Worked Examples from the Phase-I Trace Audit}\label{app:examples}
+
+To make the failure taxonomy of \S\ref{sec:taxonomy} concrete, this section
+walks one BIRD task through the audited harnesses. Artifacts are verbatim
+from the day-1 trace audit (5 harnesses $\times$ 10 tasks); its logger caps
+stored SQL excerpts at 120 characters, so truncations are marked
+\emph{[trunc.]}. Full harness sources and traces are in the code release.
+
+\paragraph{The task.} BIRD dev-set question 352 (\texttt{card\_games}
+database; question text verbatim, the typo is the dataset's):
+\begin{quote}\small\ttfamily
+Calculate the percentage of the cards availabe in Chinese Simplified.
+\end{quote}
+Its BIRD hint:
+\begin{quote}\small\ttfamily
+'Chinese Simplified' is the language; percentage = Divide(Sum(id where
+language = 'Chinese Simplified'), Count(id)) *100
+\end{quote}
+Gold SQL (executing the two on the released database yields 8.7734 and
+8.7728 respectively --- the official scorer separates them):
+\begin{quote}\small\ttfamily
+SELECT CAST(SUM(CASE WHEN T2.language = 'Chinese Simplified' THEN 1 ELSE 0
+END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN foreign\_data
+AS T2 ON T1.uuid = T2.uuid
+\end{quote}
+The \bare{} harness answers:
+\begin{quote}\small\ttfamily
+SELECT SUM(CASE WHEN language = 'Chinese Simplified' THEN 1 ELSE 0 END) *
+100.0 / COUNT(id) AS percentage FROM foreign\_data;
+\end{quote}
+marked wrong by the official scorer: it denominates by the number of
+\texttt{foreign\_data} rows (one per translated language per card), while the
+gold divides by the number of cards --- a join the hint's phrasing does not
+spell out.
+
+\paragraph{\react{} (T2: feedback without a causal path).} \react's control
+flow does execute SQL and retries on database errors. But its first call is
+byte-identical to \bare's prompt, and here the generated SQL executes without
+error, so the error-triggered retry never fires and the final SQL equals
+\bare's. Across all 10 audited tasks the pattern held: SQL executions
+present, final SQL byte-identical to \bare's on 10/10 --- the feedback loop
+is real code with no behavioral consequence.
+
+\paragraph{\texttt{cand\_bird\_g1\_b0r1\_g0} (code-level diversity,
+behavioral identity).} This candidate is a genuinely different program: it
+wraps the single coder call in a daemon-thread watchdog and fires one hedged
+duplicate re-ask if the call stalls past 40\,s. The mechanism exists in the
+control flow --- but its trigger (a stalled API call) never occurred in the
+audit: zero SQL executions, and the final SQL equaled \bare's on all 10
+audited tasks. Code difference without behavioral difference survives even
+when the added mechanism is real: it simply never fires.
+
+\paragraph{\texttt{cand\_bird\_g1\_b1r1\_g1} (T3: a broken multi-turn
+path).} The one audited candidate implementing genuine execute-inspect-repair
+returns the model's \emph{prose} as final SQL. On a task \bare{} answered
+correctly (``State the alternative languages available for card named Annul
+numbered 29.''), its logged final SQL begins, verbatim:
+\begin{quote}\small\ttfamily
+with "only a single read-only SELECT is allowed". The previous "query" was
+actually just prose text (the model wrote rea\emph{[trunc.]}
+\end{quote}
+The repair re-prompt invites the failure: asked to fix a query that ``was
+actually just prose'', the frozen target responds with more prose reasoning,
+no SQL block is found, and the reasoning text is submitted as the query. The
+item flips from bare-correct to harness-wrong.

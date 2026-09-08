@@ -36,7 +36,7 @@ Per-cell values are in Figure~\ref{fig:results} (left).}
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.85\linewidth]{figures/fig_results.pdf}
+\includegraphics[width=0.72\linewidth]{figures/fig_results.pdf}
 \caption{\textbf{Confirmatory results.} Left: per-cell D$-$A headroom deltas (sorted;
 green = D better, red = A better) with the pooled 95\% CI band. Right: factorial arm
 means on the identical core-400 items; the conformance gate's negative main effect is
@@ -52,15 +52,12 @@ against the null. Per the pre-specified conditional conclusions, we report this 
 \emph{no clear improvement} --- an unresolved estimate, not evidence of no effect.
 
 Two secondary observations qualify the null. First, both arms carry \emph{substantial}
-headroom (A: 3.1--11.7\,pp across cells; D: 4.5--11.9\,pp): the Phase-I collapse
-regime is far from the clean-protocol regime, where free generation alone already
-produces headroom-rich populations at these builder strengths. Second, the per-cell
-deltas are heterogeneous ($-2.5$ to $+2.8$\,pp): small-K cells where the gate admits
-harnesses the free arm lacks trend positive (deepseek/s1 $+2.0$, glm/s0 $+2.7$),
-while cells where the free arm is already large trend negative --- though at these
-magnitudes the noise-floor analysis below cautions against reading the per-cell
-spread structurally. Arm D repairs marginally fewer bare errors (30.0\% vs.\ 31.3\%)
-while inducing more harm (24.6\% vs.\ 19.8\%).
+headroom (A: 3.1--11.7\,pp across cells; D: 4.5--11.9\,pp): under the clean protocol,
+free generation alone produces headroom-rich populations. Second, the per-cell
+deltas are heterogeneous ($-2.5$ to $+2.8$\,pp), small-K gated cells trending
+positive and large-free cells negative --- though the noise-floor analysis below
+cautions against reading this spread structurally. Arm D repairs marginally fewer
+bare errors (30.0\% vs.\ 31.3\%) while inducing more harm (24.6\% vs.\ 19.8\%).
 
 \subsection{Factorial decomposition (same core-400 items)}\label{sec:results-factorial}
 
@@ -102,8 +99,13 @@ significance.
 \textbf{Noise floor.} Three independent cache-off repeats of \bare{} (R3,
 temperature 0) flip 14.5\% of task outcomes at least once (pairwise
 $\sim$9.7--10.0\%; bare accuracy varies 63.8--65.8\% across repeats). The
-sub-part-per-point effects under interpretation sit an order of magnitude
-below this floor.
+cache-off arm replication (R2; arms A and D, 70 harnesses, 28{,}000 core
+cells) flips 8.5\% of verdicts against the cached run while leaving
+arm-level disagreement structure and every subset contrast unchanged
+(Appendix~\ref{app:r2}): same-harness rerun disagreement is of the same
+order as cross-harness disagreement, so a substantial share of measured
+pairwise diversity is run noise --- and the sub-pp effects under
+interpretation sit an order of magnitude below this floor.
 
 \textbf{Headroom decomposition.} The gate does not make populations worse:
 oracle accuracy is essentially unchanged (A .761 vs.\ D .757; Table~\ref{tab:decomp}),
@@ -111,13 +113,13 @@ and the unmatched headroom delta is carried by best-fixed accuracy shifting, not
 by a loss of union correctness. ``Less headroom'' here means \emph{less routing
 elbow-room}, not a worse population.
 
-The honest summary: on this benchmark, neither component moved population headroom
-beyond noise in either direction. We report the unmatched, K-matched, adjusted,
+The honest summary: neither component moved population headroom beyond
+noise in either direction; we report the unmatched, K-matched, adjusted,
 and decomposition views side by side and decline to interpret the residual.
 
-\begin{table}[b]
+\begin{table}[t]
 \centering
-\small
+\footnotesize
 \begin{tabular}{@{}lcccccc@{}}
 \toprule
 Arm & $K$ & bare & mean$H_i$ & best-fixed & oracle & headroom \\
@@ -131,23 +133,41 @@ D forced/gated  & 4.8 & .653 & .646 & .673 & .757 & .084 \\
 \caption{\textbf{Headroom decomposition} (18 quad cells, core-400, official
 judge). Oracle accuracy is essentially unchanged across arms; the unmatched
 headroom differences are carried by best-fixed accuracy, not by population
-utility. Generation reliability per arm (from the per-attempt logs): $K$/144
-slots --- A 104, B 110, C 101, D 69; the gate rejects $\sim$30\% of neutral-valid
-candidates, and builder-level $R_{\mathrm{artifact}}$ spans 0.13 (GLM) to 0.80
-(ERNIE). Reliability is part of the treatment (equal budget, no top-up).}
+utility. Yield: $K$/144 slots A/B/C/D = 104/110/101/69; per-builder
+$R_{\mathrm{artifact}}$ 0.13 (GLM) to 0.80 (ERNIE).}
 \label{tab:decomp}
 \end{table}
 
-\subsection{Diversity does not imply learnable routing}
+\subsection{Diversity does not imply learnable routing}\label{sec:boundary}
 \textbf{Open-set value prediction does not beat the best fixed harness.} A
-leave-one-harness-out predictor over the Phase-I admitted populations fails to beat
-the best fixed harness (DeepSeek arm $-3.4$\,pp, Qwen $+0.9$\,pp, CI
-$[-5.2, +6.9]$; cross-protocol pool $-0.9$\,pp). Apparent per-fold repair AUROC of
-0.82--0.98 collapses under database-stratified task-held-out controls (mean 0.512)
---- within this tested configuration the signal is task memorization, not
-harness-value estimation. One narrow positive survives: on the 24-harness
-cross-protocol pool, the same predictor as an \emph{abstaining gate} gained
-$+6.9$\,pp over bare with zero \emph{observed} induced harm --- measured on the
-same tasks the gate was tuned on, so it is not a deployment claim. Selective
-abstention may be easier than full routing; the open problem --- estimating an
-unseen harness's per-item value from code and task text alone --- remains open.
+leave-one-harness-out predictor over the Phase-I admitted populations fails
+to beat the best fixed harness (DeepSeek-V4-Flash-Vision-Exp arm $-3.4$\,pp,
+Qwen3.8-Flash $+0.9$\,pp, CI $[-5.2, +6.9]$; cross-protocol pool
+$-0.9$\,pp). Apparent per-fold repair AUROC of 0.82--0.98 collapses under
+database-stratified task-held-out controls (mean 0.512) --- the signal is
+task memorization, not harness-value estimation. One narrow positive
+survives: as an \emph{abstaining gate} on the 24-harness cross-protocol
+pool, the same predictor gained $+6.9$\,pp over bare with zero
+\emph{observed} induced harm --- on its own tuning tasks, so not a
+deployment claim. Selective abstention may be easier than full routing;
+per-item value estimation from code and task text alone remains open.
+
+\subsection{Exploratory: what to measure, and what to select for}\label{sec:rich}
+Two post-hoc analyses on the archived confirmatory cells (details in
+Appendix~\ref{app:rich}) answer the two questions a measurement paper
+invites. \textbf{(i) Output-space similarity carries the signal that
+code-space similarity lacks:} mean final-SQL dissimilarity on
+verdict-\emph{agreeing} cells correlates with outcome disagreement at
+Spearman $\rho{=}0.59$ (within-arm $0.57$), where code similarity showed
+none ($\rho{=}{-}0.01$) --- but richer channels are noisier channels
+(same-harness reruns change call counts on 1.8\% of cells, verdicts on
+8.5\%, final-SQL text on 70\%), and forced-mechanism arms cost 39--42\%
+multi-call trajectories (free arms 25--30\%) while scoring \emph{lower}
+(.62 vs.\ .64). \textbf{(ii) Diversity-aware population selection
+transfers:} selecting $k{=}8$ per cell to maximize dev-half oracle
+coverage yields $+0.82$\,pp held-out headroom over top-by-accuracy
+selection (95\% CI $[0.43, 1.31]$) and $+0.40$\,pp over random
+($[0.18, 0.66]$); accuracy selection is itself worse than random --- it
+buys the best \emph{member}, diversity buys \emph{complementarity}.
+Population-level statistics transfer across the database split;
+per-item value estimates do not (\S\ref{sec:boundary}).

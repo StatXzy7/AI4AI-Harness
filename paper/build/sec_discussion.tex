@@ -1,20 +1,16 @@
 \textbf{Protocol sensitivity is the finding.} The Phase-I collapse did not
 reproduce under the clean equal-budget protocol: free ungated generation
 already produced populations with 8.6\,pp oracle headroom and 31\% union
-repair. Collapse is a failure mode of \emph{specific} generation pipelines ---
-and it was invisible to every code-level check those pipelines had passed. The
-practical corollary cuts against instinct: adding mechanism-verification did not
-add routing value here, and its apparent cost was largely a population-size
-artifact. Outcome-level auditing, not stronger code-level gating, is what
-detects collapse. For sub-pp generation-side effects, the repeat-run noise
-floor (14.5\% bare any-flip rate) should be reported alongside every CI --- it
-exceeds the effects we estimate. Separately, the yield and headroom
-decompositions show the gate changed \emph{which} candidates survive, not
-\emph{whether} the population can answer: reliability and complementarity
-need separate reporting.
-
-\textbf{Limitations.} One domain family (text-to-SQL); Phase-I from a
+repair. Collapse is a failure mode of \emph{specific} generation pipelines,
+invisible to every code-level check they passed. Adding
+mechanism-verification did not add routing value, and its apparent cost was
+largely a population-size artifact: outcome-level auditing, not stronger
+code-level gating, is what detects collapse. Sub-pp generation-side effects
+sit below the repeat-run noise floor (14.5\% bare any-flip), which belongs
+beside every CI. The yield and headroom decompositions show the gate
+changed \emph{which} candidates survive, not \emph{whether} the
+population can answer: reliability and complementarity need separate
+reporting.\textbf{Limitations.} One domain family (text-to-SQL); Phase-I from a
 discovery design with disclosed task overlap, a proxy judge, and a
-post-trace human control; factorial inference conditional on the six sampled
-builders; the cache-off arm replication (R2) is in progress; early Phase-I
-generations lack per-attempt logs.
+post-trace human control; inference conditional on the six sampled
+builders; early Phase-I generations lack per-attempt logs.

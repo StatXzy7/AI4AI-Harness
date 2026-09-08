@@ -1,0 +1,63 @@
+{
+ "n_pairs": 4386,
+ "n_pairs_within_arm": 1010,
+ "mean_outcome_disagreement": 0.1179,
+ "frac_pairs_outcome_identical": 0.0002,
+ "sql_diff_given_verdict_agree": 0.7662,
+ "mean_token_jaccard_given_verdict_agree": 0.6877,
+ "verdict_disagree_given_sql_identical": 0.0,
+ "n_sql_identical_cells": 365095,
+ "calls_diff_rate": 0.4491,
+ "execs_diff_rate": 0.512,
+ "spearman_sqlsim_vs_disagreement": 0.5852,
+ "spearman_sqlsim_vs_disagreement_within_arm": 0.5731,
+ "n_pairs_within_arm_used": 1010,
+ "outcome_identical_pairs": 1,
+ "outcome_identical_but_calls_differ": 0,
+ "frac_pairs_identical_all_channels": 0.0002,
+ "rerun_stability": {
+  "calls": {
+   "n": 28000,
+   "changed": 500,
+   "rate": 0.0179
+  },
+  "sql": {
+   "n": 27936,
+   "changed": 19547,
+   "rate": 0.6997
+  },
+  "verdict": {
+   "n": 28000,
+   "changed": 2384,
+   "rate": 0.0851
+  }
+ },
+ "rerun_sql_mean_jaccard_when_changed": 0.6193,
+ "n_rerun_sql_changed": 19547,
+ "per_arm_cost": {
+  "A": {
+   "n": 104,
+   "mean_calls": 1.617,
+   "frac_multicall": 0.298,
+   "mean_acc": 0.6407
+  },
+  "B": {
+   "n": 110,
+   "mean_calls": 1.464,
+   "frac_multicall": 0.245,
+   "mean_acc": 0.6443
+  },
+  "C": {
+   "n": 101,
+   "mean_calls": 1.872,
+   "frac_multicall": 0.422,
+   "mean_acc": 0.6204
+  },
+  "D": {
+   "n": 69,
+   "mean_calls": 1.886,
+   "frac_multicall": 0.392,
+   "mean_acc": 0.6205
+  }
+ }
+}
