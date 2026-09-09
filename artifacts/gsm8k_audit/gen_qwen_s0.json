@@ -1,0 +1,175 @@
+{
+ "builder": "qwen",
+ "model": "Qwen3.8-Max",
+ "seed": 0,
+ "raw_attempts_per_slot": 3,
+ "n_slots": 8,
+ "K_admitted": 6,
+ "raw_total": 12,
+ "R_artifact": 0.5,
+ "results": [
+  {
+   "harness": "gsm_qwen_s0_g0",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 772.9
+    }
+   ]
+  },
+  {
+   "harness": "gsm_qwen_s0_g1",
+   "seed": 0,
+   "admitted": false,
+   "admitted_attempt": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 693.6
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 386.8
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 653.2
+    }
+   ]
+  },
+  {
+   "harness": "gsm_qwen_s0_g2",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 876.6
+    }
+   ]
+  },
+  {
+   "harness": "gsm_qwen_s0_g3",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 857.2
+    }
+   ]
+  },
+  {
+   "harness": "gsm_qwen_s0_g4",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 1196.6
+    }
+   ]
+  },
+  {
+   "harness": "gsm_qwen_s0_g5",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 967.2
+    }
+   ]
+  },
+  {
+   "harness": "gsm_qwen_s0_g6",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 470.9
+    }
+   ]
+  },
+  {
+   "harness": "gsm_qwen_s0_g7",
+   "seed": 0,
+   "admitted": false,
+   "admitted_attempt": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 919.4
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 569.2
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "reason": "APITimeoutError('Request timed out.')",
+     "secs": 900.0
+    }
+   ]
+  }
+ ]
+}

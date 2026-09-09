@@ -1,0 +1,148 @@
+{
+ "builder": "kimi",
+ "model": "Kimi-K3",
+ "seed": 0,
+ "raw_attempts_per_slot": 3,
+ "n_slots": 8,
+ "K_admitted": 8,
+ "raw_total": 8,
+ "R_artifact": 1.0,
+ "results": [
+  {
+   "harness": "gsm_kimi_s0_g0",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 78.1
+    }
+   ]
+  },
+  {
+   "harness": "gsm_kimi_s0_g1",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 126.6
+    }
+   ]
+  },
+  {
+   "harness": "gsm_kimi_s0_g2",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 149.6
+    }
+   ]
+  },
+  {
+   "harness": "gsm_kimi_s0_g3",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 147.3
+    }
+   ]
+  },
+  {
+   "harness": "gsm_kimi_s0_g4",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 255.4
+    }
+   ]
+  },
+  {
+   "harness": "gsm_kimi_s0_g5",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 105.7
+    }
+   ]
+  },
+  {
+   "harness": "gsm_kimi_s0_g6",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 102.0
+    }
+   ]
+  },
+  {
+   "harness": "gsm_kimi_s0_g7",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 110.2
+    }
+   ]
+  }
+ ]
+}

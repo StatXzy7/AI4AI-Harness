@@ -1,0 +1,225 @@
+{
+ "builder": "glm",
+ "model": "GLM-5.3",
+ "seed": 0,
+ "raw_attempts_per_slot": 3,
+ "n_slots": 8,
+ "K_admitted": 4,
+ "raw_total": 19,
+ "R_artifact": 0.2105,
+ "results": [
+  {
+   "harness": "gsm_glm_s0_g0",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 129.5
+    }
+   ]
+  },
+  {
+   "harness": "gsm_glm_s0_g1",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 2,
+   "n_raw": 3,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 355.0
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 611.6
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 197.1
+    }
+   ]
+  },
+  {
+   "harness": "gsm_glm_s0_g2",
+   "seed": 0,
+   "admitted": false,
+   "admitted_attempt": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "truncated": true,
+     "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 165) (gsm_glm_s0_g2.py, line 165)",
+     "secs": 307.9
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "truncated": true,
+     "neutral_detail": "ValueError: no MathHarness subclass in agents/gsm_glm_s0_g2.py",
+     "secs": 239.9
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 234.2
+    }
+   ]
+  },
+  {
+   "harness": "gsm_glm_s0_g3",
+   "seed": 0,
+   "admitted": false,
+   "admitted_attempt": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 241.2
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 572.3
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 299.7
+    }
+   ]
+  },
+  {
+   "harness": "gsm_glm_s0_g4",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 1,
+   "n_raw": 2,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 325.9
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 547.3
+    }
+   ]
+  },
+  {
+   "harness": "gsm_glm_s0_g5",
+   "seed": 0,
+   "admitted": false,
+   "admitted_attempt": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 248.3
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 208.1
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "truncated": true,
+     "neutral_detail": "TypeError: Can't instantiate abstract class GsmGsmGlmS0G5 without an implementation for abstract method 'solve'",
+     "secs": 234.8
+    }
+   ]
+  },
+  {
+   "harness": "gsm_glm_s0_g6",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 304.4
+    }
+   ]
+  },
+  {
+   "harness": "gsm_glm_s0_g7",
+   "seed": 0,
+   "admitted": false,
+   "admitted_attempt": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 591.2
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 538.8
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 305.6
+    }
+   ]
+  }
+ ]
+}

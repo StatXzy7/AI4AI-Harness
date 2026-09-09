@@ -1,0 +1,162 @@
+{
+ "builder": "ernie",
+ "model": "ERNIE-5.0-Thinking-Preview",
+ "seed": 0,
+ "raw_attempts_per_slot": 3,
+ "n_slots": 8,
+ "K_admitted": 8,
+ "raw_total": 10,
+ "R_artifact": 0.8,
+ "results": [
+  {
+   "harness": "gsm_ernie_s0_g0",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 70.9
+    }
+   ]
+  },
+  {
+   "harness": "gsm_ernie_s0_g1",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 1,
+   "n_raw": 2,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 41.8
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 65.1
+    }
+   ]
+  },
+  {
+   "harness": "gsm_ernie_s0_g2",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 1,
+   "n_raw": 2,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 99.4
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 103.4
+    }
+   ]
+  },
+  {
+   "harness": "gsm_ernie_s0_g3",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 133.1
+    }
+   ]
+  },
+  {
+   "harness": "gsm_ernie_s0_g4",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 116.2
+    }
+   ]
+  },
+  {
+   "harness": "gsm_ernie_s0_g5",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 86.0
+    }
+   ]
+  },
+  {
+   "harness": "gsm_ernie_s0_g6",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 90.4
+    }
+   ]
+  },
+  {
+   "harness": "gsm_ernie_s0_g7",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 96.0
+    }
+   ]
+  }
+ ]
+}

@@ -63,8 +63,9 @@ def extract_answer(text: str):
 
 
 def _to_float(s: str):
-    """Parse ints, decimals, plain 'a/b', and latex '\\frac{a}{b}'."""
-    t = str(s).strip().replace(",", "").replace("$", "")
+    """Parse ints, decimals, plain 'a/b', and latex '\\frac{a}{b}' / '\\dfrac{a}{b}'."""
+    t = str(s).strip().replace(",", "").replace("$", "").replace("\\$", "")
+    t = t.replace("dfrac", "frac").replace("tfrac", "frac")
     try:
         return float(t)
     except ValueError:
@@ -82,18 +83,39 @@ def _to_float(s: str):
 def _norm_latex(s: str) -> str:
     """Canonicalize a latex/ascii answer string for exact comparison."""
     t = str(s).strip()
-    t = t.replace("$", "").replace(" ", "").replace("\\!", "")
+    # pmatrix/vector forms to tuple: \begin{pmatrix} a \\ b \end{pmatrix} -> (a,b)
+    t = re.sub(r"\\begin\{pmatrix\}(.+?)\\end\{pmatrix\}",
+               lambda m: "(" + m.group(1).replace("\\\\", ",").replace("\\ ", "") + ")", t, flags=re.S)
+    t = t.replace("$", "").replace("\\$", "").replace(" ", "").replace("\\!", "")
     t = t.replace("\\left", "").replace("\\right", "")
     t = t.replace("dfrac", "frac").replace("tfrac", "frac")
     t = t.replace("\\displaystyle", "")
-    t = re.sub(r"\\text\{[^{}]*\}", "", t)
-    t = re.sub(r"\\mbox\{[^{}]*\}", "", t)
+    t = re.sub(r"\\text\{([^{}]*)\}", r"\1", t)                     # \text{even} -> even
+    t = re.sub(r"\\mbox\{[^{}]*\}(\^\{?\d+\}?)?", "", t)   # \mbox{ cm}^2 -> units dropped
+    # trailing unit words after a numeric/latex core
+    t = re.sub(r"(?<=[\d\)\}\\])\s*(?:degrees?|cm|m|km|inches|in|ft|feet|dollars|cents|%|s)$", "", t)
+    # units and notation suffixes: ^\circ, \deg, base subscripts 204_5 / 204_{5}
+    t = re.sub(r"\^\{?\\circ\}?$", "", t)
+    t = re.sub(r"\^\{?\\deg\}?$", "", t)
+    t = re.sub(r"_\{?\d+\}?$", "", t)
+    # unicode math -> ascii
+    t = (t.replace("√", "\\sqrt").replace("π", "\\pi").replace("°", "")
+          .replace("−", "-").replace("≤", "<=").replace("≥", ">=")
+          .replace("\\lambda", "\\lambda").replace("λ", "\\lambda")
+          .replace("×", "*").replace("÷", "/"))
     t = re.sub(r"^\((.*)\)$", r"\1", t)          # strip one outer paren pair
     t = re.sub(r"\\frac\{(-?[^{}]+)\}\{(-?[^{}]+)\}", r"\1/\2", t)   # \frac{a}{b} -> a/b
-    t = t.replace("{", "").replace("}", "")      # \sqrt{3} -> \sqrt3, tuples, sets
+    t = re.sub(r"\\frac\{(-?\d+)\}(-?\d+)", r"\1/\2", t)            # \frac{270}7 -> 270/7
+    t = re.sub(r"\\frac(-?\d+)(-?\d+)", r"\1/\2", t)                # \frac43 -> 4/3
+    t = re.sub(r"\\,\\!", "", t)                                     # 10,\!080 -> 10080
+    t = t.replace(",", "") if re.fullmatch(r"[\d,\\!]+", t) else t   # digit-group commas
+    t = t.replace("{", "").replace("}", "")      # \sqrt{3} -> \sqrt3
     t = t.rstrip(".")
     t = re.sub(r"^(-?\d+)\.0+$", r"\1", t)       # 3.0 -> 3
     t = re.sub(r"^\+", "", t)
+    # interval forms: (3,4] == 3<x<=4 == 3<x<4? no -- normalize only ascii/latex brackets:
+    # "3<\\lambda<=4" style: drop the variable and keep the interval meaning
+    t = re.sub(r"^(-?[\d.]+(?:/+[\d.\\pi]+)?)[<]=?[a-z\\\\]+[<]?=?(-?[\d.]+)$", r"(\1,\2]", t)
     return t
 
 
@@ -208,7 +230,7 @@ def main() -> None:
                     continue
                 with lock:
                     fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
-                    if k % 50 == 0:
+                    if k % 10 == 0:
                         fh.flush()
                 n_ok += rec["official_correct"]
                 if (k + 1) % 100 == 0:

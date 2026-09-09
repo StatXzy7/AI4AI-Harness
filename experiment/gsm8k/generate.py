@@ -173,6 +173,11 @@ def main() -> None:
     ap.add_argument("--log", required=True)
     a = ap.parse_args()
 
+    # math prompts get their own solver cache (set before any bridge import)
+    os.environ.setdefault(
+        "SQL_SOLVER_CACHE",
+        str(ROOT / "artifacts" / "gsm8k_audit" / "solver_cache.json"))
+
     from openai import OpenAI
 
     client = OpenAI(base_url=BASE_URL, api_key=os.environ["PARATERA_API_KEY"],
