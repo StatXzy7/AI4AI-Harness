@@ -1,0 +1,57 @@
+% Cross-domain replication section. Numbers from
+% artifacts/gsm8k_audit/metrics.json (35 harnesses, 400 eval tasks,
+% completed 2026-09-10 10:00).
+
+\section{Cross-Domain Replication: MATH-500 Mini-Audit}\label{app:crossdomain}
+
+To test whether the Phase-II clean-protocol finding (free ungated generation
+produces behaviorally diverse, complementary populations) is
+text-to-SQL-specific, we replicated the free-arm protocol on competition
+math.
+
+\paragraph{Protocol.} Six builders (the same models as Phase II), one seed,
+eight slots each, $R{=}3$ raw attempts per slot, neutral validity gate
+(mechanism-blind: parse, import, interface, non-empty answer on two dev
+questions). Frozen target GLM-5.3-Flash (same as the SQL study), temperature
+0. MATH-500 \citep{math500}: 500 tasks frozen before generation (100 dev /
+400 eval, seed 20260908). Judge: numeric equality where both sides parse as
+numbers (including $a/b$, \verb|\frac{a}{b}|, decimals), else normalized
+LaTeX string equality (units, base subscripts, $^\circ$ stripped;
+\verb|\text{X}| content preserved; pmatrix $\to$ tuple). Judge
+self-consistency: 400/400 gold answers judge correct against themselves.
+bare accuracy 0.938 under the matched answer-format instruction. Yield:
+35/48 slots admitted ($R_{\mathrm{artifact}}$ 0.10--1.00; the two
+reasoning-heavy builders, GLM-5.3 and Qwen3.8-Max, exhausted the 32k-token
+generation budget on reasoning before emitting code in most slots ---
+reported as-is). This is a replication probe, not a factorial: no
+strategy forcing, no conformance gate.
+
+\paragraph{Results (35 harnesses, 400 eval tasks).} Mean pairwise outcome
+disagreement 10.6\% (max 33.0\%), $K_{\mathrm{eff}}$ 33/35 (0.94),
+outcome-identical pairs 0.7\% --- no trace of Phase-I-style collapse. Union
+repair 76.0\% of bare errors, union harm 0.8\%, oracle headroom over bare
+4.75\,pp. Yet the best fixed member is \emph{bare itself} (0.9375; generated
+harnesses 0.68--0.87): the population is strongly complementary at the oracle
+level while every individual member is worse than the baseline it wraps ---
+diversity is real, utility is at the population level only, and the
+outcome matrix is what shows both.
+
+\paragraph{Two failure-side observations.} First, the clean-protocol
+diversity result replicates in a second domain with a different output
+space. Second, a quarantined pilot round (disclosed in
+\texttt{PROTOCOL\_CHANGELOG.md}, entry G1) supplies a controlled contrast:
+when the same six builders were (mistakenly) given a GSM8K-style task
+description whose numeric answer format did not match MATH-500, the
+generated population remained behaviorally diverse (16.2\% disagreement,
+$K_{\mathrm{eff}}$ 19/19) while its union repair collapsed to 18\% --- and
+code-level inspection of the catastrophic members reproduced the Phase-I
+trace taxonomy verbatim (a generate-then-verify harness whose verifier
+rejected nearly every answer and whose fallback returned the stale loop
+variable or ``0''). Diversity without utility, induced by a prompt-side
+protocol error invisible to code-level checks: the measurement mandate, not
+any code-level audit, is what detects it.
+
+\paragraph{Scope.} One seed, one target, no factorial, exploratory; the
+Phase-I collapse-inducing SQL protocol was not re-run in the math domain,
+so this replication speaks to the clean-protocol result only, not to the
+boundary of collapse.

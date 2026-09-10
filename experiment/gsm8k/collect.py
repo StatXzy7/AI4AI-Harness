@@ -63,15 +63,16 @@ def extract_answer(text: str):
 
 
 def _to_float(s: str):
-    """Parse ints, decimals, plain 'a/b', and latex '\\frac{a}{b}' / '\\dfrac{a}{b}'."""
+    """Parse ints, decimals, plain 'a/b', and latex '\\frac{a}{b}' / '\\frac ab'."""
     t = str(s).strip().replace(",", "").replace("$", "").replace("\\$", "")
     t = t.replace("dfrac", "frac").replace("tfrac", "frac")
     try:
         return float(t)
     except ValueError:
         pass
-    m = re.fullmatch(r"\\frac\{(-?[\d.]+)\}\{(-?[\d.]+)\}", t) or re.fullmatch(
-        r"(-?[\d.]+)/(-?[\d.]+)", t)
+    m = (re.fullmatch(r"\\frac\{(-?[\d.]+)\}\{(-?[\d.]+)\}", t)
+         or re.fullmatch(r"\\frac(-?\d+)(-?\d+)", t)
+         or re.fullmatch(r"(-?[\d.]+)/(-?[\d.]+)", t))
     if m:
         try:
             return float(m.group(1)) / float(m.group(2))

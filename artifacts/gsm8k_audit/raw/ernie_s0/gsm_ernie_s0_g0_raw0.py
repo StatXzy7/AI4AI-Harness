@@ -1,45 +1,31 @@
-"""Uses self-consistency by generating multiple stochastic completions and returning the most frequent numerical answer."""
+"""Two-step verification: generate a solution, verify it, and if incorrect, regenerate with higher temperature."""
 
-import re
 from ..harness_base import MathHarness
 
 class GsmGsmErnieS0G0(MathHarness):
     def solve(self, question: str) -> str:
-        # Construct a standard prompt format for the frozen solver
-        prompt = f"Question: {question}\nAnswer:"
+        # First attempt with greedy generation (temperature=0)
+        prompt = f"Solve the following math problem. Put your final answer on the last line in the form '#### <answer>'.\n\n{question}"
+        response = self.llm(prompt, system="", temperature=0.0, n=1)
+        answer = self._extract_answer(response)
         
-        # Generate multiple completions with temperature > 0 for diversity
-        completions = self.llm(prompt, system="", temperature=0.7, n=5)
+        # Verification step: ask the model to check the solution and answer
+        verify_prompt = f"Check the following solution and answer. Is the answer correct? Respond with 'Correct' or 'Incorrect'.\n\nSolution:\n{response}\n\nAnswer: {answer}"
+        verify_response = self.llm(verify_prompt, system="", temperature=0.0, n=1)
         
-        # Helper to extract the last numerical answer from a completion
-        def extract_answer(text: str) -> str:
-            # Find all numbers (integers or decimals) in the text
-            numbers = re.findall(r'-?\d+\.?\d*', text)
-            if not numbers:
-                return ""
-            # Return the last number found (typically the final answer)
-            return numbers[-1].rstrip('.')  # remove trailing dot if present
-        
-        # Extract answers from all completions
-        answers = [extract_answer(comp) for comp in completions]
-        # Filter out empty strings (should not happen, but safe)
-        answers = [a for a in answers if a]
-        
-        if not answers:
-            # Fallback: try a single deterministic call if all extractions fail
-            single = self.llm(prompt, system="", temperature=0.0, n=1)[0]
-            return extract_answer(single)
-        
-        # Count frequencies and find the most common answer
-        freq = {}
-        for ans in answers:
-            freq[ans] = freq.get(ans, 0) + 1
-        
-        # Determine the answer with the highest frequency; break ties by first occurrence
-        max_freq = max(freq.values())
-        for ans in answers:
-            if freq[ans] == max_freq:
-                return ans
-        
-        # Should never reach here, but return first answer as fallback
-        return answers[0]
+        if "Correct" in verify_response:
+            return answer
+        else:
+            # Second attempt with higher temperature to encourage a different solution
+            response2 = self.llm(prompt, system="", temperature=0.7, n=1)
+            answer2 = self._extract_answer(response2)
+            return answer2
+    
+    def _extract_answer(self, response: str) -> str:
+        """Extract the answer from the last line starting with '#### '."""
+        lines = response.strip().split('\n')
+        for line in reversed(lines):
+            if line.strip().startswith('#### '):
+                return line.strip()[5:].strip()
+        # Fallback: return the last line if no marker found
+        return lines[-1].strip() if lines else ""

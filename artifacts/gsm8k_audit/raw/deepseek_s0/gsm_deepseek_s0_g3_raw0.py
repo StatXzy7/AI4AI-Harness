@@ -1,122 +1,110 @@
-"""Self-consistency with majority voting over diverse solver samples, falling back to greedy decoding on ties or parse failures."""
+"""Use three stochastic solver calls at temperature 0.4 and return the majority final answer, falling back to a single greedy call on ties."""
 import re
 from collections import Counter
-from typing import List, Optional
 
 from ..harness_base import MathHarness
 
 
 class GsmGsmDeepseekS0G3(MathHarness):
     def solve(self, question: str) -> str:
-        prompt = (
-            "Solve the following grade-school math problem step by step. "
-            "End your response with the final numeric answer on a new line in the form `#### answer`.\n\n"
-            f"Question: {question}\n"
+        prompt = self._make_prompt(question)
+
+        # Generate three independent candidates, allowing the frozen solver to vary.
+        candidates = [self._call_llm(prompt, temperature=0.4) for _ in range(3)]
+
+        # Extract candidate final answers and normalize for voting.
+        answers = []
+        for candidate in candidates:
+            ans = self._extract_final_answer(candidate)
+            if ans:
+                answers.append((self._normalize_answer(ans), ans))
+
+        # If no candidate had an extractable final answer, fall back to greedy.
+        if not answers:
+            fallback = self._call_llm(prompt, temperature=0.0)
+            ans = self._extract_final_answer(fallback)
+            return ans if ans else fallback.strip()
+
+        counts = Counter(norm for norm, _ in answers)
+        top_norm, top_count = counts.most_common(1)[0]
+
+        # Majority: at least two of the possible three candidates agree.
+        if top_count >= 2:
+            for norm, raw in answers:
+                if norm == top_norm:
+                    return raw
+
+        # No majority: request a single greedy answer and use it to break the tie.
+        greedy = self._call_llm(prompt, temperature=0.0)
+        greedy_ans = self._extract_final_answer(greedy)
+        if greedy_ans:
+            greedy_norm = self._normalize_answer(greedy_ans)
+            for norm, raw in answers:
+                if norm == greedy_norm:
+                    return raw
+            return greedy_ans
+
+        # Last resort: return the first successfully extracted candidate answer.
+        return answers[0][1]
+
+    def _call_llm(self, prompt: str, temperature: float) -> str:
+        output = self.llm(prompt, system="", temperature=temperature, n=1)
+
+        # Handle common API return shapes defensively.
+        if isinstance(output, str):
+            return output
+        if isinstance(output, (list, tuple)):
+            if not output:
+                return ""
+            return str(output[0])
+        if isinstance(output, dict):
+            for key in ("text", "content", "message"):
+                if key in output:
+                    return str(output[key])
+            return str(output)
+        if hasattr(output, "text"):
+            return str(output.text)
+
+        return str(output)
+
+    def _make_prompt(self, question: str) -> str:
+        return (
+            "Solve the following competition math problem. "
+            "Show your reasoning, and put the final answer on the last line exactly as:\n"
+            "#### <answer>\n"
+            "The answer may be a plain number, a fraction, a LaTeX expression, "
+            "an interval, or a tuple. Do not put any text after the final answer line.\n\n"
+            f"Problem: {question}\n"
         )
 
-        samples = self._collect_samples(prompt, temperature=0.7, n=8)
-        answers = []
-        for sample in samples:
-            ans = self._extract_answer(sample)
-            if ans is not None:
-                answers.append(ans)
-
-        if answers:
-            counts = Counter(answers)
-            most = counts.most_common()
-            if len(most) == 1 or most[0][1] > most[1][1]:
-                return most[0][0]
-
-        # If no single majority answer emerged, fall back to greedy.
-        try:
-            greedy = self.llm(prompt, system="", temperature=0.0, n=1)
-            if isinstance(greedy, list):
-                greedy = greedy[0] if greedy else ""
-            ans = self._extract_answer(greedy)
-            if ans is not None:
-                return ans
-        except Exception:
-            pass
-
-        if answers:
-            return answers[0]
-
-        # Last resort: return a number found in any sample.
-        for sample in samples:
-            ans = self._extract_answer(sample)
-            if ans is not None:
-                return ans
-        return "0"
-
-    def _collect_samples(self, prompt: str, temperature: float, n: int) -> List[str]:
-        samples = []
-        try:
-            out = self.llm(prompt, system="", temperature=temperature, n=n)
-            if isinstance(out, list):
-                samples.extend([x for x in out if x])
-            elif out is not None:
-                samples.append(out)
-        except Exception:
-            pass
-
-        while len(samples) < n:
-            try:
-                out = self.llm(prompt, system="", temperature=temperature, n=1)
-                if isinstance(out, list):
-                    valid = [x for x in out if x]
-                    if valid:
-                        samples.extend(valid)
-                    else:
-                        break
-                elif out is not None:
-                    samples.append(out)
-                else:
-                    break
-            except Exception:
-                break
-
-        return samples
-
-    @staticmethod
-    def _clean_number(token: str) -> Optional[str]:
-        if token is None:
-            return None
-        cleaned = token.strip().replace(",", "")
-        cleaned = cleaned.replace("$", "").strip()
-        if not cleaned:
-            return None
-        cleaned = cleaned.rstrip(".")
-        return cleaned
-
-    @classmethod
-    def _extract_answer(cls, text: str) -> Optional[str]:
+    def _extract_final_answer(self, text: str) -> str:
         if not text:
-            return None
-        if isinstance(text, (list, tuple)):
-            text = "\n".join(str(t) for t in text)
-        text = str(text)
+            return ""
 
-        patterns = [
-            r"####\s*\$?(-?[\d,]+(?:\.\d+)?)",
-            r"(?:final\s+answer|answer)\s*(?:is|:|=)\s*\$?(-?[\d,]+(?:\.\d+)?)",
-        ]
-        for pattern in patterns:
-            matches = re.findall(pattern, text, flags=re.IGNORECASE)
-            if matches:
-                return cls._clean_number(matches[-1])
+        # Prefer an explicit '#### <answer>' line, using the last one if multiple.
+        matches = re.findall(r"####\s*(.*)", text)
+        if matches:
+            ans = matches[-1].strip().strip("$").strip()
+            return re.sub(r"\s+", "", ans)
 
-        lines = [line.strip() for line in text.splitlines() if line.strip()]
-        for line in reversed(lines):
-            if re.fullmatch(r"\$?-?[\d,]+(?:\.\d+)?\.?", line):
-                return cls._clean_number(line)
-            if re.search(r"(?:answer|####)", line, flags=re.IGNORECASE):
-                nums = re.findall(r"-?[\d,]+(?:\.\d+)?", line)
-                if nums:
-                    return cls._clean_number(nums[-1])
+        # If the solver ignored the format, use the last nonempty line.
+        lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
+        if lines:
+            ans = lines[-1].strip("$").strip()
+            return re.sub(r"\s+", "", ans)
 
-        for line in reversed(lines):
-            nums = re.findall(r"-?[\d,]+(?:\.\d+)?", line)
-            if nums:
-                return cls._clean_number(nums[-1])
+        return ""
 
-        return None
+    def _normalize_answer(self, ans: str) -> str:
+        s = ans.strip().strip("$").strip()
+        s = s.replace("\\left", "").replace("\\right", "")
+        s = s.replace("\\dfrac", "\\frac").replace("\\tfrac", "\\frac")
+        s = re.sub(r"\s+", "", s)
+
+        # Unify simple fractions such as 3/4 with \frac{3}{4}.
+        m = re.fullmatch(r"(-?)(\d+)/(\d+)", s)
+        if m:
+            sign = m.group(1)
+            return f"{sign}\\frac{{{m.group(2)}}}{{{m.group(3)}}}"
+
+        return s

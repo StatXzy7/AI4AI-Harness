@@ -1,0 +1,162 @@
+{
+ "builder": "minimax",
+ "model": "MiniMax-M3",
+ "seed": 0,
+ "raw_attempts_per_slot": 3,
+ "n_slots": 8,
+ "K_admitted": 7,
+ "raw_total": 10,
+ "R_artifact": 0.7,
+ "results": [
+  {
+   "harness": "gsm_minimax_s0_g0",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 45.2
+    }
+   ]
+  },
+  {
+   "harness": "gsm_minimax_s0_g1",
+   "seed": 0,
+   "admitted": false,
+   "admitted_attempt": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 9.0
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 9.2
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 8.5
+    }
+   ]
+  },
+  {
+   "harness": "gsm_minimax_s0_g2",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 77.4
+    }
+   ]
+  },
+  {
+   "harness": "gsm_minimax_s0_g3",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 28.1
+    }
+   ]
+  },
+  {
+   "harness": "gsm_minimax_s0_g4",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 31.5
+    }
+   ]
+  },
+  {
+   "harness": "gsm_minimax_s0_g5",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 39.9
+    }
+   ]
+  },
+  {
+   "harness": "gsm_minimax_s0_g6",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 42.2
+    }
+   ]
+  },
+  {
+   "harness": "gsm_minimax_s0_g7",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 40.9
+    }
+   ]
+  }
+ ]
+}

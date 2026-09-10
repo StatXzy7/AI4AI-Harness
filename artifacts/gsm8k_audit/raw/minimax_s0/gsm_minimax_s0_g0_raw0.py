@@ -1,178 +1,142 @@
-"""Self-verifying GSM8K harness: samples a primary answer, then a sanity-check continuation, and returns only if the two agree on the final number."""
+"""Self-verifying solver that samples a candidate answer, then re-prompts to critique and refine it before locking in the final response."""
 from __future__ import annotations
 
 import re
+from typing import Optional
 
 from ..harness_base import MathHarness
 
 
-_FINAL_PATTERNS = [
-    re.compile(r"####\s*(-?\d+(?:\.\d+)?)"),
-    re.compile(r"[Tt]he answer is[:\s]*(-?\d+(?:\.\d+)?)"),
-    re.compile(r"answer[:\s]+is[:\s]+(-?\d+(?:\.\d+)?)"),
-    re.compile(r"=\s*(-?\d+(?:\.\d+)?)\s*\.?\s*$"),
-]
+_ANSWER_RE = re.compile(r"####\s*(.+?)\s*$", re.MULTILINE)
 
 
-def _extract_final_number(text: str) -> str | None:
-    """Return the last numeric token that looks like a final answer, or None."""
+def _extract_answer(text: str) -> Optional[str]:
+    """Pull the last '#### <answer>' line out of a model response, if present."""
     if not text:
         return None
-    # Prefer explicit markers first.
-    for pat in _FINAL_PATTERNS:
-        matches = pat.findall(text)
-        if matches:
-            return _strip_number(matches[-1])
-    # Fallback: last standalone integer/float on the final lines.
-    tail = "\n".join(text.strip().splitlines()[-3:])
-    nums = re.findall(r"-?\d+(?:\.\d+)?", tail)
-    if nums:
-        return _strip_number(nums[-1])
-    return None
+    matches = _ANSWER_RE.findall(text)
+    if not matches:
+        return None
+    return matches[-1].strip()
 
 
-def _strip_number(num_str: str) -> str:
-    """Normalize a numeric string: drop trailing .0 from floats."""
-    if "." in num_str:
-        try:
-            f = float(num_str)
-            if f.is_integer():
-                return str(int(f))
-            return num_str.rstrip("0").rstrip(".") or "0"
-        except ValueError:
-            return num_str
-    return num_str
-
-
-def _numbers_in(text: str) -> list[str]:
-    """All numeric tokens in `text`, in order, normalized."""
-    out: list[str] = []
-    for tok in re.findall(r"-?\d+(?:\.\d+)?", text or ""):
-        out.append(_strip_number(tok))
-    return out
-
-
-def _numbers_match(a: str | None, b: str | None) -> bool:
-    if a is None or b is None:
-        return False
-    return a == b
+def _strip_to_text(answer: str) -> str:
+    """Compact an extracted answer by stripping LaTeX dollar signs and whitespace."""
+    if answer is None:
+        return ""
+    a = answer.strip()
+    # Remove surrounding $...$ if the model wrapped the answer inline
+    if a.startswith("$") and a.endswith("$"):
+        a = a[1:-1].strip()
+    return a
 
 
 class GsmGsmMinimaxS0G0(MathHarness):
     """
-    Self-verifying harness for GSM8K.
+    Solve MATH-500 style competition problems via a two-stage "draft + critique"
+    protocol:
 
-    Mechanism (an actual control-flow change, not just a longer prompt):
-      1. Ask the frozen solver to solve the problem and show its work
-         (temperature 0.0, single sample).
-      2. From that primary solution, extract the candidate final number.
-      3. Re-query the frozen solver with a sanity-check prompt that
-         independently re-derives the answer from the *question only*
-         (temperature 0.7, n=3). This is cheap because the solver is the
-         same frozen weak model; we are sampling diverse reasoning paths,
-         not training anything.
-      4. If at least 2 of the 3 sanity samples agree with the primary
-         number, return that number. Otherwise fall back to a majority
-         vote across ALL samples (primary + sanity), breaking ties by
-         preferring the sanity-check number (since independent
-         re-derivation is a stronger signal than a single greedy solve).
-      5. If still ambiguous, return the primary answer.
+      Stage 1 -- DRAFT
+          Sample a greedy solution at temperature 0 and harvest the
+          '#### <answer>' line. We also retain the model's reasoning so
+          the critic can point at specific lines.
 
-    The improvement is the disagreement-handling fallback: instead of
-    trusting a single greedy decode, we get a second opinion and a tiny
-    self-consistency vote, which reduces single-sample arithmetic slips.
+      Stage 2 -- CRITIQUE / VERIFY
+          Re-prompt the frozen solver (still temperature 0) with a short
+          verification rubric: restate the problem, judge the draft's
+          arithmetic and reasoning, and either CONFIRM the draft's answer
+          or REPLACE it with a corrected one. The new response must again
+          end with '#### <answer>'.
+
+      Stage 3 -- SELECT
+          Prefer the critique's final answer. As a lightweight consistency
+          check, if the draft and critique disagree, we ask the solver one
+          more time to pick between them ("self-consistency vote" with n=1);
+          the resulting answer wins. If the critique response fails to
+          produce an '####' line we fall back to the draft.
+
+    The frozen LLM is never fine-tuned or asked to change its decoding
+    settings -- only the *control flow* around it changes.
     """
 
-    SYSTEM = (
-        "You are a careful grade-school math tutor. Solve the problem "
-        "step by step, showing arithmetic, and finish with a final line "
-        "that clearly states the answer, e.g. '#### 42' or "
-        "'The answer is 42.'."
+    # --- prompt templates -------------------------------------------------
+
+    _CRITIQUE_TEMPLATE = (
+        "You are verifying a candidate solution to a math problem.\n\n"
+        "PROBLEM:\n{question}\n\n"
+        "DRAFT SOLUTION:\n{draft}\n\n"
+        "Your task:\n"
+        "1. Re-read the problem carefully and identify what is being asked.\n"
+        "2. Walk through the draft step by step. Point out any arithmetic,\n"
+        "   algebraic, or logical errors. If you find an error, compute the\n"
+        "   correct value.\n"
+        "3. End your response with exactly one line of the form\n"
+        "   '#### <answer>'\n"
+        "   where <answer> is the final, correct answer (use LaTeX such as\n"
+        "   \\frac{{3}}{{4}}, 2\\sqrt{{3}}, (3,4], etc. as appropriate).\n"
+        "   If the draft is fully correct, repeat its answer on that line.\n\n"
+        "VERIFICATION:"
     )
 
-    SANITY_SYSTEM = (
-        "You are a careful grade-school math tutor. Re-read the problem "
-        "and solve it again from scratch, ignoring any previous answer. "
-        "Show your work and end with a clear final answer such as "
-        "'#### 42' or 'The answer is 42.'."
+    _TIEBREAK_TEMPLATE = (
+        "Two candidate answers were produced for the same math problem.\n"
+        "Pick the one that is actually correct, and respond with ONLY one\n"
+        "line of the form:\n\n"
+        "#### <answer>\n\n"
+        "PROBLEM:\n{question}\n\n"
+        "CANDIDATE A: {a}\n"
+        "CANDIDATE B: {b}\n\n"
+        "Choose the correct candidate and output the '####' line:"
     )
+
+    # ---------------------------------------------------------------------
 
     def solve(self, question: str) -> str:
-        # ---- 1. Primary greedy solution ---------------------------------
-        primary_raw = self.llm(
-            prompt=question,
-            system=self.SYSTEM,
-            temperature=0.0,
-            n=1,
+        # ---- Stage 1: greedy draft --------------------------------------
+        draft_prompt = (
+            "Solve the following math problem. Show clear reasoning, then "
+            "place your final answer on the last line in the form "
+            "'#### <answer>'.\n\n"
+            f"PROBLEM:\n{question}\n\n"
+            "SOLUTION:"
         )
-        primary_text = primary_raw if isinstance(primary_raw, str) else str(primary_raw)
-        primary_num = _extract_final_number(primary_text)
+        draft_resp = self.llm(draft_prompt, system="", temperature=0.0, n=1)
+        draft_answer = _strip_to_text(_extract_answer(draft_resp) or "")
 
-        # ---- 2. Sanity-check re-derivations -----------------------------
-        sanity_n = 3
-        sanity_raw = self.llm(
-            prompt=question,
-            system=self.SANITY_SYSTEM,
-            temperature=0.7,
-            n=sanity_n,
+        if not draft_answer:
+            # The frozen solver didn't follow the format -- return whatever
+            # it gave so we don't crash on a malformed problem.
+            return (draft_resp or "").strip()
+
+        # ---- Stage 2: critique / verification ----------------------------
+        critique_prompt = self._CRITIQUE_TEMPLATE.format(
+            question=question, draft=draft_resp
         )
-        if isinstance(sanity_raw, str):
-            sanity_texts = [sanity_raw]
-        else:
-            try:
-                sanity_texts = list(sanity_raw)
-            except TypeError:
-                sanity_texts = [str(sanity_raw)]
+        critique_resp = self.llm(critique_prompt, system="", temperature=0.0, n=1)
+        critique_answer = _strip_to_text(_extract_answer(critique_resp) or "")
 
-        sanity_nums: list[str | None] = [
-            _extract_final_number(t) for t in sanity_texts
-        ]
+        if not critique_answer:
+            # Critic failed to produce a parseable answer; trust the draft.
+            return draft_answer
 
-        # ---- 3. Decision logic ------------------------------------------
-        # If primary agrees with majority of sanity samples, trust primary.
-        agreeing = [s for s in sanity_nums if _numbers_match(s, primary_num)]
-        if len(agreeing) >= 2 and primary_num is not None:
-            return primary_num
+        # ---- Stage 3: consistency vote on disagreement -------------------
+        if critique_answer == draft_answer:
+            return critique_answer
 
-        # Otherwise, tally all samples and pick the majority number.
-        all_nums: list[str] = []
-        if primary_num is not None:
-            all_nums.append(primary_num)
-        for s in sanity_nums:
-            if s is not None:
-                all_nums.append(s)
+        tiebreak_prompt = self._TIEBREAK_TEMPLATE.format(
+            question=question, a=draft_answer, b=critique_answer
+        )
+        tiebreak_resp = self.llm(
+            tiebreak_prompt, system="", temperature=0.0, n=1
+        )
+        tiebreak_answer = _strip_to_text(_extract_answer(tiebreak_resp) or "")
 
-        if all_nums:
-            counts: dict[str, int] = {}
-            for n in all_nums:
-                counts[n] = counts.get(n, 0) + 1
-            # Sort by count desc, then prefer sanity-derived numbers
-            # (any sample other than the primary) to break ties.
-            primary_set = {primary_num} if primary_num is not None else set()
-            ranked = sorted(
-                counts.items(),
-                key=lambda kv: (
-                    kv[1],
-                    0 if kv[0] not in primary_set else 1,
-                ),
-                reverse=True,
-            )
-            best_num, _best_count = ranked[0]
+        if not tiebreak_answer:
+            # Default tie-break: trust the critic over the original draft.
+            return critique_answer
 
-            # If the primary number doesn't match the majority, but the
-            # primary is the only signal we have, still return primary.
-            if best_num == primary_num or len(all_nums) <= 1:
-                return primary_num if primary_num is not None else best_num
-            return best_num
-
-        # ---- 4. Last-resort fallbacks -----------------------------------
-        if primary_num is not None:
-            return primary_num
-
-        # Numeric scrape: if no marker matched, use the last number
-        # anywhere in the primary text.
-        nums = _numbers_in(primary_text)
-        if nums:
-            return nums[-1]
-
-        return ""
+        # If the tiebreaker echoed one of the two candidates, prefer that
+        # explicit match; otherwise return whatever the tiebreaker produced.
+        if tiebreak_answer in (draft_answer, critique_answer):
+            return tiebreak_answer
+        return tiebreak_answer

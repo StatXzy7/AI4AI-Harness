@@ -1,0 +1,10 @@
+[gen] builder=qwen(Qwen3.8-Max) slots=8 raw_budget=3/slot
+  gsm_qwen_s0_g0                 ADMIT  nv=1/3 neutral-valid
+  gsm_qwen_s0_g1                 ADMIT  nv=1/1 neutral-valid
+  gsm_qwen_s0_g2                 empty  nv=0/3 SyntaxError: unterminated string literal
+  gsm_qwen_s0_g3                 empty  nv=0/3 APITimeoutError('Request timed out.')
+  gsm_qwen_s0_g4                 empty  nv=0/3 no python fence
+  gsm_qwen_s0_g5                 ADMIT  nv=1/2 neutral-valid
+  gsm_qwen_s0_g6                 empty  nv=0/3 SyntaxError: unterminated string literal
+  gsm_qwen_s0_g7                 empty  nv=0/3 no python fence
+[gen] K=3/8 admitted | R_artifact=0.1429 -> E:\projects\AI4AI-Harness\artifacts\gsm8k_audit\gen2_qwen_s0.json

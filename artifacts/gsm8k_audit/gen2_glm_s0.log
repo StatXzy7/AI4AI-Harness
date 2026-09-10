@@ -1,0 +1,10 @@
+[gen] builder=glm(GLM-5.3) slots=8 raw_budget=3/slot
+  gsm_glm_s0_g0                  empty  nv=0/3 no python fence
+  gsm_glm_s0_g1                  empty  nv=0/3 no python fence
+  gsm_glm_s0_g2                  empty  nv=0/3 no python fence
+  gsm_glm_s0_g3                  empty  nv=0/3 no python fence
+  gsm_glm_s0_g4                  empty  nv=0/3 no python fence
+  gsm_glm_s0_g5                  empty  nv=0/3 no python fence
+  gsm_glm_s0_g6                  empty  nv=0/3 no python fence
+  gsm_glm_s0_g7                  empty  nv=0/3 no python fence
+[gen] K=0/8 admitted | R_artifact=0.0 -> E:\projects\AI4AI-Harness\artifacts\gsm8k_audit\gen2_glm_s0.json

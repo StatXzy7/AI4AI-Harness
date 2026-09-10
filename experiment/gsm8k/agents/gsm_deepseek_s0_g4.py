@@ -1,5 +1,4 @@
-"""Uses self-consistency by sampling multiple high-temperature solutions, extracting final numeric answers, and returning the majority-vote result with a single greedy fallback."""
-
+"""Uses four sampled candidate solutions with self-consistency voting and a verification pass on disagreement."""
 import re
 from collections import Counter
 
@@ -8,99 +7,106 @@ from ..harness_base import MathHarness
 
 class GsmGsmDeepseekS0G4(MathHarness):
     def solve(self, question: str) -> str:
-        prompt = (
-            "Solve the following grade-school math word problem. "
-            "Think step by step, and finish with a line containing exactly '#### <number>'.\n\n"
-            f"Problem: {question}\n"
+        system = (
+            "You are a careful competition math solver. Provide a concise step-by-step "
+            "solution and put the final answer on the last line as '#### <answer>'. "
+            "Do not write anything after that line."
+        )
+        initial_prompt = (
+            f"Solve the following math problem. The last line must be exactly "
+            f"'#### <answer>'.\n\nProblem: {question}\n\nSolution:"
         )
 
-        samples = self._sample_solutions(prompt, num_samples=8, temperature=0.6)
-        answers = []
-        for sample in samples:
-            ans = self._extract_answer(sample)
-            if ans is not None:
-                answers.append(ans)
+        responses = self._call_llm(initial_prompt, system=system, temperature=0.6, n=4)
 
-        if answers:
-            return Counter(answers).most_common(1)[0][0]
+        valid = []
+        for response in responses:
+            ans = self._extract_final_answer(response)
+            if ans:
+                valid.append(ans)
 
-        # Fall back to a single greedy attempt if all sampled answers are unparseable.
-        greedy = self._call_llm(prompt, temperature=0.0, n=1)
-        ans = self._extract_answer(greedy)
-        return ans if ans is not None else ""
-
-    def _sample_solutions(self, prompt: str, num_samples: int, temperature: float):
-        samples = []
-        try:
-            response = self.llm(prompt, system="", temperature=temperature, n=num_samples)
-        except TypeError:
-            response = None
-
-        if isinstance(response, list):
-            for r in response:
-                if isinstance(r, str) and r.strip():
-                    samples.append(r)
-        elif isinstance(response, str) and response.strip():
-            samples.append(response)
-
-        # If n>1 was not honored or fewer samples were returned, fill by
-        # sampling with n=1 one at a time.
-        while len(samples) < num_samples:
-            sample = self._call_llm(prompt, temperature=temperature, n=1)
-            if not sample:
-                break
-            samples.append(sample)
-
-        return samples
-
-    def _call_llm(self, prompt: str, temperature: float, n: int):
-        try:
-            r = self.llm(prompt, system="", temperature=temperature, n=n)
-        except TypeError:
-            try:
-                r = self.llm(prompt, system="", temperature=temperature)
-            except TypeError:
-                r = self.llm(prompt, system="")
-
-        if r is None:
+        if not valid:
+            fallback = self._call_llm(initial_prompt, system=system, temperature=0.0, n=1)
+            if fallback:
+                ans = self._extract_final_answer(fallback[0])
+                if ans:
+                    return self._compact(ans)
             return ""
-        if isinstance(r, list):
-            r = r[0] if r else ""
-        return r if isinstance(r, str) else str(r)
 
-    def _extract_answer(self, text: str):
-        if not isinstance(text, str) or not text.strip():
-            return None
-        text = text.strip()
+        normalized = [self._normalize_answer(ans) for ans in valid]
+        counts = Counter(normalized)
+        most_common, count = counts.most_common(1)[0]
 
+        if len(valid) == 1 or count * 2 > len(valid):
+            for ans, norm in zip(valid, normalized):
+                if norm == most_common:
+                    return self._compact(ans)
+
+        candidates = "\n".join(f"({i + 1}) {ans}" for i, ans in enumerate(valid))
+        choose_prompt = (
+            f"Problem: {question}\n\n"
+            f"Several candidate final answers were proposed:\n{candidates}\n\n"
+            "Choose the correct final answer. Explain briefly, then put the final answer "
+            "on the last line in the form '#### <answer>'."
+        )
+
+        chosen_responses = self._call_llm(choose_prompt, system=system, temperature=0.0, n=1)
+        if chosen_responses:
+            chosen = self._extract_final_answer(chosen_responses[0])
+            if chosen:
+                return self._compact(chosen)
+
+        return self._compact(valid[0])
+
+    def _call_llm(self, prompt, system, temperature, n):
+        response = self.llm(prompt, system=system, temperature=temperature, n=n)
+        if response is None:
+            return []
+        if isinstance(response, str):
+            return [response]
+        if isinstance(response, (list, tuple)):
+            texts = []
+            for item in response:
+                if isinstance(item, str):
+                    texts.append(item)
+                elif hasattr(item, "text"):
+                    texts.append(item.text)
+                elif hasattr(item, "message") and hasattr(item.message, "content"):
+                    texts.append(item.message.content)
+                else:
+                    texts.append(str(item))
+            return texts
+        if hasattr(response, "choices"):
+            texts = []
+            for choice in response.choices:
+                if hasattr(choice, "text"):
+                    texts.append(choice.text)
+                elif hasattr(choice, "message") and hasattr(choice.message, "content"):
+                    texts.append(choice.message.content)
+                else:
+                    texts.append(str(choice))
+            return texts
+        return [str(response)]
+
+    def _extract_final_answer(self, text: str) -> str:
+        if not text:
+            return ""
         for line in reversed(text.splitlines()):
+            line = line.strip()
             if "####" in line:
-                m = re.search(r"####\s*[^\d-]*(-?\d+(?:[\s,]\d{3})*(?:\.\d+)?)", line)
-                if m:
-                    return self._normalize_number(m.group(1))
+                _, _, ans = line.partition("####")
+                ans = ans.strip()
+                if ans:
+                    return ans
+        return ""
 
-        patterns = [
-            r"(?:answer|Answer|ANSWER)\s*(?:is|:|=)\s*(-?\d+(?:[\s,]\d{3})*(?:\.\d+)?)",
-            r"(?:result|Result|RESULT)\s*(?:is|:|=)\s*(-?\d+(?:[\s,]\d{3})*(?:\.\d+)?)",
-            r"(?:answer|Answer|ANSWER)\s*[:=]\s*(-?\d+(?:[\s,]\d{3})*(?:\.\d+)?)",
-        ]
-        for pattern in patterns:
-            m = re.search(pattern, text)
-            if m:
-                return self._normalize_number(m.group(1))
+    def _normalize_answer(self, ans: str) -> str:
+        a = ans.strip()
+        a = a.replace("\\left", "").replace("\\right", "")
+        a = a.replace("\\dfrac", "\\frac").replace("\\tfrac", "\\frac")
+        return re.sub(r"\s+", "", a)
 
-        # Last-resort fallback: use the last number appearing in the response.
-        numbers = re.findall(r"-?\d+(?:[\s,]\d{3})*(?:\.\d+)?", text)
-        if numbers:
-            return self._normalize_number(numbers[-1])
-        return None
-
-    def _normalize_number(self, number_str: str):
-        cleaned = number_str.replace(",", "").replace(" ", "").strip()
-        if not cleaned:
-            return None
-        try:
-            value = float(cleaned)
-            return str(int(value)) if value.is_integer() else cleaned
-        except ValueError:
-            return cleaned
+    def _compact(self, ans: str) -> str:
+        a = ans.strip()
+        a = re.sub(r"\s+", "", a)
+        return a

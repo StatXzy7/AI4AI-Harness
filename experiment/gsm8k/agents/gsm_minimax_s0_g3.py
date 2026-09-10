@@ -1,83 +1,117 @@
-"""Self-consistency via deterministic re-prompting with reframed reasoning and answer extraction."""
+"""Self-consistency with answer normalization: sample multiple chains, parse and canonicalize each final answer, then return the majority-voted canonical form."""
 import re
+from collections import Counter
 from ..harness_base import MathHarness
 
 
 class GsmGsmMinimaxS0G3(MathHarness):
+    # Patterns to extract the final answer line
+    _ANSWER_LINE_RE = re.compile(r"####\s*(.+?)\s*$", re.MULTILINE)
+    _FRAC_TEX_RE = re.compile(r"\\frac\s*\{\s*([^{}]+?)\s*\}\s*\{\s*([^{}]+?)\s*\}")
+    _TUPLE_RE = re.compile(r"\(\s*([^,()]+?)\s*,\s*([^,()]+?)\s*\)")
+
     def solve(self, question: str) -> str:
-        # Strategy: run the solver multiple times with temperature>0 and different
-        # framing prompts, then take a majority vote on the extracted numeric answer.
-        # This is a real change to control flow (multi-sample + vote), not just a prompt tweak.
+        system = (
+            "You are a competition-math solver. Solve the problem step by step. "
+            "On the last line of your response, write the final answer in the form "
+            "'#### <answer>' where <answer> is a compact string "
+            "(a number, a fraction like 3/4 or \\frac{3}{4}, an expression like 2\\sqrt{3}, "
+            "or an interval / tuple)."
+        )
+        # Sample several independent chains (small, deterministic temperature)
+        n_samples = 5
+        raw_responses = self.llm(
+            question,
+            system=system,
+            temperature=0.7,
+            n=n_samples,
+        )
+        # Normalize each response's final answer, then majority-vote
+        canon_counter: Counter = Counter()
+        last_canonical = None
+        for resp in raw_responses:
+            canon = self._canonical(self._extract_answer(resp))
+            if canon == "":
+                continue
+            canon_counter[canon] += 1
+            last_canonical = canon
+        if not canon_counter:
+            # Fallback: try the first response's raw final line
+            return self._extract_answer(raw_responses[0]) if raw_responses else ""
+        # Pick the most common; ties broken by order of first appearance
+        most_common = canon_counter.most_common()
+        top_count = most_common[0][1]
+        winners = [c for c, k in most_common if k == top_count]
+        # Stable tiebreak: prefer the one we saw first (already in iteration order)
+        return winners[0]
 
-        framings = [
-            "Solve the following math problem step by step. End with '#### N' where N is the answer.\n\n",
-            "Think carefully about the following word problem. Show your work, then write 'The answer is N'.\n\n",
-            "Read this grade-school math problem carefully. Compute each step. Conclude with '#### N'.\n\n",
-            "Solve this problem: break it into parts, compute each, give the final number as '#### N'.\n\n",
-        ]
+    def _extract_answer(self, text: str) -> str:
+        """Pull the substring after the last '####' marker."""
+        if text is None:
+            return ""
+        # Prefer the LAST occurrence of #### (in case the model echoes the format earlier)
+        matches = list(self._ANSWER_LINE_RE.finditer(text))
+        if matches:
+            return matches[-1].group(1).strip()
+        # Fallback: last non-empty line
+        lines = [ln.strip() for ln in text.strip().splitlines() if ln.strip()]
+        return lines[-1] if lines else ""
 
-        system = "You are a careful math tutor. Always end your response with a line of the form '#### <number>'."
+    def _canonical(self, ans: str) -> str:
+        """Canonicalize an answer string for voting equivalence.
 
-        answers = []
-        for prefix in framings:
-            prompt = prefix + question
-            # Use temperature 0.0 for determinism, but vary framing to get diverse reasoning paths
-            raw = self.llm(prompt, system=system, temperature=0.0, n=1)
-            extracted = self._extract_answer(raw)
-            if extracted is not None:
-                answers.append(extracted)
-
-        if not answers:
-            # Fallback: one more call with the plain question
-            raw = self.llm(question, system=system, temperature=0.0, n=1)
-            extracted = self._extract_answer(raw)
-            if extracted is None:
-                return ""
-            answers.append(extracted)
-
-        # Majority vote
-        return self._majority(answers)
-
-    def _extract_answer(self, text: str):
-        """Extract a numeric answer from the solver's output."""
-        if not text:
-            return None
-        # Look for "#### N"
-        m = re.search(r"####\s*(-?\d+(?:\.\d+)?)", text)
+        - Strips outer whitespace and trailing periods.
+        - Lowercases.
+        - Removes '$' delimiters.
+        - Normalizes \\frac{a}{b} <-> a/b.
+        - Collapses whitespace inside.
+        - Treats simple numeric forms as equal (e.g. '3.0' ~ '3').
+        """
+        if ans is None:
+            return ""
+        s = ans.strip()
+        # Strip surrounding LaTeX display math delimiters
+        s = s.strip("$").strip()
+        # Drop a trailing period
+        if s.endswith("."):
+            s = s[:-1].rstrip()
+        s = s.lower()
+        s = s.replace("\\,", "").replace("\\;", "").replace("\\!", "")
+        s = s.replace("\\left", "").replace("\\right", "")
+        s = s.replace("\\cdot", "*")
+        s = s.replace("\\sqrt", "sqrt")
+        # Normalize \frac{a}{b} <-> a/b
+        m = self._FRAC_TEX_RE.fullmatch(s)
         if m:
-            return self._normalize(m.group(1))
-        # Look for "The answer is N"
-        m = re.search(r"[Tt]he answer is\s*[:=]?\s*(-?\d+(?:\.\d+)?)", text)
-        if m:
-            return self._normalize(m.group(1))
-        # Look for "answer: N" or "answer is N"
-        m = re.search(r"answer\s*(?:is|:)\s*(-?\d+(?:\.\d+)?)", text, re.IGNORECASE)
-        if m:
-            return self._normalize(m.group(1))
-        # Last resort: last number in the text
-        nums = re.findall(r"-?\d+(?:\.\d+)?", text)
-        if nums:
-            return self._normalize(nums[-1])
-        return None
-
-    def _normalize(self, s: str) -> str:
-        """Normalize a numeric string for voting (strip trailing .0, handle ints vs floats)."""
+            s = f"{m.group(1).strip()}/{m.group(2).strip()}"
+        else:
+            # Replace any \frac{a}{b} substrings
+            def _frac_sub(mm):
+                return f"{mm.group(1).strip()}/{mm.group(2).strip()}"
+            s = self._FRAC_TEX_RE.sub(_frac_sub, s)
+        # Trim a trailing "/1"
+        if s.endswith("/1") and "/" in s[:-2]:
+            s = s[:-2]
+        # Collapse whitespace
+        s = re.sub(r"\s+", "", s)
+        # Numeric normalization
         try:
-            f = float(s)
-            if f == int(f):
-                return str(int(f))
-            return str(f)
-        except (ValueError, TypeError):
-            return s.strip()
-
-    def _majority(self, answers):
-        """Return the most common answer; tie-break by first occurrence."""
-        counts = {}
-        order = []
-        for a in answers:
-            if a not in counts:
-                order.append(a)
-                counts[a] = 0
-            counts[a] += 1
-        order.sort(key=lambda x: (-counts[x], answers.index(x)))
-        return order[0]
+            # Only safe for plain numbers / fractions of ints
+            if "/" in s and all(p.lstrip("-").isdigit() for p in s.split("/")):
+                num, den = s.split("/")
+                if int(den) != 0:
+                    val = int(num) / int(den)
+                    # Represent as reduced fraction if close to a rational
+                    s = f"{num}/{den}"  # keep reduced form below
+            elif re.fullmatch(r"-?\d+(?:\.\d+)?", s):
+                # Strip trailing .0
+                if "." in s:
+                    try:
+                        f = float(s)
+                        if f.is_integer():
+                            s = str(int(f))
+                    except Exception:
+                        pass
+        except Exception:
+            pass
+        return s

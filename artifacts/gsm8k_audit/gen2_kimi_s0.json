@@ -1,0 +1,175 @@
+{
+ "builder": "kimi",
+ "model": "Kimi-K3",
+ "seed": 0,
+ "raw_attempts_per_slot": 3,
+ "n_slots": 8,
+ "K_admitted": 7,
+ "raw_total": 12,
+ "R_artifact": 0.5833,
+ "results": [
+  {
+   "harness": "gsm_kimi_s0_g0",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 141.4
+    }
+   ]
+  },
+  {
+   "harness": "gsm_kimi_s0_g1",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 127.9
+    }
+   ]
+  },
+  {
+   "harness": "gsm_kimi_s0_g2",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 123.5
+    }
+   ]
+  },
+  {
+   "harness": "gsm_kimi_s0_g3",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 1,
+   "n_raw": 2,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "truncated": false,
+     "reason": "no python fence",
+     "secs": 56.1
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 94.4
+    }
+   ]
+  },
+  {
+   "harness": "gsm_kimi_s0_g4",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 436.6
+    }
+   ]
+  },
+  {
+   "harness": "gsm_kimi_s0_g5",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 1,
+   "n_raw": 2,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "truncated": false,
+     "neutral_detail": "NameError: name 'MathHarness' is not defined",
+     "secs": 89.0
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 867.6
+    }
+   ]
+  },
+  {
+   "harness": "gsm_kimi_s0_g6",
+   "seed": 0,
+   "admitted": true,
+   "admitted_attempt": 0,
+   "n_raw": 1,
+   "n_neutral_valid": 1,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": true,
+     "truncated": false,
+     "neutral_detail": "neutral-valid",
+     "secs": 115.9
+    }
+   ]
+  },
+  {
+   "harness": "gsm_kimi_s0_g7",
+   "seed": 0,
+   "admitted": false,
+   "admitted_attempt": null,
+   "n_raw": 3,
+   "n_neutral_valid": 0,
+   "attempts": [
+    {
+     "attempt": 0,
+     "neutral_valid": false,
+     "reason": "APITimeoutError('Request timed out.')",
+     "secs": 900.2
+    },
+    {
+     "attempt": 1,
+     "neutral_valid": false,
+     "truncated": false,
+     "neutral_detail": "AttributeError: 'GsmGsmKimiS0G7' object has no attribute '_normalize_answer'",
+     "secs": 92.0
+    },
+    {
+     "attempt": 2,
+     "neutral_valid": false,
+     "truncated": false,
+     "neutral_detail": "empty answer on dev question",
+     "secs": 151.1
+    }
+   ]
+  }
+ ]
+}

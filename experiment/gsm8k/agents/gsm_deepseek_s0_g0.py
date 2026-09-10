@@ -1,4 +1,5 @@
-"""Self-consistency majority voting over multiple temperature-diversified solver completions with a greedy-baseline tie-breaker."""
+"""Use multi-prompt self-consistency: query the frozen solver with several reasoning prompts, extract final answers, and return the majority normalized answer."""
+
 import re
 from collections import Counter
 
@@ -7,87 +8,102 @@ from ..harness_base import MathHarness
 
 class GsmGsmDeepseekS0G0(MathHarness):
     def solve(self, question: str) -> str:
-        def _normalize(num):
+        prompts = [
+            (
+                "Solve the following competition math problem. Think step by step. "
+                "Put your final answer on the last line in the form '#### <answer>'.\n\n"
+                f"Problem: {question}\n\nSolution:"
+            ),
+            (
+                "You are solving a MATH-500 style problem. Work carefully and concisely. "
+                "End your response with:\n#### <answer>\n\n"
+                f"Problem: {question}"
+            ),
+            (
+                "Let's work through this math problem in detail. "
+                "After your reasoning, write the final answer on the last line as '#### <answer>'.\n\n"
+                f"Problem: {question}"
+            ),
+        ]
+
+        candidates = []
+        for prompt in prompts:
             try:
-                value = float(num)
-                if value.is_integer():
-                    return str(int(value))
-            except (ValueError, OverflowError):
-                pass
-            return num
+                raw = self.llm(prompt, system="", temperature=0.0, n=1)
+            except Exception:
+                continue
 
-        def _parse_answer(text):
-            if not isinstance(text, str):
-                text = str(text)
-            if not text:
-                return None
+            if raw is None:
+                continue
 
-            clean = text.replace(",", "")
+            if isinstance(raw, list):
+                if not raw:
+                    continue
+                raw = raw[0]
 
-            # Prefer the explicit GSM8K final-answer marker.
-            m = re.search(r"####\s*([-+]?\d+(?:\.\d+)?)", clean)
-            if m:
-                return _normalize(m.group(1))
+            answer = self._extract_answer(str(raw))
+            if answer:
+                candidates.append(answer)
 
-            # Next, try an explicit "answer is" or "Answer:" phrase.
-            m = re.search(
-                r"(?:The answer is|answer is|Answer:)\s*([-+]?\d+(?:\.\d+)?)",
-                clean,
-                re.IGNORECASE,
-            )
-            if m:
-                return _normalize(m.group(1))
+        if not candidates:
+            return ""
 
-            # Fallback: use the last number appearing in the solver output.
-            numbers = re.findall(r"[-+]?\d+(?:\.\d+)?", clean)
-            if numbers:
-                return _normalize(numbers[-1])
+        normalized = [self._normalize_answer(a) for a in candidates]
+        counts = Counter(normalized)
+        best_norm = counts.most_common(1)[0][0]
 
-            return None
+        for answer, norm in zip(candidates, normalized):
+            if norm == best_norm:
+                return self._compact_answer(answer)
 
-        def _first_text(result):
-            if isinstance(result, (list, tuple)):
-                result = result[0] if result else ""
-            if isinstance(result, str):
-                return result
-            if hasattr(result, "text"):
-                return result.text
-            if isinstance(result, dict) and "text" in result:
-                return result["text"]
-            return str(result)
+        return self._compact_answer(candidates[0])
 
-        def _one_call(temperature):
-            result = self.llm(
-                prompt=question,
-                system="",
-                temperature=temperature,
-                n=1,
-            )
-            return _first_text(result)
+    def _extract_answer(self, text: str) -> str:
+        matches = re.findall(r"####\s*([^\n]+)", text)
+        if matches:
+            return matches[-1].strip().strip(" .")
 
-        # Baseline greedy generation.
-        greedy_text = _one_call(0.0)
-        greedy_answer = _parse_answer(greedy_text)
+        lines = [line.strip() for line in text.splitlines() if line.strip()]
+        if lines:
+            return lines[-1].strip().strip(" .")
+        return ""
 
-        # Diverse sampled generations.
-        sampled_answers = []
-        for _ in range(5):
-            sampled_text = _one_call(0.7)
-            answer = _parse_answer(sampled_text)
-            if answer is not None:
-                sampled_answers.append(answer)
+    def _normalize_answer(self, answer: str) -> str:
+        s = answer.strip()
+        s = s.replace("\\left", "").replace("\\right", "")
+        s = s.replace("\\,", "").replace("\\;", "").replace("\\!", "")
+        s = s.replace("\\ ", "")
+        s = s.replace(" ", "")
+        s = s.replace("$", "")
+        s = s.replace("%", "")
 
-        if not sampled_answers:
-            return greedy_answer if greedy_answer is not None else ""
+        s = re.sub(
+            r"\\frac\s*\{([^{}]*)\}\s*\{([^{}]*)\}",
+            r"(\1)/(\2)",
+            s,
+        )
+        s = s.replace("\\dfrac", "").replace("\\tfrac", "")
 
-        counts = Counter(sampled_answers)
-        most_common = counts.most_common()
+        s = s.replace("\\sqrt", "sqrt")
+        s = s.replace("\\pi", "pi")
+        s = s.replace("\\theta", "theta")
+        s = s.replace("\\alpha", "alpha")
+        s = s.replace("\\beta", "beta")
+        s = s.replace("\\gamma", "gamma")
+        s = s.replace("\\cdot", "*")
+        s = s.replace("\\times", "*")
+        s = s.replace("\\div", "/")
+        s = s.replace("\\pm", "+-")
+        s = s.replace("\\leq", "<=")
+        s = s.replace("\\geq", ">=")
+        s = s.replace("\\neq", "!=")
+        s = s.replace("\\infty", "inf")
+        s = s.replace("\\{", "{").replace("\\}", "}")
+        s = s.replace("{", "").replace("}", "")
+        s = s.replace("\\", "")
 
-        if len(most_common) == 1 or most_common[0][1] > most_common[1][1]:
-            return most_common[0][0]
+        s = re.sub(r"\s+", "", s)
+        return s
 
-        # If sampled answers tie, fall back to the greedy answer if present.
-        if greedy_answer is not None and greedy_answer in counts:
-            return greedy_answer
-
-        return most_common[0][0]
+    def _compact_answer(self, answer: str) -> str:
+        return re.sub(r"\s+", "", answer.strip())

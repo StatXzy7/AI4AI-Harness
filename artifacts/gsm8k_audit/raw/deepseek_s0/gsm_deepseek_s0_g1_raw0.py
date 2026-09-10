@@ -1,127 +1,158 @@
-"""Sample several high-temperature solution paths and return the most common final numeric answer, using greedy as tie-break."""
+"""Improved MATH harness that samples multiple independent solutions, takes a majority vote, and uses an LLM verifier to break ties."""
 
-from collections import Counter
-from decimal import Decimal, InvalidOperation
 import re
+from collections import Counter
+from typing import List, Optional
 
 from ..harness_base import MathHarness
 
 
 class GsmGsmDeepseekS0G1(MathHarness):
-    """Grade-school math harness that uses self-consistency over multiple sampled solutions."""
+    NUM_SAMPLES = 4
+    SAMPLING_TEMPERATURE = 0.7
 
     def solve(self, question: str) -> str:
-        system = "You are a careful math tutor. Solve word problems step by step and end with exactly '#### <number>'."
-        prompt = (
-            "Solve the following grade-school math word problem.\n"
-            "Explain your reasoning step by step, and end your response with the final answer "
-            "in the format '#### <number>'.\n\n"
-            f"Question: {question}\n"
-        )
+        prompt = self._build_solver_prompt(question)
 
-        # Generate a single greedy answer to use as a stable tie-break/fallback.
-        greedy_text = self._first(self._call_llm(prompt, system=system, temperature=0.0, n=1))
+        candidate_answers: List[str] = []
+        candidate_solutions: List[str] = []
+        for _ in range(self.NUM_SAMPLES):
+            raw = self._call_llm(prompt, temperature=self.SAMPLING_TEMPERATURE)
+            answer = self._extract_final(raw)
+            if answer is not None:
+                candidate_answers.append(answer)
+                candidate_solutions.append(raw)
 
-        # Generate diverse samples for majority voting.
-        sampled_texts = []
-        for _ in range(5):
-            sampled_texts.extend(self._call_llm(prompt, system=system, temperature=0.7, n=1))
+        if not candidate_answers:
+            raw = self._call_llm(prompt, temperature=0.0)
+            return self._extract_final(raw) or self._last_line(raw)
 
-        all_texts = ([greedy_text] if greedy_text else []) + sampled_texts
-        numeric_answers = []
-        for text in all_texts:
-            number = self._extract_final_number(text)
-            if number is not None:
-                numeric_answers.append(number)
+        majority = self._majority_answer(candidate_answers)
+        if majority is not None:
+            return majority
 
-        if numeric_answers:
-            counts = Counter(numeric_answers)
-            max_count = max(counts.values())
-            top = [number for number, count in counts.items() if count == max_count]
+        verified = self._verifier_choose(question, candidate_answers, candidate_solutions)
+        return verified if verified is not None else candidate_answers[0]
 
-            if len(top) == 1:
-                return str(top[0])
-
-            # In a tie, prefer the greedy answer if it is among the tied candidates.
-            greedy_number = self._extract_final_number(greedy_text) if greedy_text else None
-            if greedy_number is not None and greedy_number in top:
-                return str(greedy_number)
-
-            return str(numeric_answers[0])
-
-        # Fallback to greedy parse.
-        greedy_number = self._extract_final_number(greedy_text) if greedy_text else None
-        if greedy_number is not None:
-            return str(greedy_number)
-
-        # Last resort: ask directly for the number.
-        direct_prompt = (
-            "What is the final numeric answer to the following math word problem?\n"
-            f"Question: {question}\n"
-            "Answer with just the number."
-        )
-        direct_text = self._first(self._call_llm(direct_prompt, system=system, temperature=0.0, n=1))
-        direct_number = self._extract_final_number(direct_text)
-        if direct_number is not None:
-            return str(direct_number)
-
-        if direct_text:
-            match = re.search(r"[-+]?[\d,]+(?:\.\d+)?", direct_text)
-            if match:
-                return self._clean_number(match.group(0))
-
-        return ""
-
-    def _call_llm(self, prompt, system, temperature=0.0, n=1):
-        """Call the frozen solver and always normalize its output to a list of strings."""
-        output = self.llm(prompt, system=system, temperature=temperature, n=n)
-        if output is None:
-            return []
-        if isinstance(output, list):
-            return [o for o in output if isinstance(o, str)]
-        if isinstance(output, tuple):
-            return [o for o in output if isinstance(o, str)]
-        if isinstance(output, str):
-            return [output]
-        return [str(output)]
-
-    @staticmethod
-    def _first(outputs):
-        if not outputs:
+    def _call_llm(self, prompt: str, temperature: float) -> str:
+        try:
+            out = self.llm(prompt, system="", temperature=temperature, n=1)
+        except Exception:
             return ""
-        first = outputs[0]
-        return first if isinstance(first, str) else str(first)
+        if out is None:
+            return ""
+        if isinstance(out, list):
+            return str(out[0]).strip() if out else ""
+        return str(out).strip()
 
-    def _extract_final_number(self, text: str):
-        """Extract a final numeric answer from solver text."""
-        if not isinstance(text, str) or not text.strip():
+    def _build_solver_prompt(self, question: str) -> str:
+        return (
+            "You are solving a competition math problem. "
+            "Think through the problem carefully and provide a clear, concise solution. "
+            "On the final line, put the final answer in exactly this format:\n"
+            "#### <answer>\n\n"
+            f"Problem: {question}\n"
+        )
+
+    def _extract_final(self, text: str) -> Optional[str]:
+        if not text:
             return None
-        text = text.strip()
 
-        patterns = [
-            r"####\s*\$?([-+]?[\d,]+(?:\.\d+)?)\$?",
-            r"\\boxed\s*\{\s*\$?([-+]?[\d,]+(?:\.\d+)?)\s*\$?\}",
-            r"answer\s+is\s*:?\s*\$?([-+]?[\d,]+(?:\.\d+)?)",
-            r"(?:\$|USD)?\s*([-+]?[\d,]+(?:\.\d+)?)\s*(?:dollars?|cents?)?\.?\s*$",
-            r"([-+]?[\d,]+(?:\.\d+)?)",
-        ]
-        for pattern in patterns:
-            matches = re.findall(pattern, text, flags=re.IGNORECASE)
-            if matches:
-                return self._clean_number(matches[-1])
+        # Prefer the last line containing the requested final-answer marker.
+        for line in reversed(text.splitlines()):
+            if "####" in line:
+                answer = line.split("####", 1)[1].strip()
+                if answer:
+                    return self._clean_answer(answer)
+
+        # Fallback: a boxed expression anywhere in the output.
+        boxed_matches = re.findall(
+            r"\\boxed\{([^{}]*(?:\{[^{}]*\}[^{}]*)*)\}", text
+        )
+        if boxed_matches:
+            return self._clean_answer(boxed_matches[-1].strip())
+
         return None
 
-    @staticmethod
-    def _clean_number(token: str):
-        token = token.strip().replace(",", "").replace("$", "")
-        if not token:
-            return None
-        try:
-            value = Decimal(token)
-            if value == value.to_integral_value():
-                return str(int(value))
-            return format(value, "f").rstrip("0").rstrip(".")
-        except (InvalidOperation, ValueError):
-            return token.rstrip(".")
-        except Exception:
-            return token.rstrip(".")
+    def _clean_answer(self, answer: str) -> str:
+        answer = answer.strip()
+
+        # Remove surrounding math delimiters.
+        if answer.startswith('$') and answer.endswith('$'):
+            answer = answer[1:-1].strip()
+        if answer.startswith('\\(') and answer.endswith('\\)'):
+            answer = answer[2:-2].strip()
+
+        answer = re.sub(r"\s+", "", answer)
+
+        # Unwrap a boxed answer if it appears in the extracted text.
+        boxed = re.search(
+            r"\\boxed\{([^{}]*(?:\{[^{}]*\}[^{}]*)*)\}", answer
+        )
+        if boxed:
+            answer = boxed.group(1).strip()
+
+        # Drop accidental trailing punctuation that shouldn't be part of a compact answer.
+        answer = answer.rstrip('.,;')
+        return answer.strip()
+
+    def _normalize_answer(self, answer: str) -> str:
+        answer = answer.strip()
+
+        if answer.startswith('$') and answer.endswith('$'):
+            answer = answer[1:-1].strip()
+        if answer.startswith('\\(') and answer.endswith('\\)'):
+            answer = answer[2:-2].strip()
+
+        answer = re.sub(r"\s+", "", answer)
+        answer = answer.replace("\\left", "").replace("\\right", "")
+        answer = answer.replace("\\dfrac", "\\frac").replace("\\tfrac", "\\frac")
+        answer = re.sub(r"\\frac\{([^{}]*)\}\{([^{}]*)\}", r"\1/\2", answer)
+        answer = answer.replace("\\,", "").replace("\\;", "")
+        answer = answer.rstrip('.,;')
+        return answer
+
+    def _majority_answer(self, answers: List[str]) -> Optional[str]:
+        counts = Counter()
+        representatives = {}
+        for answer in answers:
+            key = self._normalize_answer(answer)
+            counts[key] += 1
+            representatives.setdefault(key, answer)
+
+        most_common = counts.most_common()
+        if len(most_common) == 1 or most_common[0][1] > most_common[1][1]:
+            return representatives[most_common[0][0]]
+        return None
+
+    def _verifier_choose(
+        self, question: str, answers: List[str], solutions: List[str]
+    ) -> Optional[str]:
+        candidate_blocks = []
+        for idx, (answer, solution) in enumerate(zip(answers, solutions), 1):
+            snippet = solution.strip()
+            if len(snippet) > 1200:
+                snippet = snippet[-1200:]
+            candidate_blocks.append(
+                f"[{idx}] Answer: {answer}\nReasoning snippet: {snippet}\n"
+            )
+
+        prompt = (
+            "You are an expert math verifier. Below is a problem and several candidate answers. "
+            "Read the problem and the candidates, then select the correct final answer. "
+            "Your final answer must be on the last line in the form '#### <answer>'.\n\n"
+            f"Problem: {question}\n\n"
+            + "\n".join(candidate_blocks)
+        )
+
+        raw = self._call_llm(prompt, temperature=0.0)
+        return self._extract_final(raw)
+
+    def _last_line(self, text: str) -> str:
+        if not text:
+            return ""
+        for line in reversed(text.splitlines()):
+            line = line.strip()
+            if line:
+                return line
+        return ""

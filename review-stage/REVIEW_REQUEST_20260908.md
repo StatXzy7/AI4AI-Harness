@@ -102,3 +102,28 @@ Questions for the reviewer:
 - sec_discussion.tex / sec_conclusion.tex: "What to measure, then" guidance +
   selection recommendation; Limitations extended (exploratory status).
 - Main text held at 9 pages (figures shrunk, prose tightened).
+
+---
+
+## UPDATE (2026-09-10): cross-domain mini-audit complete
+
+The audit finished (35/48 slots admitted, 400 eval tasks, 14,000 rows).
+Final metrics (artifacts/gsm8k_audit/metrics.json):
+- mean pairwise disagreement 10.6%, K_eff 33/35, outcome-identical pairs 0.7%
+- union repair over bare 76.0%, union harm 0.8%, oracle headroom over bare 4.75pp
+- best fixed member is bare itself (0.9375); generated harnesses 0.68-0.87
+
+Protocol deviation to review (disclosed in artifacts/gsm8k_audit/PROTOCOL_CHANGELOG.md,
+entry G1): the first generation round used a GSM8K-style task description that
+mismatched MATH-500's LaTeX answers; all first-round data was quarantined as a
+pilot and generation rerun. The pilot supplies a controlled contrast
+(population remains diverse at 16.2% disagreement while union repair collapses
+to 18% - a prompt-side protocol error invisible to code checks, killing
+utility without killing diversity).
+
+Questions added for the reviewer:
+- Is the G1 disclosure + quarantine handling acceptable, or must the pilot be
+  dropped entirely?
+- The cross-domain claim is "clean-protocol diversity replicates" (NOT "collapse
+  replicates" - we did not rerun the collapse-inducing protocol). Is that the
+  right claim boundary?

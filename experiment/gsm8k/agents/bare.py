@@ -4,13 +4,14 @@ Mirrors the SQL-side bare.py convention (expert system prompt, one call, structu
 final line)."""
 from ..harness_base import MathHarness
 
-SYS = ("You are an expert at grade-school math word problems. Solve carefully step by "
-       "step, then output the final numeric answer on the last line, inside "
-       "#### <number> (nothing after it).")
+SYS = ("You are an expert competition mathematician. Solve the problem carefully "
+       "step by step, then output the final answer on the last line in the form "
+       "#### <answer> (the answer may be a number, fraction, or LaTeX expression; "
+       "nothing after it).")
 
 
 class BareHarness(MathHarness):
     def solve(self, question: str) -> str:
-        prompt = f"Question: {question}\n\nSolve the problem and end with '#### <final number>'."
+        prompt = f"Question: {question}\n\nSolve the problem and end with '#### <final answer>'."
         resp = self.llm(prompt, system=SYS, temperature=0.0)
         return resp

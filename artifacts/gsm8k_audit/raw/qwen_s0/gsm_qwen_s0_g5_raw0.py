@@ -1,284 +1,208 @@
-"""Runs several prompted solver calls, extracts numeric answers, and chooses the majority answer with a judge fallback."""
+"""Uses multiple prompted generations, answer normalization, majority voting, and a verifier tie-breaker to choose the final answer."""
 try:
     from ..harness_base import MathHarness
-except Exception:
-    try:
-        from harness_base import MathHarness
-    except Exception:
-        class MathHarness:
-            def llm(self, prompt: str, system: str = "", temperature: float = 0.0, n: int = 1) -> str:
-                raise NotImplementedError
+except ImportError:
+    class MathHarness:
+        def llm(self, prompt, system="", temperature=0.0, n=1):
+            return ""
 
 import re
-import inspect
 from collections import Counter
+from fractions import Fraction
 
 
 class GsmGsmQwenS0G5(MathHarness):
-    _NUMBER_RE = re.compile(
-        r"[+-]?(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?(?:[eE][+-]?\d+)?|[+-]?\.\d+(?:[eE][+-]?\d+)?"
-    )
-
     def solve(self, question: str) -> str:
         question = (question or "").strip()
-        prompts = self._prompts(question)
-        system = (
-            "You are a careful grade-school math solver. "
-            "Solve step by step and end with #### <number>."
-        )
-
-        counts = Counter()
-        ordered_answers = []
+        candidates = []
         raw_outputs = []
-        majority = len(prompts) // 2 + 1
 
-        for prompt, temperature in prompts:
-            raw = self._call(prompt, system=system, temperature=temperature)
-            raw_outputs.append(raw)
+        for system, user in self._solver_variants(question):
+            out = self._call_llm(user, system=system, temperature=0.0)
+            raw_outputs.append(out)
+            ans = self._clean_answer(self._extract_answer(out))
+            if ans and not self._is_placeholder(ans):
+                candidates.append((self._normalize_answer(ans), ans))
 
-            answer = self._extract_answer(raw)
-            if answer is not None:
-                ordered_answers.append(answer)
-                counts[answer] += 1
-                if counts[answer] >= majority:
-                    return answer
+        if not candidates:
+            out = self._call_llm(
+                self._answer_only_prompt(question),
+                system="You are a concise math solver. Final line: #### <answer>",
+                temperature=0.0,
+            )
+            ans = self._clean_answer(self._extract_answer(out))
+            if ans and not self._is_placeholder(ans):
+                return self._present_answer(ans)
 
+            for out in raw_outputs:
+                ans = self._clean_answer(self._last_nonempty(out))
+                if ans and not self._is_placeholder(ans):
+                    return self._present_answer(ans)
+            return ""
+
+        counts = Counter(norm for norm, _ in candidates if norm)
         if counts:
-            max_count = max(counts.values())
-            top = [answer for answer, count in counts.items() if count == max_count]
+            top_norm, top_count = counts.most_common(1)[0]
+        else:
+            top_norm, top_count = "", 0
 
-            if len(top) == 1:
-                return top[0]
+        if top_count >= 2:
+            choices = [raw for norm, raw in candidates if norm == top_norm]
+            return self._present_answer(self._prefer_compact(choices))
 
-            judged = self._judge(question, top, system)
-            if judged in top:
-                return judged
+        if len(candidates) == 1:
+            return self._present_answer(candidates[0][1])
 
-            for answer in ordered_answers:
-                if answer in top:
-                    return answer
+        unique = []
+        seen = set()
+        for norm, raw in candidates:
+            key = norm or raw
+            if key and key not in seen:
+                seen.add(key)
+                unique.append(raw)
 
-            return top[0]
+        verdict = self._call_llm(
+            self._verifier_prompt(question, unique[:5]),
+            system="You are a meticulous mathematics judge. Final line: #### <answer>",
+            temperature=0.0,
+        )
+        v_ans = self._clean_answer(self._extract_answer(verdict))
+        if v_ans and not self._is_placeholder(v_ans):
+            v_norm = self._normalize_answer(v_ans)
+            choices = [v_ans]
+            if v_norm:
+                choices.extend(raw for norm, raw in candidates if norm == v_norm)
+            return self._present_answer(self._prefer_compact(choices))
 
-        fallback = self._extract_answer("\n".join(raw_outputs))
-        return fallback if fallback is not None else "0"
+        if top_norm:
+            choices = [raw for norm, raw in candidates if norm == top_norm]
+            if choices:
+                return self._present_answer(self._prefer_compact(choices))
 
-    def _prompts(self, question: str):
-        q = question.strip()
+        return self._present_answer(self._prefer_compact([raw for _, raw in candidates]))
+
+    def _call_llm(self, prompt, system="", temperature=0.0):
+        try:
+            out = self.llm(prompt, system=system, temperature=temperature, n=1)
+            return out if isinstance(out, str) else str(out)
+        except Exception:
+            return ""
+
+    def _solver_variants(self, question):
+        base = (
+            "The final answer may be a plain number, a fraction like 3/4, "
+            "a LaTeX expression like 2\\sqrt{3}, an interval like (3,4], "
+            "or a tuple like (2,5). Put the final answer alone on the last "
+            "line exactly as: #### <answer>"
+        )
         return [
             (
-                f"{q}\n\nSolve step by step. End with #### <number>.",
-                0.0,
+                "You are an expert competition mathematician. Final line: #### <answer>",
+                f"Problem:\n{question}\n\n"
+                f"Solve step by step, checking arithmetic and endpoint conditions. {base}",
             ),
             (
-                f"{q}\n\nRestate the important numbers, then solve step by step. "
-                "End with #### <number>.",
-                0.4,
+                "You are a precise mathematical problem solver. Final line: #### <answer>",
+                f"Problem:\n{question}\n\n"
+                f"Identify the requested quantity, solve with exact arithmetic, and sanity-check. {base}",
             ),
             (
-                f"{q}\n\nWrite the arithmetic expression, evaluate it carefully, "
-                "and give the final answer. End with #### <number>.",
-                0.4,
-            ),
-            (
-                f"{q}\n\nSolve step by step, then check your arithmetic. "
-                "End with #### <number>.",
-                0.6,
-            ),
-            (
-                f"{q}\n\nAnswer concisely with short steps. End with #### <number>.",
-                0.6,
+                "You are a careful mathematical auditor. Final line: #### <answer>",
+                f"Problem:\n{question}\n\n"
+                f"Solve independently, watch for sign, off-by-one, and endpoint errors. {base}",
             ),
         ]
 
-    def _judge(self, question: str, candidates, system: str):
-        candidates_text = ", ".join(candidates)
-        prompt = (
-            f"{question}\n\n"
-            f"Several candidate numeric answers were produced: {candidates_text}. "
-            "Solve the problem carefully and choose the correct one. "
-            "Reply only with #### <number>."
+    def _answer_only_prompt(self, question):
+        return (
+            f"Problem:\n{question}\n\n"
+            "Give only the final answer on the last line as: #### <answer>"
         )
-        raw = self._call(prompt, system=system, temperature=0.0)
-        return self._extract_answer(raw)
 
-    def _call(self, prompt: str, system: str = "", temperature: float = 0.0) -> str:
-        temperatures = [temperature] if temperature == 0.0 else [temperature, 0.0]
+    def _verifier_prompt(self, question, answers):
+        cand = "\n".join(f"{i + 1}. {a}" for i, a in enumerate(answers))
+        return (
+            f"Problem:\n{question}\n\n"
+            f"Candidate answers:\n{cand}\n\n"
+            "Determine the correct exact answer. If a candidate is correct, choose it. "
+            "If none is correct, compute the correct answer. Do not output a candidate number. "
+            "Put the final answer alone on the last line exactly as: #### <answer>"
+        )
 
-        for temp in temperatures:
-            desired_kwargs = {"system": system, "temperature": temp, "n": 1}
+    def _extract_answer(self, text):
+        if not text:
+            return ""
+        text = str(text)
 
-            try:
-                sig = inspect.signature(self.llm)
-            except Exception:
-                sig = None
+        matches = re.findall(r"(?im)^\s*####\s*(?:<answer>)?\s*(.+?)\s*$", text)
+        if matches:
+            ans = matches[-1]
+            boxed = self._extract_boxed(ans)
+            return boxed if boxed else ans
 
-            try:
-                if sig is None:
-                    raw = self.llm(prompt, **desired_kwargs)
-                else:
-                    has_var_keyword = any(
-                        p.kind == inspect.Parameter.VAR_KEYWORD
-                        for p in sig.parameters.values()
-                    )
-                    if has_var_keyword:
-                        kwargs = desired_kwargs
-                    else:
-                        kwargs = {
-                            k: v
-                            for k, v in desired_kwargs.items()
-                            if k in sig.parameters
-                        }
-                    raw = self.llm(prompt, **kwargs)
+        matches = re.findall(r"(?i)####\s*(?:<answer>)?\s*([^\n]+)", text)
+        if matches:
+            ans = matches[-1]
+            boxed = self._extract_boxed(ans)
+            return boxed if boxed else ans
 
-                return self._to_text(raw)
+        parts = re.split(r"(?im)^\s*####\s*$", text)
+        if len(parts) > 1:
+            tail = parts[-1].strip()
+            if tail:
+                first = self._first_nonempty(tail)
+                if first:
+                    boxed = self._extract_boxed(first)
+                    return boxed if boxed else first
 
-            except TypeError:
-                try:
-                    raw = self.llm(prompt, **desired_kwargs)
-                    return self._to_text(raw)
-                except Exception:
-                    try:
-                        raw = self.llm(prompt, system=system, temperature=temp)
-                        return self._to_text(raw)
-                    except Exception:
-                        try:
-                            raw = self.llm(prompt)
-                            return self._to_text(raw)
-                        except Exception:
-                            pass
+        boxed = self._extract_boxed(text)
+        if boxed:
+            return boxed
 
-            except Exception:
-                pass
+        matches = re.findall(r"(?im)^\s*(?:final\s+answer|answer)\s*[:\-]?\s*(.+?)\s*$", text)
+        if matches:
+            return matches[-1]
 
+        matches = re.findall(r"(?i)\b(?:final\s+answer|answer)\b\s*(?:is|:|=|-)?\s*([^\n]+)", text)
+        if matches:
+            return matches[-1]
+
+        return self._last_nonempty(text)
+
+    def _extract_boxed(self, text):
+        idx = text.rfind("\\boxed{")
+        if idx == -1:
+            return ""
+        start = idx + len("\\boxed{")
+        depth = 1
+        i = start
+        while i < len(text) and depth > 0:
+            ch = text[i]
+            if ch == "{":
+                depth += 1
+            elif ch == "}":
+                depth -= 1
+            i += 1
+        if depth == 0:
+            return text[start:i - 1].strip()
+        return text[start:].strip()
+
+    def _first_nonempty(self, text):
+        for line in text.splitlines():
+            line = line.strip()
+            if line:
+                return line
         return ""
 
-    def _to_text(self, obj) -> str:
-        if obj is None:
+    def _last_nonempty(self, text):
+        lines = [line.strip() for line in text.splitlines() if line.strip()]
+        return lines[-1] if lines else ""
+
+    def _clean_answer(self, s):
+        if s is None:
             return ""
-        if isinstance(obj, str):
-            return obj
-        if isinstance(obj, bytes):
-            return obj.decode("utf-8", errors="ignore")
-        if isinstance(obj, list):
-            return self._to_text(obj[0]) if obj else ""
-        if isinstance(obj, dict):
-            for key in ("text", "output", "completion", "content", "message", "response"):
-                if key in obj:
-                    return self._to_text(obj[key])
-            if "choices" in obj:
-                return self._to_text(obj["choices"])
-        return str(obj)
-
-    def _extract_answer(self, text, allow_fallback: bool = True):
-        if text is None:
-            return None
-
-        text = str(text)
-        if not text.strip():
-            return None
-
-        explicit_patterns = [
-            r"####\s*([^\n\r#]*)",
-            r"(?:the\s+)?(?:final\s+)?answer\s*(?:is|:|=)\s*([^\n\r]*)",
-            r"(?:the\s+)?(?:final\s+)?(?:total|result|value|sum|difference|product|quotient)\s*(?:is|:|=)\s*([^\n\r]*)",
-            r"\\boxed\{([^}]*)\}",
-            r"boxed\{([^}]*)\}",
-        ]
-
-        candidates = []
-        for pattern in explicit_patterns:
-            for match in re.finditer(pattern, text, flags=re.IGNORECASE):
-                answer = self._answer_from_snippet(match.group(1))
-                if answer is not None:
-                    candidates.append((match.start(), answer))
-
-        if candidates:
-            candidates.sort(key=lambda item: item[0])
-            return candidates[-1][1]
-
-        if allow_fallback:
-            numbers = self._NUMBER_RE.findall(text)
-            if numbers:
-                return self._canonical_number(numbers[-1])
-
-        return None
-
-    def _answer_from_snippet(self, snippet):
-        if snippet is None:
-            return None
-
-        snippet = str(snippet).strip()
-        if not snippet:
-            return None
-
-        numbers = self._NUMBER_RE.findall(snippet)
-        if numbers:
-            return self._canonical_number(numbers[0])
-
-        return self._canonical_number(snippet)
-
-    def _canonical_number(self, raw):
-        if raw is None:
-            return None
-
-        s = str(raw).strip()
-        s = s.replace(",", "").replace("$", "").replace(" ", "")
-
-        if s.endswith("%"):
-            s = s[:-1].strip()
-
+        s = str(s).strip()
         if not s:
-            return None
+            return ""
 
-        if s.startswith("+"):
-            s = s[1:]
-
-        negative = s.startswith("-")
-        if negative:
-            s = s[1:]
-
-        if not s:
-            return None
-
-        if re.fullmatch(r"\d+", s):
-            value = str(int(s))
-            if value == "0":
-                return "0"
-            return ("-" + value) if negative else value
-
-        decimal_match = re.fullmatch(r"(\d*)\.(\d*)", s)
-        if decimal_match:
-            int_part, frac_part = decimal_match.groups()
-
-            if not int_part and not frac_part:
-                return None
-
-            frac_part = frac_part.rstrip("0")
-
-            if not frac_part:
-                value = str(int(int_part)) if int_part else "0"
-                if value == "0":
-                    return "0"
-                return ("-" + value) if negative else value
-
-            int_value = str(int(int_part)) if int_part else "0"
-            value = f"{int_value}.{frac_part}"
-            return ("-" + value) if negative else value
-
-        signed = ("-" if negative else "") + s
-        try:
-            value = float(signed)
-        except ValueError:
-            return None
-
-        if value != value or value == float("inf") or value == float("-inf"):
-            return None
-
-        if value == 0:
-            return "0"
-
-        if value.is_integer():
-            return str(int(value))
-
-        return repr(value)
+        s = re.sub(r"(?m)^

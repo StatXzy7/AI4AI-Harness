@@ -5,6 +5,6 @@
   gsm_deepseek_s0_g3             ADMIT  nv=1/1 neutral-valid
   gsm_deepseek_s0_g4             ADMIT  nv=1/1 neutral-valid
   gsm_deepseek_s0_g5             ADMIT  nv=1/2 neutral-valid
-  gsm_deepseek_s0_g6             ADMIT  nv=1/3 neutral-valid
-  gsm_deepseek_s0_g7             ADMIT  nv=1/3 neutral-valid
-[gen] K=8/8 admitted | R_artifact=0.6154 -> E:\projects\AI4AI-Harness\artifacts\gsm8k_audit\gen_deepseek_s0.json
+  gsm_deepseek_s0_g6             ADMIT  nv=1/1 neutral-valid
+  gsm_deepseek_s0_g7             ADMIT  nv=1/2 neutral-valid
+[gen] K=8/8 admitted | R_artifact=0.8 -> E:\projects\AI4AI-Harness\artifacts\gsm8k_audit\gen2_deepseek_s0.json

@@ -1,220 +1,347 @@
-"""Adaptive self-consistency harness: sample several chain-of-thought solutions at nonzero temperature, extract and majority-vote their final numeric answers (weighting well-formatted '####' replies higher and anchoring ties to a greedy decode), and stop sampling early once one answer has a decisive lead."""
+"""Improves on a single greedy call by running the frozen solver under five distinct reasoning strategies, early-exiting once one answer clinches a majority of the equivalence-normalised '#### ' extractions, and adjudicating the leading candidates from scratch when the vote is split."""
 
 import re
+from fractions import Fraction
 
 from ..harness_base import MathHarness
 
 
 class GsmGsmGlmS0G6(MathHarness):
-    """Improves on a single greedy call via adaptive self-consistency voting.
+    r"""Multi-strategy deterministic self-consistency around a frozen solver.
 
-    Control flow inside ``solve``:
-
-    1. **Greedy anchor.** One temperature-0 solution is generated first; it is
-       the model's single most likely solution path.
-    2. **Diverse sampling.** Additional solutions are drawn at nonzero
-       temperature, batched through the solver's ``n`` argument when possible
-       and one-by-one otherwise.
-    3. **Weighted vote.** Each reply's final answer is extracted with a
-       cascade of parsers (``#### x``  >  "answer is x"  >  last number) and
-       cast as a vote: replies that used the explicit GSM8K ``####`` marker
-       count fully, heuristic parses count half, and the greedy anchor gets a
-       small prior (and, being registered first, wins exact ties).
-    4. **Early stopping.** Sampling halts as soon as the leading answer's
-       weighted margin is decisive; otherwise the full budget is spent and the
-       plurality answer wins.
-
-    No code execution or external tools are used -- the only signals are the
-    question and the solver's own text output.
+    Control flow (a real change vs. one greedy call):
+      1. DECODE: fire the frozen solver once per reasoning strategy (plain
+         step-by-step, meticulous setup, solve-then-verify, forced alternative
+         method, concise expert), all at temperature 0.0. Distinct prompts
+         decorrelate the greedy chains, supplying the diversity that
+         self-consistency normally gets from sampling.
+      2. EXTRACT: pull the '#### <answer>' line from each response (with
+         \boxed{...} and last-line/'answer is' fallbacks), and stop early once
+         some answer already holds a majority of all planned attempts.
+      3. VOTE: fingerprint every answer (LaTeX/units/whitespace normalisation
+         plus exact numeric equivalence via Fraction) and majority-vote.
+      4. ADJUDICATE: on disagreement, show the leading candidates to the
+         solver, which re-solves from scratch and checks each candidate; a
+         careful re-solve is the tie-break of last resort, then plurality.
     """
 
-    # ---- hyperparameters of the voting scheme -------------------------
-    sample_temperature = 0.7   # diversity for the voting pool
-    sample_batch = 2           # samples requested per round (via `n` when possible)
-    min_samples = 4            # samples required before early stopping is allowed
-    max_samples = 8            # hard budget on sampled solutions
-    early_stop_margin = 2.0    # weighted-vote lead that ends sampling early
-    anchor_weight = 1.5        # prior granted to the greedy (temperature-0) answer
+    NUM_RE = re.compile(
+        r"^[+-]?(?:\d+(?:\.\d+)?|\.\d+)(?:/[+-]?(?:\d+(?:\.\d+)?|\.\d+))?$"
+    )
+    FRAC_RE = re.compile(r"\\frac\s*\{([^{}]*)\}\s*\{([^{}]*)\}")
+    MAX_ADJ_CANDIDATES = 3
 
-    system_prompt = (
-        "You are a careful grade-school math tutor. Work through the problem "
-        "in short, explicit steps, double-check the arithmetic, and finish "
-        "with a final line of exactly the form '#### <number>' where <number> "
-        "is the final numeric answer."
+    STRATEGIES = (
+        (
+            "",
+            "Solve the problem step by step, justifying each step briefly.",
+        ),
+        (
+            "You are a meticulous competition mathematician who never skips a check.",
+            "First restate what is given and what is asked, define variables, set up "
+            "the governing equations or relationships, and solve them. Re-check every "
+            "arithmetic and algebraic manipulation before moving on.",
+        ),
+        (
+            "",
+            "Solve the problem, then VERIFY your result: substitute it back into the "
+            "original conditions, test a boundary or special case, or check every "
+            "constraint explicitly. If the verification fails, find the error, fix "
+            "it, and re-verify before giving the final answer.",
+        ),
+        (
+            "",
+            "Solve the problem with a method that is NOT your first instinct -- for "
+            "example work backwards from the target quantity, enumerate small cases "
+            "and find a pattern, introduce coordinates, or exploit symmetry.",
+        ),
+        (
+            "You are a concise competition coach writing model solutions.",
+            "Give the shortest fully rigorous solution you can: only the essential "
+            "steps, no filler, but no unjustified leaps.",
+        ),
     )
 
-    user_template = (
-        "Problem:\n{question}\n\n"
-        "Solve it step by step, then give the final numeric answer on the "
-        "last line in the form '#### <number>'."
-    )
-
-    # ---- answer-extraction patterns ------------------------------------
-    _hash_re = re.compile(r"####\s*([^\n]+)")
-    _answer_re = re.compile(
-        r"(?:final\s+answer|answer)\s*(?:is|:|=|should\s+be)?\s*\$?\s*"
-        r"(-?[\d,]*\d(?:\.\d+)?)",
-        re.IGNORECASE,
-    )
-    _number_re = re.compile(r"-?(?:\d[\d,]*(?:\.\d+)?|\.\d+)")
-
-    # ------------------------------------------------------------------ #
-    # Low-level plumbing: talking to the frozen solver                    #
-    # ------------------------------------------------------------------ #
-
-    def _prompt(self, question: str) -> str:
-        return self.user_template.format(question=question)
-
-    def _call(self, question: str, temperature: float, n: int):
-        """Invoke the frozen solver, tolerating signature/output variations."""
-        prompt = self._prompt(question)
-        try:
-            return self.llm(
-                prompt, system=self.system_prompt, temperature=temperature, n=n
-            )
-        except TypeError:
-            # Solver variant without an `n` parameter.
-            try:
-                return self.llm(
-                    prompt, system=self.system_prompt, temperature=temperature
-                )
-            except Exception:
-                return ""
-        except Exception:
-            # A failed call should not kill the whole vote; it just yields
-            # no text (and hence no vote) for that sample.
-            return ""
-
-    @staticmethod
-    def _as_text(out) -> str:
-        """Coerce a solver reply of unknown shape into plain text."""
-        if out is None:
-            return ""
-        if isinstance(out, str):
-            return out
-        if isinstance(out, (list, tuple)):
-            return "\n".join(GsmGsmGlmS0G6._as_text(item) for item in out)
-        if isinstance(out, dict):
-            for key in ("text", "content", "response", "output", "completion"):
-                value = out.get(key)
-                if isinstance(value, str):
-                    return value
-            return "\n".join(GsmGsmGlmS0G6._as_text(v) for v in out.values())
-        for attr in ("text", "content", "output", "completion"):
-            value = getattr(out, attr, None)
-            if isinstance(value, str):
-                return value
-        return str(out)
-
-    def _as_texts(self, out):
-        """Split a (possibly multi-completion) reply into a list of texts."""
-        if isinstance(out, (list, tuple)):
-            return [self._as_text(item) for item in out]
-        text = self._as_text(out)
-        return [text] if text else []
-
-    def _sample(self, question: str, k: int, temperature: float):
-        """Return exactly ``k`` sampled solution texts."""
-        texts = []
-        if k > 1:
-            # Try a single batched call first; top up one-by-one if the
-            # solver does not actually return k completions.
-            texts = self._as_texts(self._call(question, temperature, k))
-        while len(texts) < k:
-            texts.append(self._as_text(self._call(question, temperature, 1)))
-        return texts[:k]
-
-    # ------------------------------------------------------------------ #
-    # Answer extraction and normalisation                                 #
-    # ------------------------------------------------------------------ #
-
-    @classmethod
-    def _extract(cls, text: str):
-        """Return ``(canonical_answer, used_explicit_marker)``."""
-        if text:
-            hits = cls._hash_re.findall(text)      # GSM8K-style "#### 42"
-            if hits:
-                return cls._normalize(hits[-1]), True
-            hits = cls._answer_re.findall(text)    # "The answer is 42"
-            if hits:
-                return cls._normalize(hits[-1]), False
-            hits = cls._number_re.findall(text)    # last number in the reply
-            if hits:
-                return cls._normalize(hits[-1]), False
-        return None, False
-
-    @classmethod
-    def _normalize(cls, raw):
-        """Canonicalise '$1,234.50' / '42.' / ' 42 ' -> '1234.5' / '42'."""
-        if raw is None:
-            return None
-        match = cls._number_re.search(str(raw))
-        if not match:
-            return None
-        token = match.group(0).replace(",", "")
-        try:
-            value = float(token)
-        except ValueError:
-            return None
-        if value == int(value):
-            return str(int(value))
-        trimmed = ("%.10f" % value).rstrip("0").rstrip(".")
-        return trimmed if trimmed not in ("", "-") else "0"
-
-    # ------------------------------------------------------------------ #
-    # Main control flow                                                   #
-    # ------------------------------------------------------------------ #
-
-    @staticmethod
-    def _rank(tally, order):
-        """Deterministic ranking: weight first, then first-seen order."""
-        return sorted(tally.items(), key=lambda kv: (-kv[1], order[kv[0]]))
+    # ------------------------------------------------------------------ solve
 
     def solve(self, question: str) -> str:
-        # ---- Stage 1: greedy anchor (single most likely solution path) --
-        anchor_text = self._as_text(self._call(question, 0.0, 1))
-        anchor_ans, _ = self._extract(anchor_text)
+        question = str(question or "").strip()
+        majority_of_all = len(self.STRATEGIES) // 2 + 1  # 3 of 5 attempts
 
-        tally = {}   # canonical answer -> weighted vote total
-        order = {}   # canonical answer -> insertion index (tie-breaking)
+        candidates = []
+        for system, tactic in self.STRATEGIES:
+            answer = self._extract(
+                self._call(self._solve_prompt(question, tactic), system)
+            )
+            if not answer:
+                continue
+            candidates.append(answer)
+            # Early consensus: this answer already holds a majority of all
+            # planned attempts, so the remaining calls cannot change the winner.
+            if self._top_count(candidates) >= majority_of_all:
+                break
 
-        def add_vote(answer, weight):
-            if answer is None:
-                return
-            if answer not in tally:
-                tally[answer] = 0.0
-                order[answer] = len(order)
-            tally[answer] += weight
+        groups = self._tally(candidates)
+        if not groups:  # nothing extractable at all -> strict-format rescue call
+            rescue = self._extract(self._call(self._rescue_prompt(question), ""))
+            return self._compact(rescue)
 
-        # The greedy answer seeds the vote with a small prior and, being
-        # registered first, wins any exact tie.
-        add_vote(anchor_ans, self.anchor_weight)
+        need = len(candidates) // 2 + 1
+        if len(groups) == 1 or groups[0]["count"] >= need:
+            return self._compact(self._representative(groups[0]))
 
-        # ---- Stage 2: adaptive self-consistency sampling ----------------
-        drawn = 0
-        while drawn < self.max_samples:
-            k = min(self.sample_batch, self.max_samples - drawn)
-            for text in self._sample(question, k, self.sample_temperature):
-                drawn += 1
-                answer, marked = self._extract(text)
-                # Explicit "####" answers are on-policy and parse reliably,
-                # so they count fully; heuristic parses count half.
-                add_vote(answer, 1.0 if marked else 0.5)
+        winner = self._adjudicate(question, groups)
+        return self._compact(winner or self._representative(groups[0]))
 
-            # Early stopping: quit while ahead once enough evidence is in.
-            if drawn >= self.min_samples and tally:
-                ranked = self._rank(tally, order)
-                runner_up = ranked[1][1] if len(ranked) > 1 else 0.0
-                if ranked[0][1] - runner_up >= self.early_stop_margin:
+    # -------------------------------------------------------------- prompting
+
+    def _solve_prompt(self, question, tactic):
+        return (
+            f"Problem:\n{question}\n\n"
+            f"Approach: {tactic}\n\n"
+            "Work out the solution, then give the final answer on the last line, "
+            "formatted exactly as:\n"
+            "#### <answer>\n"
+            "The <answer> must be the compact final result only -- a number (42), "
+            "a fraction (\\frac{3}{4} or 3/4), a LaTeX expression (2\\sqrt{3}, "
+            "6+9i), an interval ((3,4]), or a tuple ((2, 5)). No units and no "
+            "explanation on that line."
+        )
+
+    def _rescue_prompt(self, question):
+        return (
+            f"Problem:\n{question}\n\n"
+            "Solve the problem. You MUST finish your reply with a final line of "
+            "exactly the form:\n"
+            "#### <answer>\n"
+            "where <answer> is the compact final result only -- a number (42), a "
+            "fraction (\\frac{3}{4} or 3/4), a LaTeX expression (2\\sqrt{3}), an "
+            "interval ((3,4]), or a tuple ((2, 5))."
+        )
+
+    def _adjudicate(self, question, groups):
+        cands = [self._representative(g) for g in groups[: self.MAX_ADJ_CANDIDATES]]
+        listing = "\n".join(
+            f"({label}) {cand}" for label, cand in zip("ABCDEF", cands)
+        )
+        prompt = (
+            f"Problem:\n{question}\n\n"
+            "Independent solution attempts produced these candidate final answers:\n"
+            f"{listing}\n\n"
+            "Solve the problem yourself from scratch. Then judge every candidate: "
+            "substitute each one back into the problem's conditions, check boundary "
+            "or special cases, and re-derive the key step. Select the candidate that "
+            "is actually correct; if every candidate is wrong, give your own "
+            "answer.\n"
+            "End with the final answer on the last line, formatted exactly as:\n"
+            "#### <answer>\n"
+            "The <answer> must be the compact final result only -- a number (42), a "
+            "fraction (\\frac{3}{4} or 3/4), a LaTeX expression (2\\sqrt{3}), an "
+            "interval ((3,4]), or a tuple ((2, 5))."
+        )
+        answer = self._extract(
+            self._call(prompt, system="You are a rigorous competition-math grader.")
+        )
+        if answer:
+            canon, num = self._fingerprint(answer)
+            for group in groups:
+                if self._same(group, canon, num):
+                    return self._representative(group)
+            return answer  # adjudicator re-derived a fresh answer
+
+        careful = (
+            "Solve the problem with extreme care: write out every step, double-check "
+            "each computation, and explicitly verify the final result against the "
+            "problem statement before answering."
+        )
+        return self._extract(self._call(self._solve_prompt(question, careful), ""))
+
+    def _call(self, prompt, system=""):
+        try:
+            out = self.llm(prompt, system=system, temperature=0.0, n=1)
+        except TypeError:
+            try:
+                out = self.llm(prompt, system)
+            except TypeError:
+                out = self.llm(prompt)
+        if isinstance(out, (list, tuple)):
+            out = out[0] if out else ""
+        if isinstance(out, dict):
+            out = next(
+                (
+                    out[k]
+                    for k in ("text", "content", "output", "response", "completion")
+                    if k in out
+                ),
+                "",
+            )
+        if out is None:
+            return ""
+        if not isinstance(out, str):
+            for attr in ("text", "content", "output", "response"):
+                value = getattr(out, attr, None)
+                if isinstance(value, str):
+                    return value
+            return str(out)
+        return out
+
+    # ------------------------------------------------------------- extraction
+
+    def _extract(self, text):
+        text = text or ""
+
+        # 1) explicit '#### <answer>' marker (last occurrence wins)
+        marker = text.rfind("####")
+        if marker != -1:
+            for line in text[marker + 4 :].splitlines():
+                line = line.strip()
+                if line:
+                    return self._clean_answer(line)
+
+        # 2) last \boxed{...}
+        boxed = self._last_boxed(text)
+        if boxed:
+            return self._clean_answer(boxed)
+
+        # 3) last non-empty line, with common answer labels stripped
+        for line in reversed(text.splitlines()):
+            line = line.strip()
+            if not line:
+                continue
+            if line.startswith("####"):
+                inner = line[4:].strip()
+                if inner:
+                    return self._clean_answer(inner)
+            m = re.search(
+                r"(?:final\s+answer|answer)\s*(?:is|:|=)\s*(.+)$",
+                line,
+                flags=re.IGNORECASE,
+            )
+            if m:
+                return self._clean_answer(m.group(1))
+            if len(line) <= 100:
+                return self._clean_answer(line)
+            return ""
+        return ""
+
+    @staticmethod
+    def _last_boxed(text):
+        idx = text.rfind("\\boxed")
+        if idx == -1:
+            return ""
+        start = text.find("{", idx)
+        if start == -1:
+            return ""
+        depth = 0
+        for pos in range(start, len(text)):
+            ch = text[pos]
+            if ch == "{":
+                depth += 1
+            elif ch == "}":
+                depth -= 1
+                if depth == 0:
+                    return text[start + 1 : pos]
+        return ""
+
+    @staticmethod
+    def _clean_answer(answer):
+        s = str(answer or "").strip()
+        s = s.replace("\\$", "").replace("$", "")
+        s = s.strip().lstrip(":").strip()
+        s = re.sub(r"\s+", " ", s)
+        if len(s) > 1 and s.endswith(".") and s[-2] != ".":
+            s = s[:-1].strip()
+        return s
+
+    @staticmethod
+    def _compact(answer):
+        s = str(answer or "").strip()
+        s = s.replace("\\$", "").replace("$", "")
+        s = re.sub(r"\s+", " ", s).strip()
+        s = re.sub(r",\s+", ",", s)  # "(2, 5)" -> "(2,5)"
+        if len(s) > 1 and s.endswith(".") and s[-2] != ".":
+            s = s[:-1].strip()
+        return s
+
+    # ---------------------------------------------------------------- voting
+
+    def _top_count(self, candidates):
+        groups = self._tally(candidates)
+        return groups[0]["count"] if groups else 0
+
+    def _tally(self, answers):
+        groups = []
+        for answer in answers:
+            canon, num = self._fingerprint(answer)
+            if not canon:
+                continue
+            for group in groups:
+                if self._same(group, canon, num):
+                    group["members"].append(answer)
                     break
+            else:
+                groups.append({"canon": canon, "num": num, "members": [answer]})
+        for group in groups:
+            group["count"] = len(group["members"])
+        groups.sort(key=lambda g: (-g["count"], g["canon"]))
+        return groups
 
-        # ---- Decision: plurality (weight, then anchor-first tie-break) --
-        if tally:
-            return self._rank(tally, order)[0][0]
+    @staticmethod
+    def _representative(group):
+        # shortest equivalent form == compact output string
+        return min(group["members"], key=lambda m: (len(m), m))
 
-        # Last resort: nothing parsed anywhere; echo the anchor's last line.
-        lines = [ln.strip() for ln in anchor_text.splitlines() if ln.strip()]
-        return lines[-1] if lines else ""
+    @staticmethod
+    def _same(group, canon, num):
+        gnum = group["num"]
+        if num is not None and gnum is not None:
+            return num == gnum
+        if num is None and gnum is None:
+            return canon == group["canon"]
+        return False
 
+    def _fingerprint(self, answer):
+        canon = self._canon(answer)
+        return canon, self._numeric(canon)
 
-__all__ = ["GsmGsmGlmS0G6"]
+    def _numeric(self, canon):
+        if not canon or not self.NUM_RE.match(canon):
+            return None
+        try:
+            return Fraction(canon)
+        except (ValueError, ZeroDivisionError, ArithmeticError):
+            return None
+
+    # --------------------------------------------------------- normalisation
+
+    def _canon(self, answer):
+        s = str(answer or "").strip()
+        if not s:
+            return ""
+        for src, dst in (
+            ("π", "\\pi"), ("√", "\\sqrt"), ("≤", "\\le"), ("≥", "\\ge"),
+            ("×", "\\times"), ("·", "\\cdot"), ("−", "-"), ("–", "-"),
+        ):
+            s = s.replace(src, dst)
+        s = s.replace("\\$", "").replace("$", "")
+        s = re.sub(r"\\[dtc]frac", r"\\frac", s)
+        for _ in range(4):  # flatten \frac{a}{b} (handles simple nesting)
+            flattened = self.FRAC_RE.sub(r"\1/\2", s)
+            if flattened == s:
+                break
+            s = flattened
+        s = re.sub(r"\\(?:text|mbox|mathrm)\s*\{([^{}]*)\}", r"\1", s)
+        for mac in ("\\left", "\\right", "\\Bigg", "\\bigg", "\\Big", "\\big"):
+            s = s.replace(mac, "")
+        for mac in ("\\!", "\\,", "\\;", "\\:", "\\quad", "\\qquad", "~", "\\ "):
+            s = s.replace(mac, "")
+        s = s.replace("{", "").replace("}", "")
+        s = re.sub(r"\^?\\circ", "", s)  # 90^\circ == 90
+        s = s.replace("\\%", "%")
+        s = re.sub(r"\s+", "", s)
+        prefix = re.match(r"^([A-Za-z])=(.+)$", s)
+        if prefix and not re.search(r"[A-Za-z]", prefix.group(2)):
+            s = prefix.group(2)  # drop a decorative "x=" before a pure value
+        if len(s) > 1 and s.endswith(".") and s[-2] != ".":
+            s = s[:-1]
+        return s

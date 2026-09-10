@@ -1,48 +1,97 @@
-"""Improve accuracy by generating multiple responses and selecting the most consistent answer via majority voting."""
-from ..harness_base import MathHarness
+"""Uses self-consistency with multiple sampling and majority voting to improve reliability of weak solver."""
 import re
 from collections import Counter
+from typing import List
 
 class GsmGsmKimiS0G5(MathHarness):
-    def _extract_final_answer(self, text: str) -> str:
-        """Extract the final numerical answer from solver output."""
-        # Try "#### number" pattern first
-        match = re.search(r'####\s*([\d,]+)', text)
-        if match:
-            return match.group(1).replace(',', '')
+    def solve(self, question: str) -> str:
+        """
+        Improved solving mechanism using self-consistency:
+        1. Generate N diverse solutions via temperature sampling
+        2. Extract answers from each solution's final '####' line
+        3. Vote for most frequent answer (majority voting)
+        4. If no majority, fallback to greedy generation
+        """
+        # Generate 5 diverse solutions with moderate temperature for sampling
+        solutions = self.llm(
+            prompt=question,
+            system=self._build_system_prompt(),
+            temperature=0.7,
+            n=5
+        )
         
-        # Try "The answer is number" pattern
-        match = re.search(r'The answer is\s*([\d,]+)', text)
-        if match:
-            return match.group(1).replace(',', '')
+        # Extract answers from each solution
+        extracted_answers = []
+        for solution in solutions:
+            answer = self._extract_answer(solution)
+            if answer:
+                extracted_answers.append(answer)
         
-        # Fallback: find last number in the text
-        numbers = re.findall(r'[\d,]+', text)
-        if numbers:
-            return numbers[-1].replace(',', '')
+        # If we have answers, use majority voting
+        if extracted_answers:
+            answer_counts = Counter(extracted_answers)
+            most_common_answer, count = answer_counts.most_common(1)[0]
+            
+            # Require at least 2 votes for consistency, otherwise fallback
+            if count >= 2:
+                return most_common_answer
+        
+        # Fallback: Single greedy generation (highest confidence)
+        greedy_solution = self.llm(
+            prompt=question,
+            system=self._build_system_prompt(),
+            temperature=0.0,
+            n=1
+        )[0]
+        
+        fallback_answer = self._extract_answer(greedy_solution)
+        return fallback_answer if fallback_answer else ""
+    
+    def _build_system_prompt(self) -> str:
+        """System prompt that enforces answer format and chain-of-thought."""
+        return (
+            "You are a precise mathematical problem solver. Solve the given competition-math problem "
+            "step by step. After your final answer, ALWAYS write the answer on a new line in the format:\n"
+            "#### <answer>\n"
+            "Where <answer> is the final answer in simplest form (number, fraction, LaTeX expression, "
+            "interval, or tuple). Do not include any text after the #### line."
+        )
+    
+    def _extract_answer(self, text: str) -> str:
+        """Extract answer from the #### line with robust pattern matching."""
+        # Look for the #### marker followed by answer
+        match = re.search(r'####\s*(.+?)(?:\s*$)', text, re.MULTILINE)
+        if match:
+            answer = match.group(1).strip()
+            # Clean up common artifacts
+            answer = self._clean_answer(answer)
+            return answer
+        
+        # Fallback: Look for final mathematical expression if #### missing
+        patterns = [
+            r'(?:final answer|answer)\s*(?:is|=|:)\s*(.+?)(?:\s*$)',
+            r'(?:boxed|\\boxed)\{(.+?)\}',
+        ]
+        for pattern in patterns:
+            match = re.search(pattern, text, re.IGNORECASE | re.MULTILINE)
+            if match:
+                answer = match.group(1).strip()
+                answer = self._clean_answer(answer)
+                if answer:
+                    return answer
         
         return ""
-
-    def solve(self, question: str) -> str:
-        """Generate multiple responses and use majority voting to select the most consistent answer."""
-        num_samples = 5
-        answers = []
+    
+    def _clean_answer(self, answer: str) -> str:
+        """Clean answer string of common formatting issues."""
+        # Remove trailing punctuation except mathematical notation
+        answer = re.sub(r'[.!?]+$', '', answer).strip()
         
-        for _ in range(num_samples):
-            response = self.llm(question, system="", temperature=0.7, n=1)
-            answer = self._extract_final_answer(response)
-            if answer:
-                answers.append(answer)
+        # Remove common prefixes like "the answer is"
+        answer = re.sub(r'^(?:the answer is|answer:|final answer:|result:)\s*', '', answer, flags=re.IGNORECASE)
         
-        if not answers:
-            return ""
+        # Normalize LaTeX formatting
+        answer = answer.replace('\\ ', ' ')
+        answer = re.sub(r'\s+', ' ', answer).strip()
         
-        # Count answer frequencies and return the most common
-        counter = Counter(answers)
-        most_common_answer, count = counter.most_common(1)[0]
-        
-        # If all answers are different, fall back to the last response
-        if count == 1 and len(answers) > 1:
-            return answers[-1]
-        
-        return most_common_answer
+        return answer

@@ -1,151 +1,118 @@
-"""Self-consistency with lightweight answer extraction and majority voting across sampled solver outputs."""
-from __future__ import annotations
-
-import re
+"""Wraps a frozen LLM solver with self-consistency voting: sample multiple solutions at temperature>0, parse each, and return the majority final answer."""
 from collections import Counter
-from typing import List, Optional, Tuple
-
 from ..harness_base import MathHarness
 
+PROMPT_TEMPLATE = (
+    "Solve the following math problem step by step. Put your final answer on "
+    "the last line, exactly in the form '#### <answer>'. The answer should be "
+    "compact: a plain number, a fraction like \\frac{{a}}{{b}} or a/b, a "
+    "LaTeX expression, an interval like (a,b], or a tuple like (a,b).\n\n"
+    "Problem:\n{question}\n\n"
+    "Solution:"
+)
 
-_NUM_RE = re.compile(r"-?\d+(?:\.\d+)?")
+ANSWER_KEY = "####"
 
 
-def _extract_answer(text: str) -> Optional[float]:
-    """Extract a numeric answer from a solver reply, trying multiple conventions."""
-    if not text:
+def _extract_final_answer(text: str) -> str | None:
+    """Pull the substring after the LAST '####' marker on the last non-empty line."""
+    # Look for the marker; the harness expects it on the very last line.
+    if ANSWER_KEY not in text:
         return None
-
-    # Prefer an explicit "#### N" marker when present.
-    hash_match = re.search(r"####\s*(-?\d+(?:,\d{3})*(?:\.\d+)?)", text)
-    if hash_match:
-        return _to_float(hash_match.group(1))
-
-    # Otherwise prefer "The answer is N" style phrasings.
-    phrase = re.findall(
-        r"(?:the\s+answer\s+is|answer\s*[:=])\s*\$?\s*(-?\d+(?:,\d{3})*(?:\.\d+)?)",
-        text,
-        flags=re.IGNORECASE,
-    )
-    if phrase:
-        return _to_float(phrase[-1])
-
-    # Fallback: the last number in the text (solver often summarizes a number at the end).
-    nums = _NUM_RE.findall(text)
-    if nums:
-        return _to_float(nums[-1])
-
-    return None
+    # Take everything after the last occurrence of the marker.
+    idx = text.rfind(ANSWER_KEY)
+    after = text[idx + len(ANSWER_KEY):]
+    # Strip leading separators like ':' or whitespace.
+    after = after.lstrip(": \t\r\n")
+    # The answer is the first token-ish chunk on what follows.
+    # Split off at a newline in case extra text was appended.
+    if "\n" in after:
+        after = after.split("\n", 1)[0]
+    after = after.strip()
+    return after or None
 
 
-def _to_float(token: str) -> Optional[float]:
-    cleaned = token.replace(",", "").strip()
-    try:
-        return float(cleaned)
-    except ValueError:
-        return None
-
-
-def _format_answer(value: float) -> str:
-    if value == int(value):
-        return str(int(value))
-    return f"{value:g}"
+def _normalize(ans: str) -> str:
+    """Light normalization so '3/4', '\\frac{3}{4}', ' 3 / 4 ' collapse together."""
+    s = ans.strip()
+    # Unify LaTeX fraction notation to a/b for comparison purposes.
+    if s.startswith("\\frac{") and s.endswith("}"):
+        # \frac{a}{b}  ->  a/b
+        inner = s[len("\\frac{") : -1]
+        # split at the last "}{"
+        if "}{" in inner:
+            a, b = inner.rsplit("}{", 1)
+            s = f"{a}/{b}"
+    # Collapse whitespace around '/'.
+    s = s.replace(" / ", "/").replace(" /", "/").replace("/ ", "/")
+    # Remove stray spaces.
+    s = s.replace(" ", "")
+    return s
 
 
 class GsmGsmMinimaxS0G4(MathHarness):
-    """Self-consistency wrapper: sample multiple solver replies and majority-vote their extracted answers."""
-
-    NUM_SAMPLES = 5
-    FALLBACK_TEMPERATURE = 0.7
+    # Tunables for the self-consistency loop.
+    N_SAMPLES = 5
+    TEMPERATURE = 0.6
+    SYSTEM = (
+        "You are a careful math solver. Always end your response with a final "
+        "line of the form '#### <answer>' containing only the compact answer."
+    )
 
     def solve(self, question: str) -> str:
-        prompt = self._build_prompt(question)
+        prompt = PROMPT_TEMPLATE.format(question=question.strip())
 
-        # First try a deterministic greedy decode; if it yields a parseable answer,
-        # still gather samples so we can confirm with self-consistency when possible.
-        samples: List[str] = []
-
+        # 1) Fan out: generate N independent candidate solutions.
         try:
-            greedy_reply = self.llm(prompt, system=self._system_prompt(),
-                                     temperature=0.0, n=1)
+            completions = self.llm(
+                prompt,
+                system=self.SYSTEM,
+                temperature=self.TEMPERATURE,
+                n=self.N_SAMPLES,
+            )
         except TypeError:
-            greedy_reply = self.llm(prompt, system=self._system_prompt())
-        if greedy_reply:
-            samples.append(greedy_reply)
+            # Fallback if the underlying client doesn't accept `n`.
+            completions = [self.llm(prompt, system=self.SYSTEM,
+                                    temperature=self.TEMPERATURE)]
 
-        # Stochastic sampling for self-consistency. Use n=NUM_SAMPLES with
-        # non-zero temperature; if the harness does not support `n`, fall back
-        # to looping individual calls so the mechanism still works.
-        try:
-            extra = self.llm(prompt, system=self._system_prompt(),
-                             temperature=self.FALLBACK_TEMPERATURE,
-                             n=self.NUM_SAMPLES)
-        except TypeError:
-            extra = None
-
-        if isinstance(extra, list) and extra:
-            samples.extend(extra)
-        else:
-            for _ in range(self.NUM_SAMPLES):
-                try:
-                    reply = self.llm(prompt, system=self._system_prompt(),
-                                     temperature=self.FALLBACK_TEMPERATURE, n=1)
-                except TypeError:
-                    reply = self.llm(prompt, system=self._system_prompt())
-                if reply:
-                    samples.append(reply)
-
-        final = self._aggregate(samples)
-        return final
-
-    # ------------------------------------------------------------------ #
-    # Helpers
-    # ------------------------------------------------------------------ #
-
-    def _system_prompt(self) -> str:
-        return (
-            "You are a careful grade-school math tutor. Solve the problem "
-            "step by step, then on the final line write the answer in the "
-            "form '#### <number>'."
-        )
-
-    def _build_prompt(self, question: str) -> str:
-        return (
-            "Solve the following grade-school math word problem.\n"
-            "Show your reasoning briefly, then state the final answer on the "
-            "last line as '#### <number>'.\n\n"
-            f"Problem: {question.strip()}\n\nSolution:"
-        )
-
-    def _aggregate(self, samples: List[str]) -> str:
-        parsed: List[Tuple[float, str]] = []
-        for s in samples:
-            v = _extract_answer(s)
-            if v is not None:
-                parsed.append((v, _format_answer(v)))
+        # 2) Parse each completion to its final answer.
+        parsed = []
+        for comp in completions:
+            ans = _extract_final_answer(comp)
+            if ans is not None:
+                parsed.append(ans)
 
         if not parsed:
-            # Nothing parseable: return the last sample's tail as a best effort
-            # so the harness still produces something string-like.
-            tail = (samples[-1] if samples else "").strip()
-            fallback = _NUM_RE.findall(tail)
-            if fallback:
-                return _format_answer(_to_float(fallback[-1]))
-            return tail or ""
+            # Parsing failed on every sample: fall back to a greedy T=0 call.
+            fallback = self.llm(prompt, system=self.SYSTEM,
+                                temperature=0.0, n=1)
+            ans = _extract_final_answer(fallback)
+            return ans if ans is not None else fallback.strip()
 
-        # Majority vote on the canonical string form, breaking ties by greedy sample order.
-        counter = Counter(formatted for _, formatted in parsed)
-        most_common, count = counter.most_common(1)[0]
+        # 3) Self-consistency: majority vote over normalized answers,
+        #    breaking ties by preferring the first occurrence (which tends to
+        #    be the more "central" sample at moderate temperature).
+        normalized = [_normalize(a) for a in parsed]
+        counts = Counter(normalized)
+        _top_norm, top_count = counts.most_common(1)[0]
+        # Collect candidates tied at the top.
+        tied = [a for a, n in zip(parsed, normalized) if n == _top_norm]
 
-        # If the greedy sample agrees with the majority, keep it (it was the
-        # first seen). Otherwise pick the first sampled instance of the
-        # majority value to preserve determinism.
-        greedy_value = parsed[0][1] if parsed else None
-        if greedy_value == most_common:
-            return greedy_value
+        # Pick the tied answer that appears earliest (stable tie-break).
+        winner_norm = _top_norm
+        winner = next(a for a, n in zip(parsed, normalized)
+                      if n == winner_norm)
 
-        for value, formatted in parsed:
-            if formatted == most_common:
-                return formatted
-
-        return most_common
+        # 4) Sanity check: if the top answer appears only once across N
+        #    samples, the model is uncertain -- re-run greedy at T=0 and
+        #    accept it only if it agrees with the plurality; otherwise trust
+        #    the plurality (self-consistency literature).
+        if top_count == 1 and self.N_SAMPLES > 1:
+            greedy = self.llm(prompt, system=self.SYSTEM,
+                              temperature=0.0, n=1)
+            greedy_ans = _extract_final_answer(greedy)
+            if greedy_ans is not None:
+                if _normalize(greedy_ans) == winner_norm:
+                    return greedy_ans
+                # Disagreement under full uncertainty: keep plurality.
+        return winner

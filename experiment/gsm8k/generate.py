@@ -36,7 +36,7 @@ BUILDERS = {
     "ernie": "ERNIE-5.0-Thinking-Preview",
 }
 BASE_URL = "https://llmapi.paratera.com/v1"
-MAX_TOKENS = 16384
+MAX_TOKENS = 32768            # GLM-5.3 burns its budget on reasoning_content before content
 RAW_ATTEMPTS = 3
 TEMPERATURE = 0.7
 K_SLOTS = 8
@@ -45,8 +45,8 @@ AGENTS_DIR = ROOT / "experiment" / "gsm8k" / "agents"
 AGENTS_DIR.mkdir(parents=True, exist_ok=True)
 (AGENTS_DIR / "__init__.py").write_text("", encoding="utf-8")
 
-SPLIT = json.loads((ROOT / "artifacts" / "gsm8k_audit" / "task_split.json").read_text())
-DEV = SPLIT["tasks"][:150]
+SPLIT = json.loads((ROOT / "artifacts" / "gsm8k_audit" / "math500_split.json").read_text())
+DEV = SPLIT["tasks"][:100]
 
 SKELETON = """The harness is a Python class:
 ```python
@@ -59,15 +59,17 @@ class {cls}(MathHarness):
         return final_answer_string
 ```
 
-Domain notes: the solver answers grade-school math word problems. Its raw
-replies typically end with a line like "#### 42" or "The answer is 42".
-There is NO code executor in this domain: the only signals available inside
-solve() are the question and the solver's own text output. Return the final
-answer as a string containing the number (e.g. "42").
+Domain notes: the solver answers competition-math word problems (MATH-500
+style: algebra, geometry, number theory, precalculus). Instruct the solver to
+put its final answer on the last line in the form '#### <answer>'. The answer
+may be a plain number (42), a fraction (\\frac{{3}}{{4}} or 3/4), a LaTeX
+expression (2\\sqrt{{3}}, 6+9i), an interval ((3,4]), or a tuple ((2, 5)).
+solve() must return the final answer as a compact string (e.g. "42",
+"\\frac{{3}}{{4}}", "(3,4]").
 """
 
 PROMPT_FREE = """You are designing an executable HARNESS that wraps a FROZEN weak solver for
-grade-school math word problems (GSM8K).
+competition-math word problems (MATH-500 style).
 
 {skeleton}
 Your task: invent an improvement over a single greedy generation call, and

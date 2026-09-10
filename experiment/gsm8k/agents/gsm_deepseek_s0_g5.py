@@ -1,92 +1,123 @@
-"""Self-consistency ensemble with a greedy fallback: sample five high-temperature solutions, extract numeric answers, and return the majority answer."""
+"""Use a zero-temperature greedy answer as a tie-breaker for self-consistency voting over multiple stochastic rollouts."""
 import re
 from collections import Counter
-from typing import Optional
+from typing import List, Optional
 
 from ..harness_base import MathHarness
 
 
 class GsmGsmDeepseekS0G5(MathHarness):
+    NUM_SAMPLES = 5
+    SAMPLE_TEMPERATURE = 0.7
+    SYSTEM_PROMPT = ""
+
     def solve(self, question: str) -> str:
-        prompt = question
+        prompt = self._build_prompt(question)
 
-        # Greedy answer is a stable fallback.
-        greedy_text = self._call_single(prompt, temperature=0.0)
-        greedy_answer = self._extract_answer(greedy_text)
+        greedy_answer = self._parse_answer(self._call(prompt, temperature=0.0))
 
-        # Diverse sampling for self-consistency.
-        sample_answers = []
-        for _ in range(5):
-            text = self._call_single(prompt, temperature=0.8)
-            answer = self._extract_answer(text)
-            if answer is not None:
-                sample_answers.append(answer)
+        samples: List[str] = []
+        for _ in range(self.NUM_SAMPLES):
+            answer = self._parse_answer(self._call(prompt, temperature=self.SAMPLE_TEMPERATURE))
+            if answer:
+                samples.append(answer)
 
-        if sample_answers:
-            counts = Counter(sample_answers)
-            top_answer, top_count = counts.most_common(1)[0]
-            # Require agreement among at least two sampled paths; otherwise
-            # a single high-temperature sample is too noisy.
-            if top_count >= 2:
-                return top_answer
+        if not samples:
+            return greedy_answer or ""
 
-        if greedy_answer is not None:
+        if greedy_answer:
+            samples.append(greedy_answer)
+
+        counts = Counter(self._normalize(answer) for answer in samples)
+        max_count = max(counts.values())
+        candidates = [key for key, count in counts.items() if count == max_count]
+
+        selected_key = self._select_key(candidates, samples, greedy_answer)
+
+        if greedy_answer and self._normalize(greedy_answer) == selected_key:
             return greedy_answer
-        return sample_answers[0] if sample_answers else ""
 
-    def _call_single(self, prompt: str, temperature: float) -> str:
-        result = self.llm(prompt, system="", temperature=temperature, n=1)
+        for answer in samples:
+            if self._normalize(answer) == selected_key:
+                return answer
+
+        return samples[-1]
+
+    def _build_prompt(self, question: str) -> str:
+        return (
+            "Solve the following competition math problem carefully. "
+            "Write a concise step-by-step solution, then put the final answer "
+            "on the last line in the exact format '#### <answer>'. "
+            "The <answer> must be compact, e.g. 42, \\frac{3}{4}, 2\\sqrt{3}, "
+            "6+9i, (3,4], or (2,5).\n\n"
+            f"Problem: {question}\n"
+        )
+
+    def _call(self, prompt: str, temperature: float) -> str:
+        result = self.llm(prompt, system=self.SYSTEM_PROMPT, temperature=temperature, n=1)
         if isinstance(result, list):
-            return str(result[0]) if result else ""
-        return str(result or "")
+            return result[0] if result else ""
+        return result or ""
 
-    @staticmethod
-    def _extract_answer(text: str) -> Optional[str]:
+    def _parse_answer(self, text: str) -> Optional[str]:
         if not text:
             return None
 
-        # Preferred: explicit GSM8K hash-final answer.
-        hash_matches = re.findall(
-            r"####\s*([-+]?(?:\d+(?:,\d{3})*(?:\.\d+)?|\.\d+))",
-            text,
-        )
+        # The expected format: the answer is on a line beginning with '####'.
+        hash_matches = re.findall(r'####\s*(.*?)\s*$', text, flags=re.MULTILINE)
         if hash_matches:
-            return hash_matches[-1].replace(",", "")
+            raw = hash_matches[-1].strip()
+            if raw:
+                return self._compact_answer(raw)
 
-        # Next: explicit answer phrases.
-        answer_matches = re.findall(
-            r"(?:the\s+)?(?:final\s+)?answer\s*(?:is|=|:)?\s*"
-            r"([-+]?(?:\d+(?:,\d{3})*(?:\.\d+)?|\.\d+))",
-            text,
-            re.IGNORECASE,
-        )
-        if answer_matches:
-            return answer_matches[-1].replace(",", "")
+        # Fallback for models that prefer \boxed{}.
+        boxed_matches = re.findall(r'\\boxed\{([^{}]+)\}', text)
+        if boxed_matches:
+            return self._compact_answer(boxed_matches[-1].strip())
 
-        # Next: last equality.
-        eq_matches = re.findall(
-            r"=\s*([-+]?(?:\d+(?:,\d{3})*(?:\.\d+)?|\.\d+))",
-            text,
-        )
-        if eq_matches:
-            return eq_matches[-1].replace(",", "")
-
-        # Fallback: last number on the last non-empty line.
-        lines = [line.strip() for line in text.strip().splitlines() if line.strip()]
-        if lines:
-            last_line = lines[-1]
-            nums = re.findall(
-                r"[-+]?(?:\d+(?:,\d{3})*(?:\.\d+)?|\.\d+)",
-                last_line,
-            )
-            if nums:
-                return nums[-1].replace(",", "")
-
-        # Last fallback: last number anywhere in the text.
-        nums = re.findall(
-            r"[-+]?(?:\d+(?:,\d{3})*(?:\.\d+)?|\.\d+)",
-            text,
-        )
-        if nums:
-            return nums[-1].replace(",", "")
         return None
+
+    def _compact_answer(self, raw: str) -> Optional[str]:
+        # If the answer itself is wrapped in \boxed{}, unwrap it first.
+        boxed_inner = re.search(r'\\boxed\{([^{}]+)\}', raw)
+        if boxed_inner:
+            raw = boxed_inner.group(1)
+
+        raw = re.sub(r'\s+', '', raw)
+        raw = raw.replace('\\[', '').replace('\\]', '')
+        raw = raw.replace('\\(', '').replace('\\)', '')
+        raw = raw.replace('$', '')
+        if raw.endswith('.'):
+            raw = raw[:-1]
+        return raw or None
+
+    def _normalize(self, answer: str) -> str:
+        normalized = self._compact_answer(answer) or answer
+        normalized = normalized.replace('\\left', '').replace('\\right', '')
+        normalized = normalized.replace('\\displaystyle', '')
+        # Make common fraction syntaxes compare equal.
+        normalized = re.sub(r'\\frac\{([^{}]+)\}\{([^{}]+)\}', r'\1/\2', normalized)
+        normalized = re.sub(r'\\dfrac\{([^{}]+)\}\{([^{}]+)\}', r'\1/\2', normalized)
+        normalized = re.sub(r'\\tfrac\{([^{}]+)\}\{([^{}]+)\}', r'\1/\2', normalized)
+        return normalized
+
+    def _select_key(
+        self,
+        candidates: List[str],
+        samples: List[str],
+        greedy_answer: Optional[str],
+    ) -> str:
+        if len(candidates) == 1:
+            return candidates[0]
+
+        if greedy_answer:
+            greedy_key = self._normalize(greedy_answer)
+            if greedy_key in candidates:
+                return greedy_key
+
+        for answer in samples:
+            key = self._normalize(answer)
+            if key in candidates:
+                return key
+
+        return candidates[0]

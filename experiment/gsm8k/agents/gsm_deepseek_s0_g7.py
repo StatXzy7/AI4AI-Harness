@@ -1,91 +1,86 @@
-"""Use self-consistency over multiple sampled solver calls and majority vote on extracted final numeric answers."""
-import re
-from collections import Counter
-from typing import Optional
-
+"""Draft-and-verify: generate an initial answer, then ask the solver to independently check and correct it before returning the final answer."""
 from ..harness_base import MathHarness
 
 
 class GsmGsmDeepseekS0G7(MathHarness):
-    def solve(self, question: str) -> str:
-        prompt = (
-            "Solve the following grade-school math word problem.\n"
-            "Think step by step, then write the final answer on the last line as '#### <number>'.\n\n"
-            f"Question: {question}\n"
-        )
+    @staticmethod
+    def _response_to_text(response):
+        if response is None:
+            return ""
+        if isinstance(response, list):
+            return str(response[0]) if response else ""
+        if isinstance(response, str):
+            return response
+        return str(response)
 
-        responses = []
-        for _ in range(5):
-            response = self.llm(prompt, system="", temperature=0.7, n=1)
-            responses.append(response)
+    @staticmethod
+    def _clean_answer(answer):
+        if not answer:
+            return answer
+        answer = answer.strip()
+        if answer.startswith("$") and answer.endswith("$") and len(answer) > 2:
+            answer = answer[1:-1].strip()
+        if answer.startswith("\\boxed{") and answer.endswith("}"):
+            answer = answer[len("\\boxed{"):-1].strip()
+            if answer.startswith("$") and answer.endswith("$") and len(answer) > 2:
+                answer = answer[1:-1].strip()
+        return answer
 
-        answers = []
-        for response in responses:
-            extracted = self._extract_answer(response)
-            if extracted is not None:
-                answers.append(extracted)
-
-        if answers:
-            return self._majority_vote(answers)
-
-        # Fallback to a single greedy call if no sample produced a usable number.
-        fallback_response = self.llm(prompt, system="", temperature=0.0, n=1)
-        fallback_answer = self._extract_answer(fallback_response)
-        if fallback_answer is not None:
-            return fallback_answer
-
-        # Last-resort scan over the already-sampled responses for any numeric token.
-        for response in responses:
-            numbers = re.findall(r"-?\d+(?:,\d{3})*(?:\.\d+)?", response)
-            if numbers:
-                return self._normalize_number(numbers[-1])
-
-        return ""
-
-    def _extract_answer(self, text: str) -> Optional[str]:
+    @staticmethod
+    def _extract_final_answer(text):
         if not text:
             return None
 
-        # Prefer the conventional end-of-answer marker.
-        match = re.search(r"####\s*(-?[\d,]+(?:\.\d+)?)", text)
-        if match:
-            return self._normalize_number(match.group(1))
-
-        # Explicit answer phrases, taking the last one in the response.
-        phrase_pattern = re.compile(
-            r"\b(?:answer|result|final answer)\s*(?:is|:|=)\s*(-?[\d,]+(?:\.\d+)?)",
-            re.IGNORECASE,
-        )
-        matches = phrase_pattern.findall(text)
-        if matches:
-            return self._normalize_number(matches[-1])
-
-        # Fallback: last numeric token on the last non-empty line.
         lines = [line.strip() for line in text.strip().splitlines() if line.strip()]
+        if not lines:
+            return None
+
+        # Prefer the last line containing the required delimiter.
         for line in reversed(lines):
-            numbers = re.findall(r"-?\d+(?:,\d{3})*(?:\.\d+)?", line)
-            if numbers:
-                return self._normalize_number(numbers[-1])
+            if "####" in line:
+                answer = line.split("####", 1)[1].strip()
+                if answer:
+                    return answer
 
-        return None
+        # Fallback: use the last non-empty line.
+        return lines[-1]
 
-    def _normalize_number(self, raw: str) -> str:
-        value = raw.replace(",", "")
-        if "." in value:
-            try:
-                numeric = float(value)
-                if numeric.is_integer():
-                    return str(int(numeric))
-            except ValueError:
-                pass
-            return value.rstrip("0").rstrip(".") or "0"
-        return value
+    def solve(self, question: str) -> str:
+        first_prompt = (
+            "Solve the following competition math problem. "
+            "Think carefully and show your work. "
+            "Put your final answer on the last line exactly in the form: #### <answer>\n\n"
+            f"Problem: {question}"
+        )
+        first_response = self.llm(
+            first_prompt,
+            system="",
+            temperature=0.0,
+            n=1,
+        )
+        first_text = self._response_to_text(first_response)
+        first_answer = self._extract_final_answer(first_text)
 
-    def _majority_vote(self, answers: list) -> str:
-        counts = Counter(answers)
-        max_count = max(counts.values())
-        # Preserve first-occurrence tie breaking.
-        for answer in answers:
-            if counts[answer] == max_count:
-                return answer
-        return answers[0]
+        second_prompt = (
+            "You are checking a previous answer to the following problem.\n\n"
+            f"Problem: {question}\n\n"
+            f"Previous answer: {first_answer if first_answer else 'No answer'}\n\n"
+            "Solve the problem independently to check that answer. "
+            "If your independent answer agrees with the previous answer, repeat that answer. "
+            "If it disagrees, provide the correct answer. "
+            "Put your final answer on the last line exactly in the form: #### <answer>"
+        )
+        second_response = self.llm(
+            second_prompt,
+            system="",
+            temperature=0.0,
+            n=1,
+        )
+        second_text = self._response_to_text(second_response)
+        second_answer = self._extract_final_answer(second_text)
+
+        final_answer = second_answer or first_answer
+        if final_answer is None:
+            return ""
+
+        return self._clean_answer(final_answer)

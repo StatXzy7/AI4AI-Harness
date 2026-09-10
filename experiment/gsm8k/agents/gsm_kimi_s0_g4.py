@@ -1,115 +1,171 @@
-"""Self-consistency sampling with majority voting and meta-reasoning adjudication for GSM8K math word problems."""
+"""A harness that implements a multi-step verification and refinement process for competition math problems."""
 
 from ..harness_base import MathHarness
+from typing import Optional, Tuple
 import re
-from collections import Counter
 
 
 class GsmGsmKimiS0G4(MathHarness):
     def solve(self, question: str) -> str:
-        # Phase 1: Generate diverse reasoning paths via temperature sampling
-        num_samples = 8
-        prompt = self._build_prompt(question)
-        responses = []
-        for _ in range(num_samples):
-            resp = self.llm(prompt, system="", temperature=0.7, n=1)
-            if isinstance(resp, list):
-                resp = resp[0] if resp else ""
-            responses.append(resp)
+        """
+        Solve using a multi-step process:
+        1. Generate initial solution with step-by-step reasoning
+        2. Verify solution by checking each step for logical consistency
+        3. Generate alternative solutions using different problem-solving strategies
+        4. Use majority voting on final answers from different approaches
+        5. If voting fails, attempt to identify and correct potential errors
+        """
+        
+        # Step 1: Generate initial solution with detailed reasoning
+        initial_prompt = f"""Solve this math problem step by step. Show all your work and reasoning.
 
-        # Phase 2: Extract candidate answers from each response
-        answer_pairs = []  # (answer_string, full_response)
-        for resp in responses:
-            ans = self._extract_answer(resp)
-            if ans is not None:
-                answer_pairs.append((ans, resp))
+Question: {question}
 
-        # Fallback if no answers could be extracted at all
-        if not answer_pairs:
-            greedy = self.llm(prompt, system="", temperature=0.0, n=1)
-            if isinstance(greedy, list):
-                greedy = greedy[0] if greedy else ""
-            return self._extract_answer(greedy) or "0"
+Please write your solution in this exact format:
+Step 1: [First step of reasoning]
+Step 2: [Second step of reasoning]
+...
+Final Answer: #### [your answer]"""
 
-        # Phase 3: Majority vote across all extracted answers
-        answers = [a for a, _ in answer_pairs]
-        counts = Counter(answers)
-        top_answer, top_count = counts.most_common(1)[0]
+        initial_solution = self.llm(initial_prompt, system="You are an expert mathematician solving competition math problems. Be precise and thorough.", temperature=0.0, n=1)
+        
+        # Step 2: Generate verification and potential error analysis
+        verification_prompt = f"""Analyze this math solution for errors or inconsistencies.
 
-        # Clear majority threshold (>= 3 out of 8 agrees)
-        if top_count >= 3:
-            return top_answer
+Question: {question}
 
-        # Phase 4: No clear majority — adjudicate via meta-reasoning
-        return self._adjudicate(question, answer_pairs)
+Initial Solution:
+{initial_solution}
 
-    def _build_prompt(self, question: str) -> str:
-        return (
-            "Solve the following grade-school math problem step by step. "
-            "Show all your work and reasoning clearly. "
-            "End your solution with the final answer after '#### '.\n\n"
-            f"Question: {question}\n\n"
-            "Solution:\n"
-        )
+Please:
+1. Check each step for mathematical correctness
+2. Identify any potential errors or jumps in reasoning
+3. If you find errors, provide a corrected solution
+4. If the solution appears correct, confirm it
 
-    def _extract_answer(self, text: str):
-        """Extract the final numerical answer from solver output."""
-        if not text:
-            return None
+Output your analysis and corrected solution (if any) in this format:
+Analysis: [Your analysis]
+Corrected Solution: [If errors found, provide corrected solution; otherwise write "No corrections needed"]
+Final Answer: #### [your final answer]"""
 
-        # Pattern 1: GSM8K standard "#### number"
-        match = re.search(r'####\s*([-\d,\.]+)', text)
-        if match:
-            return self._normalize(match.group(1))
+        verification = self.llm(verification_prompt, system="You are a careful math proof checker. Verify each step rigorously.", temperature=0.0, n=1)
+        
+        # Step 3: Generate alternative approach using a different strategy
+        alternative_prompt = f"""Solve this math problem using a completely different approach than standard algebraic manipulation.
 
-        # Pattern 2: "The answer is X" / "Therefore, X" / "Final answer: X"
-        match = re.search(
-            r'(?:the\s+answer\s+is|therefore[,]?\s|so\s+the\s+answer|final\s+answer\s*[:=])\s*([-\d,\.]+)',
-            text, re.IGNORECASE
-        )
-        if match:
-            return self._normalize(match.group(1))
+Question: {question}
 
-        # Pattern 3: Last number appearing in the text
-        numbers = re.findall(r'[-]?\d[\d,\.]*', text)
-        if numbers:
-            return self._normalize(numbers[-1])
+Try one of these alternative strategies:
+- Work backwards from the answer
+- Use geometric intuition
+- Apply dimensional analysis
+- Consider edge cases or special values
+- Use estimation and refinement
 
+Show your alternative solution and end with:
+Final Answer: #### [your answer]"""
+
+        alternative_solution = self.llm(alternative_prompt, system="You are a creative mathematician who approaches problems from unconventional angles.", temperature=0.0, n=1)
+        
+        # Step 4: Extract and compare answers
+        answers = []
+        
+        # Extract answer from initial solution
+        initial_answer = self._extract_answer(initial_solution)
+        if initial_answer:
+            answers.append(initial_answer)
+        
+        # Extract answer from verification/corrected solution
+        verified_answer = self._extract_answer(verification)
+        if verified_answer:
+            answers.append(verified_answer)
+        
+        # Extract answer from alternative approach
+        alt_answer = self._extract_answer(alternative_solution)
+        if alt_answer:
+            answers.append(alt_answer)
+        
+        # Step 5: Majority voting or error correction
+        if len(answers) >= 2:
+            # Check if at least two answers agree
+            from collections import Counter
+            answer_counts = Counter(answers)
+            most_common = answer_counts.most_common(1)
+            
+            if most_common and most_common[0][1] >= 2:
+                # At least two answers agree - use this
+                return most_common[0][0]
+            
+            # If no majority, try to identify which answer might be correct
+            final_answer = self._resolve_conflicting_answers(question, answers, initial_solution, verification, alternative_solution)
+            if final_answer:
+                return final_answer
+        
+        # Fallback: Use the verified answer if available, else initial
+        if verified_answer:
+            return verified_answer
+        elif initial_answer:
+            return initial_answer
+        elif alt_answer:
+            return alt_answer
+        
+        # Last resort: Ask for final answer extraction
+        final_prompt = f"""From the following solutions, extract the most likely correct final answer.
+
+Question: {question}
+
+Solutions:
+1. {initial_solution}
+2. {verification}
+3. {alternative_solution}
+
+Consider which solution appears most mathematically sound. Output only:
+#### [your final answer]"""
+
+        final_response = self.llm(final_prompt, system="Extract the most reliable final answer from these solutions.", temperature=0.0, n=1)
+        final_answer = self._extract_answer(final_response)
+        return final_answer if final_answer else "ERROR"
+    
+    def _extract_answer(self, text: str) -> Optional[str]:
+        """Extract the answer from text after the last '####' marker."""
+        lines = text.strip().split('\n')
+        for line in reversed(lines):
+            if '####' in line:
+                # Extract everything after ####
+                answer_part = line.split('####', 1)[1].strip()
+                # Clean up the answer
+                answer = answer_part.strip()
+                # Remove any trailing period
+                if answer.endswith('.'):
+                    answer = answer[:-1].strip()
+                return answer
         return None
+    
+    def _resolve_conflicting_answers(self, question: str, answers: list, 
+                                   solution1: str, solution2: str, solution3: str) -> Optional[str]:
+        """Attempt to resolve conflicting answers by asking for expert judgment."""
+        resolution_prompt = f"""We have conflicting answers to a math problem. Please help determine which is correct.
 
-    def _normalize(self, num_str: str):
-        """Normalize a number string by removing commas and validating."""
-        if not num_str:
-            return None
-        cleaned = num_str.replace(',', '').strip().rstrip('.')
-        try:
-            float(cleaned)
-            return cleaned
-        except ValueError:
-            return None
+Question: {question}
 
-    def _adjudicate(self, question: str, answer_pairs: list) -> str:
-        """When no majority exists, present all attempts and ask the model to pick the best."""
-        summary_parts = []
-        for i, (ans, resp) in enumerate(answer_pairs[:5]):
-            summary_parts.append(f"--- Attempt {i+1} (answer: {ans}) ---\n{resp}")
-        summary = "\n\n".join(summary_parts)
+Proposed answers: {', '.join(set(answers))}
 
-        adjudicate_prompt = (
-            f"Question: {question}\n\n"
-            f"Several solution attempts were made:\n{summary}\n\n"
-            f"Based on the reasoning shown, what is the correct numerical answer? "
-            f"Respond with ONLY the number, nothing else."
-        )
+Approach 1 Solution:
+{solution1}
 
-        result = self.llm(adjudicate_prompt, system="", temperature=0.0, n=1)
-        if isinstance(result, list):
-            result = result[0] if result else ""
-        adjudicated = self._extract_answer(result)
+Approach 2 Solution:
+{solution2}
 
-        # If adjudication fails, fall back to the plurality answer
-        if adjudicated is None:
-            answers = [a for a, _ in answer_pairs]
-            adjudicated = Counter(answers).most_common(1)[0][0]
+Approach 3 Solution:
+{solution3}
 
-        return adjudicated
+Please:
+1. Examine which approach seems most mathematically rigorous
+2. Check for common calculation errors in each approach
+3. Determine which answer is most likely correct
+
+Output your final determination as:
+#### [your answer]"""
+
+        resolution = self.llm(resolution_prompt, system="You are an expert mathematician arbitrating between different solutions.", temperature=0.0, n=1)
+        return self._extract_answer(resolution)

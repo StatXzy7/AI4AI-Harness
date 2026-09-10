@@ -285,6 +285,11 @@ INPUT d:/texlive/2026/texmf-dist/fonts/vf/adobe/courier/pcrr7t.vf
 INPUT d:/texlive/2026/texmf-dist/fonts/tfm/adobe/courier/pcrr8r.tfm
 INPUT d:/texlive/2026/texmf-dist/fonts/vf/adobe/times/ptmr8c.vf
 INPUT d:/texlive/2026/texmf-dist/fonts/tfm/adobe/courier/pcrro7t.tfm
+INPUT ./sec_crossdomain.tex
+INPUT ./sec_crossdomain.tex
+INPUT ./sec_crossdomain.tex
+INPUT ./sec_crossdomain.tex
+INPUT sec_crossdomain.tex
 INPUT d:/texlive/2026/texmf-dist/fonts/vf/adobe/courier/pcrro7t.vf
 INPUT d:/texlive/2026/texmf-dist/fonts/tfm/adobe/courier/pcrro8r.tfm
 INPUT main.aux

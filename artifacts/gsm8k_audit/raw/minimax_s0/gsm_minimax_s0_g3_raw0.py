@@ -1,208 +1,117 @@
-"""
-Self-consistency style ensemble that samples k completions with the frozen solver
-at a non-zero temperature, extracts numeric answers, and returns the majority vote
-(breaking ties by lowest variance / shortest reasoning trace as a heuristic tie-break).
-"""
-from __future__ import annotations
-
+"""Self-consistency with answer normalization: sample multiple chains, parse and canonicalize each final answer, then return the majority-voted canonical form."""
 import re
-import statistics
 from collections import Counter
-from typing import List, Optional
-
 from ..harness_base import MathHarness
 
 
-_NUM_RE = re.compile(
-    r"(?ix)
-    (?:
-        \#\#\#\#\s*(?P<hash>-?\d[\d,\.\s]*)
-        |
-        the\s+answer\s+is\s*[:\-]?\s*(?P<ans>-?\d[\d,\.\s]*)
-        |
-        answer\s*[:\-=]\s*(?P<eq>-?\d[\d,\.\s]*)
-        |
-        \\boxed\{\s*(?P<box>-?\d[\d,\.\s]*)\s*\}
-        |
-        =\s*(?P<eq2>-?\d[\d,\.\s]*)\s*\.?\s*$
-    )
-    "
-)
-
-
-def _strip_to_number(token: str) -> Optional[float]:
-    if token is None:
-        return None
-    s = token.strip().rstrip(".")
-    s = s.replace(",", "").replace(" ", "")
-    if s.startswith("$"):
-        s = s[1:]
-    if s.endswith("%"):
-        s = s[:-1]
-    try:
-        return float(s)
-    except Exception:
-        # try to peel trailing units / words
-        m = re.search(r"-?\d+(?:\.\d+)?", s)
-        if m:
-            try:
-                return float(m.group(0))
-            except Exception:
-                return None
-        return None
-
-
-def _extract_answer(text: str) -> Optional[float]:
-    """Pull the most plausible final number from a solver completion."""
-    if not text:
-        return None
-    # Prefer the explicit "#### N" pattern if present.
-    for line in text.splitlines()[::-1]:
-        line_stripped = line.strip()
-        if line_stripped.startswith("####"):
-            tail = line_stripped[4:].strip()
-            m = re.search(r"-?\d+(?:\.\d+)?", tail.replace(",", ""))
-            if m:
-                try:
-                    return float(m.group(0))
-                except Exception:
-                    pass
-    # Fall back to a regex sweep, last match wins.
-    matches = list(_NUM_RE.finditer(text))
-    for m in reversed(matches):
-        for grp in ("hash", "ans", "eq", "box", "eq2"):
-            v = m.group(grp)
-            if v is not None:
-                num = _strip_to_number(v)
-                if num is not None:
-                    return num
-    # Last resort: last standalone number in the text.
-    nums = re.findall(r"-?\d+(?:\.\d+)?", text.replace(",", ""))
-    if nums:
-        try:
-            return float(nums[-1])
-        except Exception:
-            return None
-    return None
-
-
-def _format_number(x: float) -> str:
-    """Render a numeric answer the way GSM8K-style evaluators expect."""
-    if x is None:
-        return ""
-    if abs(x - round(x)) < 1e-9 and abs(x) < 1e15:
-        return str(int(round(x)))
-    # Trim trailing zeros for non-integers.
-    s = ("%.6f" % x).rstrip("0").rstrip(".")
-    return s if s else "0"
-
-
 class GsmGsmMinimaxS0G3(MathHarness):
-    """Ensemble solver that majority-votes over multiple frozen-solver samples."""
-
-    # --- knobs (kept as class-level constants so they're easy to override) ---
-    N_SAMPLES = 5
-    TEMPERATURE = 0.7
-    TOP_P = 0.95
-    SYSTEM_PROMPT = (
-        "You are a careful grade-school math tutor. "
-        "Solve the problem step by step and finish with '#### <number>' on its own line."
-    )
-
-    # ---- internal helpers --------------------------------------------------
-
-    def _sample(self, question: str, n: int) -> List[str]:
-        """Draw n independent completions from the frozen solver."""
-        return self.llm(
-            question,
-            system=self.SYSTEM_PROMPT,
-            temperature=self.TEMPERATURE,
-            top_p=self.TOP_P,
-            n=n,
-        ) or []
-
-    def _greedy(self, question: str) -> str:
-        """One greedy (temperature=0) completion for the fallback path."""
-        outs = self.llm(
-            question,
-            system=self.SYSTEM_PROMPT,
-            temperature=0.0,
-            n=1,
-        ) or []
-        return outs[0] if outs else ""
-
-    def _vote(self, candidates: List[Optional[float]]) -> Optional[float]:
-        """Majority vote over numeric candidates; tie-break by lowest spread."""
-        valid = [c for c in candidates if c is not None]
-        if not valid:
-            return None
-        # Bin floats into integer-ish buckets so 42.0 == 42 == 42.00 vote together.
-        def _bucket(x: float):
-            if abs(x - round(x)) < 1e-6 and abs(x) < 1e12:
-                return int(round(x))
-            return round(x, 6)
-
-        buckets = Counter(_bucket(v) for v in valid)
-        top_count = max(buckets.values())
-        winners = [k for k, v in buckets.items() if v == top_count]
-        if len(winners) == 1:
-            return float(winners[0])
-        # Tie-break: pick the bucket whose raw candidates have the smallest variance
-        # (most "confident" / consistent reasoning).
-        best = None
-        best_var = float("inf")
-        for w in winners:
-            group = [v for v in valid if _bucket(v) == w]
-            try:
-                var = statistics.pvariance(group) if len(group) > 1 else 0.0
-            except Exception:
-                var = 0.0
-            if var < best_var or (var == best_var and (best is None or w < best)):
-                best_var = var
-                best = w
-        return float(best) if best is not None else float(winners[0])
-
-    # ---- public API -------------------------------------------------------
+    # Patterns to extract the final answer line
+    _ANSWER_LINE_RE = re.compile(r"####\s*(.+?)\s*$", re.MULTILINE)
+    _FRAC_TEX_RE = re.compile(r"\\frac\s*\{\s*([^{}]+?)\s*\}\s*\{\s*([^{}]+?)\s*\}")
+    _TUPLE_RE = re.compile(r"\(\s*([^,()]+?)\s*,\s*([^,()]+?)\s*\)")
 
     def solve(self, question: str) -> str:
-        # 1) Sample a small ensemble.
+        system = (
+            "You are a competition-math solver. Solve the problem step by step. "
+            "On the last line of your response, write the final answer in the form "
+            "'#### <answer>' where <answer> is a compact string "
+            "(a number, a fraction like 3/4 or \\frac{3}{4}, an expression like 2\\sqrt{3}, "
+            "or an interval / tuple)."
+        )
+        # Sample several independent chains (small, deterministic temperature)
+        n_samples = 5
+        raw_responses = self.llm(
+            question,
+            system=system,
+            temperature=0.7,
+            n=n_samples,
+        )
+        # Normalize each response's final answer, then majority-vote
+        canon_counter: Counter = Counter()
+        last_canonical = None
+        for resp in raw_responses:
+            canon = self._canonical(self._extract_answer(resp))
+            if canon == "":
+                continue
+            canon_counter[canon] += 1
+            last_canonical = canon
+        if not canon_counter:
+            # Fallback: try the first response's raw final line
+            return self._extract_answer(raw_responses[0]) if raw_responses else ""
+        # Pick the most common; ties broken by order of first appearance
+        most_common = canon_counter.most_common()
+        top_count = most_common[0][1]
+        winners = [c for c, k in most_common if k == top_count]
+        # Stable tiebreak: prefer the one we saw first (already in iteration order)
+        return winners[0]
+
+    def _extract_answer(self, text: str) -> str:
+        """Pull the substring after the last '####' marker."""
+        if text is None:
+            return ""
+        # Prefer the LAST occurrence of #### (in case the model echoes the format earlier)
+        matches = list(self._ANSWER_LINE_RE.finditer(text))
+        if matches:
+            return matches[-1].group(1).strip()
+        # Fallback: last non-empty line
+        lines = [ln.strip() for ln in text.strip().splitlines() if ln.strip()]
+        return lines[-1] if lines else ""
+
+    def _canonical(self, ans: str) -> str:
+        """Canonicalize an answer string for voting equivalence.
+
+        - Strips outer whitespace and trailing periods.
+        - Lowercases.
+        - Removes '$' delimiters.
+        - Normalizes \\frac{a}{b} <-> a/b.
+        - Collapses whitespace inside.
+        - Treats simple numeric forms as equal (e.g. '3.0' ~ '3').
+        """
+        if ans is None:
+            return ""
+        s = ans.strip()
+        # Strip surrounding LaTeX display math delimiters
+        s = s.strip("$").strip()
+        # Drop a trailing period
+        if s.endswith("."):
+            s = s[:-1].rstrip()
+        s = s.lower()
+        s = s.replace("\\,", "").replace("\\;", "").replace("\\!", "")
+        s = s.replace("\\left", "").replace("\\right", "")
+        s = s.replace("\\cdot", "*")
+        s = s.replace("\\sqrt", "sqrt")
+        # Normalize \frac{a}{b} <-> a/b
+        m = self._FRAC_TEX_RE.fullmatch(s)
+        if m:
+            s = f"{m.group(1).strip()}/{m.group(2).strip()}"
+        else:
+            # Replace any \frac{a}{b} substrings
+            def _frac_sub(mm):
+                return f"{mm.group(1).strip()}/{mm.group(2).strip()}"
+            s = self._FRAC_TEX_RE.sub(_frac_sub, s)
+        # Trim a trailing "/1"
+        if s.endswith("/1") and "/" in s[:-2]:
+            s = s[:-2]
+        # Collapse whitespace
+        s = re.sub(r"\s+", "", s)
+        # Numeric normalization
         try:
-            samples = self._sample(question, self.N_SAMPLES)
-        except TypeError:
-            # Backend doesn't accept top_p -> drop it.
-            samples = self.llm(
-                question,
-                system=self.SYSTEM_PROMPT,
-                temperature=self.TEMPERATURE,
-                n=self.N_SAMPLES,
-            ) or []
+            # Only safe for plain numbers / fractions of ints
+            if "/" in s and all(p.lstrip("-").isdigit() for p in s.split("/")):
+                num, den = s.split("/")
+                if int(den) != 0:
+                    val = int(num) / int(den)
+                    # Represent as reduced fraction if close to a rational
+                    s = f"{num}/{den}"  # keep reduced form below
+            elif re.fullmatch(r"-?\d+(?:\.\d+)?", s):
+                # Strip trailing .0
+                if "." in s:
+                    try:
+                        f = float(s)
+                        if f.is_integer():
+                            s = str(int(f))
+                    except Exception:
+                        pass
         except Exception:
-            samples = []
-
-        # 2) Always also grab one greedy answer so we have a deterministic anchor.
-        greedy_text = self._greedy(question)
-        greedy_ans = _extract_answer(greedy_text)
-
-        candidates: List[Optional[float]] = [greedy_ans]
-        raw_answers: List[Optional[float]] = []
-        for s in samples:
-            a = _extract_answer(s)
-            raw_answers.append(a)
-            candidates.append(a)
-
-        # 3) Majority vote, falling back to greedy if sampling failed.
-        voted = self._vote(candidates)
-        if voted is None:
-            voted = greedy_ans
-        if voted is None:
-            # Absolute last resort: the last number anywhere in the greedy output.
-            nums = re.findall(r"-?\d+(?:\.\d+)?", greedy_text.replace(",", ""))
-            if nums:
-                try:
-                    voted = float(nums[-1])
-                except Exception:
-                    voted = 0.0
-            else:
-                voted = 0.0
-
-        return _format_number(voted)
+            pass
+        return s

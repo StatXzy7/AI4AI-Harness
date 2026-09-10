@@ -1,0 +1,1 @@
+{"target": "GLM-5.3-Flash", "harness_id": "gsm_kimi_s0_g4", "task_id": "math500_split#100", "db_id": "Geometry", "repeat": 0, "no_cache": false, "official_correct": 1, "legacy_correct": null, "final_answer": "145", "n_llm_calls": 8, "n_execs": 0, "latency_ms": 213720, "code_hash": "e6eb49e0d1036df3", "error": null}
