@@ -61,7 +61,14 @@ time; \citet{cfrouting2026} learn counterfactual instance-level routing over
 within a harness. All of these consume a population whose members
 \emph{actually disagree}; \citet{helix2026} comes closest, evaluating a
 full candidate outcome matrix and measuring portfolio complementarity beyond
-the best fixed candidate. Our contribution is narrower and different: we
+the best fixed candidate. Instance-conditional selection is classical: algorithm
+selection \citep{rice1976} and portfolio solvers such as SATzilla
+\citep{xu2008satzilla,kotthoff2016} choose among enumerated algorithms
+from per-instance features. We differ in unit and question: candidates
+are full \emph{generated} harnesses, and we do not build a selector ---
+we measure whether such populations carry selectable diversity at all,
+the outcome structure any selector would inherit (\S\ref{sec:boundary}).
+Our contribution is narrower and different: we
 measure whether \emph{automatically generated} populations collapse as an
 outcome phenomenon, diagnose why at the trace level, and isolate the
 generation-side causes with a controlled factorial.

@@ -1,0 +1,23 @@
+{
+ "n_cells": 18,
+ "n_splits": 100,
+ "k": 8,
+ "note": "exploratory addendum: captured = (oracle(selected)-best_fixed)/(oracle(full pool)-best_fixed)",
+ "top-acc": {
+  "mean_captured": 0.7333,
+  "min_cell": 0.5357,
+  "max_cell": 0.9461
+ },
+ "div-only": {
+  "mean_captured": 0.7621,
+  "min_cell": 0.6267,
+  "max_cell": 1.0
+ },
+ "delta_div_minus_topacc": {
+  "mean_pp": 2.87,
+  "ci95_pp": [
+   -0.02,
+   6.08
+  ]
+ }
+}

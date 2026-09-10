@@ -1,4 +1,4 @@
-\begin{thebibliography}{17}
+\begin{thebibliography}{20}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -35,6 +35,11 @@ Minho Kim.
 \newblock When should {LLMs} search? counterfactual supervision for search
   routing.
 \newblock \emph{arXiv preprint arXiv:2607.05752}, 2026.
+
+\bibitem[Kotthoff(2014)]{kotthoff2016}
+Lars Kotthoff.
+\newblock Algorithm selection for combinatorial search problems: A survey.
+\newblock \emph{AI Magazine}, 35\penalty0 (2):\penalty0 48--60, 2014.
 
 \bibitem[Li et~al.(2023)Li, Hui, Qu, Yang, Li, Li, Wang, Qin, Geng, Huo,
   et~al.]{bird2021}
@@ -85,6 +90,11 @@ Jun Nie, Yonggang Zhang, Jun Song, Qianshu Cai, Dahai Yu, Xinmei Tian, Bo~Han,
 \newblock {TTHE}: Test-time harness evolution.
 \newblock \emph{arXiv preprint arXiv:2607.08124}, 2026.
 
+\bibitem[Rice(1976)]{rice1976}
+John~R. Rice.
+\newblock \emph{The Algorithm Selection Problem}.
+\newblock Elsevier, 1976.
+
 \bibitem[Wang et~al.(2026)Wang, Shi, Li, Li, Yu, and Yang]{handbook2026}
 Ruhan Wang, Yucheng Shi, Zongxia Li, Zhongzhi Li, Yue Yu, and Junyao Yang.
 \newblock Harness handbook: Making evolving agent harnesses readable,
@@ -96,6 +106,12 @@ Jinghan Xu, Yikai Zhang, Aili Chen, Weiyuan Li, Jiaqing Liang, and Deqing Yang.
 \newblock Verify smarter, evolve further: Efficient harness evolution through
   behavior-aware verification.
 \newblock \emph{arXiv preprint arXiv:2608.27311}, 2026.
+
+\bibitem[Xu et~al.(2008)Xu, Hutter, Hoos, and Leyton-Brown]{xu2008satzilla}
+Lin Xu, Frank Hutter, Holger~H. Hoos, and Kevin Leyton-Brown.
+\newblock {SATzilla}: Portfolio-based algorithm selection for {SAT}.
+\newblock \emph{Journal of Artificial Intelligence Research}, 32:\penalty0
+  565--606, 2008.
 
 \bibitem[Zhang et~al.(2026{\natexlab{a}})Zhang, Lu, Xie, Zhu, Wang, and
   Xie]{jitagent2026}

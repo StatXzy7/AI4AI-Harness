@@ -127,7 +127,14 @@ $[0.18, 0.66]$, random vs.\ top-acc $+0.41$ $[0.19, 0.68]$; at $k{=}4$:
 $+0.65$ $[0.23, 1.17]$, $+0.24$ $[-0.03, 0.53]$ (not distinguishable
 from random), $+0.41$ $[0.11, 0.74]$. The $\lambda$-blended variants
 interpolate monotonically between top-acc and div-only; the pure
-diversity objective dominates at both $k$. A dev-measured population
+diversity objective dominates at both $k$. Normalized as captured
+headroom --- $(\mathrm{oracle}(S) - \mathrm{best\_fixed}) /
+(\mathrm{oracle}(\mathrm{pool}) - \mathrm{best\_fixed})$, with best-fixed
+the best single pool member on the test half --- the div-only 8-subset
+retains a mean 76.2\% of the full-pool oracle headroom (per-cell
+0.63--1.00), top-acc 73.3\% (0.54--0.95); paired delta $+2.87$\,pp
+$[-0.02, +6.08]$ (script \texttt{w1\_headroom.py}, output
+\texttt{w1\_headroom.json}). A dev-measured population
 statistic (oracle coverage) transfers across databases; a dev-measured
 per-item signal does not (\S\ref{sec:boundary}) --- which is the
 operational content of the measurement mandate.

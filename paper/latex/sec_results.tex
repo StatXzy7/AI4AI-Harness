@@ -36,7 +36,7 @@ Per-cell values are in Figure~\ref{fig:results} (left).}
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.72\linewidth]{figures/fig_results.pdf}
+\includegraphics[width=0.63\linewidth]{figures/fig_results.pdf}
 \caption{\textbf{Confirmatory results.} Left: per-cell D$-$A headroom deltas (sorted;
 green = D better, red = A better) with the pooled 95\% CI band. Right: factorial arm
 means on the identical core-400 items; the conformance gate's negative main effect is
@@ -107,11 +107,11 @@ order as cross-harness disagreement, so a substantial share of measured
 pairwise diversity is run noise --- and the sub-pp effects under
 interpretation sit an order of magnitude below this floor.
 
-\textbf{Headroom decomposition.} The gate does not make populations worse:
-oracle accuracy is essentially unchanged (A .761 vs.\ D .757; Table~\ref{tab:decomp}),
-and the unmatched headroom delta is carried by best-fixed accuracy shifting, not
-by a loss of union correctness. ``Less headroom'' here means \emph{less routing
-elbow-room}, not a worse population.
+\textbf{Headroom decomposition.} Oracle accuracy is essentially unchanged
+(A .761 vs.\ D .757; Table~\ref{tab:decomp}); the unmatched headroom delta
+is carried by best-fixed accuracy shifting, not by a loss of union
+correctness --- ``less headroom'' means \emph{less routing elbow-room},
+not a worse population.
 
 The honest summary: neither component moved population headroom beyond
 noise in either direction; we report the unmatched, K-matched, adjusted,
@@ -133,16 +133,15 @@ D forced/gated  & 4.8 & .653 & .646 & .673 & .757 & .084 \\
 \caption{\textbf{Headroom decomposition} (18 quad cells, core-400, official
 judge). Oracle accuracy is essentially unchanged across arms; the unmatched
 headroom differences are carried by best-fixed accuracy, not by population
-utility. Yield: $K$/144 slots A/B/C/D = 104/110/101/69; per-builder
-$R_{\mathrm{artifact}}$ 0.13 (GLM) to 0.80 (ERNIE).}
+utility. Yield: $K$/144 slots A/B/C/D = 104/110/101/69.}
 \label{tab:decomp}
 \end{table}
 
 \subsection{Diversity does not imply learnable routing}\label{sec:boundary}
 \textbf{Open-set value prediction does not beat the best fixed harness.} A
 leave-one-harness-out predictor over the Phase-I admitted populations fails
-to beat the best fixed harness (DeepSeek-V4-Flash-Vision-Exp arm $-3.4$\,pp,
-Qwen3.8-Flash $+0.9$\,pp, CI $[-5.2, +6.9]$; cross-protocol pool
+to beat the best fixed harness (DeepSeek arm $-3.4$\,pp,
+Qwen $+0.9$\,pp, CI $[-5.2, +6.9]$; cross-protocol pool
 $-0.9$\,pp). Apparent per-fold repair AUROC of 0.82--0.98 collapses under
 database-stratified task-held-out controls (mean 0.512) --- the signal is
 task memorization, not harness-value estimation. One narrow positive
@@ -160,8 +159,8 @@ code-space similarity lacks:} mean final-SQL dissimilarity on
 verdict-\emph{agreeing} cells correlates with outcome disagreement at
 Spearman $\rho{=}0.59$ (within-arm $0.57$), where code similarity showed
 none ($\rho{=}{-}0.01$) --- but richer channels are noisier channels
-(same-harness reruns change call counts on 1.8\% of cells, verdicts on
-8.5\%, final-SQL text on 70\%), and forced-mechanism arms cost 39--42\%
+(rerun stability: calls 1.8\%, verdicts 8.5\%, SQL 70\%), and
+forced-mechanism arms cost 39--42\%
 multi-call trajectories (free arms 25--30\%) while scoring \emph{lower}
 (.62 vs.\ .64). \textbf{(ii) Diversity-aware population selection
 transfers:} selecting $k{=}8$ per cell to maximize dev-half oracle
@@ -169,5 +168,8 @@ coverage yields $+0.82$\,pp held-out headroom over top-by-accuracy
 selection (95\% CI $[0.43, 1.31]$) and $+0.40$\,pp over random
 ($[0.18, 0.66]$); accuracy selection is itself worse than random --- it
 buys the best \emph{member}, diversity buys \emph{complementarity}.
+Normalized, the diversity-selected 8-subset retains 76\% of the full-pool
+oracle headroom over the best fixed harness (accuracy selection: 73\%;
+paired delta $+2.9$\,pp, CI $[-0.02, +6.08]$).
 Population-level statistics transfer across the database split;
 per-item value estimates do not (\S\ref{sec:boundary}).

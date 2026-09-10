@@ -23,7 +23,7 @@
 \end{table}
 
 \subsection{Harness 的条件效用与路由}\label{related:routing}
-近期多篇论文确立了 harness 质量以实例为条件：\citet{nouniversal2026} 与 \citet{nonmonotone2026} 的非单调性分析记录了没有任何单一 harness 在所有实例上占优。HELIX \citep{helix2026} 表明一个兄弟 harness 组合能胜过最优固定 harness，并将 harness 路由器列为未来工作；STS \citep{sts2026} 在封闭集合内的六个人工设计脚手架之间路由；GRASP \citep{grasp2026} 在开发期把技能编辑门控进库；\citet{cfrouting2026} 在 \{不搜索、搜索、弃答\} 之上学习反事实的实例级路由；\citet{agenticrouting2026} 在一个 harness 内部路由模型。这些工作都消费一个成员\emph{确实存在分歧}的群体；\citet{helix2026} 与我们最接近，它评估了完整的候选结果矩阵并测量组合相对最优固定候选的互补性。我们的贡献更窄也更高不同：我们测量\emph{自动生成}的群体是否作为结果现象发生坍缩，在轨迹层面诊断原因，并用受控因子实验分离生成侧成因。
+近期多篇论文确立了 harness 质量以实例为条件：\citet{nouniversal2026} 与 \citet{nonmonotone2026} 的非单调性分析记录了没有任何单一 harness 在所有实例上占优。HELIX \citep{helix2026} 表明一个兄弟 harness 组合能胜过最优固定 harness，并将 harness 路由器列为未来工作；STS \citep{sts2026} 在封闭集合内的六个人工设计脚手架之间路由；GRASP \citep{grasp2026} 在开发期把技能编辑门控进库；\citet{cfrouting2026} 在 \{不搜索、搜索、弃答\} 之上学习反事实的实例级路由；\citet{agenticrouting2026} 在一个 harness 内部路由模型。这些工作都消费一个成员\emph{确实存在分歧}的群体；\citet{helix2026} 与我们最接近，它评估了完整的候选结果矩阵并测量组合相对最优固定候选的互补性。以实例为条件的选择本身是经典问题：算法选择 \citep{rice1976} 与 SATzilla 等组合求解器 \citep{xu2008satzilla,kotthoff2016} 依据逐实例特征在已枚举的算法中挑选。我们与之在单元与问题上都不同：候选是完整的\emph{生成} harness，而我们并不构建选择器——我们测量此类群体是否携带可供选择的多样性，即任何选择器将要继承的结果结构（\Sef{sec:boundary}）。我们的贡献更窄也更高不同：我们测量\emph{自动生成}的群体是否作为结果现象发生坍缩，在轨迹层面诊断原因，并用受控因子实验分离生成侧成因。
 
 \subsection{LLM 群体中的行为多样性}\label{related:diversity}
 LLM 输出的多样性研究大多停留在样本层面（自一致性、多样解码）或智能体策略层面。语法上不同的程序可以表现出相同行为，这一观察呼应了程序合成与变异测试实践中记录的覆盖缺口；我们的贡献是针对 AI 生成的 harness 群体把这一点实例化并定量化，并给出机制层面的分类法。

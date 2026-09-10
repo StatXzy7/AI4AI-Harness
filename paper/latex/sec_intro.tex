@@ -59,6 +59,12 @@ precision --- the apparent negative gate effect was substantially size-confounde
 and not Holm-significant, and the API nondeterminism noise floor exceeds the
 sub-pp effects in question (Section~5).
 
+Read together, the two phases answer three nested questions: \emph{does
+diversity exist} (yes in code, substantially less in behavior); \emph{is
+it useful} (only at the population level, never enough to beat bare);
+and \emph{is it predictable per instance} (not under the tested
+predictors, \S\ref{sec:boundary}).
+
 Our contributions:
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -83,7 +89,6 @@ Our contributions:
   (\S\ref{sec:boundary}).
 \end{enumerate}
 
-Beyond harnesses, the failure pattern we isolate --- LLM builders producing
-plausible, well-documented, behaviorally inert variants --- is a
-generation-reliability phenomenon we expect to recur wherever a model is
-asked to modify its own program.
+Beyond harnesses, behaviorally inert LLM-written variants are a
+generation-reliability phenomenon we expect to recur wherever a model
+is asked to modify its own program.

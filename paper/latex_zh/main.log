@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.4.29)  8 SEP 2026 15:00
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.4.29)  10 SEP 2026 12:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -921,7 +921,7 @@ Package fontspec Info:
 [1
 
 ]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 1163) has occurred while \output is active []
 
  [2])
 (./sec_related.tex [3]) (./sec_phase1.tex
@@ -929,21 +929,25 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 LaTeX Warning: Reference `app:phase1-provenance' on page 4 undefined on input l
 ine 1.
 
-[4]
+
+Underfull \vbox (badness 2126) has occurred while \output is active []
+
+ [4]
 File: figures/fig_phenomenon.pdf Graphic file (type pdf)
 <use figures/fig_phenomenon.pdf>
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [5]
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <10.53937> not available
 (Font)              Font shape `TU/lmtt/b/n' tried instead on input line 32.
 
+[5]
 
 LaTeX Warning: Reference `app:phase1-provenance' on page 6 undefined on input l
 ine 41.
 
-) [6] (./sec_phase2.tex
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [6])
+(./sec_phase2.tex
 
 LaTeX Warning: Reference `app:phase2-protocol' on page 7 undefined on input lin
 e 1.
@@ -956,24 +960,24 @@ File: figures/fig_design.pdf Graphic file (type pdf)
 LaTeX Warning: Reference `app:phase2-protocol' on page 8 undefined on input lin
 e 25.
 
-) [8] (./sec_results.tex
+)
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [8]
+(./sec_results.tex
 File: figures/fig_results.pdf Graphic file (type pdf)
 <use figures/fig_results.pdf>
- [9])
+ [9]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [10]
-(./sec_discussion.tex) (./sec_conclusion.tex
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [11])
-(./main.bbl [12]
-Underfull \hbox (badness 1028) in paragraph at lines 83--87
+ [10])
+[11] (./sec_discussion.tex) (./sec_conclusion.tex) [12] (./main.bbl [13]
+Underfull \hbox (badness 1028) in paragraph at lines 88--92
 []\TU/lmr/m/n/10.53937 Jun Nie, Yonggang Zhang, Jun Song, Qianshu Cai, Dahai Yu
 , Xinmei Tian,
  []
 
-[13]) [14] (./main.aux)
+) [14] (./main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2022/07/14>
@@ -986,15 +990,15 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 6A2C0F6A9F52B0C855CA22ECB0BEDA15;2865.
+(rerunfilecheck)             Checksum: EFC5625BA9356EF6119A0DF4E41AFE57;3059.
  ) 
 Here is how much of TeX's memory you used:
- 16499 strings out of 467992
- 361463 string characters out of 5433177
- 806307 words of memory out of 5000000
- 45111 multiletter control sequences out of 15000+600000
+ 16521 strings out of 467992
+ 362459 string characters out of 5433177
+ 806676 words of memory out of 5000000
+ 45133 multiletter control sequences out of 15000+600000
  636559 words of font info for 111 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 93i,12n,111p,787b,490s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 93i,12n,111p,787b,478s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.xdv (14 pages, 276976 bytes).
+Output written on main.xdv (14 pages, 297320 bytes).
