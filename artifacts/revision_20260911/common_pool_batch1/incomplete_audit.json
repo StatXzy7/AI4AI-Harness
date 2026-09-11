@@ -1,0 +1,21 @@
+{
+  "status": "INCOMPLETE",
+  "exit_code": 1,
+  "planned_attempts": 192,
+  "completed_attempts": 0,
+  "pending_attempts": 1,
+  "not_started_attempts": 191,
+  "event_counts": {
+    "task_start": 1,
+    "logical_start": 1,
+    "http_start": 1,
+    "http_unknown": 1
+  },
+  "error_type": "ReadTimeout",
+  "unknown_provider_completion_and_cost": 1,
+  "known_usage": null,
+  "qwen_started": false,
+  "bindings_verified": 11,
+  "ledger_sha256": "c362d6881d05b76dfe1ea7eb51ed71839ca7a6629fba6074505f4b6b0ddb8acc",
+  "retry_performed": false
+}

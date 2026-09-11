@@ -1,0 +1,11 @@
+{
+  "scope": "interim billing metadata only",
+  "response_bodies_verified": 5,
+  "unknown_account_pricing": true,
+  "unknown_currency_cost": true,
+  "bindings": {
+    "artifacts\\revision_20260911\\account_readonly_check\\result.json": "fbaaa33e1aabaa8f7457b1d1e8ac7a4142f285008423cd863deeea4a1ebd570c",
+    "artifacts\\revision_20260911\\account_readonly_check\\raw_usage_check.json": "dfcce1bcd049ee1da0366ae94a81c1c9b43456764694729c9a60f2be06a14f4b",
+    "review-stage\\PROVIDER_USAGE_BOUNDARY_20260911.md": "3fb78b6503a014330a771f6eee500ea9043db4ea20744e4bcea511b99616fdb9"
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "scope": "exposed development regression only",
+  "total_runs": 39,
+  "rows": [
+    {
+      "id": "archive_repair",
+      "role": "archived_candidate",
+      "runs": 3,
+      "structural_verdict": "pass",
+      "errors": 0,
+      "admission": "not_evaluated"
+    },
+    {
+      "id": "archive_vote3",
+      "role": "archived_candidate",
+      "runs": 6,
+      "structural_verdict": "pass",
+      "errors": 0,
+      "admission": "not_evaluated"
+    },
+    {
+      "id": "archive_schema_link",
+      "role": "archived_candidate",
+      "runs": 3,
+      "structural_verdict": "review_required",
+      "errors": 0,
+      "admission": "not_evaluated"
+    },
+    {
+      "id": "archive_hint_guard",
+      "role": "archived_candidate",
+      "runs": 3,
+      "structural_verdict": "review_required",
+      "errors": 0,
+      "admission": "not_evaluated"
+    },
+    {
+      "id": "archive_two_view",
+      "role": "archived_candidate",
+      "runs": 4,
+      "structural_verdict": "fail",
+      "errors": 0,
+      "admission": "not_evaluated"
+    },
+    {
+      "id": "archive_decompose",
+      "role": "archived_candidate",
+      "runs": 2,
+      "structural_verdict": "review_required",
+      "errors": 0,
+      "admission": "not_evaluated"
+    },
+    {
+      "id": "archive_error_classify",
+      "role": "archived_candidate",
+      "runs": 7,
+      "structural_verdict": "review_required",
+      "errors": 0,
+      "admission": "not_evaluated"
+    },
+    {
+      "id": "archive_format_guard",
+      "role": "archived_candidate",
+      "runs": 0,
+      "structural_verdict": null,
+      "errors": 0,
+      "admission": "not_evaluated"
+    },
+    {
+      "id": "neg_uncond_twocall",
+      "role": "exposed_negative_control",
+      "runs": 3,
+      "structural_verdict": "fail",
+      "errors": 0,
+      "admission": "not_evaluated"
+    },
+    {
+      "id": "neg_selectfirst",
+      "role": "exposed_negative_control",
+      "runs": 6,
+      "structural_verdict": "fail",
+      "errors": 0,
+      "admission": "not_evaluated"
+    },
+    {
+      "id": "development_format",
+      "role": "exposed_development_control",
+      "runs": 2,
+      "structural_verdict": "review_required",
+      "errors": 0,
+      "admission": "not_evaluated"
+    }
+  ]
+}

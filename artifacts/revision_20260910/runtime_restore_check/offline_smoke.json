@@ -1,0 +1,96 @@
+{
+  "status": "PASS_FOR_OFFLINE_PLUMBING_ONLY",
+  "python": "3.13.9 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 19:09:58) [MSC v.1929 64 bit (AMD64)]",
+  "isolated_venv": true,
+  "venv_configuration": "home = D:\\anaconda3\ninclude-system-site-packages = false\nversion = 3.13.9\nexecutable = E:\\projects\\AI4AI-Harness\\artifacts\\revision_20260910\\runtime_env\\Scripts\\python.exe\ncommand = E:\\projects\\AI4AI-Harness\\artifacts\\revision_20260910\\runtime_env\\Scripts\\python.exe -m venv E:\\projects\\AI4AI-Harness\\artifacts\\revision_20260910\\runtime_restore_check\\env\n",
+  "dependencies": {
+    "annotated-types": "0.8.0",
+    "anyio": "4.15.1",
+    "certifi": "2026.7.22",
+    "colorama": "0.4.6",
+    "contourpy": "1.3.3",
+    "cycler": "0.12.1",
+    "distro": "1.9.0",
+    "fonttools": "4.64.0",
+    "h11": "0.16.0",
+    "httpcore": "1.0.9",
+    "httpx": "0.28.1",
+    "idna": "3.19",
+    "jiter": "0.16.0",
+    "kiwisolver": "1.5.1",
+    "matplotlib": "3.10.9",
+    "numpy": "2.3.5",
+    "openai": "2.24.0",
+    "packaging": "26.3",
+    "pillow": "12.3.0",
+    "pydantic": "2.13.5",
+    "pydantic_core": "2.46.5",
+    "pyparsing": "3.3.2",
+    "python-dateutil": "2.9.0.post0",
+    "PyYAML": "6.0.3",
+    "six": "1.17.0",
+    "sniffio": "1.3.1",
+    "tqdm": "4.70.0",
+    "typing-inspection": "0.4.4",
+    "typing_extensions": "4.16.0"
+  },
+  "compiled_python_files_after_patch": 444,
+  "restored_modules": {
+    "text_to_sql.bridge": "E:\\projects\\AI4AI-Harness\\artifacts\\revision_20260910\\runtime_restore_check\\restored\\text_to_sql\\bridge.py",
+    "ase.db": "E:\\projects\\AI4AI-Harness\\artifacts\\revision_20260910\\runtime_restore_check\\restored\\ase\\db.py",
+    "ase.solver_cache": "E:\\projects\\AI4AI-Harness\\artifacts\\revision_20260910\\runtime_restore_check\\restored\\ase\\solver_cache.py",
+    "ase.llm": "E:\\projects\\AI4AI-Harness\\artifacts\\revision_20260910\\runtime_restore_check\\restored\\ase\\llm.py"
+  },
+  "provider": "mock",
+  "network_attempts": [],
+  "mock_output": "OK",
+  "mock_output_execution": {
+    "ok": false,
+    "rows": [],
+    "error": "not a SELECT",
+    "n": 0
+  },
+  "explicit_sql_execution": {
+    "ok": true,
+    "rows": [
+      [
+        3
+      ]
+    ],
+    "error": null,
+    "n": 1
+  },
+  "trace": [
+    {
+      "step": "coder_llm",
+      "system": "You are an expert Text-to-SQL system for SQLite. Read the schema carefully and output exactly one SQLite query that answers the question, inside a ```sql ... ``` block.",
+      "prompt": "Database schema:\nTable stadium(stadium_id, name, capacity)\nTable singer(singer_id, name, country)\nTable concert(concert_id, stadium_id, singer_id)\nFK concert.singer_id -> singer.singer_id\nFK concert.stadium_id -> stadium.stadium_id\n\nQuestion: How many singers are there?\n\nWrite the SQLite query.",
+      "response": "OK"
+    },
+    {
+      "step": "execute_sql",
+      "sql": "OK",
+      "ok": false,
+      "error": "not a SELECT",
+      "rows": [],
+      "n_rows": 0
+    },
+    {
+      "step": "execute_sql",
+      "sql": "SELECT COUNT(*) FROM singer",
+      "ok": true,
+      "error": null,
+      "rows": [
+        [
+          3
+        ]
+      ],
+      "n_rows": 1
+    }
+  ],
+  "prior_smoke_failures": [
+    "minimal mock config omitted base_url: KeyError before model invocation",
+    "built-in mock harness purpose returns OK, so asserting valid generated SQL failed; preserved as a negative execution test, explicit hand-written SQL used to check SQLite separately"
+  ],
+  "scope": "Windows isolated source and new clean venv; built-in demo/mock/cache/trace/SQLite only. No generated-SQL correctness, BIRD evaluation, remote-provider or repeat independence evidence."
+}

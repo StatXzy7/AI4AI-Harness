@@ -1,0 +1,28 @@
+{
+  "observed_unix": 1789062673.616679,
+  "scope": "interim usage metadata only; no candidate quality analysis",
+  "exceedances": [
+    {
+      "http_end_event": 26,
+      "task": "1b22c511ea07b345886a3201f246d84d80365e3225124f27b5268a86569be0f1",
+      "requested_max_tokens": 16384,
+      "usage": {
+        "completion_tokens": 18889,
+        "completion_tokens_details": {
+          "reasoning_tokens": 16933,
+          "text_tokens": 18889
+        },
+        "prompt_tokens": 287,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "text_tokens": 287
+        },
+        "total_tokens": 19176
+      }
+    }
+  ],
+  "explanation": "Provider-reported completion tokens exceed requested max_tokens for these responses; cause unknown. Record actual usage. Requested allowance is not a verified upper bound on billed tokens.",
+  "request_batch_limit": 96,
+  "auto_expansion": false,
+  "prior_glm_unknown_cost_requests": 1
+}

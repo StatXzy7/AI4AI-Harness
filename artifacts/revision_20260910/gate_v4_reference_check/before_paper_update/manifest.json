@@ -1,0 +1,147 @@
+[
+  {
+    "original": "artifacts/revision_20260910/chinese_sync_verification.json",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/artifacts__revision_20260910__chinese_sync_verification.json",
+    "sha256": "c953a66f67ff09a25132c970ae956c9ba8fa73abe1de152a6f6aa0ed3cc799e4"
+  },
+  {
+    "original": "artifacts/revision_20260910/verification.json",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/artifacts__revision_20260910__verification.json",
+    "sha256": "13d278ba5a7328c32a2ff97217f70fa6e17a08dc1e6760f72ff5df2cf79043e1"
+  },
+  {
+    "original": "experiment/revision/README.md",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/experiment__revision__README.md",
+    "sha256": "0b459dabd51b97df48041cd87c86085b5a4d2a40946cc31f163885f0c1ddff44"
+  },
+  {
+    "original": "paper/latex/main.aux",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/paper__latex__main.aux",
+    "sha256": "382b27a6cc5aa4b4af7caf3b2f1ecc5658af1d5fdefec28039af8a79813ec244"
+  },
+  {
+    "original": "paper/latex/main.bbl",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/paper__latex__main.bbl",
+    "sha256": "3c4f01c9ea536f872d840deef1f88a56d8a80ab0a9d911368f384d36111be0e5"
+  },
+  {
+    "original": "paper/latex/main.blg",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/paper__latex__main.blg",
+    "sha256": "be17451e34338bee01c983447e3445ef29589c4987ff990b7f853511eac6149d"
+  },
+  {
+    "original": "paper/latex/main.fdb_latexmk",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/paper__latex__main.fdb_latexmk",
+    "sha256": "8bddd2a9f8dba496902e88d85604042d9f9e7cf4de04afeb3fea355d20f8f642"
+  },
+  {
+    "original": "paper/latex/main.fls",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/paper__latex__main.fls",
+    "sha256": "17ccf4295db7568bc4cecc9d3eced28b5f6c548df6cd9b17e32939fcfbfbaa0a"
+  },
+  {
+    "original": "paper/latex/main.log",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/paper__latex__main.log",
+    "sha256": "9743feada8c00d3bddc521df58cc94a1681cd40441947d605825e6ef6c6caebd"
+  },
+  {
+    "original": "paper/latex/main.out",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/paper__latex__main.out",
+    "sha256": "6b97464e8261614364e318055a56682c5c0a09bdeff8667eb3013dc772e39d1f"
+  },
+  {
+    "original": "paper/latex/main.pdf",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/paper__latex__main.pdf",
+    "sha256": "451e4c5f1af09580189f24fb4b038210edf9f6e74098e3f72d297f1dbcb47428"
+  },
+  {
+    "original": "paper/latex/main.tex",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/paper__latex__main.tex",
+    "sha256": "1a66d4bf81d8feace9dfa1602111ba114a391ac3025def4310fbf6bba00e2c12"
+  },
+  {
+    "original": "paper/latex/sec_appendix.tex",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/paper__latex__sec_appendix.tex",
+    "sha256": "183c4d70f2dd3934a5a32f3c4f8578fd702a2c2e11d8efced8e9845eb05499a0"
+  },
+  {
+    "original": "paper/latex/sec_discussion.tex",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/paper__latex__sec_discussion.tex",
+    "sha256": "82103e431a607da12786f6ba56faf3065c7e6d0ed91435c9555b7771b952ae2d"
+  },
+  {
+    "original": "paper/latex_zh/build_utf8.log",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/paper__latex_zh__build_utf8.log",
+    "sha256": "d9805b0a6492609240edfefa5817065fa5331c81d646309decb4159f99bff70a"
+  },
+  {
+    "original": "paper/latex_zh/main.aux",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/paper__latex_zh__main.aux",
+    "sha256": "dc49a9870bc64fc6421db415e7550b5f299ccaf93e893e67b96e044dcfea7e1c"
+  },
+  {
+    "original": "paper/latex_zh/main.bbl",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/paper__latex_zh__main.bbl",
+    "sha256": "3c4f01c9ea536f872d840deef1f88a56d8a80ab0a9d911368f384d36111be0e5"
+  },
+  {
+    "original": "paper/latex_zh/main.blg",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/paper__latex_zh__main.blg",
+    "sha256": "5f817fcceaf518d6da95a7314ba28001bcd02b5b21440c866b79395b41f19036"
+  },
+  {
+    "original": "paper/latex_zh/main.fdb_latexmk",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/paper__latex_zh__main.fdb_latexmk",
+    "sha256": "9a9c2a35c34c15cdce703853b6fe9783c62fd52561d3a9ad7d51f0ef06859d49"
+  },
+  {
+    "original": "paper/latex_zh/main.fls",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/paper__latex_zh__main.fls",
+    "sha256": "23859254c415cbc7ea1b46c5b27a0b4fccacd21e5d420b9c673bf1c131227c6a"
+  },
+  {
+    "original": "paper/latex_zh/main.log",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/paper__latex_zh__main.log",
+    "sha256": "57f7bba8da0ad4806b7b6b6416ace4bae13b84ee1c5f898e85f448d9f4420b75"
+  },
+  {
+    "original": "paper/latex_zh/main.out",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/paper__latex_zh__main.out",
+    "sha256": "c4e597e3a0235c44d7b810cc07ea17029c3a76aebb7e211447e33b8d12b5de2c"
+  },
+  {
+    "original": "paper/latex_zh/main.pdf",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/paper__latex_zh__main.pdf",
+    "sha256": "3ef6470198393fe291ce08d125745696803f1f58561545af18bc75113695667b"
+  },
+  {
+    "original": "paper/latex_zh/main.tex",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/paper__latex_zh__main.tex",
+    "sha256": "945d5a5f43ca4b23d72b21729719ba239882878e1fc7927e14ec621deec0290c"
+  },
+  {
+    "original": "paper/latex_zh/main.xdv",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/paper__latex_zh__main.xdv",
+    "sha256": "d24777bf35d33e9dbb4c82b5d79cefce873e7a47383e29202bb52d85a4ddabff"
+  },
+  {
+    "original": "paper/latex_zh/sec_appendix.tex",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/paper__latex_zh__sec_appendix.tex",
+    "sha256": "f1c412bc60b699e9f69a4b39f5e66fe0a3594a7b7bf0fc52b4dc10862719db8f"
+  },
+  {
+    "original": "paper/latex_zh/sec_discussion.tex",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/paper__latex_zh__sec_discussion.tex",
+    "sha256": "d0d19818fb74e6f61df3f1f44402b0dd5cb7d49caa0c7d097ac7c72856f39d21"
+  },
+  {
+    "original": "review-stage/REVISED_EXPERIMENT_PLAN.md",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/review-stage__REVISED_EXPERIMENT_PLAN.md",
+    "sha256": "d34bf632f739a76c25c085d561aa2534178cb64f5f2345ebf100c551e5626d1f"
+  },
+  {
+    "original": "review-stage/REVISION_20260910.md",
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_paper_update/review-stage__REVISION_20260910.md",
+    "sha256": "a168ed580ecf8af54755a4b08359902ab3bda02f8aae04e908049d99488ecff8"
+  }
+]

@@ -1,0 +1,8 @@
+test_complete_artificial_pool_retains_all_six_attempts (experiment.revision.test_common_pool_extraction_compare.ExtractionComparisonTests.test_complete_artificial_pool_retains_all_six_attempts) ... ok
+test_incomplete_export_cannot_be_analyzed_as_complete (experiment.revision.test_common_pool_extraction_compare.ExtractionComparisonTests.test_incomplete_export_cannot_be_analyzed_as_complete) ... ok
+test_nested_fence_and_missing_content_keep_denominators (experiment.revision.test_common_pool_extraction_compare.ExtractionComparisonTests.test_nested_fence_and_missing_content_keep_denominators) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.025s
+
+OK

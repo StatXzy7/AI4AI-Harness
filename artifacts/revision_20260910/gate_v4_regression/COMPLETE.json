@@ -1,0 +1,5 @@
+{
+  "results_sha256": "70ea42818ce1e4ae679bdb8e4d7828936e15019e731bb735c649d2d9a4f54acd",
+  "manifest_sha256": "fc31fa25b1268645603768f30e43c11954ab9986406f2a61f5404bb920dadaea",
+  "scope": "exposed regression only; no calibration or admission"
+}

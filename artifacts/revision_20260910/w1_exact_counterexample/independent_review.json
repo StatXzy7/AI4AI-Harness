@@ -1,0 +1,33 @@
+{
+  "python_review_initial": {
+    "model": "gpt-5.5",
+    "score": 6,
+    "verdict": "not ready",
+    "findings": [
+      "Self-hash binding replaced expected value with current value",
+      "assert integrity checks disabled by python -O",
+      "Black formatting"
+    ]
+  },
+  "python_review_corrected": {
+    "model": "gpt-5.5",
+    "score": 8,
+    "verdict": "ready",
+    "scope": "precalculation source freeze and Python integrity",
+    "source_sha256": "5146e51f96dc2e7bff24ee641a34c9ddaa684ab10d24026c250fdc272da0bfaa"
+  },
+  "statistical_review_initial": {
+    "model": "gpt-5.5",
+    "score": 8.5,
+    "verdict": "almost",
+    "finding": "Scope rejection to this proposed interval rather than all positive-weight methods"
+  },
+  "statistical_and_bilingual_final": {
+    "model": "gpt-5.5",
+    "score": 9,
+    "verdict": "ready",
+    "scope": "constructed-DGP proof, exact result counts and bilingual claim boundaries only",
+    "findings": []
+  },
+  "separation": "Different-model reviewers from GPT-6 author; parallel Python and statistical axes. No paper-wide acceptance score inferred."
+}

@@ -1,0 +1,57 @@
+{
+  "english": {
+    "pages": 19,
+    "main_pages": 9,
+    "build_exit": 0,
+    "new_paragraph_pages": [
+      14,
+      15
+    ],
+    "pdf_sha256": "6a0fc4482904031547b478525f73b7c2999406c1ef6d5c057f975b0e0c0ae9c6"
+  },
+  "chinese": {
+    "pages": 22,
+    "main_end_page": 11,
+    "xelatex_exit_codes": [
+      0,
+      0
+    ],
+    "xdvipdfmx_exit_codes": [
+      1,
+      0
+    ],
+    "first_failure": "Unable to open main.pdf; full failure and retry logs retained",
+    "new_paragraph_pages": [
+      16,
+      17
+    ],
+    "pdf_sha256": "c235a66414bf7b0ca33035034e220a798832627e399ccf865facddc651127e5f"
+  },
+  "visual_check": {
+    "contact_sheet_pages": [
+      19,
+      22
+    ],
+    "detail_pages_en": [
+      14,
+      15
+    ],
+    "detail_pages_zh": [
+      16,
+      17,
+      22
+    ],
+    "result": "Readable, no clipping or missing glyphs. Paragraphs span pages; Chinese floating table precedes continuation. Final pages contain short existing MATH scope text with white space."
+  },
+  "log_checks": "No undefined references/citations, overfull boxes, missing glyphs or rerun requests. Existing SimSun smallcaps fallback remains.",
+  "paper_verifier": {
+    "first_exit": 1,
+    "first_issue": "Updated source manifest left duplicate appendix entry stale in build_inputs; preserved failure log",
+    "final_exit": 0,
+    "hashes_checked": 42,
+    "changes": "Only expected appendix hashes refreshed in duplicate maps; verifier unchanged"
+  },
+  "chinese_source_build_maps_checked": 55,
+  "empirical_tables_and_main_text_changed": false,
+  "historical_test_provenance": "Earlier25-test verification remains historical; this stage ran10 selection regression tests and60 canonical comparisons."
+}

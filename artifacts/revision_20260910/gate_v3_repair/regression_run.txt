@@ -1,0 +1,2 @@
+{"fail": 13, "pass": 6, "review_required": 13}
+[{"case_id": "ic021", "new": "pass", "old": "fail"}, {"case_id": "ic025", "new": "review_required", "old": "fail"}, {"case_id": "ic026", "new": "review_required", "old": "fail"}, {"case_id": "ic027", "new": "review_required", "old": "fail"}, {"case_id": "ic028", "new": "review_required", "old": "fail"}]

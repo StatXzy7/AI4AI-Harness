@@ -1,0 +1,9 @@
+{
+  "requests_checked": 16,
+  "all_model": "GLM-5.3-Flash",
+  "all_temperature": 0,
+  "all_max_tokens": 4096,
+  "explicit_thinking_toggle_sent": false,
+  "explicit_reasoning_effort_sent": false,
+  "interpretation": "No thinking toggle was sent; provider reasoning tokens may still be reported."
+}

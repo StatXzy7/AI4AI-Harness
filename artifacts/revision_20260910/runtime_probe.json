@@ -1,0 +1,559 @@
+{
+  "scope": "synthetic loopback integration, no paid API or empirical BIRD outcomes",
+  "python": "3.13.9",
+  "packages": {
+    "openai": "2.24.0",
+    "PyYAML": "6.0.3",
+    "httpx": "0.28.1"
+  },
+  "collector_cases": [
+    {
+      "case": "first",
+      "repeat": 0,
+      "http_requests": 1,
+      "stdout": "[collect] 0 cells already recorded in collected.jsonl\n[collect] 1 tasks over 1 databases | target=fixture-model\n  [done] bare: official_acc=1.000 on 1 new cells\n[collect] wrote <temporary>\\collected.jsonl\n"
+    },
+    {
+      "case": "resume",
+      "repeat": 0,
+      "http_requests": 0,
+      "stdout": "[collect] 1 cells already recorded in collected.jsonl\n[collect] 1 tasks over 1 databases | target=fixture-model\n  [have] bare: complete\n[collect] wrote <temporary>\\collected.jsonl\n"
+    },
+    {
+      "case": "repeat_cached",
+      "repeat": 1,
+      "http_requests": 0,
+      "stdout": "[collect] 1 cells already recorded in collected.jsonl\n[collect] 1 tasks over 1 databases | target=fixture-model\n  [done] bare: official_acc=1.000 on 1 new cells\n[collect] wrote <temporary>\\collected.jsonl\n"
+    },
+    {
+      "case": "fresh_2",
+      "repeat": 2,
+      "http_requests": 1,
+      "stdout": "[collect] solver cache BYPASSED\n[collect] 2 cells already recorded in collected.jsonl\n[collect] 1 tasks over 1 databases | target=fixture-model\n  [done] bare: official_acc=1.000 on 1 new cells\n[collect] wrote <temporary>\\collected.jsonl\n"
+    },
+    {
+      "case": "fresh_3",
+      "repeat": 3,
+      "http_requests": 1,
+      "stdout": "[collect] solver cache BYPASSED\n[collect] 3 cells already recorded in collected.jsonl\n[collect] 1 tasks over 1 databases | target=fixture-model\n  [done] bare: official_acc=1.000 on 1 new cells\n[collect] wrote <temporary>\\collected.jsonl\n"
+    },
+    {
+      "case": "resume_mode_switch",
+      "repeat": 0,
+      "http_requests": 0,
+      "stdout": "[collect] solver cache BYPASSED\n[collect] 4 cells already recorded in collected.jsonl\n[collect] 1 tasks over 1 databases | target=fixture-model\n  [have] bare: complete\n[collect] wrote <temporary>\\collected.jsonl\n"
+    }
+  ],
+  "collector_rows": [
+    {
+      "target": "fixture-model",
+      "harness_id": "bare",
+      "task_id": "fixture#0",
+      "db_id": "fixture",
+      "repeat": 0,
+      "no_cache": false,
+      "official_correct": 1,
+      "legacy_correct": 1,
+      "final_sql": "SELECT count(*) FROM ledger -- reply 1",
+      "n_llm_calls": 1,
+      "n_execs": 0,
+      "latency_ms": 260,
+      "code_hash": "307091e6d5b29f0e",
+      "error": null
+    },
+    {
+      "target": "fixture-model",
+      "harness_id": "bare",
+      "task_id": "fixture#0",
+      "db_id": "fixture",
+      "repeat": 1,
+      "no_cache": false,
+      "official_correct": 1,
+      "legacy_correct": 1,
+      "final_sql": "SELECT count(*) FROM ledger -- reply 1",
+      "n_llm_calls": 1,
+      "n_execs": 0,
+      "latency_ms": 0,
+      "code_hash": "307091e6d5b29f0e",
+      "error": null
+    },
+    {
+      "target": "fixture-model",
+      "harness_id": "bare",
+      "task_id": "fixture#0",
+      "db_id": "fixture",
+      "repeat": 2,
+      "no_cache": true,
+      "official_correct": 1,
+      "legacy_correct": 1,
+      "final_sql": "SELECT count(*) FROM ledger -- reply 2",
+      "n_llm_calls": 1,
+      "n_execs": 0,
+      "latency_ms": 2,
+      "code_hash": "307091e6d5b29f0e",
+      "error": null
+    },
+    {
+      "target": "fixture-model",
+      "harness_id": "bare",
+      "task_id": "fixture#0",
+      "db_id": "fixture",
+      "repeat": 3,
+      "no_cache": true,
+      "official_correct": 1,
+      "legacy_correct": 1,
+      "final_sql": "SELECT count(*) FROM ledger -- reply 3",
+      "n_llm_calls": 1,
+      "n_execs": 0,
+      "latency_ms": 2,
+      "code_hash": "307091e6d5b29f0e",
+      "error": null
+    }
+  ],
+  "pending_cache": [
+    {
+      "case": "first_seq0",
+      "http_requests": 1,
+      "answer": "```sql\nSELECT count(*) FROM ledger -- reply 4\n```"
+    },
+    {
+      "case": "first_seq1",
+      "http_requests": 1,
+      "answer": "```sql\nSELECT count(*) FROM ledger -- reply 5\n```"
+    },
+    {
+      "case": "clone_seq0",
+      "http_requests": 0,
+      "answer": "```sql\nSELECT count(*) FROM ledger -- reply 4\n```"
+    },
+    {
+      "case": "clone_seq1",
+      "http_requests": 1,
+      "answer": "```sql\nSELECT count(*) FROM ledger -- reply 6\n```"
+    }
+  ],
+  "multi_sample": {
+    "logical_trace_calls": 1,
+    "outputs": [
+      "```sql\nSELECT count(*) FROM ledger -- reply 8\n```",
+      "```sql\nSELECT count(*) FROM ledger -- reply 7\n```",
+      "```sql\nSELECT count(*) FROM ledger -- reply 9\n```"
+    ],
+    "http_requests": 3,
+    "trace": [
+      {
+        "step": "coder_llm",
+        "system": "",
+        "prompt": "MULTI_SAMPLE",
+        "response": [
+          "```sql\nSELECT count(*) FROM ledger -- reply 8\n```",
+          "```sql\nSELECT count(*) FROM ledger -- reply 7\n```",
+          "```sql\nSELECT count(*) FROM ledger -- reply 9\n```"
+        ]
+      }
+    ]
+  },
+  "retry": {
+    "logical_trace_calls": 1,
+    "sdk_create_calls": 1,
+    "http_requests": 2,
+    "statuses": [
+      429,
+      200
+    ]
+  },
+  "thinking_request": {
+    "messages": [
+      {
+        "role": "system",
+        "content": ""
+      },
+      {
+        "role": "user",
+        "content": "THINKING_TEMPERATURE"
+      }
+    ],
+    "model": "fixture-model",
+    "max_tokens": 32000,
+    "thinking": {
+      "type": "enabled"
+    },
+    "reasoning_effort": "high"
+  },
+  "judge_cases": [
+    {
+      "prediction": "SELECT 1",
+      "gold": "SELECT 1.0",
+      "official": 1,
+      "legacy": 0
+    },
+    {
+      "prediction": "SELECT '1'",
+      "gold": "SELECT 1",
+      "official": 0,
+      "legacy": 1
+    },
+    {
+      "prediction": "SELECT 1 UNION ALL SELECT 1",
+      "gold": "SELECT 1",
+      "official": 1,
+      "legacy": 1
+    },
+    {
+      "prediction": "SELECT missing FROM ledger",
+      "gold": "SELECT 1",
+      "official": 0,
+      "legacy": 0
+    }
+  ],
+  "provider_ledger": [
+    {
+      "request_index": 1,
+      "path": "/v1/chat/completions",
+      "case": "ordinary",
+      "request": {
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are an expert Text-to-SQL system for SQLite. Read the schema carefully and output exactly one SQLite query that answers the question, inside a ```sql ... ``` block."
+          },
+          {
+            "role": "user",
+            "content": "Database schema:\nTable ledger(id, label)\n\nQuestion: How many ledger entries?\n\nWrite the SQLite query."
+          }
+        ],
+        "model": "fixture-model",
+        "max_tokens": 32000,
+        "temperature": 0.0
+      },
+      "status": 200,
+      "response_id": "fixture-1",
+      "usage": {
+        "prompt_tokens": 11,
+        "completion_tokens": 7,
+        "total_tokens": 18
+      }
+    },
+    {
+      "request_index": 2,
+      "path": "/v1/chat/completions",
+      "case": "ordinary",
+      "request": {
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are an expert Text-to-SQL system for SQLite. Read the schema carefully and output exactly one SQLite query that answers the question, inside a ```sql ... ``` block."
+          },
+          {
+            "role": "user",
+            "content": "Database schema:\nTable ledger(id, label)\n\nQuestion: How many ledger entries?\n\nWrite the SQLite query."
+          }
+        ],
+        "model": "fixture-model",
+        "max_tokens": 32000,
+        "temperature": 0.0
+      },
+      "status": 200,
+      "response_id": "fixture-2",
+      "usage": {
+        "prompt_tokens": 11,
+        "completion_tokens": 7,
+        "total_tokens": 18
+      }
+    },
+    {
+      "request_index": 3,
+      "path": "/v1/chat/completions",
+      "case": "ordinary",
+      "request": {
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are an expert Text-to-SQL system for SQLite. Read the schema carefully and output exactly one SQLite query that answers the question, inside a ```sql ... ``` block."
+          },
+          {
+            "role": "user",
+            "content": "Database schema:\nTable ledger(id, label)\n\nQuestion: How many ledger entries?\n\nWrite the SQLite query."
+          }
+        ],
+        "model": "fixture-model",
+        "max_tokens": 32000,
+        "temperature": 0.0
+      },
+      "status": 200,
+      "response_id": "fixture-3",
+      "usage": {
+        "prompt_tokens": 11,
+        "completion_tokens": 7,
+        "total_tokens": 18
+      }
+    },
+    {
+      "request_index": 4,
+      "path": "/v1/chat/completions",
+      "case": "ordinary",
+      "request": {
+        "messages": [
+          {
+            "role": "system",
+            "content": ""
+          },
+          {
+            "role": "user",
+            "content": "PENDING_CACHE"
+          }
+        ],
+        "model": "fixture-model",
+        "max_tokens": 32000,
+        "temperature": 0.0
+      },
+      "status": 200,
+      "response_id": "fixture-4",
+      "usage": {
+        "prompt_tokens": 11,
+        "completion_tokens": 7,
+        "total_tokens": 18
+      }
+    },
+    {
+      "request_index": 5,
+      "path": "/v1/chat/completions",
+      "case": "ordinary",
+      "request": {
+        "messages": [
+          {
+            "role": "system",
+            "content": ""
+          },
+          {
+            "role": "user",
+            "content": "PENDING_CACHE"
+          }
+        ],
+        "model": "fixture-model",
+        "max_tokens": 32000,
+        "temperature": 0.0
+      },
+      "status": 200,
+      "response_id": "fixture-5",
+      "usage": {
+        "prompt_tokens": 11,
+        "completion_tokens": 7,
+        "total_tokens": 18
+      }
+    },
+    {
+      "request_index": 6,
+      "path": "/v1/chat/completions",
+      "case": "ordinary",
+      "request": {
+        "messages": [
+          {
+            "role": "system",
+            "content": ""
+          },
+          {
+            "role": "user",
+            "content": "PENDING_CACHE"
+          }
+        ],
+        "model": "fixture-model",
+        "max_tokens": 32000,
+        "temperature": 0.0
+      },
+      "status": 200,
+      "response_id": "fixture-6",
+      "usage": {
+        "prompt_tokens": 11,
+        "completion_tokens": 7,
+        "total_tokens": 18
+      }
+    },
+    {
+      "request_index": 7,
+      "path": "/v1/chat/completions",
+      "case": "ordinary",
+      "request": {
+        "messages": [
+          {
+            "role": "system",
+            "content": ""
+          },
+          {
+            "role": "user",
+            "content": "MULTI_SAMPLE"
+          }
+        ],
+        "model": "fixture-model",
+        "max_tokens": 32000,
+        "temperature": 0.0
+      },
+      "status": 200,
+      "response_id": "fixture-7",
+      "usage": {
+        "prompt_tokens": 11,
+        "completion_tokens": 7,
+        "total_tokens": 18
+      }
+    },
+    {
+      "request_index": 8,
+      "path": "/v1/chat/completions",
+      "case": "ordinary",
+      "request": {
+        "messages": [
+          {
+            "role": "system",
+            "content": ""
+          },
+          {
+            "role": "user",
+            "content": "MULTI_SAMPLE"
+          }
+        ],
+        "model": "fixture-model",
+        "max_tokens": 32000,
+        "temperature": 0.0
+      },
+      "status": 200,
+      "response_id": "fixture-8",
+      "usage": {
+        "prompt_tokens": 11,
+        "completion_tokens": 7,
+        "total_tokens": 18
+      }
+    },
+    {
+      "request_index": 9,
+      "path": "/v1/chat/completions",
+      "case": "ordinary",
+      "request": {
+        "messages": [
+          {
+            "role": "system",
+            "content": ""
+          },
+          {
+            "role": "user",
+            "content": "MULTI_SAMPLE"
+          }
+        ],
+        "model": "fixture-model",
+        "max_tokens": 32000,
+        "temperature": 0.0
+      },
+      "status": 200,
+      "response_id": "fixture-9",
+      "usage": {
+        "prompt_tokens": 11,
+        "completion_tokens": 7,
+        "total_tokens": 18
+      }
+    },
+    {
+      "request_index": 10,
+      "path": "/v1/chat/completions",
+      "case": "retry",
+      "request": {
+        "messages": [
+          {
+            "role": "system",
+            "content": ""
+          },
+          {
+            "role": "user",
+            "content": "SDK_RETRY"
+          }
+        ],
+        "model": "fixture-model",
+        "max_tokens": 32000,
+        "temperature": 0.0
+      },
+      "status": 429,
+      "response_id": null,
+      "usage": null
+    },
+    {
+      "request_index": 11,
+      "path": "/v1/chat/completions",
+      "case": "retry",
+      "request": {
+        "messages": [
+          {
+            "role": "system",
+            "content": ""
+          },
+          {
+            "role": "user",
+            "content": "SDK_RETRY"
+          }
+        ],
+        "model": "fixture-model",
+        "max_tokens": 32000,
+        "temperature": 0.0
+      },
+      "status": 200,
+      "response_id": "fixture-11",
+      "usage": {
+        "prompt_tokens": 11,
+        "completion_tokens": 7,
+        "total_tokens": 18
+      }
+    },
+    {
+      "request_index": 12,
+      "path": "/v1/chat/completions",
+      "case": "ordinary",
+      "request": {
+        "messages": [
+          {
+            "role": "system",
+            "content": ""
+          },
+          {
+            "role": "user",
+            "content": "THINKING_TEMPERATURE"
+          }
+        ],
+        "model": "fixture-model",
+        "max_tokens": 32000,
+        "thinking": {
+          "type": "enabled"
+        },
+        "reasoning_effort": "high"
+      },
+      "status": 200,
+      "response_id": "fixture-12",
+      "usage": {
+        "prompt_tokens": 11,
+        "completion_tokens": 7,
+        "total_tokens": 18
+      }
+    }
+  ],
+  "temporary_routes": [
+    "TTHE_CONFIG",
+    "SQL_SOLVER_CACHE",
+    "collect.ROOT",
+    "official_scorer.BIRD_ROOT",
+    "official_scorer.DB_DIR"
+  ],
+  "observation_wrapper": "SDK create delegates unchanged; counts method entries during retry case",
+  "upstream_changes": false,
+  "worker_stderr": "",
+  "source_sha256": {
+    "experiment/revision/runtime_probe.py": "5cabd92613268d90c23a2c7bc97fa9b041c90d0ab936724b75629ae8a28f4c57",
+    "experiment/phase2/collect.py": "7e8be5b203654c2563594d33bb79b09848d1e82324ee46bfba72cf8a47a8e0cf",
+    "experiment/phase2/official_scorer.py": "57eadeaad62f79e6f4a435a539da9db0717ad85f17a05056b04696c50fb8be7d",
+    "external/TTHE/ase/llm.py": "c57bb5d5adcc58c2c00b9279ff0b8bef372f08d26bd1abbb4e31bbac595f16ec",
+    "external/TTHE/ase/solver_cache.py": "75870ceac43a4ffc20c5e8a2d222b178c0788719cc318a988e3a5cb628fae1c1",
+    "external/TTHE/ase/db.py": "d503b95fac338987bf5f1816d1da78b8e46ba70075583dd29e5990a8e6a598cd",
+    "external/TTHE/ase/dataset.py": "933b1afd79bacb98fcbdb4fe2fa49f44294e9aad66ca8561958f738d38617a29",
+    "external/TTHE/text_to_sql/bridge.py": "bf611b02a28f6f42e9cce6c711052ac048f21652613510fbae65cbf5f56624fc",
+    "external/TTHE/text_to_sql/harness_base.py": "a25324fa098706aa74b3396ede06dd5a4b45b584a0b3e0fc7043949287b0d063",
+    "external/TTHE/text_to_sql/evolve.py": "30ac1e5bdf0fdc4b3e369acc6f4d6fcda75426aee43816766c244f13ae7f8b39",
+    "external/TTHE/text_to_sql/agents/bare.py": "03dfac6a47f4139742edc54d6c0c7fff1d562bfafd6aeeae5fbdbe351d8ab543"
+  },
+  "source_unchanged_during_run": true,
+  "created_utc": "2026-09-10T10:28:54Z"
+}

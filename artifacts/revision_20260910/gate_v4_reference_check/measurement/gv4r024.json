@@ -1,0 +1,148 @@
+{
+  "identity": {
+    "case_id": "gv4r024",
+    "strategy": "decompose",
+    "callable_name": "control_flint",
+    "profile": "dedicated_current_subquestion"
+  },
+  "result": {
+    "version": "gate-v4",
+    "strategy": "decompose",
+    "profile": "dedicated_current_subquestion",
+    "structural_verdict": "review_required",
+    "runs": [
+      {
+        "case": {
+          "strategy": "decompose",
+          "name": "parts_0",
+          "steps": [
+            "List ledger identifiers.",
+            "List ledger amounts."
+          ],
+          "answers": [
+            "SELECT id FROM ledger /* payload_0_0 */",
+            "SELECT amount FROM ledger /* payload_0_1 */"
+          ],
+          "final": "SELECT id FROM ledger"
+        },
+        "final": "SELECT id FROM ledger WHERE id > 0",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Return two ordered sub-questions as JSON.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+            "system": "",
+            "temperature": 0.0,
+            "n": 1,
+            "response": "[\"List ledger identifiers.\", \"List ledger amounts.\"]",
+            "response_role": "plan",
+            "target_step": null
+          },
+          {
+            "kind": "llm",
+            "prompt": "Resolve the current step.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nCurrent sub-question to answer:\nList ledger identifiers.",
+            "system": "",
+            "temperature": 0.0,
+            "n": 1,
+            "response": "SELECT id FROM ledger /* payload_0_0 */",
+            "response_role": "subquestion_sql",
+            "target_step": 0
+          },
+          {
+            "kind": "llm",
+            "prompt": "Resolve the current step.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nCurrent sub-question to answer:\nList ledger amounts.",
+            "system": "",
+            "temperature": 0.0,
+            "n": 1,
+            "response": "SELECT amount FROM ledger /* payload_0_1 */",
+            "response_role": "subquestion_sql",
+            "target_step": 1
+          },
+          {
+            "kind": "llm",
+            "prompt": "Build one SQLite query from the two planned step names.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPlanned step 1:\nList ledger identifiers.\nPlanned step 2:\nList ledger amounts.",
+            "system": "",
+            "temperature": 0.0,
+            "n": 1,
+            "response": "SELECT id FROM ledger WHERE id > 0",
+            "response_role": "unresolved_request",
+            "target_step": null
+          }
+        ],
+        "error": null,
+        "interface_issues": [
+          "request has neither assigned target nor all partial answers"
+        ],
+        "admission": "not_evaluated",
+        "scope": "source-assigned exposed-candidate interface diagnostic; not calibration",
+        "status": "review_required"
+      },
+      {
+        "case": {
+          "strategy": "decompose",
+          "name": "parts_1",
+          "steps": [
+            "List ledger identifiers.",
+            "List ledger amounts."
+          ],
+          "answers": [
+            "SELECT id FROM ledger /* payload_1_0 */",
+            "SELECT amount FROM ledger /* payload_1_1 */"
+          ],
+          "final": "SELECT amount FROM ledger"
+        },
+        "final": "SELECT id FROM ledger WHERE id > 0",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Return two ordered sub-questions as JSON.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+            "system": "",
+            "temperature": 0.0,
+            "n": 1,
+            "response": "[\"List ledger identifiers.\", \"List ledger amounts.\"]",
+            "response_role": "plan",
+            "target_step": null
+          },
+          {
+            "kind": "llm",
+            "prompt": "Resolve the current step.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nCurrent sub-question to answer:\nList ledger identifiers.",
+            "system": "",
+            "temperature": 0.0,
+            "n": 1,
+            "response": "SELECT id FROM ledger /* payload_1_0 */",
+            "response_role": "subquestion_sql",
+            "target_step": 0
+          },
+          {
+            "kind": "llm",
+            "prompt": "Resolve the current step.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nCurrent sub-question to answer:\nList ledger amounts.",
+            "system": "",
+            "temperature": 0.0,
+            "n": 1,
+            "response": "SELECT amount FROM ledger /* payload_1_1 */",
+            "response_role": "subquestion_sql",
+            "target_step": 1
+          },
+          {
+            "kind": "llm",
+            "prompt": "Build one SQLite query from the two planned step names.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPlanned step 1:\nList ledger identifiers.\nPlanned step 2:\nList ledger amounts.",
+            "system": "",
+            "temperature": 0.0,
+            "n": 1,
+            "response": "SELECT id FROM ledger WHERE id > 0",
+            "response_role": "unresolved_request",
+            "target_step": null
+          }
+        ],
+        "error": null,
+        "interface_issues": [
+          "request has neither assigned target nor all partial answers"
+        ],
+        "admission": "not_evaluated",
+        "scope": "source-assigned exposed-candidate interface diagnostic; not calibration",
+        "status": "review_required"
+      }
+    ],
+    "admission": "not_evaluated",
+    "scope": "Unified development measurement, with explicit source-assigned response roles.\n\nFrozen v3 supplies five unchanged strategy probes. Typed schema/decomposition and\nreal SQLite feedback supply the remaining three. This module never admits a\ncandidate: semantic decisions and independently frozen reference checks remain\nseparate. Unsupported response profiles are review-required, not rejection.\n"
+  }
+}

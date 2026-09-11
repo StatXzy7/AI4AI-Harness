@@ -1,0 +1,235 @@
+{
+  "status": "DRAFT_AWAITING_CORRECTED_SOURCE_REVIEW",
+  "salt": "stage28_v4_reference_20260911",
+  "planned_scenarios": 124,
+  "per_case_scenarios": {
+    "gv4r001": 3,
+    "gv4r002": 3,
+    "gv4r003": 9,
+    "gv4r004": 6,
+    "gv4r005": 3,
+    "gv4r006": 2,
+    "gv4r007": 2,
+    "gv4r008": 4,
+    "gv4r009": 3,
+    "gv4r010": 3,
+    "gv4r011": 6,
+    "gv4r012": 7,
+    "gv4r013": 4,
+    "gv4r014": 3,
+    "gv4r015": 2,
+    "gv4r016": 2,
+    "gv4r017": 6,
+    "gv4r018": 3,
+    "gv4r019": 3,
+    "gv4r020": 7,
+    "gv4r021": 3,
+    "gv4r022": 4,
+    "gv4r023": 2,
+    "gv4r024": 2,
+    "gv4r025": 3,
+    "gv4r026": 6,
+    "gv4r027": 3,
+    "gv4r028": 9,
+    "gv4r029": 4,
+    "gv4r030": 2,
+    "gv4r031": 2,
+    "gv4r032": 3
+  },
+  "roster": [
+    {
+      "case_id": "gv4r001",
+      "strategy": "schema_link",
+      "callable_name": "control_orchid",
+      "profile": "tables_columns_json"
+    },
+    {
+      "case_id": "gv4r002",
+      "strategy": "repair",
+      "callable_name": "control_cobalt",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r003",
+      "strategy": "error_classify",
+      "callable_name": "control_lantern",
+      "profile": "llm_classifier"
+    },
+    {
+      "case_id": "gv4r004",
+      "strategy": "vote3",
+      "callable_name": "control_mica",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r005",
+      "strategy": "hint_guard",
+      "callable_name": "control_saffron",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r006",
+      "strategy": "decompose",
+      "callable_name": "control_delta",
+      "profile": "dedicated_current_subquestion"
+    },
+    {
+      "case_id": "gv4r007",
+      "strategy": "format_guard",
+      "callable_name": "control_harbor",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r008",
+      "strategy": "two_view",
+      "callable_name": "control_finch",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r009",
+      "strategy": "repair",
+      "callable_name": "control_maple",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r010",
+      "strategy": "schema_link",
+      "callable_name": "control_quartz",
+      "profile": "tables_columns_json"
+    },
+    {
+      "case_id": "gv4r011",
+      "strategy": "vote3",
+      "callable_name": "control_raven",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r012",
+      "strategy": "error_classify",
+      "callable_name": "control_ember",
+      "profile": "local_classifier"
+    },
+    {
+      "case_id": "gv4r013",
+      "strategy": "two_view",
+      "callable_name": "control_pine",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r014",
+      "strategy": "hint_guard",
+      "callable_name": "control_slate",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r015",
+      "strategy": "decompose",
+      "callable_name": "control_iris",
+      "profile": "dedicated_current_subquestion"
+    },
+    {
+      "case_id": "gv4r016",
+      "strategy": "format_guard",
+      "callable_name": "control_willow",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r017",
+      "strategy": "vote3",
+      "callable_name": "control_pebble",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r018",
+      "strategy": "repair",
+      "callable_name": "control_aurora",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r019",
+      "strategy": "schema_link",
+      "callable_name": "control_birch",
+      "profile": "tables_columns_json"
+    },
+    {
+      "case_id": "gv4r020",
+      "strategy": "error_classify",
+      "callable_name": "control_cedar",
+      "profile": "local_classifier"
+    },
+    {
+      "case_id": "gv4r021",
+      "strategy": "hint_guard",
+      "callable_name": "control_lotus",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r022",
+      "strategy": "two_view",
+      "callable_name": "control_marrow",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r023",
+      "strategy": "format_guard",
+      "callable_name": "control_nova",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r024",
+      "strategy": "decompose",
+      "callable_name": "control_flint",
+      "profile": "dedicated_current_subquestion"
+    },
+    {
+      "case_id": "gv4r025",
+      "strategy": "schema_link",
+      "callable_name": "control_spruce",
+      "profile": "tables_columns_json"
+    },
+    {
+      "case_id": "gv4r026",
+      "strategy": "vote3",
+      "callable_name": "control_onyx",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r027",
+      "strategy": "repair",
+      "callable_name": "control_coral",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r028",
+      "strategy": "error_classify",
+      "callable_name": "control_elm",
+      "profile": "llm_classifier"
+    },
+    {
+      "case_id": "gv4r029",
+      "strategy": "two_view",
+      "callable_name": "control_breeze",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r030",
+      "strategy": "format_guard",
+      "callable_name": "control_umber",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r031",
+      "strategy": "decompose",
+      "callable_name": "control_jade",
+      "profile": "dedicated_current_subquestion"
+    },
+    {
+      "case_id": "gv4r032",
+      "strategy": "hint_guard",
+      "callable_name": "control_fog",
+      "profile": null
+    }
+  ],
+  "source_sha256": "4df6313a7c9b41b4deccb58192f9de4c7a3b15036d62157aa1e922d61b39bb4e",
+  "measurement_run": false
+}

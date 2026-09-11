@@ -1,0 +1,81 @@
+{
+  "case": {
+    "id": "archive_hint_guard",
+    "strategy": "hint_guard",
+    "path": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_hint_guard.py",
+    "source_sha256": "def3837c363969ba6b4b323ff293faff32665bb87ddb4827b70a0d65c46e6b1d",
+    "role": "archived_candidate",
+    "profile": null
+  },
+  "result": {
+    "version": "gate-v4",
+    "strategy": "hint_guard",
+    "profile": null,
+    "structural_verdict": "review_required",
+    "runs": [
+      {
+        "probe": "no_hint",
+        "status": "review_required",
+        "reasons": [
+          "semantic_prompt_review_required"
+        ],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\n\nWrite a single SQL query that answers the question and satisfies all stated hard requirements. Return only the SQL query.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger",
+            "seq": 0
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "hint_0",
+        "status": "review_required",
+        "reasons": [
+          "semantic_prompt_review_required"
+        ],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\nHint: id must exceed 317.\n\nHard requirements extracted from the Hint line (these must all be satisfied):\nid must exceed 317.\n\nWrite a single SQL query that answers the question and satisfies all stated hard requirements. Return only the SQL query.",
+            "system": "You are a precise text-to-SQL assistant. The hard requirements in the prompt are mandatory. Obey them exactly; they override any conflicting implication in the question.",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger",
+            "seq": 0
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "hint_1",
+        "status": "review_required",
+        "reasons": [
+          "semantic_prompt_review_required"
+        ],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\nHint: id must exceed 941.\n\nHard requirements extracted from the Hint line (these must all be satisfied):\nid must exceed 941.\n\nWrite a single SQL query that answers the question and satisfies all stated hard requirements. Return only the SQL query.",
+            "system": "You are a precise text-to-SQL assistant. The hard requirements in the prompt are mandatory. Obey them exactly; they override any conflicting implication in the question.",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger",
+            "seq": 0
+          }
+        ],
+        "error": null
+      }
+    ],
+    "admission": "not_evaluated",
+    "scope": "Unified development measurement, with explicit source-assigned response roles.\n\nFrozen v3 supplies five unchanged strategy probes. Typed schema/decomposition and\nreal SQLite feedback supply the remaining three. This module never admits a\ncandidate: semantic decisions and independently frozen reference checks remain\nseparate. Unsupported response profiles are review-required, not rejection.\n"
+  },
+  "admission": "not_evaluated"
+}

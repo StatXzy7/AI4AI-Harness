@@ -1,0 +1,167 @@
+{
+  "reviewer_model": "gpt-5.6-sol",
+  "packet_sha256": "8aa1db106007740a9f8f243a00a260853f0a802f25fc65428a9e293c369ba266",
+  "source_sha256": "35f9427837c97e0ae838eeb3348ca4b30d632bc8403a887186861b59cce7ab6e",
+  "cases": [
+    {
+      "case_id": "vc025",
+      "verdict": "conforms",
+      "rationale": "The initial SQL is executed and the success probe returns without a post-execution LLM call. On each failed probe, the source-assigned classification response is consumed by _class_from_text and selects the corresponding affirmative syntax, schema, or semantics repair action. Each repair request also carries schema, question, previous SQL, and the exact execution feedback. This adjudicates action consumption under supplied correct categories, not classifier-model accuracy or final SQL correctness.",
+      "evidence": [
+        {
+          "probe": "success_no_repair",
+          "trace_index": 1,
+          "field": "sql",
+          "quote": "SELECT id FROM ledger"
+        },
+        {
+          "probe": "syntax_a",
+          "trace_index": 2,
+          "field": "response",
+          "quote": "syntax"
+        },
+        {
+          "probe": "syntax_a",
+          "trace_index": 3,
+          "field": "prompt",
+          "quote": "Correct the SQL grammar and punctuation while preserving intent.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nExact execution feedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v3-20260910_syntax_a]'}"
+        },
+        {
+          "probe": "schema_a",
+          "trace_index": 2,
+          "field": "response",
+          "quote": "schema"
+        },
+        {
+          "probe": "schema_a",
+          "trace_index": 3,
+          "field": "prompt",
+          "quote": "Replace invalid table or column names using the provided schema.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nExact execution feedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v3-20260910_schema_a]'}"
+        },
+        {
+          "probe": "semantics_a",
+          "trace_index": 2,
+          "field": "response",
+          "quote": "semantics"
+        },
+        {
+          "probe": "semantics_a",
+          "trace_index": 3,
+          "field": "prompt",
+          "quote": "Revise the query logic so the requested meaning is represented.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nExact execution feedback:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v3-20260910_semantics_a]'}"
+        }
+      ]
+    },
+    {
+      "case_id": "vc026",
+      "verdict": "nonconforms",
+      "rationale": "The initial execution, success short-circuit, and feedback forwarding are present, and syntax and semantics probes receive appropriate affirmative actions. However, local classification does not recognize the supplied literal schema failure feedback and labels both schema probes as semantics, applying a logic repair instead of a schema-reference repair. Correct final SQL supplied by the responder does not cure that class/action mismatch.",
+      "evidence": [
+        {
+          "probe": "success_no_repair",
+          "trace_index": 1,
+          "field": "sql",
+          "quote": "SELECT id FROM ledger"
+        },
+        {
+          "probe": "syntax_a",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "Failure class: syntax\nRequired repair action: Fix the SQL syntax error indicated by the executor.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nExact feedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v3-20260910_syntax_a]'}"
+        },
+        {
+          "probe": "schema_a",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "Failure class: semantics\nRequired repair action: Change the query construction to match the question intent.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nExact feedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v3-20260910_schema_a]'}"
+        },
+        {
+          "probe": "semantics_a",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "Failure class: semantics\nRequired repair action: Change the query construction to match the question intent.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nExact feedback:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v3-20260910_semantics_a]'}"
+        }
+      ]
+    },
+    {
+      "case_id": "vc027",
+      "verdict": "nonconforms",
+      "rationale": "The initial SQL is executed, success returns immediately, and exact failure feedback is forwarded. After failure, however, the only repair request merely lists all three classes and says to try again; the same generic action is used for syntax, schema, and semantics. The responder's supplied SQL is irrelevant to the missing classification and class-appropriate repair action.",
+      "evidence": [
+        {
+          "probe": "success_no_repair",
+          "trace_index": 1,
+          "field": "sql",
+          "quote": "SELECT id FROM ledger"
+        },
+        {
+          "probe": "syntax_a",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "The SQL failed. It might be syntax, schema, or semantics. Try again.\nFeedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v3-20260910_syntax_a]'}"
+        },
+        {
+          "probe": "schema_a",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "The SQL failed. It might be syntax, schema, or semantics. Try again.\nFeedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v3-20260910_schema_a]'}"
+        },
+        {
+          "probe": "semantics_a",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "The SQL failed. It might be syntax, schema, or semantics. Try again.\nFeedback:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v3-20260910_semantics_a]'}"
+        }
+      ]
+    },
+    {
+      "case_id": "vc028",
+      "verdict": "nonconforms",
+      "rationale": "The initial SQL is executed and success returns without classification. On failures, the injected correct syntax, schema, or semantics response is received but discarded; every class then receives the identical generic rewrite request, which contains neither the selected class, a class-appropriate affirmative action, nor the exact feedback. The returned SQL does not compensate for this missing consumption and action semantics.",
+      "evidence": [
+        {
+          "probe": "success_no_repair",
+          "trace_index": 1,
+          "field": "sql",
+          "quote": "SELECT id FROM ledger"
+        },
+        {
+          "probe": "syntax_a",
+          "trace_index": 2,
+          "field": "response",
+          "quote": "syntax"
+        },
+        {
+          "probe": "syntax_a",
+          "trace_index": 3,
+          "field": "prompt",
+          "quote": "Rewrite the SQL in a cleaner form for the original database task."
+        },
+        {
+          "probe": "schema_a",
+          "trace_index": 2,
+          "field": "response",
+          "quote": "schema"
+        },
+        {
+          "probe": "schema_a",
+          "trace_index": 3,
+          "field": "prompt",
+          "quote": "Rewrite the SQL in a cleaner form for the original database task."
+        },
+        {
+          "probe": "semantics_a",
+          "trace_index": 2,
+          "field": "response",
+          "quote": "semantics"
+        },
+        {
+          "probe": "semantics_a",
+          "trace_index": 3,
+          "field": "prompt",
+          "quote": "Rewrite the SQL in a cleaner form for the original database task."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,203 @@
+{
+  "author_model": "gpt-5.5",
+  "backend_build": "unknown",
+  "utc": "2026-09-10T12:31:23Z",
+  "read_scope": [
+    "artifacts/revision_20260910/gate_independent_controls/PROTOCOL.md",
+    "review-stage/GATE_V2_CONTRACTS.md sections 1-3 only, truncated before section 4"
+  ],
+  "cases": [
+    {
+      "case_id": "ic001",
+      "strategy": "repair",
+      "expected": "conforms",
+      "rationale": "Executes one initial SQL, returns immediately on success, and on failure sends the exact execution feedback with schema and question to a repair request."
+    },
+    {
+      "case_id": "ic002",
+      "strategy": "repair",
+      "expected": "conforms",
+      "rationale": "Uses a single initial draft and conditionally repairs only after a failed execute result, preserving the failed SQL and feedback in the second prompt."
+    },
+    {
+      "case_id": "ic003",
+      "strategy": "repair",
+      "expected": "nonconforms",
+      "rationale": "Runs the initial SQL but discards the execution result and never performs a repair after failure."
+    },
+    {
+      "case_id": "ic004",
+      "strategy": "repair",
+      "expected": "nonconforms",
+      "rationale": "Makes an unconditional extra n=2 request regardless of whether execution succeeded, which violates the success path and adds batch sampling."
+    },
+    {
+      "case_id": "ic005",
+      "strategy": "vote3",
+      "expected": "conforms",
+      "rationale": "Requests three candidates, executes all three, and selects by majority over execution-result signatures rather than by prompt order."
+    },
+    {
+      "case_id": "ic006",
+      "strategy": "vote3",
+      "expected": "conforms",
+      "rationale": "Builds three candidates through separate prompts, executes every candidate, and returns the candidate matching the majority execution outcome."
+    },
+    {
+      "case_id": "ic007",
+      "strategy": "vote3",
+      "expected": "nonconforms",
+      "rationale": "Requests three candidates but returns the first without executing candidates or arbitrating by execution evidence."
+    },
+    {
+      "case_id": "ic008",
+      "strategy": "vote3",
+      "expected": "nonconforms",
+      "rationale": "Chooses among candidate SQL strings lexically and never uses execution results, so it is string voting rather than result voting."
+    },
+    {
+      "case_id": "ic009",
+      "strategy": "schema_link",
+      "expected": "conforms",
+      "rationale": "First asks for relevant schema elements, derives a reduced schema from that payload, and passes the linked evidence and reduced schema to final SQL generation."
+    },
+    {
+      "case_id": "ic010",
+      "strategy": "schema_link",
+      "expected": "conforms",
+      "rationale": "Obtains two linked-subset payloads, uses them to reduce the schema, and supplies both payloads plus the reduced schema in the final prompt."
+    },
+    {
+      "case_id": "ic011",
+      "strategy": "schema_link",
+      "expected": "nonconforms",
+      "rationale": "Calls a linking step but ignores its payload and sends the full schema into final SQL generation."
+    },
+    {
+      "case_id": "ic012",
+      "strategy": "schema_link",
+      "expected": "nonconforms",
+      "rationale": "Skips linked-schema selection entirely and explicitly considers every table in the complete schema."
+    },
+    {
+      "case_id": "ic013",
+      "strategy": "hint_guard",
+      "expected": "conforms",
+      "rationale": "Uses one sample and explicitly preserves the original question and schema while treating any Hint as an added requirement outside the original wording."
+    },
+    {
+      "case_id": "ic014",
+      "strategy": "hint_guard",
+      "expected": "conforms",
+      "rationale": "Uses a single LLM call with a system instruction that keeps the question and schema intact and applies Hint text as a hard extra constraint."
+    },
+    {
+      "case_id": "ic015",
+      "strategy": "hint_guard",
+      "expected": "nonconforms",
+      "rationale": "Only passes schema and question through without making the Hint visible as a distinct explicit requirement."
+    },
+    {
+      "case_id": "ic016",
+      "strategy": "hint_guard",
+      "expected": "nonconforms",
+      "rationale": "Actively instructs the model to ignore any Hint text, contradicting the guarded-hint mechanism."
+    },
+    {
+      "case_id": "ic017",
+      "strategy": "two_view",
+      "expected": "conforms",
+      "rationale": "Requests two differently framed SQL constructions, executes both, prefers the first when it has rows, and otherwise selects using observed execution results."
+    },
+    {
+      "case_id": "ic018",
+      "strategy": "two_view",
+      "expected": "conforms",
+      "rationale": "Requests two semantically different constructions, executes both, returns the first when both are usable, and falls back based on execution evidence."
+    },
+    {
+      "case_id": "ic019",
+      "strategy": "two_view",
+      "expected": "nonconforms",
+      "rationale": "Creates the second view by adding whitespace to the first SQL, which is not an independent construction."
+    },
+    {
+      "case_id": "ic020",
+      "strategy": "two_view",
+      "expected": "nonconforms",
+      "rationale": "Executes two requested SQL candidates but returns the second regardless of execution results, ignoring the required arbitration."
+    },
+    {
+      "case_id": "ic021",
+      "strategy": "decompose",
+      "expected": "conforms",
+      "rationale": "Parses a JSON-list plan, answers each step in order with prior partials, and passes the collected partial answers into final SQL assembly."
+    },
+    {
+      "case_id": "ic022",
+      "strategy": "decompose",
+      "expected": "conforms",
+      "rationale": "Builds an ordered two-step plan, collects intermediate facts sequentially, and requires final SQL generation to incorporate those facts."
+    },
+    {
+      "case_id": "ic023",
+      "strategy": "decompose",
+      "expected": "nonconforms",
+      "rationale": "Gets a plan but final generation uses only step titles, so no partial-answer payload can influence the final SQL."
+    },
+    {
+      "case_id": "ic024",
+      "strategy": "decompose",
+      "expected": "nonconforms",
+      "rationale": "Calls subtask prompts but discards their outputs and omits all partial answers from final SQL generation."
+    },
+    {
+      "case_id": "ic025",
+      "strategy": "error_classify",
+      "expected": "conforms",
+      "rationale": "On success it avoids repair; on failure it assigns one explicit category and uses a category-specific repair action with exact feedback."
+    },
+    {
+      "case_id": "ic026",
+      "strategy": "error_classify",
+      "expected": "conforms",
+      "rationale": "Classifies failed execution feedback into exactly one category and then applies a distinct syntax, schema, or semantics repair prompt."
+    },
+    {
+      "case_id": "ic027",
+      "strategy": "error_classify",
+      "expected": "nonconforms",
+      "rationale": "On failure it lists all possible categories and asks for a generic correction rather than making one explicit classification and targeted action."
+    },
+    {
+      "case_id": "ic028",
+      "strategy": "error_classify",
+      "expected": "nonconforms",
+      "rationale": "Computes a category but uses the same generic edit action for every category, so category-specific action templates are absent."
+    },
+    {
+      "case_id": "ic029",
+      "strategy": "format_guard",
+      "expected": "conforms",
+      "rationale": "Preserves schema and question while explicitly requiring one SQL code fence and no extra explanatory text."
+    },
+    {
+      "case_id": "ic030",
+      "strategy": "format_guard",
+      "expected": "conforms",
+      "rationale": "Uses a single-call system instruction that requires exactly one fenced SQL block and nothing outside it, while passing schema and question."
+    },
+    {
+      "case_id": "ic031",
+      "strategy": "format_guard",
+      "expected": "nonconforms",
+      "rationale": "Only passes schema and question through and never imposes an explicit fenced-SQL/no-extra-text output constraint."
+    },
+    {
+      "case_id": "ic032",
+      "strategy": "format_guard",
+      "expected": "nonconforms",
+      "rationale": "Explicitly forbids a SQL code fence and asks for explanation, contradicting the format guard requirement."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "mechanical": {
+    "model": "gpt-5.5",
+    "score": 8.5,
+    "verdict": "ready"
+  },
+  "protocol": {
+    "model": "gpt-5.5",
+    "score": 9,
+    "verdict": "ready"
+  },
+  "scope": "192rawgenerationrequests only",
+  "preflight_matches": true,
+  "freeze_sha256": "00a66fc35c5a97ba8bb6ccc246cf8efb88b768bf2bdce6da7943be5912ab9a2b",
+  "tests_passed": 13,
+  "namespace_note": "Same classnames acrossbuilders require unique builder/pool/seed/condition namespaces later."
+}

@@ -26,10 +26,10 @@ rate} --- the fraction of bare errors some population member repairs;
 H(P) \;=\; \mathrm{Acc}\big(x \mapsto \max_{H \in P \cup \{H_0\}} Y(x,H)\big)
 \;-\; \max_{H \in P \cup \{H_0\}} \mathrm{Acc}(H).
 \]
-Positive headroom means population value is \emph{conditional on the item} ---
-the signal a router needs. The metrics are diagnostic in combination: high
-disagreement with no repair is noise; repair with no headroom means one
-harness dominates.
+Positive observed headroom records item-dependent successes in that execution
+matrix; independent repeats are needed to establish a stable routing signal.
+Disagreement without repair adds no observed coverage beyond bare; repair
+without headroom adds no observed oracle advantage over the best fixed member.
 
 \subsection{The collapse, quantified}\label{sec:collapse}
 The domain is BIRD text-to-SQL (SQLite; execution-accuracy judging), target
@@ -76,20 +76,21 @@ per task) decomposes ``different code'' into three failure classes:
 The harness issues exactly one LLM call and never executes an artifact ---
 the identical execution path as \bare{}. Docstrings claim retrieval,
 self-checking, or token caps; none exists in the control flow.
-\item \textbf{T2 --- feedback without a causal path (\react, 10/10 audited
-tasks).} SQL is executed and errors fed back, yet the final SQL is
-byte-identical to \bare's on every audited task.
+\item \textbf{T2 --- mechanism present but untriggered (\react, 10/10 audited
+tasks).} The first SQL executes successfully, so error repair is not
+triggered and the final SQL equals \bare's. This does not show that repair
+feedback lacks a causal path when a failure occurs.
 \item \textbf{T3 --- broken multi-turn path (1/12).} The one candidate
 implementing genuine multi-turn repair returns prose as final SQL,
 converting bare-correct items into harness-wrong.
 \end{itemize}
 The taxonomy is actionable: T1 demands an execution-path acceptance gate,
-T2 demands verified causal paths for feedback, T3 demands
+T2 demands controlled faults to test trigger and feedback use, T3 demands
 executable-output validation --- all generation-protocol requirements.
 
 \subsection{Human positive control: the headroom exists}\label{sec:positive}
-To exclude the alternative that the domain simply lacks
-instance-conditional signal, we wrote four harnesses by hand with forcibly
+To probe whether distinct hand-written mechanisms can produce additional
+observed coverage, we wrote four harnesses by hand with forcibly
 distinct execution paths (\texttt{hpc\_repair}: execute-and-repair;
 \texttt{hpc\_vote3}: 3-vote on execution results; \texttt{hpc\_schema}:
 schema-linking; \texttt{hpc\_hint}: hint-first reordering). Same frozen
@@ -97,8 +98,8 @@ target, tasks, and judge as the collapsed population: oracle headroom
 \textbf{6.67\,pp} on 60 tasks and \textbf{7.28\,pp} {[}3.3, 10.0{]} on the
 151-item set, with repair/schema/hint each producing repairs the others
 miss. One disclosed caveat: the control was designed \emph{after}
-inspecting day-1 traces, so its headroom is an existence proof, not a blind
-estimate. The bare baseline itself flipped 3 of 60 items between the two
+inspecting day-1 traces, so its headroom is descriptive, not a blind estimate
+of stable complementarity. The bare baseline itself flipped 3 of 60 items between the two
 day-1 runs (API nondeterminism at temperature 0).
 
 \subsection{Phase-I protocol probes and their limits}\label{sec:phase1probes}
@@ -118,8 +119,8 @@ and acceptance was an import/smoke check, not the counterfactual conformance gat
 
 \paragraph{Generation-null failures (M0).} Re-running the original optimize loop
 with Qwen3.8-Flash and DeepSeek-V4-Flash-Vision-Exp builders produced 40 candidates byte-identical to the
-\bare{} baseline source. Identical code trivially yields identical outcomes, so this
-run provides no evidence about behavioral collapse; it is reported as a distinct,
+\bare{} baseline source. Code identity alone does not imply identical stochastic
+executions. This run supplies no distinct-code population; it is reported as a distinct,
 more primitive failure mode --- the pipeline produced no distinct population at all.
 The collapse claims above rest exclusively on the genuinely distinct-source day-1
 population.

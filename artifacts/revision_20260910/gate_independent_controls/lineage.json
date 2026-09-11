@@ -1,0 +1,277 @@
+{
+  "recorded_at_utc": "2026-09-10T13:08:39.000986+00:00",
+  "scope": "Resolve historical bindings without rewriting prior verification records",
+  "prior_stages": [
+    {
+      "prior_verification": "artifacts/revision_20260910/gate_semantic_adjudication/verification.json",
+      "prior_verification_sha256": "92e2053cb493ea2cac3181283b4f73521c0ec380247ec2069d03729f267c1b58",
+      "resolved_bindings": 18,
+      "entries": [
+        {
+          "original_path": "artifacts\\revision_20260910\\gate_semantic_adjudication\\adjudication.initial.json",
+          "expected_sha256": "2632f35e656f31de4ffd71f055db7a8f2b259f2467fd490b43403486f90ab9d3",
+          "resolved_path": "artifacts/revision_20260910/gate_semantic_adjudication/adjudication.initial.json",
+          "resolution": "current_unchanged",
+          "current_sha256": "2632f35e656f31de4ffd71f055db7a8f2b259f2467fd490b43403486f90ab9d3"
+        },
+        {
+          "original_path": "artifacts\\revision_20260910\\gate_semantic_adjudication\\adjudication.json",
+          "expected_sha256": "907d6c6df607060c54d2cc839310cf040c68d2519e6d961cff8c26d2c5400aa4",
+          "resolved_path": "artifacts/revision_20260910/gate_semantic_adjudication/adjudication.json",
+          "resolution": "current_unchanged",
+          "current_sha256": "907d6c6df607060c54d2cc839310cf040c68d2519e6d961cff8c26d2c5400aa4"
+        },
+        {
+          "original_path": "artifacts\\revision_20260910\\gate_semantic_adjudication\\DECISION_RULE.md",
+          "expected_sha256": "2bce94c257bb11aff46da8b6d19eb88a1ce661d839945c9285247d3659c53128",
+          "resolved_path": "artifacts/revision_20260910/gate_semantic_adjudication/DECISION_RULE.md",
+          "resolution": "current_unchanged",
+          "current_sha256": "2bce94c257bb11aff46da8b6d19eb88a1ce661d839945c9285247d3659c53128"
+        },
+        {
+          "original_path": "artifacts\\revision_20260910\\gate_semantic_adjudication\\merged.json",
+          "expected_sha256": "e6223abca01316fc03e655656cfd7000d70c29fe22d7f7245c8bcd16118814e0",
+          "resolved_path": "artifacts/revision_20260910/gate_semantic_adjudication/merged.json",
+          "resolution": "current_unchanged",
+          "current_sha256": "e6223abca01316fc03e655656cfd7000d70c29fe22d7f7245c8bcd16118814e0"
+        },
+        {
+          "original_path": "artifacts\\revision_20260910\\gate_semantic_adjudication\\status_lineage.json",
+          "expected_sha256": "36ee2a859deec738502df95ca9782aa988b96c132dd0f7076d2c8ef2da076af2",
+          "resolved_path": "artifacts/revision_20260910/gate_semantic_adjudication/status_lineage.json",
+          "resolution": "current_unchanged",
+          "current_sha256": "36ee2a859deec738502df95ca9782aa988b96c132dd0f7076d2c8ef2da076af2"
+        },
+        {
+          "original_path": "artifacts\\revision_20260910\\gate_semantic_adjudication\\before_status_update\\experiment__revision__README.md",
+          "expected_sha256": "0a2448a243410a5592095ff40b9ea4a6ac4e274faf1a577dfa6d3adf90a70222",
+          "resolved_path": "artifacts/revision_20260910/gate_semantic_adjudication/before_status_update/experiment__revision__README.md",
+          "resolution": "current_unchanged",
+          "current_sha256": "0a2448a243410a5592095ff40b9ea4a6ac4e274faf1a577dfa6d3adf90a70222"
+        },
+        {
+          "original_path": "artifacts\\revision_20260910\\gate_semantic_adjudication\\before_status_update\\review-stage__REVISED_EXPERIMENT_PLAN.md",
+          "expected_sha256": "d56620488d75906825e9325f28e301be03c50e8e361c4ba1c8376d9419d254ff",
+          "resolved_path": "artifacts/revision_20260910/gate_semantic_adjudication/before_status_update/review-stage__REVISED_EXPERIMENT_PLAN.md",
+          "resolution": "current_unchanged",
+          "current_sha256": "d56620488d75906825e9325f28e301be03c50e8e361c4ba1c8376d9419d254ff"
+        },
+        {
+          "original_path": "artifacts\\revision_20260910\\gate_semantic_adjudication\\before_status_update\\review-stage__REVISION_20260910.md",
+          "expected_sha256": "4cb7390eb5b05f45a61be91879371d7f731be92ae13a8807ee0a482bf8c16237",
+          "resolved_path": "artifacts/revision_20260910/gate_semantic_adjudication/before_status_update/review-stage__REVISION_20260910.md",
+          "resolution": "current_unchanged",
+          "current_sha256": "4cb7390eb5b05f45a61be91879371d7f731be92ae13a8807ee0a482bf8c16237"
+        },
+        {
+          "original_path": "review-stage\\GATE_SEMANTIC_ADJUDICATION.md",
+          "expected_sha256": "7e476fcab97d29666bb45953e4138af62ed092616026f2932463bf191e894d9b",
+          "resolved_path": "review-stage/GATE_SEMANTIC_ADJUDICATION.md",
+          "resolution": "current_unchanged",
+          "current_sha256": "7e476fcab97d29666bb45953e4138af62ed092616026f2932463bf191e894d9b"
+        },
+        {
+          "original_path": "review-stage\\GATE_V2_CONTRACTS.md",
+          "expected_sha256": "80870579629bad16ec4f06b2953138cbb707424d91922853c10647c20e2f49bb",
+          "resolved_path": "review-stage/GATE_V2_CONTRACTS.md",
+          "resolution": "current_unchanged",
+          "current_sha256": "80870579629bad16ec4f06b2953138cbb707424d91922853c10647c20e2f49bb"
+        },
+        {
+          "original_path": "review-stage\\REVISION_20260910.md",
+          "expected_sha256": "f6479f7db8318ad7379ad7a6c8d39508dd59980928b2e8bdbf95310602aaf4fc",
+          "resolved_path": "artifacts/revision_20260910/gate_independent_controls/before_status_update/review-stage__REVISION_20260910.md",
+          "resolution": "exact_prior_snapshot",
+          "current_sha256": "58088cfa2f61fccfb30178be620d124de43e91852a777532e327375ab621e84f"
+        },
+        {
+          "original_path": "review-stage\\REVISED_EXPERIMENT_PLAN.md",
+          "expected_sha256": "38f0cbcfd42653e28c0424d8dc5beaed34fa13cbbb14f4c5dcd5836d6506c5ed",
+          "resolved_path": "artifacts/revision_20260910/gate_independent_controls/before_status_update/review-stage__REVISED_EXPERIMENT_PLAN.md",
+          "resolution": "exact_prior_snapshot",
+          "current_sha256": "0f332e1e37b8aa636d15f06eb7860cb16bf885e79bc77738de14f0e466589fa5"
+        },
+        {
+          "original_path": "experiment\\revision\\README.md",
+          "expected_sha256": "683198e86fcb8dfc3f59d0d080a4672936996fb9039f5ac675b73af09fd52252",
+          "resolved_path": "artifacts/revision_20260910/gate_independent_controls/before_status_update/experiment__revision__README.md",
+          "resolution": "exact_prior_snapshot",
+          "current_sha256": "471db71ef0ce2846ce3a285a293b74203ab1ae3f91b980454d6cec5de54044e9"
+        },
+        {
+          "original_path": "artifacts\\revision_20260910\\gate_v2_development.json",
+          "expected_sha256": "55e5adc87b6b8699352266232481e58a1f858306790dbddef60193b599d7f1b1",
+          "resolved_path": "artifacts/revision_20260910/gate_v2_development.json",
+          "resolution": "current_unchanged",
+          "current_sha256": "55e5adc87b6b8699352266232481e58a1f858306790dbddef60193b599d7f1b1"
+        },
+        {
+          "original_path": "artifacts\\revision_20260910\\gate_v2_semantic_review_packet.json",
+          "expected_sha256": "7f2c1085b53e7ee30e50958ad7e823c65b7aff10734ed11cbaa72cb30ea00dce",
+          "resolved_path": "artifacts/revision_20260910/gate_v2_semantic_review_packet.json",
+          "resolution": "current_unchanged",
+          "current_sha256": "7f2c1085b53e7ee30e50958ad7e823c65b7aff10734ed11cbaa72cb30ea00dce"
+        },
+        {
+          "original_path": "artifacts\\revision_20260910\\gate_v2_development_verification.json",
+          "expected_sha256": "48d18eec353f65ca4f8a9743395a95c015840248d4186a6627bc815747c1269f",
+          "resolved_path": "artifacts/revision_20260910/gate_v2_development_verification.json",
+          "resolution": "current_unchanged",
+          "current_sha256": "48d18eec353f65ca4f8a9743395a95c015840248d4186a6627bc815747c1269f"
+        },
+        {
+          "original_path": "artifacts\\revision_20260910\\verification.json",
+          "expected_sha256": "f978c4b8cebe7662849de337661cb81994eb037ad374ec325aa968434158a859",
+          "resolved_path": "artifacts/revision_20260910/gate_independent_controls/before_paper_update/artifacts__revision_20260910__verification.json",
+          "resolution": "exact_prior_snapshot",
+          "current_sha256": "6ffeddc99b2ad35270cbb5e3c8d88e249486e6e238e321c1845298b0bef72304"
+        },
+        {
+          "original_path": "artifacts\\revision_20260910\\chinese_sync_verification.json",
+          "expected_sha256": "23175b594281e9c7d9d13f9e2cceff405ac8b18a4e3e50deaaa073f24102f96f",
+          "resolved_path": "artifacts/revision_20260910/gate_independent_controls/before_paper_update/artifacts__revision_20260910__chinese_sync_verification.json",
+          "resolution": "exact_prior_snapshot",
+          "current_sha256": "935966a8f01dd1f222bb69ed4cb492ac9e321755001b8803c0c9e73c7abb4d6f"
+        }
+      ]
+    },
+    {
+      "prior_verification": "artifacts/revision_20260910/selection_weights_verification.json",
+      "prior_verification_sha256": "b94b06b85abb356f5a7e8f8d784eb7a67250b2fe08d3515065447d2a4b7d41d0",
+      "resolved_bindings": 9,
+      "entries": [
+        {
+          "original_path": "experiment/revision/selection_weights.py",
+          "expected_sha256": "4d44052327174557d1c7264d7b3c2db2476ef80cf915f863b81400f992af3592",
+          "resolved_path": "experiment/revision/selection_weights.py",
+          "resolution": "current_unchanged",
+          "current_sha256": "4d44052327174557d1c7264d7b3c2db2476ef80cf915f863b81400f992af3592"
+        },
+        {
+          "original_path": "experiment/revision/test_selection_weights.py",
+          "expected_sha256": "b5c12587d1f55aa89b2c5092a750db977245a4f118fc69ada7de2fc30bf825e6",
+          "resolved_path": "experiment/revision/test_selection_weights.py",
+          "resolution": "current_unchanged",
+          "current_sha256": "b5c12587d1f55aa89b2c5092a750db977245a4f118fc69ada7de2fc30bf825e6"
+        },
+        {
+          "original_path": "artifacts/revision_20260910/selection_weights.json",
+          "expected_sha256": "bb5a3bb38898eace5589c7483afbf008984a4c028f8121f8734a9775097bebd9",
+          "resolved_path": "artifacts/revision_20260910/selection_weights.json",
+          "resolution": "current_unchanged",
+          "current_sha256": "bb5a3bb38898eace5589c7483afbf008984a4c028f8121f8734a9775097bebd9"
+        },
+        {
+          "original_path": "artifacts/revision_20260910/selection_weights.npz",
+          "expected_sha256": "051e76e2fe96278d3870b559544995f07ac6df6185c47669edab13b0efbeb386",
+          "resolved_path": "artifacts/revision_20260910/selection_weights.npz",
+          "resolution": "current_unchanged",
+          "current_sha256": "051e76e2fe96278d3870b559544995f07ac6df6185c47669edab13b0efbeb386"
+        },
+        {
+          "original_path": "artifacts/revision_20260910/selection_weight_tie_fixture.npz",
+          "expected_sha256": "66d996bbf6b1b26f9d4bb7be48f6ea671651b58e1f59c6914d0b1fbbf1281294",
+          "resolved_path": "artifacts/revision_20260910/selection_weight_tie_fixture.npz",
+          "resolution": "current_unchanged",
+          "current_sha256": "66d996bbf6b1b26f9d4bb7be48f6ea671651b58e1f59c6914d0b1fbbf1281294"
+        },
+        {
+          "original_path": "artifacts/revision_20260910/selection_weights_tests.txt",
+          "expected_sha256": "d98e8a0709293c2eee8b1a254d7a1b42a0e227066792709770ced1e554ad6b28",
+          "resolved_path": "artifacts/revision_20260910/selection_weights_tests.txt",
+          "resolution": "current_unchanged",
+          "current_sha256": "d98e8a0709293c2eee8b1a254d7a1b42a0e227066792709770ced1e554ad6b28"
+        },
+        {
+          "original_path": "review-stage/W1_WEIGHT_SENSITIVITY.md",
+          "expected_sha256": "191609e8c7b4855821494233e76cc6bcb05e21483255a559391712efd0b71794",
+          "resolved_path": "review-stage/W1_WEIGHT_SENSITIVITY.md",
+          "resolution": "current_unchanged",
+          "current_sha256": "191609e8c7b4855821494233e76cc6bcb05e21483255a559391712efd0b71794"
+        },
+        {
+          "original_path": "artifacts/revision_20260910/verification.json",
+          "expected_sha256": "f978c4b8cebe7662849de337661cb81994eb037ad374ec325aa968434158a859",
+          "resolved_path": "artifacts/revision_20260910/gate_independent_controls/before_paper_update/artifacts__revision_20260910__verification.json",
+          "resolution": "exact_prior_snapshot",
+          "current_sha256": "6ffeddc99b2ad35270cbb5e3c8d88e249486e6e238e321c1845298b0bef72304"
+        },
+        {
+          "original_path": "artifacts/revision_20260910/chinese_sync_verification.json",
+          "expected_sha256": "23175b594281e9c7d9d13f9e2cceff405ac8b18a4e3e50deaaa073f24102f96f",
+          "resolved_path": "artifacts/revision_20260910/gate_independent_controls/before_paper_update/artifacts__revision_20260910__chinese_sync_verification.json",
+          "resolution": "exact_prior_snapshot",
+          "current_sha256": "935966a8f01dd1f222bb69ed4cb492ac9e321755001b8803c0c9e73c7abb4d6f"
+        }
+      ]
+    }
+  ],
+  "paper_snapshots": [
+    {
+      "original_path": "paper/latex/sec_appendix.tex",
+      "sha256": "6cd0269f3ded22e861002c2943655f550b2338da155cea01782e7eef7b5964c6",
+      "snapshot_path": "artifacts\\revision_20260910\\gate_independent_controls\\before_paper_update\\paper__latex__sec_appendix.tex",
+      "current_sha256": "b93788de85d1a6b56f6ca5c51c5630f603270112fb134705f6b7eda217303d7d"
+    },
+    {
+      "original_path": "paper/latex/sec_discussion.tex",
+      "sha256": "1e57193b993b71f63a42f80e10eff0a6443f0026c649d3e4f961492040814727",
+      "snapshot_path": "artifacts\\revision_20260910\\gate_independent_controls\\before_paper_update\\paper__latex__sec_discussion.tex",
+      "current_sha256": "82103e431a607da12786f6ba56faf3065c7e6d0ed91435c9555b7771b952ae2d"
+    },
+    {
+      "original_path": "paper/latex/main.pdf",
+      "sha256": "ea1ad3a407d4c0d1c451b6890ebc69ee06047f7bf446c29ba2bdbb5b0b14ffc1",
+      "snapshot_path": "artifacts\\revision_20260910\\gate_independent_controls\\before_paper_update\\paper__latex__main.pdf",
+      "current_sha256": "b1c8e2bd14727da094361da647e6f35b9f4218d77be2e50808a468622dcc4c86"
+    },
+    {
+      "original_path": "paper/latex_zh/sec_appendix.tex",
+      "sha256": "a7d3e03274711ae6de1bafbb09f6b2254f049e63d7136603167b1cc8b8c9fc8f",
+      "snapshot_path": "artifacts\\revision_20260910\\gate_independent_controls\\before_paper_update\\paper__latex_zh__sec_appendix.tex",
+      "current_sha256": "3da5ab142a9f56b8030efe7c9bf44a753a957d1eb716c8eb988a13aacbffdfb8"
+    },
+    {
+      "original_path": "paper/latex_zh/sec_discussion.tex",
+      "sha256": "cfb26b18d3c5e867906b99ad780d92e30010b7d7392dcf72717737eaa7dcd49d",
+      "snapshot_path": "artifacts\\revision_20260910\\gate_independent_controls\\before_paper_update\\paper__latex_zh__sec_discussion.tex",
+      "current_sha256": "d0d19818fb74e6f61df3f1f44402b0dd5cb7d49caa0c7d097ac7c72856f39d21"
+    },
+    {
+      "original_path": "paper/latex_zh/main.pdf",
+      "sha256": "6484cc69a35f57c4dd16c0aa0d851c059c4c2eeaf21c2185458a58da985e1ed0",
+      "snapshot_path": "artifacts\\revision_20260910\\gate_independent_controls\\before_paper_update\\paper__latex_zh__main.pdf",
+      "current_sha256": "cc39720997360ce52e63a1090c4377788c749cd017a260ec45a084d8f9b8c27e"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/verification.json",
+      "sha256": "f978c4b8cebe7662849de337661cb81994eb037ad374ec325aa968434158a859",
+      "snapshot_path": "artifacts\\revision_20260910\\gate_independent_controls\\before_paper_update\\artifacts__revision_20260910__verification.json",
+      "current_sha256": "6ffeddc99b2ad35270cbb5e3c8d88e249486e6e238e321c1845298b0bef72304"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/chinese_sync_verification.json",
+      "sha256": "23175b594281e9c7d9d13f9e2cceff405ac8b18a4e3e50deaaa073f24102f96f",
+      "snapshot_path": "artifacts\\revision_20260910\\gate_independent_controls\\before_paper_update\\artifacts__revision_20260910__chinese_sync_verification.json",
+      "current_sha256": "935966a8f01dd1f222bb69ed4cb492ac9e321755001b8803c0c9e73c7abb4d6f"
+    }
+  ],
+  "preauthoring_instrument_freeze_resolution": [
+    {
+      "original_path": "experiment\\revision\\gate_v2.py",
+      "expected_sha256": "fff11167e55a9f2e18230b145de3f967e2006a53587bb624fc9f32d5e7c7dd18",
+      "resolved_path": "experiment/revision/gate_v2.py"
+    },
+    {
+      "original_path": "review-stage\\GATE_V2_CONTRACTS.md",
+      "expected_sha256": "80870579629bad16ec4f06b2953138cbb707424d91922853c10647c20e2f49bb",
+      "resolved_path": "review-stage/GATE_V2_CONTRACTS.md"
+    },
+    {
+      "original_path": "artifacts\\revision_20260910\\gate_independent_controls\\PROTOCOL.md",
+      "expected_sha256": "983a1c9de4060166c9f92a09d4d43a3c1bdf2037d63be66340b44dfe09b6b2ad",
+      "resolved_path": "artifacts/revision_20260910/gate_independent_controls/PROTOCOL.before_clarification.md"
+    }
+  ],
+  "prior_stage16_chain": "Stage17 status_lineage.json remains unchanged and resolves its stage16 predecessor."
+}

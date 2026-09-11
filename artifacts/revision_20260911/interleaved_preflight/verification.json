@@ -1,0 +1,20 @@
+{
+  "status": "INTERLEAVING_PREFLIGHT_VERIFIED",
+  "scientific_A_complete": false,
+  "bindings": {
+    "artifacts\\revision_20260911\\interleaved_preflight\\draft_config.json": "c58de96c810389ea925adc667edd55f3b3075632e13700c57a86287146374150",
+    "artifacts\\revision_20260911\\interleaved_preflight\\format.log": "45024182b54970ed6a981096180379cc9c31b9b1c248f9c56607e313ae689239",
+    "artifacts\\revision_20260911\\interleaved_preflight\\preflight.json": "07ee528d54294d2ab9026bce9200fbf9b7af0481e7e1bbacbcfab50ca3e4150a",
+    "artifacts\\revision_20260911\\interleaved_preflight\\PROTOCOL.md": "f48243899534cdb656adf4d7f17ec4c090b48354bb2a49080c55d1ac5d081d15",
+    "artifacts\\revision_20260911\\interleaved_preflight\\review.json": "8f8add7f64f8929da3e4e3875fc91e2b3f5131d3a83ee321a9c9f4eae554d9f5",
+    "artifacts\\revision_20260911\\interleaved_preflight\\schedule.json": "91b6e1c1f7084c5d4db7ab78b0793150b59ca469335f64a5b888c0a4745d8ac2",
+    "artifacts\\revision_20260911\\interleaved_preflight\\tests.log": "88017c6ffd0746f0250af17eb79ae50110335bbb9558652a323dee2ffff1d84b",
+    "review-stage\\INTERLEAVED_PREFLIGHT_20260911.md": "913b7ae18175259acf9a67f581ac00fd6e45c9f1f0e13722f09fe7b43d483646",
+    "experiment\\revision\\interleaved_collect.py": "e6d09e39a220deac4172ae70a254866a5051ff013dc4e0e6386efe7270fe2034",
+    "experiment\\revision\\test_interleaved_collect.py": "14faa0691928b974d48bd824b341013e3446b49d60a560bf3bfab8b3c2e84e35",
+    "experiment\\revision\\isolated_collect.py": "96b5e8cc259db12307f8c00461a8d39c672fdfd28dff4073302de23df3d99fae",
+    "experiment\\revision\\fresh_runtime.py": "e8ee2447355ae9b2f59c8fb8ebd9b122b4b19466359afe5315ba1c0224d648f6",
+    "experiment\\revision\\fresh_collect.py": "4c95e7dafb3488abd9764106defe40b88e4519c2d1a82db28d49f92b3936bcdd",
+    "experiment\\revision\\windows_job.py": "bf0a387e69fa2a028beaf88a806c1c892288ffa4f0a03418fbc3e34af8f556b0"
+  }
+}

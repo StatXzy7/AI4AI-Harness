@@ -15,3 +15,11 @@ paper/latex/main.blg
 paper/latex/main.out
 paper/latex/tmp_*.tex
 paper/latex/backup_*.tex
+# Derived post-review replay products (compact results/manifests remain tracked candidates)
+artifacts/revision_20260910/canonical_rows.jsonl
+artifacts/revision_20260910/smoke/
+artifacts/revision_20260910/page_*.png
+artifacts/revision_20260910/replay_env/
+artifacts/revision_20260910/runtime_env/
+artifacts/revision_20260910/fresh_replay/
+artifacts/revision_20260910/sensitivity_smoke.json

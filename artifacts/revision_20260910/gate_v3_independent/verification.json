@@ -1,0 +1,187 @@
+{
+  "recorded_at_utc": "2026-09-10T13:57:03.589932+00:00",
+  "scope": "New independently authored finite control measurement, adjudication, merge and bilingual manuscript update; not production or overall scientific clearance",
+  "bindings": {
+    "artifacts/revision_20260910/chinese_sync_verification.json": "55b0cc67e5a02c0b773914b4e3b52ba7d705c03040e2fc282a04c68aedfc93c6",
+    "artifacts/revision_20260910/gate_v3_independent/adjudication.initial.json": "ef83f22bbb9e44229913b12b1c98cceed58dd16dd5b5b9ba5ff79bb440ae12a6",
+    "artifacts/revision_20260910/gate_v3_independent/adjudication.json": "329258136d068f3b33fcfd25af6cd78569e2f3619eb7b8a16782cf7b74409ece",
+    "artifacts/revision_20260910/gate_v3_independent/author_labels.json": "5c126fb12d1aee72c128cb5ad94c15535380f591c2b6c15c41036b9d566753e5",
+    "artifacts/revision_20260910/gate_v3_independent/before_paper_update/artifacts__revision_20260910__chinese_sync_verification.json": "935966a8f01dd1f222bb69ed4cb492ac9e321755001b8803c0c9e73c7abb4d6f",
+    "artifacts/revision_20260910/gate_v3_independent/before_paper_update/artifacts__revision_20260910__verification.json": "6ffeddc99b2ad35270cbb5e3c8d88e249486e6e238e321c1845298b0bef72304",
+    "artifacts/revision_20260910/gate_v3_independent/before_paper_update/manifest.json": "1b19aca3ee07fa40a30e2b54b2db838dc6db9d1ff9e75de862f5c062a130bdb2",
+    "artifacts/revision_20260910/gate_v3_independent/before_paper_update/paper__latex__main.pdf": "b1c8e2bd14727da094361da647e6f35b9f4218d77be2e50808a468622dcc4c86",
+    "artifacts/revision_20260910/gate_v3_independent/before_paper_update/paper__latex__sec_appendix.tex": "b93788de85d1a6b56f6ca5c51c5630f603270112fb134705f6b7eda217303d7d",
+    "artifacts/revision_20260910/gate_v3_independent/before_paper_update/paper__latex_zh__main.pdf": "cc39720997360ce52e63a1090c4377788c749cd017a260ec45a084d8f9b8c27e",
+    "artifacts/revision_20260910/gate_v3_independent/before_paper_update/paper__latex_zh__sec_appendix.tex": "3da5ab142a9f56b8030efe7c9bf44a753a957d1eb716c8eb988a13aacbffdfb8",
+    "artifacts/revision_20260910/gate_v3_independent/before_status_update/experiment__revision__README.md": "99ea4591002654ea8199f6426729b07fcf5cfc7146071d595c022a9803bffbb6",
+    "artifacts/revision_20260910/gate_v3_independent/before_status_update/review-stage__REVISED_EXPERIMENT_PLAN.md": "4c3745164c6b3dc4386eeb188c8ac7729e338e6ca5330d008fbb92b696c7bc07",
+    "artifacts/revision_20260910/gate_v3_independent/before_status_update/review-stage__REVISION_20260910.md": "cc3339feb2adcbdac83962344c2b9f5e2613055d3917bc8424e51fd5aa7a5cf7",
+    "artifacts/revision_20260910/gate_v3_independent/chinese-18.png": "e57d4b67d52cdfeff807b99ec39e50b3ff221529de850f99d4b317263ec5bdcf",
+    "artifacts/revision_20260910/gate_v3_independent/chinese-19.png": "9ed509e0db9ad8d0f05fc5f170d040ca419f7a75ba4d11b3508f7328eeaea19c",
+    "artifacts/revision_20260910/gate_v3_independent/chinese-20.png": "a62634749bbc9d204eb7c8ac866378694ba4548f0d23d9becf2b7cacc71c7a06",
+    "artifacts/revision_20260910/gate_v3_independent/COMPLETE.json": "c6344cc3c9f1de5adfbdb6d9df4d17f9b624e9a7a8ebf84b3fb73ac65b74ea4d",
+    "artifacts/revision_20260910/gate_v3_independent/CONTRACT.md": "53fa8902694c48b3a197aed844e5c60ab69cd6e13a61ece0351bbc9b4b1ad595",
+    "artifacts/revision_20260910/gate_v3_independent/english-16.png": "500c5d7c2d779af8b633d14ac7ba27262a3e09d9e4ead3d26908a57fb075018f",
+    "artifacts/revision_20260910/gate_v3_independent/english-17.png": "cf8e1239b2bbd447e18083a8fed2bbf73cd25d24bf5ecfb17858442461045cc0",
+    "artifacts/revision_20260910/gate_v3_independent/english-18.png": "61dd5c2d30f9254a55266ab8c5b6d279c0ddd62755e46496c2f52766eae5d34c",
+    "artifacts/revision_20260910/gate_v3_independent/instrument_freeze.json": "5f72b88a7a5475863b6f1d4ec2a9e2d0e64f0ded3bfe150316dbbf2b7905be42",
+    "artifacts/revision_20260910/gate_v3_independent/interface_observations.json": "5fe58c0c54ed8cf011c407a176ed02ffb8df8debcd1b925c0d9aed970eb82017",
+    "artifacts/revision_20260910/gate_v3_independent/lineage.json": "30d499d5eb0f16344a658c65c9ae79f0d9ce62bc29d983892d9f99bdc43a0329",
+    "artifacts/revision_20260910/gate_v3_independent/measurement_freeze.json": "a751cfb043965240a5a33d5e97eb7175395c200100caa63c3f054c8934e03c94",
+    "artifacts/revision_20260910/gate_v3_independent/measurement_started.json": "ea3a4848f69c6adc241fa2c0016ff43fc49f153b8bc96e9852c98ca005515a26",
+    "artifacts/revision_20260910/gate_v3_independent/PROTOCOL.md": "c0ff14a9009fc43bf334fe8b0225eeb886942ccae3fb128b14cda76a1ef18a63",
+    "artifacts/revision_20260910/gate_v3_independent/results.json": "f731c6d6a09ad340531e0f1b26ead5b5b66a92a57da93533dfebd1aab71e470e",
+    "artifacts/revision_20260910/gate_v3_independent/review_packet.json": "365cb1640c795e4e37599de85eb6bb7d02bd63cccda4922f3476c601e76020df",
+    "artifacts/revision_20260910/gate_v3_independent/runner.before_blinding_fix.diff": "0dba49a488dbe74c55fbe168feb60dfab359278ab23bc43c8c7adfcd70b1a43f",
+    "artifacts/revision_20260910/gate_v3_independent/runner.diff": "2d13002c753517f8634a4990131a384a6d91552783b3450d360e71af6815744b",
+    "artifacts/revision_20260910/gate_v3_independent/runner_tests.before_blinding_fix.txt": "018fab993a72cd46979572d98a7dbe5698696f8ba42fb4bb5815d2c288973e5e",
+    "artifacts/revision_20260910/gate_v3_independent/runner_tests.txt": "4370ab322d57250cc96e0511ebff24ba4a9a7e48ce91329fe8837207e49a9df1",
+    "artifacts/revision_20260910/gate_v3_independent/summary.json": "a7e46610b107386c8ea07ed2718c20b563e25189461c3390a1b9c05439bd2c8f",
+    "artifacts/revision_20260910/verification.json": "cb86b923282bfe7c01d33bbf8bbc441a56cc237a40124d5184a5343c90bca777",
+    "experiment/revision/gate_v3.py": "93e68080d0de32b29d349593e54535857c9acbfacaa42ebd8e70477298ca9827",
+    "experiment/revision/independent_gate_v3_controls.py": "35f9427837c97e0ae838eeb3348ca4b30d632bc8403a887186861b59cce7ab6e",
+    "experiment/revision/independent_gate_v3_measure.py": "253629cb688e2069902d00adcb80e6ffcbff5727079196bcd86cb4cd6dbbccf2",
+    "experiment/revision/README.md": "6fea47b9923f24fcd0fe406692e7c19127053b5c145ff39f61962b154798f00d",
+    "experiment/revision/test_independent_gate_v3_measure.py": "d91242d6245003f3bb6a2e53bbca5c816ff90b42e528f022d56071f74dd0930c",
+    "paper/latex/main.log": "5ba77f7548bc4d8eac560a17926bca56aecbbef124fe6330a98a933901a6343b",
+    "paper/latex/main.pdf": "fabf6cb725544b8e9f370d13a534d98dc1bfe6138270364b18797ecd010c3044",
+    "paper/latex/sec_appendix.tex": "8394d343f008f499f76873e4cf484a4d16a1f0ae0e3dd4fb38382b53004c0c3a",
+    "paper/latex_zh/main.log": "311f71e0125d4493f82b778cb39e26c3bf4f884c48eaeb883849ef06e98da275",
+    "paper/latex_zh/main.pdf": "209a5f18146e2a3f58b8873d789c38bc52becf9d542e4784f5ec852c422c56ce",
+    "paper/latex_zh/sec_appendix.tex": "306be0e616b2281a2183654df18091916f1675d38b58c316a49fcddc694efced",
+    "review-stage/GATE_V3_INDEPENDENT.md": "57ee5b535371e1b4d244f41d8180ad3f185ec258e823f96d6a94580b7230dfdf",
+    "review-stage/REVISED_EXPERIMENT_PLAN.md": "714bfd8a8d53aed8a993f66da3226c30037dc10eb03f442a760c6cc2159d69cd",
+    "review-stage/REVISION_20260910.md": "b6153c85eb022e78b02be3af709473cd51d84e78d729b36d5d389a088788c5d5"
+  },
+  "author": "fresh-context gpt-5.5",
+  "instrument_implementation_and_measurement": "GPT-6",
+  "adjudicator": "fresh-context gpt-5.6-sol",
+  "backend_build": "unknown",
+  "measurement": {
+    "cases": 32,
+    "evaluate_traversals": 1,
+    "COMPLETE_hashes": "PASS",
+    "source_labels_instrument_unchanged_after_measurement": true,
+    "neutral_case_trace_mappings_checked": 32,
+    "semantic_routes": 20,
+    "instrument_derived_attribution_fields_and_empty_template_metaruns_hidden": true,
+    "unknown_real_traces_preserved": true,
+    "execution_failures": 0
+  },
+  "adjudication": {
+    "source_counts": {
+      "conforms": 15,
+      "nonconforms": 17
+    },
+    "semantic_counts": {
+      "conforms": 8,
+      "nonconforms": 11,
+      "indeterminate": 1
+    },
+    "evidence_references_checked": 101,
+    "clarification_rounds": 1,
+    "initial_preserved": true,
+    "changes": [
+      "vc025 semantic nonconforms to indeterminate",
+      "vc026 source conforms to nonconforms",
+      "vc005 scope clarified, source conforms retained"
+    ]
+  },
+  "hybrid_counts": {
+    "structural_conforms": 6,
+    "fail": 10,
+    "hybrid_conforms": 8,
+    "hybrid_nonconforms": 7,
+    "unresolved": 1
+  },
+  "undisputed_comparison": {
+    "conforms": {
+      "accepted": 14,
+      "unresolved": 1
+    },
+    "nonconforms": {
+      "rejected": 16
+    }
+  },
+  "disputed_case_ids": [
+    "vc026"
+  ],
+  "unresolved_case_ids": [
+    "vc025"
+  ],
+  "incomplete_reference_coverage_types": [
+    "error_classify"
+  ],
+  "finite_control_verdict": "not ready",
+  "population_error_rate_estimate": false,
+  "production_admissions": 0,
+  "reviews": {
+    "runner_independent_contract": {
+      "model": "gpt-5.6-sol",
+      "initial_score": 7.5,
+      "initial_verdict": "almost",
+      "issue": "conditional empty template meta-run leaked instrument observation",
+      "final_score": 9,
+      "final_verdict": "ready",
+      "scope": "fixed local measurement runner only"
+    },
+    "mechanical_merge_and_bilingual_text": {
+      "score": 9,
+      "verdict": "ready",
+      "same_model_as_root": true,
+      "scope": "32 mappings,101 evidence references,fixed merge and bilingual wording; excludes PDF/lineage"
+    },
+    "classification_interface_diagnostic": {
+      "model": "gpt-5.6-sol",
+      "score": 5,
+      "verdict": "not ready",
+      "scope": "intermediate-classification response compatibility, not overall gate or paper score"
+    }
+  },
+  "validation": {
+    "new_runner_mock_tests": 2,
+    "test_status": "PASS",
+    "ruff": "PASS new controls/runner/tests",
+    "paper_verifier": "42 checks PASS",
+    "english_pages": 18,
+    "english_main_pages": 9,
+    "chinese_pages": 20,
+    "chinese_main_end_page": 11,
+    "visual_english_pages": [
+      16,
+      17,
+      18
+    ],
+    "visual_chinese_pages": [
+      18,
+      19,
+      20
+    ],
+    "builds": "PASS",
+    "overfull_missing_glyph_undefined_reference_warnings": false,
+    "utf8_no_bom_edited_chinese": "PASS"
+  },
+  "historical_integrity": {
+    "stage19_bindings_resolved": "28/28",
+    "stage18_bindings_resolved": "53/55",
+    "unresolved": [
+      "stage18 paper/latex/main.log original bytes overwritten by rebuild without snapshot",
+      "stage18 paper/latex_zh/main.log original bytes overwritten by rebuild without snapshot"
+    ],
+    "old_source_PDF_raw_measurement_adjudication_snapshots": "preserved and hash verified",
+    "old_verification_records_rewritten": false
+  },
+  "external_provider_generation_requests": 0,
+  "benchmark_evaluations": 0,
+  "agent_compute_claimed_zero_cost": false,
+  "B_experiment_complete": false,
+  "full_goal_complete": false,
+  "overall_verdict": "not ready",
+  "remaining": [
+    "Support classification-text versus repair-SQL response roles without excluding permitted intermediate classification requests",
+    "Independently validate reference control semantics before new first measurement; preserve this now-exposed set",
+    "Real interface and B common raw pool / fixed attempts and fixed-K policies",
+    "A repeated execution and cost matching;C bridge;D independent utility;W1 formal uncertainty",
+    "Provider pilot budget and final protocol gates remain pending"
+  ]
+}

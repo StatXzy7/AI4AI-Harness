@@ -1,0 +1,16 @@
+{
+  "mechanical": {
+    "model": "gpt-5.5",
+    "score": 8.5,
+    "verdict": "ready"
+  },
+  "protocol": {
+    "model": "gpt-5.5",
+    "score": 8.5,
+    "verdict": "ready"
+  },
+  "scope": "Single authorized12cell token-accounted instrumentpilot; noformalexpansion",
+  "isolation_tests": 8,
+  "freeze_sha256": "d4a5e51783b77928cd247f240696a381569c717926e2c0696feb8a4be6b2de93",
+  "startup_manifest_equal": true
+}

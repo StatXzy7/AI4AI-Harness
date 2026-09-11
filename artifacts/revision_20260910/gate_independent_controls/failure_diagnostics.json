@@ -1,0 +1,229 @@
+{
+  "scope": "trace/source diagnostic explanations; no gate or control edits, no additional evaluate calls; independent source-contract adjudication is reported separately",
+  "result_sha256": "875d104d1c960e5545114e13e5ba692c432dbb21c1ef502057090237c456835b",
+  "instrument_sha256": "fff11167e55a9f2e18230b145de3f967e2006a53587bb624fc9f32d5e7c7dd18",
+  "observations": [
+    {
+      "case_id": "ic025",
+      "probe": "syntax_a",
+      "observation": "category-token extraction sees contextual Schema header as a category",
+      "final_request": "The execution error is classified as syntax. fix SQL grammar, parentheses, aliases, and clauses without changing the intended question. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nError:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v1-20260910_syntax_a]'}",
+      "extracted_category_words": [
+        "schema",
+        "syntax"
+      ],
+      "structural_reasons": [
+        "unambiguous_error_class_not_observed",
+        "classification_action_semantics_review_required"
+      ]
+    },
+    {
+      "case_id": "ic025",
+      "probe": "syntax_b",
+      "observation": "category-token extraction sees contextual Schema header as a category",
+      "final_request": "The execution error is classified as syntax. fix SQL grammar, parentheses, aliases, and clauses without changing the intended question. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nError:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v1-20260910_syntax_b]'}",
+      "extracted_category_words": [
+        "schema",
+        "syntax"
+      ],
+      "structural_reasons": [
+        "unambiguous_error_class_not_observed",
+        "classification_action_semantics_review_required"
+      ]
+    },
+    {
+      "case_id": "ic025",
+      "probe": "schema_a",
+      "observation": "category-token extraction sees contextual Schema header as a category",
+      "final_request": "The execution error is classified as schema. check table and column names against the schema and replace invalid references. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nError:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v1-20260910_schema_a]'}",
+      "extracted_category_words": [
+        "schema"
+      ],
+      "structural_reasons": [
+        "classification_action_semantics_review_required"
+      ]
+    },
+    {
+      "case_id": "ic025",
+      "probe": "schema_b",
+      "observation": "category-token extraction sees contextual Schema header as a category",
+      "final_request": "The execution error is classified as schema. check table and column names against the schema and replace invalid references. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nError:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v1-20260910_schema_b]'}",
+      "extracted_category_words": [
+        "schema"
+      ],
+      "structural_reasons": [
+        "classification_action_semantics_review_required"
+      ]
+    },
+    {
+      "case_id": "ic025",
+      "probe": "semantics_a",
+      "observation": "category-token extraction sees contextual Schema header as a category",
+      "final_request": "The execution error is classified as semantics. revise joins, filters, grouping, or aggregation to match the question intent. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nError:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v1-20260910_semantics_a]'}",
+      "extracted_category_words": [
+        "schema",
+        "semantics"
+      ],
+      "structural_reasons": [
+        "unambiguous_error_class_not_observed",
+        "classification_action_semantics_review_required"
+      ]
+    },
+    {
+      "case_id": "ic025",
+      "probe": "semantics_b",
+      "observation": "category-token extraction sees contextual Schema header as a category",
+      "final_request": "The execution error is classified as semantics. revise joins, filters, grouping, or aggregation to match the question intent. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nError:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v1-20260910_semantics_b]'}",
+      "extracted_category_words": [
+        "schema",
+        "semantics"
+      ],
+      "structural_reasons": [
+        "unambiguous_error_class_not_observed",
+        "classification_action_semantics_review_required"
+      ]
+    },
+    {
+      "case_id": "ic026",
+      "probe": "syntax_a",
+      "observation": "category-token extraction sees contextual Schema header as a category",
+      "final_request": "Repair only the SQL syntax and clause ordering. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nFeedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v1-20260910_syntax_a]'}",
+      "extracted_category_words": [
+        "schema",
+        "syntax"
+      ],
+      "structural_reasons": [
+        "unambiguous_error_class_not_observed",
+        "classification_action_semantics_review_required"
+      ]
+    },
+    {
+      "case_id": "ic026",
+      "probe": "syntax_b",
+      "observation": "category-token extraction sees contextual Schema header as a category",
+      "final_request": "Repair only the SQL syntax and clause ordering. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nFeedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v1-20260910_syntax_b]'}",
+      "extracted_category_words": [
+        "schema",
+        "syntax"
+      ],
+      "structural_reasons": [
+        "unambiguous_error_class_not_observed",
+        "classification_action_semantics_review_required"
+      ]
+    },
+    {
+      "case_id": "ic026",
+      "probe": "schema_a",
+      "observation": "category-token extraction sees contextual Schema header as a category",
+      "final_request": "Repair invalid table or column references using the provided schema. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nFeedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v1-20260910_schema_a]'}",
+      "extracted_category_words": [
+        "schema"
+      ],
+      "structural_reasons": [
+        "classification_action_semantics_review_required"
+      ]
+    },
+    {
+      "case_id": "ic026",
+      "probe": "schema_b",
+      "observation": "category-token extraction sees contextual Schema header as a category",
+      "final_request": "Repair invalid table or column references using the provided schema. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nFeedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v1-20260910_schema_b]'}",
+      "extracted_category_words": [
+        "schema"
+      ],
+      "structural_reasons": [
+        "classification_action_semantics_review_required"
+      ]
+    },
+    {
+      "case_id": "ic026",
+      "probe": "semantics_a",
+      "observation": "category-token extraction sees contextual Schema header as a category",
+      "final_request": "Repair the query logic so the joins, predicates, and aggregates answer the question. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nFeedback:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v1-20260910_semantics_a]'}",
+      "extracted_category_words": [
+        "schema"
+      ],
+      "structural_reasons": [
+        "unambiguous_error_class_not_observed",
+        "classification_action_semantics_review_required"
+      ]
+    },
+    {
+      "case_id": "ic026",
+      "probe": "semantics_b",
+      "observation": "category-token extraction sees contextual Schema header as a category",
+      "final_request": "Repair the query logic so the joins, predicates, and aggregates answer the question. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nFeedback:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v1-20260910_semantics_b]'}",
+      "extracted_category_words": [
+        "schema"
+      ],
+      "structural_reasons": [
+        "unambiguous_error_class_not_observed",
+        "classification_action_semantics_review_required"
+      ]
+    },
+    {
+      "case_id": "ic021",
+      "probe": "parts_0",
+      "observation": "second subtask request includes prior step text in context; scripted responder searches first matching plan step",
+      "plan": [
+        "independent-v1-20260910_part_0",
+        "independent-v1-20260910_part_1"
+      ],
+      "partial_calls": [
+        {
+          "plan_steps_found_in_order": [
+            "independent-v1-20260910_part_0"
+          ],
+          "prompt": "Answer step 1 for the SQL task. Use prior partial answers as evidence.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nStep:\nindependent-v1-20260910_part_0\nPrior partials:\n[]",
+          "response": "PAYLOAD_9dacdc2449c8f8c0"
+        },
+        {
+          "plan_steps_found_in_order": [
+            "independent-v1-20260910_part_0",
+            "independent-v1-20260910_part_1"
+          ],
+          "prompt": "Answer step 2 for the SQL task. Use prior partial answers as evidence.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nStep:\nindependent-v1-20260910_part_1\nPrior partials:\n[{\"step\": \"independent-v1-20260910_part_0\", \"answer\": \"PAYLOAD_9dacdc2449c8f8c0\"}]",
+          "response": "PAYLOAD_9dacdc2449c8f8c0"
+        }
+      ],
+      "final_request": "Assemble the final SQL using the partial answers, not just the step names.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPartial answers:\n[{\"step\": \"independent-v1-20260910_part_0\", \"answer\": \"PAYLOAD_9dacdc2449c8f8c0\"}, {\"step\": \"independent-v1-20260910_part_1\", \"answer\": \"PAYLOAD_9dacdc2449c8f8c0\"}]",
+      "final_response": "PAYLOAD_9dacdc2449c8f8c0",
+      "structural_reasons": [
+        "counterfactual_output_mismatch",
+        "partial_answers_not_assembled"
+      ]
+    },
+    {
+      "case_id": "ic021",
+      "probe": "parts_1",
+      "observation": "second subtask request includes prior step text in context; scripted responder searches first matching plan step",
+      "plan": [
+        "independent-v1-20260910_part_0",
+        "independent-v1-20260910_part_1"
+      ],
+      "partial_calls": [
+        {
+          "plan_steps_found_in_order": [
+            "independent-v1-20260910_part_0"
+          ],
+          "prompt": "Answer step 1 for the SQL task. Use prior partial answers as evidence.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nStep:\nindependent-v1-20260910_part_0\nPrior partials:\n[]",
+          "response": "PAYLOAD_6f7fd6ef98aae637"
+        },
+        {
+          "plan_steps_found_in_order": [
+            "independent-v1-20260910_part_0",
+            "independent-v1-20260910_part_1"
+          ],
+          "prompt": "Answer step 2 for the SQL task. Use prior partial answers as evidence.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nStep:\nindependent-v1-20260910_part_1\nPrior partials:\n[{\"step\": \"independent-v1-20260910_part_0\", \"answer\": \"PAYLOAD_6f7fd6ef98aae637\"}]",
+          "response": "PAYLOAD_6f7fd6ef98aae637"
+        }
+      ],
+      "final_request": "Assemble the final SQL using the partial answers, not just the step names.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPartial answers:\n[{\"step\": \"independent-v1-20260910_part_0\", \"answer\": \"PAYLOAD_6f7fd6ef98aae637\"}, {\"step\": \"independent-v1-20260910_part_1\", \"answer\": \"PAYLOAD_6f7fd6ef98aae637\"}]",
+      "final_response": "PAYLOAD_6f7fd6ef98aae637",
+      "structural_reasons": [
+        "counterfactual_output_mismatch",
+        "partial_answers_not_assembled"
+      ]
+    }
+  ]
+}

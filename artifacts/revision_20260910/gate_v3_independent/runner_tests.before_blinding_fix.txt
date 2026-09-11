@@ -1,0 +1,9 @@
+{"cases": 32, "structural_states": {"pass": 31, "execution_failure": 1}}
+{"cases": 32, "structural_states": {"pass": 31, "execution_failure": 1}}
+test_failure_retained_unknown_trace_kept_and_packaging_never_reruns (experiment.revision.test_independent_gate_v3_measure.IndependentMeasurementTests.test_failure_retained_unknown_trace_kept_and_packaging_never_reruns) ... ok
+test_missing_freeze_binding_rejected_before_control_import (experiment.revision.test_independent_gate_v3_measure.IndependentMeasurementTests.test_missing_freeze_binding_rejected_before_control_import) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.081s
+
+OK

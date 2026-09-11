@@ -1,0 +1,3989 @@
+{
+  "recorded_at_utc": "2026-09-10T12:42:24.860052+00:00",
+  "measurement_freeze_sha256": "8d658137251c28f356e93abb705e687b741838d7cc9d18ad2a149bedaaf38890",
+  "source_sha256": "b9120ac63de5ff348821182ae95726e7f1b3a6ff799f972e2362b6f18006d13b",
+  "salt": "independent-v1-20260910",
+  "scope": "independently authored synthetic controls, not benchmark or population error rates",
+  "source": "\"\"\"Independent gate-v2 controls authored from the public contract only.\"\"\"\n\nimport json\nimport re\n\n\ndef _one(value):\n    if isinstance(value, list):\n        return value[0] if value else \"\"\n    return \"\" if value is None else str(value)\n\n\ndef _many(value):\n    if isinstance(value, list):\n        return [\"\" if item is None else str(item) for item in value]\n    return [\"\" if value is None else str(value)]\n\n\ndef _sql(text):\n    value = _one(text).strip()\n    fenced = re.search(r\"```(?:sql)?\\s*(.*?)```\", value, re.IGNORECASE | re.DOTALL)\n    if fenced:\n        value = fenced.group(1).strip()\n    match = re.search(r\"\\b(WITH|SELECT)\\b[\\s\\S]*\", value, re.IGNORECASE)\n    if match:\n        value = match.group(0).strip()\n    return value or \"SELECT 1\"\n\n\ndef _result_key(result):\n    if not isinstance(result, dict):\n        return (\"invalid\", repr(result))\n    if not result.get(\"ok\"):\n        return (\"error\", str(result.get(\"error\")))\n    rows = result.get(\"rows\")\n    return (\"rows\", json.dumps(rows, sort_keys=True, default=str))\n\n\ndef _first_working(candidates, results):\n    for candidate, result in zip(candidates, results):\n        if isinstance(result, dict) and result.get(\"ok\"):\n            return _sql(candidate)\n    return _sql(candidates[0] if candidates else \"\")\n\n\ndef _majority_choice(candidates, results):\n    counts = {}\n    keys = []\n    for result in results:\n        key = _result_key(result)\n        keys.append(key)\n        counts[key] = counts.get(key, 0) + 1\n    majority = max(counts, key=counts.get) if counts else None\n    for candidate, key in zip(candidates, keys):\n        if key == majority:\n            return _sql(candidate)\n    return _first_working(candidates, results)\n\n\ndef _json_list(text):\n    value = _one(text).strip()\n    try:\n        parsed = json.loads(value)\n    except json.JSONDecodeError:\n        parsed = []\n    if isinstance(parsed, list):\n        items = [str(item) for item in parsed if str(item).strip()]\n        if items:\n            return items\n    lines = [line.strip(\" -\\t\") for line in value.splitlines() if line.strip(\" -\\t\")]\n    return lines[:3] or [\"identify the needed tables\", \"write the final SQL\"]\n\n\ndef _linked_schema(schema, payloads):\n    schema_text = str(schema)\n    words = set()\n    for payload in payloads:\n        words.update(re.findall(r\"[A-Za-z_][A-Za-z0-9_]*\", str(payload)))\n    blocks = [block for block in re.split(r\"\\n\\s*\\n\", schema_text) if block.strip()]\n    kept = []\n    for block in blocks:\n        names = set(re.findall(r\"[A-Za-z_][A-Za-z0-9_]*\", block))\n        if names & words:\n            kept.append(block.strip())\n    if kept:\n        return \"\\n\\n\".join(kept)\n    lines = schema_text.splitlines()\n    return \"\\n\".join(lines[: max(1, min(len(lines), 12))])\n\n\ndef _classify_error(message):\n    text = str(message).lower()\n    if any(word in text for word in (\"syntax\", \"parse\", \"near\", \"token\")):\n        return \"syntax\"\n    if any(word in text for word in (\"column\", \"table\", \"schema\", \"no such\", \"unknown\")):\n        return \"schema\"\n    return \"semantics\"\n\n\ndef case_001(io, question):\n    draft = _sql(io.llm(f\"Write one SQL query for this task.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\"))\n    result = io.execute(draft)\n    if isinstance(result, dict) and result.get(\"ok\"):\n        return draft\n    fixed = io.llm(\n        \"Repair the SQL using the exact execution feedback. Return only SQL.\\n\"\n        f\"Schema:\\n{io.schema}\\nQuestion:\\n{question}\\nSQL:\\n{draft}\\nError:\\n{result.get('error') if isinstance(result, dict) else result}\"\n    )\n    return _sql(fixed)\n\n\ndef case_002(io, question):\n    first = _sql(io.llm(f\"Create an initial SQL answer.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\"))\n    feedback = io.execute(first)\n    if isinstance(feedback, dict) and feedback.get(\"ok\"):\n        return first\n    second = io.llm(\n        \"The previous SQL failed. Use the database feedback to produce a corrected SQL query only.\\n\"\n        f\"Original question:\\n{question}\\nSchema:\\n{io.schema}\\nPrevious SQL:\\n{first}\\nDatabase feedback:\\n{feedback}\"\n    )\n    return _sql(second)\n\n\ndef case_003(io, question):\n    draft = _sql(io.llm(f\"Write SQL for the question.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\"))\n    io.execute(draft)\n    return draft\n\n\ndef case_004(io, question):\n    draft = _sql(io.llm(f\"Write SQL for the question.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\"))\n    result = io.execute(draft)\n    extra = io.llm(\n        f\"Give two alternate SQL answers regardless of the prior outcome {result}.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\",\n        n=2,\n    )\n    return _sql(_many(extra)[0])\n\n\ndef case_005(io, question):\n    candidates = [_sql(item) for item in _many(io.llm(f\"Generate three SQL candidates.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\", n=3))]\n    results = [io.execute(candidate) for candidate in candidates]\n    return _majority_choice(candidates, results)\n\n\ndef case_006(io, question):\n    candidates = [\n        _sql(io.llm(f\"Approach A: write SQL.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\")),\n        _sql(io.llm(f\"Approach B: write SQL with a different route.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\")),\n        _sql(io.llm(f\"Approach C: write SQL after rechecking joins and filters.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\")),\n    ]\n    results = [io.execute(candidate) for candidate in candidates]\n    return _majority_choice(candidates, results)\n\n\ndef case_007(io, question):\n    candidates = _many(io.llm(f\"Generate three SQL candidates.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\", n=3))\n    return _sql(candidates[0])\n\n\ndef case_008(io, question):\n    candidates = [_sql(item) for item in _many(io.llm(f\"Generate three SQL candidates.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\", n=3))]\n    return sorted(candidates, key=lambda item: (len(item), item))[-1]\n\n\ndef case_009(io, question):\n    linked = _one(io.llm(f\"List only the schema tables and columns needed for the question.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\"))\n    narrowed = _linked_schema(io.schema, [linked])\n    final = io.llm(\n        \"Use the linked schema subset below, and avoid unrelated tables.\\n\"\n        f\"Linked evidence:\\n{linked}\\nLinked schema:\\n{narrowed}\\nQuestion:\\n{question}\"\n    )\n    return _sql(final)\n\n\ndef case_010(io, question):\n    linked_payloads = _many(\n        io.llm(\n            \"Return two independent linked-schema subsets for the question; include table and column names only.\",\n            n=2,\n        )\n    )\n    narrowed = _linked_schema(io.schema, linked_payloads)\n    final = io.llm(\n        \"Write SQL from the linked subsets and reduced schema. Do not use tables absent from the reduced schema.\\n\"\n        f\"Subset 1:\\n{linked_payloads[0] if linked_payloads else ''}\\n\"\n        f\"Subset 2:\\n{linked_payloads[1] if len(linked_payloads) > 1 else ''}\\n\"\n        f\"Reduced schema:\\n{narrowed}\\nQuestion:\\n{question}\"\n    )\n    return _sql(final)\n\n\ndef case_011(io, question):\n    io.llm(f\"Identify relevant schema for this question.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\")\n    final = io.llm(f\"Write SQL using the full schema.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\")\n    return _sql(final)\n\n\ndef case_012(io, question):\n    final = io.llm(f\"Write SQL. Consider every table in this complete schema.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\")\n    return _sql(final)\n\n\ndef case_013(io, question):\n    final = io.llm(\n        \"Write one SQL query. Preserve the original question and schema constraints. \"\n        \"If the question includes a Hint, treat that Hint as an additional explicit requirement outside the original wording.\\n\"\n        f\"Schema:\\n{io.schema}\\nOriginal question:\\n{question}\"\n    )\n    return _sql(final)\n\n\ndef case_014(io, question):\n    final = io.llm(\n        f\"Schema:\\n{io.schema}\\nQuestion:\\n{question}\",\n        system=\"Return one SQL query. Keep the schema and original question intact, and apply any Hint text as a hard extra constraint.\",\n        temperature=0.0,\n        n=1,\n    )\n    return _sql(final)\n\n\ndef case_015(io, question):\n    final = io.llm(f\"{io.schema}\\n{question}\")\n    return _sql(final)\n\n\ndef case_016(io, question):\n    final = io.llm(\n        \"Write SQL for the original question. Ignore any Hint text if one is present.\\n\"\n        f\"Schema:\\n{io.schema}\\nQuestion:\\n{question}\"\n    )\n    return _sql(final)\n\n\ndef case_017(io, question):\n    first = _sql(io.llm(f\"Write SQL using a join-focused formulation.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\"))\n    second = _sql(io.llm(f\"Write SQL using an aggregation/filter-first formulation.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\"))\n    first_result = io.execute(first)\n    second_result = io.execute(second)\n    if isinstance(first_result, dict) and first_result.get(\"ok\") and first_result.get(\"rows\"):\n        return first\n    if isinstance(second_result, dict) and second_result.get(\"ok\") and second_result.get(\"rows\"):\n        return second\n    return _first_working([first, second], [first_result, second_result])\n\n\ndef case_018(io, question):\n    candidates = [_sql(item) for item in _many(io.llm(f\"Produce two semantically different SQL constructions.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\", n=2))]\n    while len(candidates) < 2:\n        candidates.append(_sql(io.llm(f\"Produce another SQL construction.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\")))\n    results = [io.execute(candidate) for candidate in candidates[:2]]\n    both_usable = all(isinstance(result, dict) and result.get(\"ok\") and result.get(\"rows\") for result in results)\n    if both_usable:\n        return candidates[0]\n    return _first_working(candidates[:2], results)\n\n\ndef case_019(io, question):\n    first = _sql(io.llm(f\"Write SQL for this question.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\"))\n    second = first + \" \"\n    io.execute(first)\n    io.execute(second)\n    return first\n\n\ndef case_020(io, question):\n    first = _sql(io.llm(f\"Write SQL from one perspective.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\"))\n    second = _sql(io.llm(f\"Write SQL from another perspective.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\"))\n    io.execute(first)\n    io.execute(second)\n    return second\n\n\ndef case_021(io, question):\n    plan = _json_list(io.llm(f\"Return a JSON string list of two steps for solving this SQL task.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\"))\n    partials = []\n    for index, step in enumerate(plan, 1):\n        answer = _one(\n            io.llm(\n                f\"Answer step {index} for the SQL task. Use prior partial answers as evidence.\\n\"\n                f\"Schema:\\n{io.schema}\\nQuestion:\\n{question}\\nStep:\\n{step}\\nPrior partials:\\n{json.dumps(partials)}\"\n            )\n        )\n        partials.append({\"step\": step, \"answer\": answer})\n    final = io.llm(\n        \"Assemble the final SQL using the partial answers, not just the step names.\\n\"\n        f\"Schema:\\n{io.schema}\\nQuestion:\\n{question}\\nPartial answers:\\n{json.dumps(partials, ensure_ascii=True)}\"\n    )\n    return _sql(final)\n\n\ndef case_022(io, question):\n    plan = _json_list(io.llm(f\"Plan this query as a JSON list of ordered subtasks.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\"))[:2]\n    collected = []\n    for step in plan:\n        collected.append(_one(io.llm(f\"Solve this subtask and return the useful intermediate facts.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\\nSubtask:\\n{step}\\nEarlier facts:\\n{json.dumps(collected)}\")))\n    final = io.llm(\n        \"Write the final SQL. Incorporate every intermediate fact below.\\n\"\n        f\"Schema:\\n{io.schema}\\nQuestion:\\n{question}\\nIntermediate facts:\\n{json.dumps(collected, ensure_ascii=True)}\"\n    )\n    return _sql(final)\n\n\ndef case_023(io, question):\n    plan = _json_list(io.llm(f\"Return a JSON list plan for this task.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\"))\n    final = io.llm(f\"Write SQL using these step titles only.\\nSteps:\\n{json.dumps(plan)}\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\")\n    return _sql(final)\n\n\ndef case_024(io, question):\n    plan = _json_list(io.llm(f\"Return a JSON list plan for this task.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\"))[:2]\n    for step in plan:\n        io.llm(f\"Work on this subtask.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\\nSubtask:\\n{step}\")\n    final = io.llm(f\"Now write SQL from the original problem.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\")\n    return _sql(final)\n\n\ndef case_025(io, question):\n    first = _sql(io.llm(f\"Write SQL for this task.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\"))\n    result = io.execute(first)\n    if isinstance(result, dict) and result.get(\"ok\"):\n        return first\n    category = _classify_error(result.get(\"error\") if isinstance(result, dict) else result)\n    action = {\n        \"syntax\": \"fix SQL grammar, parentheses, aliases, and clauses without changing the intended question\",\n        \"schema\": \"check table and column names against the schema and replace invalid references\",\n        \"semantics\": \"revise joins, filters, grouping, or aggregation to match the question intent\",\n    }[category]\n    fixed = io.llm(\n        f\"The execution error is classified as {category}. {action}. Return only SQL.\\n\"\n        f\"Schema:\\n{io.schema}\\nQuestion:\\n{question}\\nPrevious SQL:\\n{first}\\nError:\\n{result}\"\n    )\n    return _sql(fixed)\n\n\ndef case_026(io, question):\n    first = _sql(io.llm(f\"Draft SQL.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\"))\n    result = io.execute(first)\n    if isinstance(result, dict) and result.get(\"ok\"):\n        return first\n    category = _one(\n        io.llm(\n            \"Classify the database feedback as exactly one of syntax, schema, or semantics.\\n\"\n            f\"Feedback:\\n{result}\\nSQL:\\n{first}\"\n        )\n    ).strip().lower()\n    if category not in {\"syntax\", \"schema\", \"semantics\"}:\n        category = _classify_error(result.get(\"error\") if isinstance(result, dict) else result)\n    prompts = {\n        \"syntax\": \"Repair only the SQL syntax and clause ordering.\",\n        \"schema\": \"Repair invalid table or column references using the provided schema.\",\n        \"semantics\": \"Repair the query logic so the joins, predicates, and aggregates answer the question.\",\n    }\n    fixed = io.llm(\n        f\"{prompts[category]} Return only SQL.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\\nSQL:\\n{first}\\nFeedback:\\n{result}\"\n    )\n    return _sql(fixed)\n\n\ndef case_027(io, question):\n    first = _sql(io.llm(f\"Draft SQL.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\"))\n    result = io.execute(first)\n    if isinstance(result, dict) and result.get(\"ok\"):\n        return first\n    fixed = io.llm(\n        \"This might be syntax, schema, or semantics. Try any generic correction and return SQL.\\n\"\n        f\"Schema:\\n{io.schema}\\nQuestion:\\n{question}\\nSQL:\\n{first}\\nFeedback:\\n{result}\"\n    )\n    return _sql(fixed)\n\n\ndef case_028(io, question):\n    first = _sql(io.llm(f\"Draft SQL.\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\"))\n    result = io.execute(first)\n    if isinstance(result, dict) and result.get(\"ok\"):\n        return first\n    category = _classify_error(result.get(\"error\") if isinstance(result, dict) else result)\n    fixed = io.llm(\n        f\"The issue category is {category}. Make a minimal generic edit and return SQL.\\n\"\n        f\"Schema:\\n{io.schema}\\nQuestion:\\n{question}\\nSQL:\\n{first}\\nFeedback:\\n{result}\"\n    )\n    return _sql(fixed)\n\n\ndef case_029(io, question):\n    final = io.llm(\n        \"Return the answer as a single SQL code fence with no explanation or extra text.\\n\"\n        f\"Schema:\\n{io.schema}\\nQuestion:\\n{question}\"\n    )\n    return _sql(final)\n\n\ndef case_030(io, question):\n    final = io.llm(\n        f\"Schema:\\n{io.schema}\\nQuestion:\\n{question}\",\n        system=\"You must answer with exactly one fenced SQL block and nothing outside the fence.\",\n        temperature=0.0,\n        n=1,\n    )\n    return _sql(final)\n\n\ndef case_031(io, question):\n    final = io.llm(f\"Schema:\\n{io.schema}\\nQuestion:\\n{question}\")\n    return _sql(final)\n\n\ndef case_032(io, question):\n    final = io.llm(\n        \"Do not use a SQL code fence. Explain briefly before the query.\\n\"\n        f\"Schema:\\n{io.schema}\\nQuestion:\\n{question}\"\n    )\n    return _sql(final)\n\n\nCASES = [\n    {\"case_id\": \"ic001\", \"strategy\": \"repair\", \"solve\": case_001},\n    {\"case_id\": \"ic002\", \"strategy\": \"repair\", \"solve\": case_002},\n    {\"case_id\": \"ic003\", \"strategy\": \"repair\", \"solve\": case_003},\n    {\"case_id\": \"ic004\", \"strategy\": \"repair\", \"solve\": case_004},\n    {\"case_id\": \"ic005\", \"strategy\": \"vote3\", \"solve\": case_005},\n    {\"case_id\": \"ic006\", \"strategy\": \"vote3\", \"solve\": case_006},\n    {\"case_id\": \"ic007\", \"strategy\": \"vote3\", \"solve\": case_007},\n    {\"case_id\": \"ic008\", \"strategy\": \"vote3\", \"solve\": case_008},\n    {\"case_id\": \"ic009\", \"strategy\": \"schema_link\", \"solve\": case_009},\n    {\"case_id\": \"ic010\", \"strategy\": \"schema_link\", \"solve\": case_010},\n    {\"case_id\": \"ic011\", \"strategy\": \"schema_link\", \"solve\": case_011},\n    {\"case_id\": \"ic012\", \"strategy\": \"schema_link\", \"solve\": case_012},\n    {\"case_id\": \"ic013\", \"strategy\": \"hint_guard\", \"solve\": case_013},\n    {\"case_id\": \"ic014\", \"strategy\": \"hint_guard\", \"solve\": case_014},\n    {\"case_id\": \"ic015\", \"strategy\": \"hint_guard\", \"solve\": case_015},\n    {\"case_id\": \"ic016\", \"strategy\": \"hint_guard\", \"solve\": case_016},\n    {\"case_id\": \"ic017\", \"strategy\": \"two_view\", \"solve\": case_017},\n    {\"case_id\": \"ic018\", \"strategy\": \"two_view\", \"solve\": case_018},\n    {\"case_id\": \"ic019\", \"strategy\": \"two_view\", \"solve\": case_019},\n    {\"case_id\": \"ic020\", \"strategy\": \"two_view\", \"solve\": case_020},\n    {\"case_id\": \"ic021\", \"strategy\": \"decompose\", \"solve\": case_021},\n    {\"case_id\": \"ic022\", \"strategy\": \"decompose\", \"solve\": case_022},\n    {\"case_id\": \"ic023\", \"strategy\": \"decompose\", \"solve\": case_023},\n    {\"case_id\": \"ic024\", \"strategy\": \"decompose\", \"solve\": case_024},\n    {\"case_id\": \"ic025\", \"strategy\": \"error_classify\", \"solve\": case_025},\n    {\"case_id\": \"ic026\", \"strategy\": \"error_classify\", \"solve\": case_026},\n    {\"case_id\": \"ic027\", \"strategy\": \"error_classify\", \"solve\": case_027},\n    {\"case_id\": \"ic028\", \"strategy\": \"error_classify\", \"solve\": case_028},\n    {\"case_id\": \"ic029\", \"strategy\": \"format_guard\", \"solve\": case_029},\n    {\"case_id\": \"ic030\", \"strategy\": \"format_guard\", \"solve\": case_030},\n    {\"case_id\": \"ic031\", \"strategy\": \"format_guard\", \"solve\": case_031},\n    {\"case_id\": \"ic032\", \"strategy\": \"format_guard\", \"solve\": case_032},\n]\n",
+  "cases": [
+    {
+      "case_id": "ic001",
+      "strategy": "repair",
+      "callable_name": "case_001",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "success_no_repair",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write one SQL query for this task.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "syntax_a",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write one SQL query for this task.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [independent-v1-20260910_syntax_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Repair the SQL using the exact execution feedback. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nError:\nsyntax failure [independent-v1-20260910_syntax_a]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "syntax_b",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write one SQL query for this task.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [independent-v1-20260910_syntax_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Repair the SQL using the exact execution feedback. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nError:\nsyntax failure [independent-v1-20260910_syntax_b]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null
+        }
+      ],
+      "runs_sha256": "61cbe2e1d4d33e76af581b917edd5ae9f4bc08c4138065ad7533e24f6981b5a5",
+      "review_mode": "source_contract",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic002",
+      "strategy": "repair",
+      "callable_name": "case_002",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "success_no_repair",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Create an initial SQL answer.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "syntax_a",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Create an initial SQL answer.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [independent-v1-20260910_syntax_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "The previous SQL failed. Use the database feedback to produce a corrected SQL query only.\nOriginal question:\nReturn ledger identifiers.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nPrevious SQL:\nSELECT id FROM ledger\nDatabase feedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v1-20260910_syntax_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "syntax_b",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Create an initial SQL answer.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [independent-v1-20260910_syntax_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "The previous SQL failed. Use the database feedback to produce a corrected SQL query only.\nOriginal question:\nReturn ledger identifiers.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nPrevious SQL:\nSELECT id FROM ledger\nDatabase feedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v1-20260910_syntax_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null
+        }
+      ],
+      "runs_sha256": "71da05da688cbb3d7e7433d688fc79dcbadd773fd20dfb0d5f5d3ef3050973c7",
+      "review_mode": "source_contract",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic003",
+      "strategy": "repair",
+      "callable_name": "case_003",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "success_no_repair",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL for the question.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "syntax_a",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL for the question.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [independent-v1-20260910_syntax_a]"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "syntax_b",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL for the question.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [independent-v1-20260910_syntax_b]"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        }
+      ],
+      "runs_sha256": "491c0617c79cb532dad2b52ce5fa4cb03720677d4cf0d03c3c5bfe30e1b90224",
+      "review_mode": "source_contract",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic004",
+      "strategy": "repair",
+      "callable_name": "case_004",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "success_no_repair",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL for the question.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "llm",
+              "prompt": "Give two alternate SQL answers regardless of the prior outcome {'ok': True, 'rows': [['A']], 'error': None}.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 2,
+              "temperature": 0.0,
+              "response": [
+                "SELECT id FROM ledger WHERE id > 0",
+                "SELECT id FROM ledger WHERE id > 0"
+              ]
+            }
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null
+        },
+        {
+          "probe": "syntax_a",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL for the question.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [independent-v1-20260910_syntax_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Give two alternate SQL answers regardless of the prior outcome {'ok': False, 'rows': [], 'error': 'syntax failure [independent-v1-20260910_syntax_a]'}.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 2,
+              "temperature": 0.0,
+              "response": [
+                "SELECT amount FROM ledger",
+                "SELECT amount FROM ledger"
+              ]
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "syntax_b",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL for the question.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [independent-v1-20260910_syntax_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Give two alternate SQL answers regardless of the prior outcome {'ok': False, 'rows': [], 'error': 'syntax failure [independent-v1-20260910_syntax_b]'}.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 2,
+              "temperature": 0.0,
+              "response": [
+                "SELECT id FROM ledger WHERE id > 0",
+                "SELECT id FROM ledger WHERE id > 0"
+              ]
+            }
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null
+        }
+      ],
+      "runs_sha256": "7441ce2797b5dd58b30129d93b2596fe8adfb10903440d11628d32cf95da0846",
+      "review_mode": "source_contract",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic005",
+      "strategy": "vote3",
+      "callable_name": "case_005",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "late_majority",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Generate three SQL candidates.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.0,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT amount FROM ledger"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "permuted_majority",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Generate three SQL candidates.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.0,
+              "response": [
+                "SELECT amount FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "flipped_majority",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Generate three SQL candidates.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.0,
+              "response": [
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger",
+                "SELECT id FROM ledger"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "equivalent_results",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Generate three SQL candidates.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.0,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "execution_majority_flipped",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Generate three SQL candidates.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.0,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "execution_majority_AB",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Generate three SQL candidates.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.0,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "C"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        }
+      ],
+      "runs_sha256": "2121de1668fea0531786966916d99c6fd44acc010be0af9839cb7acd6c84d5c1",
+      "review_mode": "source_contract",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic006",
+      "strategy": "vote3",
+      "callable_name": "case_006",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "late_majority",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Approach A: write SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Approach B: write SQL with a different route.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Approach C: write SQL after rechecking joins and filters.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "permuted_majority",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Approach A: write SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Approach B: write SQL with a different route.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Approach C: write SQL after rechecking joins and filters.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "flipped_majority",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Approach A: write SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Approach B: write SQL with a different route.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Approach C: write SQL after rechecking joins and filters.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "equivalent_results",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Approach A: write SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Approach B: write SQL with a different route.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Approach C: write SQL after rechecking joins and filters.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "execution_majority_flipped",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Approach A: write SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Approach B: write SQL with a different route.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Approach C: write SQL after rechecking joins and filters.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "execution_majority_AB",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Approach A: write SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Approach B: write SQL with a different route.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Approach C: write SQL after rechecking joins and filters.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "C"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        }
+      ],
+      "runs_sha256": "ce788e406ad8e1b414a23d4848328b206bce8c22e77916a64433dea286010dfd",
+      "review_mode": "source_contract",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic007",
+      "strategy": "vote3",
+      "callable_name": "case_007",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "late_majority",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Generate three SQL candidates.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.0,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT amount FROM ledger"
+              ]
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "permuted_majority",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Generate three SQL candidates.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.0,
+              "response": [
+                "SELECT amount FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger"
+              ]
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "flipped_majority",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Generate three SQL candidates.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.0,
+              "response": [
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger",
+                "SELECT id FROM ledger"
+              ]
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "equivalent_results",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Generate three SQL candidates.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.0,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ]
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "execution_majority_flipped",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Generate three SQL candidates.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.0,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ]
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "execution_majority_AB",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Generate three SQL candidates.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.0,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ]
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        }
+      ],
+      "runs_sha256": "135e0910a4bd2b4ea9804dc43e9f20d11968048637318825c67b56065d9e1c94",
+      "review_mode": "source_contract",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic008",
+      "strategy": "vote3",
+      "callable_name": "case_008",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "late_majority",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Generate three SQL candidates.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.0,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT amount FROM ledger"
+              ]
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "permuted_majority",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Generate three SQL candidates.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.0,
+              "response": [
+                "SELECT amount FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger"
+              ]
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "flipped_majority",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Generate three SQL candidates.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.0,
+              "response": [
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger",
+                "SELECT id FROM ledger"
+              ]
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "equivalent_results",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Generate three SQL candidates.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.0,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ]
+            }
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null
+        },
+        {
+          "probe": "execution_majority_flipped",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Generate three SQL candidates.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.0,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ]
+            }
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null
+        },
+        {
+          "probe": "execution_majority_AB",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Generate three SQL candidates.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.0,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ]
+            }
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null
+        }
+      ],
+      "runs_sha256": "c370fa71f14b5d9acf65b9bfc87e3176b068721437b471ec98ec7b2a9c84c752",
+      "review_mode": "source_contract",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic009",
+      "strategy": "schema_link",
+      "callable_name": "case_009",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "link_0",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "List only the schema tables and columns needed for the question.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "ledger(id) [independent-v1-20260910_link_0]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Use the linked schema subset below, and avoid unrelated tables.\nLinked evidence:\nledger(id) [independent-v1-20260910_link_0]\nLinked schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "link_1",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "List only the schema tables and columns needed for the question.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "ledger(id) [independent-v1-20260910_link_1]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Use the linked schema subset below, and avoid unrelated tables.\nLinked evidence:\nledger(id) [independent-v1-20260910_link_1]\nLinked schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        }
+      ],
+      "runs_sha256": "07d7d6bb284cee391702998a6dced19ca9717a1c2778995b8ee308186435bc9c",
+      "review_mode": "source_contract",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic010",
+      "strategy": "schema_link",
+      "callable_name": "case_010",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "link_0",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Return two independent linked-schema subsets for the question; include table and column names only.",
+              "system": "",
+              "n": 2,
+              "temperature": 0.0,
+              "response": [
+                "ledger(id) [independent-v1-20260910_link_0]",
+                "ledger(id) [independent-v1-20260910_link_0]"
+              ]
+            },
+            {
+              "kind": "llm",
+              "prompt": "Write SQL from the linked subsets and reduced schema. Do not use tables absent from the reduced schema.\nSubset 1:\nledger(id) [independent-v1-20260910_link_0]\nSubset 2:\nledger(id) [independent-v1-20260910_link_0]\nReduced schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "link_1",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Return two independent linked-schema subsets for the question; include table and column names only.",
+              "system": "",
+              "n": 2,
+              "temperature": 0.0,
+              "response": [
+                "ledger(id) [independent-v1-20260910_link_1]",
+                "ledger(id) [independent-v1-20260910_link_1]"
+              ]
+            },
+            {
+              "kind": "llm",
+              "prompt": "Write SQL from the linked subsets and reduced schema. Do not use tables absent from the reduced schema.\nSubset 1:\nledger(id) [independent-v1-20260910_link_1]\nSubset 2:\nledger(id) [independent-v1-20260910_link_1]\nReduced schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        }
+      ],
+      "runs_sha256": "1a8c17b456f1da05e6d8014c6a05c50a0229136c986f0cf23a3418873bd71af6",
+      "review_mode": "source_contract",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic011",
+      "strategy": "schema_link",
+      "callable_name": "case_011",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "link_0",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Identify relevant schema for this question.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "ledger(id) [independent-v1-20260910_link_0]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Write SQL using the full schema.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null
+        },
+        {
+          "probe": "link_1",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Identify relevant schema for this question.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "ledger(id) [independent-v1-20260910_link_1]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Write SQL using the full schema.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null
+        }
+      ],
+      "runs_sha256": "f4087d0a27ca8e58cd52610723ca20d2c616ea46c7d91fc84cc5ab0f6f5b9299",
+      "review_mode": "source_contract",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic012",
+      "strategy": "schema_link",
+      "callable_name": "case_012",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "link_0",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL. Consider every table in this complete schema.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "ledger(id) [independent-v1-20260910_link_0]"
+            }
+          ],
+          "final": "ledger(id) [independent-v1-20260910_link_0]",
+          "error": null
+        },
+        {
+          "probe": "link_1",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL. Consider every table in this complete schema.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "ledger(id) [independent-v1-20260910_link_1]"
+            }
+          ],
+          "final": "ledger(id) [independent-v1-20260910_link_1]",
+          "error": null
+        }
+      ],
+      "runs_sha256": "619fa9f19b41b50122d3154698cb53c4e0110ecb11e942260933b24b47c80829",
+      "review_mode": "source_contract",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic013",
+      "strategy": "hint_guard",
+      "callable_name": "case_013",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "no_hint",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write one SQL query. Preserve the original question and schema constraints. If the question includes a Hint, treat that Hint as an additional explicit requirement outside the original wording.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nOriginal question:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "hint_0",
+          "question": "Return ledger identifiers.\nHint: id must exceed 317.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write one SQL query. Preserve the original question and schema constraints. If the question includes a Hint, treat that Hint as an additional explicit requirement outside the original wording.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nOriginal question:\nReturn ledger identifiers.\nHint: id must exceed 317.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "hint_1",
+          "question": "Return ledger identifiers.\nHint: id must exceed 941.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write one SQL query. Preserve the original question and schema constraints. If the question includes a Hint, treat that Hint as an additional explicit requirement outside the original wording.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nOriginal question:\nReturn ledger identifiers.\nHint: id must exceed 941.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        }
+      ],
+      "runs_sha256": "954c4d077e8145d0b119de119ad506396c90e3b5d21adfdbe7ca7dd711627b39",
+      "review_mode": "semantic",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic014",
+      "strategy": "hint_guard",
+      "callable_name": "case_014",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "no_hint",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "Return one SQL query. Keep the schema and original question intact, and apply any Hint text as a hard extra constraint.",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "hint_0",
+          "question": "Return ledger identifiers.\nHint: id must exceed 317.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nHint: id must exceed 317.",
+              "system": "Return one SQL query. Keep the schema and original question intact, and apply any Hint text as a hard extra constraint.",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "hint_1",
+          "question": "Return ledger identifiers.\nHint: id must exceed 941.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nHint: id must exceed 941.",
+              "system": "Return one SQL query. Keep the schema and original question intact, and apply any Hint text as a hard extra constraint.",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        }
+      ],
+      "runs_sha256": "cf12fda896b8ee8aa87df9e7407873f8ee8ec206e863bdfbdbc6759c0a63c467",
+      "review_mode": "semantic",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic015",
+      "strategy": "hint_guard",
+      "callable_name": "case_015",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "no_hint",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "hint_0",
+          "question": "Return ledger identifiers.\nHint: id must exceed 317.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nHint: id must exceed 317.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "hint_1",
+          "question": "Return ledger identifiers.\nHint: id must exceed 941.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nHint: id must exceed 941.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        }
+      ],
+      "runs_sha256": "5db74a4a000f03cee6f7c6ca5a435e5e370c3d42d566cf54b5942ebe078dc99b",
+      "review_mode": "semantic",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic016",
+      "strategy": "hint_guard",
+      "callable_name": "case_016",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "no_hint",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL for the original question. Ignore any Hint text if one is present.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "hint_0",
+          "question": "Return ledger identifiers.\nHint: id must exceed 317.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL for the original question. Ignore any Hint text if one is present.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nHint: id must exceed 317.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "hint_1",
+          "question": "Return ledger identifiers.\nHint: id must exceed 941.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL for the original question. Ignore any Hint text if one is present.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nHint: id must exceed 941.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        }
+      ],
+      "runs_sha256": "97577938bd6a3dc69de122e98ed27c5422ad8366e8d8e787b7df112588d34eec",
+      "review_mode": "semantic",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic017",
+      "strategy": "two_view",
+      "callable_name": "case_017",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "first_empty",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL using a join-focused formulation.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Write SQL using an aggregation/filter-first formulation.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "second_empty",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL using a join-focused formulation.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Write SQL using an aggregation/filter-first formulation.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [],
+              "error": null
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "both_nonempty",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL using a join-focused formulation.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Write SQL using an aggregation/filter-first formulation.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "first_failed",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL using a join-focused formulation.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Write SQL using an aggregation/filter-first formulation.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        }
+      ],
+      "runs_sha256": "829c25589477ed4b05d0c8f43c58eab92ee74964b9daf4052e1405f1b865a3bc",
+      "review_mode": "semantic",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic018",
+      "strategy": "two_view",
+      "callable_name": "case_018",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "first_empty",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Produce two semantically different SQL constructions.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 2,
+              "temperature": 0.0,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "second_empty",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Produce two semantically different SQL constructions.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 2,
+              "temperature": 0.0,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [],
+              "error": null
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "both_nonempty",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Produce two semantically different SQL constructions.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 2,
+              "temperature": 0.0,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "first_failed",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Produce two semantically different SQL constructions.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 2,
+              "temperature": 0.0,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        }
+      ],
+      "runs_sha256": "443d58eae3a42e59da41b9d2232393ec8820b3b0679e6de0e2266401aae0be05",
+      "review_mode": "semantic",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic019",
+      "strategy": "two_view",
+      "callable_name": "case_019",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "first_empty",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL for this question.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger ",
+              "ok": true,
+              "rows": [],
+              "error": null
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "second_empty",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL for this question.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger ",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "both_nonempty",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL for this question.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger ",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "first_failed",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL for this question.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger ",
+              "ok": false,
+              "rows": [],
+              "error": "syntax"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        }
+      ],
+      "runs_sha256": "595188cecf583bf05446cec8a290d5be125cdbadc42ccea505a2dea88a19ee33",
+      "review_mode": "semantic",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic020",
+      "strategy": "two_view",
+      "callable_name": "case_020",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "first_empty",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL from one perspective.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Write SQL from another perspective.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "second_empty",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL from one perspective.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Write SQL from another perspective.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [],
+              "error": null
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "both_nonempty",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL from one perspective.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Write SQL from another perspective.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "first_failed",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL from one perspective.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Write SQL from another perspective.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        }
+      ],
+      "runs_sha256": "0954a5c55ec24f2adeb92def365199cb0d900f657783c580185017c0caef8923",
+      "review_mode": "semantic",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic021",
+      "strategy": "decompose",
+      "callable_name": "case_021",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "parts_0",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Return a JSON string list of two steps for solving this SQL task.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "[\"independent-v1-20260910_part_0\", \"independent-v1-20260910_part_1\"]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Answer step 1 for the SQL task. Use prior partial answers as evidence.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nStep:\nindependent-v1-20260910_part_0\nPrior partials:\n[]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_9dacdc2449c8f8c0"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Answer step 2 for the SQL task. Use prior partial answers as evidence.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nStep:\nindependent-v1-20260910_part_1\nPrior partials:\n[{\"step\": \"independent-v1-20260910_part_0\", \"answer\": \"PAYLOAD_9dacdc2449c8f8c0\"}]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_9dacdc2449c8f8c0"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Assemble the final SQL using the partial answers, not just the step names.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPartial answers:\n[{\"step\": \"independent-v1-20260910_part_0\", \"answer\": \"PAYLOAD_9dacdc2449c8f8c0\"}, {\"step\": \"independent-v1-20260910_part_1\", \"answer\": \"PAYLOAD_9dacdc2449c8f8c0\"}]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_9dacdc2449c8f8c0"
+            }
+          ],
+          "final": "PAYLOAD_9dacdc2449c8f8c0",
+          "error": null
+        },
+        {
+          "probe": "parts_1",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Return a JSON string list of two steps for solving this SQL task.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "[\"independent-v1-20260910_part_0\", \"independent-v1-20260910_part_1\"]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Answer step 1 for the SQL task. Use prior partial answers as evidence.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nStep:\nindependent-v1-20260910_part_0\nPrior partials:\n[]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_6f7fd6ef98aae637"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Answer step 2 for the SQL task. Use prior partial answers as evidence.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nStep:\nindependent-v1-20260910_part_1\nPrior partials:\n[{\"step\": \"independent-v1-20260910_part_0\", \"answer\": \"PAYLOAD_6f7fd6ef98aae637\"}]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_6f7fd6ef98aae637"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Assemble the final SQL using the partial answers, not just the step names.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPartial answers:\n[{\"step\": \"independent-v1-20260910_part_0\", \"answer\": \"PAYLOAD_6f7fd6ef98aae637\"}, {\"step\": \"independent-v1-20260910_part_1\", \"answer\": \"PAYLOAD_6f7fd6ef98aae637\"}]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_6f7fd6ef98aae637"
+            }
+          ],
+          "final": "PAYLOAD_6f7fd6ef98aae637",
+          "error": null
+        }
+      ],
+      "runs_sha256": "2037bc43864ef93d91ff3449c6efc16d80ee78c58bab95f77df11c092309cd10",
+      "review_mode": "source_contract",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic022",
+      "strategy": "decompose",
+      "callable_name": "case_022",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "parts_0",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Plan this query as a JSON list of ordered subtasks.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "[\"independent-v1-20260910_part_0\", \"independent-v1-20260910_part_1\"]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Solve this subtask and return the useful intermediate facts.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSubtask:\nindependent-v1-20260910_part_0\nEarlier facts:\n[]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_9dacdc2449c8f8c0"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Solve this subtask and return the useful intermediate facts.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSubtask:\nindependent-v1-20260910_part_1\nEarlier facts:\n[\"PAYLOAD_9dacdc2449c8f8c0\"]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_050979558e483ed1"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Write the final SQL. Incorporate every intermediate fact below.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nIntermediate facts:\n[\"PAYLOAD_9dacdc2449c8f8c0\", \"PAYLOAD_050979558e483ed1\"]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "parts_1",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Plan this query as a JSON list of ordered subtasks.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "[\"independent-v1-20260910_part_0\", \"independent-v1-20260910_part_1\"]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Solve this subtask and return the useful intermediate facts.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSubtask:\nindependent-v1-20260910_part_0\nEarlier facts:\n[]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_6f7fd6ef98aae637"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Solve this subtask and return the useful intermediate facts.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSubtask:\nindependent-v1-20260910_part_1\nEarlier facts:\n[\"PAYLOAD_6f7fd6ef98aae637\"]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_b46085eb948c0eda"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Write the final SQL. Incorporate every intermediate fact below.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nIntermediate facts:\n[\"PAYLOAD_6f7fd6ef98aae637\", \"PAYLOAD_b46085eb948c0eda\"]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        }
+      ],
+      "runs_sha256": "5913b8f98b33ef3174ce50b01c76b6e5440430a2b43ae85ec521e83e2d3a7173",
+      "review_mode": "source_contract",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic023",
+      "strategy": "decompose",
+      "callable_name": "case_023",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "parts_0",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Return a JSON list plan for this task.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "[\"independent-v1-20260910_part_0\", \"independent-v1-20260910_part_1\"]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Write SQL using these step titles only.\nSteps:\n[\"independent-v1-20260910_part_0\", \"independent-v1-20260910_part_1\"]\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_9dacdc2449c8f8c0"
+            }
+          ],
+          "final": "PAYLOAD_9dacdc2449c8f8c0",
+          "error": null
+        },
+        {
+          "probe": "parts_1",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Return a JSON list plan for this task.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "[\"independent-v1-20260910_part_0\", \"independent-v1-20260910_part_1\"]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Write SQL using these step titles only.\nSteps:\n[\"independent-v1-20260910_part_0\", \"independent-v1-20260910_part_1\"]\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_6f7fd6ef98aae637"
+            }
+          ],
+          "final": "PAYLOAD_6f7fd6ef98aae637",
+          "error": null
+        }
+      ],
+      "runs_sha256": "1cf7ad26226835d1c07917aef635f4cef3d0e1cdfccf9d72d7b192174065d268",
+      "review_mode": "source_contract",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic024",
+      "strategy": "decompose",
+      "callable_name": "case_024",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "parts_0",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Return a JSON list plan for this task.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "[\"independent-v1-20260910_part_0\", \"independent-v1-20260910_part_1\"]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Work on this subtask.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSubtask:\nindependent-v1-20260910_part_0",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_9dacdc2449c8f8c0"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Work on this subtask.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSubtask:\nindependent-v1-20260910_part_1",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_050979558e483ed1"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Now write SQL from the original problem.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "UNRELATED"
+            }
+          ],
+          "final": "UNRELATED",
+          "error": null
+        },
+        {
+          "probe": "parts_1",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Return a JSON list plan for this task.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "[\"independent-v1-20260910_part_0\", \"independent-v1-20260910_part_1\"]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Work on this subtask.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSubtask:\nindependent-v1-20260910_part_0",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_6f7fd6ef98aae637"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Work on this subtask.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSubtask:\nindependent-v1-20260910_part_1",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_b46085eb948c0eda"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Now write SQL from the original problem.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "UNRELATED"
+            }
+          ],
+          "final": "UNRELATED",
+          "error": null
+        }
+      ],
+      "runs_sha256": "15b672b89863e7f764170e5f21960c7ea22f1b7b0544c9827bb79828d1567502",
+      "review_mode": "source_contract",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic025",
+      "strategy": "error_classify",
+      "callable_name": "case_025",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "success_no_repair",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL for this task.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "syntax_a",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL for this task.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [independent-v1-20260910_syntax_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "The execution error is classified as syntax. fix SQL grammar, parentheses, aliases, and clauses without changing the intended question. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nError:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v1-20260910_syntax_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "syntax_b",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL for this task.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [independent-v1-20260910_syntax_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "The execution error is classified as syntax. fix SQL grammar, parentheses, aliases, and clauses without changing the intended question. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nError:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v1-20260910_syntax_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null
+        },
+        {
+          "probe": "schema_a",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL for this task.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [independent-v1-20260910_schema_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "The execution error is classified as schema. check table and column names against the schema and replace invalid references. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nError:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v1-20260910_schema_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "schema_b",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL for this task.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [independent-v1-20260910_schema_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "The execution error is classified as schema. check table and column names against the schema and replace invalid references. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nError:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v1-20260910_schema_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null
+        },
+        {
+          "probe": "semantics_a",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL for this task.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [independent-v1-20260910_semantics_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "The execution error is classified as semantics. revise joins, filters, grouping, or aggregation to match the question intent. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nError:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v1-20260910_semantics_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "semantics_b",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Write SQL for this task.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [independent-v1-20260910_semantics_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "The execution error is classified as semantics. revise joins, filters, grouping, or aggregation to match the question intent. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nError:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v1-20260910_semantics_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null
+        }
+      ],
+      "runs_sha256": "0e60b1e3ac0b18a501db8d73e7882bcafae593a5150a7977449c716bfed0c88c",
+      "review_mode": "semantic",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic026",
+      "strategy": "error_classify",
+      "callable_name": "case_026",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "success_no_repair",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "syntax_a",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [independent-v1-20260910_syntax_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Classify the database feedback as exactly one of syntax, schema, or semantics.\nFeedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v1-20260910_syntax_a]'}\nSQL:\nSELECT id FROM ledger",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Repair only the SQL syntax and clause ordering. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nFeedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v1-20260910_syntax_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "syntax_b",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [independent-v1-20260910_syntax_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Classify the database feedback as exactly one of syntax, schema, or semantics.\nFeedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v1-20260910_syntax_b]'}\nSQL:\nSELECT id FROM ledger",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Repair only the SQL syntax and clause ordering. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nFeedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v1-20260910_syntax_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null
+        },
+        {
+          "probe": "schema_a",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [independent-v1-20260910_schema_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Classify the database feedback as exactly one of syntax, schema, or semantics.\nFeedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v1-20260910_schema_a]'}\nSQL:\nSELECT id FROM ledger",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Repair invalid table or column references using the provided schema. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nFeedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v1-20260910_schema_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "schema_b",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [independent-v1-20260910_schema_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Classify the database feedback as exactly one of syntax, schema, or semantics.\nFeedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v1-20260910_schema_b]'}\nSQL:\nSELECT id FROM ledger",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Repair invalid table or column references using the provided schema. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nFeedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v1-20260910_schema_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null
+        },
+        {
+          "probe": "semantics_a",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [independent-v1-20260910_semantics_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Classify the database feedback as exactly one of syntax, schema, or semantics.\nFeedback:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v1-20260910_semantics_a]'}\nSQL:\nSELECT id FROM ledger",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Repair the query logic so the joins, predicates, and aggregates answer the question. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nFeedback:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v1-20260910_semantics_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "semantics_b",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [independent-v1-20260910_semantics_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Classify the database feedback as exactly one of syntax, schema, or semantics.\nFeedback:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v1-20260910_semantics_b]'}\nSQL:\nSELECT id FROM ledger",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Repair the query logic so the joins, predicates, and aggregates answer the question. Return only SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nFeedback:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v1-20260910_semantics_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null
+        }
+      ],
+      "runs_sha256": "b9ecc7f43c9f2d0e532822266dc89c92e273e681610d767fbb3f8190fd19d0c7",
+      "review_mode": "semantic",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic027",
+      "strategy": "error_classify",
+      "callable_name": "case_027",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "success_no_repair",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "syntax_a",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [independent-v1-20260910_syntax_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "This might be syntax, schema, or semantics. Try any generic correction and return SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nFeedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v1-20260910_syntax_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "syntax_b",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [independent-v1-20260910_syntax_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "This might be syntax, schema, or semantics. Try any generic correction and return SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nFeedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v1-20260910_syntax_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null
+        },
+        {
+          "probe": "schema_a",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [independent-v1-20260910_schema_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "This might be syntax, schema, or semantics. Try any generic correction and return SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nFeedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v1-20260910_schema_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "schema_b",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [independent-v1-20260910_schema_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "This might be syntax, schema, or semantics. Try any generic correction and return SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nFeedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v1-20260910_schema_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null
+        },
+        {
+          "probe": "semantics_a",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [independent-v1-20260910_semantics_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "This might be syntax, schema, or semantics. Try any generic correction and return SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nFeedback:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v1-20260910_semantics_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "semantics_b",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [independent-v1-20260910_semantics_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "This might be syntax, schema, or semantics. Try any generic correction and return SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nFeedback:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v1-20260910_semantics_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null
+        }
+      ],
+      "runs_sha256": "dbb73f57d54a88b8ee5609353d2c38264625a76286c3fdbd94e736a22b7dcc2e",
+      "review_mode": "semantic",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic028",
+      "strategy": "error_classify",
+      "callable_name": "case_028",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "success_no_repair",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "syntax_a",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [independent-v1-20260910_syntax_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "The issue category is syntax. Make a minimal generic edit and return SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nFeedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v1-20260910_syntax_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "syntax_b",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [independent-v1-20260910_syntax_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "The issue category is syntax. Make a minimal generic edit and return SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nFeedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v1-20260910_syntax_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null
+        },
+        {
+          "probe": "schema_a",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [independent-v1-20260910_schema_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "The issue category is schema. Make a minimal generic edit and return SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nFeedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v1-20260910_schema_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "schema_b",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [independent-v1-20260910_schema_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "The issue category is schema. Make a minimal generic edit and return SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nFeedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v1-20260910_schema_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null
+        },
+        {
+          "probe": "semantics_a",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [independent-v1-20260910_semantics_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "The issue category is semantics. Make a minimal generic edit and return SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nFeedback:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v1-20260910_semantics_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "final": "SELECT amount FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "semantics_b",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [independent-v1-20260910_semantics_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "The issue category is semantics. Make a minimal generic edit and return SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nSQL:\nSELECT id FROM ledger\nFeedback:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v1-20260910_semantics_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null
+        }
+      ],
+      "runs_sha256": "be23bbf040ccb30520473be391e56c576cb3c432a0334997b460155caf015883",
+      "review_mode": "semantic",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic029",
+      "strategy": "format_guard",
+      "callable_name": "case_029",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "format_original",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Return the answer as a single SQL code fence with no explanation or extra text.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "format_changed_question",
+          "question": "Return ledger amounts.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Return the answer as a single SQL code fence with no explanation or extra text.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger amounts.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        }
+      ],
+      "runs_sha256": "07aa630999a5eb0e63e87320d7c49a2fcea397a03a73b7e296ff94a764f23267",
+      "review_mode": "semantic",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic030",
+      "strategy": "format_guard",
+      "callable_name": "case_030",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "format_original",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "You must answer with exactly one fenced SQL block and nothing outside the fence.",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "format_changed_question",
+          "question": "Return ledger amounts.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger amounts.",
+              "system": "You must answer with exactly one fenced SQL block and nothing outside the fence.",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        }
+      ],
+      "runs_sha256": "297d4010882735220ceaaec7c81153d0255808ad81ee9258ea0f1f552fd61878",
+      "review_mode": "semantic",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic031",
+      "strategy": "format_guard",
+      "callable_name": "case_031",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "format_original",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "format_changed_question",
+          "question": "Return ledger amounts.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger amounts.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        }
+      ],
+      "runs_sha256": "97cce662128bef3627214a52e902021b4139ff6a7a5b8fc23684a0b6fab6fcb3",
+      "review_mode": "semantic",
+      "measurement_error": null
+    },
+    {
+      "case_id": "ic032",
+      "strategy": "format_guard",
+      "callable_name": "case_032",
+      "schema": "Table ledger(id, amount)\nTable unused(label)",
+      "runs": [
+        {
+          "probe": "format_original",
+          "question": "Return ledger identifiers.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Do not use a SQL code fence. Explain briefly before the query.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        },
+        {
+          "probe": "format_changed_question",
+          "question": "Return ledger amounts.",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Do not use a SQL code fence. Explain briefly before the query.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger amounts.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "final": "SELECT id FROM ledger",
+          "error": null
+        }
+      ],
+      "runs_sha256": "2de5e1802e6f887cad4ec738103d188f62fb78c1cbae90571053c92ebf24434b",
+      "review_mode": "semantic",
+      "measurement_error": null
+    }
+  ]
+}

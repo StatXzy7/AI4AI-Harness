@@ -1,0 +1,64 @@
+{
+  "scope": "Stage21 software only, not paper rating",
+  "implementer_model": "GPT-6",
+  "events": [
+    {
+      "axis": "spec",
+      "reviewer": "independent_calibration_review",
+      "model": "gpt-5.6-sol",
+      "score": 7,
+      "verdict": "almost",
+      "stage": "preimplementation design",
+      "finding": "Source role must be fixed before results by fresh independent source-only reviewer."
+    },
+    {
+      "axis": "standards",
+      "reviewer": "revision_code_review",
+      "score": 9,
+      "verdict": "ready",
+      "stage": "initial implementation",
+      "note": "Requested report tests; subsequently added."
+    },
+    {
+      "axis": "spec",
+      "reviewer": "independent_calibration_review",
+      "model": "gpt-5.6-sol",
+      "score": 8,
+      "verdict": "almost",
+      "stage": "initial implementation",
+      "finding": "Atomic complete publication and no-rerun recovery needed."
+    },
+    {
+      "axis": "spec",
+      "reviewer": "independent_calibration_review",
+      "model": "gpt-5.6-sol",
+      "score": 9.2,
+      "verdict": "ready",
+      "stage": "before actual profile collection"
+    },
+    {
+      "axis": "standards",
+      "reviewer": "revision_code_review",
+      "score": 7,
+      "verdict": "not ready",
+      "stage": "finding received after collection",
+      "finding": "Recovery forgot earlier detected input changes after original bytes restored."
+    },
+    {
+      "axis": "standards",
+      "reviewer": "revision_code_review",
+      "score": 9,
+      "verdict": "ready",
+      "stage": "persistent invalidation fix; historical measurement runner preserved"
+    },
+    {
+      "axis": "spec",
+      "reviewer": "independent_calibration_review",
+      "model": "gpt-5.6-sol",
+      "score": 9.5,
+      "verdict": "ready",
+      "stage": "persistent invalidation fix only"
+    }
+  ],
+  "note": "Review history summarized from app subagent messages. No score is an overall paper score; final software review does not claim historical84runs used the later fix."
+}

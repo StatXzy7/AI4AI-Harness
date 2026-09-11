@@ -1,0 +1,83 @@
+{
+  "scope": "Frozen-v3 diagnostic observations; not conformance labels",
+  "actual_scenarios": 27,
+  "statuses": {
+    "pass": 10,
+    "fail": 4,
+    "review_required": 13
+  },
+  "strategies": [
+    {
+      "strategy": "repair",
+      "actual_scenarios": 3,
+      "statuses": {
+        "pass": 3
+      },
+      "extra_derived_records": 0,
+      "availability": "available"
+    },
+    {
+      "strategy": "vote3",
+      "actual_scenarios": 6,
+      "statuses": {
+        "pass": 6
+      },
+      "extra_derived_records": 0,
+      "availability": "available"
+    },
+    {
+      "strategy": "schema_link",
+      "actual_scenarios": 2,
+      "statuses": {
+        "fail": 2
+      },
+      "extra_derived_records": 0,
+      "availability": "available"
+    },
+    {
+      "strategy": "hint_guard",
+      "actual_scenarios": 3,
+      "statuses": {
+        "review_required": 3
+      },
+      "extra_derived_records": 0,
+      "availability": "available"
+    },
+    {
+      "strategy": "two_view",
+      "actual_scenarios": 4,
+      "statuses": {
+        "review_required": 2,
+        "fail": 2
+      },
+      "extra_derived_records": 0,
+      "availability": "available"
+    },
+    {
+      "strategy": "decompose",
+      "actual_scenarios": 2,
+      "statuses": {
+        "review_required": 2
+      },
+      "extra_derived_records": 0,
+      "availability": "available"
+    },
+    {
+      "strategy": "error_classify",
+      "actual_scenarios": 7,
+      "statuses": {
+        "pass": 1,
+        "review_required": 6
+      },
+      "extra_derived_records": 1,
+      "availability": "available"
+    },
+    {
+      "strategy": "format_guard",
+      "actual_scenarios": 0,
+      "statuses": {},
+      "extra_derived_records": 0,
+      "availability": "unavailable"
+    }
+  ]
+}

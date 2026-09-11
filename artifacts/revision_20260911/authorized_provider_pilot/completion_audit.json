@@ -1,0 +1,57 @@
+{
+  "status": "EXECUTION_COMPLETE_INSTRUMENT_SCOPE_ONLY",
+  "planned_cells": 12,
+  "completed": 12,
+  "pending": 0,
+  "not_started": 0,
+  "http_attempts": 16,
+  "http_end_count": 16,
+  "http_status_counts": {
+    "200": 16
+  },
+  "prompt_tokens": 8088,
+  "completion_tokens": 839,
+  "total_tokens": 8927,
+  "reasoning_tokens_in_completion": 539,
+  "cached_prompt_tokens": 448,
+  "responses_missing_usage": 0,
+  "response_id_present": 16,
+  "response_id_unique": 16,
+  "request_header_id_present": 0,
+  "late_response_cells": [
+    {
+      "task_key": "2f094703b218a50ede60dc677f519917572e8dbf77b30223f9a21ded49e1e9b1",
+      "late_http_event_ids": [
+        43
+      ]
+    },
+    {
+      "task_key": "93508a807f7a89c26d7eaad089f343b4639e230a752693e3b7f5539737a5c622",
+      "late_http_event_ids": [
+        55
+      ]
+    },
+    {
+      "task_key": "7b1bb4332a7d9d70630a731f4b01c72ba92a99716988b9f9e8afce97104c82f3",
+      "late_http_event_ids": [
+        99
+      ]
+    },
+    {
+      "task_key": "317afb576488e7ddcf6832ae93b40ba7327aca1d848eb5167905e22c3b019da7",
+      "late_http_event_ids": [
+        111
+      ]
+    }
+  ],
+  "workers_exited": 12,
+  "all_jobs_active_zero_after_cleanup": true,
+  "source_bindings_verified": 510,
+  "database_bindings_verified": 1,
+  "currency_cost": null,
+  "currency_status": "account-specific prices and reconciliation not yet available; tokens are not RMB",
+  "provider_independence": "not established; prompt cache usage does not identify answer reuse",
+  "formal_A_D_or_W1_claims": false,
+  "ledger_sha256": "3af7fabf502f8f88a16d34648a301615e06bdc868a4b1573a57e8b22bd418a39",
+  "manifest_sha256": "8cb76c05c655ebd1346ffba1fb812453e7a1581325fff9fa7de04bc07b68b689"
+}

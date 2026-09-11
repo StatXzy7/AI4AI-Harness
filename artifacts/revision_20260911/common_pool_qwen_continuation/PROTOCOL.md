@@ -1,0 +1,9 @@
+# Qwen共同池：传输中止后的独立采集
+
+原batch1首个GLM请求180秒ReadTimeout：0/192完成、1未决、191未启动；无响应体或usage，完成状态和成本未知，不能记为零。本次不重试该GLM请求，不修改原batch1、原分母、原先停止后续builder的规则。
+
+用户已授权连接和论文模型，几千元预算继续有效；沿用2000元内部规划上限，不宣称账户或程序人民币硬限。此次明确新建Qwen采集：原Qwen尚未发出任何请求；保留原Qwen配置全部32槽、两个generation seed、free/forced各8槽每seed、每槽3次、顺序、prompt、class、requested seed、temperature0.7和max_tokens16384。唯一执行变化为独立pool_id/output/protocol与读取等待600秒。HTTP request body无变化，零自动重试。固定96请求，最大requested completion 1572864 tokens；这不是实际usage或人民币报价。
+
+该变化由传输失败触发，在没有任何生成回复、gate或benchmark反馈时登记。Qwen完成也仅为单builder原始池；不能说原双builder批次完成，不能据此做paired跨builder结论。GLM首个未知请求保留在总费用未决项，后续其余GLM槽仍待处置；不因此替换builder或挑选成功模型。
+
+全程只保存原始响应字节、逐尝试身份和usage、提取Python并做AST语法检查，不运行候选或benchmark。语法/提取失败也保留三次完整分母；任何传输、响应或usage异常立即停止本池，不能因质量追加采样。完成前后核对冻结绑定，完成后独立验收96尝试身份、HTTP对账、响应hash与已知tokens。原始pool完成不是gate验收、B/C完成或论文提分。

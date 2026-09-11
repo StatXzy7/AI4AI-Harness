@@ -1,0 +1,22 @@
+{
+  "observed_unix": 1789061771.6749475,
+  "collection_state": {
+    "status": "RUNNING",
+    "started_unix": 1789061165.301409,
+    "planned_attempts": 96,
+    "model": "Qwen3.8-Max"
+  },
+  "started": 3,
+  "completed": 2,
+  "pending": 1,
+  "planned": 96,
+  "known_usage": {
+    "prompt_tokens": 844,
+    "completion_tokens": 22177,
+    "total_tokens": 23021
+  },
+  "prior_glm_unknown_requests": 1,
+  "complete_pool": false,
+  "exec_session_id": 7541,
+  "scope": "time-stamped checkpoint; read live ledger/status for current progress"
+}

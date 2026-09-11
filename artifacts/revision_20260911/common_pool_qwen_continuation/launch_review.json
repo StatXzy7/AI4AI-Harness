@@ -1,0 +1,12 @@
+{
+  "mechanical_reviewer": "gpt-5.5",
+  "mechanical_score": 9,
+  "mechanical_verdict": "ready",
+  "spec_reviewer": "gpt-5.5",
+  "spec_score": 9,
+  "spec_verdict": "ready",
+  "scope": "Qwen96 raw collection only",
+  "bindings_verified": 17,
+  "freeze_sha256": "e3d32973f7059b856e3349209cea8567d7f9fc9949f0589f475f409c4949788f",
+  "preflight_matches": true
+}

@@ -1,0 +1,171 @@
+"""Generate corrected paper numbers, tables and figure from one versioned JSON."""
+import json
+
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import numpy as np
+
+from experiment.revision.replay import ROOT, digest
+
+
+def pp(value):
+    return f"{100 * value:+.2f}"
+
+
+def main():
+    source = ROOT / "artifacts/revision_20260910/corrected_analysis.json"
+    data = json.loads(source.read_text(encoding="utf-8"))
+    if data["analysis_version"] != "revision-20260910-v1":
+        raise ValueError("unexpected analysis version")
+    if data["n_boot"] != 10000:
+        raise ValueError("paper requires the final 10000-replicate analysis")
+    primary, core = data["primary"], data["core"]
+    sensitivity_source = source.parent / "sensitivity.json"
+    sensitivity = json.loads(sensitivity_source.read_text(encoding="utf-8"))
+    if sensitivity["analysis_version"] != "sensitivity-20260910-v1" or sensitivity["n_boot"] != 10000:
+        raise ValueError("paper requires the final versioned sensitivity analysis")
+    km, r2 = sensitivity["kmatched"], sensitivity["r2"]
+    cost_source = source.parent / "cost_audit.json"
+    cost = json.loads(cost_source.read_text(encoding="utf-8"))
+    if cost["version"] != "cost-audit-20260910-v1":
+        raise ValueError("unexpected cost audit version")
+    fingerprint_source, selection_source = source.parent / "fingerprint.json", source.parent / "selection.json"
+    fingerprint = json.loads(fingerprint_source.read_text(encoding="utf-8"))
+    selection = json.loads(selection_source.read_text(encoding="utf-8"))
+    if (fingerprint["analysis_version"], selection["analysis_version"]) != (
+            "fingerprint-20260910-v1", "selection-20260910-v1"):
+        raise ValueError("unexpected exploratory replay version")
+    w3, rerun = fingerprint["summary"], fingerprint["rerun"]
+    w1delta = np.array(selection["summary"]["div-only|k=8"]["bare_inclusive"]) - selection["summary"]["top-acc|k=8"]["bare_inclusive"]
+    dst = ROOT / "paper/latex"
+    deltas = [r["contrasts"][0] for r in primary["per_cell"]]
+    macros = {
+        "RevisionPrimaryDelta": pp(primary["point"][0]),
+        "RevisionPrimaryCI": f"[{pp(primary['ci95_unadjusted'][0][0])},\\ {pp(primary['ci95_unadjusted'][0][1])}]",
+        "RevisionPrimaryP": f"{primary['p_signflip'][0]:.3f}",
+        "RevisionPrimaryRange": f"{pp(min(deltas))}\\text{{ to }}{pp(max(deltas))}",
+        "RevisionGateDelta": pp(core["point"][1]),
+        "RevisionGateHolm": f"{core['holm_secondaries'][0]:.3f}",
+        "RevisionOracleDelta": pp(primary["arm_means"]["D"]["oracle_accuracy"] - primary["arm_means"]["A"]["oracle_accuracy"]),
+        "RevisionBestDelta": pp(primary["arm_means"]["D"]["best_fixed"] - primary["arm_means"]["A"]["best_fixed"]),
+        "RevisionKmatchedDelta": pp(km["point"][2][2]),
+        "RevisionKmatchedCI": f"[{pp(km['ci95_unadjusted'][0][2][2])},\\ {pp(km['ci95_unadjusted'][1][2][2])}]",
+        "RevisionRtwoCached": pp(r2["point"][0]),
+        "RevisionRtwoOff": pp(r2["point"][1]),
+        "RevisionRtwoChange": pp(r2["point"][2]),
+        "RevisionRtwoChangeCI": f"[{pp(r2['ci95_unadjusted'][0][2])},\\ {pp(r2['ci95_unadjusted'][1][2])}]",
+        "RevisionRtwoFlips": str(r2["micro_verdict_flips"]["flips"]),
+        "RevisionRtwoFlipPercent": f"{100*r2['micro_verdict_flips']['rate']:.2f}",
+        "RevisionRtwoRepeatFlips": str(r2["micro_D_repeat_flips"]["flips"]),
+        "RevisionRtwoRepeatPercent": f"{100*r2['micro_D_repeat_flips']['rate']:.2f}",
+        "RevisionRtwoLegacyCached": pp(r2["legacy_eligible_scope_diagnostic"]["point"][0]),
+        "RevisionRtwoLegacyOff": pp(r2["legacy_eligible_scope_diagnostic"]["point"][1]),
+        "RevisionCostRows": f"{sum(a['n_rows'] for a in cost['arms'].values()):,}".replace(",", "{,}"),
+        "RevisionLogicalCalls": f"{sum(a['total_logged_solver_calls'] for a in cost['arms'].values()):,}".replace(",", "{,}"),
+        "RevisionWoneOracle": pp(w1delta[0]),
+        "RevisionWoneBest": pp(w1delta[1]),
+        "RevisionWoneHeadroom": pp(w1delta[2]),
+        "RevisionWoneFixed": f"{100*w1delta[3]:+.3f}",
+        "RevisionWthreeSameSQL": f"{w3['identical_normalized_sql']['n']:,}".replace(",", "{,}"),
+        "RevisionWthreeSameDisagreements": str(w3['identical_normalized_sql']['verdict_disagreements']),
+        "RevisionWthreeRho": f"{w3['all_pairs_correlation']['rho']:.3f}",
+        "RevisionWthreeWithinRho": f"{w3['within_arm_correlation']['rho']:.3f}",
+        "RevisionWthreeCallChanges": str(rerun['channels']['calls']['changed']),
+        "RevisionWthreeSQLChanges": str(rerun['channels']['sql']['changed']),
+        "RevisionWthreeSQLN": str(rerun['channels']['sql']['n']),
+        "RevisionWthreeSQLPercent": f"{100*rerun['channels']['sql']['rate']:.2f}",
+        "RevisionWthreeJaccard": f"{rerun['mean_jaccard_when_sql_changed']:.3f}",
+    }
+    (dst / "revision_numbers.tex").write_text(
+        "% Generated by experiment.revision.render; post-review reanalysis.\n" +
+        "\n".join(f"\\newcommand{{\\{k}}}{{{v}}}" for k, v in macros.items()) + "\n", encoding="utf-8")
+    lines = [r"\begin{tabular}{@{}lrr@{}}", r"\toprule", r"Metric & II-A & II-D \\", r"\midrule"]
+    for label, key, scale in (("Candidate count", "K_candidate", 1),
+                               ("Oracle accuracy (\\%)", "oracle_accuracy", 100),
+                               ("Best-fixed accuracy (\\%)", "best_fixed", 100),
+                               ("Headroom (pp)", "headroom", 100)):
+        vals = [primary["arm_means"][a][key] * scale for a in "AD"]
+        lines.append(f"{label} & {vals[0]:.2f} & {vals[1]:.2f}" + r" \\")
+    lines += [r"\midrule", r"D$-$A headroom (pp) & \multicolumn{2}{c}{$\RevisionPrimaryDelta$} \\",
+              r"Unadjusted bootstrap 95\% CI & \multicolumn{2}{c}{$\RevisionPrimaryCI$} \\",
+              r"One-sided sign-flip $p$ & \multicolumn{2}{c}{$\RevisionPrimaryP$} \\", r"\bottomrule", r"\end{tabular}"]
+    (dst / "revision_primary_table.tex").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    lines = [r"\begin{tabular}{@{}lrrrr@{}}", r"\toprule",
+             r"Contrast & Effect (pp) & 95\% CI (pp) & Raw $p$ & Holm $p$ \\", r"\midrule"]
+    for i, name in enumerate(("Gate", "Strategy", "Interaction"), 1):
+        lo, hi = core["ci95_unadjusted"][i]
+        lines.append(f"{name} & ${pp(core['point'][i])}$ & $[{pp(lo)}, {pp(hi)}]$ & "
+                     f"{core['p_signflip'][i]:.3f} & {core['holm_secondaries'][i-1]:.3f}" + r" \\")
+    lines += [r"\bottomrule", r"\end{tabular}"]
+    (dst / "revision_factorial_table.tex").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    lines = [r"\begin{tabular}{@{}lrrrrrr@{}}", r"\toprule",
+             r"Arm & $K_{\rm cand}$ & $K_{\rm total}$ & Bare (\%) & Best (\%) & Oracle (\%) & $H$ (pp) \\", r"\midrule"]
+    for arm, m in core["arm_means"].items():
+        vals = [m["K_candidate"], m["K_total"], m["bare_accuracy"]*100,
+                m["best_fixed"]*100, m["oracle_accuracy"]*100, m["headroom"]*100]
+        lines.append(arm + " & " + " & ".join(f"{v:.2f}" for v in vals) + r" \\")
+    lines += [r"\bottomrule", r"\end{tabular}"]
+    (dst / "revision_decomposition_table.tex").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    lines = [r"\begin{tabular}{@{}lrr@{}}", r"\toprule",
+             r"Sensitivity estimand & Estimate (pp) & 95\% CI (pp) \\", r"\midrule"]
+    for i, label in enumerate(("K-matched B$-$A headroom", "K-matched D$-$C headroom", "K-matched gate mean")):
+        lo, hi = [km["ci95_unadjusted"][q][i][2] for q in (0, 1)]
+        lines.append(f"{label} & ${pp(km['point'][i][2])}$ & $[{pp(lo)}, {pp(hi)}]$" + r" \\")
+    lines.append(r"\midrule")
+    for i, label in enumerate(("R2 subset D$-$A (cached)", "R2 subset D$-$A (cache-off)", "R2 change in subset D$-$A")):
+        lo, hi = [r2["ci95_unadjusted"][q][i] for q in (0, 1)]
+        lines.append(f"{label} & ${pp(r2['point'][i])}$ & $[{pp(lo)}, {pp(hi)}]$" + r" \\")
+    lines += [r"\bottomrule", r"\end{tabular}"]
+    (dst / "revision_sensitivity_table.tex").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    lines = [r"\begin{tabular}{@{}lrrr@{}}", r"\toprule",
+             r"Arm & Candidate-task records & Logged solver calls & Calls/task/population \\", r"\midrule"]
+    for arm, values in cost["arms"].items():
+        lines.append(f"{arm} & {values['n_rows']:,} & {values['total_logged_solver_calls']:,} & "
+                     f"{values['logical_solver_calls_per_task_population_cell_mean']:.2f}" + r" \\")
+    lines += [r"\bottomrule", r"\end{tabular}"]
+    (dst / "revision_cost_table.tex").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    lines = [r"\begin{tabular}{@{}rlrrrr@{}}", r"\toprule",
+             r"$k$ & Selection & Oracle (\%) & Best (\%) & $H$ (pp) & Dev-fixed (\%) \\", r"\midrule"]
+    for k in (4, 8):
+        for name in ("top-acc", "random", "div-only"):
+            vals = selection["summary"][f"{name}|k={k}"]["bare_inclusive"]
+            lines.append(f"{k} & {name} & " + " & ".join(f"{100*v:.2f}" for v in vals) + r" \\")
+    lines += [r"\bottomrule", r"\end{tabular}"]
+    (dst / "revision_selection_table.tex").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    fig, axes = plt.subplots(1, 2, figsize=(9.5, 4.2), gridspec_kw={"width_ratios": [3, 2]})
+    cells = sorted(primary["per_cell"], key=lambda r: r["contrasts"][0])
+    values = np.array([r["contrasts"][0] for r in cells]) * 100
+    lo, hi = np.array(primary["ci95_unadjusted"][0]) * 100
+    axes[0].barh(range(len(cells)), values, color=["#a9474e" if v < 0 else "#39764f" for v in values])
+    axes[0].set_yticks(range(len(cells)), [f"{r['builder']}/s{r['seed']}" for r in cells], fontsize=7)
+    axes[0].axvspan(lo, hi, alpha=.15, color="steelblue", label="Pooled unadjusted 95% CI")
+    axes[0].axvline(0, color="black", linewidth=.6)
+    axes[0].set_xlabel("D - A headroom (percentage points)")
+    axes[0].set_title("Original gate: corrected primary reanalysis", fontsize=10)
+    axes[0].legend(fontsize=7)
+    axes[1].bar(list("ABCD"), [core["arm_means"][a]["headroom"]*100 for a in "ABCD"], color="#557fa1")
+    axes[1].set_ylabel("Mean headroom (percentage points)")
+    axes[1].set_title("Same core tasks and shared bare", fontsize=10)
+    fig.tight_layout()
+    fig_dir = dst / "figures"
+    fig_dir.mkdir(exist_ok=True)
+    fig.savefig(fig_dir / "fig_results_revision.pdf", bbox_inches="tight")
+    fig.savefig(fig_dir / "fig_results_revision.png", dpi=180, bbox_inches="tight")
+    plt.close(fig)
+    generated = sorted(dst.glob("revision_*.tex")) + [
+        fig_dir / "fig_results_revision.pdf", fig_dir / "fig_results_revision.png"]
+    manifest = {"analysis_sha256": digest(source), "analysis_version": data["analysis_version"],
+                "sensitivity_sha256": digest(sensitivity_source),
+                "cost_sha256": digest(cost_source),
+                "fingerprint_sha256": digest(fingerprint_source),
+                "selection_sha256": digest(selection_source),
+                "generator_sha256": digest(ROOT / "experiment/revision/render.py"),
+                "generated": {p.relative_to(ROOT).as_posix(): digest(p) for p in generated}}
+    (source.parent / "paper_assets_manifest.json").write_text(
+        json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    print("Generated revision macros, 6 tables, and figure from canonical analysis JSONs")
+
+
+if __name__ == "__main__":
+    main()

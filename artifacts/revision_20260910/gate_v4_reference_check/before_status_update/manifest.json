@@ -1,0 +1,14 @@
+{
+  "review-stage/REVISION_20260910.md": {
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_status_update/review-stage__REVISION_20260910.md",
+    "sha256": "a168ed580ecf8af54755a4b08359902ab3bda02f8aae04e908049d99488ecff8"
+  },
+  "review-stage/REVISED_EXPERIMENT_PLAN.md": {
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_status_update/review-stage__REVISED_EXPERIMENT_PLAN.md",
+    "sha256": "d34bf632f739a76c25c085d561aa2534178cb64f5f2345ebf100c551e5626d1f"
+  },
+  "experiment/revision/README.md": {
+    "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_status_update/experiment__revision__README.md",
+    "sha256": "0b459dabd51b97df48041cd87c86085b5a4d2a40946cc31f163885f0c1ddff44"
+  }
+}

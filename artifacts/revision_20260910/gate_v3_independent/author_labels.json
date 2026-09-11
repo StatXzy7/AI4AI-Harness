@@ -1,0 +1,198 @@
+{
+  "author_model": "gpt-5.5",
+  "scope": "independently authored references, not assumed truth",
+  "cases": [
+    {
+      "case_id": "vc001",
+      "strategy": "repair",
+      "reference_verdict": "conforms",
+      "rationale": "Generates one initial SQL, executes it, returns immediately on success, and on failure sends schema, question, previous SQL, and exact execution feedback to one repair request."
+    },
+    {
+      "case_id": "vc002",
+      "strategy": "repair",
+      "reference_verdict": "conforms",
+      "rationale": "Uses a distinct context object organization while preserving the required conditional repair flow and exact failed execution feedback."
+    },
+    {
+      "case_id": "vc003",
+      "strategy": "repair",
+      "reference_verdict": "nonconforms",
+      "rationale": "Always requests a second SQL candidate after executing the first, including when the first execution succeeds."
+    },
+    {
+      "case_id": "vc004",
+      "strategy": "repair",
+      "reference_verdict": "nonconforms",
+      "rationale": "After failure it sends a generic retry prompt without carrying the previous SQL, schema, question, or exact execution feedback."
+    },
+    {
+      "case_id": "vc005",
+      "strategy": "vote3",
+      "reference_verdict": "conforms",
+      "rationale": "Requests three candidates, executes all of them, and chooses by the majority key of successful execution-result rows."
+    },
+    {
+      "case_id": "vc006",
+      "strategy": "vote3",
+      "reference_verdict": "conforms",
+      "rationale": "Uses three separate candidate prompts, executes all three, and groups successful outputs by rows rather than SQL text."
+    },
+    {
+      "case_id": "vc007",
+      "strategy": "vote3",
+      "reference_verdict": "nonconforms",
+      "rationale": "Executes candidates but selects by repeated SQL string text instead of majority successful execution-result rows."
+    },
+    {
+      "case_id": "vc008",
+      "strategy": "vote3",
+      "reference_verdict": "nonconforms",
+      "rationale": "Returns the first successful execution early and may not execute all three candidates or apply row-result majority voting."
+    },
+    {
+      "case_id": "vc009",
+      "strategy": "schema_link",
+      "reference_verdict": "conforms",
+      "rationale": "First asks for relevant tables and columns, then gives only the returned linked subset to the SQL-generation request."
+    },
+    {
+      "case_id": "vc010",
+      "strategy": "schema_link",
+      "reference_verdict": "conforms",
+      "rationale": "Uses a selected schema-lines step and passes that subset, without the original full schema, to the final SQL request."
+    },
+    {
+      "case_id": "vc011",
+      "strategy": "schema_link",
+      "reference_verdict": "nonconforms",
+      "rationale": "Calls a linker but still includes the full original schema in the subsequent SQL request."
+    },
+    {
+      "case_id": "vc012",
+      "strategy": "schema_link",
+      "reference_verdict": "nonconforms",
+      "rationale": "Combines relevance identification and SQL generation in one request instead of using a prior linked subset."
+    },
+    {
+      "case_id": "vc013",
+      "strategy": "hint_guard",
+      "reference_verdict": "conforms",
+      "rationale": "Uses one solver sample, preserves the original schema and question, and restates actual Hint content as a hard requirement when present."
+    },
+    {
+      "case_id": "vc014",
+      "strategy": "hint_guard",
+      "reference_verdict": "conforms",
+      "rationale": "Uses a different prompt assembly style while preserving the original inputs and making actual Hint content mandatory only when present."
+    },
+    {
+      "case_id": "vc015",
+      "strategy": "hint_guard",
+      "reference_verdict": "nonconforms",
+      "rationale": "Only includes the original question, so any Hint is merely copied inside the question and not restated as an affirmative hard requirement."
+    },
+    {
+      "case_id": "vc016",
+      "strategy": "hint_guard",
+      "reference_verdict": "nonconforms",
+      "rationale": "Fabricates an extra hard requirement regardless of whether the question contains a Hint and does not restate actual Hint content."
+    },
+    {
+      "case_id": "vc017",
+      "strategy": "two_view",
+      "reference_verdict": "conforms",
+      "rationale": "Makes two distinct solver requests, executes both, and prefers the first successful nonempty result before considering the second."
+    },
+    {
+      "case_id": "vc018",
+      "strategy": "two_view",
+      "reference_verdict": "conforms",
+      "rationale": "Uses entity-first and metric-first formulations as distinct requests, executes both, and applies the required nonempty-success preference rule."
+    },
+    {
+      "case_id": "vc019",
+      "strategy": "two_view",
+      "reference_verdict": "nonconforms",
+      "rationale": "Obtains two candidates through one batched solver request instead of two distinct query-construction requests."
+    },
+    {
+      "case_id": "vc020",
+      "strategy": "two_view",
+      "reference_verdict": "nonconforms",
+      "rationale": "Executes two distinct candidates but prefers the second successful nonempty result even when the first is also successful and nonempty."
+    },
+    {
+      "case_id": "vc021",
+      "strategy": "decompose",
+      "reference_verdict": "conforms",
+      "rationale": "Requests a two-step JSON plan, answers each subquestion in order, and includes both returned partial answers in the final SQL assembly request."
+    },
+    {
+      "case_id": "vc022",
+      "strategy": "decompose",
+      "reference_verdict": "conforms",
+      "rationale": "Uses an iterative ordered loop, carries earlier returned partials forward, and assembles final SQL from both returned partial answers."
+    },
+    {
+      "case_id": "vc023",
+      "strategy": "decompose",
+      "reference_verdict": "nonconforms",
+      "rationale": "Asks for subquestion answers but discards the returned partial answers when constructing the final SQL prompt."
+    },
+    {
+      "case_id": "vc024",
+      "strategy": "decompose",
+      "reference_verdict": "nonconforms",
+      "rationale": "Answers both subquestions together in one combined request instead of requesting each ordered subquestion separately."
+    },
+    {
+      "case_id": "vc025",
+      "strategy": "error_classify",
+      "reference_verdict": "conforms",
+      "rationale": "After a failed initial execution, it classifies feedback and sends a class-specific repair action with schema, question, previous SQL, and exact feedback."
+    },
+    {
+      "case_id": "vc026",
+      "strategy": "error_classify",
+      "reference_verdict": "conforms",
+      "rationale": "Uses local feedback classification and distinct syntax, schema, or semantics repair actions while carrying exact feedback forward."
+    },
+    {
+      "case_id": "vc027",
+      "strategy": "error_classify",
+      "reference_verdict": "nonconforms",
+      "rationale": "After failure it only lists possible classes in a generic retry request and applies no affirmative class-specific repair action."
+    },
+    {
+      "case_id": "vc028",
+      "strategy": "error_classify",
+      "reference_verdict": "nonconforms",
+      "rationale": "Requests a classification but then sends a generic rewrite request without previous SQL, exact feedback, or a class-specific action."
+    },
+    {
+      "case_id": "vc029",
+      "strategy": "format_guard",
+      "reference_verdict": "conforms",
+      "rationale": "Uses one solver sample, preserves original schema and question, and affirmatively requires exactly one fenced SQL block with no prose."
+    },
+    {
+      "case_id": "vc030",
+      "strategy": "format_guard",
+      "reference_verdict": "conforms",
+      "rationale": "Uses prompt plus system instruction in one solver call while preserving inputs and requiring only a fenced SQL answer."
+    },
+    {
+      "case_id": "vc031",
+      "strategy": "format_guard",
+      "reference_verdict": "nonconforms",
+      "rationale": "Affirmatively asks for raw SQL without markdown fences, violating the fenced-SQL-only requirement."
+    },
+    {
+      "case_id": "vc032",
+      "strategy": "format_guard",
+      "reference_verdict": "nonconforms",
+      "rationale": "Requests a fenced SQL block but also asks for explanation and a note, violating the no-extra-prose requirement."
+    }
+  ]
+}

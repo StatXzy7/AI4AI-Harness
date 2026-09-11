@@ -1,0 +1,80 @@
+{
+  "scope": "Stage28 bilingual added paragraphs and report fact review only",
+  "reviewer_model": "gpt-5.5",
+  "score": 9,
+  "verdict": "ready",
+  "independent_review_limit": "Reviewer did not directly reopen author labels; root verified all32 agreements before freeze",
+  "primary_finite_verdict": "not ready",
+  "english_pages": 19,
+  "english_main_pages": 9,
+  "chinese_pages": 21,
+  "chinese_main_end_page": 11,
+  "visual_detail_pages": {
+    "english": [
+      18,
+      19
+    ],
+    "chinese": [
+      20,
+      21
+    ]
+  },
+  "contact_pages": {
+    "english": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "chinese": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+    ]
+  },
+  "layout": "No clipping/overlap observed; English page19 contains the final existing MATH scope paragraph.",
+  "build_exit_codes": {
+    "english_latexmk": 0,
+    "chinese_initial_xelatex": 1,
+    "chinese_retry": 0,
+    "chinese_reference_rerun": 0,
+    "xdvipdfmx": 0
+  },
+  "first_chinese_failure": "Could not write main.aux; no TeX process remained; retry succeeded. Tool output retains the error excerpt; attempted log copy used wrong cwd and did not preserve a full failure-log file.",
+  "final_undefined_citations_or_references": false,
+  "final_overfull": false,
+  "missing_glyphs": false
+}

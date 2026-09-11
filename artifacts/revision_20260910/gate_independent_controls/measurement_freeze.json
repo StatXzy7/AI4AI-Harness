@@ -1,0 +1,199 @@
+{
+  "recorded_at_utc": "2026-09-10T12:42:22.291274+00:00",
+  "stage": "controls and runner fixed before first evaluation",
+  "bindings": {
+    "experiment/revision/gate_v2.py": "fff11167e55a9f2e18230b145de3f967e2006a53587bb624fc9f32d5e7c7dd18",
+    "experiment/revision/independent_gate_controls.py": "b9120ac63de5ff348821182ae95726e7f1b3a6ff799f972e2362b6f18006d13b",
+    "experiment/revision/independent_gate_measure.py": "1401caa919c1c148e501bcaf693f3a9a4ef816a8dc80993831480a241aa44d91",
+    "review-stage/GATE_V2_CONTRACTS.md": "80870579629bad16ec4f06b2953138cbb707424d91922853c10647c20e2f49bb",
+    "artifacts/revision_20260910/gate_independent_controls/PROTOCOL.md": "087443809c59b5a00ee9297a9dd68be6c8a855d90280d57e48ec242856ca1bc4",
+    "artifacts/revision_20260910/gate_independent_controls/author_labels.json": "29fa9f7b2afacb9a7b8ff6335616c510074823ba3f0229a3b932eef8c1aeee4a"
+  },
+  "salt": "independent-v1-20260910",
+  "planned_cases": 32,
+  "strategy_counts": {
+    "repair": 4,
+    "vote3": 4,
+    "schema_link": 4,
+    "hint_guard": 4,
+    "two_view": 4,
+    "decompose": 4,
+    "error_classify": 4,
+    "format_guard": 4
+  },
+  "semantic_strategies": [
+    "hint_guard",
+    "format_guard",
+    "two_view",
+    "error_classify"
+  ],
+  "case_roster": [
+    {
+      "case_id": "ic001",
+      "strategy": "repair",
+      "callable_name": "case_001"
+    },
+    {
+      "case_id": "ic002",
+      "strategy": "repair",
+      "callable_name": "case_002"
+    },
+    {
+      "case_id": "ic003",
+      "strategy": "repair",
+      "callable_name": "case_003"
+    },
+    {
+      "case_id": "ic004",
+      "strategy": "repair",
+      "callable_name": "case_004"
+    },
+    {
+      "case_id": "ic005",
+      "strategy": "vote3",
+      "callable_name": "case_005"
+    },
+    {
+      "case_id": "ic006",
+      "strategy": "vote3",
+      "callable_name": "case_006"
+    },
+    {
+      "case_id": "ic007",
+      "strategy": "vote3",
+      "callable_name": "case_007"
+    },
+    {
+      "case_id": "ic008",
+      "strategy": "vote3",
+      "callable_name": "case_008"
+    },
+    {
+      "case_id": "ic009",
+      "strategy": "schema_link",
+      "callable_name": "case_009"
+    },
+    {
+      "case_id": "ic010",
+      "strategy": "schema_link",
+      "callable_name": "case_010"
+    },
+    {
+      "case_id": "ic011",
+      "strategy": "schema_link",
+      "callable_name": "case_011"
+    },
+    {
+      "case_id": "ic012",
+      "strategy": "schema_link",
+      "callable_name": "case_012"
+    },
+    {
+      "case_id": "ic013",
+      "strategy": "hint_guard",
+      "callable_name": "case_013"
+    },
+    {
+      "case_id": "ic014",
+      "strategy": "hint_guard",
+      "callable_name": "case_014"
+    },
+    {
+      "case_id": "ic015",
+      "strategy": "hint_guard",
+      "callable_name": "case_015"
+    },
+    {
+      "case_id": "ic016",
+      "strategy": "hint_guard",
+      "callable_name": "case_016"
+    },
+    {
+      "case_id": "ic017",
+      "strategy": "two_view",
+      "callable_name": "case_017"
+    },
+    {
+      "case_id": "ic018",
+      "strategy": "two_view",
+      "callable_name": "case_018"
+    },
+    {
+      "case_id": "ic019",
+      "strategy": "two_view",
+      "callable_name": "case_019"
+    },
+    {
+      "case_id": "ic020",
+      "strategy": "two_view",
+      "callable_name": "case_020"
+    },
+    {
+      "case_id": "ic021",
+      "strategy": "decompose",
+      "callable_name": "case_021"
+    },
+    {
+      "case_id": "ic022",
+      "strategy": "decompose",
+      "callable_name": "case_022"
+    },
+    {
+      "case_id": "ic023",
+      "strategy": "decompose",
+      "callable_name": "case_023"
+    },
+    {
+      "case_id": "ic024",
+      "strategy": "decompose",
+      "callable_name": "case_024"
+    },
+    {
+      "case_id": "ic025",
+      "strategy": "error_classify",
+      "callable_name": "case_025"
+    },
+    {
+      "case_id": "ic026",
+      "strategy": "error_classify",
+      "callable_name": "case_026"
+    },
+    {
+      "case_id": "ic027",
+      "strategy": "error_classify",
+      "callable_name": "case_027"
+    },
+    {
+      "case_id": "ic028",
+      "strategy": "error_classify",
+      "callable_name": "case_028"
+    },
+    {
+      "case_id": "ic029",
+      "strategy": "format_guard",
+      "callable_name": "case_029"
+    },
+    {
+      "case_id": "ic030",
+      "strategy": "format_guard",
+      "callable_name": "case_030"
+    },
+    {
+      "case_id": "ic031",
+      "strategy": "format_guard",
+      "callable_name": "case_031"
+    },
+    {
+      "case_id": "ic032",
+      "strategy": "format_guard",
+      "callable_name": "case_032"
+    }
+  ],
+  "instrument_freeze_sha256": "cbad474ad6e8fd1249ff519756943e6bb3b525dd32085f679e274d452ec9e2a0",
+  "runner_review": {
+    "model": "gpt-5.6-sol",
+    "score": 9,
+    "verdict": "ready",
+    "scope": "fixed local measurement mechanics only"
+  }
+}

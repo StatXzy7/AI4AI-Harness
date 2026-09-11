@@ -1,0 +1,22 @@
+{
+  "status": "FROZEN_PENDING_REVIEW",
+  "bindings": {
+    "artifacts/revision_20260911/common_pool_batch1/PROTOCOL.md": "6dbe6ea25ce27a526782a712d0ca4baf01eb6190d4e19bbec9e5812f4afbd38f",
+    "artifacts/revision_20260911/common_pool_batch1/plan.json": "0fa025ba317526d93db3d76bdb0bef0eda75313cf59139dca0658cb5aec3745f",
+    "experiment/phase2/generate.py": "20d847647c69cf6276df157b1b6763c8ac841b019ee7bbb89fa4b19e04a12d47",
+    "experiment/revision/common_pool.py": "b697e032d19791df06d0af2fbde0af37fe842f104698c5d03ddd112f4c064624",
+    "experiment/revision/code_responses.py": "ec28862d63909d7df370501f31bbabc5007d071adaa0e1fa3a1d5b0b662a3ba4",
+    "experiment/revision/fresh_runtime.py": "e8ee2447355ae9b2f59c8fb8ebd9b122b4b19466359afe5315ba1c0224d648f6",
+    "external/TTHE/text_to_sql/harness_base.py": "a25324fa098706aa74b3396ede06dd5a4b45b584a0b3e0fc7043949287b0d063",
+    "artifacts/revision_20260911/common_pool_batch1/glm.json": "d38bdf54adef2d5704f3b41d6a114f5f76c62557364d7bdb1f797a61bac8579d",
+    "artifacts/revision_20260911/common_pool_batch1/glm_preflight.json": "0935df1a6525bc59e371cd4f9d2a5bdf3c0f7970d2d8eeed674d02e5d647139b",
+    "artifacts/revision_20260911/common_pool_batch1/qwen.json": "4888cd09eab4d7b3edcd357c46cae008a5bdab648fb150fbaacac576c945197e",
+    "artifacts/revision_20260911/common_pool_batch1/qwen_preflight.json": "add6846353999013f7c940930395b82ca41678b35e7711c81eca253e1d5d3e1b",
+    "artifacts\\revision_20260911\\common_pool_batch1\\freeze.json": "00a66fc35c5a97ba8bb6ccc246cf8efb88b768bf2bdce6da7943be5912ab9a2b",
+    "artifacts\\revision_20260911\\common_pool_batch1\\incomplete_audit.json": "56f1c9a5a1316ab7b442887a0a0dd0c60db668baed3ffe0d600a43ed09ea2acc",
+    "artifacts\\revision_20260911\\common_pool_batch1\\glm\\ledger.sqlite": "c362d6881d05b76dfe1ea7eb51ed71839ca7a6629fba6074505f4b6b0ddb8acc",
+    "artifacts\\revision_20260911\\common_pool_qwen_continuation\\PROTOCOL.md": "187858e858907ccc025d055593afa38e0e2be38eee6188634be9edbb86566ccc",
+    "artifacts\\revision_20260911\\common_pool_qwen_continuation\\qwen.json": "75f45d5379776f8388b266995bd2fc5fc75420964f15513818a772813ed6f6b9",
+    "artifacts\\revision_20260911\\common_pool_qwen_continuation\\preflight.json": "e0ace1b462606c0f9900333f631a6f7ef33b4cc9166058cd326ea486ef1e6e52"
+  }
+}

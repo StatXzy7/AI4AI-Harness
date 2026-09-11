@@ -1,0 +1,288 @@
+{
+  "stage20_verification_sha256": "f78a7bc69d7bf1470e5831070fb111d7454a8e5ca68789e8ca343ae70e16a952",
+  "stage20": [
+    {
+      "original_path": "artifacts/revision_20260910/chinese_sync_verification.json",
+      "sha256": "55b0cc67e5a02c0b773914b4e3b52ba7d705c03040e2fc282a04c68aedfc93c6",
+      "resolved_path": "artifacts/revision_20260910/chinese_sync_verification.json"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/adjudication.initial.json",
+      "sha256": "ef83f22bbb9e44229913b12b1c98cceed58dd16dd5b5b9ba5ff79bb440ae12a6",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/adjudication.initial.json"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/adjudication.json",
+      "sha256": "329258136d068f3b33fcfd25af6cd78569e2f3619eb7b8a16782cf7b74409ece",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/adjudication.json"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/author_labels.json",
+      "sha256": "5c126fb12d1aee72c128cb5ad94c15535380f591c2b6c15c41036b9d566753e5",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/author_labels.json"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/before_paper_update/artifacts__revision_20260910__chinese_sync_verification.json",
+      "sha256": "935966a8f01dd1f222bb69ed4cb492ac9e321755001b8803c0c9e73c7abb4d6f",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/before_paper_update/artifacts__revision_20260910__chinese_sync_verification.json"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/before_paper_update/artifacts__revision_20260910__verification.json",
+      "sha256": "6ffeddc99b2ad35270cbb5e3c8d88e249486e6e238e321c1845298b0bef72304",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/before_paper_update/artifacts__revision_20260910__verification.json"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/before_paper_update/manifest.json",
+      "sha256": "1b19aca3ee07fa40a30e2b54b2db838dc6db9d1ff9e75de862f5c062a130bdb2",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/before_paper_update/manifest.json"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/before_paper_update/paper__latex__main.pdf",
+      "sha256": "b1c8e2bd14727da094361da647e6f35b9f4218d77be2e50808a468622dcc4c86",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/before_paper_update/paper__latex__main.pdf"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/before_paper_update/paper__latex__sec_appendix.tex",
+      "sha256": "b93788de85d1a6b56f6ca5c51c5630f603270112fb134705f6b7eda217303d7d",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/before_paper_update/paper__latex__sec_appendix.tex"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/before_paper_update/paper__latex_zh__main.pdf",
+      "sha256": "cc39720997360ce52e63a1090c4377788c749cd017a260ec45a084d8f9b8c27e",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/before_paper_update/paper__latex_zh__main.pdf"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/before_paper_update/paper__latex_zh__sec_appendix.tex",
+      "sha256": "3da5ab142a9f56b8030efe7c9bf44a753a957d1eb716c8eb988a13aacbffdfb8",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/before_paper_update/paper__latex_zh__sec_appendix.tex"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/before_status_update/experiment__revision__README.md",
+      "sha256": "99ea4591002654ea8199f6426729b07fcf5cfc7146071d595c022a9803bffbb6",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/before_status_update/experiment__revision__README.md"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/before_status_update/review-stage__REVISED_EXPERIMENT_PLAN.md",
+      "sha256": "4c3745164c6b3dc4386eeb188c8ac7729e338e6ca5330d008fbb92b696c7bc07",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/before_status_update/review-stage__REVISED_EXPERIMENT_PLAN.md"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/before_status_update/review-stage__REVISION_20260910.md",
+      "sha256": "cc3339feb2adcbdac83962344c2b9f5e2613055d3917bc8424e51fd5aa7a5cf7",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/before_status_update/review-stage__REVISION_20260910.md"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/chinese-18.png",
+      "sha256": "e57d4b67d52cdfeff807b99ec39e50b3ff221529de850f99d4b317263ec5bdcf",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/chinese-18.png"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/chinese-19.png",
+      "sha256": "9ed509e0db9ad8d0f05fc5f170d040ca419f7a75ba4d11b3508f7328eeaea19c",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/chinese-19.png"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/chinese-20.png",
+      "sha256": "a62634749bbc9d204eb7c8ac866378694ba4548f0d23d9becf2b7cacc71c7a06",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/chinese-20.png"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/COMPLETE.json",
+      "sha256": "c6344cc3c9f1de5adfbdb6d9df4d17f9b624e9a7a8ebf84b3fb73ac65b74ea4d",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/COMPLETE.json"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/CONTRACT.md",
+      "sha256": "53fa8902694c48b3a197aed844e5c60ab69cd6e13a61ece0351bbc9b4b1ad595",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/CONTRACT.md"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/english-16.png",
+      "sha256": "500c5d7c2d779af8b633d14ac7ba27262a3e09d9e4ead3d26908a57fb075018f",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/english-16.png"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/english-17.png",
+      "sha256": "cf8e1239b2bbd447e18083a8fed2bbf73cd25d24bf5ecfb17858442461045cc0",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/english-17.png"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/english-18.png",
+      "sha256": "61dd5c2d30f9254a55266ab8c5b6d279c0ddd62755e46496c2f52766eae5d34c",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/english-18.png"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/instrument_freeze.json",
+      "sha256": "5f72b88a7a5475863b6f1d4ec2a9e2d0e64f0ded3bfe150316dbbf2b7905be42",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/instrument_freeze.json"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/interface_observations.json",
+      "sha256": "5fe58c0c54ed8cf011c407a176ed02ffb8df8debcd1b925c0d9aed970eb82017",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/interface_observations.json"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/lineage.json",
+      "sha256": "30d499d5eb0f16344a658c65c9ae79f0d9ce62bc29d983892d9f99bdc43a0329",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/lineage.json"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/measurement_freeze.json",
+      "sha256": "a751cfb043965240a5a33d5e97eb7175395c200100caa63c3f054c8934e03c94",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/measurement_freeze.json"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/measurement_started.json",
+      "sha256": "ea3a4848f69c6adc241fa2c0016ff43fc49f153b8bc96e9852c98ca005515a26",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/measurement_started.json"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/PROTOCOL.md",
+      "sha256": "c0ff14a9009fc43bf334fe8b0225eeb886942ccae3fb128b14cda76a1ef18a63",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/PROTOCOL.md"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/results.json",
+      "sha256": "f731c6d6a09ad340531e0f1b26ead5b5b66a92a57da93533dfebd1aab71e470e",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/results.json"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/review_packet.json",
+      "sha256": "365cb1640c795e4e37599de85eb6bb7d02bd63cccda4922f3476c601e76020df",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/review_packet.json"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/runner.before_blinding_fix.diff",
+      "sha256": "0dba49a488dbe74c55fbe168feb60dfab359278ab23bc43c8c7adfcd70b1a43f",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/runner.before_blinding_fix.diff"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/runner.diff",
+      "sha256": "2d13002c753517f8634a4990131a384a6d91552783b3450d360e71af6815744b",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/runner.diff"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/runner_tests.before_blinding_fix.txt",
+      "sha256": "018fab993a72cd46979572d98a7dbe5698696f8ba42fb4bb5815d2c288973e5e",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/runner_tests.before_blinding_fix.txt"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/runner_tests.txt",
+      "sha256": "4370ab322d57250cc96e0511ebff24ba4a9a7e48ce91329fe8837207e49a9df1",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/runner_tests.txt"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/gate_v3_independent/summary.json",
+      "sha256": "a7e46610b107386c8ea07ed2718c20b563e25189461c3390a1b9c05439bd2c8f",
+      "resolved_path": "artifacts/revision_20260910/gate_v3_independent/summary.json"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/verification.json",
+      "sha256": "cb86b923282bfe7c01d33bbf8bbc441a56cc237a40124d5184a5343c90bca777",
+      "resolved_path": "artifacts/revision_20260910/verification.json"
+    },
+    {
+      "original_path": "experiment/revision/gate_v3.py",
+      "sha256": "93e68080d0de32b29d349593e54535857c9acbfacaa42ebd8e70477298ca9827",
+      "resolved_path": "experiment/revision/gate_v3.py"
+    },
+    {
+      "original_path": "experiment/revision/independent_gate_v3_controls.py",
+      "sha256": "35f9427837c97e0ae838eeb3348ca4b30d632bc8403a887186861b59cce7ab6e",
+      "resolved_path": "experiment/revision/independent_gate_v3_controls.py"
+    },
+    {
+      "original_path": "experiment/revision/independent_gate_v3_measure.py",
+      "sha256": "253629cb688e2069902d00adcb80e6ffcbff5727079196bcd86cb4cd6dbbccf2",
+      "resolved_path": "experiment/revision/independent_gate_v3_measure.py"
+    },
+    {
+      "original_path": "experiment/revision/README.md",
+      "sha256": "6fea47b9923f24fcd0fe406692e7c19127053b5c145ff39f61962b154798f00d",
+      "resolved_path": "artifacts/revision_20260910/classification_profiles/before_status_update/experiment__revision__README.md"
+    },
+    {
+      "original_path": "experiment/revision/test_independent_gate_v3_measure.py",
+      "sha256": "d91242d6245003f3bb6a2e53bbca5c816ff90b42e528f022d56071f74dd0930c",
+      "resolved_path": "experiment/revision/test_independent_gate_v3_measure.py"
+    },
+    {
+      "original_path": "paper/latex/main.log",
+      "sha256": "5ba77f7548bc4d8eac560a17926bca56aecbbef124fe6330a98a933901a6343b",
+      "resolved_path": "paper/latex/main.log"
+    },
+    {
+      "original_path": "paper/latex/main.pdf",
+      "sha256": "fabf6cb725544b8e9f370d13a534d98dc1bfe6138270364b18797ecd010c3044",
+      "resolved_path": "paper/latex/main.pdf"
+    },
+    {
+      "original_path": "paper/latex/sec_appendix.tex",
+      "sha256": "8394d343f008f499f76873e4cf484a4d16a1f0ae0e3dd4fb38382b53004c0c3a",
+      "resolved_path": "paper/latex/sec_appendix.tex"
+    },
+    {
+      "original_path": "paper/latex_zh/main.log",
+      "sha256": "311f71e0125d4493f82b778cb39e26c3bf4f884c48eaeb883849ef06e98da275",
+      "resolved_path": "paper/latex_zh/main.log"
+    },
+    {
+      "original_path": "paper/latex_zh/main.pdf",
+      "sha256": "209a5f18146e2a3f58b8873d789c38bc52becf9d542e4784f5ec852c422c56ce",
+      "resolved_path": "paper/latex_zh/main.pdf"
+    },
+    {
+      "original_path": "paper/latex_zh/sec_appendix.tex",
+      "sha256": "306be0e616b2281a2183654df18091916f1675d38b58c316a49fcddc694efced",
+      "resolved_path": "paper/latex_zh/sec_appendix.tex"
+    },
+    {
+      "original_path": "review-stage/GATE_V3_INDEPENDENT.md",
+      "sha256": "57ee5b535371e1b4d244f41d8180ad3f185ec258e823f96d6a94580b7230dfdf",
+      "resolved_path": "review-stage/GATE_V3_INDEPENDENT.md"
+    },
+    {
+      "original_path": "review-stage/REVISED_EXPERIMENT_PLAN.md",
+      "sha256": "714bfd8a8d53aed8a993f66da3226c30037dc10eb03f442a760c6cc2159d69cd",
+      "resolved_path": "artifacts/revision_20260910/classification_profiles/before_status_update/review-stage__REVISED_EXPERIMENT_PLAN.md"
+    },
+    {
+      "original_path": "review-stage/REVISION_20260910.md",
+      "sha256": "b6153c85eb022e78b02be3af709473cd51d84e78d729b36d5d389a088788c5d5",
+      "resolved_path": "artifacts/revision_20260910/classification_profiles/before_status_update/review-stage__REVISION_20260910.md"
+    }
+  ],
+  "stage21_measurement": [
+    {
+      "original_path": "experiment/revision/independent_gate_v3_controls.py",
+      "sha256": "35f9427837c97e0ae838eeb3348ca4b30d632bc8403a887186861b59cce7ab6e",
+      "resolved_path": "experiment/revision/independent_gate_v3_controls.py"
+    },
+    {
+      "original_path": "experiment/revision/gate_v3.py",
+      "sha256": "93e68080d0de32b29d349593e54535857c9acbfacaa42ebd8e70477298ca9827",
+      "resolved_path": "experiment/revision/gate_v3.py"
+    },
+    {
+      "original_path": "experiment/revision/classification_profile_report.py",
+      "sha256": "efc773bd52e5241d5d4e21634988e75eca59bb328567a2f41eff89d3c9c3b2e2",
+      "resolved_path": "artifacts/revision_20260910/classification_profiles/measurement_report_source.py"
+    },
+    {
+      "original_path": "experiment/revision/classification_profiles.py",
+      "sha256": "9371e17c9240092cc1e26f7e0d7691ff998d6a2d971b7c1e0e0e8c4c1568ead7",
+      "resolved_path": "experiment/revision/classification_profiles.py"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/classification_profiles/PROTOCOL.md",
+      "sha256": "706bc9079cacdc48778dbd468db3dba07ede6bd4ec5a5ec3a4f13c8d16ac851c",
+      "resolved_path": "artifacts/revision_20260910/classification_profiles/PROTOCOL.md"
+    },
+    {
+      "original_path": "artifacts/revision_20260910/classification_profiles/role_map.json",
+      "sha256": "94b71b849019925e0b8bf1d786774115cd0f5dcd9e731790e7de39b8756435b9",
+      "resolved_path": "artifacts/revision_20260910/classification_profiles/role_map.json"
+    }
+  ],
+  "note": "Stage20 bindings remain resolvable. Stage21 measured runner predates persistent invalidation fix; exact bytes preserved. No rerun or result change."
+}

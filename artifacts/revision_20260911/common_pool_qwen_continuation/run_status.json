@@ -1,0 +1,8 @@
+{
+  "status": "STOPPED_INCOMPLETE",
+  "started_unix": 1789061165.301409,
+  "planned_attempts": 96,
+  "model": "Qwen3.8-Max",
+  "finished_unix": 1789066667.3687644,
+  "error_type": "RuntimeError"
+}

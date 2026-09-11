@@ -1,0 +1,27 @@
+{
+  "checked_at_utc": "2026-09-10T19:36:54.810715+00:00",
+  "status": "STOPPED_INCOMPLETE",
+  "terminal_evidence": "session 7541 returned qwen_exit=1; wrapper exit_code=0 is not collector success",
+  "planned": 96,
+  "started": 23,
+  "completed": 22,
+  "pending": 1,
+  "not_started": 73,
+  "unknown_events": [
+    {
+      "attempt": 157,
+      "error_type": "ReadTimeout",
+      "kind": "http_unknown",
+      "task": "8006101f14b224affa0d8f2ba7122d087ddf14b8e3e27c3d85b3667a9cf742b4",
+      "time_ns": 1789066667365268000
+    }
+  ],
+  "known_total_tokens": 242695,
+  "unknown_request_cost": "unknown, not zero",
+  "freeze_binding_count": 17,
+  "freeze_mismatches": [],
+  "ledger_sha256": "1c88b8d9d08774dbc48fc24014699512c7228b3762fb80cffebfad236624f028",
+  "pool_exists": false,
+  "complete_marker_exists": false,
+  "next_action": "Preserve failed pool; no automatic resend or completed-pool analysis. Any further collection requires a separately recorded transport-failure continuation design retaining this missingness and original denominator."
+}

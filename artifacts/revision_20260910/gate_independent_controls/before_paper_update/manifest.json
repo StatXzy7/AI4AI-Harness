@@ -1,0 +1,42 @@
+[
+  {
+    "original_path": "paper/latex/sec_appendix.tex",
+    "sha256": "6cd0269f3ded22e861002c2943655f550b2338da155cea01782e7eef7b5964c6",
+    "snapshot_path": "artifacts\\revision_20260910\\gate_independent_controls\\before_paper_update\\paper__latex__sec_appendix.tex"
+  },
+  {
+    "original_path": "paper/latex/sec_discussion.tex",
+    "sha256": "1e57193b993b71f63a42f80e10eff0a6443f0026c649d3e4f961492040814727",
+    "snapshot_path": "artifacts\\revision_20260910\\gate_independent_controls\\before_paper_update\\paper__latex__sec_discussion.tex"
+  },
+  {
+    "original_path": "paper/latex/main.pdf",
+    "sha256": "ea1ad3a407d4c0d1c451b6890ebc69ee06047f7bf446c29ba2bdbb5b0b14ffc1",
+    "snapshot_path": "artifacts\\revision_20260910\\gate_independent_controls\\before_paper_update\\paper__latex__main.pdf"
+  },
+  {
+    "original_path": "paper/latex_zh/sec_appendix.tex",
+    "sha256": "a7d3e03274711ae6de1bafbb09f6b2254f049e63d7136603167b1cc8b8c9fc8f",
+    "snapshot_path": "artifacts\\revision_20260910\\gate_independent_controls\\before_paper_update\\paper__latex_zh__sec_appendix.tex"
+  },
+  {
+    "original_path": "paper/latex_zh/sec_discussion.tex",
+    "sha256": "cfb26b18d3c5e867906b99ad780d92e30010b7d7392dcf72717737eaa7dcd49d",
+    "snapshot_path": "artifacts\\revision_20260910\\gate_independent_controls\\before_paper_update\\paper__latex_zh__sec_discussion.tex"
+  },
+  {
+    "original_path": "paper/latex_zh/main.pdf",
+    "sha256": "6484cc69a35f57c4dd16c0aa0d851c059c4c2eeaf21c2185458a58da985e1ed0",
+    "snapshot_path": "artifacts\\revision_20260910\\gate_independent_controls\\before_paper_update\\paper__latex_zh__main.pdf"
+  },
+  {
+    "original_path": "artifacts/revision_20260910/verification.json",
+    "sha256": "f978c4b8cebe7662849de337661cb81994eb037ad374ec325aa968434158a859",
+    "snapshot_path": "artifacts\\revision_20260910\\gate_independent_controls\\before_paper_update\\artifacts__revision_20260910__verification.json"
+  },
+  {
+    "original_path": "artifacts/revision_20260910/chinese_sync_verification.json",
+    "sha256": "23175b594281e9c7d9d13f9e2cceff405ac8b18a4e3e50deaaa073f24102f96f",
+    "snapshot_path": "artifacts\\revision_20260910\\gate_independent_controls\\before_paper_update\\artifacts__revision_20260910__chinese_sync_verification.json"
+  }
+]

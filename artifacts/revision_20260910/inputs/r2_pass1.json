@@ -1,0 +1,12 @@
+{
+  "purpose": "post-review archived-repeat snapshot; not a prospective freeze",
+  "acquisition_group": "r2_pass1",
+  "files": [
+    {
+      "file": "../../phase2/r2_cacheoff.jsonl",
+      "bytes": 13769597,
+      "sha256": "70f6462a63e5aae48f6e8aeba6753954b65fdd2d24e2cd83673a1f30344d6d44",
+      "sha256_16": "70f6462a63e5aae4"
+    }
+  ]
+}

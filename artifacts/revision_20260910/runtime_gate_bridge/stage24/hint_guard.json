@@ -1,0 +1,73 @@
+{
+  "strategy": "hint_guard",
+  "path": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_hint_guard.py",
+  "availability": "available",
+  "result": {
+    "strategy": "hint_guard",
+    "verdict": "review_required",
+    "scope": "v3 exposed-control development; independent calibration and production adapter pending",
+    "runs": [
+      {
+        "probe": "no_hint",
+        "status": "review_required",
+        "reasons": [
+          "semantic_prompt_review_required"
+        ],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\n\nWrite a single SQL query that answers the question and satisfies all stated hard requirements. Return only the SQL query.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger",
+            "seq": 0
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "hint_0",
+        "status": "review_required",
+        "reasons": [
+          "semantic_prompt_review_required"
+        ],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\nHint: id must exceed 317.\n\nHard requirements extracted from the Hint line (these must all be satisfied):\nid must exceed 317.\n\nWrite a single SQL query that answers the question and satisfies all stated hard requirements. Return only the SQL query.",
+            "system": "You are a precise text-to-SQL assistant. The hard requirements in the prompt are mandatory. Obey them exactly; they override any conflicting implication in the question.",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger",
+            "seq": 0
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "hint_1",
+        "status": "review_required",
+        "reasons": [
+          "semantic_prompt_review_required"
+        ],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\nHint: id must exceed 941.\n\nHard requirements extracted from the Hint line (these must all be satisfied):\nid must exceed 941.\n\nWrite a single SQL query that answers the question and satisfies all stated hard requirements. Return only the SQL query.",
+            "system": "You are a precise text-to-SQL assistant. The hard requirements in the prompt are mandatory. Obey them exactly; they override any conflicting implication in the question.",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger",
+            "seq": 0
+          }
+        ],
+        "error": null
+      }
+    ]
+  },
+  "admission": "not_evaluated"
+}

@@ -1,0 +1,20 @@
+{
+  "analysis_sha256": "4725c9707af2da9ebf05fde08d2700706e800714f41892442e6f231d3d696dc4",
+  "analysis_version": "revision-20260910-v1",
+  "sensitivity_sha256": "381e8f35a355cf085881cb6dd37ce9868609e5d58937387b1026b582487a3bea",
+  "cost_sha256": "fbcd046182ae364840b53c85835920634d1304c50da653c9859c293de4376a2c",
+  "fingerprint_sha256": "0f0b75ef49984a3990424e8918c002ed78a13c8a68044dadaf6ea3f080d93e41",
+  "selection_sha256": "ea17878cb0871088f85f5fdff6acaa5bf29171813220aa2ed9a5989a2f9bda3f",
+  "generator_sha256": "59889b4e09d6ceda9ff19e9fff8ab5a2eddd584466a717644b8c2839c86b37f1",
+  "generated": {
+    "paper/latex/revision_cost_table.tex": "339adf78e0d016bc9843b0b98ba72f7ea539742709ce9464386b580438654f4a",
+    "paper/latex/revision_decomposition_table.tex": "ec2952c5665535b0e2432db5a2f0befca09a5c06bc0355941c9f62ffa6664635",
+    "paper/latex/revision_factorial_table.tex": "a2e9b34116f8952d0d1bfb572cf04aef3e9a92a536059fe23b15237b51e09f1f",
+    "paper/latex/revision_numbers.tex": "a6057d4eae68f3029dc4d45d36717d4f209017f36fd0eb8919a429967d9420ef",
+    "paper/latex/revision_primary_table.tex": "15cdab94ec4ea99e32047566b38300408f30e4abc6c92cba35611e2982a80c83",
+    "paper/latex/revision_selection_table.tex": "8def247465827d58415f3c43f5d0d2dfc0a8885b53148bbf34e090c60f3058d8",
+    "paper/latex/revision_sensitivity_table.tex": "8d73c21212a526d30f16cae68f34a17d158918ee1c160cb6a7a17ebbbd01627b",
+    "paper/latex/figures/fig_results_revision.pdf": "43d2ecca338e89962f0c8a4e245a1ff4818e65501cc60817d49b014b86d3c5eb",
+    "paper/latex/figures/fig_results_revision.png": "0764294176b8f3d8937e71afaeb6f28873d6bb8b5124fc9e3df4ca5f1cd167e5"
+  }
+}

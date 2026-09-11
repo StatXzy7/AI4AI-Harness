@@ -1,0 +1,5761 @@
+{
+  "version": "gate-v2-development-20260910-v1",
+  "release_verdict": "not ready",
+  "scope": "same-author development controls plus adversarial regression mutants and trusted local runtime adapter; no independent calibration, no benchmark collection",
+  "admission": "probe pass is a structural observation, not production admission; four semantic families require independent adjudication and all strategies require held-out calibration",
+  "outstanding": [
+    "independent calibration fixtures and cross-model adjudication",
+    "frozen semantic decisions for hint/format/two_view/error_classify",
+    "broader robustness of prompt/dataflow/branch contracts",
+    "common raw pool and fixed budget",
+    "full runtime restoration and prospective freeze"
+  ],
+  "development_outcome_counts": {
+    "repair": {
+      "positive": {
+        "pass": 1,
+        "fail": 0,
+        "review_required": 0,
+        "execution_failure": 0
+      },
+      "negative": {
+        "pass": 0,
+        "fail": 1,
+        "review_required": 0,
+        "execution_failure": 0
+      },
+      "adversarial_negative": {
+        "pass": 0,
+        "fail": 1,
+        "review_required": 0,
+        "execution_failure": 0
+      },
+      "execution_failure": {
+        "pass": 0,
+        "fail": 0,
+        "review_required": 0,
+        "execution_failure": 2
+      }
+    },
+    "vote3": {
+      "positive": {
+        "pass": 1,
+        "fail": 0,
+        "review_required": 0,
+        "execution_failure": 0
+      },
+      "negative": {
+        "pass": 0,
+        "fail": 1,
+        "review_required": 0,
+        "execution_failure": 0
+      },
+      "adversarial_negative": {
+        "pass": 0,
+        "fail": 2,
+        "review_required": 0,
+        "execution_failure": 0
+      },
+      "execution_failure": {
+        "pass": 0,
+        "fail": 0,
+        "review_required": 0,
+        "execution_failure": 0
+      }
+    },
+    "schema_link": {
+      "positive": {
+        "pass": 1,
+        "fail": 0,
+        "review_required": 0,
+        "execution_failure": 0
+      },
+      "negative": {
+        "pass": 0,
+        "fail": 1,
+        "review_required": 0,
+        "execution_failure": 0
+      },
+      "adversarial_negative": {
+        "pass": 0,
+        "fail": 0,
+        "review_required": 0,
+        "execution_failure": 0
+      },
+      "execution_failure": {
+        "pass": 0,
+        "fail": 0,
+        "review_required": 0,
+        "execution_failure": 0
+      }
+    },
+    "hint_guard": {
+      "positive": {
+        "pass": 0,
+        "fail": 0,
+        "review_required": 1,
+        "execution_failure": 0
+      },
+      "negative": {
+        "pass": 0,
+        "fail": 0,
+        "review_required": 1,
+        "execution_failure": 0
+      },
+      "adversarial_negative": {
+        "pass": 0,
+        "fail": 0,
+        "review_required": 1,
+        "execution_failure": 0
+      },
+      "execution_failure": {
+        "pass": 0,
+        "fail": 0,
+        "review_required": 0,
+        "execution_failure": 0
+      }
+    },
+    "two_view": {
+      "positive": {
+        "pass": 0,
+        "fail": 0,
+        "review_required": 1,
+        "execution_failure": 0
+      },
+      "negative": {
+        "pass": 0,
+        "fail": 1,
+        "review_required": 0,
+        "execution_failure": 0
+      },
+      "adversarial_negative": {
+        "pass": 0,
+        "fail": 1,
+        "review_required": 0,
+        "execution_failure": 0
+      },
+      "execution_failure": {
+        "pass": 0,
+        "fail": 0,
+        "review_required": 0,
+        "execution_failure": 0
+      }
+    },
+    "decompose": {
+      "positive": {
+        "pass": 1,
+        "fail": 0,
+        "review_required": 0,
+        "execution_failure": 0
+      },
+      "negative": {
+        "pass": 0,
+        "fail": 1,
+        "review_required": 0,
+        "execution_failure": 0
+      },
+      "adversarial_negative": {
+        "pass": 0,
+        "fail": 1,
+        "review_required": 0,
+        "execution_failure": 0
+      },
+      "execution_failure": {
+        "pass": 0,
+        "fail": 0,
+        "review_required": 0,
+        "execution_failure": 0
+      }
+    },
+    "error_classify": {
+      "positive": {
+        "pass": 0,
+        "fail": 0,
+        "review_required": 1,
+        "execution_failure": 0
+      },
+      "negative": {
+        "pass": 0,
+        "fail": 1,
+        "review_required": 0,
+        "execution_failure": 0
+      },
+      "adversarial_negative": {
+        "pass": 0,
+        "fail": 3,
+        "review_required": 0,
+        "execution_failure": 0
+      },
+      "execution_failure": {
+        "pass": 0,
+        "fail": 0,
+        "review_required": 0,
+        "execution_failure": 0
+      }
+    },
+    "format_guard": {
+      "positive": {
+        "pass": 0,
+        "fail": 0,
+        "review_required": 1,
+        "execution_failure": 0
+      },
+      "negative": {
+        "pass": 0,
+        "fail": 0,
+        "review_required": 1,
+        "execution_failure": 0
+      },
+      "adversarial_negative": {
+        "pass": 0,
+        "fail": 0,
+        "review_required": 1,
+        "execution_failure": 0
+      },
+      "execution_failure": {
+        "pass": 0,
+        "fail": 0,
+        "review_required": 0,
+        "execution_failure": 0
+      }
+    }
+  },
+  "cases": [
+    {
+      "name": "repair",
+      "label": "positive",
+      "strategy": "repair",
+      "verdict": "pass",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "success_no_repair",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "syntax_a",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [v2dev_syntax_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nPrevious SQL: SELECT id FROM ledger\nError: syntax failure [v2dev_syntax_a]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "syntax_b",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [v2dev_syntax_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nPrevious SQL: SELECT id FROM ledger\nError: syntax failure [v2dev_syntax_b]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "vote3",
+      "label": "positive",
+      "strategy": "vote3",
+      "verdict": "pass",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "late_majority",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT amount FROM ledger"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "permuted_majority",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT amount FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "flipped_majority",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger",
+                "SELECT id FROM ledger"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "equivalent_results",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "execution_majority_flipped",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "execution_majority_AB",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "C"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "schema_link",
+      "label": "positive",
+      "strategy": "schema_link",
+      "verdict": "pass",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "link_0",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nIdentify the relevant tables and columns.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "ledger(id) [v2dev_link_0]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Return ledger identifiers.\nWrite SQL against only the linked subset:\nledger(id) [v2dev_link_0]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "link_1",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nIdentify the relevant tables and columns.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "ledger(id) [v2dev_link_1]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Return ledger identifiers.\nWrite SQL against only the linked subset:\nledger(id) [v2dev_link_1]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "hint_guard",
+      "label": "positive",
+      "strategy": "hint_guard",
+      "verdict": "review_required",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "no_hint",
+          "status": "review_required",
+          "reasons": [
+            "semantic_prompt_review_required"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "hint_0",
+          "status": "review_required",
+          "reasons": [
+            "semantic_prompt_review_required"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nHint: id must exceed 317.\nHard requirement: id must exceed 317.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "hint_1",
+          "status": "review_required",
+          "reasons": [
+            "semantic_prompt_review_required"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nHint: id must exceed 941.\nHard requirement: id must exceed 941.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "two_view",
+      "label": "positive",
+      "strategy": "two_view",
+      "verdict": "review_required",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "first_empty",
+          "status": "review_required",
+          "reasons": [
+            "formulation_semantics_review_required"
+          ],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nUse a join formulation.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nUse a subquery formulation.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "second_empty",
+          "status": "review_required",
+          "reasons": [
+            "formulation_semantics_review_required"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nUse a join formulation.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nUse a subquery formulation.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "both_nonempty",
+          "status": "review_required",
+          "reasons": [
+            "formulation_semantics_review_required"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nUse a join formulation.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nUse a subquery formulation.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "first_failed",
+          "status": "review_required",
+          "reasons": [
+            "formulation_semantics_review_required"
+          ],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nUse a join formulation.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nUse a subquery formulation.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "decompose",
+      "label": "positive",
+      "strategy": "decompose",
+      "verdict": "pass",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "parts_0",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nReturn ordered subquestions as a JSON array.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "[\"v2dev_part_0\", \"v2dev_part_1\"]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nAnswer subquestion: v2dev_part_0",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_9adf49b50ecd8395"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nAnswer subquestion: v2dev_part_1",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_d72b8bda4aa620fc"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nAssemble final SQL from:\nPAYLOAD_9adf49b50ecd8395\nPAYLOAD_d72b8bda4aa620fc",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "parts_1",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nReturn ordered subquestions as a JSON array.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "[\"v2dev_part_0\", \"v2dev_part_1\"]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nAnswer subquestion: v2dev_part_0",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_23e2216e36815793"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nAnswer subquestion: v2dev_part_1",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_785bd80b9edb3be5"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nAssemble final SQL from:\nPAYLOAD_23e2216e36815793\nPAYLOAD_785bd80b9edb3be5",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "error_classify",
+      "label": "positive",
+      "strategy": "error_classify",
+      "verdict": "review_required",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "success_no_repair",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "syntax_a",
+          "status": "review_required",
+          "reasons": [
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [v2dev_syntax_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nsyntax-specific fix: correct grammar\nsyntax failure [v2dev_syntax_a]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "syntax_b",
+          "status": "review_required",
+          "reasons": [
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [v2dev_syntax_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nsyntax-specific fix: correct grammar\nsyntax failure [v2dev_syntax_b]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "schema_a",
+          "status": "review_required",
+          "reasons": [
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [v2dev_schema_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nschema-specific fix: correct table and column references\nschema failure [v2dev_schema_a]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "schema_b",
+          "status": "review_required",
+          "reasons": [
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [v2dev_schema_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nschema-specific fix: correct table and column references\nschema failure [v2dev_schema_b]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "semantics_a",
+          "status": "review_required",
+          "reasons": [
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [v2dev_semantics_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nsemantics-specific fix: correct the query logic\nsemantics failure [v2dev_semantics_a]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "semantics_b",
+          "status": "review_required",
+          "reasons": [
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [v2dev_semantics_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nsemantics-specific fix: correct the query logic\nsemantics failure [v2dev_semantics_b]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "format_guard",
+      "label": "positive",
+      "strategy": "format_guard",
+      "verdict": "review_required",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "format_original",
+          "status": "review_required",
+          "reasons": [
+            "semantic_prompt_review_required"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nUse only schema-defined names. Return only a ```sql fence, no extra text.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "format_changed_question",
+          "status": "review_required",
+          "reasons": [
+            "semantic_prompt_review_required"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger amounts.\nUse only schema-defined names. Return only a ```sql fence, no extra text.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "read_discard",
+      "label": "negative",
+      "strategy": "repair",
+      "verdict": "fail",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "success_no_repair",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "syntax_a",
+          "status": "fail",
+          "reasons": [
+            "counterfactual_output_mismatch",
+            "execution_feedback_not_carried_forward"
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [v2dev_syntax_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nTry again.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "syntax_b",
+          "status": "fail",
+          "reasons": [
+            "execution_feedback_not_carried_forward"
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [v2dev_syntax_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nTry again.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "select_first",
+      "label": "negative",
+      "strategy": "vote3",
+      "verdict": "fail",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "late_majority",
+          "status": "fail",
+          "reasons": [
+            "counterfactual_output_mismatch"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT amount FROM ledger"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "permuted_majority",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT amount FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "flipped_majority",
+          "status": "fail",
+          "reasons": [
+            "counterfactual_output_mismatch"
+          ],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger",
+                "SELECT id FROM ledger"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "equivalent_results",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "execution_majority_flipped",
+          "status": "fail",
+          "reasons": [
+            "counterfactual_output_mismatch"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "execution_majority_AB",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "C"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "schema_discard",
+      "label": "negative",
+      "strategy": "schema_link",
+      "verdict": "fail",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "link_0",
+          "status": "fail",
+          "reasons": [
+            "counterfactual_output_mismatch",
+            "linked_subset_not_carried_forward"
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nFind tables.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "ledger(id) [v2dev_link_0]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "link_1",
+          "status": "fail",
+          "reasons": [
+            "counterfactual_output_mismatch",
+            "linked_subset_not_carried_forward"
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nFind tables.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "ledger(id) [v2dev_link_1]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "passthrough",
+      "label": "negative",
+      "strategy": "hint_guard",
+      "verdict": "review_required",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "no_hint",
+          "status": "review_required",
+          "reasons": [
+            "semantic_prompt_review_required"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "hint_0",
+          "status": "review_required",
+          "reasons": [
+            "explicit_hint_restatement_not_observed",
+            "semantic_prompt_review_required"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nHint: id must exceed 317.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "hint_1",
+          "status": "review_required",
+          "reasons": [
+            "explicit_hint_restatement_not_observed",
+            "semantic_prompt_review_required"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nHint: id must exceed 941.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "two_view_ignore_rows",
+      "label": "negative",
+      "strategy": "two_view",
+      "verdict": "fail",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "first_empty",
+          "status": "fail",
+          "reasons": [
+            "counterfactual_output_mismatch",
+            "formulation_semantics_review_required"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nJoin formulation.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nSubquery formulation.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "second_empty",
+          "status": "review_required",
+          "reasons": [
+            "formulation_semantics_review_required"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nJoin formulation.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nSubquery formulation.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "both_nonempty",
+          "status": "review_required",
+          "reasons": [
+            "formulation_semantics_review_required"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nJoin formulation.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nSubquery formulation.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "first_failed",
+          "status": "fail",
+          "reasons": [
+            "counterfactual_output_mismatch",
+            "formulation_semantics_review_required"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nJoin formulation.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nSubquery formulation.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "decompose_discard",
+      "label": "negative",
+      "strategy": "decompose",
+      "verdict": "fail",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "parts_0",
+          "status": "fail",
+          "reasons": [
+            "counterfactual_output_mismatch",
+            "partial_answers_not_assembled"
+          ],
+          "final": "UNRELATED",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nPlan.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "[\"v2dev_part_0\", \"v2dev_part_1\"]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "v2dev_part_0",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_9adf49b50ecd8395"
+            },
+            {
+              "kind": "llm",
+              "prompt": "v2dev_part_1",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_d72b8bda4aa620fc"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "UNRELATED"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "parts_1",
+          "status": "fail",
+          "reasons": [
+            "counterfactual_output_mismatch",
+            "partial_answers_not_assembled"
+          ],
+          "final": "UNRELATED",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nPlan.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "[\"v2dev_part_0\", \"v2dev_part_1\"]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "v2dev_part_0",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_23e2216e36815793"
+            },
+            {
+              "kind": "llm",
+              "prompt": "v2dev_part_1",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_785bd80b9edb3be5"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "UNRELATED"
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "repair",
+      "label": "negative",
+      "strategy": "error_classify",
+      "verdict": "fail",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "success_no_repair",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "syntax_a",
+          "status": "fail",
+          "reasons": [
+            "unambiguous_error_class_not_observed",
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [v2dev_syntax_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nPrevious SQL: SELECT id FROM ledger\nError: syntax failure [v2dev_syntax_a]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "syntax_b",
+          "status": "fail",
+          "reasons": [
+            "unambiguous_error_class_not_observed",
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [v2dev_syntax_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nPrevious SQL: SELECT id FROM ledger\nError: syntax failure [v2dev_syntax_b]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "schema_a",
+          "status": "fail",
+          "reasons": [
+            "unambiguous_error_class_not_observed",
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [v2dev_schema_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nPrevious SQL: SELECT id FROM ledger\nError: schema failure [v2dev_schema_a]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "schema_b",
+          "status": "fail",
+          "reasons": [
+            "unambiguous_error_class_not_observed",
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [v2dev_schema_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nPrevious SQL: SELECT id FROM ledger\nError: schema failure [v2dev_schema_b]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "semantics_a",
+          "status": "fail",
+          "reasons": [
+            "unambiguous_error_class_not_observed",
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [v2dev_semantics_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nPrevious SQL: SELECT id FROM ledger\nError: semantics failure [v2dev_semantics_a]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "semantics_b",
+          "status": "fail",
+          "reasons": [
+            "unambiguous_error_class_not_observed",
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [v2dev_semantics_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nPrevious SQL: SELECT id FROM ledger\nError: semantics failure [v2dev_semantics_b]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "passthrough",
+      "label": "negative",
+      "strategy": "format_guard",
+      "verdict": "review_required",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "format_original",
+          "status": "review_required",
+          "reasons": [
+            "explicit_sql_only_fence_requirement_not_observed",
+            "semantic_prompt_review_required"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "format_changed_question",
+          "status": "review_required",
+          "reasons": [
+            "explicit_sql_only_fence_requirement_not_observed",
+            "semantic_prompt_review_required"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger amounts.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "string_vote",
+      "label": "adversarial_negative",
+      "strategy": "vote3",
+      "verdict": "fail",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "late_majority",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT amount FROM ledger"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "permuted_majority",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT amount FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "flipped_majority",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger",
+                "SELECT id FROM ledger"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "equivalent_results",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "execution_majority_flipped",
+          "status": "fail",
+          "reasons": [
+            "counterfactual_output_mismatch"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "execution_majority_AB",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "C"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "all_classes",
+      "label": "adversarial_negative",
+      "strategy": "error_classify",
+      "verdict": "fail",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "success_no_repair",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "syntax_a",
+          "status": "fail",
+          "reasons": [
+            "unambiguous_error_class_not_observed",
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [v2dev_syntax_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "syntax schema semantics\nsyntax failure [v2dev_syntax_a]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "syntax_b",
+          "status": "fail",
+          "reasons": [
+            "unambiguous_error_class_not_observed",
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [v2dev_syntax_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "syntax schema semantics\nsyntax failure [v2dev_syntax_b]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "schema_a",
+          "status": "fail",
+          "reasons": [
+            "unambiguous_error_class_not_observed",
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [v2dev_schema_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "syntax schema semantics\nschema failure [v2dev_schema_a]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "schema_b",
+          "status": "fail",
+          "reasons": [
+            "unambiguous_error_class_not_observed",
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [v2dev_schema_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "syntax schema semantics\nschema failure [v2dev_schema_b]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "semantics_a",
+          "status": "fail",
+          "reasons": [
+            "unambiguous_error_class_not_observed",
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [v2dev_semantics_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "syntax schema semantics\nsemantics failure [v2dev_semantics_a]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "semantics_b",
+          "status": "fail",
+          "reasons": [
+            "unambiguous_error_class_not_observed",
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [v2dev_semantics_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "syntax schema semantics\nsemantics failure [v2dev_semantics_b]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "batch_repair",
+      "label": "adversarial_negative",
+      "strategy": "repair",
+      "verdict": "fail",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "success_no_repair",
+          "status": "fail",
+          "reasons": [
+            "extra_batched_samples",
+            "unconditional_extra_generation"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 2,
+              "temperature": 0.0,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "syntax_a",
+          "status": "fail",
+          "reasons": [
+            "extra_batched_samples"
+          ],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 2,
+              "temperature": 0.0,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT id FROM ledger"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [v2dev_syntax_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "syntax failure [v2dev_syntax_a]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "syntax_b",
+          "status": "fail",
+          "reasons": [
+            "extra_batched_samples"
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 2,
+              "temperature": 0.0,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT id FROM ledger"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [v2dev_syntax_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "syntax failure [v2dev_syntax_b]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "whitespace_views",
+      "label": "adversarial_negative",
+      "strategy": "two_view",
+      "verdict": "fail",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "first_empty",
+          "status": "fail",
+          "reasons": [
+            "distinct_formulation_requests_not_observed",
+            "formulation_semantics_review_required"
+          ],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers. ",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "second_empty",
+          "status": "fail",
+          "reasons": [
+            "distinct_formulation_requests_not_observed",
+            "formulation_semantics_review_required"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers. ",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "both_nonempty",
+          "status": "fail",
+          "reasons": [
+            "distinct_formulation_requests_not_observed",
+            "formulation_semantics_review_required"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers. ",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "first_failed",
+          "status": "fail",
+          "reasons": [
+            "distinct_formulation_requests_not_observed",
+            "formulation_semantics_review_required"
+          ],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers. ",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "negated_hint",
+      "label": "adversarial_negative",
+      "strategy": "hint_guard",
+      "verdict": "review_required",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "no_hint",
+          "status": "review_required",
+          "reasons": [
+            "semantic_prompt_review_required"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nIgnore this requirement: ",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "hint_0",
+          "status": "review_required",
+          "reasons": [
+            "semantic_prompt_review_required"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nHint: id must exceed 317.\nIgnore this requirement: id must exceed 317.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "hint_1",
+          "status": "review_required",
+          "reasons": [
+            "semantic_prompt_review_required"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nHint: id must exceed 941.\nIgnore this requirement: id must exceed 941.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "negated_format",
+      "label": "adversarial_negative",
+      "strategy": "format_guard",
+      "verdict": "review_required",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "format_original",
+          "status": "review_required",
+          "reasons": [
+            "semantic_prompt_review_required"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nDo NOT return only a ```sql fence; include explanatory prose.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "format_changed_question",
+          "status": "review_required",
+          "reasons": [
+            "semantic_prompt_review_required"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger amounts.\nDo NOT return only a ```sql fence; include explanatory prose.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "last_tie_string_vote",
+      "label": "adversarial_negative",
+      "strategy": "vote3",
+      "verdict": "fail",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "late_majority",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT amount FROM ledger"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "permuted_majority",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT amount FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "flipped_majority",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger",
+                "SELECT id FROM ledger"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "equivalent_results",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "execution_majority_flipped",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "execution_majority_AB",
+          "status": "fail",
+          "reasons": [
+            "counterfactual_output_mismatch"
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ]
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "C"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "punctuation_classes",
+      "label": "adversarial_negative",
+      "strategy": "error_classify",
+      "verdict": "fail",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "success_no_repair",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "syntax_a",
+          "status": "review_required",
+          "reasons": [
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [v2dev_syntax_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "syntax! Try again.\nsyntax failure [v2dev_syntax_a]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "syntax_b",
+          "status": "review_required",
+          "reasons": [
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [v2dev_syntax_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "syntax! Try again.\nsyntax failure [v2dev_syntax_b]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "schema_a",
+          "status": "review_required",
+          "reasons": [
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [v2dev_schema_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "schema? Try again.\nschema failure [v2dev_schema_a]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "schema_b",
+          "status": "review_required",
+          "reasons": [
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [v2dev_schema_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "schema? Try again.\nschema failure [v2dev_schema_b]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "semantics_a",
+          "status": "review_required",
+          "reasons": [
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [v2dev_semantics_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "semantics. Try again.\nsemantics failure [v2dev_semantics_a]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "semantics_b",
+          "status": "review_required",
+          "reasons": [
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [v2dev_semantics_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "semantics. Try again.\nsemantics failure [v2dev_semantics_b]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "cross_class_action",
+          "status": "fail",
+          "reasons": [
+            "same_action_template_across_error_classes"
+          ],
+          "final": null,
+          "trace": [],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "shared_two_actions",
+      "label": "adversarial_negative",
+      "strategy": "error_classify",
+      "verdict": "fail",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "success_no_repair",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "syntax_a",
+          "status": "review_required",
+          "reasons": [
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [v2dev_syntax_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "syntax correct grammar\nsyntax failure [v2dev_syntax_a]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "syntax_b",
+          "status": "review_required",
+          "reasons": [
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [v2dev_syntax_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "syntax correct grammar\nsyntax failure [v2dev_syntax_b]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "schema_a",
+          "status": "review_required",
+          "reasons": [
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [v2dev_schema_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "schema correct grammar\nschema failure [v2dev_schema_a]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "schema_b",
+          "status": "review_required",
+          "reasons": [
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [v2dev_schema_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "schema correct grammar\nschema failure [v2dev_schema_b]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "semantics_a",
+          "status": "review_required",
+          "reasons": [
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [v2dev_semantics_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "semantics correct query logic\nsemantics failure [v2dev_semantics_a]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "semantics_b",
+          "status": "review_required",
+          "reasons": [
+            "classification_action_semantics_review_required"
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [v2dev_semantics_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "semantics correct query logic\nsemantics failure [v2dev_semantics_b]",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "cross_class_action",
+          "status": "fail",
+          "reasons": [
+            "same_action_template_across_error_classes"
+          ],
+          "final": null,
+          "trace": [],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "fabricated_parts",
+      "label": "adversarial_negative",
+      "strategy": "decompose",
+      "verdict": "fail",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "parts_0",
+          "status": "fail",
+          "reasons": [
+            "counterfactual_output_mismatch",
+            "partial_answers_not_assembled"
+          ],
+          "final": "UNRELATED",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "[\"v2dev_part_0\", \"v2dev_part_1\"]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "v2dev_part_0",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_9adf49b50ecd8395"
+            },
+            {
+              "kind": "llm",
+              "prompt": "v2dev_part_1",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_d72b8bda4aa620fc"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nv2dev_answer_0\nv2dev_answer_1",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "UNRELATED"
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "parts_1",
+          "status": "fail",
+          "reasons": [
+            "counterfactual_output_mismatch",
+            "partial_answers_not_assembled"
+          ],
+          "final": "UNRELATED",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "[\"v2dev_part_0\", \"v2dev_part_1\"]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "v2dev_part_0",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_23e2216e36815793"
+            },
+            {
+              "kind": "llm",
+              "prompt": "v2dev_part_1",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "PAYLOAD_785bd80b9edb3be5"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers.\nv2dev_answer_0\nv2dev_answer_1",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "UNRELATED"
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "crash",
+      "label": "execution_failure",
+      "strategy": "repair",
+      "verdict": "execution_failure",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "success_no_repair",
+          "status": "execution_failure",
+          "reasons": [],
+          "final": null,
+          "trace": [],
+          "error": "RuntimeError: intentional development control failure"
+        },
+        {
+          "probe": "syntax_a",
+          "status": "execution_failure",
+          "reasons": [],
+          "final": null,
+          "trace": [],
+          "error": "RuntimeError: intentional development control failure"
+        },
+        {
+          "probe": "syntax_b",
+          "status": "execution_failure",
+          "reasons": [],
+          "final": null,
+          "trace": [],
+          "error": "RuntimeError: intentional development control failure"
+        }
+      ]
+    },
+    {
+      "name": "invalid",
+      "label": "execution_failure",
+      "strategy": "repair",
+      "verdict": "execution_failure",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "success_no_repair",
+          "status": "execution_failure",
+          "reasons": [],
+          "final": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Return ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "error": "TypeError: solve must return a nonempty SQL string"
+        },
+        {
+          "probe": "syntax_a",
+          "status": "execution_failure",
+          "reasons": [],
+          "final": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Return ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "error": "TypeError: solve must return a nonempty SQL string"
+        },
+        {
+          "probe": "syntax_b",
+          "status": "execution_failure",
+          "reasons": [],
+          "final": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Return ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            }
+          ],
+          "error": "TypeError: solve must return a nonempty SQL string"
+        }
+      ]
+    }
+  ],
+  "trusted_runtime": [
+    {
+      "name": "hpc_repair",
+      "strategy": "repair",
+      "verdict": "pass",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "success_no_repair",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nWrite the SQLite query.",
+              "system": "You are an expert Text-to-SQL system for SQLite. Output exactly one SQLite query inside a ```sql block. No commentary.",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger",
+              "seq": 0
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "syntax_a",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nWrite the SQLite query.",
+              "system": "You are an expert Text-to-SQL system for SQLite. Output exactly one SQLite query inside a ```sql block. No commentary.",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger",
+              "seq": 0
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [v2dev_syntax_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nYour previous query:\nSELECT id FROM ledger\n\nIt failed with error:\nsyntax failure [v2dev_syntax_a]\n\nWrite a corrected SQLite query.",
+              "system": "You are an expert Text-to-SQL system for SQLite. Output exactly one SQLite query inside a ```sql block. No commentary.",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger",
+              "seq": 0
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "syntax_b",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nWrite the SQLite query.",
+              "system": "You are an expert Text-to-SQL system for SQLite. Output exactly one SQLite query inside a ```sql block. No commentary.",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger",
+              "seq": 0
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [v2dev_syntax_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nYour previous query:\nSELECT id FROM ledger\n\nIt failed with error:\nsyntax failure [v2dev_syntax_b]\n\nWrite a corrected SQLite query.",
+              "system": "You are an expert Text-to-SQL system for SQLite. Output exactly one SQLite query inside a ```sql block. No commentary.",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0",
+              "seq": 0
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "hpc_vote3",
+      "strategy": "vote3",
+      "verdict": "pass",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "late_majority",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nWrite the SQLite query.",
+              "system": "You are an expert Text-to-SQL system for SQLite. Output exactly one SQLite query inside a ```sql block. No commentary.",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT amount FROM ledger"
+              ],
+              "seq": 0
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "permuted_majority",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nWrite the SQLite query.",
+              "system": "You are an expert Text-to-SQL system for SQLite. Output exactly one SQLite query inside a ```sql block. No commentary.",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT amount FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger"
+              ],
+              "seq": 0
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "flipped_majority",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nWrite the SQLite query.",
+              "system": "You are an expert Text-to-SQL system for SQLite. Output exactly one SQLite query inside a ```sql block. No commentary.",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger",
+                "SELECT id FROM ledger"
+              ],
+              "seq": 0
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "equivalent_results",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nWrite the SQLite query.",
+              "system": "You are an expert Text-to-SQL system for SQLite. Output exactly one SQLite query inside a ```sql block. No commentary.",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ],
+              "seq": 0
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "execution_majority_flipped",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nWrite the SQLite query.",
+              "system": "You are an expert Text-to-SQL system for SQLite. Output exactly one SQLite query inside a ```sql block. No commentary.",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ],
+              "seq": 0
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "execution_majority_AB",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nWrite the SQLite query.",
+              "system": "You are an expert Text-to-SQL system for SQLite. Output exactly one SQLite query inside a ```sql block. No commentary.",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ],
+              "seq": 0
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "C"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "neg_uncond_twocall",
+      "strategy": "repair",
+      "verdict": "fail",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "success_no_repair",
+          "status": "fail",
+          "reasons": [
+            "counterfactual_output_mismatch",
+            "unconditional_extra_generation"
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\nReturn only SQL.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger",
+              "seq": 0
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\nReturn only SQL.\n\nTry again.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0",
+              "seq": 0
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "syntax_a",
+          "status": "fail",
+          "reasons": [
+            "counterfactual_output_mismatch",
+            "execution_feedback_not_carried_forward"
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\nReturn only SQL.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger",
+              "seq": 0
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [v2dev_syntax_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\nReturn only SQL.\n\nTry again.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0",
+              "seq": 0
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "syntax_b",
+          "status": "fail",
+          "reasons": [
+            "execution_feedback_not_carried_forward"
+          ],
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\nReturn only SQL.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger",
+              "seq": 0
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [v2dev_syntax_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\nReturn only SQL.\n\nTry again.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0",
+              "seq": 0
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "neg_selectfirst",
+      "strategy": "vote3",
+      "verdict": "fail",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "late_majority",
+          "status": "fail",
+          "reasons": [
+            "counterfactual_output_mismatch"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\nReturn only SQL.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT amount FROM ledger"
+              ],
+              "seq": 0
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "permuted_majority",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\nReturn only SQL.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT amount FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger"
+              ],
+              "seq": 0
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "flipped_majority",
+          "status": "fail",
+          "reasons": [
+            "counterfactual_output_mismatch"
+          ],
+          "final": "SELECT amount FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\nReturn only SQL.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger",
+                "SELECT id FROM ledger"
+              ],
+              "seq": 0
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "equivalent_results",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\nReturn only SQL.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ],
+              "seq": 0
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "B"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "execution_majority_flipped",
+          "status": "fail",
+          "reasons": [
+            "counterfactual_output_mismatch"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\nReturn only SQL.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ],
+              "seq": 0
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "execution_majority_AB",
+          "status": "pass",
+          "reasons": [],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\nReturn only SQL.",
+              "system": "",
+              "n": 3,
+              "temperature": 0.7,
+              "response": [
+                "SELECT id FROM ledger",
+                "SELECT amount FROM ledger",
+                "SELECT id FROM ledger WHERE id > 0"
+              ],
+              "seq": 0
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT amount FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "same"
+                ]
+              ],
+              "error": null
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger WHERE id > 0",
+              "ok": true,
+              "rows": [
+                [
+                  "C"
+                ]
+              ],
+              "error": null
+            }
+          ],
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "bare",
+      "strategy": "format_guard",
+      "verdict": "review_required",
+      "scope": "development probes; independent calibration and production adapter pending",
+      "runs": [
+        {
+          "probe": "format_original",
+          "status": "review_required",
+          "reasons": [
+            "explicit_sql_only_fence_requirement_not_observed",
+            "semantic_prompt_review_required"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nWrite the SQLite query.",
+              "system": "You are an expert Text-to-SQL system for SQLite. Read the schema carefully and output exactly one SQLite query that answers the question, inside a ```sql ... ``` block.",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger",
+              "seq": 0
+            }
+          ],
+          "error": null
+        },
+        {
+          "probe": "format_changed_question",
+          "status": "review_required",
+          "reasons": [
+            "explicit_sql_only_fence_requirement_not_observed",
+            "semantic_prompt_review_required"
+          ],
+          "final": "SELECT id FROM ledger",
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger amounts.\n\nWrite the SQLite query.",
+              "system": "You are an expert Text-to-SQL system for SQLite. Read the schema carefully and output exactly one SQLite query that answers the question, inside a ```sql ... ``` block.",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger",
+              "seq": 0
+            }
+          ],
+          "error": null
+        }
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "path": "external/TTHE/text_to_sql/agents/hpc_repair.py",
+      "sha256": "989f70daf0d4a16c41030cf6da1dbf8d070801322e9619e343ad9b6691beb82f"
+    },
+    {
+      "path": "external/TTHE/text_to_sql/agents/hpc_vote3.py",
+      "sha256": "00c674b64961a4a69f630cc6d11c8dea0228f49590accf25169c865fe8ba9a55"
+    },
+    {
+      "path": "external/TTHE/text_to_sql/agents/neg_uncond_twocall.py",
+      "sha256": "d9f18f4c7a6219dc3e5468dabeebe9f372c921a15f49ce83501fa7bc33cec815"
+    },
+    {
+      "path": "external/TTHE/text_to_sql/agents/neg_selectfirst.py",
+      "sha256": "532fecc72d92349a129317541e60197486731085cbbfd041cbd3386f4871b288"
+    },
+    {
+      "path": "external/TTHE/text_to_sql/agents/bare.py",
+      "sha256": "03dfac6a47f4139742edc54d6c0c7fff1d562bfafd6aeeae5fbdbe351d8ab543"
+    },
+    {
+      "path": "experiment/revision/gate_v2.py",
+      "sha256": "fff11167e55a9f2e18230b145de3f967e2006a53587bb624fc9f32d5e7c7dd18"
+    },
+    {
+      "path": "experiment/revision/gate_controls.py",
+      "sha256": "27d586acf9bd29463417046ce28648f76ebf495d8c4f3052a9644ad4bc241ff3"
+    },
+    {
+      "path": "experiment/revision/gate_runtime_adapter.py",
+      "sha256": "529c9d02a58c0613f32de1ab04e60f83d27d5e57052a54f2805da3f08a69b238"
+    },
+    {
+      "path": "experiment/revision/test_gate_v2.py",
+      "sha256": "3ef1f97a72b858d4e74466d969421de2d3468c3dfa3720aa30fee281ffe294f9"
+    },
+    {
+      "path": "experiment/revision/test_gate_runtime_adapter.py",
+      "sha256": "0d74b2e358c8c73bcbb71c70a04f3e2aaa4e3a106154ddf20c566ef44a830d8e"
+    },
+    {
+      "path": "experiment/revision/replay.py",
+      "sha256": "b87ba0aae2b610053c418b7a8373532bfe1c53a2a2dcfb9d345f548f2693ea86"
+    },
+    {
+      "path": "experiment/revision/gate_development_report.py",
+      "sha256": "7ac44a067828b1c9bb66ce6a51913704b37f2deb73ec2722d8523ebb75edcb12"
+    },
+    {
+      "path": "external/TTHE/text_to_sql/harness_base.py",
+      "sha256": "a25324fa098706aa74b3396ede06dd5a4b45b584a0b3e0fc7043949287b0d063"
+    },
+    {
+      "path": "external/TTHE/text_to_sql/resultkey.py",
+      "sha256": "3fb8e89f05a60dd0d1039e3c34436415cb9b01dbe0b043047db0b6dbc59b1ada"
+    },
+    {
+      "path": "external/TTHE/ase/llm.py",
+      "sha256": "c57bb5d5adcc58c2c00b9279ff0b8bef372f08d26bd1abbb4e31bbac595f16ec"
+    },
+    {
+      "path": "review-stage/GATE_V2_CONTRACTS.md",
+      "sha256": "80870579629bad16ec4f06b2953138cbb707424d91922853c10647c20e2f49bb"
+    }
+  ]
+}

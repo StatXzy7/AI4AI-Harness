@@ -1,0 +1,197 @@
+{
+  "case": {
+    "id": "archive_two_view",
+    "strategy": "two_view",
+    "path": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_two_view.py",
+    "source_sha256": "7263a85db95f0acb132d063f390c6111ce6a12700ba16db18708e6823f8a1f37",
+    "role": "archived_candidate",
+    "profile": null
+  },
+  "result": {
+    "version": "gate-v4",
+    "strategy": "two_view",
+    "profile": null,
+    "structural_verdict": "fail",
+    "runs": [
+      {
+        "probe": "first_empty",
+        "status": "review_required",
+        "reasons": [
+          "formulation_semantics_review_required"
+        ],
+        "final": "SELECT amount FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nStyle requirement: Use JOIN clauses (e.g., INNER JOIN ... ON ...) to combine tables.\nReturn only the SQL query.",
+            "system": "You are an expert SQL engineer. Write only a SQL query, without explanation or markdown fences.",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger",
+            "seq": 0
+          },
+          {
+            "kind": "llm",
+            "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nStyle requirement: Use subqueries (e.g., IN, EXISTS, scalar subqueries) instead of JOINs where possible.\nReturn only the SQL query.",
+            "system": "You are an expert SQL engineer. Write only a SQL query, without explanation or markdown fences.",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT amount FROM ledger",
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": true,
+            "rows": [],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "B"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "second_empty",
+        "status": "fail",
+        "reasons": [
+          "candidate_not_executed",
+          "formulation_semantics_review_required"
+        ],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nStyle requirement: Use JOIN clauses (e.g., INNER JOIN ... ON ...) to combine tables.\nReturn only the SQL query.",
+            "system": "You are an expert SQL engineer. Write only a SQL query, without explanation or markdown fences.",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger",
+            "seq": 0
+          },
+          {
+            "kind": "llm",
+            "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nStyle requirement: Use subqueries (e.g., IN, EXISTS, scalar subqueries) instead of JOINs where possible.\nReturn only the SQL query.",
+            "system": "You are an expert SQL engineer. Write only a SQL query, without explanation or markdown fences.",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT amount FROM ledger",
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "both_nonempty",
+        "status": "fail",
+        "reasons": [
+          "candidate_not_executed",
+          "formulation_semantics_review_required"
+        ],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nStyle requirement: Use JOIN clauses (e.g., INNER JOIN ... ON ...) to combine tables.\nReturn only the SQL query.",
+            "system": "You are an expert SQL engineer. Write only a SQL query, without explanation or markdown fences.",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger",
+            "seq": 0
+          },
+          {
+            "kind": "llm",
+            "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nStyle requirement: Use subqueries (e.g., IN, EXISTS, scalar subqueries) instead of JOINs where possible.\nReturn only the SQL query.",
+            "system": "You are an expert SQL engineer. Write only a SQL query, without explanation or markdown fences.",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT amount FROM ledger",
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "first_failed",
+        "status": "review_required",
+        "reasons": [
+          "formulation_semantics_review_required"
+        ],
+        "final": "SELECT amount FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nStyle requirement: Use JOIN clauses (e.g., INNER JOIN ... ON ...) to combine tables.\nReturn only the SQL query.",
+            "system": "You are an expert SQL engineer. Write only a SQL query, without explanation or markdown fences.",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger",
+            "seq": 0
+          },
+          {
+            "kind": "llm",
+            "prompt": "Database schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nStyle requirement: Use subqueries (e.g., IN, EXISTS, scalar subqueries) instead of JOINs where possible.\nReturn only the SQL query.",
+            "system": "You are an expert SQL engineer. Write only a SQL query, without explanation or markdown fences.",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT amount FROM ledger",
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": false,
+            "rows": [],
+            "error": "syntax"
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "B"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      }
+    ],
+    "admission": "not_evaluated",
+    "scope": "Unified development measurement, with explicit source-assigned response roles.\n\nFrozen v3 supplies five unchanged strategy probes. Typed schema/decomposition and\nreal SQLite feedback supply the remaining three. This module never admits a\ncandidate: semantic decisions and independently frozen reference checks remain\nseparate. Unsupported response profiles are review-required, not rejection.\n"
+  },
+  "admission": "not_evaluated"
+}

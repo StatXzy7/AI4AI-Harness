@@ -1,0 +1,20 @@
+{
+  "scope": "exact identification checks and conservative bounds; not empirical validation, formal inference or scientific clearance",
+  "all_revision_tests": 52,
+  "new_tests": 6,
+  "tests": "PASS in isolated replay_env",
+  "ruff": "PASS",
+  "review": "two bounded code/math reviews9/10 ready; does not prove execution independence, compute matching or generalization",
+  "empirical_analysis_unchanged": true,
+  "english_main_pages": 9,
+  "english_total_pages": 16,
+  "chinese_total_pages": 19,
+  "inputs_and_artifacts": {
+    "experiment/revision/stable_witness.py": "68a94bb9d3780a6062d3481dc8f65ccba90f65c3d668cae4f9968fd6a5270d26",
+    "experiment/revision/test_stable_witness.py": "afa1dcb4f793aa4578b51b205590407be5f6094a7c461195ea9a3b86a261d62f",
+    "review-stage/STABLE_IDENTIFICATION.md": "7363cdd52af3e251aacbfb78f7259778918d24b4a70997bd2944a2476f703f1c",
+    "artifacts/revision_20260910/stable_identification.json": "720e16cc25f0730f9b3d33158271458a0b2f0a8b007e8574f3c3039c91c1c3da",
+    "artifacts/revision_20260910/verification.json": "bc9f99a817f59737cbdeb9e6726712173ba2ffd0a431e3c00b2adfd9dd766d40",
+    "artifacts/revision_20260910/chinese_sync_verification.json": "fb046e3c6fcf6415cd70b17d0dc2d23225a0258191a93c5134642c5f198f7826"
+  }
+}

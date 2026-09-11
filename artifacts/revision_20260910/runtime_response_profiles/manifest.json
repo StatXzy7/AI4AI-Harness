@@ -1,0 +1,146 @@
+{
+  "bindings": {
+    "artifacts/revision_20260910/runtime_gate_bridge/source_manifest.json": "709929f9d351d059b1f91e7daaee679408d37b08508b3dd8fa7bd12d184328db",
+    "experiment/revision/runtime_response_report.py": "57a3ae0d7193770009b81f15ffd929be5af62c6c90c316492a527d44bb98c801",
+    "experiment/revision/runtime_response_profiles.py": "65baf9b7cf3a79fff3d3814d87dca62fd8af331f08f16536680a9537e986fd57",
+    "experiment/revision/gate_runtime_adapter.py": "529c9d02a58c0613f32de1ab04e60f83d27d5e57052a54f2805da3f08a69b238",
+    "experiment/revision/gate_v2.py": "fff11167e55a9f2e18230b145de3f967e2006a53587bb624fc9f32d5e7c7dd18",
+    "experiment/revision/gate_v3.py": "93e68080d0de32b29d349593e54535857c9acbfacaa42ebd8e70477298ca9827",
+    "experiment/revision/common_pool.py": "b697e032d19791df06d0af2fbde0af37fe842f104698c5d03ddd112f4c064624",
+    "external/TTHE/text_to_sql/harness_base.py": "a25324fa098706aa74b3396ede06dd5a4b45b584a0b3e0fc7043949287b0d063",
+    "external/TTHE/ase/llm.py": "c57bb5d5adcc58c2c00b9279ff0b8bef372f08d26bd1abbb4e31bbac595f16ec",
+    "review-stage/RUNTIME_RESPONSE_PROFILES_PROTOCOL.md": "28fd7cf1fcbf9037ee1c6b8957563cc6195d500a96ab161825aba94d0621eb92",
+    "external/TTHE/text_to_sql/agents/p2_C_deepseek_s1_schema_link.py": "99542e3e0c703f1c3a0f93649e50416b6035085be55b08335b64b2e901cd46a0",
+    "external/TTHE/text_to_sql/agents/p2_C_deepseek_s1_decompose.py": "e353221cc20bce5849d44f7fa92b6d3002bbbd1f2572eed807dae0ef82be11d5",
+    "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_error_classify.py": "7960116a8c4026e466ef73e509ffcb183ec09b499f50fc515c79678b10864035"
+  },
+  "cases": [
+    {
+      "strategy": "schema_link",
+      "name": "ledger_json",
+      "linking": {
+        "tables": [
+          "ledger"
+        ],
+        "columns": [
+          "ledger.id"
+        ]
+      },
+      "final": "SELECT id FROM ledger"
+    },
+    {
+      "strategy": "schema_link",
+      "name": "unused_json",
+      "linking": {
+        "tables": [
+          "unused"
+        ],
+        "columns": [
+          "unused.label"
+        ]
+      },
+      "final": "SELECT label FROM unused"
+    },
+    {
+      "strategy": "schema_link",
+      "name": "malformed_json",
+      "linking": null,
+      "final": "SELECT id FROM ledger"
+    },
+    {
+      "strategy": "decompose",
+      "name": "parts_0",
+      "steps": [
+        "List ledger identifiers.",
+        "List ledger amounts."
+      ],
+      "answers": [
+        "SELECT id FROM ledger /* payload_0_0 */",
+        "SELECT amount FROM ledger /* payload_0_1 */"
+      ],
+      "final": "SELECT id FROM ledger"
+    },
+    {
+      "strategy": "decompose",
+      "name": "parts_1",
+      "steps": [
+        "List ledger identifiers.",
+        "List ledger amounts."
+      ],
+      "answers": [
+        "SELECT id FROM ledger /* payload_1_0 */",
+        "SELECT amount FROM ledger /* payload_1_1 */"
+      ],
+      "final": "SELECT amount FROM ledger"
+    },
+    {
+      "strategy": "error_classify",
+      "name": "success",
+      "initial": "SELECT id FROM ledger"
+    },
+    {
+      "strategy": "error_classify",
+      "name": "sqlite_syntax",
+      "initial": "SELEC id FROM ledger"
+    },
+    {
+      "strategy": "error_classify",
+      "name": "sqlite_missing_column",
+      "initial": "SELECT absent FROM ledger"
+    },
+    {
+      "strategy": "error_classify",
+      "name": "sqlite_missing_table",
+      "initial": "SELECT id FROM absent"
+    },
+    {
+      "strategy": "error_classify",
+      "name": "sqlite_incomplete",
+      "initial": "SELECT id FROM"
+    },
+    {
+      "strategy": "error_classify",
+      "name": "executable_other_column",
+      "initial": "SELECT amount FROM ledger"
+    }
+  ],
+  "sources": {
+    "schema_link": {
+      "strategy": "schema_link",
+      "path": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s1_schema_link.py",
+      "sha256": "99542e3e0c703f1c3a0f93649e50416b6035085be55b08335b64b2e901cd46a0",
+      "available_count": 11,
+      "imports": [
+        "from ..harness_base import SQLHarness",
+        "from .. import bridge",
+        "import json",
+        "import re"
+      ]
+    },
+    "decompose": {
+      "strategy": "decompose",
+      "path": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s1_decompose.py",
+      "sha256": "e353221cc20bce5849d44f7fa92b6d3002bbbd1f2572eed807dae0ef82be11d5",
+      "available_count": 12,
+      "imports": [
+        "import json",
+        "import re",
+        "from ..harness_base import SQLHarness",
+        "from .. import bridge"
+      ]
+    },
+    "error_classify": {
+      "strategy": "error_classify",
+      "path": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_error_classify.py",
+      "sha256": "7960116a8c4026e466ef73e509ffcb183ec09b499f50fc515c79678b10864035",
+      "available_count": 12,
+      "imports": [
+        "import re",
+        "from ..harness_base import SQLHarness",
+        "from .. import bridge"
+      ]
+    }
+  },
+  "sqlite_version": "3.51.0",
+  "python": "3.13.9 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 19:09:58) [MSC v.1929 64 bit (AMD64)]"
+}

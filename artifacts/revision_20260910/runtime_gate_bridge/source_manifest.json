@@ -1,0 +1,88 @@
+{
+  "scope": "Archived forced-ungated candidate interface diagnostics; no benchmark outcomes read",
+  "selection_rule": "For each of the eight named strategies, choose lexicographically first existing p2_C_*_<strategy>.py by filename. Do not replace unavailable or failing cases.",
+  "cases": [
+    {
+      "strategy": "repair",
+      "path": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_repair.py",
+      "sha256": "64b17889de12ebe40aca5f1a5a0f287eb70656bb0f7485b61c8e031463bea2a7",
+      "available_count": 17,
+      "imports": [
+        "from ..harness_base import SQLHarness",
+        "from .. import bridge"
+      ]
+    },
+    {
+      "strategy": "vote3",
+      "path": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_vote3.py",
+      "sha256": "8910d3ab1a010fc7b1c27ca4c0ddb8698e76b2c8879e6fa8b65826bdc23c5a1b",
+      "available_count": 18,
+      "imports": [
+        "from ..harness_base import SQLHarness",
+        "from .. import bridge"
+      ]
+    },
+    {
+      "strategy": "schema_link",
+      "path": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s1_schema_link.py",
+      "sha256": "99542e3e0c703f1c3a0f93649e50416b6035085be55b08335b64b2e901cd46a0",
+      "available_count": 11,
+      "imports": [
+        "from ..harness_base import SQLHarness",
+        "from .. import bridge",
+        "import json",
+        "import re"
+      ]
+    },
+    {
+      "strategy": "hint_guard",
+      "path": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_hint_guard.py",
+      "sha256": "def3837c363969ba6b4b323ff293faff32665bb87ddb4827b70a0d65c46e6b1d",
+      "available_count": 14,
+      "imports": [
+        "import re",
+        "from typing import List",
+        "from ..harness_base import SQLHarness",
+        "from .. import bridge"
+      ]
+    },
+    {
+      "strategy": "two_view",
+      "path": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_two_view.py",
+      "sha256": "7263a85db95f0acb132d063f390c6111ce6a12700ba16db18708e6823f8a1f37",
+      "available_count": 17,
+      "imports": [
+        "from ..harness_base import SQLHarness",
+        "from .. import bridge"
+      ]
+    },
+    {
+      "strategy": "decompose",
+      "path": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s1_decompose.py",
+      "sha256": "e353221cc20bce5849d44f7fa92b6d3002bbbd1f2572eed807dae0ef82be11d5",
+      "available_count": 12,
+      "imports": [
+        "import json",
+        "import re",
+        "from ..harness_base import SQLHarness",
+        "from .. import bridge"
+      ]
+    },
+    {
+      "strategy": "error_classify",
+      "path": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_error_classify.py",
+      "sha256": "7960116a8c4026e466ef73e509ffcb183ec09b499f50fc515c79678b10864035",
+      "available_count": 12,
+      "imports": [
+        "import re",
+        "from ..harness_base import SQLHarness",
+        "from .. import bridge"
+      ]
+    },
+    {
+      "strategy": "format_guard",
+      "path": null,
+      "available_count": 0
+    }
+  ]
+}

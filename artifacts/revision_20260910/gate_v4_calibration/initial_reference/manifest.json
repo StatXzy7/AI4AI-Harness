@@ -1,0 +1,18 @@
+{
+  "experiment/revision/v4_reference_controls/controls.py": {
+    "snapshot": "artifacts/revision_20260910/gate_v4_calibration/initial_reference/controls.py",
+    "sha256": "4d39ab1d202394e2a396c7a4c8de95d3f11493552fc72b3734d408cb426f8276"
+  },
+  "artifacts/revision_20260910/gate_v4_references/inventory.json": {
+    "snapshot": "artifacts/revision_20260910/gate_v4_calibration/initial_reference/inventory.json",
+    "sha256": "731c211dcc39ba527ab7298d5eefbdd8a0a4a429c7cd83d8993518e41f9f31c2"
+  },
+  "artifacts/revision_20260910/gate_v4_references/author_reference.json": {
+    "snapshot": "artifacts/revision_20260910/gate_v4_calibration/initial_reference/author_reference.json",
+    "sha256": "8a132e11bfb3f7b3b4486512576438e5ef87eb355cc905279b5c0b4d060d0243"
+  },
+  "artifacts/revision_20260910/gate_v4_references/AUTHOR_STATEMENT.md": {
+    "snapshot": "artifacts/revision_20260910/gate_v4_calibration/initial_reference/AUTHOR_STATEMENT.md",
+    "sha256": "f469aef98f9316cd81e5795f17bc4c33e8b5ae1b584d03639f0862a74dc391b8"
+  }
+}

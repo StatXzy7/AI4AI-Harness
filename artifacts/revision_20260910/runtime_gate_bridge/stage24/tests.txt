@@ -1,0 +1,7 @@
+test_adapter_cleanup_after_caller_exception (experiment.revision.test_gate_runtime_adapter.GateRuntimeTests.test_adapter_cleanup_after_caller_exception) ... ok
+test_real_harness_base_and_trusted_positive_negative_controls (experiment.revision.test_gate_runtime_adapter.GateRuntimeTests.test_real_harness_base_and_trusted_positive_negative_controls) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.015s
+
+OK

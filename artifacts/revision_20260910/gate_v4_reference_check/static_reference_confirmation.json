@@ -1,0 +1,9 @@
+{
+  "source_sha256": "4df6313a7c9b41b4deccb58192f9de4c7a3b15036d62157aa1e922d61b39bb4e",
+  "cases": 32,
+  "author_reviewer_agreements": 32,
+  "verified_quotes": 37,
+  "scope": "static-feedback-corrected references before any instrument execution",
+  "reviewer_model": "gpt-5.5",
+  "author_model": "gpt-5.6-sol"
+}

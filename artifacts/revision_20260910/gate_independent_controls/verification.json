@@ -1,0 +1,185 @@
+{
+  "recorded_at_utc": "2026-09-10T13:11:29.064314+00:00",
+  "scope": "First frozen finite independently authored instrument-control measurement and bilingual reporting; not production calibration or overall paper clearance",
+  "bindings": {
+    "artifacts/revision_20260910/chinese_sync_verification.json": "935966a8f01dd1f222bb69ed4cb492ac9e321755001b8803c0c9e73c7abb4d6f",
+    "artifacts/revision_20260910/gate_independent_controls/adjudication.initial.json": "15c7b10dcb82e3b51ec2aeec23f17f23f00b5761b80dd143681ec2c2650edaa1",
+    "artifacts/revision_20260910/gate_independent_controls/adjudication.json": "06592f0c3fa973089f2679999c8cea28285cd3df02198043b6851d5385f6e9c7",
+    "artifacts/revision_20260910/gate_independent_controls/author_labels.json": "29fa9f7b2afacb9a7b8ff6335616c510074823ba3f0229a3b932eef8c1aeee4a",
+    "artifacts/revision_20260910/gate_independent_controls/before_paper_update/artifacts__revision_20260910__chinese_sync_verification.json": "23175b594281e9c7d9d13f9e2cceff405ac8b18a4e3e50deaaa073f24102f96f",
+    "artifacts/revision_20260910/gate_independent_controls/before_paper_update/artifacts__revision_20260910__verification.json": "f978c4b8cebe7662849de337661cb81994eb037ad374ec325aa968434158a859",
+    "artifacts/revision_20260910/gate_independent_controls/before_paper_update/manifest.json": "80190dfd3ea020b9159bd53a5a1dcd05e209ca53fea82068caf778faff618cb3",
+    "artifacts/revision_20260910/gate_independent_controls/before_paper_update/paper__latex__main.pdf": "ea1ad3a407d4c0d1c451b6890ebc69ee06047f7bf446c29ba2bdbb5b0b14ffc1",
+    "artifacts/revision_20260910/gate_independent_controls/before_paper_update/paper__latex__sec_appendix.tex": "6cd0269f3ded22e861002c2943655f550b2338da155cea01782e7eef7b5964c6",
+    "artifacts/revision_20260910/gate_independent_controls/before_paper_update/paper__latex__sec_discussion.tex": "1e57193b993b71f63a42f80e10eff0a6443f0026c649d3e4f961492040814727",
+    "artifacts/revision_20260910/gate_independent_controls/before_paper_update/paper__latex_zh__main.pdf": "6484cc69a35f57c4dd16c0aa0d851c059c4c2eeaf21c2185458a58da985e1ed0",
+    "artifacts/revision_20260910/gate_independent_controls/before_paper_update/paper__latex_zh__sec_appendix.tex": "a7d3e03274711ae6de1bafbb09f6b2254f049e63d7136603167b1cc8b8c9fc8f",
+    "artifacts/revision_20260910/gate_independent_controls/before_paper_update/paper__latex_zh__sec_discussion.tex": "cfb26b18d3c5e867906b99ad780d92e30010b7d7392dcf72717737eaa7dcd49d",
+    "artifacts/revision_20260910/gate_independent_controls/before_status_update/experiment__revision__README.md": "683198e86fcb8dfc3f59d0d080a4672936996fb9039f5ac675b73af09fd52252",
+    "artifacts/revision_20260910/gate_independent_controls/before_status_update/review-stage__REVISED_EXPERIMENT_PLAN.md": "38f0cbcfd42653e28c0424d8dc5beaed34fa13cbbb14f4c5dcd5836d6506c5ed",
+    "artifacts/revision_20260910/gate_independent_controls/before_status_update/review-stage__REVISION_20260910.md": "f6479f7db8318ad7379ad7a6c8d39508dd59980928b2e8bdbf95310602aaf4fc",
+    "artifacts/revision_20260910/gate_independent_controls/chinese-18.png": "d87fc7fa7a2d8e54297741c227c722f355b37c924bd462e00ffee6d1354ff670",
+    "artifacts/revision_20260910/gate_independent_controls/chinese-19.png": "f73b2276934c1caaef7f7c62896d08a12f4c43549ea89d3c92843b496b5ede90",
+    "artifacts/revision_20260910/gate_independent_controls/chinese-20.png": "8feca0beac2c55acbb646e24391ce948a52d0e83c29ca88baebd08f255e89b21",
+    "artifacts/revision_20260910/gate_independent_controls/chinese-main-10.png": "43aa9a8d08a4f6df72a47d9b8c77073d7883b3ab96bc0bee6db9bd8a44da8b63",
+    "artifacts/revision_20260910/gate_independent_controls/chinese-main-11.png": "4809c99bd01c782f68ab86d8e70a16e2e121543097717e38f28c3268100f06b0",
+    "artifacts/revision_20260910/gate_independent_controls/COMPLETE.json": "242eef420241149ceefea5171112a5c8edbcd4aa27378d27838aac0b65df8a7f",
+    "artifacts/revision_20260910/gate_independent_controls/english-16.png": "183bd096f73fc492cadec6ec652c5fa166bf1775b5561b05164ac4b8ff3507ae",
+    "artifacts/revision_20260910/gate_independent_controls/english-17.png": "3bb51fa4091437c15bfabf1a7186eb1d46ccb7a715081bf658c147099b27a3ad",
+    "artifacts/revision_20260910/gate_independent_controls/english-main-09.png": "91b9c1dcc95f72cc6d2e3f694758d7d3f80d022fd33b63daca7b1662751311ba",
+    "artifacts/revision_20260910/gate_independent_controls/failure_diagnostics.json": "8d7d00e121b565469976f49899f7620b46080bcb350701c107b5f38653c96ef6",
+    "artifacts/revision_20260910/gate_independent_controls/instrument_freeze.json": "cbad474ad6e8fd1249ff519756943e6bb3b525dd32085f679e274d452ec9e2a0",
+    "artifacts/revision_20260910/gate_independent_controls/lineage.json": "259ae70c30c6a8f0d676581469b58f468cc8c7b77ac5b7c1b27637ce6a309c0c",
+    "artifacts/revision_20260910/gate_independent_controls/measurement_freeze.json": "8d658137251c28f356e93abb705e687b741838d7cc9d18ad2a149bedaaf38890",
+    "artifacts/revision_20260910/gate_independent_controls/measurement_started.json": "dc729c2dfa6bf5b46483a92f31bb539894e1c034d6484a7f5372ccf1be3b334c",
+    "artifacts/revision_20260910/gate_independent_controls/PROTOCOL.before_clarification.md": "983a1c9de4060166c9f92a09d4d43a3c1bdf2037d63be66340b44dfe09b6b2ad",
+    "artifacts/revision_20260910/gate_independent_controls/PROTOCOL.md": "087443809c59b5a00ee9297a9dd68be6c8a855d90280d57e48ec242856ca1bc4",
+    "artifacts/revision_20260910/gate_independent_controls/results.json": "875d104d1c960e5545114e13e5ba692c432dbb21c1ef502057090237c456835b",
+    "artifacts/revision_20260910/gate_independent_controls/review_packet.json": "9bf6d964a6f731a7c66c1a80c3dcc5e778e92c4d7aa93b32ea2baae197040aba",
+    "artifacts/revision_20260910/gate_independent_controls/runner.before_review.py": "6059aeb2cc7e78bae923a02fec9ed61554b9ee24e388f6b0ab1568d3c12b8e78",
+    "artifacts/revision_20260910/gate_independent_controls/summary.json": "e2702b4ee658b7e2492878a7c563085ae32b5b0027cb20271a48198d46fa71a4",
+    "artifacts/revision_20260910/gate_independent_controls/tests.txt": "1c77118fe5474b43f08527044d4a124f276753989b587533bc9fd06d2d63732d",
+    "artifacts/revision_20260910/verification.json": "6ffeddc99b2ad35270cbb5e3c8d88e249486e6e238e321c1845298b0bef72304",
+    "experiment/revision/gate_v2.py": "fff11167e55a9f2e18230b145de3f967e2006a53587bb624fc9f32d5e7c7dd18",
+    "experiment/revision/independent_gate_controls.py": "b9120ac63de5ff348821182ae95726e7f1b3a6ff799f972e2362b6f18006d13b",
+    "experiment/revision/independent_gate_measure.py": "1401caa919c1c148e501bcaf693f3a9a4ef816a8dc80993831480a241aa44d91",
+    "experiment/revision/README.md": "471db71ef0ce2846ce3a285a293b74203ab1ae3f91b980454d6cec5de54044e9",
+    "experiment/revision/test_independent_gate_measure.py": "cf4c403e477420455d8fbe60b509e870f4811e65e9b80cd512aa98e12abfdb6a",
+    "paper/latex/main.log": "ba575d65a34a5f22950dfda41b9ef04b36fe547fee7e303d51109ba7ef909340",
+    "paper/latex/main.pdf": "b1c8e2bd14727da094361da647e6f35b9f4218d77be2e50808a468622dcc4c86",
+    "paper/latex/sec_appendix.tex": "b93788de85d1a6b56f6ca5c51c5630f603270112fb134705f6b7eda217303d7d",
+    "paper/latex/sec_discussion.tex": "82103e431a607da12786f6ba56faf3065c7e6d0ed91435c9555b7771b952ae2d",
+    "paper/latex_zh/main.log": "51b8cff5c7b8beea9fd979f54d5f7a7f3434a9f489a59be7fb8ba03788fd4d56",
+    "paper/latex_zh/main.pdf": "cc39720997360ce52e63a1090c4377788c749cd017a260ec45a084d8f9b8c27e",
+    "paper/latex_zh/sec_appendix.tex": "3da5ab142a9f56b8030efe7c9bf44a753a957d1eb716c8eb988a13aacbffdfb8",
+    "paper/latex_zh/sec_discussion.tex": "d0d19818fb74e6f61df3f1f44402b0dd5cb7d49caa0c7d097ac7c72856f39d21",
+    "review-stage/GATE_INDEPENDENT_CALIBRATION.md": "242822d4cb4231a7f3ce47c11c563e4a00aff128dd68ef1bf29736e780d161c1",
+    "review-stage/GATE_V2_CONTRACTS.md": "80870579629bad16ec4f06b2953138cbb707424d91922853c10647c20e2f49bb",
+    "review-stage/REVISED_EXPERIMENT_PLAN.md": "0f332e1e37b8aa636d15f06eb7860cb16bf885e79bc77738de14f0e466589fa5",
+    "review-stage/REVISION_20260910.md": "58088cfa2f61fccfb30178be620d124de43e91852a777532e327375ab621e84f"
+  },
+  "measurement": {
+    "cases": 32,
+    "actual_evaluate_traversals": 1,
+    "complete_binding_check": "PASS",
+    "input_freeze_bindings": 6,
+    "instrument_or_control_changed_after_measurement": false,
+    "source_trace_case_mappings_checked": 32,
+    "evidence_references_checked": 72,
+    "diagnostic_records": 14,
+    "clarification_rounds": 1,
+    "initial_adjudication_preserved": true,
+    "control_author_model": "gpt-5.5",
+    "instrument_developer_model": "GPT-6",
+    "adjudicator_model": "gpt-5.6-sol",
+    "backend_build": "unknown"
+  },
+  "finite_control_verdict": "not ready",
+  "structural_counts": {
+    "pass": 5,
+    "fail": 18,
+    "review_required": 9
+  },
+  "semantic_review_counts": {
+    "conforms": 7,
+    "nonconforms": 8,
+    "indeterminate": 1
+  },
+  "disputed_case_ids": [
+    "ic009",
+    "ic010",
+    "ic018"
+  ],
+  "undisputed_cases": 29,
+  "undisputed_comparison": {
+    "conforms": {
+      "accepted": 10,
+      "rejected": 3
+    },
+    "nonconforms": {
+      "rejected": 16
+    }
+  },
+  "confirmed_false_rejection_case_ids": [
+    "ic021",
+    "ic025",
+    "ic026"
+  ],
+  "indeterminate_semantic_case_preserves_structural_fail": "ic018",
+  "population_error_rates_estimated": false,
+  "production_admissions": 0,
+  "checks": {
+    "related_tests": 13,
+    "related_tests_status": "PASS retained current-source run in tests.txt",
+    "ruff": "PASS three new Python files",
+    "current_paper_verifier": "PASS 42 source/result/asset hashes, sample sizes, page count and decompositions",
+    "bilingual_table9_rows": "PASS all eight strategies and total recomputed from summary",
+    "current_bilingual_source_build_pdf_hashes": "PASS",
+    "lineage": "PASS stage17 18 bindings, stage14 9 bindings, 8 exact paper snapshots, 3 preauthoring instrument/protocol bindings",
+    "edited_chinese_utf8": "PASS no BOM or replacement characters",
+    "ad_hoc_checker_note": "Initial evidence recheck assumed all evidence indices were trace entries and raised TypeError on run-level final fields. Read-only checker then handled null trace_index as run-level and all 72 passed; no evidence or result edits."
+  },
+  "paper": {
+    "english_total_pages": 17,
+    "english_main_pages": 9,
+    "chinese_total_pages": 20,
+    "chinese_main_text_end_page": 11,
+    "visually_inspected_english_pages": [
+      9,
+      16,
+      17
+    ],
+    "visually_inspected_chinese_pages": [
+      10,
+      11,
+      18,
+      19,
+      20
+    ],
+    "latest_appendix_correction_rerendered_pages": {
+      "english": [
+        16,
+        17
+      ],
+      "chinese": [
+        18,
+        19,
+        20
+      ]
+    },
+    "no_overfull_missing_glyph_or_undefined_reference_warnings": true,
+    "benchmark_values_changed": false,
+    "original_external_score": 4,
+    "original_external_score_is_new_review": false,
+    "overall_verdict": "not ready"
+  },
+  "reviews": {
+    "measurement_runner": {
+      "model": "gpt-5.6-sol",
+      "score": 9,
+      "verdict": "ready",
+      "scope": "fixed local runner mechanics only"
+    },
+    "final_text_corrections": {
+      "score": 9,
+      "verdict": "ready",
+      "same_model_as_root": true,
+      "scope": "two bilingual wording fixes versus summary and diagnostics; excludes overall science, PDF and lineage/verification"
+    }
+  },
+  "external_provider_generation_requests": 0,
+  "benchmark_evaluations": 0,
+  "agent_compute_is_not_zero_cost": true,
+  "B_experiment_complete": false,
+  "full_reviewer_improvement_goal_complete": false,
+  "remaining": [
+    "Versioned repair of decomposition spy and error-category extraction; these 32 exposed controls become regression evidence only",
+    "Fresh independent controls with valid schema_link and two_view positive coverage",
+    "Reviewer A: matched null/repeated generation and cost accounting",
+    "Reviewer B: validated instrument, real interface and common raw pool",
+    "Reviewer C: empirical bridge",
+    "Reviewer D: independent frozen utility evaluation",
+    "W1: formal estimand and uncertainty calibration",
+    "Provider pilot budget remains pending; no permission inferred"
+  ]
+}

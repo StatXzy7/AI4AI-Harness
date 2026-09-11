@@ -1,0 +1,9 @@
+test_current_field_ignores_other_steps_in_context_but_rejects_ambiguity (experiment.revision.test_runtime_response_profiles.ProfileTests.test_current_field_ignores_other_steps_in_context_but_rejects_ambiguity) ... ok
+test_json_fields_and_invalid_input_are_preserved (experiment.revision.test_runtime_response_profiles.ProfileTests.test_json_fields_and_invalid_input_are_preserved) ... ok
+test_partial_answers_must_be_carried_to_assembly (experiment.revision.test_runtime_response_profiles.ProfileTests.test_partial_answers_must_be_carried_to_assembly) ... ok
+test_sqlite_feedback_is_actual_and_dropped_feedback_does_not_receive_fix (experiment.revision.test_runtime_response_profiles.ProfileTests.test_sqlite_feedback_is_actual_and_dropped_feedback_does_not_receive_fix) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+OK

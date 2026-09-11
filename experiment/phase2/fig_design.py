@@ -30,7 +30,7 @@ box(2, 16, 26, 10, "Phase-II confirmatory test\n9 DBs never opened in\ndevelopme
 box(2, 4, 26, 9, "Stratified core 400\n(drawn pre-outcome,\nsubset of the 1,169)", fc="#eef8ee", ec="#4a8f5c")
 
 # ---- middle panel: 2x2 factorial
-ax.text(58, 54, "Generation protocol (equal raw budget R=3/slot)", fontsize=10, fontweight="bold", ha="center")
+ax.text(58, 54, "Attempt cap R=3; stop at first admission", fontsize=10, fontweight="bold", ha="center")
 box(42, 38, 14, 10, "II-A\nfree\nungated", fs=8)
 box(62, 38, 14, 10, "II-B\nfree\ngated", fs=8)
 box(42, 24, 14, 10, "II-C\nforced\nungated", fs=8)
@@ -56,6 +56,6 @@ ax.annotate("", xy=(30.5, 16), xytext=(15, 29),
 fig.suptitle("Phase-II confirmatory design: database-level isolation, 2×2 factorial + open-mechanism arm, three-layer admission",
              fontsize=10.5, y=0.99)
 plt.tight_layout(rect=[0, 0, 1, 0.97])
-plt.savefig("../../paper/figures/fig_design.pdf", bbox_inches="tight")
-plt.savefig("../../paper/figures/fig_design.png", dpi=180, bbox_inches="tight")
-print("wrote paper/figures/fig_design.pdf/.png (v2: no overlap, phase labels corrected)")
+plt.savefig("../../paper/figures/fig_design_revision.pdf", bbox_inches="tight")
+plt.savefig("../../paper/figures/fig_design_revision.png", dpi=180, bbox_inches="tight")
+print("wrote paper/figures/fig_design_revision.pdf/.png (post-review: actual attempt cap)")

@@ -1,0 +1,16 @@
+{
+  "recorded_at_utc": "2026-09-10T12:03:31.339328+00:00",
+  "status": "not_ready_to_launch",
+  "source": "official provider public page and visible browser state",
+  "official_product_url": "https://www.paratera.com/mass.html",
+  "linked_console_url": "https://ai.paratera.com/#/login",
+  "console_visible_final_state": "Loading",
+  "account_price_verified": false,
+  "balance_verified": false,
+  "hard_spending_limit_verified": false,
+  "provider_internal_retry_policy": "general product page describes fallback/retry; per-account invocation and billing semantics not established",
+  "new_model_generation_requests": 0,
+  "account_mutations": 0,
+  "user_budget_response": "not_received",
+  "report_sha256": "b684d72f038910dd75c225042212039a30e433bac62cb9dae5e0d15b869992c3"
+}

@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "scope": "same-checkout isolated venv offline descriptive W1/W3 rerun; no independent execution data",
+  "artifact_bytes_exact_equal": true,
+  "sha256": {
+    "fingerprint.json": "0f0b75ef49984a3990424e8918c002ed78a13c8a68044dadaf6ea3f080d93e41",
+    "selection.json": "ea17878cb0871088f85f5fdff6acaa5bf29171813220aa2ed9a5989a2f9bda3f"
+  }
+}

@@ -1,0 +1,147 @@
+[
+  {
+    "path": "paper/latex/sec_appendix.tex",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/paper/latex/sec_appendix.tex",
+    "sha256": "2043bb821ea3d5ac05e4cbdfe73975b20d309bb3784a30b736394c468b9e96ee"
+  },
+  {
+    "path": "paper/latex/sec_discussion.tex",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/paper/latex/sec_discussion.tex",
+    "sha256": "82103e431a607da12786f6ba56faf3065c7e6d0ed91435c9555b7771b952ae2d"
+  },
+  {
+    "path": "paper/latex/main.aux",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/paper/latex/main.aux",
+    "sha256": "3b72a49241896f21264568df533ffc749c88e8f78b36cc6d20238f7f2f6a5105"
+  },
+  {
+    "path": "paper/latex/main.bbl",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/paper/latex/main.bbl",
+    "sha256": "3c4f01c9ea536f872d840deef1f88a56d8a80ab0a9d911368f384d36111be0e5"
+  },
+  {
+    "path": "paper/latex/main.blg",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/paper/latex/main.blg",
+    "sha256": "be17451e34338bee01c983447e3445ef29589c4987ff990b7f853511eac6149d"
+  },
+  {
+    "path": "paper/latex/main.fdb_latexmk",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/paper/latex/main.fdb_latexmk",
+    "sha256": "d9deedfedfa9b3de8c1e846c0db3446598287c93657df6814a39c58e0823d388"
+  },
+  {
+    "path": "paper/latex/main.fls",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/paper/latex/main.fls",
+    "sha256": "5bc8f49a06bc1e3eebb7ffaeb7f544799cdfd603e2c6120de1d2e39e6179b1e5"
+  },
+  {
+    "path": "paper/latex/main.log",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/paper/latex/main.log",
+    "sha256": "79cdd218cc0e498b5ec359d72f52da396505c39d7fdbc02eff17ca482b60c2e6"
+  },
+  {
+    "path": "paper/latex/main.out",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/paper/latex/main.out",
+    "sha256": "6b97464e8261614364e318055a56682c5c0a09bdeff8667eb3013dc772e39d1f"
+  },
+  {
+    "path": "paper/latex/main.pdf",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/paper/latex/main.pdf",
+    "sha256": "6a0fc4482904031547b478525f73b7c2999406c1ef6d5c057f975b0e0c0ae9c6"
+  },
+  {
+    "path": "paper/latex/main.tex",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/paper/latex/main.tex",
+    "sha256": "1a66d4bf81d8feace9dfa1602111ba114a391ac3025def4310fbf6bba00e2c12"
+  },
+  {
+    "path": "paper/latex_zh/sec_appendix.tex",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/paper/latex_zh/sec_appendix.tex",
+    "sha256": "68edf22b211835fe924c5811db01f6cd71674faec73d4656df35f1ea396ccadd"
+  },
+  {
+    "path": "paper/latex_zh/sec_discussion.tex",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/paper/latex_zh/sec_discussion.tex",
+    "sha256": "d0d19818fb74e6f61df3f1f44402b0dd5cb7d49caa0c7d097ac7c72856f39d21"
+  },
+  {
+    "path": "paper/latex_zh/main.aux",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/paper/latex_zh/main.aux",
+    "sha256": "56a089556ed749299e9dab1f3585744f7f448a62f7c0a848e3f784d9f3fa6d7f"
+  },
+  {
+    "path": "paper/latex_zh/main.bbl",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/paper/latex_zh/main.bbl",
+    "sha256": "3c4f01c9ea536f872d840deef1f88a56d8a80ab0a9d911368f384d36111be0e5"
+  },
+  {
+    "path": "paper/latex_zh/main.blg",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/paper/latex_zh/main.blg",
+    "sha256": "5f817fcceaf518d6da95a7314ba28001bcd02b5b21440c866b79395b41f19036"
+  },
+  {
+    "path": "paper/latex_zh/main.fdb_latexmk",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/paper/latex_zh/main.fdb_latexmk",
+    "sha256": "9a9c2a35c34c15cdce703853b6fe9783c62fd52561d3a9ad7d51f0ef06859d49"
+  },
+  {
+    "path": "paper/latex_zh/main.fls",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/paper/latex_zh/main.fls",
+    "sha256": "23859254c415cbc7ea1b46c5b27a0b4fccacd21e5d420b9c673bf1c131227c6a"
+  },
+  {
+    "path": "paper/latex_zh/main.log",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/paper/latex_zh/main.log",
+    "sha256": "373cfbe77c7813f268d995685927489745abd0f188fc61dafe7975c12c1f17b1"
+  },
+  {
+    "path": "paper/latex_zh/main.out",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/paper/latex_zh/main.out",
+    "sha256": "c4e597e3a0235c44d7b810cc07ea17029c3a76aebb7e211447e33b8d12b5de2c"
+  },
+  {
+    "path": "paper/latex_zh/main.pdf",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/paper/latex_zh/main.pdf",
+    "sha256": "c235a66414bf7b0ca33035034e220a798832627e399ccf865facddc651127e5f"
+  },
+  {
+    "path": "paper/latex_zh/main.tex",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/paper/latex_zh/main.tex",
+    "sha256": "945d5a5f43ca4b23d72b21729719ba239882878e1fc7927e14ec621deec0290c"
+  },
+  {
+    "path": "paper/latex_zh/main.xdv",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/paper/latex_zh/main.xdv",
+    "sha256": "95eb6beb4fab15c09eb93b6a2c22c03e92f306878b54b471575c3e9d1f053f85"
+  },
+  {
+    "path": "artifacts/revision_20260910/verification.json",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/artifacts/revision_20260910/verification.json",
+    "sha256": "4a64cd443860634bb45755e49e4fe526af51e7d9d9ba67651419686595eea145"
+  },
+  {
+    "path": "artifacts/revision_20260910/chinese_sync_verification.json",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/artifacts/revision_20260910/chinese_sync_verification.json",
+    "sha256": "c69012844df00aa0094cbd79062d7923b71856b331154b9ea2c138f6efe0409b"
+  },
+  {
+    "path": "paper/latex_zh/build_utf8.log",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/paper/latex_zh/build_utf8.log",
+    "sha256": "222e0ffef902e934b49aa4be24dfcf515a80237d11a652880473f1fcd965eb23"
+  },
+  {
+    "path": "review-stage/REVISION_20260910.md",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/review-stage/REVISION_20260910.md",
+    "sha256": "f286e1f1836a5ea89166e5301d5cdab33d2dfa5ff8c2a55af1f5da587a8e5dd4"
+  },
+  {
+    "path": "review-stage/REVISED_EXPERIMENT_PLAN.md",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/review-stage/REVISED_EXPERIMENT_PLAN.md",
+    "sha256": "89ef52778c6917108c5801083173e8e1bbe44581d4d3cfea486c61c295373589"
+  },
+  {
+    "path": "experiment/revision/README.md",
+    "snapshot": "artifacts/revision_20260911/free_declaration_scope/before_paper_update/experiment/revision/README.md",
+    "sha256": "c925a487c317e1fba760da3ff96c03ca5dd715f12ba073627cbdf9e08eb64b04"
+  }
+]

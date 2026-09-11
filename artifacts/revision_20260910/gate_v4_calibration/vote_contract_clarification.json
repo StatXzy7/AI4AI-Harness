@@ -1,0 +1,74 @@
+{
+  "reviewer_model": "gpt-5.5",
+  "source_sha256": "4d39ab1d202394e2a396c7a4c8de95d3f11493552fc72b3734d408cb426f8276",
+  "scope": "Execution-before contract clarification for vote3 reference validity. This independent addendum preserves the first source_review.json unchanged, reads only the same allowed public contract/protocol/source files plus the STRATEGIES declaration, does not read author labels, and does not run measurement, gate, API, or benchmark code.",
+  "contract_decision": {
+    "question": "Are vote3 sampling parameters and call shape part of the reference compliance contract?",
+    "decision": "yes",
+    "reason": "For this calibration, the original STRATEGIES text is the source of the eight strategy declarations, and the protocol explicitly requires sampling-parameter and call-shape differences to be adjudicated rather than silently ignored. Because vote3 states n=3 and temperature=0.7 inside the declaration text, a reference may conform to the abstract majority mechanism while still failing the concrete original vote3 declaration.",
+    "evidence": [
+      {
+        "path": "experiment/phase2/generate.py",
+        "line_start": 66,
+        "line_end": 66,
+        "quote": "    \"vote3\": \"Ask the solver for 3 independent SQL attempts (n=3, temperature=0.7), execute all that parse, return the majority result.\","
+      },
+      {
+        "path": "review-stage/GATE_V4_CALIBRATION_PROTOCOL.md",
+        "line_start": 29,
+        "line_end": 29,
+        "quote": "八类原始生成声明以experiment/phase2/generate.py的STRATEGIES文字为依据，允许盲审者只读取该声明字典。hint_guard表示将问题Hint行的约束重述为硬要求。原声明中的采样参数、调用方式及修复次数若与参考不一致，必须明确裁决其是否属于合同，不能默默忽略。未决参考仍保留在完整分母中。"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "case_id": "gv4r011",
+      "strategy": "vote3",
+      "first_review_decision": "conforms",
+      "abstract_majority_mechanism_decision": "conforms",
+      "concrete_original_statement_decision": "nonconforms",
+      "should_correct_first_review_decision": true,
+      "corrected_decision": "nonconforms",
+      "reason": "The source requests one n=3 generation and votes by majority execution rows, so it satisfies the abstract vote-by-result mechanism. It sets temperature=0.35, not the declared temperature=0.7. Since the protocol makes declared sampling parameters part of the explicit adjudication surface, the stricter source-review decision should be nonconforms. This correction is based only on the public contract and source, not on maintaining a 2+2 balance.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 263,
+          "line_end": 275,
+          "quote": "def control_raven(io: ControlIO, question: str) -> str:\n    candidates = _responses(\n        io.llm(\n            \"Generate three independently sampled SQLite candidates.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\",\n            temperature=0.35,\n            n=3,\n        ),\n        3,\n    )\n    results = [io.execute(candidate) for candidate in candidates]\n    return _majority_by_rows(candidates, results)"
+        },
+        {
+          "path": "experiment/phase2/generate.py",
+          "line_start": 66,
+          "line_end": 66,
+          "quote": "    \"vote3\": \"Ask the solver for 3 independent SQL attempts (n=3, temperature=0.7), execute all that parse, return the majority result.\","
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r026",
+      "strategy": "vote3",
+      "first_review_decision": "conforms",
+      "abstract_majority_mechanism_decision": "conforms",
+      "concrete_original_statement_decision": "nonconforms",
+      "should_correct_first_review_decision": true,
+      "corrected_decision": "nonconforms",
+      "reason": "The source creates three candidates, executes them, and votes by majority execution rows, so it satisfies the abstract majority mechanism. It does not use the declared n=3 call; it makes three separate default n=1 calls, and sets temperature=0.2 rather than 0.7. Under the protocol's explicit sampling-parameter and call-shape clarification, the stricter source-review decision should be nonconforms. This correction is not inferred from expected class balance.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 278,
+          "line_end": 294,
+          "quote": "def control_onyx(io: ControlIO, question: str) -> str:\n    approaches = (\n        \"Begin from the entities named in the question.\",\n        \"Begin from the requested output and work backward through joins.\",\n        \"Build the query by validating filters before aggregation.\",\n    )\n    candidates = [\n        _extract_sql(\n            io.llm(\n                f\"{approach}\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\",\n                temperature=0.2,\n            )\n        )\n        for approach in approaches\n    ]\n    results = [io.execute(candidate) for candidate in candidates]\n    return _majority_by_rows(candidates, results)"
+        },
+        {
+          "path": "experiment/phase2/generate.py",
+          "line_start": 66,
+          "line_end": 66,
+          "quote": "    \"vote3\": \"Ask the solver for 3 independent SQL attempts (n=3, temperature=0.7), execute all that parse, return the majority result.\","
+        }
+      ]
+    }
+  ]
+}

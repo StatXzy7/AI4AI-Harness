@@ -1,0 +1,43 @@
+{
+  "created_utc": "2026-09-10T11:20:42.613866+00:00",
+  "scope": "development task process isolation, ledger recovery and synthetic race execution; not scientific clearance",
+  "all_revision_tests": 71,
+  "new_isolation_tests": 5,
+  "tests": "PASS in runtime_env CPython3.13.9",
+  "ruff": "PASS for experiment/revision",
+  "paper_hash_checks": 42,
+  "paper_verifier": "PASS",
+  "paper_source_results_and_pdfs_unchanged": true,
+  "new_paid_api_calls": 0,
+  "new_empirical_outcomes": 0,
+  "retained_source_files_per_case": 510,
+  "retained_cases": 3,
+  "all_retained_jobs_confirmed_empty": true,
+  "case_http_requests": [
+    4,
+    2,
+    1
+  ],
+  "case_complete_cells": [
+    2,
+    0,
+    0
+  ],
+  "reviews": {
+    "code": "9/10 ready - limited process/ledger implementation",
+    "spec": "9/10 ready - limited task isolation implementation",
+    "cross_model_scientific_clearance": false
+  },
+  "formal_A_to_D_verdict": "not ready",
+  "inputs_and_artifacts": {
+    "experiment/revision/windows_job.py": "bf0a387e69fa2a028beaf88a806c1c892288ffa4f0a03418fbc3e34af8f556b0",
+    "experiment/revision/isolated_collect.py": "195bd514c6f0e890c7a5c812b3f4839ae52711533491a13b58931cc2a460ee7e",
+    "experiment/revision/test_isolated_collect.py": "66d314623f59c31aa8e77d54682df8d20b0f65a5b1a4cadc183b2a8b64c51348",
+    "review-stage/TASK_PROCESS_ISOLATION.md": "96411da8d34497376d39b929761580f53e3d9ea012fab617a968d33baecc3d92",
+    "artifacts/revision_20260910/isolation_smoke.json": "9c94ea6cbbe975379224d395f5d0f49238d631954b7bb2d40896b57cf3287dc5",
+    "artifacts/revision_20260910/isolation_tests.txt": "ce3f798aa7cf505eb5f0d5b90169654fdcd6d4aa72e8516d07e83343bb59a6bf",
+    "artifacts/revision_20260910/requirements-runtime.lock.txt": "4a3ba2814c636143f78075dac1fd2d566a913ba604de0963f7fa7ed1e18ee71e",
+    "artifacts/revision_20260910/verification.json": "bc9f99a817f59737cbdeb9e6726712173ba2ffd0a431e3c00b2adfd9dd766d40",
+    "artifacts/revision_20260910/chinese_sync_verification.json": "fb046e3c6fcf6415cd70b17d0dc2d23225a0258191a93c5134642c5f198f7826"
+  }
+}

@@ -1,0 +1,30 @@
+{"cases": 32, "structural_states": {"pass": 31, "execution_failure": 1}}
+{"cases": 32, "structural_states": {"pass": 31, "execution_failure": 1}}
+test_adversarial_impostors_never_receive_automatic_pass (experiment.revision.test_gate_v2.GateV2Tests.test_adversarial_impostors_never_receive_automatic_pass) ... ok
+test_all_eight_positive_control_contracts (experiment.revision.test_gate_v2.GateV2Tests.test_all_eight_positive_control_contracts) ... ok
+test_conditional_success_and_changed_error_are_separate_probes (experiment.revision.test_gate_v2.GateV2Tests.test_conditional_success_and_changed_error_are_separate_probes) ... ok
+test_counterfactual_markers_are_not_fixed_to_default_salt (experiment.revision.test_gate_v2.GateV2Tests.test_counterfactual_markers_are_not_fixed_to_default_salt) ... ok
+test_crash_invalid_output_and_unknown_contract_are_distinct (experiment.revision.test_gate_v2.GateV2Tests.test_crash_invalid_output_and_unknown_contract_are_distinct) ... ok
+test_decomposition_counterfactual_keeps_plan_changes_opaque_answers (experiment.revision.test_gate_v2.GateV2Tests.test_decomposition_counterfactual_keeps_plan_changes_opaque_answers) ... ok
+test_eight_negative_variants_are_not_admitted (experiment.revision.test_gate_v2.GateV2Tests.test_eight_negative_variants_are_not_admitted) ... ok
+test_execution_vote_counterfactual_holds_candidates_fixed (experiment.revision.test_gate_v2.GateV2Tests.test_execution_vote_counterfactual_holds_candidates_fixed) ... ok
+test_uncertain_prompt_witness_is_review_not_no_mechanism (experiment.revision.test_gate_v2.GateV2Tests.test_uncertain_prompt_witness_is_review_not_no_mechanism) ... ok
+test_adapter_cleanup_after_caller_exception (experiment.revision.test_gate_runtime_adapter.GateRuntimeTests.test_adapter_cleanup_after_caller_exception) ... ok
+test_real_harness_base_and_trusted_positive_negative_controls (experiment.revision.test_gate_runtime_adapter.GateRuntimeTests.test_real_harness_base_and_trusted_positive_negative_controls) ... ok
+test_failure_retained_unknown_trace_kept_and_packaging_never_reruns (experiment.revision.test_independent_gate_measure.IndependentMeasurementTests.test_failure_retained_unknown_trace_kept_and_packaging_never_reruns) ... ok
+test_missing_freeze_binding_rejected_before_control_import (experiment.revision.test_independent_gate_measure.IndependentMeasurementTests.test_missing_freeze_binding_rejected_before_control_import) ... ok
+test_ambiguity_does_not_erase_missing_subquestion_calls (experiment.revision.test_gate_v3.GateV3Tests.test_ambiguity_does_not_erase_missing_subquestion_calls) ... ok
+test_ambiguous_target_is_retained_for_review (experiment.revision.test_gate_v3.GateV3Tests.test_ambiguous_target_is_retained_for_review) ... ok
+test_classification_impostors_never_automatically_pass (experiment.revision.test_gate_v3.GateV3Tests.test_classification_impostors_never_automatically_pass) ... ok
+test_classification_independent_structural_failures_stay_hard (experiment.revision.test_gate_v3.GateV3Tests.test_classification_independent_structural_failures_stay_hard) ... ok
+test_discarded_and_fabricated_answers_still_fail (experiment.revision.test_gate_v3.GateV3Tests.test_discarded_and_fabricated_answers_still_fail) ... ok
+test_eight_development_positives_and_negative_variants (experiment.revision.test_gate_v3.GateV3Tests.test_eight_development_positives_and_negative_variants) ... ok
+test_prior_context_does_not_repeat_the_first_payload (experiment.revision.test_gate_v3.GateV3Tests.test_prior_context_does_not_repeat_the_first_payload) ... ok
+test_reversed_and_repeated_steps_fail (experiment.revision.test_gate_v3.GateV3Tests.test_reversed_and_repeated_steps_fail) ... ok
+test_three_frozen_false_rejections_have_expected_transition (experiment.revision.test_gate_v3.GateV3Tests.test_three_frozen_false_rejections_have_expected_transition) ... ok
+test_unrelated_exposed_strategies_have_identical_runs (experiment.revision.test_gate_v3.GateV3Tests.test_unrelated_exposed_strategies_have_identical_runs) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.098s
+
+OK

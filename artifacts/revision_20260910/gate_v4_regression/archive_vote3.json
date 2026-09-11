@@ -1,0 +1,351 @@
+{
+  "case": {
+    "id": "archive_vote3",
+    "strategy": "vote3",
+    "path": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_vote3.py",
+    "source_sha256": "8910d3ab1a010fc7b1c27ca4c0ddb8698e76b2c8879e6fa8b65826bdc23c5a1b",
+    "role": "archived_candidate",
+    "profile": null
+  },
+  "result": {
+    "version": "gate-v4",
+    "strategy": "vote3",
+    "profile": null,
+    "structural_verdict": "pass",
+    "runs": [
+      {
+        "probe": "late_majority",
+        "status": "pass",
+        "reasons": [],
+        "final": "SELECT amount FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Given the following database schema:\n\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nWrite a single SQL query that answers the question. Return only the SQL.",
+            "system": "",
+            "n": 3,
+            "temperature": 0.7,
+            "response": [
+              "SELECT id FROM ledger",
+              "SELECT amount FROM ledger",
+              "SELECT amount FROM ledger"
+            ],
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "B"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "B"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "permuted_majority",
+        "status": "pass",
+        "reasons": [],
+        "final": "SELECT amount FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Given the following database schema:\n\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nWrite a single SQL query that answers the question. Return only the SQL.",
+            "system": "",
+            "n": 3,
+            "temperature": 0.7,
+            "response": [
+              "SELECT amount FROM ledger",
+              "SELECT amount FROM ledger",
+              "SELECT id FROM ledger"
+            ],
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "B"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "B"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "flipped_majority",
+        "status": "pass",
+        "reasons": [],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Given the following database schema:\n\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nWrite a single SQL query that answers the question. Return only the SQL.",
+            "system": "",
+            "n": 3,
+            "temperature": 0.7,
+            "response": [
+              "SELECT amount FROM ledger",
+              "SELECT id FROM ledger",
+              "SELECT id FROM ledger"
+            ],
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "B"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "equivalent_results",
+        "status": "pass",
+        "reasons": [],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Given the following database schema:\n\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nWrite a single SQL query that answers the question. Return only the SQL.",
+            "system": "",
+            "n": 3,
+            "temperature": 0.7,
+            "response": [
+              "SELECT id FROM ledger",
+              "SELECT amount FROM ledger",
+              "SELECT id FROM ledger WHERE id > 0"
+            ],
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "same"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "B"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger WHERE id > 0",
+            "ok": true,
+            "rows": [
+              [
+                "same"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "execution_majority_flipped",
+        "status": "pass",
+        "reasons": [],
+        "final": "SELECT amount FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Given the following database schema:\n\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nWrite a single SQL query that answers the question. Return only the SQL.",
+            "system": "",
+            "n": 3,
+            "temperature": 0.7,
+            "response": [
+              "SELECT id FROM ledger",
+              "SELECT amount FROM ledger",
+              "SELECT id FROM ledger WHERE id > 0"
+            ],
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "same"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger WHERE id > 0",
+            "ok": true,
+            "rows": [
+              [
+                "same"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "execution_majority_AB",
+        "status": "pass",
+        "reasons": [],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Given the following database schema:\n\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nWrite a single SQL query that answers the question. Return only the SQL.",
+            "system": "",
+            "n": 3,
+            "temperature": 0.7,
+            "response": [
+              "SELECT id FROM ledger",
+              "SELECT amount FROM ledger",
+              "SELECT id FROM ledger WHERE id > 0"
+            ],
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "same"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "same"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger WHERE id > 0",
+            "ok": true,
+            "rows": [
+              [
+                "C"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      }
+    ],
+    "admission": "not_evaluated",
+    "scope": "Unified development measurement, with explicit source-assigned response roles.\n\nFrozen v3 supplies five unchanged strategy probes. Typed schema/decomposition and\nreal SQLite feedback supply the remaining three. This module never admits a\ncandidate: semantic decisions and independently frozen reference checks remain\nseparate. Unsupported response profiles are review-required, not rejection.\n"
+  },
+  "admission": "not_evaluated"
+}

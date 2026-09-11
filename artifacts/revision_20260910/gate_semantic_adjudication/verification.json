@@ -1,0 +1,63 @@
+{
+  "recorded_at_utc": "2026-09-10T12:28:11.608463+00:00",
+  "scope": "independent different-model adjudication of exposed development fixtures; not held-out calibration",
+  "status": "development_semantic_adjudication_complete",
+  "bindings": {
+    "artifacts\\revision_20260910\\gate_semantic_adjudication\\adjudication.initial.json": "2632f35e656f31de4ffd71f055db7a8f2b259f2467fd490b43403486f90ab9d3",
+    "artifacts\\revision_20260910\\gate_semantic_adjudication\\adjudication.json": "907d6c6df607060c54d2cc839310cf040c68d2519e6d961cff8c26d2c5400aa4",
+    "artifacts\\revision_20260910\\gate_semantic_adjudication\\DECISION_RULE.md": "2bce94c257bb11aff46da8b6d19eb88a1ce661d839945c9285247d3659c53128",
+    "artifacts\\revision_20260910\\gate_semantic_adjudication\\merged.json": "e6223abca01316fc03e655656cfd7000d70c29fe22d7f7245c8bcd16118814e0",
+    "artifacts\\revision_20260910\\gate_semantic_adjudication\\status_lineage.json": "36ee2a859deec738502df95ca9782aa988b96c132dd0f7076d2c8ef2da076af2",
+    "artifacts\\revision_20260910\\gate_semantic_adjudication\\before_status_update\\experiment__revision__README.md": "0a2448a243410a5592095ff40b9ea4a6ac4e274faf1a577dfa6d3adf90a70222",
+    "artifacts\\revision_20260910\\gate_semantic_adjudication\\before_status_update\\review-stage__REVISED_EXPERIMENT_PLAN.md": "d56620488d75906825e9325f28e301be03c50e8e361c4ba1c8376d9419d254ff",
+    "artifacts\\revision_20260910\\gate_semantic_adjudication\\before_status_update\\review-stage__REVISION_20260910.md": "4cb7390eb5b05f45a61be91879371d7f731be92ae13a8807ee0a482bf8c16237",
+    "review-stage\\GATE_SEMANTIC_ADJUDICATION.md": "7e476fcab97d29666bb45953e4138af62ed092616026f2932463bf191e894d9b",
+    "review-stage\\GATE_V2_CONTRACTS.md": "80870579629bad16ec4f06b2953138cbb707424d91922853c10647c20e2f49bb",
+    "review-stage\\REVISION_20260910.md": "f6479f7db8318ad7379ad7a6c8d39508dd59980928b2e8bdbf95310602aaf4fc",
+    "review-stage\\REVISED_EXPERIMENT_PLAN.md": "38f0cbcfd42653e28c0424d8dc5beaed34fa13cbbb14f4c5dcd5836d6506c5ed",
+    "experiment\\revision\\README.md": "683198e86fcb8dfc3f59d0d080a4672936996fb9039f5ac675b73af09fd52252",
+    "artifacts\\revision_20260910\\gate_v2_development.json": "55e5adc87b6b8699352266232481e58a1f858306790dbddef60193b599d7f1b1",
+    "artifacts\\revision_20260910\\gate_v2_semantic_review_packet.json": "7f2c1085b53e7ee30e50958ad7e823c65b7aff10734ed11cbaa72cb30ea00dce",
+    "artifacts\\revision_20260910\\gate_v2_development_verification.json": "48d18eec353f65ca4f8a9743395a95c015840248d4186a6627bc815747c1269f",
+    "artifacts\\revision_20260910\\verification.json": "f978c4b8cebe7662849de337661cb81994eb037ad374ec325aa968434158a859",
+    "artifacts\\revision_20260910\\chinese_sync_verification.json": "23175b594281e9c7d9d13f9e2cceff405ac8b18a4e3e50deaaa073f24102f96f"
+  },
+  "cases": 14,
+  "evidence_references_checked": 40,
+  "original_source_trace_mappings_checked": 14,
+  "unchanged_old_gate_input_bindings_checked": 16,
+  "adjudication_initial_and_final_verdicts_identical": true,
+  "clarification_rounds": 1,
+  "semantic_counts": {
+    "conforms": 4,
+    "nonconforms": 10,
+    "indeterminate": 0
+  },
+  "combined_counts": {
+    "development_semantic_conforms": 4,
+    "development_semantic_nonconforms": 4,
+    "fail": 6
+  },
+  "reviewer_model": "gpt-5.5",
+  "backend_build": "unknown",
+  "implementation_model": "GPT-6",
+  "reviewer_scope_score": 9,
+  "reviewer_scope_verdict": "ready for mechanical mapping only",
+  "independent_held_out_calibration": false,
+  "gate_release_verdict": "not ready",
+  "B_experiment_complete": false,
+  "paper_score": 4,
+  "paper_verdict": "not ready",
+  "paper_verification": "PASS original 42 hash/size/decomposition checks plus bilingual source/build/PDF hashes",
+  "paper_changed": false,
+  "code_changed": false,
+  "external_generation_requests": 0,
+  "UTF8_checks": "PASS",
+  "prior_stage16_bindings": "14 resolve, including 3 exact-hash prior status document snapshots; old verification unchanged",
+  "mechanical_review": {
+    "score": 9,
+    "verdict": "ready",
+    "same_model_as_implementer": true,
+    "scope": "14 identity/source/trace mappings, 40 evidence references, unchanged adjudication and fixed merge counts; reviewer did not independently audit final verification or lineage"
+  }
+}

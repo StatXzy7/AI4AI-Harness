@@ -1,0 +1,58 @@
+{
+  "case": {
+    "strategy": "error_classify",
+    "name": "sqlite_missing_table",
+    "initial": "SELECT id FROM absent"
+  },
+  "final": "SELECT id FROM ledger",
+  "trace": [
+    {
+      "kind": "llm",
+      "prompt": "You are a SQL expert. Given the database schema below, write a single SQL query that answers the question.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\nReturn only the SQL query, without any explanation or markdown formatting.",
+      "system": "",
+      "temperature": 0.0,
+      "n": 1,
+      "response": "SELECT id FROM absent",
+      "response_role": "initial_sql",
+      "target_step": null,
+      "seq": 0
+    },
+    {
+      "kind": "execute",
+      "sql": "SELECT id FROM absent",
+      "ok": false,
+      "rows": [],
+      "error": "no such table: absent",
+      "error_type": "OperationalError"
+    },
+    {
+      "kind": "llm",
+      "prompt": "You are a SQL expert. A previous SQL query failed or was incorrect.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\n### Previous SQL\nSELECT id FROM absent\n\n### Error Message\nno such table: absent\n\nThe previous SQL query failed with a schema issue, such as an invalid table or column reference. Use only table and column names exactly as they appear in the schema. Check all joins, aliases, and identifiers. Return only the corrected SQL query.",
+      "system": "",
+      "temperature": 0.0,
+      "n": 1,
+      "response": "SELECT id FROM ledger",
+      "response_role": "repair_sql",
+      "target_step": null,
+      "seq": 0
+    },
+    {
+      "kind": "execute",
+      "sql": "SELECT id FROM ledger",
+      "ok": true,
+      "rows": [
+        [
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "error": null
+    }
+  ],
+  "error": null,
+  "interface_issues": [],
+  "admission": "not_evaluated",
+  "scope": "source-assigned exposed-candidate interface diagnostic; not calibration"
+}

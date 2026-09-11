@@ -1,0 +1,10 @@
+{
+  "status": "SOURCE_FINDING_PENDING_REVIEW",
+  "bindings": {
+    "review-stage\\FREE_DECLARATION_SCOPE_20260911.md": "323f63f7486ed1f762f65361b33a8b24468a13e9af41c74b55eb84c3eb87acdd",
+    "experiment\\phase2\\generate.py": "20d847647c69cf6276df157b1b6763c8ac841b019ee7bbb89fa4b19e04a12d47",
+    "experiment\\phase2\\conformance.py": "2c9cde2eb6b62e0a7934ff8e6d8c8877ab7b5a6429c830673e770f765ada460f",
+    "experiment\\revision\\gate_v4.py": "9b607eb755d94b86ad74c23bb9505cea2710cb92155bcad94e9e7bd0b3f97fac",
+    "experiment\\revision\\gate_v3.py": "93e68080d0de32b29d349593e54535857c9acbfacaa42ebd8e70477298ca9827"
+  }
+}

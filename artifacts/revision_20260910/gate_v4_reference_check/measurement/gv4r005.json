@@ -1,0 +1,75 @@
+{
+  "identity": {
+    "case_id": "gv4r005",
+    "strategy": "hint_guard",
+    "callable_name": "control_saffron",
+    "profile": null
+  },
+  "result": {
+    "version": "gate-v4",
+    "strategy": "hint_guard",
+    "profile": null,
+    "structural_verdict": "review_required",
+    "runs": [
+      {
+        "probe": "no_hint",
+        "status": "review_required",
+        "reasons": [
+          "semantic_prompt_review_required"
+        ],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Schema exactly as supplied:\nTable ledger(id, amount)\nTable unused(label)\nQuestion exactly as supplied:\nReturn ledger identifiers.\nReturn one SQLite query.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger"
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "hint_0",
+        "status": "review_required",
+        "reasons": [
+          "semantic_prompt_review_required"
+        ],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Schema exactly as supplied:\nTable ledger(id, amount)\nTable unused(label)\nQuestion exactly as supplied:\nReturn ledger identifiers.\nHint: id must exceed 317.\nThe following Hint content must be satisfied: id must exceed 317.\nReturn one SQLite query.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger"
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "hint_1",
+        "status": "review_required",
+        "reasons": [
+          "semantic_prompt_review_required"
+        ],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Schema exactly as supplied:\nTable ledger(id, amount)\nTable unused(label)\nQuestion exactly as supplied:\nReturn ledger identifiers.\nHint: id must exceed 941.\nThe following Hint content must be satisfied: id must exceed 941.\nReturn one SQLite query.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger"
+          }
+        ],
+        "error": null
+      }
+    ],
+    "admission": "not_evaluated",
+    "scope": "Unified development measurement, with explicit source-assigned response roles.\n\nFrozen v3 supplies five unchanged strategy probes. Typed schema/decomposition and\nreal SQLite feedback supply the remaining three. This module never admits a\ncandidate: semantic decisions and independently frozen reference checks remain\nseparate. Unsupported response profiles are review-required, not rejection.\n"
+  }
+}

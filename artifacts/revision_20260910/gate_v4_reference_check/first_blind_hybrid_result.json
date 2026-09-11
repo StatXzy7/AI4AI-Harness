@@ -1,0 +1,332 @@
+{
+  "scope": "Primary first blind trace adjudication under prespecified hybrid rule; before targeted evidence clarification",
+  "verdict": "not ready",
+  "source_sha256": "4df6313a7c9b41b4deccb58192f9de4c7a3b15036d62157aa1e922d61b39bb4e",
+  "cases": [
+    {
+      "case_id": "gv4r001",
+      "strategy": "schema_link",
+      "reference_label": "conforms",
+      "structural_verdict": "review_required",
+      "blind_trace_decision": "conforms",
+      "hybrid_decision": "conforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r002",
+      "strategy": "repair",
+      "reference_label": "nonconforms",
+      "structural_verdict": "fail",
+      "blind_trace_decision": "nonconforms",
+      "hybrid_decision": "nonconforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r003",
+      "strategy": "error_classify",
+      "reference_label": "conforms",
+      "structural_verdict": "review_required",
+      "blind_trace_decision": "conforms",
+      "hybrid_decision": "conforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r004",
+      "strategy": "vote3",
+      "reference_label": "nonconforms",
+      "structural_verdict": "fail",
+      "blind_trace_decision": "nonconforms",
+      "hybrid_decision": "nonconforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r005",
+      "strategy": "hint_guard",
+      "reference_label": "conforms",
+      "structural_verdict": "review_required",
+      "blind_trace_decision": "conforms",
+      "hybrid_decision": "conforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r006",
+      "strategy": "decompose",
+      "reference_label": "nonconforms",
+      "structural_verdict": "review_required",
+      "blind_trace_decision": "nonconforms",
+      "hybrid_decision": "nonconforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r007",
+      "strategy": "format_guard",
+      "reference_label": "conforms",
+      "structural_verdict": "review_required",
+      "blind_trace_decision": "conforms",
+      "hybrid_decision": "conforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r008",
+      "strategy": "two_view",
+      "reference_label": "nonconforms",
+      "structural_verdict": "fail",
+      "blind_trace_decision": "conforms",
+      "hybrid_decision": "nonconforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r009",
+      "strategy": "repair",
+      "reference_label": "conforms",
+      "structural_verdict": "pass",
+      "blind_trace_decision": "conforms",
+      "hybrid_decision": "conforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r010",
+      "strategy": "schema_link",
+      "reference_label": "nonconforms",
+      "structural_verdict": "review_required",
+      "blind_trace_decision": "nonconforms",
+      "hybrid_decision": "nonconforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r011",
+      "strategy": "vote3",
+      "reference_label": "conforms",
+      "structural_verdict": "pass",
+      "blind_trace_decision": "conforms",
+      "hybrid_decision": "conforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r012",
+      "strategy": "error_classify",
+      "reference_label": "nonconforms",
+      "structural_verdict": "review_required",
+      "blind_trace_decision": "nonconforms",
+      "hybrid_decision": "nonconforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r013",
+      "strategy": "two_view",
+      "reference_label": "conforms",
+      "structural_verdict": "review_required",
+      "blind_trace_decision": "conforms",
+      "hybrid_decision": "conforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r014",
+      "strategy": "hint_guard",
+      "reference_label": "nonconforms",
+      "structural_verdict": "review_required",
+      "blind_trace_decision": "nonconforms",
+      "hybrid_decision": "nonconforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r015",
+      "strategy": "decompose",
+      "reference_label": "conforms",
+      "structural_verdict": "review_required",
+      "blind_trace_decision": "conforms",
+      "hybrid_decision": "conforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r016",
+      "strategy": "format_guard",
+      "reference_label": "nonconforms",
+      "structural_verdict": "review_required",
+      "blind_trace_decision": "nonconforms",
+      "hybrid_decision": "nonconforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r017",
+      "strategy": "vote3",
+      "reference_label": "nonconforms",
+      "structural_verdict": "fail",
+      "blind_trace_decision": "nonconforms",
+      "hybrid_decision": "nonconforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r018",
+      "strategy": "repair",
+      "reference_label": "conforms",
+      "structural_verdict": "pass",
+      "blind_trace_decision": "conforms",
+      "hybrid_decision": "conforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r019",
+      "strategy": "schema_link",
+      "reference_label": "conforms",
+      "structural_verdict": "review_required",
+      "blind_trace_decision": "conforms",
+      "hybrid_decision": "conforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r020",
+      "strategy": "error_classify",
+      "reference_label": "conforms",
+      "structural_verdict": "review_required",
+      "blind_trace_decision": "conforms",
+      "hybrid_decision": "conforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r021",
+      "strategy": "hint_guard",
+      "reference_label": "conforms",
+      "structural_verdict": "review_required",
+      "blind_trace_decision": "conforms",
+      "hybrid_decision": "conforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r022",
+      "strategy": "two_view",
+      "reference_label": "nonconforms",
+      "structural_verdict": "fail",
+      "blind_trace_decision": "nonconforms",
+      "hybrid_decision": "nonconforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r023",
+      "strategy": "format_guard",
+      "reference_label": "conforms",
+      "structural_verdict": "review_required",
+      "blind_trace_decision": "conforms",
+      "hybrid_decision": "conforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r024",
+      "strategy": "decompose",
+      "reference_label": "nonconforms",
+      "structural_verdict": "review_required",
+      "blind_trace_decision": "nonconforms",
+      "hybrid_decision": "nonconforms",
+      "raw_run_interface_issues": [
+        {
+          "probe": "parts_0",
+          "issues": [
+            "request has neither assigned target nor all partial answers"
+          ]
+        },
+        {
+          "probe": "parts_1",
+          "issues": [
+            "request has neither assigned target nor all partial answers"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r025",
+      "strategy": "schema_link",
+      "reference_label": "nonconforms",
+      "structural_verdict": "review_required",
+      "blind_trace_decision": "nonconforms",
+      "hybrid_decision": "nonconforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r026",
+      "strategy": "vote3",
+      "reference_label": "conforms",
+      "structural_verdict": "pass",
+      "blind_trace_decision": "conforms",
+      "hybrid_decision": "conforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r027",
+      "strategy": "repair",
+      "reference_label": "nonconforms",
+      "structural_verdict": "fail",
+      "blind_trace_decision": "nonconforms",
+      "hybrid_decision": "nonconforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r028",
+      "strategy": "error_classify",
+      "reference_label": "nonconforms",
+      "structural_verdict": "review_required",
+      "blind_trace_decision": "nonconforms",
+      "hybrid_decision": "nonconforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r029",
+      "strategy": "two_view",
+      "reference_label": "conforms",
+      "structural_verdict": "review_required",
+      "blind_trace_decision": "conforms",
+      "hybrid_decision": "conforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r030",
+      "strategy": "format_guard",
+      "reference_label": "nonconforms",
+      "structural_verdict": "review_required",
+      "blind_trace_decision": "nonconforms",
+      "hybrid_decision": "nonconforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r031",
+      "strategy": "decompose",
+      "reference_label": "conforms",
+      "structural_verdict": "review_required",
+      "blind_trace_decision": "conforms",
+      "hybrid_decision": "conforms",
+      "raw_run_interface_issues": []
+    },
+    {
+      "case_id": "gv4r032",
+      "strategy": "hint_guard",
+      "reference_label": "nonconforms",
+      "structural_verdict": "review_required",
+      "blind_trace_decision": "conforms",
+      "hybrid_decision": "conforms",
+      "raw_run_interface_issues": []
+    }
+  ],
+  "verified_evidence_quotes": 83,
+  "trace_counts": {
+    "conforms": 18,
+    "nonconforms": 14
+  },
+  "hybrid_counts": {
+    "conforms": 17,
+    "nonconforms": 15
+  },
+  "disagreements": [
+    {
+      "case_id": "gv4r032",
+      "strategy": "hint_guard",
+      "reference_label": "nonconforms",
+      "structural_verdict": "review_required",
+      "blind_trace_decision": "conforms",
+      "hybrid_decision": "conforms",
+      "raw_run_interface_issues": []
+    }
+  ],
+  "notes": [
+    "Per-run attribution diagnostics are retained. gv4r024 has supported preassigned profile and no exception; missing partial payloads in its final request are observable behavior for independent adjudication, not an unknown profile.",
+    "Targeted clarification is recorded separately and cannot erase this first blind result."
+  ]
+}

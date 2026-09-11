@@ -1,0 +1,36 @@
+{
+  "created_utc": "2026-09-10T10:31:32.598359+00:00",
+  "scope": "current-behavior synthetic local integration; reproduces defects, does not repair or certify production",
+  "tests": {
+    "command": "python -m unittest discover -s experiment/revision -p test_*.py -v",
+    "environment": "artifacts/revision_20260910/runtime_env",
+    "python": "3.13.9",
+    "all_revision_tests": 58,
+    "new_integration_tests": 6,
+    "result": "PASS"
+  },
+  "ruff": "PASS for experiment/revision",
+  "pip_check": "PASS",
+  "selected_runtime_source_hashes": 11,
+  "runtime_source_unchanged_during_run": true,
+  "paper_verifier_checks": 42,
+  "paper_verifier_result": "PASS",
+  "paper_source_results_and_pdfs_unchanged": true,
+  "review": {
+    "code": "9/10 ready for diagnostic mechanical delivery",
+    "spec": "9/10 ready for limited diagnosis; report and final JSON consistency checked",
+    "independent_cross_model_scientific_clearance": false
+  },
+  "new_paid_provider_calls": 0,
+  "new_empirical_bird_outcomes": 0,
+  "formal_runtime_verdict": "not ready",
+  "inputs_and_artifacts": {
+    "experiment/revision/runtime_probe.py": "5cabd92613268d90c23a2c7bc97fa9b041c90d0ab936724b75629ae8a28f4c57",
+    "experiment/revision/test_runtime_probe.py": "9aec0a2da10e9ad8512cc10fdb023a4242c0e8ebc813dbdb50e45508994b6217",
+    "review-stage/RUNTIME_RESTORATION.md": "6e10b12d9281e0435b514be348fab7bf2f0e57d221e0fe1ad86dabdd87e02c0d",
+    "artifacts/revision_20260910/runtime_probe.json": "cea6fc3149b8ab1516c06e8cfae539d20583252e85ceccd230de8f11367071c6",
+    "artifacts/revision_20260910/requirements-runtime.lock.txt": "4a3ba2814c636143f78075dac1fd2d566a913ba604de0963f7fa7ed1e18ee71e",
+    "artifacts/revision_20260910/verification.json": "bc9f99a817f59737cbdeb9e6726712173ba2ffd0a431e3c00b2adfd9dd766d40",
+    "artifacts/revision_20260910/chinese_sync_verification.json": "fb046e3c6fcf6415cd70b17d0dc2d23225a0258191a93c5134642c5f198f7826"
+  }
+}

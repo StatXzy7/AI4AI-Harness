@@ -1,0 +1,16 @@
+{
+  "scope": "Premeasurement code/contract review, not scientific clearance",
+  "implementer": "GPT-6",
+  "mechanical": {
+    "score": 9,
+    "verdict": "ready",
+    "tests": 8
+  },
+  "independent_spec": {
+    "model": "gpt-5.6-sol",
+    "score": 9.4,
+    "verdict": "ready",
+    "tests": 8
+  },
+  "provider_calls": 0
+}

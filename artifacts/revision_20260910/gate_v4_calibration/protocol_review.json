@@ -1,0 +1,19 @@
+{
+  "scope": "Stage27 premeasurement scientific protocol review only",
+  "reviewer": "/root/independent_calibration_review",
+  "score": 9.5,
+  "verdict": "ready",
+  "blockers": [],
+  "requirements_checked": [
+    "source-assigned profiles before execution",
+    "blinded source reference adjudication",
+    "immutable one measurement",
+    "blind actual trace packet",
+    "indeterminate precedence",
+    "32 complete and 2+2 per strategy",
+    "zero false accept/reject/unresolved finite threshold"
+  ],
+  "clarification": "indeterminate cases remain in the full denominator; they only skip the structural-fail override",
+  "measurement_run": false,
+  "labels_read": false
+}

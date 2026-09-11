@@ -1,0 +1,8 @@
+{
+  "reviewer": "gpt-5.5",
+  "score": 8,
+  "verdict": "almost",
+  "finding": "Asked to include plain versus free control-flow prompt tension",
+  "english_paragraph": "\nThese controls cover the eight strategy-forced contracts, not the free arm's\nfour declarations (repair, vote, twostage, and plain). In the original free\nprompt, vote specifies multiple samples and selection but not three-way\nmajority voting; twostage specifies artifact consumption without a particular\nresponse interface. Applying the eight-strategy gate to these declarations\ntherefore requires separately fixed semantic rules and an indeterminate policy,\nrather than silently treating vote as vote3 or choosing a compatible profile\nafter observing its result. This source-level scope gap does not estimate\nfalse-rejection rates for generated candidates.\n",
+  "chinese_paragraph": "\n这些控制覆盖八种强制策略合同，不覆盖free臂的repair、vote、twostage和plain四类声明。原free提示中的vote要求多次采样并选择，但未规定三票多数决；twostage要求消费早期产物，但未规定具体响应接口。因此，将八策略gate应用于这些声明之前，需要另行固定语义规则与未决处理政策，不能静默把vote当作vote3，或在观察结果后选择兼容profile。这个源码层适用性缺口不估计生成候选的误拒率。\n"
+}

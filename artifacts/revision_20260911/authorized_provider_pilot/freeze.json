@@ -1,0 +1,11 @@
+{
+  "status": "FROZEN_PENDING_LAUNCH_REVIEW",
+  "planned_cells": 12,
+  "bindings": {
+    "artifacts/revision_20260911/authorized_provider_pilot/PROTOCOL.md": "5ec765adc9774f23be5a10470f0b4ba629312447ae89c27564f9fc6393246e79",
+    "artifacts/revision_20260911/authorized_provider_pilot/acquisition.json": "aa9bab9951f3ea14aeb4869926e0cf55efe388c87332519bb0783b71fbb8eb0b",
+    "artifacts/revision_20260911/authorized_provider_pilot/preflight.json": "38e681bdd27d5d16031a3558f259573e1ed2cb8e303271c86b9079bce601edc5",
+    "artifacts/revision_20260911/authorized_provider_pilot/connection_check.json": "182ccadf1629f7c70205f30dcc16aaab8e5ff39240e4d77d2f351e7bacfcf7a1"
+  },
+  "manifest_sha256": "8cb76c05c655ebd1346ffba1fb812453e7a1581325fff9fa7de04bc07b68b689"
+}

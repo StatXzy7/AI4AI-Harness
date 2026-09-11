@@ -1,5 +1,10 @@
 # Phase-II Current State
 
+> Historical snapshot from 2026-09-04. For the current 2026-09-10 revision,
+> see `../../review-stage/REVISION_20260910.md` and the new versioned replay.
+> The generation/outcome/credential statements below describe their dated snapshot,
+> not the present project state.
+
 **Real date:** 2026-09-04 (late afternoon). Factual, no aspirational claims.
 
 ## What just happened

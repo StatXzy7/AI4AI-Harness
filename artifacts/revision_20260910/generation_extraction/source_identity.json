@@ -1,0 +1,9 @@
+{
+  "review_locked_commit": "1fd2b3fd91e393cb8553812f77638855439900da",
+  "git_blob_sha256": "e9dee7a802676ae763318e86d51d133f5abf9ce2cd29d278cf08180dc8388053",
+  "current_file_sha256": "20d847647c69cf6276df157b1b6763c8ac841b019ee7bbb89fa4b19e04a12d47",
+  "exact_byte_match": false,
+  "historical_run_sha_bound_by_inspected_generation_logs": false,
+  "normalized_lf_text_match": true,
+  "extractor_ast_equal": true
+}

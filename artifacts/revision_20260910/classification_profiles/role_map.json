@@ -1,0 +1,79 @@
+{
+  "reviewer_model": "gpt-5.6-sol",
+  "source_sha256": "35f9427837c97e0ae838eeb3348ca4b30d632bc8403a887186861b59cce7ab6e",
+  "protocol_sha256": "706bc9079cacdc48778dbd468db3dba07ede6bd4ec5a5ec3a4f13c8d16ac851c",
+  "cases": [
+    {
+      "case_id": "vc025",
+      "role": "classify_then_repair",
+      "rationale": "After failed execution, the first post-failure LLM call requests one failure category; the following LLM call requests repaired SQL, with its repair action selected from that category.",
+      "evidence": [
+        {
+          "function": "error_classify_flow_one",
+          "quote": "Classify this failed SQL feedback as syntax, schema, or semantics."
+        },
+        {
+          "function": "error_classify_flow_one",
+          "quote": "Exact execution feedback:"
+        }
+      ]
+    },
+    {
+      "case_id": "vc026",
+      "role": "direct_repair",
+      "rationale": "Classification is performed locally from execution feedback; the first post-failure LLM call is the rewrite request and therefore expects repair SQL.",
+      "evidence": [
+        {
+          "function": "error_classify_flow_two",
+          "quote": "lower = feedback.lower()"
+        },
+        {
+          "function": "error_classify_flow_two",
+          "quote": "Required repair action: {action}"
+        }
+      ]
+    },
+    {
+      "case_id": "vc027",
+      "role": "direct_repair",
+      "rationale": "After failed execution, the next and only post-failure LLM call says to try again and its return value is extracted as SQL; it does not request a category response.",
+      "evidence": [
+        {
+          "function": "error_classify_flow_three",
+          "quote": "The SQL failed. It might be syntax, schema, or semantics. Try again."
+        },
+        {
+          "function": "error_classify_flow_three",
+          "quote": "return _extract_sql(io.llm("
+        }
+      ]
+    },
+    {
+      "case_id": "vc028",
+      "role": "classify_then_repair",
+      "rationale": "After failed execution, the first post-failure LLM call requests one category and discards that response; the following LLM call requests a SQL rewrite.",
+      "evidence": [
+        {
+          "function": "error_classify_flow_four",
+          "quote": "Classify the failure as syntax, schema, or semantics."
+        },
+        {
+          "function": "error_classify_flow_four",
+          "quote": "Rewrite the SQL in a cleaner form for the original database task."
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "direct_repair": [
+      "vc026",
+      "vc027"
+    ],
+    "classify_then_repair": [
+      "vc025",
+      "vc028"
+    ],
+    "ambiguous": [],
+    "scope": "Source-only requested-response role assignment; no conformance labels or adjudication."
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "scope": "offline paired extraction demo and implementation freeze; no live pool outcome",
+  "bindings": {
+    "experiment/revision/common_pool_extraction_compare.py": "320010ae0519766ad0447e96e2818c6b79caadce107447fb27d0aeeff08ea56d",
+    "experiment/revision/test_common_pool_extraction_compare.py": "00feece7baf7db14afe882f9f4a6fa8ed3b9b7b2b14865672411d212328fcdac",
+    "experiment/revision/code_responses.py": "ec28862d63909d7df370501f31bbabc5007d071adaa0e1fa3a1d5b0b662a3ba4",
+    "experiment/revision/generation_extraction_audit.py": "6537bb785863e8d45284e9de802ce871ce681e4df74c41ef0986ed0c41a65136",
+    "experiment/phase2/generate.py": "20d847647c69cf6276df157b1b6763c8ac841b019ee7bbb89fa4b19e04a12d47",
+    "artifacts\\revision_20260911\\paired_extraction_preflight\\PROTOCOL.md": "31634c3fb71ba9a8fcc73761deec19265ceb5713783783e57ecf8b37a443a32c",
+    "artifacts/revision_20260910/common_pool_generation/loopback/pool/pool.json": "02ceb2fbdfdc11ceba24ce1e4a49bbfc64e2c0bcc4e16f19da8814a41bfb611d",
+    "artifacts/revision_20260910/common_pool_generation/loopback/pool/POOL_COMPLETE.json": "a0c173e087af7647653e95d64182bd950adc9403827bee4c7d05dc3274be2619"
+  }
+}

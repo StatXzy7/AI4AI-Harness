@@ -1,0 +1,99 @@
+{
+  "recorded_at_utc": "2026-09-10T11:37:11.510011+00:00",
+  "scope": "AI disclosure only; manuscript updated, empirical assets and executable code unchanged",
+  "lineage": {
+    "artifacts/revision_20260910/chinese_sync_verification.json": {
+      "previous_sha256": "fb046e3c6fcf6415cd70b17d0dc2d23225a0258191a93c5134642c5f198f7826",
+      "retained_snapshot": "artifacts\\revision_20260910\\before_ai_disclosure\\artifacts__revision_20260910__chinese_sync_verification.json",
+      "current_sha256": "23175b594281e9c7d9d13f9e2cceff405ac8b18a4e3e50deaaa073f24102f96f"
+    },
+    "artifacts/revision_20260910/verification.json": {
+      "previous_sha256": "bc9f99a817f59737cbdeb9e6726712173ba2ffd0a431e3c00b2adfd9dd766d40",
+      "retained_snapshot": "artifacts\\revision_20260910\\before_ai_disclosure\\artifacts__revision_20260910__verification.json",
+      "current_sha256": "f978c4b8cebe7662849de337661cb81994eb037ad374ec325aa968434158a859"
+    },
+    "paper/latex_zh/main.pdf": {
+      "previous_sha256": "f7b7472034e1859b8f31bdfa1179f643ecd140eff647fb09009b1459574c7e09",
+      "retained_snapshot": "artifacts\\revision_20260910\\before_ai_disclosure\\paper__latex_zh__main.pdf",
+      "current_sha256": "6484cc69a35f57c4dd16c0aa0d851c059c4c2eeaf21c2185458a58da985e1ed0"
+    },
+    "paper/latex_zh/main.tex": {
+      "previous_sha256": "2b624c8a2ed23eb6e1fa60599bf9a19c94c7fd511864a81d7b666351c586c6d1",
+      "retained_snapshot": "artifacts\\revision_20260910\\before_ai_disclosure\\paper__latex_zh__main.tex",
+      "current_sha256": "945d5a5f43ca4b23d72b21729719ba239882878e1fc7927e14ec621deec0290c"
+    },
+    "paper/latex/main.pdf": {
+      "previous_sha256": "dd495803a5ada05f82f69f6934812369820e84596448ec5257d08bfea6a44167",
+      "retained_snapshot": "artifacts\\revision_20260910\\before_ai_disclosure\\paper__latex__main.pdf",
+      "current_sha256": "ea1ad3a407d4c0d1c451b6890ebc69ee06047f7bf446c29ba2bdbb5b0b14ffc1"
+    },
+    "paper/latex/main.tex": {
+      "previous_sha256": "71baf6baaacc45b739cda3f34b70af21160269152db1658b996b41de66f68788",
+      "retained_snapshot": "artifacts\\revision_20260910\\before_ai_disclosure\\paper__latex__main.tex",
+      "current_sha256": "1a66d4bf81d8feace9dfa1602111ba114a391ac3025def4310fbf6bba00e2c12"
+    }
+  },
+  "historical_verifications_with_prior_paper_bindings": [
+    {
+      "historical_verification": "artifacts\\revision_20260910\\fresh_runtime_verification.json",
+      "superseded_file_bindings": [
+        "artifacts/revision_20260910/chinese_sync_verification.json",
+        "artifacts/revision_20260910/verification.json"
+      ]
+    },
+    {
+      "historical_verification": "artifacts\\revision_20260910\\isolation_verification.json",
+      "superseded_file_bindings": [
+        "artifacts/revision_20260910/chinese_sync_verification.json",
+        "artifacts/revision_20260910/verification.json"
+      ]
+    },
+    {
+      "historical_verification": "artifacts\\revision_20260910\\runtime_probe_verification.json",
+      "superseded_file_bindings": [
+        "artifacts/revision_20260910/chinese_sync_verification.json",
+        "artifacts/revision_20260910/verification.json"
+      ]
+    },
+    {
+      "historical_verification": "artifacts\\revision_20260910\\stable_identification_verification.json",
+      "superseded_file_bindings": [
+        "artifacts/revision_20260910/chinese_sync_verification.json",
+        "artifacts/revision_20260910/verification.json"
+      ]
+    },
+    {
+      "historical_verification": "artifacts\\revision_20260910\\verification_before_chinese_sync.json",
+      "superseded_file_bindings": [
+        "paper/latex/main.tex"
+      ]
+    },
+    {
+      "historical_verification": "artifacts\\revision_20260910\\verification_before_stable_identification.json",
+      "superseded_file_bindings": [
+        "paper/latex/main.tex"
+      ]
+    }
+  ],
+  "paper_verifier": "42 checks PASS",
+  "english_pages": 16,
+  "english_main_pages": 9,
+  "chinese_pages": 19,
+  "chinese_main_end_page": 11,
+  "visually_inspected_disclosure_pages": {
+    "english": 10,
+    "chinese": 11
+  },
+  "real_generation_requests": 0,
+  "reviews": {
+    "mechanical": {
+      "score": 9,
+      "verdict": "ready"
+    },
+    "spec_translation": {
+      "score": 9,
+      "verdict": "ready"
+    },
+    "scope": "AI disclosure correction only; same-model review, not independent scientific clearance"
+  }
+}

@@ -1,0 +1,1406 @@
+      Under review as a conference paper at ICLR 2027
+
+
+
+
+000
+001
+      B EHAVIORAL C OLLAPSE IN AI-G ENERATED H ARNESS
+002   P OPULATIONS
+003
+004
+005    Anonymous authors
+006    Paper under double-blind review
+007
+008
+009                                              A BSTRACT
+010
+011            Automatically generated LLM harnesses can differ in source code, executed
+012            mechanisms, and correctness outcomes. These differences need not imply re-
+013            producible additional capability. We examine the distinction on BIRD text-to-
+014            SQL. A discovery population had 36 of 91 harness pairs identical on all evalu-
+015            ated outcomes despite distinct source code; trace inspection found absent mech-
+016
+               anisms, untriggered branches, and broken multi-turn paths. A subsequent facto-
+               rial study crossed strategy forcing and an admission gate over six builders and
+017
+               three seeds, using 1,169 questions and the official BIRD scorer. Free genera-
+018
+               tion already yielded 8.6 pp observed oracle headroom. Post-review reanalysis of
+019            the archived experiment estimates the combined intervention at −0.16 pp (95%
+020            CI [−0.83, +0.87]), with no clear improvement. The implemented gate also ex-
+021            cludes two allowed prompt-level strategy types, so this contrast cannot isolate
+022            verification alone. Repeated executions show outcome instability, which a single-
+023            run oracle can exploit without stable mechanism complementarity. We distinguish
+024            observed headroom from stable task–harness advantages and identify the controls
+025            needed to connect either to usable selection gains. The current evidence estab-
+026            lishes these measurement limits; it does not yet identify stable complementarity
+027
+               beyond repeated sampling.
+028
+029   1   I NTRODUCTION
+030
+031   An LLM harness is the program of prompts, tools, and control flow that wraps a frozen model.
+032   Automatically generating many such programs creates an evaluation problem: what evidence shows
+033   that a new program provides a new capability? Different source code may execute the same path;
+034   different paths may produce the same answer; different answers on one run may reflect execution
+035   randomness rather than a repeatable advantage.
+036   We study this problem on BIRD text-to-SQL (Li et al., 2023). In a Phase-I discovery population, 21
+037   of 66 generated-candidate pairs had identical correctness vectors. Including the shipped react har-
+038   ness and bare baseline gives 36 identical pairs out of 91. Pairwise code similarity had no observed
+039   rank association with outcome disagreement (ρ = −0.01). Trace inspection found three distinct
+040   situations: claimed mechanisms absent from control flow, mechanisms present but untriggered on
+041   the inspected tasks, and broken multi-turn implementations. These observations motivate an audit
+042   of the measurement process; they do not establish that generated harnesses generally collapse.
+043   A subsequent pre-specified factorial study crossed strategy forcing and conformance gating over six
+044   builders and three seeds. Its primary evaluation used 1,169 questions from nine databases outside
+045   protocol development, with one disclosed 18-item smoke-test exception. Under this revised setting,
+046   free ungated generation already produced 8.6 pp observed oracle headroom. The Phase-I pattern
+047   therefore did not recur, but changes in generation, judge, data, and execution prevent attribution to
+048   any one protocol component without a controlled bridge.
+049   The original gate also changes the admissible strategy space: two allowed single-call prompt trans-
+050   formations cannot pass its mechanism check. Consequently, the intervention combines mechanism
+051   screening with verification. We preserve that experiment and report a versioned post-review reanal-
+052   ysis rather than treating it as a repaired-gate trial. The primary contrast remains −0.16 pp (95%
+053   CI [−0.83, +0.87]). This unresolved estimate neither demonstrates improvement nor establishes
+      equivalence.
+
+
+                                                       1
+      Under review as a conference paper at ICLR 2027
+
+
+
+
+054
+                                            This work                 HarnessLens              HarnessBank
+055
+056   Unit of study                population outcome matrix         evolution loop            diversity library
+      Measures population collapse             yes                         no               search collapse only
+057
+      Gate definition                 counterfactual traces      attributable-evidence       semantic screening
+058   Gate calibration                  pos/neg controls                   —                          —
+059   Gate comparison              factorial, mixed screening gate ablation (single factor)           no
+060   Confirmatory split                 9 isolated DBs                    —                          —
+061
+062   Table 1: Nearest concurrent systems. Behavior-aware verification inside evolution systems is con-
+063   current independent work; our contribution is the population-level outcome measurement, instru-
+064
+      ment calibration, and the generation-policy contrast. The present gate includes structural screening;
+      the database split has a disclosed 18-item smoke-test exception.
+065
+066
+067
+068   Our contribution at this stage is an empirical account of three measurement boundaries:
+069
+070         1. Code, trace, and outcome diversity differ. Discovery examples show why an inactive
+071            branch and a missing mechanism require different tests.
+072         2. Admission and inference define the comparison. A factorial study and an explicit cor-
+073            rection of its data and statistical chain show which intervention was actually evaluated and
+074            what its estimate supports.
+075         3. Observed oracle value is not stable or usable value. Repeat instability and ex-
+076            ploratory selection results motivate separate reporting of oracle accuracy, best-fixed ac-
+077            curacy, repeated-run advantages, and realized selector performance.
+078
+079   The decisive remaining question is whether a real harness population outperforms an equal-budget
+080   population of independent executions of the same code, with advantages that survive independent
+081   repeats. The current study has not completed that control. We therefore treat stable complementarity
+082   as an estimand to be tested, not a discovered property.
+083
+084
+085   2     R ELATED W ORK
+086
+087
+088   2.1   H ARNESS GENERATION FOR LLM S
+089
+090   A growing line of work generates task-specific scaffolding around a frozen model. TTHE evolves
+091   text-to-SQL harnesses with an LLM proposer/judge loop (Nie et al., 2026); Self-Harness (Zhang
+092   et al., 2026b) shows a model can improve its own harness; JIT-Agent (Zhang et al., 2026a) trains
+093
+      a model to generate a harness per task at inference time; Task-CoEvolve (Miyai et al., 2026) co-
+      evolves tasks and scaffolds. A concurrent 2026 cluster makes harness evolution behavior-aware
+094
+      from the verification side: HarnessLens (Xu et al., 2026) allocates rollout budget using behavior-
+095
+      level checks during evolution; HarnessFix (Chen et al., 2026) repairs harnesses from trace-grounded
+096   diagnoses; AHE (Lin et al., 2026) verifies each proposed edit against self-declared behavioral pre-
+097   dictions; gated semantic quality-diversity search (Luo et al., 2026) evolves populations over LLM-
+098   assigned pathology descriptors; Harness Handbook (Wang et al., 2026) attacks behavior localization
+099   and outer-loop search.
+100
+      Our work is complementary but distinct in unit of analysis and question. Table 1 contrasts the two
+101
+      nearest systems. HarnessLens uses behavior as a signal inside an evolution loop to allocate compute;
+102   we ask whether the resulting population is behaviorally diverse as an outcome property, and how
+103   it changes under generation-side interventions. HarnessBank (Luo et al., 2026) documents search-
+104   space collapse and maintains a semantic diversity library with gated screening; our conformance
+105   gate does not score semantics at all — it verifies mechanically, via counterfactual trace probes, that
+106   a declared mechanism executes — and our design compares admission policies through a factorial
+107   contrast. Because the implemented gate also excludes allowed prompt transformations, the current
+      experiment does not isolate verification’s causal contribution.
+
+
+                                                          2
+      Under review as a conference paper at ICLR 2027
+
+
+
+
+108
+      2.2   H ARNESS CONDITIONAL UTILITY AND ROUTING
+109
+110   Harness quality is instance-conditional: Gupta et al. (2026) and Cho (2026) document that no single
+111   harness dominates across instances. HELIX evaluates a full sibling-harness outcome matrix and
+112   portfolio complementarity beyond the best fixed candidate, listing a router as future work (Fan &
+113   Huang, 2026). STS routes over six fixed human-designed scaffolds (Zhou et al., 2026); GRASP
+114   gates skill edits into a development-time library (Moll et al., 2026); Kim (2026) learn instance-level
+115   routing over {no-search, search, abstain}; Liu et al. (2026) route models within a harness. Classical
+116
+      algorithm selection (Rice, 1976) and portfolio solvers such as SATzilla (Xu et al., 2008; Kotthoff,
+      2014) select enumerated algorithms from instance features.
+117
+118   Our candidates are complete automatically generated harnesses. We measure the population out-
+119   come structure a selector would inherit (§5.4), rather than build a selector. We diagnose execu-
+120   tion paths and compare generation policies through a factorial whose treatment includes structural
+121   screening; the present study does not establish stable selectable value.
+122
+123   2.3   B EHAVIORAL DIVERSITY IN LLM POPULATIONS
+124
+      Diversity of LLM outputs has mostly been studied at the sample level (self-consistency, diverse
+125
+      decoding) or the agent-policy level. The observation that syntactically distinct programs can exhibit
+126
+      identical behavior echoes coverage gaps documented in program synthesis and mutation-testing
+127   practice; our contribution is to instantiate and quantify it for AI-generated harness populations, with
+128   a mechanism-level taxonomy.
+129
+130
+131
+      3     P HASE I: M EASURING AND D IAGNOSING THE C OLLAPSE (D ISCOVERY )
+132
+133
+      Phase I is a discovery study: its role is to establish the phenomenon, the taxonomy, and the exis-
+      tence of task-side headroom, and to motivate the confirmatory design. None of its results is confir-
+134
+      matory: 24 of its 151 evaluation items overlapped protocol-development measurements, the human
+135
+      control was designed after inspecting development traces, and its judge was a conservative proxy
+136   (Appendix A). We report it with those limits stated.
+137
+138
+      3.1   H ARNESSES , OUTCOMES , AND THE THREE METRICS
+139
+140   A harness H wraps a frozen target model M : it receives the natural-language task x, issues one or
+141   more calls to M , optionally executes intermediate artifacts (e.g. SQL), and returns a final answer
+142   scored programmatically. With H0 the bare single-call baseline and Y ∈ {0, 1} correctness, the
+143   harness marginal value is ∆(x, H, M ) = Y (x, H, M ) − Y (x, H0 , M ) ∈ {−1, 0, +1} (+1 repair,
+144   −1 harness-induced harm).
+145   We propose that harness-generation and harness-routing pipelines report three precondition metrics
+146   on a held-out set, all computable from the outcome matrix any evaluation already produces: (i)
+147   pairwise outcome disagreement — over all harness pairs, the fraction of tasks where correctness
+148   differs; (ii) union repair rate — the fraction of bare errors some population member repairs; (iii)
+149   bare-inclusive oracle headroom
+150                                                             
+                        H(P ) = Acc x 7→ max Y (x, H) −                 max Acc(H).
+151                                          H∈P ∪{H0 }                H∈P ∪{H0 }
+152
+      Positive observed headroom records item-dependent successes in that execution matrix; independent
+153
+      repeats are needed to establish a stable routing signal. Disagreement without repair adds no observed
+154   coverage beyond bare; repair without headroom adds no observed oracle advantage over the best
+155   fixed member.
+156
+157   3.2   T HE COLLAPSE , QUANTIFIED
+158
+159   The domain is BIRD text-to-SQL (SQLite; execution-accuracy judging), target frozen at GLM-5.3-
+160   Flash (temperature 0) throughout Phase I. On the day-1 population — 14 harnesses (bare, react,
+161   and 12 evolution candidates) × 60 tasks — average pairwise outcome disagreement is 3.3% and 36
+      of 91 pairs are identical on every task; among the 12 generated candidates alone (66 candidate
+
+
+                                                          3
+      Under review as a conference paper at ICLR 2027
+
+
+
+
+162                                                                          Syntactically diverse, behaviorally collapsed
+163                                                                (day-1 population, 14 harnesses x 60 tasks; Spearman = -0.01)
+                                                          0.14
+164
+165                                                       0.12
+
+
+
+
+                          pairwise outcome disagreement
+166                                                       0.10
+167
+168
+                                                          0.08
+169                                                       0.06
+170
+                                                          0.04                                                  mean disagreement 3.3%
+171
+172                                                       0.02
+173
+                                                          0.00 36/91 pairs identical on all 60 tasks
+174
+                                                                   0.10       0.15       0.20        0.25 0.30     0.35    0.40    0.45
+175                                                                      pairwise source-code similarity (token-sequence ratio)
+176
+177   Figure 1: Syntactic diversity vs. behavioral collapse (Phase I, discovery; day-1 population: 14
+178   harnesses × 60 tasks, 91 pairs including the bare and react baselines). Each point is a harness
+179   pair; x = token-sequence code similarity, y = fraction of tasks with differing correctness. Code
+180   similarity does not predict outcome disagreement (ρ = −0.01); 36/91 pairs are identical on all 60
+181   tasks. Raw pairs: fig1 phenomenon data.json in the code release.
+182
+183
+184
+      pairs; mean pairwise code similarity 0.143 under the normalized-character metric of the original
+      code-difference check), disagreement is 3.8% with 21 identical pairs. Every candidate had passed a
+185
+      code-difference check (“all files distinct, non-trivial diffs”). Union repair over bare errors is 7.7%
+186
+      and oracle headroom 3.3 pp; react differs from bare on zero tasks.
+187
+188   Figure 1 makes the central relation quantitative: across all 91 pairs, pairwise source-code similarity
+189   under the figure’s token-sequence metric (mean 0.190; distinct from the candidates-only normalized-
+190
+      character metric of 0.143 above) has Spearman ρ = −0.010 with outcome disagreement — code
+      similarity shows no observed rank association with behavioral similarity in this population. (Pairs
+191
+      share harnesses and are not independent samples; we report ρ as a descriptive summary, not an
+192
+      inferential test.)
+193
+194
+      3.3   T RACE TAXONOMY: WHY CODE DIVERSITY FAILS TO BECOME BEHAVIORAL DIVERSITY
+195
+196   Auditing execution traces (the sequence of LLM calls and artifact executions per task) decomposes
+197   “different code” into three failure classes:
+198
+199          • T1 — mechanism described, not executed (6/12 candidates). The harness issues ex-
+200            actly one LLM call and never executes an artifact — the identical execution path as bare.
+201            Docstrings claim retrieval, self-checking, or token caps; none exists in the control flow.
+202          • T2 — mechanism present but untriggered (react, 10/10 audited tasks). The first SQL
+203            executes successfully, so error repair is not triggered and the final SQL equals bare’s. This
+204
+               does not show that repair feedback lacks a causal path when a failure occurs.
+             • T3 — broken multi-turn path (1/12). The one candidate implementing genuine multi-
+205
+               turn repair returns prose as final SQL, converting bare-correct items into harness-wrong.
+206
+207   The taxonomy is actionable: T1 demands an execution-path acceptance gate, T2 demands controlled
+208   faults to test trigger and feedback use, T3 demands executable-output validation — all generation-
+209   protocol requirements.
+210
+211   3.4   H UMAN POSITIVE CONTROL : THE HEADROOM EXISTS
+212
+213   To probe whether distinct hand-written mechanisms can produce additional observed coverage, we
+214   wrote four harnesses by hand with forcibly distinct execution paths (hpc repair: execute-and-
+215   repair; hpc vote3: 3-vote on execution results; hpc schema: schema-linking; hpc hint: hint-
+      first reordering). Same frozen target, tasks, and judge as the collapsed population: oracle headroom
+
+
+                                                                                              4
+      Under review as a conference paper at ICLR 2027
+
+
+
+
+216
+      6.67 pp on 60 tasks and 7.28 pp [3.3, 10.0] on the 151-item set, with repair/schema/hint each produc-
+217   ing repairs the others miss. One disclosed caveat: the control was designed after inspecting day-1
+218   traces, so its headroom is descriptive, not a blind estimate of stable complementarity. The bare base-
+219   line itself flipped 3 of 60 items between the two day-1 runs (API nondeterminism at temperature
+220   0).
+221
+222   3.5   P HASE -I PROTOCOL PROBES AND THEIR LIMITS
+223
+224   Phase I also probed generation-side fixes — a strategy-forced free-form protocol (assigned mech-
+225   anism, import/smoke acceptance) and a compiled Harness IR. Under the strategy-forced protocol
+226   two of three builders produced populations whose point estimates exceeded the pre-specified thresh-
+227   olds (Qwen3.8-Flash 5.96, DeepSeek-V4-Flash-Vision-Exp 7.95 pp; the old-protocol arm missed at
+228
+      4.64 pp), and per-strategy acceptance ordered with builder identity (GLM-5.3-Flash 3/8, Qwen3.8-
+      Flash 7/8, DeepSeek-V4-Flash-Vision-Exp 8/8, under the logged tool). These observations motivate
+229
+      Phase II but are not confirmatory, for three disclosed reasons: the design was two nested contrasts
+230
+      that cannot separate protocol from builder main effects; the early runs lack per-attempt logs, so bud-
+231   get equality cannot be audited; and acceptance was an import/smoke check, not the counterfactual
+232   conformance gate of §4. Full condition details are in Appendix A.
+233
+234   Generation-null failures (M0). Re-running the original optimize loop with Qwen3.8-Flash and
+235   DeepSeek-V4-Flash-Vision-Exp builders produced 40 candidates byte-identical to the bare base-
+236   line source. Code identity alone does not imply identical stochastic executions. This run supplies
+237   no distinct-code population; it is reported as a distinct, more primitive failure mode — the pipeline
+238   produced no distinct population at all. The collapse claims above rest exclusively on the genuinely
+239   distinct-source day-1 population.
+240
+241
+      4     P HASE II: C ONFIRMATORY G ENERATION S TUDY (D ESIGN )
+242
+243
+      Phase II is the confirmatory study. Its protocol was frozen and committed before any confirma-
+244   tory outcome was observed (one exception, disclosed as deviation D1 in the protocol changelog: an
+245   18-item pipeline smoke test whose aggregate accuracies were observed and whose items were re-
+246   tained); deviations are logged in the protocol changelog (Appendix B). The frozen estimand, splits,
+247   instruments, and analysis plan are summarized here.
+248
+249   4.1   D ESIGN
+250
+251   Arms. Two crossed factors: strategy forcing (S=1: the builder is assigned a named mechanism
+252   from a fixed set of eight; S=0: the builder invents an improvement with no mechanism named) and
+253   the conformance gate (G=1: the harness must pass the frozen conformance suite; G=0: neutral va-
+254   lidity only). This yields four factorial arms, which we denote II-A (free/ungated), II-B (free/gated),
+255
+      II-C (forced/ungated), II-D (forced/gated). A fifth, pre-specified secondary arm II-E (open mecha-
+      nism discovery: the builder emits a self-specified behavioral contract over generic trace primitives,
+256
+      gated on its own declaration) tests whether mechanism diversity requires author-supplied vocabu-
+257
+      lary at all; it is deliberately outside the factorial. These arm names are Phase-II-specific; Phase-I
+258   conditions in §3.5 are always referred to with their descriptive names.
+259
+260
+      Implemented treatment. The original gate maps both hint guard and format guard to
+261   a plain scenario that returns NO MECHANISM declared; admission requires PASS. Thus two
+262   of eight forced strategy slots cannot pass even if neutrally valid. We interpret G as nontrivial-
+263   mechanism screening plus conformance verification. The archived results do not identify pure verifi-
+264   cation, and matching population size cannot restore excluded types. Moreover, no format guard
+265   candidate passed neutral validity in either forced arm (18 slots and 54 attempts per arm), before
+266   mechanism gating. An extraction audit identifies a possible upstream failure: embedded SQL fences
+267   can truncate otherwise valid Python (Appendix B).
+268
+269   Common attempt cap; unequal realized cost. Each slot has at most R=3 raw builder attempts
+      (same model, temperature 0.7, 16,384 token cap); generation stops at the first accepted candidate.
+
+
+                                                        5
+      Under review as a conference paper at ICLR 2027
+
+
+
+
+270
+      The original protocol’s “exactly three” wording does not describe execution. Logged raw attempts
+271   total 269/255/273/324 for A/B/C/D, respectively, against a 432-attempt cap per arm; actual token
+272   costs are not fully recovered. Generation prompts and admission policies differ across arms: ungated
+273   arms take the first candidate passing neutral validity (parses, imports, returns SQL on a development
+274   question — mechanism-blind); gated arms take the first additionally passing the conformance suite.
+275   Slot failure is final; populations are never topped up, so generation reliability is part of the treatment.
+276   Extracted code files and attempt logs were saved, but complete builder messages were not archived
+277   by the generator. Generation reliability is reported separately from population quality via three
+278   rates: Rartifact (valid artifact), Rcontract (valid, non-vacuous contract), Rfidelity (asserted properties
+279
+      verified, conditional on a valid contract).
+280
+281   Builders and seeds. Six builders from independent labs (GLM-5.3, Qwen3.8-Max, DeepSeek-
+282
+      V4-Pro, Kimi-K3, MiniMax-M3, ERNIE-5.0-Thinking-Preview), three seeds each: 18 paired
+      (builder × seed) cells. These were the strongest models available on the project’s single API gate-
+283
+      way; no Anthropic- or OpenAI-family builder was accessible, so frontier capability-dependence is
+284
+      untested. Every cell enters the primary contrast regardless of admitted population size, including
+285   K=0 — excluding low-yield cells would condition on a post-treatment outcome.
+286
+287   Data isolation. A fail-closed contamination registry scans every project artifact for observed
+288   BIRD questions. Two databases touched during development are banned wholesale; the confir-
+289   matory evaluation uses 1,169 questions from nine databases never opened during development
+290   (the registry’s defensible claim is no project-specific adaptive use, not pretraining-time isolation; the
+291   18-item smoke contact is the disclosed exception), with a stratified 400-item core drawn before any
+292   outcome existed. Factorial secondary analyses run on the same core items for all four arms.
+293
+294   Judge. Primary: the official BIRD execution scorer (set equality on raw result rows, 30 s wall-
+295   clock timeout). Secondary: the Phase-I legacy judge, measured to be uniformly conservative (on
+296   Phase-I matrices it never credits an answer the official scorer rejects).
+297
+298   Instruments. The conformance suite drives each harness against scripted scenarios and asserts on
+299   the recorded execution trace, never on task performance, so gating cannot leak outcome supervision.
+300   Every mechanism is probed with paired counterfactual variants whose correct answer differs — in-
+301
+      cluding a variant where the first query succeeds, separating conditional repair from an unconditional
+      second call — and answers are compared by exact normalized equality. The suite was calibrated
+302
+      before any Phase-II generation against three hand-written positive controls (all must pass) and two
+303
+      known-negative impostor harnesses (both must be rejected), plus the invariant that the bare baseline
+304   must violate every conditional property; the calibration is an executable gate re-run before each gen-
+305   eration batch. Arm II-E additionally enforces non-vacuity (the contract must be violated by the bare
+306   baseline, checked by running it) and verifies only the properties actually asserted.
+307
+308   4.2   F ROZEN ANALYSIS PLAN
+309
+310   The primary estimand is the paired difference in bare-inclusive oracle headroom, H(II-D) −
+311   H(II-A) over (builder × seed) cells, on the full 1,169-question set under the official judge — a
+312   continuous effect with a two-sided 95% CI and paired permutation test, never a pass/fail threshold.
+313   The Phase-I thresholds survive only as a descriptive checklist. Confirmatory secondaries (Holm-
+314   corrected, all four arms on the same core-400 items): gate main effect [(B−A) + (D−C)]/2, strat-
+315
+      egy main effect [(C−A) + (D−B)]/2, and their interaction (D−C) − (B−A) — whether strategy
+      differentiation requires execution fidelity to be realized. Original plan and corrected inference:
+316
+      the original primary code omitted within-database task resampling and sampled tasks separately
+317
+      across cells; the factorial code resampled cell summaries only. The versioned post-review analysis
+318   uses 10,000 shared database/within-database task draws across all arms and cells, keeping builders
+319   fixed and resampling generation seeds within builder. It does not add execution-repeat variance.
+320   Exact sign-flip reference tests are conditional on observed tasks and on cell-contrast sign symme-
+321   try (one-sided primary; two-sided secondaries with Holm adjustment). These are not randomized
+322   causal tests. H(P ) is not monotone in K — adding a harness that answers everything correctly
+323   drives headroom to zero — so matched-K comparison, not monotonicity, licenses cross-population
+      claims. K-matched sensitivity, the full estimand definitions, and the robustness audits (dual judge,
+
+
+                                                          6
+      Under review as a conference paper at ICLR 2027
+
+
+
+
+324                           Phase-II confirmatory design: database-level isolation, 2×2 factorial + open-mechanism arm, three-layer admission
+
+325                                 Data isolation                          Attempt cap R=3; stop at first admission
+326                                                                                          G=0                                 G=1
+                                   Phase-I discovery eval
+                                  151 q (overlaps dev use;                                 II-A                                    II-B
+327                                      disclosed)                        S=0
+                                                                                          free                                    free
+                                                                                        ungated                                  gated
+                                                                                                                                                            II-E (secondary)
+328                                                                                                                                                        open mechanism:
+                                                                                                                                                              self-specified
+                                 Phase-II development pool                                                                                                      contract,
+                                 (card_games + formula_1,                                                                                                     gated on own
+329                                365 q builders only)
+                                                                           S=1             II-C                                II-D
+                                                                                                                             forced
+                                                                                                                                                               declaration
+                                                                                         forced                              gated
+                                                                                        ungated                            (PRIMARY)
+330
+                                Phase-II confirmatory test
+                                 9 DBs never opened in
+331                                   development
+                                    1,169 q frozen
+
+332                                                                Three-layer admission (gated arms)
+                                                                                                   6 builders × 3 seeds = 18 paired cells (all enter, incl. K=0)
+                                     Stratified core 400
+333                                (drawn pre-outcome,                 1. neutral validity                   2. counterfactual                 3. non-vacuity
+                                    subset of the 1,169)                (parse / import /                      conformance                    (must be violated
+                                                                          returns SQL)                        (trace probes)                  by bare) arm E
+334
+335
+336   Figure 2: Phase-II confirmatory design (frozen protocol). Left: database-level contamination
+337   isolation (the two development databases are banned wholesale; evaluation uses nine databases, with
+338   the disclosed 18-item smoke exception). Middle: the 2×2 factorial (strategy forcing × conformance
+339   gate) with a common attempt cap (realized costs differ), plus the open-mechanism arm II-E. Right:
+340   the three-layer admission pipeline (neutral validity → counterfactual conformance → non-vacuity
+341   vs. bare).
+342
+343                                Metric                                                                               II-A                              II-D
+344                                Candidate count                                                                   5.78                               3.83
+345                                Oracle accuracy (%)                                                              76.14                              75.70
+346                                Best-fixed accuracy (%)                                                          67.58                              67.30
+                                   Headroom (pp)                                                                     8.56                               8.40
+347
+348                                D−A headroom (pp)                                                                    −0.16
+349                                Unadjusted bootstrap 95% CI                                                      [−0.83, +0.87]
+                                   One-sided sign-flip p                                                                0.647
+350
+351
+      Table 2: Corrected primary analysis of the original intervention. Means over 18 builder–seed
+352
+      cells on 1,169 questions. Bare is included in both the oracle and best-fixed comparator. The CI
+353   incorporates task and generation-seed variation, conditional on six fixed builders and the archived
+354   execution records. The sign-flip reference test conditions on the observed tasks and assumes sym-
+355   metric cell contrasts.
+356
+357
+358   cache-off replication, repeat stability) are specified in Appendix B together with the protocol devia-
+359   tion log.
+360
+361   5     P HASE II: R ESULTS
+362
+363   5.1    C ORRECTED REANALYSIS OF THE ORIGINAL GATE EXPERIMENT
+364
+365   The following tables report a post-review reanalysis of archived outcomes, not a new experiment
+366   with a repaired gate. Original analysis files remain available. All revised tables use full-precision
+367   outcomes from one canonical input order; the four-arm analysis reuses the same bare records on the
+368   same 400 tasks. The revised intervals use shared database and within-database task draws across all
+369   arms and cells, with generation seeds resampled within each of the six fixed builders.
+370   The paired estimate is −0.16 pp with unadjusted 95% CI [−0.83, +0.87] and one-sided sign-flip
+371   p = 0.647. We find no clear improvement; the interval does not establish equivalence. The full-set
+372   cell contrasts range from −4.36 to + 2.74 pp. These are estimates for the implemented screening
+373   policy, which excludes some allowed strategies, rather than a pure verification intervention.
+374
+375   5.2    FACTORIAL EFFECTS AND ABSOLUTE PERFORMANCE
+376
+377   The gate estimate is −0.69 pp; its Holm-adjusted p = 0.079 does not meet the 0.05 threshold.
+      This cannot distinguish useful verification from the gate’s structural exclusion of prompt transfor-
+
+
+                                                                                              7
+      Under review as a conference paper at ICLR 2027
+
+
+
+
+378                                    Original gate: corrected primary reanalysis                                                     Same core tasks and shared bare
+379                          Pooled unadjusted 95% CI
+                   glm/s0
+              deepseek/s1
+
+
+
+
+                                                                                             Mean headroom (percentage points)
+380                glm/s1
+               minimax/s0
+                                                                                                                                 8
+381            minimax/s1
+                  qwen/s2
+382           deepseek/s0
+                  ernie/s1
+                                                                                                                                 6
+383                kimi/s2
+                  qwen/s1
+384                kimi/s1
+                   glm/s2
+                                                                                                                                 4
+385           deepseek/s2
+                   kimi/s0
+386               ernie/s2
+               minimax/s2
+                                                                                                                                 2
+387               qwen/s0
+                  ernie/s0
+388
+                                                                                                                                 0
+389                           4           3        2      1       0       1          2   3                                             A        B         C         D
+                                           D - A headroom (percentage points)
+390
+391
+      Figure 3: Versioned corrected reanalysis. Left: full-set D−A cell contrasts and the pooled un-
+392
+      adjusted 95% interval. Right: four-arm headroom on the same core-400 tasks with a shared bare
+393
+      baseline. Both axes use percentage points. No significance stars are used; raw and adjusted p-values
+394   appear in Table 3.
+395
+396                               Contrast              Effect (pp)             95% CI (pp)                                          Raw p     Holm p
+397
+                                  Gate                       −0.69         [−1.56, +0.20]                                            0.026       0.079
+398
+                                  Strategy                   +0.42         [−0.32, +1.51]                                            0.263       0.428
+399                               Interaction                −0.87         [−2.83, +0.65]                                            0.214       0.428
+400
+401   Table 3: Corrected core-400 factorial reanalysis. Gate is [(B − A) + (D − C)]/2, strategy is
+402   [(C −A)+(D −B)]/2, and interaction is (D −C)−(B −A). CIs are unadjusted database/task/seed
+403   bootstrap intervals. Raw p-values use two-sided cell sign flips; Holm adjusts the three secondary
+404   tests. The two procedures address different sources of variation.
+405
+406
+      mations. The corrected fixed-K gate sensitivity is −0.31 pp (95% CI [−1.07, +0.40]). Both sides
+407
+      are matched to the smaller candidate count within each A/B and C/D cell; all candidate subsets
+408
+      are averaged exactly and bare is always retained (Appendix B). A change after subsampling does
+409   not identify a causal proportion mediated by population size. Moreover, oracle headroom is not
+410   monotone in population size: adding a strong fixed member can reduce it.
+411
+412
+      For the full primary set, the D−A oracle change is −0.44 pp and the best-fixed change is −0.28 pp.
+      The best-fixed decrease offsets part of the oracle decrease; it does not explain away that decrease.
+413
+      The same-core four-arm decomposition is reported separately in Table 4.
+414
+415
+      5.3   E XECUTION VARIABILITY AND THE STABLE - COMPLEMENTARITY QUESTION
+416
+417   The archived R3 audit reports that 14.5% of tasks changed bare correctness at least once across
+418   three cache-off repeats. Canonical R2 replay finds 2391/28,000 same-harness verdict flips (8.54%).
+419   Retaining all 18 cells, including two with singleton A subsets, changes subset D−A from +0.42 to
+420   +0.81 pp; the change is +0.39 pp (95% CI [−0.95, +1.63]). R2 subset headroom excludes bare
+421   because R2 did not acquire a matched bare run. It is therefore distinct from the bare-inclusive
+422   primary estimand. The old 16-cell comparison is reconciled in Appendix B. These are instability
+423   measurements, not standard errors or a detectability floor for the mean treatment effect. They do not
+424
+      establish that every contrast is unchanged, or identify what fraction of between-harness disagreement
+      is noise.
+425
+426   Let ph,x denote the probability that harness h answers task x correctly across independent execu-
+427   tions. For a pool including bare, define
+428                                          1X                    1X
+429                              Hstable =        max ph,x − max         ph,x .
+                                             n x h             h n
+                                                                      x
+430
+431   A same-code clone-only pool has identical ph,x across members, hence zero stable headroom de-
+      spite potentially positive one-run headroom. Adding distinct bare can retain baseline–harness com-
+
+
+                                                                                 8
+      Under review as a conference paper at ICLR 2027
+
+
+
+
+432
+                      Arm    Kcand     Ktotal   Bare (%)    Best (%)   Oracle (%)   H (pp)
+433
+434                   A        5.78      6.78      63.25      66.00        74.51      8.51
+                      B        6.11      7.11      63.25      66.12        74.39      8.26
+435
+                      C        5.61      6.61      63.25      65.64        75.01      9.38
+436                   D        3.83      4.83      63.25      65.65        73.90      8.25
+437
+438   Table 4: Same-core headroom decomposition. All arms use identical 400 tasks and identical bare
+439   outcomes. Kcand excludes bare and Ktotal = Kcand + 1; counts and accuracies are cell means.
+440   Headroom is oracle minus best-fixed accuracy, not realized routing gain.
+441
+442
+443   plementarity. Independent repeats estimate a fitted policy’s value against its specified comparator.
+444   A discovery-selected fixed member may be suboptimal: beating it alone does not establish stable
+445   complementarity or unseen-task utility. The current data lack a balanced, cost-matched clone com-
+446   parison, so stable added capability remains unestimated.
+447
+448
+      5.4   ROUTING AND EXPLORATORY SELECTION
+449
+450   A Phase-I leave-one-harness-out predictor failed to beat the best fixed harness in the DeepSeek
+451   population (−3.4 pp); the Qwen estimate was +0.9 pp with CI [−5.2, +6.9]. Database-stratified
+452   task-held-out controls reduced mean repair AUROC to 0.512, consistent with task memorization
+453   rather than reliable value prediction. These findings apply to the tested predictors and splits.
+454
+      The canonical W1 reanalysis remains descriptive. At k = 8, with bare retained, diversity selection
+455   versus top-accuracy selection changes headroom by +0.78 pp: oracle changes by +0.35 pp and
+456   best-fixed by −0.42 pp. A fixed member chosen only on development data changes by −0.001 pp,
+457   with ties resolved consistently within each selected subset. These are different estimands, not a
+458   demonstrated routing gain. Appendix C reports absolute values and the limitations of this post-hoc,
+459   single-execution comparison.
+460
+461
+462   6     D ISCUSSION AND C ONCLUSION
+463
+464   What the evidence establishes. Source diversity, executed mechanisms, and one-run correctness
+465   differences are distinct measurements. The Phase-I pattern did not recur in the revised Phase-II
+466   setting; multiple protocol changes prevent identifying the cause. The corrected analysis of the orig-
+467   inal gate shows no clear headroom improvement. Because that gate also excludes allowed prompt
+468   strategies, it does not identify the effect of verification alone.
+469   What remains unidentified. Same-code reruns can disagree and create oracle gains. Outcome flip
+470   rates measure instability, not the standard error of a treatment contrast, and cannot define a numer-
+471   ical noise floor for that contrast. A matched-cost clone control, independent repeat validation, and
+472   validated calibration across mechanism types (Appendix G) are needed before attributing headroom
+473   to stable additional capability.
+474   Limitations. The main comparison uses one text-to-SQL target and six fixed builders, with three
+475   generation seeds per builder. Phase I is discovery evidence with disclosed task overlap, a proxy
+476   judge, and a post-trace human control. The new statistical analysis is post-review and does not add
+477   independent executions. K-matched and R2 results now share the corrected data and resampling
+478   chain. W1/W3 now share the canonical data but remain descriptive; selection uncertainty and in-
+479   dependent utility validation are outstanding. The completed one-seed MATH-500 free-arm probe
+480   (Appendix H) extends the observed outcome comparison to a second domain, but does not supply a
+481   clone control, a repaired-gate factorial, or an independent test of stable complementarity.
+482   Generated code, observed outcome diversity, and reproducible additional capability should be eval-
+483   uated separately. Our archived experiments expose failures at the first two levels and leave the third
+484   unresolved. Reporting absolute oracle accuracy, best-fixed accuracy, admission policy, execution
+485   cost, and repeat variability makes that boundary inspectable. Establishing practical value requires
+      independently validated selection gains beyond same-code repeated sampling.
+
+
+                                                        9
+      Under review as a conference paper at ICLR 2027
+
+
+
+
+486
+      AI USE STATEMENT
+487
+488   This work is, by construction, an AI-assisted research project studying AI-generated artifacts, and
+489   we disclose the extent of that assistance precisely.
+490
+      Required disclosure. We used generative AI tools for: (i) writing and modifying the experimental
+491
+      code (generation pipeline, evaluation collectors, statistical analysis scripts); (ii) running experimen-
+492   tal workflows that made model API calls; (iii) analyzing experimental data and producing tables
+493   and figures; and (iv) drafting and editing manuscript text. The revised primary and factorial tables
+494   and result figure are generated from a shared, versioned reanalysis artifact. Historical exploratory
+495   analyses retain their original provenance and stated limitations. The post-review corrections are
+496   recorded separately from the original protocol. Verification records specify the scope of automated
+497   tests, development controls, and review for each artifact. Post-review revisions also used same-
+498   model subagent reviews; these are mechanical checks, not independent cross-model scientific vali-
+499   dation. Development controls and local runtime tests do not establish independent gate calibration
+500
+      or provider-level execution independence.
+501   Research ideas and direction. The core research questions, the causal design decisions (estimand,
+502   contrasts, exclusion rules), the interpretation standards, and proposed go/no-go criteria were devel-
+503   oped with AI assistance. The human authors set the overall research direction and requested the
+504   review-driven revision; AI tools also proposed analysis and experiment designs, identified coun-
+505   terexamples, and implemented revisions. Final scientific decisions and approval of the submission
+506
+      remain the authors’ responsibility. This disclosure does not claim that every AI-proposed decision
+      has already received individual author approval.
+507
+508   Responsibility. We take responsibility for the final content of this work, including text, claims, and
+509   artifacts produced with the aid of generative AI. The factual statements in this section are provided
+510   for author verification; final responsibility for their accuracy rests with the authors.
+511
+512   R EFERENCES
+513
+514   Mengzhuo Chen, Junjie Wang, Zhe Liu, Yawen Wang, Haiming Zheng, and Qing Wang. From
+515
+       failed trajectories to reliable LLM agents: Diagnosing and repairing harness flaws. arXiv preprint
+       arXiv:2606.06324, 2026.
+516
+517   Yong-eun Cho. It’s not the capability: Harness sensitivity is non-monotone across LLM agent tiers.
+518     arXiv preprint arXiv:2605.26731, 2026.
+519
+520   Tianyu Fan and Chao Huang. HELIX: Model-harness co-evolution for recursive self-improvement.
+521     arXiv preprint arXiv:2608.13951, 2026.
+522
+      Akshat Gupta, Jermaine Lei, Alexander Lu, Gopala Anumanchipalli, and Leshem Choshen. Auto-
+523     mated discovery has no universally superior harness. arXiv preprint arXiv:2607.18235, 2026.
+524
+525   Minho Kim. When should LLMs search? counterfactual supervision for search routing. arXiv
+526    preprint arXiv:2607.05752, 2026.
+527
+      Lars Kotthoff. Algorithm selection for combinatorial search problems: A survey. AI Magazine, 35
+528
+        (2):48–60, 2014.
+529
+530   Jinyang Li, Binyuan Hui, Ge Qu, Jiaxi Yang, Binhua Li, Bowen Li, Bailin Wang, Bowen Qin, Ruiy-
+531      ing Geng, Nan Huo, et al. Can LLM already serve as a database interface? a BIRD’s eye view. In
+532      Advances in Neural Information Processing Systems (NeurIPS) Datasets and Benchmarks Track,
+533      2023.
+534
+      Hunter Lightman, Vineet Kosaraju, Yura Burda, Harri Edwards, Bowen Baker, Teddy Lee, Jan
+535
+        Leike, John Schulman, Ilya Sutskever, and Karl Cobbe. Lightman et al. let’s verify step by step
+536     appendix: Math-500 subset. arXiv preprint arXiv:2305.20050, 2023.
+537
+538   Jiahang Lin, Shichun Liu, Chengjun Pan, Lizhi Lin, Shihan Dou, Zhiheng Xi, Xuanjing Huang, and
+539      Hang Yan. Agentic harness engineering: Observability-driven automatic evolution of coding-
+         agent harnesses. arXiv preprint arXiv:2604.25850, 2026.
+
+
+                                                        10
+      Under review as a conference paper at ICLR 2027
+
+
+
+
+540
+      Xinchen Liu, Hang Zhou, Yingjie Zong, Yuchuan Tian, Liuyang Song, and Shuo Zhang. Agentic
+541     routing: The harness-native data flywheel. arXiv preprint arXiv:2607.11399, 2026.
+542
+543   Xiaotian Luo, Dizhan Xue, Fengxingyu Wang, Chuanrui Hu, and Yafeng Deng. HarnessBank:
+544     Semantic gene-bank search with gated verification for agent-harness self-evolution. arXiv preprint
+545     arXiv:2607.13683, 2026.
+546
+547   Atsuyuki Miyai, Kiyoharu Aizawa, and Toshihiko Yamasaki. Task-CoEvolve: Efficient harness
+548     optimization via adaptive validation task selection. arXiv preprint arXiv:2608.20169, 2026.
+549
+550   Johannes Moll, Jean-Philippe Corbeil, Jiazhen Pan, Martin Hadamitzky, Daniel Rueckert, and Lisa
+551     Adams. GRASP: Gated regression-aware skill proposer for self-improving LLM agents. arXiv
+552     preprint arXiv:2605.29668, 2026.
+553
+554
+      Jun Nie, Yonggang Zhang, Jun Song, Qianshu Cai, Dahai Yu, Xinmei Tian, Bo Han, Yike Guo, et al.
+        TTHE: Test-time harness evolution. arXiv preprint arXiv:2607.08124, 2026.
+555
+556
+      John R. Rice. The Algorithm Selection Problem. Elsevier, 1976.
+557
+558
+      Ruhan Wang, Yucheng Shi, Zongxia Li, Zhongzhi Li, Yue Yu, and Junyao Yang. Harness hand-
+559     book: Making evolving agent harnesses readable, navigable, and editable. arXiv preprint
+560     arXiv:2607.13285, 2026.
+561
+562   Jinghan Xu, Yikai Zhang, Aili Chen, Weiyuan Li, Jiaqing Liang, and Deqing Yang. Verify smarter,
+563      evolve further: Efficient harness evolution through behavior-aware verification. arXiv preprint
+564      arXiv:2608.27311, 2026.
+565
+566   Lin Xu, Frank Hutter, Holger H. Hoos, and Kevin Leyton-Brown. SATzilla: Portfolio-based algo-
+567     rithm selection for SAT. Journal of Artificial Intelligence Research, 32:565–606, 2008.
+568
+569   Guibin Zhang, Leo Lu, Fangzhou Xie, Kang Zhu, Junhao Wang, and Zhifei Xie. JIT-Agent: Scaling
+570
+        harness intelligence via just-in-time harness evolution. arXiv preprint arXiv:2608.25593, 2026a.
+571
+      Hangfan Zhang, Shao Zhang, Kangcong Li, Chen Zhang, Yang Chen, and Yiqun Zhang. Self-
+572
+        harness: Harnesses that improve themselves. arXiv preprint arXiv:2606.09498, 2026b.
+573
+574
+      Heng Zhou, Zelin Tan, Zhemeng Zhang, Yutao Fan, Yibing Lin, and Li Kang. Select-then-
+575     solve: Paradigm routing as inference-time optimization for LLM agents. arXiv preprint
+576     arXiv:2604.06753, 2026.
+577
+578
+579
+      A    P HASE -I P ROVENANCE AND C ONDITIONS (D ETAIL )
+580
+581
+      Discovery status. Phase I (Sections 3 and 5.4) is a discovery study. 24 of its 151 evaluation
+582
+      items overlapped day-1 protocol-development measurements; the human control was designed after
+583
+      inspecting day-1 traces (its observed headroom is descriptive, not a blind estimate of stable com-
+584   plementarity); the repository history was initialized retrospectively, and the decision-log changelog
+585   is the authoritative ordering record. Phase-I admission thresholds (union repair ≥15%, headroom
+586   ≥5 pp, ≥3 pairwise-distinct non-empty fix sets) were frozen in the internal decision log before the
+587   151-item evaluation; the v6→v7 threshold change (20%→15%) is disclosed, and both readings ad-
+588   mit the same populations. This is an internal pre-evaluation freeze, not external preregistration.
+589
+590   Data hygiene. The bare baseline flipped 3 of 60 items between the two day-1 runs (API nondeter-
+591   minism at temperature 0), so 60-item columns are conditioned on slightly different bare-error sets.
+592   Phase-I judging used a set-of-rows-equality proxy that we later measured to be uniformly conserva-
+593   tive relative to the official BIRD scorer (on the two Phase-I matrices with logged final SQL, it never
+      credits an answer the official scorer rejects; agreement 0.97–0.99).
+
+
+                                                       11
+      Under review as a conference paper at ICLR 2027
+
+
+
+
+594
+      Phase-I populations. Seed baselines: bare (single call) and react (execution feedback loop,
+595   shipped with TTHE). Old proposer protocol: six candidates selected from TTHE’s optimize-loop
+596   output (GLM-5.3-Flash builder), selected for behavioral diversity using only the 36 questions dis-
+597   joint from the evaluation set, by a rule frozen before evaluation. Strategy-forced free-form: GLM-
+598   5.3-Flash, Qwen3.8-Flash, and DeepSeek-V4-Flash-Vision-Exp builders, eight assigned mecha-
+599   nisms each; the GLM population is the logged re-run (K=3; the original 09-01 run recorded zero
+600   accepted outputs but its tool was not preserved and the observation is unaudited). Harness IR: six
+601   harnesses compiled deterministically from declarative mechanism specifications (context ∈ {plain,
+602   schema link, hint guard, link+hint}, candidate generation with temperature, per-candidate execu-
+603
+      tion, repair rounds, selection rule), so a declared mechanism is present in the control flow by con-
+      struction. Human positive control: the four hand-written harnesses of §3.4.
+604
+605
+      Generation-provenance gaps. The 09-01 free-form populations were produced in-session; their
+606
+      generation tool was not preserved, and per-attempt logs do not exist for them — so budget equality
+607
+      cannot be audited for those runs, and we do not claim it. Their acceptance was an import/smoke
+608   check at evaluation time, not the Phase-II counterfactual conformance gate. The tool of record
+609   from 2026-09-03 (builder generate3.py) logs every attempt (3 retries, 16,384-token budget,
+610   per-attempt stage and finish reason); the completed per-strategy grids and the builder-acceptance
+611   ordering (3/8, 7/8, 8/8) come from this logged tool and are post-hoc with respect to the frozen
+612   admission decisions.
+613
+614
+      B    P HASE -II P ROTOCOL S UMMARY AND D EVIATION L OG
+615
+616   The authoritative protocol (estimands, splits, instruments, exclusion rules, and the historical devi-
+617   ation changelog) is PHASE2 PROTOCOL.md in the code release, frozen at the commit recorded
+618   in PROTOCOL FREEZE.txt. Summary: 2×2 factorial plus open-mechanism arm; six builders
+619   × three seeds; at most R=3 attempts per slot, stopping at first admission, with no top-up; con-
+620   tamination registry (fail-closed, two development databases banned wholesale); 1,169-question
+621   confirmatory set from nine databases never opened during development plus a pre-drawn 400-
+622   item core; official BIRD judge with enforced 30 s timeout; response cache keyed on model iden-
+623   tity with cross-process locking (deviation D13 documents and fixes a cache concurrency bug
+624
+      found during collection); primary contrast D−A on paired (builder × seed) cells with hierarchi-
+      cal bootstrap and permutation inference; Holm-corrected factorial secondaries on the common
+625
+      core; K-matched sensitivity only. Deviations D1–D13 include the disclosed 18-item pipeline
+626
+      smoke test, instrument-calibration fixes made before any confirmatory outcome was observed,
+627   the credential-handling incident and its remediation, and the artifact-divergence quarantine —
+628   each with its rationale and date in the changelog. The post-review corrections are recorded in
+629   review-stage/REVISION 20260910.md; revised results do not replace the historical freeze.
+630   In particular, the implemented gate structurally rejects two allowed prompt-level strategies and
+631   realized generation costs differ across arms. Corrected tables use shared baseline records and
+632   database/task resampling, as described in the main text.
+633
+634   Upstream code-extraction audit. Across the 36 forced C/D cells, all 108 format guard at-
+635   tempts failed neutral validity: 71 logs report unterminated Python strings, 36 report no Python
+636   fence, and one reports a provider timeout. The archived generator’s non-greedy Python-fence ex-
+637
+      tractor terminates at the first subsequent triple backtick, including one inside a Python string. Three
+      synthetic, syntactically valid files containing SQL fences in an ordinary string, docstring, or regex
+638
+      become invalid prefixes; the extractor nevertheless sets its truncation flag to false. This extractor is
+639
+      unchanged from the review-locked commit, but the historical attempt logs do not bind its execution-
+640   time source hash. Full builder messages were not saved by this generator. Thus the failure pattern
+641   is compatible with extraction damage, not proof that all historical failures had this cause or that re-
+642   paired candidates would pass admission. We found 74 saved extracted files, all syntactically invalid;
+643   three coexist with no-fence logs and are retained as provenance conflicts, not attributed to those
+644   attempts. These findings place a generation interface failure alongside the gate’s explicit strategy
+645   exclusions.
+646
+647   Corrected K-matched and R2 replays. Both replays use the same manifest-ordered canonical
+      loader and shared database/within-database task draws as the corrected primary analysis, with seeds
+
+
+                                                        12
+      Under review as a conference paper at ICLR 2027
+
+
+
+
+648
+                           Sensitivity estimand         Estimate (pp)       95% CI (pp)
+649
+650                        K-matched B−A headroom             −0.55       [−1.53, +0.63]
+                           K-matched D−C headroom             −0.08       [−1.26, +0.80]
+651
+                           K-matched gate mean                −0.31       [−1.07, +0.40]
+652
+                           R2 subset D−A (cached)             +0.42       [−0.61, +1.48]
+653
+                           R2 subset D−A (cache-off)          +0.81       [−0.35, +1.84]
+654                        R2 change in subset D−A            +0.39       [−0.95, +1.63]
+655
+656   Table 5: Corrected sensitivities on core-400, 18 cells. CIs are unadjusted. K-matched comparisons
+657   always retain bare; R2 comparisons exclude bare and are conditional on the observed acquisition
+658   groups.
+659
+660                 Arm    Candidate-task records   Logged solver calls    Calls/task/population
+661                 A                      41,600               67,258                      9.34
+662                 B                      44,000               64,399                      8.94
+663                 C                      40,400               75,604                     10.50
+664                 D                      27,600               52,043                      7.23
+665
+666   Table 6: Descriptive canonical cost audit on core-400, 18 cells per arm. Logged logical calls are not
+667   billable requests or token counts. The last column averages candidate-population calls per task over
+668
+      cells.
+669
+670   resampled within fixed builders (10,000 replicates). For K-matching, each A/B and C/D pair uses
+671   the smaller candidate count; every uniform candidate subset is enumerated exactly. Bare stays in
+672   every subset, and best-fixed is recomputed inside each subset on every task draw. This is a size
+673   sensitivity analysis, not a causal mediation decomposition.
+674   R2 acquired 70 harnesses on 400 tasks, selecting the first two callable admitted candidates per
+675   A/D cell where available. The two cache-off acquisition files retain separate identities even though
+676   both stored repeat=0; source hashes are checked against the cached runs. No matched bare was
+677   acquired, so R2 headroom excludes bare in both conditions. The corrected analysis retains singleton
+678   cells (their subset headroom is zero), yielding all 18 paired cells. There are 2391/28,000 verdict
+679   flips against cached outcomes (8.54%) and 1245/14,400 flips between the two D cache-off passes
+680   (8.65%). For reconciliation only, restricting to the 16 cells with at least two members in both arms
+681
+      gives D−A −0.11 pp cached and +0.36 pp cache-off. This explains the difference from the full-
+      cell estimates; neither analysis identifies future execution variance, the effect of caching alone, or
+682
+      a stable-complementarity advantage over clones. Acquisition time and caching condition are not
+683
+      isolated.
+684
+685
+      Recorded cost and missing billing data. The same canonical core records contain 259,304
+686   logged logical solver calls across 153,600 candidate–task records (Table 6). These calls include
+687   cache-served requests and are not provider-billed API requests. None of the inspected records has
+688   token usage fields; we do not impute token or monetary expenditure from call counts. Actual gen-
+689   eration attempts, admitted candidate counts, and these execution counts therefore remain separate
+690   measurements. The population cost mean gives each builder–seed cell equal weight and excludes
+691   bare; zero-candidate populations would contribute zero solver calls.
+692
+693   C    E XPLORATORY F INGERPRINT AND S ELECTION A NALYSES
+694
+695   Both analyses are post-hoc on the archived confirmatory cells (18 builder×seed cells, 384 admitted
+696   candidates, core-400 outcomes). The versioned experiment/revision/ scripts now use the
+697   same canonical loader, frozen task list, membership and source checks as the main reanalysis. They
+698   remain descriptive: these tasks had already been analyzed, and this is not independent transfer
+699   validation.
+700
+701   Rich fingerprints. To isolate the loader change, the W3 reanalysis retains the legacy lossy SQL
+      text transform: semicolon deletion, backtick replacement, lowercasing even segments after splitting
+
+
+                                                       13
+      Under review as a conference paper at ICLR 2027
+
+
+
+
+702
+                        k    Selection   Oracle (%)   Best (%)   H (pp)   Dev-fixed (%)
+703
+704                     4    top-acc         73.98      66.64      7.34           65.10
+                        4    random          73.90      66.03      7.87           64.66
+705
+                        4    div-only        74.22      66.18      8.04           65.13
+706                     8    top-acc         76.03      67.11      8.93           65.10
+707                     8    random          76.15      66.76      9.39           64.95
+708                     8    div-only        76.39      66.68      9.70           65.10
+709
+710   Table 7: Canonical descriptive W1 reanalysis. Every pool contains k selected candidates plus the
+711   common bare. Means over 18 cells and 100 overlapping database splits; no confidence intervals.
+712
+      Dev-fixed is chosen only on development data; Best uses held-out outcomes.
+713
+714
+      on single quotes, and whitespace joining. This is not a SQL parser or semantic normalization; it
+715
+      can alter literals and quoted identifiers. Among 364,428 pair–task observations with two identical,
+716
+      nonempty transformed SQL strings, 0 have different verdicts. This is an observed consistency check,
+717   not a property guaranteed by construction.
+718
+719   Pair-level SQL dissimilarity averages (1−token-Jaccard) only over verdict-agreeing tasks with two
+720
+      nonempty SQL strings. Its Spearman correlation with overall outcome disagreement is 0.597 across
+      4,386 within-cell pairs and 0.588 across 1,010 within-arm pairs. Pairs share candidates and tasks,
+721
+      and the SQL metric conditions on verdict agreement; these correlations have no independence-based
+722
+      significance or causal interpretation.
+723
+724   In R2’s 70-harness first cache-off acquisition, call counts change on 506/28000 comparisons and
+725   verdicts on 2391/28000. Transformed SQL changes on 19569/27936 comparisons (70.05%); 64
+726
+      comparisons lack two nonempty SQL strings and are excluded only from the SQL denominator. The
+      mean token Jaccard among changed SQL pairs is 0.619. These channel-specific rates do not define
+727
+      an effect-size noise floor. Canonical logical-call costs are reported separately in Table 6.
+728
+729
+730   Diversity-aware selection. Each cell pools all admitted candidates across arms. The reanalysis
+731
+      retains the legacy seed, 100 random database-half splits, 200 random subset draws per split and cell,
+      and candidate-selection rules. It records a new deterministic schedule: the historical set-derived
+732
+      cell order was not archived, so identical historical splits and draws cannot be recovered from the
+733
+      seed alone. Selection uses development databases; evaluation uses the complementary databases.
+734   The overlapping splits are not 1,800 independent experiments. Methods are top-k development
+735   accuracy, uniform random subsets, greedy development oracle coverage, and greedy mean accuracy
+736   plus λ times oracle coverage for λ ∈ {0.25, 0.5, 1, 2}. All candidate choices are frozen within a
+737   split before its evaluation.
+738
+      Table 7 retains the common AD bare in every evaluated subset; k counts candidates only. The JSON
+739
+      also records candidate-only values to distinguish the historical estimand. Oracle and best-fixed
+740   use held-out outcomes as descriptive upper bounds. Dev-fixed instead chooses one member using
+741   development accuracy, with ascending member-name ties and bare first. Deterministic methods
+742   already retain a globally dev-best candidate; differences in this comparator may arise from which
+743   tied maxima survive, not improved maximum development accuracy.
+744
+      At k = 8, div-only versus top-acc changes oracle by +0.35 pp, best-fixed by −0.42 pp, and head-
+745
+      room by +0.78 pp. Dev-fixed changes by −0.001 pp. These are distinct quantities, and none is
+746   an independently validated routing gain. We withdraw the legacy cell-only confidence intervals; the
+747   current table is descriptive while inference covering database/task sampling and re-selection remains
+748   outstanding. The earlier normalized-headroom ratio is retained only in the historical artifact and is
+749   not carried into the revised claims.
+750
+751
+752   D    P HASE -I A DDITIONAL R ESULTS
+753
+754   Per-harness accuracies, per-fold LOHO tables, bootstrap intervals, fix-set audits, K-subsampling
+755   curves, the task-held-out control, and the second-target replication (Qwen3.8-Flash as frozen target:
+      collapse replicates; the strategy-forced population retains headroom; the prompt-side human con-
+
+
+                                                       14
+      Under review as a conference paper at ICLR 2027
+
+
+
+
+756
+      trol does not transfer wholesale) are included in the anonymous code release with their generating
+757   scripts.
+758
+759
+760   E      M ODELS AND V ERSIONS
+761
+762
+      Table 8 lists every model used in this paper with its exact version string as sent to the API. All models
+      were accessed through a single commercial OpenAI-compatible API aggregator (the same provider
+763
+      for every role); the BIRD data-collection window is 2026-08-30 through 2026-09-08. The frozen
+764
+      target is always called at temperature 0. Phase-II harness generation uses temperature 0.7 with a
+765   16,384-token budget; Phase-I generation settings are recorded per tool in the code release. Phase I
+766   used a proxy execution judge; Phase II uses the official BIRD scorer (30 s timeout), with the legacy
+767   judge as a secondary audit. The MATH-500 probe uses the answer comparator in Appendix H; no
+768   LLM judge produces reported accuracy.
+769
+770       Role                           Model (exact version string)                          Used in
+771       Frozen target solver           GLM-5.3-Flash (temperature 0)                         Phases I–II
+772       Second frozen target (repli-   Qwen3.8-Flash                                         Phase I
+773       cation)
+774       Phase-I builders               GLM-5.3-Flash,                    Qwen3.8-Flash,      §3.5
+                                         DeepSeek-V4-Flash-Vision-Exp
+775
+          Phase-II builders              GLM-5.3,                             Qwen3.8-Max,     Phase II
+776                                      DeepSeek-V4-Pro, Kimi-K3, MiniMax-M3,
+777                                      ERNIE-5.0-Thinking-Preview
+778       Judge                          proxy / official BIRD execution scorer; MATH answer   see text
+779                                      comparator
+780
+781
+      Table 8: Complete model inventory. The target is held frozen within each phase; Phase-II builders
+      come from six independent labs.
+782
+783
+784
+      F      W ORKED E XAMPLES FROM THE P HASE -I T RACE AUDIT
+785
+786   To make the failure taxonomy of §3.3 concrete, this section walks one BIRD task through the audited
+787   harnesses. Artifacts are verbatim from the day-1 trace audit (5 harnesses × 10 tasks); its logger caps
+788   stored SQL excerpts at 120 characters, so truncations are marked [trunc.]. Full harness sources and
+789   traces are in the code release.
+790
+791   The task. BIRD dev-set question 352 (card games database; question text verbatim, the typo is
+792   the dataset’s):
+793
+                  Calculate the percentage of the cards availabe in Chinese
+794               Simplified.
+795
+796   Its BIRD hint:
+797
+                  ’Chinese Simplified’ is the language; percentage =
+798               Divide(Sum(id where language = ’Chinese Simplified’),
+799               Count(id)) *100
+800
+801   Gold SQL (executing the two on the released database yields 8.7734 and 8.7728 respectively — the
+802   official scorer separates them):
+803               SELECT CAST(SUM(CASE WHEN T2.language = ’Chinese Simplified’
+804               THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.id) FROM cards
+805               AS T1 INNER JOIN foreign data AS T2 ON T1.uuid = T2.uuid
+806
+      The bare harness answers:
+807
+808               SELECT SUM(CASE WHEN language = ’Chinese Simplified’
+809               THEN 1 ELSE 0 END) * 100.0 / COUNT(id) AS percentage FROM
+                  foreign data;
+
+
+                                                            15
+      Under review as a conference paper at ICLR 2027
+
+
+
+
+810
+      marked wrong by the official scorer: it counts directly over foreign data, whereas the gold
+811   query counts after joining to cards; the hint does not spell out that join.
+812
+813   react (T2: mechanism present but untriggered). react’s control flow does execute SQL
+814   and retries on database errors. But its first call is byte-identical to bare’s prompt, and here the
+815   generated SQL executes without error, so the error-triggered retry never fires and the final SQL
+816   equals bare’s. Across all 10 audited tasks the pattern held: SQL executions present, final SQL
+817   byte-identical to bare’s on 10/10 — the feedback loop is real code whose repair branch did not
+818   activate on these tasks. Controlled failure injection is needed to test whether feedback changes the
+819   output.
+820
+821   cand bird g1 b0r1 g0 (code-level diversity, behavioral identity). This candidate is a gen-
+822
+      uinely different program: it wraps the single coder call in a daemon-thread watchdog and fires one
+      hedged duplicate re-ask if the call stalls past 40 s. The mechanism exists in the control flow — but
+823
+      its trigger (a stalled API call) never occurred in the audit: zero SQL executions, and the final SQL
+824
+      equaled bare’s on all 10 audited tasks. Code difference without behavioral difference survives even
+825   when the added mechanism is real: it simply never fires.
+826
+827   cand bird g1 b1r1 g1 (T3: a broken multi-turn path). The one audited candidate imple-
+828   menting genuine execute-inspect-repair returns the model’s prose as final SQL. On a task bare an-
+829   swered correctly (“State the alternative languages available for card named Annul numbered 29.”),
+830   its logged final SQL begins, verbatim:
+831
+832            with "only a single read-only SELECT is allowed". The
+               previous "query" was actually just prose text (the model
+833
+               wrote rea[trunc.]
+834
+835   The repair re-prompt invites the failure: asked to fix a query that “was actually just prose”, the
+836   frozen target responds with more prose reasoning, no SQL block is found, and the reasoning text is
+837   submitted as the query. The item flips from bare-correct to harness-wrong.
+838
+839   G    I NDEPENDENT CONSTRUCTION OF INSTRUMENT CONTROLS
+840
+841   We tested the post-review Gate-v2 development instrument with 32 newly authored controls, sepa-
+842   rate from the controls used to develop its probes. The instrument was fixed before a separate model
+843   received the public contracts and callable interface, without its implementation or earlier controls.
+844   The author supplied two intended conforming and two intended nonconforming implementations for
+845   each of the eight mechanism types. Control source, author-reference labels, instrument, measure-
+846   ment code, and execution order were hashed before the first evaluation. No benchmark or provider
+847   generation was run, and this first measurement is retained unchanged.
+848
+849                  Declared mechanism      Structural pass   Structural fail   Review required
+850                  Repair                               2                 2                 0
+851                  Execution-result vote                2                 2                 0
+852                  Schema linking                       0                 4                 0
+                     Hint guard                           0                 0                 4
+853
+                     Two views                            0                 3                 1
+854                  Decomposition                        1                 3                 0
+855                  Error classification                 0                 4                 0
+856                  Format guard                         0                 0                 4
+857                  Total                                5                18                 9
+858
+859   Table 9: First evaluation of 32 independently authored controls by the fixed development instrument.
+860   No case had an execution failure. These are instrument states, not correctness labels or population
+861   error rates; the author’s intended positive/negative labels require separate scrutiny.
+862
+863   The nine review-required cases were retained. A third model received the full control source and
+      traces without author-reference labels or automatic verdicts, for source-contract review of all 32
+
+
+                                                         16
+      Under review as a conference paper at ICLR 2027
+
+
+
+
+864
+      controls and semantic adjudication of the four designated mechanism types. Independent source
+865   review supported conformance for one decomposition control and two error-classification controls
+866   that the instrument rejected. The decomposition stub returned the payload of the first plan step
+867   whose text occurred in a request; retaining the earlier step in the context of the next request therefore
+868   retrieved the earlier payload again. The classification check removed the exact error text but still
+869   counted an ordinary Schema: heading as a category, making the extracted category set disagree
+870   with the expected error class. These are instrument failures on these controls, not observed failures of
+871   a target model. Three author-intended positive controls were disputed: two schema-linking controls
+872   retained an unrelated table, and one two-view control batched its requests and mishandled an empty
+873
+      result. Their original labels and the review disagreements were retained separately. Among the 29
+      controls whose author labels and source review agreed, the instrument rejected 3 of 13 conforming
+874
+      controls; all 16 nonconforming controls were rejected after the designated semantic review. The
+875
+      instrument therefore did not pass this finite control check. These counts do not estimate error rates in
+876   a generated population. Semantic adjudication of the designated 16 controls yielded 7 conforming,
+877   8 nonconforming, and 1 indeterminate case. The indeterminate case already had a structural failure,
+878   which was retained without resolving its semantics. This small, deliberately balanced control set is
+879   not a random sample of generated harnesses. Passing it would not validate the production interface
+880   or replace the common-raw-pool comparison of admission policies. The source, frozen inputs, full
+881   traces, and adjudications are retained in the accompanying revision artifacts.
+882
+883
+884   Revised instrument and a new independent control set. Gate-v3 corrected decomposition re-
+885   quest attribution and treated category keywords and shared request templates as review clues rather
+886   than automatic rejections. We fixed this version before fresh model contexts authored and reviewed
+887   a new set of 32 controls, again two intended positive and two intended negative controls per mecha-
+888
+      nism. The review packet withheld author labels, automatic verdicts, and instrument-derived attribu-
+      tion metadata. All 32 controls received source review; the 20 controls in the four prompt/formulation
+889
+      groups plus decomposition also received semantic or data-flow review. Structural outcomes were 8
+890
+      passes, 10 failures, and 14 review-required cases, with no execution failures. Following one recorded
+891   evidence clarification, source review classified 15 controls as conforming and 17 as nonconforming;
+892   semantic review classified 8 as conforming, 11 as nonconforming, and 1 as indeterminate.
+893
+894
+      The indeterminate classification control requested an intermediate error category, but the synthetic
+      interface returned SQL text. Its fallback then selected a semantics repair action. This establishes
+895
+      a response-type mismatch in the fixture, not a real solver’s classification error. A second classifi-
+896
+      cation control was reference-disputed: its source mapped the supplied schema-failure message to a
+897   semantics action. Among the 31 undisputed references, 14 of 15 conforming controls were accepted
+898   and one remained unresolved; all 16 nonconforming controls were rejected. The prespecified finite
+899   check therefore remained unmet because of the unresolved case and insufficient agreed positive cov-
+900   erage for error classification. One voting control’s conformance applied only to result arbitration;
+901   it did not establish task-conditioned candidate generation. These finite mechanism checks do not
+902   validate complete harness operation or replace the planned common-pool policy comparison.
+903
+904
+905   Runtime response contracts. We subsequently tested seven archived ungated, strategy-forced
+906   candidates, selecting the first available filename per strategy rather than by performance; no format-
+907   guard candidate was available (Appendix B). The 27 synthetic scenarios exposed both candidate and
+908   instrument limitations. The two-view candidate skipped its second execution when the first result
+909
+      was nonempty, contrary to its original “execute both” declaration. In contrast, the schema-linking
+      candidate requested JSON but received plain text, and the full plan in decomposition requests pre-
+910
+      vented the frozen probe from uniquely attributing the current target. We retained those observations
+911
+      and tested source-assigned response profiles in 11 further development scenarios. Dedicated sub-
+912   question fields identified the current target, executable SQL payloads reached the final assembly,
+913   and four errors produced by an in-memory SQLite database elicited the corresponding syntax or
+914   schema repair instructions. Schema-linking JSON changed the explicit table/column restrictions
+915   in the SQL-writing request, although the full schema remained present. Retaining schema context
+916   therefore cannot by itself establish that the linked subset was ignored. These exposed-candidate
+917   checks distinguish response-interface failures from observable candidate deviations; they do not
+      replace independent calibration or provide revised benchmark outcomes.
+
+
+                                                         17
+      Under review as a conference paper at ICLR 2027
+
+
+
+
+918
+      H    C ROSS -D OMAIN R EPLICATION : MATH-500 M INI -AUDIT
+919
+920
+      To test whether the Phase-II clean-protocol finding (free ungated generation produces distinct one-
+921   run correctness vectors) is text-to-SQL-specific, we replicated the free-arm protocol on competition
+922   math.
+923
+924   Protocol. Six builders (the same models as Phase II), one seed, eight slots each, an R=3 raw-
+925   attempt cap per slot, neutral validity gate (mechanism-blind: parse, import, interface, non-empty
+926   answer on two dev questions). Frozen target GLM-5.3-Flash (same as the SQL study), temper-
+927   ature 0. MATH-500 (Lightman et al., 2023): 500 tasks frozen before generation (100 dev / 400
+928   eval, seed 20260908). Judge: numeric equality where both sides parse as numbers (including
+929   a/b, \frac{a}{b}, decimals), else normalized LaTeX string equality (units, base subscripts, ◦
+930   stripped; \text{X} content preserved; pmatrix → tuple). Judge self-consistency: 400/400 gold
+931
+      answers judge correct against themselves. bare accuracy 0.938 under the matched answer-format
+      instruction. Yield: 35/48 slots admitted (Rartifact 0.10–1.00; the two reasoning-heavy builders,
+932
+      GLM-5.3 and Qwen3.8-Max, exhausted the 32k-token generation budget on reasoning before emit-
+933
+      ting code in most slots — reported as-is). This is a replication probe, not a factorial: no strategy
+934   forcing, no conformance gate.
+935
+936   Results (35 harnesses, 400 eval tasks). Mean pairwise outcome disagreement 10.6% (max
+937   33.0%), Keff 33/35 (0.94), outcome-identical pairs 0.7% — no trace of Phase-I-style collapse.
+938   Union repair 76.0% of bare errors, union harm 0.8%, oracle headroom over bare 4.75 pp. Yet the best
+939   fixed member is bare itself (0.9375; generated harnesses 0.68–0.87): observed oracle coverage ex-
+940   ceeds bare while every generated member is worse individually. Repeated-execution and same-code
+941   clone controls were not collected, so this does not establish stable complementarity or deployable
+942   utility.
+943
+944   Two failure-side observations. First, the clean-protocol diversity result replicates in a sec-
+945
+      ond domain with a different output space. Second, a quarantined pilot round (disclosed in
+      PROTOCOL CHANGELOG.md, entry G1) supplies an exploratory comparison: when the same six
+946
+      builders were (mistakenly) given a GSM8K-style task description whose numeric answer format did
+947
+      not match MATH-500, the generated population remained behaviorally diverse (16.2% disagree-
+948   ment, Keff 19/19) while its union repair collapsed to 18% — and code-level inspection of the catas-
+949   trophic members reproduced the Phase-I trace taxonomy verbatim (a generate-then-verify harness
+950   whose verifier rejected nearly every answer and whose fallback returned the stale loop variable
+951   or “0”). Diversity without utility, induced by a prompt-side protocol error invisible to code-level
+952   checks: the measurement mandate, not any code-level audit, is what detects it.
+953
+954   Scope. One seed, one target, no factorial, exploratory; the Phase-I collapse-inducing SQL protocol
+955   was not re-run in the math domain, so this replication speaks to the clean-protocol result only, not
+956   to the boundary of collapse.
+957
+958
+959
+960
+961
+962
+963
+964
+965
+966
+967
+968
+969
+970
+971
+
+
+
+                                                      18
+

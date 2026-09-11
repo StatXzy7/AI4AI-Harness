@@ -1,0 +1,18 @@
+{
+  "bindings": {
+    "experiment/revision/independent_gate_v3_controls.py": "35f9427837c97e0ae838eeb3348ca4b30d632bc8403a887186861b59cce7ab6e",
+    "experiment/revision/gate_v3.py": "93e68080d0de32b29d349593e54535857c9acbfacaa42ebd8e70477298ca9827",
+    "experiment/revision/classification_profile_report.py": "efc773bd52e5241d5d4e21634988e75eca59bb328567a2f41eff89d3c9c3b2e2",
+    "experiment/revision/classification_profiles.py": "9371e17c9240092cc1e26f7e0d7691ff998d6a2d971b7c1e0e0e8c4c1568ead7",
+    "artifacts/revision_20260910/classification_profiles/PROTOCOL.md": "706bc9079cacdc48778dbd468db3dba07ede6bd4ec5a5ec3a4f13c8d16ac851c",
+    "artifacts/revision_20260910/classification_profiles/role_map.json": "94b71b849019925e0b8bf1d786774115cd0f5dcd9e731790e7de39b8756435b9"
+  },
+  "roles": {
+    "vc025": "classify_then_repair",
+    "vc026": "direct_repair",
+    "vc027": "direct_repair",
+    "vc028": "classify_then_repair"
+  },
+  "scope": "exposed-control development regression",
+  "salt": "independent-v3-20260910"
+}
