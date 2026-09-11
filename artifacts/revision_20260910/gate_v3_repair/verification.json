@@ -1,0 +1,120 @@
+{
+  "recorded_at_utc": "2026-09-10T13:23:17.959676+00:00",
+  "scope": "Versioned v3 instrument repair and exposed-control regression; not new independent calibration",
+  "bindings": {
+    "artifacts/revision_20260910/chinese_sync_verification.json": "935966a8f01dd1f222bb69ed4cb492ac9e321755001b8803c0c9e73c7abb4d6f",
+    "artifacts/revision_20260910/gate_independent_controls/measurement_freeze.json": "8d658137251c28f356e93abb705e687b741838d7cc9d18ad2a149bedaaf38890",
+    "artifacts/revision_20260910/gate_independent_controls/results.json": "875d104d1c960e5545114e13e5ba692c432dbb21c1ef502057090237c456835b",
+    "artifacts/revision_20260910/gate_independent_controls/summary.json": "e2702b4ee658b7e2492878a7c563085ae32b5b0027cb20271a48198d46fa71a4",
+    "artifacts/revision_20260910/gate_independent_controls/verification.json": "a91fd9dcf0958d73d2ea5bb98d21e19397361f7d79737aed9de37a4472884181",
+    "artifacts/revision_20260910/gate_v3_repair/before_status_update/experiment__revision__README.md": "471db71ef0ce2846ce3a285a293b74203ab1ae3f91b980454d6cec5de54044e9",
+    "artifacts/revision_20260910/gate_v3_repair/before_status_update/review-stage__REVISED_EXPERIMENT_PLAN.md": "0f332e1e37b8aa636d15f06eb7860cb16bf885e79bc77738de14f0e466589fa5",
+    "artifacts/revision_20260910/gate_v3_repair/before_status_update/review-stage__REVISION_20260910.md": "58088cfa2f61fccfb30178be620d124de43e91852a777532e327375ab621e84f",
+    "artifacts/revision_20260910/gate_v3_repair/instrument.diff": "9c16cbe804432718aba91910416d9bde47afd5e5b35ae66d54caa5cfea311087",
+    "artifacts/revision_20260910/gate_v3_repair/lineage.json": "5b0cc4c508ff146d9ceeabc3df1f0e424b26170d54a7883988d779794b7c9329",
+    "artifacts/revision_20260910/gate_v3_repair/regression.json": "2f3d54feca3e4fc1ea84b10d23f91830da8f5d3c97f15d9b619c6e9a217018b4",
+    "artifacts/revision_20260910/gate_v3_repair/regression_run.txt": "ed0a2270716194cf10570d7708c714b6b52a85b652bf03b18ec6ea136f337f85",
+    "artifacts/revision_20260910/gate_v3_repair/SPEC.initial.md": "2d08fcd281e14a591eb97f756d9ebef9dd776a33b3db29c103819670b3b1d051",
+    "artifacts/revision_20260910/gate_v3_repair/tests.txt": "1d05498151a6cb9ea1382658b46a162b34c392493df39e8884f8b05f4cbdcff1",
+    "artifacts/revision_20260910/gate_v3_repair/tests_before.txt": "145a6795c2fb3c2997d0e444c58e48c0b5794a75bcaf8a442d2d5553521fc6d7",
+    "artifacts/revision_20260910/verification.json": "6ffeddc99b2ad35270cbb5e3c8d88e249486e6e238e321c1845298b0bef72304",
+    "experiment/revision/gate_v2.py": "fff11167e55a9f2e18230b145de3f967e2006a53587bb624fc9f32d5e7c7dd18",
+    "experiment/revision/gate_v3.py": "93e68080d0de32b29d349593e54535857c9acbfacaa42ebd8e70477298ca9827",
+    "experiment/revision/gate_v3_report.py": "de4e75373226c8b4e9f597cc294262583500ac0659a8f286fa542bf4a5d66981",
+    "experiment/revision/independent_gate_controls.py": "b9120ac63de5ff348821182ae95726e7f1b3a6ff799f972e2362b6f18006d13b",
+    "experiment/revision/README.md": "99ea4591002654ea8199f6426729b07fcf5cfc7146071d595c022a9803bffbb6",
+    "experiment/revision/test_gate_v3.py": "70204a90331a8d1f3c91a17734360f1ad6f316ed55df42453b6e6c54159c116e",
+    "paper/latex/main.pdf": "b1c8e2bd14727da094361da647e6f35b9f4218d77be2e50808a468622dcc4c86",
+    "paper/latex_zh/main.pdf": "cc39720997360ce52e63a1090c4377788c749cd017a260ec45a084d8f9b8c27e",
+    "review-stage/GATE_V3_REGRESSION.md": "90415ed3b7baf4d03ec4755b4f09980314537b5226ff8c09b91fe8bc68a1b79e",
+    "review-stage/GATE_V3_REPAIR.md": "b24047c084c86f88ee28a839ad631c6234ab8585a1d6c2869255e005af0bd894",
+    "review-stage/REVISED_EXPERIMENT_PLAN.md": "4c3745164c6b3dc4386eeb188c8ac7729e338e6ca5330d008fbb92b696c7bc07",
+    "review-stage/REVISION_20260910.md": "cc3339feb2adcbdac83962344c2b9f5e2613055d3917bc8424e51fd5aa7a5cf7"
+  },
+  "implementation_model": "GPT-6",
+  "independent_contract_review": {
+    "model": "gpt-5.6-sol",
+    "backend_build": "unknown",
+    "score": 9,
+    "verdict": "ready",
+    "scope": "gate-v3 code contract and reason-level regression tests; not scientific or production clearance",
+    "initial_test_gap": "hard structural reason assertions missing",
+    "gap_closed": true,
+    "independent_gate_v3_tests_passed": 10
+  },
+  "mechanical_review": {
+    "score": 9,
+    "verdict": "ready",
+    "same_model_as_root": true,
+    "scope": "gate-v3 normative review and regression reporter static mapping review"
+  },
+  "tests": {
+    "related_count": 23,
+    "status": "PASS",
+    "v3_count": 10,
+    "old_gate_count": 9,
+    "adapter_count": 2,
+    "measurement_count": 2,
+    "ruff": "PASS",
+    "test_first_history": "Initial import failed before gate_v3 existed; implementation then exposed cross-class classification-request template misidentification and comparison-salt mismatch; both resolved before final retained run."
+  },
+  "regression": {
+    "cases": 32,
+    "salt": "independent-v1-20260910",
+    "structural_counts": {
+      "pass": 6,
+      "fail": 13,
+      "review_required": 13,
+      "execution_failure": 0
+    },
+    "transitions": {
+      "ic021": [
+        "fail",
+        "pass"
+      ],
+      "ic025": [
+        "fail",
+        "review_required"
+      ],
+      "ic026": [
+        "fail",
+        "review_required"
+      ],
+      "ic027": [
+        "fail",
+        "review_required"
+      ],
+      "ic028": [
+        "fail",
+        "review_required"
+      ]
+    },
+    "unchanged_unrelated_case_traces": 24,
+    "historical_reference_mappings_verified": 32,
+    "historical_adjudication_used_for_new_admission": false,
+    "production_admissions": 0,
+    "fresh_independent_calibration": false
+  },
+  "historical_integrity": {
+    "stage18_bindings_resolved": 55,
+    "exact_status_snapshots": 3,
+    "old_instrument_and_controls_unchanged": true,
+    "first_measurement_unchanged": true,
+    "old_manuscript_and_pdf_unchanged": true,
+    "old_verification_records_rewritten": false
+  },
+  "paper_verifier": "PASS 42 source/result/asset hashes, sizes and decompositions; paper unchanged this stage",
+  "edited_chinese_utf8": "PASS",
+  "external_provider_generation_requests": 0,
+  "benchmark_evaluations": 0,
+  "production_default_gate_changed": false,
+  "full_goal_complete": false,
+  "overall_verdict": "not ready",
+  "remaining": [
+    "Fresh independent control authoring and calibration with complete valid-positive coverage",
+    "Freeze v3 hybrid adjudication including ambiguous decomposition requests; adjudicate all pending cases before any admission",
+    "Real interface coverage and B common raw pool, fixed attempts and cost ledger",
+    "A repeat/noise and cost-matched controls, C bridge, D independent utility, W1 formal inference",
+    "Provider pilot budget and final freeze remain pending"
+  ]
+}

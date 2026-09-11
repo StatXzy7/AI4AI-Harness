@@ -1,0 +1,124 @@
+Phase II is the confirmatory study. Its protocol was frozen and committed
+before any confirmatory outcome was observed (one exception, disclosed as
+deviation D1 in the protocol changelog: an 18-item pipeline smoke test whose
+aggregate accuracies were observed and whose items were retained); deviations are logged in the
+protocol changelog (Appendix~\ref{app:phase2-protocol}). The frozen
+estimand, splits, instruments, and analysis plan are summarized here.
+
+\subsection{Design}\label{sec:p2design}
+
+\paragraph{Arms.} Two crossed factors: \emph{strategy forcing} (S=1: the
+builder is assigned a named mechanism from a fixed set of eight; S=0: the
+builder invents an improvement with no mechanism named) and the
+\emph{conformance gate} (G=1: the harness must pass the frozen conformance
+suite; G=0: neutral validity only). This yields four factorial arms, which
+we denote \textbf{II-A} (free/ungated), \textbf{II-B} (free/gated),
+\textbf{II-C} (forced/ungated), \textbf{II-D} (forced/gated). A fifth,
+pre-specified \emph{secondary} arm \textbf{II-E} (open mechanism discovery:
+the builder emits a self-specified behavioral contract over generic trace
+primitives, gated on its own declaration) tests whether mechanism diversity
+requires author-supplied vocabulary at all; it is deliberately outside the
+factorial. These arm names are Phase-II-specific; Phase-I conditions in
+\S\ref{sec:phase1probes} are always referred to with their descriptive
+names.
+
+\paragraph{Implemented treatment.} The original gate maps both
+\texttt{hint\_guard} and \texttt{format\_guard} to a plain scenario that
+returns \texttt{NO\_MECHANISM\_declared}; admission requires \texttt{PASS}.
+Thus two of eight forced strategy slots cannot pass even if neutrally
+valid. We interpret G as \emph{nontrivial-mechanism screening plus
+conformance verification}. The archived results do not identify pure
+verification, and matching population size cannot restore excluded types.
+
+\paragraph{Common attempt cap; unequal realized cost.} Each slot has at most
+$R{=}3$ raw builder attempts (same model, temperature 0.7, 16{,}384
+token cap); generation stops at the first accepted candidate. The original
+protocol's ``exactly three'' wording does not describe execution. Logged
+raw attempts total 269/255/273/324 for A/B/C/D, respectively, against a
+432-attempt cap per arm; actual token costs are not fully recovered.
+Generation prompts and admission policies differ across arms:
+ungated arms take the first candidate passing neutral validity (parses,
+imports, returns SQL on a development question --- mechanism-blind); gated
+arms take the first additionally passing the conformance suite. Slot failure
+is final; populations are never topped up, so generation reliability is part
+of the treatment. All raw candidates are retained and generation
+reliability is reported separately from population quality via three rates:
+$R_{\mathrm{artifact}}$ (valid artifact), $R_{\mathrm{contract}}$ (valid,
+non-vacuous contract), $R_{\mathrm{fidelity}}$ (asserted properties
+verified, conditional on a valid contract).
+
+\paragraph{Builders and seeds.} Six builders from independent labs (GLM-5.3,
+Qwen3.8-Max, DeepSeek-V4-Pro, Kimi-K3, MiniMax-M3,
+ERNIE-5.0-Thinking-Preview), three seeds each: 18 paired (builder $\times$
+seed) cells. These were the strongest models available on the project's single API
+gateway; no Anthropic- or OpenAI-family builder was accessible, so frontier
+capability-dependence is untested. Every cell enters the primary contrast regardless of admitted
+population size, including $K{=}0$ --- excluding low-yield cells would
+condition on a post-treatment outcome.
+
+\paragraph{Data isolation.} A fail-closed contamination registry scans every
+project artifact for observed BIRD questions. Two databases touched during
+development are banned wholesale; the confirmatory evaluation uses
+\textbf{1{,}169 questions from nine databases never opened during development}
+(the registry's defensible claim is no project-specific adaptive use, not
+pretraining-time isolation; the 18-item smoke contact is the disclosed exception), with a
+stratified 400-item core drawn before any outcome existed. Factorial
+secondary analyses run on the same core items for all four arms.
+
+\paragraph{Judge.} Primary: the official BIRD execution scorer (set
+equality on raw result rows, 30\,s wall-clock timeout). Secondary: the
+Phase-I legacy judge, measured to be uniformly conservative (on Phase-I
+matrices it never credits an answer the official scorer rejects).
+
+\paragraph{Instruments.} The conformance suite drives each harness against
+scripted scenarios and asserts on the recorded execution trace, never on
+task performance, so gating cannot leak outcome supervision. Every mechanism
+is probed with \emph{paired counterfactual variants} whose correct answer
+differs --- including a variant where the first query \emph{succeeds},
+separating conditional repair from an unconditional second call --- and
+answers are compared by exact normalized equality. The suite was calibrated
+before any Phase-II generation against three hand-written positive controls
+(all must pass) and two known-negative impostor harnesses (both must be
+rejected), plus the invariant that the bare baseline must violate every
+conditional property; the calibration is an executable gate re-run before
+each generation batch. Arm II-E additionally enforces non-vacuity (the
+contract must be violated by the bare baseline, checked by running it) and
+verifies only the properties actually asserted.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.57\linewidth]{figures/fig_design_revision.pdf}
+\caption{\textbf{Phase-II confirmatory design} (frozen protocol). Left:
+database-level contamination isolation (the two development databases are
+banned wholesale; evaluation uses nine databases, with the disclosed 18-item smoke exception). Middle:
+the $2{\times}2$ factorial (strategy forcing $\times$ conformance gate)
+with a common attempt cap (realized costs differ), plus the open-mechanism arm II-E. Right: the
+three-layer admission pipeline (neutral validity $\rightarrow$
+counterfactual conformance $\rightarrow$ non-vacuity vs.\ bare).}
+\label{fig:design}
+\end{figure}
+
+\subsection{Frozen analysis plan}\label{sec:p2plan}
+The \textbf{primary estimand} is the paired difference in bare-inclusive oracle
+headroom, $H(\text{II-D}) - H(\text{II-A})$ over (builder $\times$ seed) cells, on
+the full 1{,}169-question set under the official judge --- a continuous effect with
+a two-sided 95\% CI and paired permutation test, never a pass/fail threshold. The
+Phase-I thresholds survive only as a descriptive checklist.
+\textbf{Confirmatory secondaries} (Holm-corrected, all four arms on the same
+core-400 items): gate main effect $[(B{-}A)+(D{-}C)]/2$, strategy main effect
+$[(C{-}A)+(D{-}B)]/2$, and their interaction $(D{-}C)-(B{-}A)$ --- whether strategy
+differentiation requires execution fidelity to be realized.
+\textbf{Original plan and corrected inference}: the original primary code
+omitted within-database task resampling and sampled tasks separately across
+cells; the factorial code resampled cell summaries only. The versioned
+post-review analysis uses 10{,}000 shared database/within-database task
+draws across all arms and cells, keeping builders fixed and resampling
+generation seeds within builder. It does not add execution-repeat variance.
+Exact sign-flip reference tests are conditional on observed tasks and on
+cell-contrast sign symmetry (one-sided primary; two-sided secondaries with
+Holm adjustment). These are not randomized causal tests. $H(P)$ is \emph{not} monotone
+in $K$ --- adding a harness that answers everything correctly drives headroom to
+zero --- so matched-$K$ comparison, not monotonicity, licenses cross-population
+claims. K-matched sensitivity, the full estimand definitions, and the robustness
+audits (dual judge, cache-off replication, repeat stability) are specified in
+Appendix~\ref{app:phase2-protocol} together with the protocol deviation log.

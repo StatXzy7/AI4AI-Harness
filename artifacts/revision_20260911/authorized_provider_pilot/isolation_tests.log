@@ -1,0 +1,13 @@
+test_direct_worker_rejects_draft_before_gate_or_credentials (experiment.revision.test_isolated_collect.IsolatedCollectTests.test_direct_worker_rejects_draft_before_gate_or_credentials) ... ok
+test_draft_cli_never_prepares_or_calls_provider (experiment.revision.test_isolated_collect.IsolatedCollectTests.test_draft_cli_never_prepares_or_calls_provider) ... ok
+test_drain_expiry_retains_answer_and_unmatched_requests_without_retry (experiment.revision.test_isolated_collect.IsolatedCollectTests.test_drain_expiry_retains_answer_and_unmatched_requests_without_retry) ... ok
+test_hot_rollback_journal_recovers_committed_request_evidence (experiment.revision.test_isolated_collect.IsolatedCollectTests.test_hot_rollback_journal_recovers_committed_request_evidence) ... ok
+test_missing_usage_preserves_answer_and_stops_before_next_cell_and_resume (experiment.revision.test_isolated_collect.IsolatedCollectTests.test_missing_usage_preserves_answer_and_stops_before_next_cell_and_resume) ... ok
+test_real_race_drains_and_repeats_in_distinct_processes (experiment.revision.test_isolated_collect.IsolatedCollectTests.test_real_race_drains_and_repeats_in_distinct_processes) ... ok
+test_suspended_assignment_contains_and_terminates_descendants (experiment.revision.test_isolated_collect.IsolatedCollectTests.test_suspended_assignment_contains_and_terminates_descendants) ... ok
+test_wall_timeout_kills_local_job_and_preserves_remote_unknown (experiment.revision.test_isolated_collect.IsolatedCollectTests.test_wall_timeout_kills_local_job_and_preserves_remote_unknown) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 20.300s
+
+OK

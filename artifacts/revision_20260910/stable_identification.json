@@ -1,0 +1,153 @@
+{
+  "version": "stable-identification-checks-v1",
+  "scope": "exact constructed examples and conservative bound arithmetic; no empirical experiment or inference clearance",
+  "counterexamples": {
+    "discovery_fixed_trap": {
+      "probabilities": [
+        [
+          0.2,
+          0.2
+        ],
+        [
+          0.8,
+          0.8
+        ],
+        [
+          0.5,
+          0.5
+        ]
+      ],
+      "discovery": [
+        [
+          1.0,
+          1.0
+        ],
+        [
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "frozen_policy": [
+        [
+          0.5,
+          0.5
+        ],
+        [
+          0.5,
+          0.0
+        ],
+        [
+          0.0,
+          0.5
+        ]
+      ],
+      "selected_accuracy": 0.425,
+      "discovery_selected_fixed_accuracy": 0.2,
+      "apparent_advantage": 0.22499999999999998,
+      "best_fixed_accuracy": 0.8,
+      "stable_headroom": 0.0,
+      "all_fixed_witness": -0.37500000000000006
+    },
+    "difference_of_lower_bounds_trap": {
+      "real_probabilities": [
+        [
+          0.5,
+          0.5
+        ],
+        [
+          0.5,
+          0.5
+        ],
+        [
+          0.5,
+          0.5
+        ]
+      ],
+      "clone_probabilities": [
+        [
+          0.9,
+          0.1
+        ],
+        [
+          0.1,
+          0.9
+        ],
+        [
+          0.1,
+          0.9
+        ]
+      ],
+      "real_witness": 0.0,
+      "clone_witness": -0.4,
+      "invalid_witness_difference": 0.4,
+      "real_stable_headroom": 0.0,
+      "clone_stable_headroom": 0.4,
+      "true_stable_difference": -0.4
+    }
+  },
+  "band_radius_arithmetic": [
+    {
+      "validation_blocks": 4,
+      "simultaneous_parameters": 6480,
+      "alpha": 0.05,
+      "hoeffding_radius": 1.2482665602476628
+    },
+    {
+      "validation_blocks": 8,
+      "simultaneous_parameters": 6480,
+      "alpha": 0.05,
+      "hoeffding_radius": 0.8826577494795285
+    },
+    {
+      "validation_blocks": 16,
+      "simultaneous_parameters": 6480,
+      "alpha": 0.05,
+      "hoeffding_radius": 0.6241332801238314
+    },
+    {
+      "validation_blocks": 64,
+      "simultaneous_parameters": 6480,
+      "alpha": 0.05,
+      "hoeffding_radius": 0.3120666400619157
+    },
+    {
+      "validation_blocks": 256,
+      "simultaneous_parameters": 6480,
+      "alpha": 0.05,
+      "hoeffding_radius": 0.15603332003095785
+    },
+    {
+      "validation_blocks": 1024,
+      "simultaneous_parameters": 6480,
+      "alpha": 0.05,
+      "hoeffding_radius": 0.07801666001547893
+    }
+  ],
+  "limitations": [
+    "fresh heldout gain against a discovery-selected fixed comparator does not identify stable headroom",
+    "a validated policy compared against every fixed member witnesses a lower bound, not equality with stable headroom",
+    "subtracting two lower bounds does not bound a difference; use L_real-U_clone and U_real-L_clone",
+    "a dev-code clone pool retaining distinct bare can have positive stable headroom",
+    "Hoeffding bands require stationary independent temporal blocks; no cross-task/cell independence needed",
+    "generic probability bands do not exploit equality of clone source probabilities and can be extremely wide",
+    "fixed-pool bounds do not generalize to new databases/builders, prove mechanism causality or match compute"
+  ],
+  "inputs": [
+    {
+      "path": "experiment/revision/stable_witness.py",
+      "sha256": "68a94bb9d3780a6062d3481dc8f65ccba90f65c3d668cae4f9968fd6a5270d26"
+    },
+    {
+      "path": "experiment/revision/repeat_planning.py",
+      "sha256": "8d673ff72ac6c4dcac7e44948b1d35f2ff15b070df6a8baf81422085622cc048"
+    },
+    {
+      "path": "experiment/revision/replay.py",
+      "sha256": "b87ba0aae2b610053c418b7a8373532bfe1c53a2a2dcfb9d345f548f2693ea86"
+    }
+  ]
+}

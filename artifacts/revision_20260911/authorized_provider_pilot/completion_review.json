@@ -1,0 +1,25 @@
+{
+  "reviewer_model": "gpt-5.5",
+  "score": 8.5,
+  "verdict": "ready",
+  "scope": "execution/instrument completion only",
+  "independently_verified": [
+    "12completed0pending",
+    "16HTTP200start-endmatch",
+    "8088prompt839completion8927total",
+    "539reasoningwithincompletion",
+    "448cachedprompt",
+    "12jobsactivezero",
+    "4lateHTTPresponses",
+    "16uniqueResponseIDs0headerRequestIDs"
+  ],
+  "corrections": [
+    "Report unique database count corrected from2to1;2tasks same card_games database"
+  ],
+  "limits": [
+    "No provider independence conclusion",
+    "No model reasoning-off claim",
+    "No RMB reconciliation or fixedcost claim",
+    "No A-D/W1 scientific validation"
+  ]
+}

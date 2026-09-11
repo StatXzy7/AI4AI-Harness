@@ -1,0 +1,8 @@
+{
+  "status": "COLLECTION_RETURNED",
+  "started_unix": 1789059875.8914273,
+  "planned_cells": 12,
+  "startup_freeze_sha256": "d4a5e51783b77928cd247f240696a381569c717926e2c0696feb8a4be6b2de93",
+  "finished_unix": 1789059923.3031487,
+  "returned_cells": 12
+}

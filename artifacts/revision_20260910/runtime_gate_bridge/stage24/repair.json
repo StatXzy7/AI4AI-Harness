@@ -1,0 +1,132 @@
+{
+  "strategy": "repair",
+  "path": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_repair.py",
+  "availability": "available",
+  "result": {
+    "strategy": "repair",
+    "verdict": "pass",
+    "scope": "v3 exposed-control development; independent calibration and production adapter pending",
+    "runs": [
+      {
+        "probe": "success_no_repair",
+        "status": "pass",
+        "reasons": [],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Given the following SQLite schema:\nTable ledger(id, amount)\nTable unused(label)\n\nWrite a SQLite SELECT query to answer the question.\nReturn only the SQL query, no explanation.\nQuestion: Return ledger identifiers.\nSQL:",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger",
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "syntax_a",
+        "status": "pass",
+        "reasons": [],
+        "final": "SELECT amount FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Given the following SQLite schema:\nTable ledger(id, amount)\nTable unused(label)\n\nWrite a SQLite SELECT query to answer the question.\nReturn only the SQL query, no explanation.\nQuestion: Return ledger identifiers.\nSQL:",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger",
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": false,
+            "rows": [],
+            "error": "syntax failure [runtime_bridge_stage24_syntax_a]"
+          },
+          {
+            "kind": "llm",
+            "prompt": "Given the following SQLite schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nThe previous SQL query was:\nSELECT id FROM ledger\n\nIt failed with this SQLite error:\nsyntax failure [runtime_bridge_stage24_syntax_a]\n\nPlease fix the SQL query. Return only the corrected SQLite query, no explanation.\nSQL:",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT amount FROM ledger",
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "syntax_b",
+        "status": "pass",
+        "reasons": [],
+        "final": "SELECT id FROM ledger WHERE id > 0",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Given the following SQLite schema:\nTable ledger(id, amount)\nTable unused(label)\n\nWrite a SQLite SELECT query to answer the question.\nReturn only the SQL query, no explanation.\nQuestion: Return ledger identifiers.\nSQL:",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger",
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": false,
+            "rows": [],
+            "error": "syntax failure [runtime_bridge_stage24_syntax_b]"
+          },
+          {
+            "kind": "llm",
+            "prompt": "Given the following SQLite schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion: Return ledger identifiers.\n\nThe previous SQL query was:\nSELECT id FROM ledger\n\nIt failed with this SQLite error:\nsyntax failure [runtime_bridge_stage24_syntax_b]\n\nPlease fix the SQL query. Return only the corrected SQLite query, no explanation.\nSQL:",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger WHERE id > 0",
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger WHERE id > 0",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      }
+    ]
+  },
+  "admission": "not_evaluated"
+}

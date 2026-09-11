@@ -1,0 +1,453 @@
+{
+  "version": "repeat-inference-development-v1",
+  "seed": 20260911,
+  "n_sim": 300,
+  "n_reference": 3000,
+  "n_boot": 399,
+  "estimand": "expected fresh-execution advantage of the finite-repeat fitted policy, real minus dev-selected-code clone; equal database sizes; four fixed population slots; conditional on one independently development-selected anchor per cell, averaged over simulated task sets and discovery executions",
+  "purpose": "calibrate a candidate percentile re-selection bootstrap; not a validated formal estimator, not empirical paper results or a budget/sample-size freeze",
+  "assumptions": [
+    "synthetic nine-database population, 20 or40 tasks per database,4 or8 repeats; different from initial200/400-task grid",
+    "database logit sd1, independent member/database/repeat execution shock sd.8; optional shared time logit sd1.2",
+    "fixed four population slots; builder and new-generation population uncertainty not represented",
+    "anchor code is selected on a separate200-task development sample once per scenario/design and frozen for reference and calibration draws",
+    "reference draws independent of calibration draws and bootstrap RNG; alternative truth is Monte Carlo with reported uncertainty",
+    "both methods re-fit per-task and fixed members; task weights shared across all cells/groups; repeat weights global and restricted to each original half",
+    "same task may repeat in a bootstrap draw; no original raw execution appears in both halves of a directional comparison",
+    "cache stress violates independent validation, and intervals are not expected to fix that bias",
+    "equal member counts do not imply equal compute; development population uses preceding simulator settings, not fitted real data"
+  ],
+  "calibration": {
+    "mean_accuracy_assumption": 0.64,
+    "beta_concentration": 0.2274673211941321,
+    "flip_input": 0.08539285714285715
+  },
+  "results": [
+    {
+      "scenario": "database_null",
+      "settings": {
+        "interaction": 0.0,
+        "db_sd": 1.0,
+        "execution_sd": 0.8,
+        "block_sd": 0.0,
+        "cache": 0.0
+      },
+      "n_databases": 9,
+      "n_tasks": 180,
+      "n_repeats": 4,
+      "frozen_dev_selected_anchor_codes": [
+        0,
+        2,
+        1,
+        1
+      ],
+      "reference_mean": 0.0,
+      "reference_mc_se": 0.0,
+      "methods": {
+        "database_task_repeat": {
+          "target": 0.0,
+          "target_reference_mc_se": 0.0,
+          "bias": -0.0003580246913580253,
+          "mean_estimate": -0.0003580246913580253,
+          "coverage": 1.0,
+          "coverage_mc_se": 0.0,
+          "coverage_reference_band_lower": 1.0,
+          "coverage_reference_band_upper": 1.0,
+          "mean_width": 0.049896489197530834,
+          "median_width": 0.04956886574074072,
+          "positive_interval_fraction": 0.0,
+          "negative_interval_fraction": 0.0
+        },
+        "iid_task_repeat": {
+          "target": 0.0,
+          "target_reference_mc_se": 0.0,
+          "bias": -0.0003580246913580253,
+          "mean_estimate": -0.0003580246913580253,
+          "coverage": 1.0,
+          "coverage_mc_se": 0.0,
+          "coverage_reference_band_lower": 1.0,
+          "coverage_reference_band_upper": 1.0,
+          "mean_width": 0.04071412037037034,
+          "median_width": 0.040021701388888865,
+          "positive_interval_fraction": 0.0,
+          "negative_interval_fraction": 0.0
+        }
+      }
+    },
+    {
+      "scenario": "database_null",
+      "settings": {
+        "interaction": 0.0,
+        "db_sd": 1.0,
+        "execution_sd": 0.8,
+        "block_sd": 0.0,
+        "cache": 0.0
+      },
+      "n_databases": 9,
+      "n_tasks": 360,
+      "n_repeats": 8,
+      "frozen_dev_selected_anchor_codes": [
+        0,
+        1,
+        2,
+        0
+      ],
+      "reference_mean": 0.0,
+      "reference_mc_se": 0.0,
+      "methods": {
+        "database_task_repeat": {
+          "target": 0.0,
+          "target_reference_mc_se": 0.0,
+          "bias": -8.309220679012422e-05,
+          "mean_estimate": -8.309220679012422e-05,
+          "coverage": 1.0,
+          "coverage_mc_se": 0.0,
+          "coverage_reference_band_lower": 1.0,
+          "coverage_reference_band_upper": 1.0,
+          "mean_width": 0.03171185136959868,
+          "median_width": 0.03149450231481473,
+          "positive_interval_fraction": 0.0,
+          "negative_interval_fraction": 0.0
+        },
+        "iid_task_repeat": {
+          "target": 0.0,
+          "target_reference_mc_se": 0.0,
+          "bias": -8.309220679012422e-05,
+          "mean_estimate": -8.309220679012422e-05,
+          "coverage": 1.0,
+          "coverage_mc_se": 0.0,
+          "coverage_reference_band_lower": 1.0,
+          "coverage_reference_band_upper": 1.0,
+          "mean_width": 0.025626909722222115,
+          "median_width": 0.0255562789351851,
+          "positive_interval_fraction": 0.0,
+          "negative_interval_fraction": 0.0
+        }
+      }
+    },
+    {
+      "scenario": "database_interaction",
+      "settings": {
+        "interaction": 0.8,
+        "db_sd": 1.0,
+        "execution_sd": 0.8,
+        "block_sd": 0.0,
+        "cache": 0.0
+      },
+      "n_databases": 9,
+      "n_tasks": 180,
+      "n_repeats": 4,
+      "frozen_dev_selected_anchor_codes": [
+        2,
+        0,
+        2,
+        0
+      ],
+      "reference_mean": 0.006638173610388994,
+      "reference_mc_se": 3.527164629408321e-05,
+      "methods": {
+        "database_task_repeat": {
+          "target": 0.006638173610388994,
+          "target_reference_mc_se": 3.527164629408321e-05,
+          "bias": 7.035262417890743e-05,
+          "mean_estimate": 0.006708526234567902,
+          "coverage": 1.0,
+          "coverage_mc_se": 0.0,
+          "coverage_reference_band_lower": 1.0,
+          "coverage_reference_band_upper": 1.0,
+          "mean_width": 0.05096131365740739,
+          "median_width": 0.050716145833333275,
+          "positive_interval_fraction": 0.0,
+          "negative_interval_fraction": 0.0
+        },
+        "iid_task_repeat": {
+          "target": 0.006638173610388994,
+          "target_reference_mc_se": 3.527164629408321e-05,
+          "bias": 7.035262417890743e-05,
+          "mean_estimate": 0.006708526234567902,
+          "coverage": 1.0,
+          "coverage_mc_se": 0.0,
+          "coverage_reference_band_lower": 1.0,
+          "coverage_reference_band_upper": 1.0,
+          "mean_width": 0.04137231867283949,
+          "median_width": 0.04064814814814794,
+          "positive_interval_fraction": 0.0,
+          "negative_interval_fraction": 0.0
+        }
+      }
+    },
+    {
+      "scenario": "database_interaction",
+      "settings": {
+        "interaction": 0.8,
+        "db_sd": 1.0,
+        "execution_sd": 0.8,
+        "block_sd": 0.0,
+        "cache": 0.0
+      },
+      "n_databases": 9,
+      "n_tasks": 360,
+      "n_repeats": 8,
+      "frozen_dev_selected_anchor_codes": [
+        0,
+        0,
+        2,
+        1
+      ],
+      "reference_mean": 0.010317181845704211,
+      "reference_mc_se": 2.9286642733161212e-05,
+      "methods": {
+        "database_task_repeat": {
+          "target": 0.010317181845704211,
+          "target_reference_mc_se": 2.9286642733161212e-05,
+          "bias": -7.157034879062829e-05,
+          "mean_estimate": 0.010245611496913583,
+          "coverage": 1.0,
+          "coverage_mc_se": 0.0,
+          "coverage_reference_band_lower": 1.0,
+          "coverage_reference_band_upper": 1.0,
+          "mean_width": 0.033554214891975215,
+          "median_width": 0.033455584490740604,
+          "positive_interval_fraction": 0.0,
+          "negative_interval_fraction": 0.0
+        },
+        "iid_task_repeat": {
+          "target": 0.010317181845704211,
+          "target_reference_mc_se": 2.9286642733161212e-05,
+          "bias": -7.157034879062829e-05,
+          "mean_estimate": 0.010245611496913583,
+          "coverage": 1.0,
+          "coverage_mc_se": 0.0,
+          "coverage_reference_band_lower": 1.0,
+          "coverage_reference_band_upper": 1.0,
+          "mean_width": 0.027016382137345557,
+          "median_width": 0.026890914351851834,
+          "positive_interval_fraction": 0.03,
+          "negative_interval_fraction": 0.0
+        }
+      }
+    },
+    {
+      "scenario": "database_and_time",
+      "settings": {
+        "interaction": 0.8,
+        "db_sd": 1.0,
+        "execution_sd": 0.8,
+        "block_sd": 1.2,
+        "cache": 0.0
+      },
+      "n_databases": 9,
+      "n_tasks": 180,
+      "n_repeats": 4,
+      "frozen_dev_selected_anchor_codes": [
+        0,
+        1,
+        2,
+        1
+      ],
+      "reference_mean": 0.0052253063903825985,
+      "reference_mc_se": 3.167465663345662e-05,
+      "methods": {
+        "database_task_repeat": {
+          "target": 0.0052253063903825985,
+          "target_reference_mc_se": 3.167465663345662e-05,
+          "bias": 0.00023244823924703072,
+          "mean_estimate": 0.005457754629629629,
+          "coverage": 1.0,
+          "coverage_mc_se": 0.0,
+          "coverage_reference_band_lower": 1.0,
+          "coverage_reference_band_upper": 1.0,
+          "mean_width": 0.05058468364197529,
+          "median_width": 0.050341435185185184,
+          "positive_interval_fraction": 0.0,
+          "negative_interval_fraction": 0.0
+        },
+        "iid_task_repeat": {
+          "target": 0.0052253063903825985,
+          "target_reference_mc_se": 3.167465663345662e-05,
+          "bias": 0.00023244823924703072,
+          "mean_estimate": 0.005457754629629629,
+          "coverage": 1.0,
+          "coverage_mc_se": 0.0,
+          "coverage_reference_band_lower": 1.0,
+          "coverage_reference_band_upper": 1.0,
+          "mean_width": 0.04072176890432096,
+          "median_width": 0.039817708333333326,
+          "positive_interval_fraction": 0.0,
+          "negative_interval_fraction": 0.0
+        }
+      }
+    },
+    {
+      "scenario": "database_and_time",
+      "settings": {
+        "interaction": 0.8,
+        "db_sd": 1.0,
+        "execution_sd": 0.8,
+        "block_sd": 1.2,
+        "cache": 0.0
+      },
+      "n_databases": 9,
+      "n_tasks": 360,
+      "n_repeats": 8,
+      "frozen_dev_selected_anchor_codes": [
+        1,
+        2,
+        0,
+        0
+      ],
+      "reference_mean": 0.009349972624137053,
+      "reference_mc_se": 2.5948757921217587e-05,
+      "methods": {
+        "database_task_repeat": {
+          "target": 0.009349972624137053,
+          "target_reference_mc_se": 2.5948757921217587e-05,
+          "bias": 2.8779252961470825e-07,
+          "mean_estimate": 0.009350260416666667,
+          "coverage": 1.0,
+          "coverage_mc_se": 0.0,
+          "coverage_reference_band_lower": 1.0,
+          "coverage_reference_band_upper": 1.0,
+          "mean_width": 0.032837615740740664,
+          "median_width": 0.03283203124999977,
+          "positive_interval_fraction": 0.0,
+          "negative_interval_fraction": 0.0
+        },
+        "iid_task_repeat": {
+          "target": 0.009349972624137053,
+          "target_reference_mc_se": 2.5948757921217587e-05,
+          "bias": 2.8779252961470825e-07,
+          "mean_estimate": 0.009350260416666667,
+          "coverage": 1.0,
+          "coverage_mc_se": 0.0,
+          "coverage_reference_band_lower": 1.0,
+          "coverage_reference_band_upper": 1.0,
+          "mean_width": 0.02636888985339495,
+          "median_width": 0.026333188657407178,
+          "positive_interval_fraction": 0.006666666666666667,
+          "negative_interval_fraction": 0.0
+        }
+      }
+    },
+    {
+      "scenario": "cache_null",
+      "settings": {
+        "interaction": 0.0,
+        "db_sd": 1.0,
+        "execution_sd": 0.8,
+        "block_sd": 0.0,
+        "cache": 0.9
+      },
+      "n_databases": 9,
+      "n_tasks": 180,
+      "n_repeats": 4,
+      "frozen_dev_selected_anchor_codes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "reference_mean": 0.0,
+      "reference_mc_se": 0.0,
+      "methods": {
+        "database_task_repeat": {
+          "target": 0.0,
+          "target_reference_mc_se": 0.0,
+          "bias": 0.04398398919753086,
+          "mean_estimate": 0.04398398919753086,
+          "coverage": 0.0,
+          "coverage_mc_se": 0.0,
+          "coverage_reference_band_lower": 0.0,
+          "coverage_reference_band_upper": 0.0,
+          "mean_width": 0.04702084297839515,
+          "median_width": 0.046381655092592775,
+          "positive_interval_fraction": 1.0,
+          "negative_interval_fraction": 0.0
+        },
+        "iid_task_repeat": {
+          "target": 0.0,
+          "target_reference_mc_se": 0.0,
+          "bias": 0.04398398919753086,
+          "mean_estimate": 0.04398398919753086,
+          "coverage": 0.0,
+          "coverage_mc_se": 0.0,
+          "coverage_reference_band_lower": 0.0,
+          "coverage_reference_band_upper": 0.0,
+          "mean_width": 0.03718940972222237,
+          "median_width": 0.037232349537036996,
+          "positive_interval_fraction": 1.0,
+          "negative_interval_fraction": 0.0
+        }
+      }
+    },
+    {
+      "scenario": "cache_null",
+      "settings": {
+        "interaction": 0.0,
+        "db_sd": 1.0,
+        "execution_sd": 0.8,
+        "block_sd": 0.0,
+        "cache": 0.9
+      },
+      "n_databases": 9,
+      "n_tasks": 360,
+      "n_repeats": 8,
+      "frozen_dev_selected_anchor_codes": [
+        2,
+        0,
+        0,
+        2
+      ],
+      "reference_mean": 0.0,
+      "reference_mc_se": 0.0,
+      "methods": {
+        "database_task_repeat": {
+          "target": 0.0,
+          "target_reference_mc_se": 0.0,
+          "bias": 0.03170196759259259,
+          "mean_estimate": 0.03170196759259259,
+          "coverage": 0.0,
+          "coverage_mc_se": 0.0,
+          "coverage_reference_band_lower": 0.0,
+          "coverage_reference_band_upper": 0.0,
+          "mean_width": 0.027679130497685094,
+          "median_width": 0.027536530671295713,
+          "positive_interval_fraction": 1.0,
+          "negative_interval_fraction": 0.0
+        },
+        "iid_task_repeat": {
+          "target": 0.0,
+          "target_reference_mc_se": 0.0,
+          "bias": 0.03170196759259259,
+          "mean_estimate": 0.03170196759259259,
+          "coverage": 0.0,
+          "coverage_mc_se": 0.0,
+          "coverage_reference_band_lower": 0.0,
+          "coverage_reference_band_upper": 0.0,
+          "mean_width": 0.02152179301697519,
+          "median_width": 0.021561053240740542,
+          "positive_interval_fraction": 1.0,
+          "negative_interval_fraction": 0.0
+        }
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "path": "experiment/revision/repeat_inference.py",
+      "sha256": "94d00e237f14d09e500bb9cd4835282809e34a6264447f4d59d7c966e4523a63"
+    },
+    {
+      "path": "experiment/revision/repeat_planning.py",
+      "sha256": "8d673ff72ac6c4dcac7e44948b1d35f2ff15b070df6a8baf81422085622cc048"
+    },
+    {
+      "path": "experiment/revision/replay.py",
+      "sha256": "b87ba0aae2b610053c418b7a8373532bfe1c53a2a2dcfb9d345f548f2693ea86"
+    },
+    {
+      "path": "artifacts/revision_20260910/sensitivity.json",
+      "sha256": "381e8f35a355cf085881cb6dd37ce9868609e5d58937387b1026b582487a3bea"
+    }
+  ]
+}

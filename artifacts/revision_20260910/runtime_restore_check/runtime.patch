@@ -1,0 +1,232 @@
+diff --git a/ase/db.py b/ase/db.py
+index 168382e..78e19e5 100644
+--- a/ase/db.py
++++ b/ase/db.py
+@@ -72,8 +72,11 @@ def execute_sql(path, sql, timeout=5.0, limit=2000):
+     if not re.match(r"(?is)^\s*(select|with)\b", sql):
+         return {"ok": False, "rows": [], "error": "not a SELECT", "n": 0}
+     try:
++        import time as _t
+         con = sqlite3.connect(path, timeout=timeout)
+         con.text_factory = lambda b: b.decode(errors="ignore") if isinstance(b, bytes) else b
++        _t0 = _t.monotonic()
++        con.set_progress_handler(lambda: (_t.monotonic() - _t0) > 30.0, 100000)  # abort runaway queries (cartesian products) after 30s
+         cur = con.cursor()
+         cur.execute(sql)
+         rows = cur.fetchmany(limit)
+diff --git a/ase/solver_cache.py b/ase/solver_cache.py
+index d2f3a38..3611c91 100644
+--- a/ase/solver_cache.py
++++ b/ase/solver_cache.py
+@@ -33,6 +33,9 @@ silently deleting the mechanism the harness was built around. The harness base c
+ (see DS1000Harness.llm).
+ """
+ import hashlib
++import time
++import msvcrt
++from contextlib import contextmanager
+ import json
+ import os
+ import threading
+@@ -41,10 +44,12 @@ import threading
+ class SolverCache:
+     """Thread-safe, process-shared, disk-backed. Safe to construct at import time; loads lazily."""
+ 
+-    def __init__(self, path):
++    def __init__(self, path, flush_interval=30.0):
+         self.path = path
+         self._lock = threading.Lock()
+         self._data = None
++        self.flush_interval = float(os.environ.get("SOLVER_CACHE_FLUSH_INTERVAL", flush_interval))
++        self._last_flush = 0.0
+ 
+     def _load(self):
+         if self._data is None:
+@@ -63,25 +68,99 @@ class SolverCache:
+         return hashlib.sha1(json.dumps([str(p) for p in parts], ensure_ascii=False).encode("utf-8")).hexdigest()
+ 
+     def get_or_call(self, parts, produce):
+-        """Return the cached reply for `parts`, else call `produce()` and store it."""
++        """Return the cached reply for `parts`, else call `produce()` and store it.
++
++        MULTI-PROCESS SAFE (D13) + WRITE-BACK (D14 perf fix). The D13 fix wrote the
++        whole cache file on every miss under a cross-process lock; with a 87MB cache
++        and ~300 worker threads across 13 collectors, that serialized the entire
++        pipeline (measured: aggregate rate fell to <0.5 rows/s). This variant keeps
++        the SAME key contract and the same cross-process merge, but batches writes:
++        the process-local pending set is merged and flushed to disk at most every
++        `self.flush_interval` seconds (and on the miss that first observes a pending
++        entry older than that). A crash loses at most flush_interval seconds of
++        cache entries -- re-collected on resume, deterministically identical keys.
++        """
+         k = self.key(parts)
+         data = self._load()
+         if k in data:
+             return data[k]
+-        value = produce()
+-        with self._lock:
+-            data[k] = value
++        value = produce()                      # never inside the lock: calls take 10-60 s
++        with self._xlock():
++            try:
++                with open(self.path, encoding="utf-8") as fh:
++                    disk = json.load(fh)       # freshest state from the other processes
++            except Exception:  # noqa: BLE001  — absent or corrupt cache = empty
++                disk = {}
++            disk[k] = value
++            self._pending = getattr(self, "_pending", {})
++            self._pending[k] = value
++            self._maybe_flush_locked(disk)
++        return value
++
++    def _maybe_flush_locked(self, disk):
++        """Flush the merged cache to disk at most every flush_interval seconds.
++
++        D14: flush_interval trades cache-durability latency for throughput. 30s means
++        a killed process loses <30s of entries; keys are deterministic so a re-run
++        re-requests them identically. Writing the full 87MB file on every miss (the
++        D13 behavior) is what starved all 300 collector threads."""
++        now = time.time()
++        if now - self._last_flush >= self.flush_interval:
++            self._write_disk(disk)
++
++    def _write_disk(self, disk):
++        with self._lock:                       # intra-process: only one thread writes
+             try:
+                 d = os.path.dirname(self.path)
+                 if d:
+                     os.makedirs(d, exist_ok=True)
+-                tmp = self.path + ".tmp"
++                tmp = self.path + f".tmp{os.getpid()}"
+                 with open(tmp, "w", encoding="utf-8") as fh:
+-                    json.dump(data, fh)
+-                os.replace(tmp, self.path)   # atomic: concurrent harnesses must never read a half-written file
++                    json.dump(disk, fh)
++                os.replace(tmp, self.path)     # atomic: readers never see a half-written file
++                self._data = disk
++                self._last_flush = time.time()
+             except Exception:  # noqa: BLE001  — a cache that cannot persist must not break the run
+                 pass
+-        return value
++
++    def flush(self):
++        """Persist any pending entries immediately (called on clean process exit)."""
++        pending = getattr(self, "_pending", {})
++        if not pending:
++            return
++        with self._xlock():
++            try:
++                with open(self.path, encoding="utf-8") as fh:
++                    disk = json.load(fh)
++            except Exception:  # noqa: BLE001
++                disk = {}
++            disk.update(pending)
++            self._write_disk(disk)
++            self._pending = {}
++
++    @contextmanager
++    def _xlock(self):
++        """Cross-PROCESS lock on a sidecar file. threading.Lock only guards one process;
++        N collector processes each had their own, which is why writes raced."""
++        lock_path = self.path + ".lock"
++        os.makedirs(os.path.dirname(lock_path) or ".", exist_ok=True)
++        fh = open(lock_path, "a+")
++        try:
++            while True:
++                try:
++                    fh.seek(0)   # all processes must contend on the SAME byte (position 0);
++                    msvcrt.locking(fh.fileno(), msvcrt.LK_NBLCK, 1)
++                    break        # "a+" leaves the position at EOF, which would lock different
++                except OSError:  # bytes per process and not exclude anyone at all
++                    time.sleep(0.05)
++            yield
++        finally:
++            try:
++                fh.seek(0)
++                msvcrt.locking(fh.fileno(), msvcrt.LK_UNLCK, 1)
++            except OSError:
++                pass
++            fh.close()
+ 
+     def __len__(self):
+         return len(self._load())
+diff --git a/text_to_sql/bridge.py b/text_to_sql/bridge.py
+index 658ecf4..1e8d766 100644
+--- a/text_to_sql/bridge.py
++++ b/text_to_sql/bridge.py
+@@ -81,7 +81,9 @@ def solver_llm(prompt, system="", temperature=0.0, n=1, seq=0):
+     # unless an isolated model-ablation process explicitly opts in.
+     if os.environ.get("SOLVER_TEMPERATURE_OVERRIDE"):
+         t = float(os.environ["SOLVER_TEMPERATURE_OVERRIDE"])
+-    outs = _CACHE.get_or_call((prompt, system, t, n, seq),
++    # MODEL IDENTITY IS PART OF THE KEY. Without it a target-transfer run silently serves a
++    # reply generated by the PREVIOUS target for the same prompt, erasing the whole contrast.
++    outs = _CACHE.get_or_call((_llmcfg["solver_model"], _llmcfg["base_url"], prompt, system, t, n, seq),
+                               lambda: _LLM.chat("harness", system, prompt, model_role="solver", n=n,
+                                                 temperature=t))
+     return outs[0] if n == 1 else outs
+diff --git a/text_to_sql/claude_wrapper.py b/text_to_sql/claude_wrapper.py
+index 20979b7..534965d 100644
+--- a/text_to_sql/claude_wrapper.py
++++ b/text_to_sql/claude_wrapper.py
+@@ -124,12 +124,15 @@ def build_command(
+     disable_mcp=True,
+     effort=None,
+ ):
+-    """Build the claude CLI command list."""
++    """Build the claude CLI command list. The prompt is sent via STDIN, not argv:
++    a .CMD shim is executed through cmd.exe, whose 8191-char command-line limit
++    truncates/mangles long prompts (~9KB proposer prompts hang or error out)."""
++    import shutil
++    _claude_bin = os.environ.get("CLAUDE_CLI_PATH") or shutil.which("claude") or "claude"
+     cmd = [
+-        "claude",
++        _claude_bin,
+         "--dangerously-skip-permissions",
+         "-p",
+-        prompt,
+         "--output-format",
+         "stream-json",
+         "--verbose",
+@@ -579,6 +582,10 @@ def run(
+     # MAX_THINKING_TOKENS so the DeepSeek anthropic endpoint enables thinking (verified). Respect an
+     # explicit env value; else default from TTHO_PROPOSER_THINK (8192). Set =0 to disable.
+     env.setdefault("MAX_THINKING_TOKENS", os.environ.get("TTHO_PROPOSER_THINK", "8192"))
++    # Non-Anthropic model names (e.g. deepseek-v4-flash, GLM-5.3-Flash via a custom endpoint) trigger
++    # the CLI's unknown-model context-window enforcement, which STALLS stream-json/sdk sessions with
++    # zero output until killed. Restore the old wait-for-the-API behavior.
++    env.setdefault("CLAUDE_CODE_DISABLE_UNKNOWN_MODEL_WINDOW_ENFORCEMENT", "1")
+ 
+     # Resolve progress callback
+     if progress is True:
+@@ -599,11 +606,13 @@ def run(
+             cmd,
+             stdout=subprocess.PIPE,
+             stderr=subprocess.PIPE,
+-            stdin=subprocess.DEVNULL,
++            stdin=subprocess.PIPE,  # prompt goes over stdin; closed immediately after write (EOF)
+             text=True,
+             cwd=cwd,
+             env=env,
+         )
++        proc.stdin.write(prompt)
++        proc.stdin.close()
+         deadline = start + timeout_seconds if timeout_seconds else None
+         q = queue.Queue()
+         stdout_thread = threading.Thread(
+diff --git a/text_to_sql/optimize.py b/text_to_sql/optimize.py
+index 9e7d16b..45751e7 100644
+--- a/text_to_sql/optimize.py
++++ b/text_to_sql/optimize.py
+@@ -70,7 +70,10 @@ def isolated_solve(run_dir, harness_name, db_id, question, timeout, tag):
+         _stdout, stderr = proc.communicate(timeout=timeout)
+     except subprocess.TimeoutExpired:
+         try:
+-            os.killpg(proc.pid, signal.SIGKILL)
++            if hasattr(os, "killpg"):
++                os.killpg(proc.pid, signal.SIGKILL)
++            else:  # Windows: no process groups
++                proc.kill()
+         except ProcessLookupError:
+             pass
+         _stdout, stderr = proc.communicate()

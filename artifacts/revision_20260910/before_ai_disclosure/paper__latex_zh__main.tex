@@ -1,0 +1,48 @@
+% 中文参考译本：正文、AI使用声明与附录，非投稿版本。
+% 对应英文工作稿的精确哈希见 artifacts/revision_20260910/chinese_sync_verification.json。
+% 数值宏、六张结果表、三幅图和参考文献共用英文源；图表内英文标签保留。
+\documentclass{article}
+\usepackage{iclr2027_conference,times}
+\usepackage[UTF8,fontset=windows]{ctex}
+\usepackage{hyperref,url,graphicx,booktabs,array,amsmath,amssymb,xcolor}
+\graphicspath{{../}}
+\title{AI 生成 Harness 群体中的行为坍缩\\（中文参考译本）}
+\author{Anonymous}
+\newcommand{\bare}{\texttt{bare}}
+\newcommand{\react}{\texttt{react}}
+\newcommand{\pp}{\,pp}
+\input{../latex/revision_numbers}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\begin{document}
+\maketitle
+\begin{abstract}
+自动生成的 LLM harness 可以在源代码、实际执行的机制和正确性结果上有所不同，但这些差异未必意味着可重复的新增能力。我们在 BIRD 文本转 SQL 任务上研究这一问题。在发现阶段的一个种群中，尽管源代码不同，91 对 harness 中仍有 36 对在全部已评估题目上的正确性结果完全相同；轨迹检查发现了机制缺失、分支未触发和多轮路径失效。后续析因研究在六个构建器、三个种子上交叉设置策略强制与准入门控，使用 1,169 道题和官方 BIRD 评分器。自由生成已产生 8.6 个百分点的观测 oracle 提升空间。对存档实验的审后重分析估计，组合干预的效应为 $\RevisionPrimaryDelta$ 个百分点（95\% CI $\RevisionPrimaryCI$），未显示明确改善。实际门控还排除了两种原本允许的提示层策略，因此该对比无法单独识别验证的作用。重复执行显示结果不稳定，单次运行的 oracle 可以利用这种波动，而不要求稳定的机制互补。我们区分观测提升空间与稳定的题目—harness 优势，并说明将二者连接到实际选择收益所需的对照。当前证据明确了这些测量边界，尚未识别超出重复采样的稳定互补性。
+\end{abstract}
+\section{引言}\label{sec:introduction}
+\input{sec_intro}
+\section{相关工作}\label{sec:related}
+\input{sec_related}
+\section{Phase I：坍缩的测量与诊断（发现研究）}\label{sec:phase1}
+\input{sec_phase1}
+\section{Phase II：验证性生成研究（设计）}\label{sec:phase2}
+\input{sec_phase2}
+\section{Phase II：结果}\label{sec:results}
+\input{sec_results}
+\section{讨论与结论}\label{sec:discussion}
+\input{sec_discussion}
+\input{sec_conclusion}
+\label{endofmain}
+\subsection*{AI 使用声明}
+本研究借助 AI 研究 AI 生成的产物，以下说明其参与范围。
+
+\textbf{必要披露。}生成式 AI 工具用于：（i）编写和修改实验代码，包括生成流程、评估采集器和统计分析脚本；代码通过执行、自动测试、人工编写的正控制和已知负例校准，以及跨模型对抗审核进行检查；（ii）执行实验，包括文中报告的模型 API 调用；（iii）分析数据并制作图表；（iv）起草和修改论文。修订后的主分析表、析因表和结果图由共同的版本化重分析产物生成。历史探索性分析保留各自来源与局限；审后修正与原协议分开记录。
+
+\textbf{研究构思与方向。}核心问题、因果设计决策（估计目标、对比与排除规则）、解释标准及所有继续／停止决策由人类作者作出。AI 工具承担执行和其中一路对抗审核；按项目跨模型审核约定，该审核者与执行者来自不同模型家族。
+
+\textbf{责任。}作者对最终内容承担责任，包括 AI 辅助生成的文字、主张和产物。本声明中的事实有待作者核实，作者对其准确性负最终责任。
+\bibliography{../latex/references}
+\bibliographystyle{iclr2027_conference}
+\appendix
+\input{sec_appendix}
+\input{sec_crossdomain}
+\end{document}

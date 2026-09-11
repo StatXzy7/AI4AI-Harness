@@ -1,0 +1,9 @@
+{
+  "provider_name": "paratera-glm-ziqian",
+  "http_status": 200,
+  "selected_models_present": {
+    "GLM-5.3": true,
+    "Qwen3.8-Max": true
+  },
+  "generation_calls_so_far": 0
+}

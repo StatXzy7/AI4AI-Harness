@@ -1,0 +1,10 @@
+{
+  "status": "FROZEN_PENDING_INDEPENDENT_PRECALCULATION_REVIEW",
+  "bindings": {
+    "artifacts/revision_20260910/w1_exact_counterexample/protocol.json": "280640a2c4cfc04dfe455d19c5d998d890e5323fb1eb31df595cbe172aa75f66",
+    "experiment/revision/w1_exact_counterexample.py": "0be56e2e03403fe26b5694358919b34bff299fa4498fc8671cd3248ee3da1505",
+    "experiment/revision/selection.py": "b0c75f72e4b6cf3e3fdeb150fed9460b625d497d71a6e84ae66fa5a4b4f3085c",
+    "experiment/revision/selection_weights.py": "4d44052327174557d1c7264d7b3c2db2476ef80cf915f863b81400f992af3592",
+    "experiment/revision/replay.py": "b87ba0aae2b610053c418b7a8373532bfe1c53a2a2dcfb9d345f548f2693ea86"
+  }
+}

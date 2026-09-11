@@ -1,0 +1,187 @@
+{
+  "strategy": "decompose",
+  "path": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s1_decompose.py",
+  "availability": "available",
+  "result": {
+    "strategy": "decompose",
+    "verdict": "review_required",
+    "scope": "v3 exposed-control development; independent calibration and production adapter pending",
+    "runs": [
+      {
+        "probe": "parts_0",
+        "status": "review_required",
+        "reasons": [
+          "decomposition_request_attribution_ambiguous"
+        ],
+        "final": "UNRELATED",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "You are an expert SQL planner. Given a database schema and a complex natural language question, break the question into a minimal ordered list of sub-questions. Each sub-question should be answerable by a single SELECT query against the schema and should contribute toward the final SQL answer. Order the sub-questions from base data retrieval to final computation.\n\nSchema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\n\nReturn ONLY a JSON list of strings, for example: [\"sub-question 1\", \"sub-question 2\"]. No explanation.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "[\"runtime_bridge_stage24_part_0\", \"runtime_bridge_stage24_part_1\"]",
+            "seq": 0
+          },
+          {
+            "kind": "llm",
+            "prompt": "You are an expert SQL query generator.\n\nDatabase schema:\nTable ledger(id, amount)\nTable unused(label)\n\nOriginal question:\nReturn ledger identifiers.\n\nOrdered decomposition:\n1. runtime_bridge_stage24_part_0\n2. runtime_bridge_stage24_part_1\n\nPreviously generated CTE definitions and status:\n(none)\n\nCurrent sub-question to answer:\nruntime_bridge_stage24_part_0\n\nWrite a single SELECT query that answers only this current sub-question. It will be used as a CTE named `q1`. Ensure all referenced tables/columns exist in the schema. Return ONLY SQL, without markdown fences or explanation.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "UNRELATED",
+            "decomposition_step": null,
+            "decomposition_candidates": [
+              0,
+              1
+            ],
+            "decomposition_ambiguous": true,
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "UNRELATED",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "llm",
+            "prompt": "You are an expert SQL query generator.\n\nDatabase schema:\nTable ledger(id, amount)\nTable unused(label)\n\nOriginal question:\nReturn ledger identifiers.\n\nOrdered decomposition:\n1. runtime_bridge_stage24_part_0\n2. runtime_bridge_stage24_part_1\n\nPreviously generated CTE definitions and status:\nq1 (execution succeeded: 1 rows returned):\nUNRELATED\n\nCurrent sub-question to answer:\nruntime_bridge_stage24_part_1\n\nWrite a single SELECT query that answers only this current sub-question. It will be used as a CTE named `q2`. Ensure all referenced tables/columns exist in the schema. Return ONLY SQL, without markdown fences or explanation.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "UNRELATED",
+            "decomposition_step": null,
+            "decomposition_candidates": [
+              0,
+              1
+            ],
+            "decomposition_ambiguous": true,
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "UNRELATED",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "llm",
+            "prompt": "You are an expert SQL query writer.\n\nDatabase schema:\nTable ledger(id, amount)\nTable unused(label)\n\nOriginal question:\nReturn ledger identifiers.\n\nOrdered decomposition:\n1. runtime_bridge_stage24_part_0\n2. runtime_bridge_stage24_part_1\n\nIntermediate CTEs already generated:\nq1 AS (\nUNRELATED\n),\nq2 AS (\nUNRELATED\n)\n\nWrite a final SQL query that answers the original question. Use the provided CTE definitions in a WITH clause where appropriate. Return ONLY SQL, without markdown fences or explanation.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "UNRELATED",
+            "decomposition_step": null,
+            "decomposition_candidates": [
+              0,
+              1
+            ],
+            "decomposition_ambiguous": true,
+            "seq": 0
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "parts_1",
+        "status": "review_required",
+        "reasons": [
+          "decomposition_request_attribution_ambiguous"
+        ],
+        "final": "UNRELATED",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "You are an expert SQL planner. Given a database schema and a complex natural language question, break the question into a minimal ordered list of sub-questions. Each sub-question should be answerable by a single SELECT query against the schema and should contribute toward the final SQL answer. Order the sub-questions from base data retrieval to final computation.\n\nSchema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\n\nReturn ONLY a JSON list of strings, for example: [\"sub-question 1\", \"sub-question 2\"]. No explanation.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "[\"runtime_bridge_stage24_part_0\", \"runtime_bridge_stage24_part_1\"]",
+            "seq": 0
+          },
+          {
+            "kind": "llm",
+            "prompt": "You are an expert SQL query generator.\n\nDatabase schema:\nTable ledger(id, amount)\nTable unused(label)\n\nOriginal question:\nReturn ledger identifiers.\n\nOrdered decomposition:\n1. runtime_bridge_stage24_part_0\n2. runtime_bridge_stage24_part_1\n\nPreviously generated CTE definitions and status:\n(none)\n\nCurrent sub-question to answer:\nruntime_bridge_stage24_part_0\n\nWrite a single SELECT query that answers only this current sub-question. It will be used as a CTE named `q1`. Ensure all referenced tables/columns exist in the schema. Return ONLY SQL, without markdown fences or explanation.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "UNRELATED",
+            "decomposition_step": null,
+            "decomposition_candidates": [
+              0,
+              1
+            ],
+            "decomposition_ambiguous": true,
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "UNRELATED",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "llm",
+            "prompt": "You are an expert SQL query generator.\n\nDatabase schema:\nTable ledger(id, amount)\nTable unused(label)\n\nOriginal question:\nReturn ledger identifiers.\n\nOrdered decomposition:\n1. runtime_bridge_stage24_part_0\n2. runtime_bridge_stage24_part_1\n\nPreviously generated CTE definitions and status:\nq1 (execution succeeded: 1 rows returned):\nUNRELATED\n\nCurrent sub-question to answer:\nruntime_bridge_stage24_part_1\n\nWrite a single SELECT query that answers only this current sub-question. It will be used as a CTE named `q2`. Ensure all referenced tables/columns exist in the schema. Return ONLY SQL, without markdown fences or explanation.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "UNRELATED",
+            "decomposition_step": null,
+            "decomposition_candidates": [
+              0,
+              1
+            ],
+            "decomposition_ambiguous": true,
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "UNRELATED",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "llm",
+            "prompt": "You are an expert SQL query writer.\n\nDatabase schema:\nTable ledger(id, amount)\nTable unused(label)\n\nOriginal question:\nReturn ledger identifiers.\n\nOrdered decomposition:\n1. runtime_bridge_stage24_part_0\n2. runtime_bridge_stage24_part_1\n\nIntermediate CTEs already generated:\nq1 AS (\nUNRELATED\n),\nq2 AS (\nUNRELATED\n)\n\nWrite a final SQL query that answers the original question. Use the provided CTE definitions in a WITH clause where appropriate. Return ONLY SQL, without markdown fences or explanation.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "UNRELATED",
+            "decomposition_step": null,
+            "decomposition_candidates": [
+              0,
+              1
+            ],
+            "decomposition_ambiguous": true,
+            "seq": 0
+          }
+        ],
+        "error": null
+      }
+    ]
+  },
+  "admission": "not_evaluated"
+}

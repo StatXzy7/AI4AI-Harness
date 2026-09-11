@@ -1,0 +1,5 @@
+main.xdv -> main.pdf
+
+xdvipdfmx:fatal: Unable to open "main.pdf".
+
+No output PDF file written.

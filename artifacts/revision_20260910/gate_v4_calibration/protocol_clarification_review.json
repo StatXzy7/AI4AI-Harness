@@ -1,0 +1,17 @@
+{
+  "scope": "Stage27 premeasurement interface clarification review",
+  "reviewer": "/root/independent_calibration_review",
+  "score": 9.6,
+  "verdict": "ready",
+  "blockers": [],
+  "checked": [
+    "top-level tables and columns string arrays match frozen profile",
+    "nested table objects unsupported and indeterminate rather than rejected",
+    "original STRATEGIES declaration reading is allowed",
+    "hint hard-requirement restatement corrected",
+    "parameter and invocation differences must be explicitly adjudicated"
+  ],
+  "measurement_run": false,
+  "labels_read": false,
+  "controls_read": false
+}

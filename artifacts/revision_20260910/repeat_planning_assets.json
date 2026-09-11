@@ -1,0 +1,8 @@
+{
+  "input_sha256": "3275c1ec3c646d5968067c474dda257c912cef9e8cdb4b11cfa80759ccff77fc",
+  "renderer_sha256": "52b81faf41631364fa7739f36a26f3c24d29cf7b7b09e2bef9140f2999a6702d",
+  "outputs": {
+    "repeat_planning.png": "1d467041584702df1d3cd9843ae8c0187db330210ebbcc9c1a53a04a0337c550",
+    "repeat_planning.pdf": "800d13e4bab6aa3f6197d964133300b068c55d7279213e40ed88959c908b97c6"
+  }
+}

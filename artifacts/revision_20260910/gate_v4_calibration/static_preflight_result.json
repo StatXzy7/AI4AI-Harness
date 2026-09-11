@@ -1,0 +1,207 @@
+{
+  "status": "PREMEASUREMENT_HOLD",
+  "initial_source_sha256": "4d39ab1d202394e2a396c7a4c8de95d3f11493552fc72b3734d408cb426f8276",
+  "initial_review_quotes": 37,
+  "clarification_quotes_verified": 6,
+  "counts": {
+    "indeterminate": 4,
+    "nonconforms": 16,
+    "conforms": 12
+  },
+  "agreements": 26,
+  "cases": [
+    {
+      "case_id": "gv4r001",
+      "strategy": "schema_link",
+      "author_label": "conforms",
+      "decision": "indeterminate"
+    },
+    {
+      "case_id": "gv4r002",
+      "strategy": "repair",
+      "author_label": "nonconforms",
+      "decision": "nonconforms"
+    },
+    {
+      "case_id": "gv4r003",
+      "strategy": "error_classify",
+      "author_label": "conforms",
+      "decision": "conforms"
+    },
+    {
+      "case_id": "gv4r004",
+      "strategy": "vote3",
+      "author_label": "nonconforms",
+      "decision": "nonconforms"
+    },
+    {
+      "case_id": "gv4r005",
+      "strategy": "hint_guard",
+      "author_label": "conforms",
+      "decision": "conforms"
+    },
+    {
+      "case_id": "gv4r006",
+      "strategy": "decompose",
+      "author_label": "nonconforms",
+      "decision": "nonconforms"
+    },
+    {
+      "case_id": "gv4r007",
+      "strategy": "format_guard",
+      "author_label": "conforms",
+      "decision": "conforms"
+    },
+    {
+      "case_id": "gv4r008",
+      "strategy": "two_view",
+      "author_label": "nonconforms",
+      "decision": "nonconforms"
+    },
+    {
+      "case_id": "gv4r009",
+      "strategy": "repair",
+      "author_label": "conforms",
+      "decision": "conforms"
+    },
+    {
+      "case_id": "gv4r010",
+      "strategy": "schema_link",
+      "author_label": "nonconforms",
+      "decision": "indeterminate"
+    },
+    {
+      "case_id": "gv4r011",
+      "strategy": "vote3",
+      "author_label": "conforms",
+      "decision": "nonconforms"
+    },
+    {
+      "case_id": "gv4r012",
+      "strategy": "error_classify",
+      "author_label": "nonconforms",
+      "decision": "nonconforms"
+    },
+    {
+      "case_id": "gv4r013",
+      "strategy": "two_view",
+      "author_label": "conforms",
+      "decision": "conforms"
+    },
+    {
+      "case_id": "gv4r014",
+      "strategy": "hint_guard",
+      "author_label": "nonconforms",
+      "decision": "nonconforms"
+    },
+    {
+      "case_id": "gv4r015",
+      "strategy": "decompose",
+      "author_label": "conforms",
+      "decision": "conforms"
+    },
+    {
+      "case_id": "gv4r016",
+      "strategy": "format_guard",
+      "author_label": "nonconforms",
+      "decision": "nonconforms"
+    },
+    {
+      "case_id": "gv4r017",
+      "strategy": "vote3",
+      "author_label": "nonconforms",
+      "decision": "nonconforms"
+    },
+    {
+      "case_id": "gv4r018",
+      "strategy": "repair",
+      "author_label": "conforms",
+      "decision": "conforms"
+    },
+    {
+      "case_id": "gv4r019",
+      "strategy": "schema_link",
+      "author_label": "conforms",
+      "decision": "indeterminate"
+    },
+    {
+      "case_id": "gv4r020",
+      "strategy": "error_classify",
+      "author_label": "conforms",
+      "decision": "conforms"
+    },
+    {
+      "case_id": "gv4r021",
+      "strategy": "hint_guard",
+      "author_label": "conforms",
+      "decision": "conforms"
+    },
+    {
+      "case_id": "gv4r022",
+      "strategy": "two_view",
+      "author_label": "nonconforms",
+      "decision": "nonconforms"
+    },
+    {
+      "case_id": "gv4r023",
+      "strategy": "format_guard",
+      "author_label": "conforms",
+      "decision": "conforms"
+    },
+    {
+      "case_id": "gv4r024",
+      "strategy": "decompose",
+      "author_label": "nonconforms",
+      "decision": "nonconforms"
+    },
+    {
+      "case_id": "gv4r025",
+      "strategy": "schema_link",
+      "author_label": "nonconforms",
+      "decision": "indeterminate"
+    },
+    {
+      "case_id": "gv4r026",
+      "strategy": "vote3",
+      "author_label": "conforms",
+      "decision": "nonconforms"
+    },
+    {
+      "case_id": "gv4r027",
+      "strategy": "repair",
+      "author_label": "nonconforms",
+      "decision": "nonconforms"
+    },
+    {
+      "case_id": "gv4r028",
+      "strategy": "error_classify",
+      "author_label": "nonconforms",
+      "decision": "nonconforms"
+    },
+    {
+      "case_id": "gv4r029",
+      "strategy": "two_view",
+      "author_label": "conforms",
+      "decision": "conforms"
+    },
+    {
+      "case_id": "gv4r030",
+      "strategy": "format_guard",
+      "author_label": "nonconforms",
+      "decision": "nonconforms"
+    },
+    {
+      "case_id": "gv4r031",
+      "strategy": "decompose",
+      "author_label": "conforms",
+      "decision": "conforms"
+    },
+    {
+      "case_id": "gv4r032",
+      "strategy": "hint_guard",
+      "author_label": "nonconforms",
+      "decision": "nonconforms"
+    }
+  ],
+  "measurement_run": false
+}

@@ -1,0 +1,77 @@
+{
+  "recorded_at_utc": "2026-09-10T11:58:14.380981+00:00",
+  "scope": "W1 joint positive-weight re-selection development analysis; not confidence-interval calibration or independent utility validation",
+  "bindings": {
+    "experiment/revision/selection_weights.py": "4d44052327174557d1c7264d7b3c2db2476ef80cf915f863b81400f992af3592",
+    "experiment/revision/test_selection_weights.py": "b5c12587d1f55aa89b2c5092a750db977245a4f118fc69ada7de2fc30bf825e6",
+    "artifacts/revision_20260910/selection_weights.json": "bb5a3bb38898eace5589c7483afbf008984a4c028f8121f8734a9775097bebd9",
+    "artifacts/revision_20260910/selection_weights.npz": "051e76e2fe96278d3870b559544995f07ac6df6185c47669edab13b0efbeb386",
+    "artifacts/revision_20260910/selection_weight_tie_fixture.npz": "66d996bbf6b1b26f9d4bb7be48f6ea671651b58e1f59c6914d0b1fbbf1281294",
+    "artifacts/revision_20260910/selection_weights_tests.txt": "d98e8a0709293c2eee8b1a254d7a1b42a0e227066792709770ced1e554ad6b28",
+    "review-stage/W1_WEIGHT_SENSITIVITY.md": "191609e8c7b4855821494233e76cc6bcb05e21483255a559391712efd0b71794",
+    "artifacts/revision_20260910/verification.json": "f978c4b8cebe7662849de337661cb81994eb037ad374ec325aa968434158a859",
+    "artifacts/revision_20260910/chinese_sync_verification.json": "23175b594281e9c7d9d13f9e2cceff405ac8b18a4e3e50deaaa073f24102f96f"
+  },
+  "numpy": "2.3.5",
+  "completed_splits": 100,
+  "positive_weight_draws": 199,
+  "uniform_audit_rows": 1,
+  "method_count": 7,
+  "summary_count": 28,
+  "metric_count_per_summary": 4,
+  "uniform_choice_mismatches": 0,
+  "canonical_reference_means": "PASS within 1e-12",
+  "all_saved_quantiles_recomputed": "PASS",
+  "input_start_end_and_reference_bindings": "PASS",
+  "decomposition_and_fixed_le_best": "PASS",
+  "selection_tests": 10,
+  "selection_tests_status": "PASS",
+  "ruff": "PASS",
+  "paper_verification": "42 checks PASS",
+  "paper_sources_and_pdf_changed": false,
+  "model_generation_requests": 0,
+  "execution_history": [
+    {
+      "session": 83275,
+      "terminal": "exit1",
+      "reason": "uniform choice mismatch",
+      "final_result_written": false
+    },
+    {
+      "session": 96627,
+      "terminal": "exit1",
+      "reason": "axis still not contiguous",
+      "final_result_written": false
+    },
+    {
+      "session": 6564,
+      "terminal": "exit1 after deliberate stop",
+      "reason": "memory optimization at split6 before code edit",
+      "final_result_written": false
+    },
+    {
+      "session": 4657,
+      "terminal": "exit0",
+      "completed_splits": 100
+    }
+  ],
+  "remaining": [
+    "W1 estimand and frequentist calibration",
+    "generation/execution variability and independent D",
+    "reviewer A-C",
+    "provider pilot budget and launch gates"
+  ],
+  "reviews": {
+    "mechanical": {
+      "score": 9,
+      "verdict": "ready",
+      "scope": "weighted implementation, provenance, float regression and optimization"
+    },
+    "spec_artifact": {
+      "score": 9,
+      "verdict": "ready",
+      "scope": "28 summaries and complete development artifact"
+    },
+    "independent_cross_model_scientific_clearance": false
+  }
+}

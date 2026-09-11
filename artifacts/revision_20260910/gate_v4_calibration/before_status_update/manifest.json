@@ -1,0 +1,14 @@
+{
+  "review-stage/REVISION_20260910.md": {
+    "snapshot": "artifacts/revision_20260910/gate_v4_calibration/before_status_update/review-stage__REVISION_20260910.md",
+    "sha256": "559d84da340c06ea5482f9b395a7acc05eece03bc0017bea5224128cd9258178"
+  },
+  "review-stage/REVISED_EXPERIMENT_PLAN.md": {
+    "snapshot": "artifacts/revision_20260910/gate_v4_calibration/before_status_update/review-stage__REVISED_EXPERIMENT_PLAN.md",
+    "sha256": "baac7b42266a96820f3ea107ac409b1326b2886239e5c38e418aa7f00eaebac8"
+  },
+  "experiment/revision/README.md": {
+    "snapshot": "artifacts/revision_20260910/gate_v4_calibration/before_status_update/experiment__revision__README.md",
+    "sha256": "327d952154c423710240aef8295f98f9e79b2b0b87293cfc6398723c04f8df41"
+  }
+}

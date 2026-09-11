@@ -1,0 +1,323 @@
+\section{Phase-I Provenance and Conditions (Detail)}\label{app:phase1-provenance}
+
+\paragraph{Discovery status.} Phase I (Sections~\ref{sec:phase1} and
+\ref{sec:boundary}) is a discovery study. 24 of its 151 evaluation items
+overlapped day-1 protocol-development measurements; the human control was
+designed after inspecting day-1 traces (its observed headroom is descriptive,
+not a blind estimate of stable complementarity); the repository history was initialized
+retrospectively, and the decision-log changelog is the authoritative
+ordering record. Phase-I admission thresholds (union repair
+$\geq$15\%, headroom $\geq$5\,pp, $\geq$3 pairwise-distinct non-empty fix
+sets) were frozen in the internal decision log before the 151-item
+evaluation; the v6$\rightarrow$v7 threshold change (20\%$\rightarrow$15\%)
+is disclosed, and both readings admit the same populations. This is an
+internal pre-evaluation freeze, not external preregistration.
+
+\paragraph{Data hygiene.} The bare baseline flipped 3 of 60 items between
+the two day-1 runs (API nondeterminism at temperature 0), so 60-item
+columns are conditioned on slightly different bare-error sets. Phase-I
+judging used a set-of-rows-equality proxy that we later measured to be
+uniformly conservative relative to the official BIRD scorer (on the two
+Phase-I matrices with logged final SQL, it never credits an answer the
+official scorer rejects; agreement 0.97--0.99).
+
+\paragraph{Phase-I populations.} Seed baselines: \texttt{bare} (single
+call) and \texttt{react} (execution feedback loop, shipped with TTHE).
+\emph{Old proposer protocol}: six candidates selected from TTHE's
+optimize-loop output (GLM-5.3-Flash builder), selected for behavioral
+diversity using only the 36 questions disjoint from the evaluation set, by a
+rule frozen before evaluation. \emph{Strategy-forced free-form}:
+GLM-5.3-Flash, Qwen3.8-Flash, and DeepSeek-V4-Flash-Vision-Exp builders,
+eight assigned mechanisms each; the GLM population
+is the logged re-run (K=3; the original 09-01 run recorded zero accepted
+outputs but its tool was not preserved and the observation is unaudited).
+\emph{Harness IR}: six harnesses compiled deterministically from
+declarative mechanism specifications (context $\in$
+\{plain, schema\_link, hint\_guard, link+hint\}, candidate generation with
+temperature, per-candidate execution, repair rounds, selection rule), so a
+declared mechanism is present in the control flow by construction.
+\emph{Human positive control}: the four hand-written harnesses of
+\S\ref{sec:positive}.
+
+\paragraph{Generation-provenance gaps.} The 09-01 free-form populations
+were produced in-session; their generation tool was not preserved, and
+per-attempt logs do not exist for them --- so budget equality cannot be
+audited for those runs, and we do not claim it. Their acceptance was an
+import/smoke check at evaluation time, \emph{not} the Phase-II
+counterfactual conformance gate. The tool of record from 2026-09-03
+(\texttt{builder\_generate3.py}) logs every attempt (3 retries,
+16{,}384-token budget, per-attempt stage and finish reason); the completed
+per-strategy grids and the builder-acceptance ordering (3/8, 7/8, 8/8)
+come from this logged tool and are post-hoc with respect to the frozen
+admission decisions.
+
+\section{Phase-II Protocol Summary and Deviation Log}\label{app:phase2-protocol}
+
+The authoritative protocol (estimands, splits, instruments, exclusion
+rules, and the historical deviation changelog) is
+\texttt{PHASE2\_PROTOCOL.md} in the code release, frozen at the commit
+recorded in \texttt{PROTOCOL\_FREEZE.txt}. Summary: $2{\times}2$ factorial
+plus open-mechanism arm; six builders $\times$ three seeds; at most
+$R{=}3$ attempts per slot, stopping at first admission, with no top-up;
+contamination registry (fail-closed,
+two development databases banned wholesale); 1{,}169-question confirmatory
+set from nine databases never opened during development plus a pre-drawn 400-item core;
+official BIRD judge with enforced 30\,s timeout; response cache keyed on
+model identity with cross-process locking (deviation D13 documents and
+fixes a cache concurrency bug found during collection); primary contrast
+D$-$A on paired (builder $\times$ seed) cells with hierarchical bootstrap
+and permutation inference; Holm-corrected factorial secondaries on the
+common core; K-matched sensitivity only. Deviations D1--D13 include the
+disclosed 18-item pipeline smoke test, instrument-calibration fixes made
+before any confirmatory outcome was observed, the credential-handling
+incident and its remediation, and the artifact-divergence quarantine ---
+each with its rationale and date in the changelog.
+The post-review corrections are recorded in
+\texttt{review-stage/REVISION\_20260910.md}; revised results do not replace
+the historical freeze. In particular, the implemented gate structurally
+rejects two allowed prompt-level strategies and realized generation costs
+differ across arms. Corrected tables use shared baseline records and
+database/task resampling, as described in the main text.
+
+\paragraph{Corrected K-matched and R2 replays.}\label{app:r2}
+Both replays use the same manifest-ordered canonical loader and shared
+database/within-database task draws as the corrected primary analysis,
+with seeds resampled within fixed builders (10{,}000 replicates).
+For K-matching, each A/B and C/D pair uses the smaller candidate count;
+every uniform candidate subset is enumerated exactly. Bare stays in every
+subset, and best-fixed is recomputed inside each subset on every task draw.
+This is a size sensitivity analysis, not a causal mediation decomposition.
+
+R2 acquired 70 harnesses on 400 tasks, selecting the first two callable
+admitted candidates per A/D cell where available. The two cache-off
+acquisition files retain separate identities even though both stored
+\texttt{repeat=0}; source hashes are checked against the cached runs.
+No matched bare was acquired, so R2 headroom excludes bare in both
+conditions. The corrected analysis retains singleton cells (their subset
+headroom is zero), yielding all 18 paired cells.
+There are \RevisionRtwoFlips/28{,}000 verdict flips against cached outcomes
+(\RevisionRtwoFlipPercent\%) and
+\RevisionRtwoRepeatFlips/14{,}400 flips between the two D cache-off passes
+(\RevisionRtwoRepeatPercent\%).
+For reconciliation only, restricting to the 16 cells with at least two
+members in both arms gives D$-$A $\RevisionRtwoLegacyCached$\,pp cached
+and $\RevisionRtwoLegacyOff$\,pp cache-off. This explains the difference
+from the full-cell estimates; neither analysis identifies future execution
+variance, the effect of caching alone, or a stable-complementarity advantage
+over clones. Acquisition time and caching condition are not isolated.
+
+\begin{table}[t]
+\centering\small
+\input{revision_sensitivity_table}
+\caption{Corrected sensitivities on core-400, 18 cells. CIs are unadjusted.
+K-matched comparisons always retain bare; R2 comparisons exclude bare and
+are conditional on the observed acquisition groups.}
+\label{tab:sensitivity}
+\end{table}
+
+\paragraph{Recorded cost and missing billing data.}
+The same canonical core records contain \RevisionLogicalCalls{} logged
+logical solver calls across \RevisionCostRows{} candidate--task records
+(Table~\ref{tab:cost}). These calls include cache-served requests and are
+not provider-billed API requests. None of the inspected records has token
+usage fields; we do not impute token or monetary expenditure from call
+counts. Actual generation attempts, admitted candidate counts, and these
+execution counts therefore remain separate measurements. The population
+cost mean gives each builder--seed cell equal weight and excludes bare;
+zero-candidate populations would contribute zero solver calls.
+
+\begin{table}[t]
+\centering\small
+\input{revision_cost_table}
+\caption{Descriptive canonical cost audit on core-400, 18 cells per arm.
+Logged logical calls are not billable requests or token counts. The last
+column averages candidate-population calls per task over cells.}
+\label{tab:cost}
+\end{table}
+
+\section{Exploratory Fingerprint and Selection Analyses}\label{app:rich}
+Both analyses are post-hoc on the archived confirmatory cells (18
+builder$\times$seed cells, 384 admitted candidates, core-400 outcomes).
+The versioned \texttt{experiment/revision/} scripts now use the same
+canonical loader, frozen task list, membership and source checks as the
+main reanalysis. They remain descriptive: these tasks had already been
+analyzed, and this is not independent transfer validation.
+
+\paragraph{Rich fingerprints.} To isolate the loader change, the W3
+reanalysis retains the legacy lossy SQL text transform: semicolon deletion,
+backtick replacement, lowercasing even segments after splitting on single
+quotes, and whitespace joining. This is not a SQL parser or semantic
+normalization; it can alter literals and quoted identifiers. Among
+$\RevisionWthreeSameSQL$ pair--task observations with two identical,
+nonempty transformed SQL strings, $\RevisionWthreeSameDisagreements$
+have different verdicts. This is an observed consistency check, not a
+property guaranteed by construction.
+
+Pair-level SQL dissimilarity averages $(1-$token-Jaccard$)$ only over
+verdict-agreeing tasks with two nonempty SQL strings. Its Spearman
+correlation with overall outcome disagreement is $\RevisionWthreeRho$
+across 4{,}386 within-cell pairs and $\RevisionWthreeWithinRho$ across
+1{,}010 within-arm pairs. Pairs share candidates and tasks, and the SQL
+metric conditions on verdict agreement; these correlations have no
+independence-based significance or causal interpretation.
+
+In R2's 70-harness first cache-off acquisition, call counts change on
+$\RevisionWthreeCallChanges/28000$ comparisons and verdicts on
+$\RevisionRtwoFlips/28000$. Transformed SQL changes on
+$\RevisionWthreeSQLChanges/\RevisionWthreeSQLN$ comparisons
+($\RevisionWthreeSQLPercent\%$); 64 comparisons lack two nonempty SQL
+strings and are excluded only from the SQL denominator. The mean token
+Jaccard among changed SQL pairs is $\RevisionWthreeJaccard$. These
+channel-specific rates do not define an effect-size noise floor.
+Canonical logical-call costs are reported separately in Table~\ref{tab:cost}.
+
+\paragraph{Diversity-aware selection.} Each cell pools all admitted
+candidates across arms. The reanalysis retains the legacy seed, 100
+random database-half splits, 200 random subset draws per split and cell,
+and candidate-selection rules. It records a new deterministic schedule:
+the historical set-derived cell order was not archived, so identical
+historical splits and draws cannot be recovered from the seed alone.
+Selection uses development databases; evaluation uses the complementary
+databases. The overlapping splits are not 1{,}800 independent experiments.
+Methods are top-$k$ development accuracy, uniform random subsets, greedy
+development oracle coverage, and greedy mean accuracy plus
+$\lambda$ times oracle coverage for $\lambda\in\{0.25,0.5,1,2\}$.
+All candidate choices are frozen within a split before its evaluation.
+
+Table~\ref{tab:selection} retains the common AD bare in every evaluated
+subset; $k$ counts candidates only. The JSON also records candidate-only
+values to distinguish the historical estimand. Oracle and best-fixed use
+held-out outcomes as descriptive upper bounds. Dev-fixed instead chooses
+one member using development accuracy, with ascending member-name ties
+and bare first. Deterministic methods already retain a globally dev-best
+candidate; differences in this comparator may arise from which tied
+maxima survive, not improved maximum development accuracy.
+
+At $k=8$, div-only versus top-acc changes oracle by
+$\RevisionWoneOracle$\,pp, best-fixed by $\RevisionWoneBest$\,pp,
+and headroom by $\RevisionWoneHeadroom$\,pp. Dev-fixed changes by
+$\RevisionWoneFixed$\,pp. These are distinct quantities, and none is an
+independently validated routing gain. We withdraw the legacy cell-only
+confidence intervals; the current table is descriptive while inference
+covering database/task sampling and re-selection remains outstanding.
+The earlier normalized-headroom ratio is retained only in the historical
+artifact and is not carried into the revised claims.
+
+\begin{table}[t]
+\centering\small
+\input{revision_selection_table}
+\caption{Canonical descriptive W1 reanalysis. Every pool contains $k$
+selected candidates plus the common bare. Means over 18 cells and 100
+overlapping database splits; no confidence intervals. Dev-fixed is chosen
+only on development data; Best uses held-out outcomes.}
+\label{tab:selection}
+\end{table}
+
+\section{Phase-I Additional Results}\label{app:phase1-results}
+Per-harness accuracies, per-fold LOHO tables, bootstrap intervals,
+fix-set audits, K-subsampling curves, the task-held-out control, and the
+second-target replication (Qwen3.8-Flash as frozen target: collapse
+replicates; the strategy-forced population retains headroom; the
+prompt-side human control does not transfer wholesale) are included in
+the anonymous code release with their generating scripts.
+
+\section{Models and Versions}\label{app:models}
+
+Table~\ref{tab:models} lists every model used in this paper with its exact
+version string as sent to the API. All models were accessed through a single
+commercial OpenAI-compatible API aggregator (the same provider for every
+role); the BIRD data-collection window is 2026-08-30 through 2026-09-08. The frozen
+target is always called at temperature 0. Phase-II harness generation uses
+temperature 0.7 with a 16{,}384-token budget; Phase-I generation settings are
+recorded per tool in the code release. Phase I used a proxy execution judge;
+Phase II uses the official BIRD scorer (30\,s timeout), with the legacy
+judge as a secondary audit. The MATH-500 probe uses the answer comparator
+in Appendix~\ref{app:crossdomain}; no LLM judge produces reported accuracy.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{p{0.26\linewidth}p{0.50\linewidth}p{0.14\linewidth}}
+\toprule
+Role & Model (exact version string) & Used in \\
+\midrule
+Frozen target solver & \texttt{GLM-5.3-Flash} (temperature 0) & Phases I--II \\
+Second frozen target (replication) & \texttt{Qwen3.8-Flash} & Phase I \\
+Phase-I builders & \texttt{GLM-5.3-Flash}, \texttt{Qwen3.8-Flash},
+\texttt{DeepSeek-V4-Flash-Vision-Exp} & \S\ref{sec:phase1probes} \\
+Phase-II builders & \texttt{GLM-5.3}, \texttt{Qwen3.8-Max},
+\texttt{DeepSeek-V4-Pro}, \texttt{Kimi-K3}, \texttt{MiniMax-M3},
+\texttt{ERNIE-5.0-Thinking-Preview} & Phase II \\
+Judge & proxy / official BIRD execution scorer; MATH answer comparator & see text \\
+\bottomrule
+\end{tabular}
+\caption{Complete model inventory. The target is held frozen within each
+phase; Phase-II builders come from six independent labs.}
+\label{tab:models}
+\end{table}
+
+\section{Worked Examples from the Phase-I Trace Audit}\label{app:examples}
+
+To make the failure taxonomy of \S\ref{sec:taxonomy} concrete, this section
+walks one BIRD task through the audited harnesses. Artifacts are verbatim
+from the day-1 trace audit (5 harnesses $\times$ 10 tasks); its logger caps
+stored SQL excerpts at 120 characters, so truncations are marked
+\emph{[trunc.]}. Full harness sources and traces are in the code release.
+
+\paragraph{The task.} BIRD dev-set question 352 (\texttt{card\_games}
+database; question text verbatim, the typo is the dataset's):
+\begin{quote}\small\ttfamily
+Calculate the percentage of the cards availabe in Chinese Simplified.
+\end{quote}
+Its BIRD hint:
+\begin{quote}\small\ttfamily
+'Chinese Simplified' is the language; percentage = Divide(Sum(id where
+language = 'Chinese Simplified'), Count(id)) *100
+\end{quote}
+Gold SQL (executing the two on the released database yields 8.7734 and
+8.7728 respectively --- the official scorer separates them):
+\begin{quote}\small\ttfamily
+SELECT CAST(SUM(CASE WHEN T2.language = 'Chinese Simplified' THEN 1 ELSE 0
+END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN foreign\_data
+AS T2 ON T1.uuid = T2.uuid
+\end{quote}
+The \bare{} harness answers:
+\begin{quote}\small\ttfamily
+SELECT SUM(CASE WHEN language = 'Chinese Simplified' THEN 1 ELSE 0 END) *
+100.0 / COUNT(id) AS percentage FROM foreign\_data;
+\end{quote}
+marked wrong by the official scorer: it counts directly over
+\texttt{foreign\_data}, whereas the gold query counts after joining to
+\texttt{cards}; the hint does not spell out that join.
+
+\paragraph{\react{} (T2: mechanism present but untriggered).} \react's control
+flow does execute SQL and retries on database errors. But its first call is
+byte-identical to \bare's prompt, and here the generated SQL executes without
+error, so the error-triggered retry never fires and the final SQL equals
+\bare's. Across all 10 audited tasks the pattern held: SQL executions
+present, final SQL byte-identical to \bare's on 10/10 --- the feedback loop
+is real code whose repair branch did not activate on these tasks. Controlled
+failure injection is needed to test whether feedback changes the output.
+
+\paragraph{\texttt{cand\_bird\_g1\_b0r1\_g0} (code-level diversity,
+behavioral identity).} This candidate is a genuinely different program: it
+wraps the single coder call in a daemon-thread watchdog and fires one hedged
+duplicate re-ask if the call stalls past 40\,s. The mechanism exists in the
+control flow --- but its trigger (a stalled API call) never occurred in the
+audit: zero SQL executions, and the final SQL equaled \bare's on all 10
+audited tasks. Code difference without behavioral difference survives even
+when the added mechanism is real: it simply never fires.
+
+\paragraph{\texttt{cand\_bird\_g1\_b1r1\_g1} (T3: a broken multi-turn
+path).} The one audited candidate implementing genuine execute-inspect-repair
+returns the model's \emph{prose} as final SQL. On a task \bare{} answered
+correctly (``State the alternative languages available for card named Annul
+numbered 29.''), its logged final SQL begins, verbatim:
+\begin{quote}\small\ttfamily
+with "only a single read-only SELECT is allowed". The previous "query" was
+actually just prose text (the model wrote rea\emph{[trunc.]}
+\end{quote}
+The repair re-prompt invites the failure: asked to fix a query that ``was
+actually just prose'', the frozen target responds with more prose reasoning,
+no SQL block is found, and the reasoning text is submitted as the query. The
+item flips from bare-correct to harness-wrong.

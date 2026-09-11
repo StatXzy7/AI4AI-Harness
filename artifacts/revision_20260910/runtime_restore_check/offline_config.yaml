@@ -1,0 +1,8 @@
+llm:
+  provider: mock
+  base_url: http://127.0.0.1:1
+  solver_model: offline-mock
+  controller_model: offline-mock
+dataset:
+  name: demo
+output_dir: E:/projects/AI4AI-Harness/artifacts/revision_20260910/runtime_restore_check/demo_output

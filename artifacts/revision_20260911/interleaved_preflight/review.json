@@ -1,0 +1,16 @@
+{
+  "mechanical_reviewer": "gpt-5.5",
+  "mechanical_score": 9,
+  "mechanical_verdict": "ready",
+  "spec_reviewer": "gpt-5.5",
+  "spec_score": 9,
+  "spec_verdict": "ready",
+  "scope": "interleaving and preserved isolated lifecycle only; not A scientific readiness",
+  "tests": 3,
+  "test_seconds": 13.04,
+  "root_test_exit_code": 0,
+  "draft_collect_refused": true,
+  "preflight_cells": 12,
+  "preflight_source_bindings": 511,
+  "same_source_clone": true
+}

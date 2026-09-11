@@ -1,0 +1,58 @@
+{
+  "case": {
+    "strategy": "error_classify",
+    "name": "sqlite_syntax",
+    "initial": "SELEC id FROM ledger"
+  },
+  "final": "SELECT id FROM ledger",
+  "trace": [
+    {
+      "kind": "llm",
+      "prompt": "You are a SQL expert. Given the database schema below, write a single SQL query that answers the question.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\nReturn only the SQL query, without any explanation or markdown formatting.",
+      "system": "",
+      "temperature": 0.0,
+      "n": 1,
+      "response": "SELEC id FROM ledger",
+      "response_role": "initial_sql",
+      "target_step": null,
+      "seq": 0
+    },
+    {
+      "kind": "execute",
+      "sql": "SELEC id FROM ledger",
+      "ok": false,
+      "rows": [],
+      "error": "near \"SELEC\": syntax error",
+      "error_type": "OperationalError"
+    },
+    {
+      "kind": "llm",
+      "prompt": "You are a SQL expert. A previous SQL query failed or was incorrect.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\n### Previous SQL\nSELEC id FROM ledger\n\n### Error Message\nnear \"SELEC\": syntax error\n\nThe previous SQL query failed with a syntax issue. Fix the SQL syntax and return only the corrected SQL query. Do not change the intended meaning of the query.",
+      "system": "",
+      "temperature": 0.0,
+      "n": 1,
+      "response": "SELECT id FROM ledger",
+      "response_role": "repair_sql",
+      "target_step": null,
+      "seq": 0
+    },
+    {
+      "kind": "execute",
+      "sql": "SELECT id FROM ledger",
+      "ok": true,
+      "rows": [
+        [
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "error": null
+    }
+  ],
+  "error": null,
+  "interface_issues": [],
+  "admission": "not_evaluated",
+  "scope": "source-assigned exposed-candidate interface diagnostic; not calibration"
+}

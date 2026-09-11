@@ -1,0 +1,18 @@
+{
+  "scope": "offline implementation and six artificial-message CLI verification",
+  "demo_exit_code": 0,
+  "attempts": 6,
+  "tests": 3,
+  "bindings_verified": 8,
+  "real_pool_analyzed": false,
+  "bindings": {
+    "artifacts\\revision_20260911\\paired_extraction_preflight\\artificial_demo.json": "a539605deab4269eaf2e3fd9ecc3cff44ceab0c53c682cbf0f0e76eb08351e4c",
+    "artifacts\\revision_20260911\\paired_extraction_preflight\\format.log": "15ce1c58f5a208b43b0b5b2c89dd10a913ada5795d5f51ef82884d88227edcdb",
+    "artifacts\\revision_20260911\\paired_extraction_preflight\\freeze.json": "e3077d799fc0506690d4d0a35bc737201d5e603697385b72bddf00e451b59ade",
+    "artifacts\\revision_20260911\\paired_extraction_preflight\\PROTOCOL.md": "31634c3fb71ba9a8fcc73761deec19265ceb5713783783e57ecf8b37a443a32c",
+    "artifacts\\revision_20260911\\paired_extraction_preflight\\review.json": "76f36dd46ee8d9633c2af6e9ac7bc998b7193acf75f6f5eca6c4d7abbb6ededd",
+    "artifacts\\revision_20260911\\paired_extraction_preflight\\tests.json": "6d23c204b192660e9e1ea2b6a8604ffaf4c1f53bd0318db24cb3ed0d656fee98",
+    "artifacts\\revision_20260911\\paired_extraction_preflight\\tests_final.log": "50825104c02d5a856c2e72c2017c115b10823629b01e403a0c698e24f471be85",
+    "review-stage\\PAIRED_EXTRACTION_PREFLIGHT_20260911.md": "977bc71dd4da9ce688e497c58dd68f0492cd1f552462da3709519d11a35a1952"
+  }
+}

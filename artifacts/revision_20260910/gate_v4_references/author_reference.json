@@ -1,0 +1,256 @@
+{
+  "author_model": "gpt-5.6-sol",
+  "scope": "Fallible author references for fresh Gate-v4 controls before independent static review",
+  "source_sha256": "4df6313a7c9b41b4deccb58192f9de4c7a3b15036d62157aa1e922d61b39bb4e",
+  "contract_sha256": "5fb46b099eddbacdcaed278bad5fef0ce56e44d091adcd2e9dfd7bde31f8addb",
+  "authoring_repairs_used": 2,
+  "premeasurement_correction": {
+    "basis": "The first blind static review and its vote-contract clarification were read only after their original files and the first reference files had been snapshotted. No Gate-v4 reference measurement had started.",
+    "calibration_protocol_sha256": "fb76d5f72fa23c4ac65ed4aba4fd68d3f68cfcf1a3101054d1d381aa9e22bafd",
+    "source_review_sha256": "cd48c3b1086bdbaea6be6a669805f0c7790f16ad13ea22f7ca891ea9ddcc66da",
+    "vote_contract_clarification_sha256": "f50e9e578a82ac2487bec8eafc66f58d6cb12a849ce0dccfa0d8c2ba80643e59",
+    "changes": [
+      {
+        "cases": ["gv4r001", "gv4r010", "gv4r019", "gv4r025"],
+        "change": "Changed schema-link requests and parsing to the frozen tables_columns_json shape with top-level tables:list[str] and columns:list[str]. The two intended conforming consumers and the two distinct mechanism failures remain unchanged in role."
+      },
+      {
+        "cases": ["gv4r004", "gv4r011", "gv4r017", "gv4r026"],
+        "change": "Changed every vote3 generator to one n=3 call at temperature=0.7. Result-row majority remains the intended behavior for gv4r011/gv4r026; SQL-text voting and first-success selection remain the sole intended failures for gv4r004/gv4r017."
+      }
+    ]
+  },
+  "contract_interpretations": [
+    {
+      "topic": "integer_overflow_action",
+      "applies_to": ["gv4r003", "gv4r020"],
+      "definition": "For these finite references, a residual SQLite integer-overflow execution error is routed to the semantics action because it is neither an identifier-resolution error nor a SQL grammar/parse error. This defines the proposed reference action for independent review; it does not assert that overflow detection is a wrong answer, measure classifier accuracy, or settle the category beyond this batch."
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "gv4r001",
+      "label": "conforms",
+      "profile": "tables_columns_json",
+      "rationale": "Parses the frozen top-level tables and columns string arrays and makes the normalized payload a binding identifier boundary in the later SQL request; invalid JSON is consumed as an explicit invalid state requiring a fresh restricted allowlist.",
+      "failure_point": null
+    },
+    {
+      "case_id": "gv4r002",
+      "label": "nonconforms",
+      "profile": null,
+      "rationale": "Initial generation, execution, success return, and conditional single repair are retained, but the repair request omits the execution feedback.",
+      "failure_point": "The conditional repair prompt carries schema, question, and previous SQL but not exact execution feedback."
+    },
+    {
+      "case_id": "gv4r003",
+      "label": "conforms",
+      "profile": "llm_classifier",
+      "rationale": "Executes the initial SQL, returns on success, otherwise requests exactly one category and consumes that returned category to choose a distinct affirmative action while forwarding full context and exact feedback.",
+      "failure_point": null
+    },
+    {
+      "case_id": "gv4r004",
+      "label": "nonconforms",
+      "profile": null,
+      "rationale": "Uses the declared n=3, temperature=0.7 generation and executes all three candidates, but chooses by duplicate SQL strings instead of successful execution-result rows.",
+      "failure_point": "The vote key is candidate SQL text rather than successful result rows."
+    },
+    {
+      "case_id": "gv4r005",
+      "label": "conforms",
+      "profile": null,
+      "rationale": "Uses one sample, preserves the supplied schema and question, and conditionally states the actual Hint content as a mandatory requirement without adding one when absent.",
+      "failure_point": null
+    },
+    {
+      "case_id": "gv4r006",
+      "label": "nonconforms",
+      "profile": "dedicated_current_subquestion",
+      "rationale": "Uses the dedicated current-subquestion field and retains both returned answers for final assembly, but requests the second planned subquestion before the first.",
+      "failure_point": "The two planned subquestions are answered in reverse order."
+    },
+    {
+      "case_id": "gv4r007",
+      "label": "conforms",
+      "profile": null,
+      "rationale": "Uses one solver sample with the original schema/question and affirmatively requires exactly one sql fenced block with no outside prose.",
+      "failure_point": null
+    },
+    {
+      "case_id": "gv4r008",
+      "label": "nonconforms",
+      "profile": null,
+      "rationale": "Executes both candidates and applies the required empty/nonempty preference, but obtains them from one batched n=2 request rather than two distinct construction requests.",
+      "failure_point": "One batched solver request substitutes for the required two distinct solver requests."
+    },
+    {
+      "case_id": "gv4r009",
+      "label": "conforms",
+      "profile": null,
+      "rationale": "Uses one initial request and execution, exits on success, and on failure sends one repair request containing schema, question, prior SQL, and the complete serialized execution result.",
+      "failure_point": null
+    },
+    {
+      "case_id": "gv4r010",
+      "label": "nonconforms",
+      "profile": "tables_columns_json",
+      "rationale": "Parses and forwards the frozen top-level tables/columns arrays, but the SQL request explicitly makes that payload advisory and permits identifiers from the full schema.",
+      "failure_point": "The linked payload is explicitly nonbinding."
+    },
+    {
+      "case_id": "gv4r011",
+      "label": "conforms",
+      "profile": null,
+      "rationale": "Uses one declared n=3, temperature=0.7 task-conditioned request, executes all three candidates, and selects by the majority of successful result rows with deterministic first-occurrence tie handling.",
+      "failure_point": null
+    },
+    {
+      "case_id": "gv4r012",
+      "label": "nonconforms",
+      "profile": "local_classifier",
+      "rationale": "Locally assigns a failure category and forwards exact feedback, but every category receives the same generic rewrite action.",
+      "failure_point": "The repair action is not specific to syntax, schema, or semantics."
+    },
+    {
+      "case_id": "gv4r013",
+      "label": "conforms",
+      "profile": null,
+      "rationale": "Makes separate direct/base-table and staged/CTE construction requests, executes both, and implements the required first-successful-nonempty preference.",
+      "failure_point": null
+    },
+    {
+      "case_id": "gv4r014",
+      "label": "nonconforms",
+      "profile": null,
+      "rationale": "Uses one sample and preserves the inputs, but any Hint remains only inside the copied question and is never affirmatively restated as mandatory.",
+      "failure_point": "Actual Hint content is copied but not restated as a hard requirement."
+    },
+    {
+      "case_id": "gv4r015",
+      "label": "conforms",
+      "profile": "dedicated_current_subquestion",
+      "rationale": "Requests a two-step plan, resolves steps in order through the dedicated current-subquestion field, retains earlier context, and supplies both actual returned answers to final assembly.",
+      "failure_point": null
+    },
+    {
+      "case_id": "gv4r016",
+      "label": "nonconforms",
+      "profile": null,
+      "rationale": "Uses one sample and preserves schema/question but affirmatively forbids markdown fences instead of requiring a fenced SQL-only answer.",
+      "failure_point": "The required SQL fence is explicitly prohibited."
+    },
+    {
+      "case_id": "gv4r017",
+      "label": "nonconforms",
+      "profile": null,
+      "rationale": "Uses the declared n=3, temperature=0.7 generation and executes all candidates but returns the first successful candidate rather than computing a majority over successful result rows.",
+      "failure_point": "Selection is first-successful rather than result-row majority."
+    },
+    {
+      "case_id": "gv4r018",
+      "label": "conforms",
+      "profile": null,
+      "rationale": "Executes one initial candidate, returns immediately on success, and otherwise performs one repair request carrying schema, question, failed SQL, and exact serialized execution feedback.",
+      "failure_point": null
+    },
+    {
+      "case_id": "gv4r019",
+      "label": "conforms",
+      "profile": "tables_columns_json",
+      "rationale": "Parses the frozen top-level tables and columns string arrays, renders a selected identifier allowlist, and makes that allowlist binding in the subsequent SQL request while retaining the original context for validation.",
+      "failure_point": null
+    },
+    {
+      "case_id": "gv4r020",
+      "label": "conforms",
+      "profile": "local_classifier",
+      "rationale": "Executes the initial SQL, returns on success, and otherwise locally distinguishes syntax, schema, and residual semantics failures before issuing the corresponding affirmative repair action with full exact feedback.",
+      "failure_point": null
+    },
+    {
+      "case_id": "gv4r021",
+      "label": "conforms",
+      "profile": null,
+      "rationale": "Uses one solver request, preserves original inputs, and adds an affirmative mandatory constraint only when actual Hint content is present.",
+      "failure_point": null
+    },
+    {
+      "case_id": "gv4r022",
+      "label": "nonconforms",
+      "profile": null,
+      "rationale": "Makes two meaningfully different solver requests and executes both, but prefers the second whenever it is nonempty, including when the first is also successful and nonempty.",
+      "failure_point": "The both-nonempty preference is reversed."
+    },
+    {
+      "case_id": "gv4r023",
+      "label": "conforms",
+      "profile": null,
+      "rationale": "Uses one sample with preserved inputs and consistent prompt/system instructions requiring a single sql fenced block without explanation.",
+      "failure_point": null
+    },
+    {
+      "case_id": "gv4r024",
+      "label": "nonconforms",
+      "profile": "dedicated_current_subquestion",
+      "rationale": "Requests and answers both plan steps in order through the dedicated field, but discards both returned partial answers and assembles only from the plan text.",
+      "failure_point": "Actual returned partial-answer payloads are not used in final assembly."
+    },
+    {
+      "case_id": "gv4r025",
+      "label": "nonconforms",
+      "profile": "tables_columns_json",
+      "rationale": "Requests the frozen top-level tables/columns arrays but discards the returned payload and constructs SQL from the unqualified full schema.",
+      "failure_point": "The returned linked payload is never consumed by the SQL request."
+    },
+    {
+      "case_id": "gv4r026",
+      "label": "conforms",
+      "profile": null,
+      "rationale": "Uses one n=3, temperature=0.7 task-conditioned request, processes and executes all three returned attempts through an explicit loop, and chooses the majority of successful execution-result rows.",
+      "failure_point": null
+    },
+    {
+      "case_id": "gv4r027",
+      "label": "nonconforms",
+      "profile": null,
+      "rationale": "Carries all required repair context but unconditionally asks for and returns a rewritten SQL even when the initial execution succeeds.",
+      "failure_point": "The success path does not return before an extra generation call."
+    },
+    {
+      "case_id": "gv4r028",
+      "label": "nonconforms",
+      "profile": "llm_classifier",
+      "rationale": "Requests a category and forwards exact feedback, but discards the returned category and sends a generic repair action independent of class.",
+      "failure_point": "The LLM classification response is not consumed to select a class-appropriate action."
+    },
+    {
+      "case_id": "gv4r029",
+      "label": "conforms",
+      "profile": null,
+      "rationale": "Uses separate entity-first and metric-first construction requests, executes both candidate SQL strings, and applies the specified first-nonempty preference and fallback.",
+      "failure_point": null
+    },
+    {
+      "case_id": "gv4r030",
+      "label": "nonconforms",
+      "profile": null,
+      "rationale": "Requests a SQL fence but also affirmatively requires an explanation before it and a verification note after it.",
+      "failure_point": "Extra prose is required outside the fenced SQL answer."
+    },
+    {
+      "case_id": "gv4r031",
+      "label": "conforms",
+      "profile": "dedicated_current_subquestion",
+      "rationale": "Uses an ordered two-step plan, a dedicated current-subquestion field for each sequential answer, actual first-answer context in the second request, and both returned payloads in final assembly.",
+      "failure_point": null
+    },
+    {
+      "case_id": "gv4r032",
+      "label": "nonconforms",
+      "profile": null,
+      "rationale": "Correctly restates an actual Hint when present, but fabricates a mandatory sort constraint when the question has no Hint.",
+      "failure_point": "A hard requirement is fabricated on the no-Hint path."
+    }
+  ]
+}

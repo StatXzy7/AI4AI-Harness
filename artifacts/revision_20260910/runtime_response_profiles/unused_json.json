@@ -1,0 +1,44 @@
+{
+  "case": {
+    "strategy": "schema_link",
+    "name": "unused_json",
+    "linking": {
+      "tables": [
+        "unused"
+      ],
+      "columns": [
+        "unused.label"
+      ]
+    },
+    "final": "SELECT label FROM unused"
+  },
+  "final": "SELECT label FROM unused",
+  "trace": [
+    {
+      "kind": "llm",
+      "prompt": "You are given a database schema and a question.\nIdentify ONLY the tables and columns needed to answer the question.\nReturn a JSON object with two keys:\n  \"tables\": list of table names\n  \"columns\": list of column names, optionally qualified as \"table.column\"\nDo not include any explanation or markdown.\n\nSchema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\n",
+      "system": "You are a precise database schema linker.",
+      "temperature": 0.0,
+      "n": 1,
+      "response": "{\"tables\": [\"unused\"], \"columns\": [\"unused.label\"]}",
+      "response_role": "linking_json",
+      "target_step": null,
+      "seq": 0
+    },
+    {
+      "kind": "llm",
+      "prompt": "Using only the linked schema subset below, write a single SQLite SELECT query that answers the question.\n\nLinked tables (use only these tables): unused.\nLinked columns (use only these columns): unused.label.\nDo not reference any table or column outside these lists.\n\nLinked schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\n\nReturn only the SQL query, with no markdown fences or explanation.",
+      "system": "You are an expert SQL writer that strictly follows the linked schema.",
+      "temperature": 0.0,
+      "n": 1,
+      "response": "SELECT label FROM unused",
+      "response_role": "final_sql",
+      "target_step": null,
+      "seq": 0
+    }
+  ],
+  "error": null,
+  "interface_issues": [],
+  "admission": "not_evaluated",
+  "scope": "source-assigned exposed-candidate interface diagnostic; not calibration"
+}

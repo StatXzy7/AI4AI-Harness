@@ -1,0 +1,1050 @@
+{
+  "manifest": {
+    "bindings": {
+      "E:\\projects\\AI4AI-Harness\\artifacts\\revision_20260910\\common_pool_generation\\loopback\\DEMO_PROTOCOL.md": "8dde5f9a82cc081a0069d71a703a13e550684e6ceb17d24ca1e9f2a789e3f83d",
+      "E:\\projects\\AI4AI-Harness\\experiment\\revision\\code_responses.py": "ec28862d63909d7df370501f31bbabc5007d071adaa0e1fa3a1d5b0b662a3ba4",
+      "E:\\projects\\AI4AI-Harness\\experiment\\revision\\common_pool.py": "b697e032d19791df06d0af2fbde0af37fe842f104698c5d03ddd112f4c064624",
+      "E:\\projects\\AI4AI-Harness\\experiment\\revision\\fresh_runtime.py": "e8ee2447355ae9b2f59c8fb8ebd9b122b4b19466359afe5315ba1c0224d648f6"
+    },
+    "cache_mode": "off",
+    "config": {
+      "api_key_env": "UNUSED_DEMO_KEY",
+      "builder": {
+        "base_url": "http://127.0.0.1:12727/v1",
+        "max_tokens": 100,
+        "model": "artificial-builder",
+        "temperature": 0.7,
+        "timeout_seconds": 5
+      },
+      "output": "E:\\projects\\AI4AI-Harness\\artifacts\\revision_20260910\\common_pool_generation\\loopback\\pool",
+      "pool_id": "loopback-only-demo",
+      "protocol_path": "E:\\projects\\AI4AI-Harness\\artifacts\\revision_20260910\\common_pool_generation\\loopback\\DEMO_PROTOCOL.md",
+      "slots": [
+        {
+          "generation_condition": "free",
+          "id": "free",
+          "messages": [
+            {
+              "content": "生成一个Python文件。",
+              "role": "user"
+            }
+          ],
+          "seeds": [
+            10,
+            11,
+            12
+          ],
+          "strategy": null
+        },
+        {
+          "generation_condition": "forced",
+          "id": "forced",
+          "messages": [
+            {
+              "content": "生成一个Python文件。",
+              "role": "user"
+            }
+          ],
+          "seeds": [
+            10,
+            11,
+            12
+          ],
+          "strategy": null
+        }
+      ],
+      "status": "FROZEN"
+    },
+    "interpretation": "complete pool requires all planned attempts and known token usage; no admission",
+    "planned_attempts": 6,
+    "status_retries": 0,
+    "version": "common-pool-v1"
+  },
+  "run_id": "ad75cc3f3c1db10bb0fc72c62d15d95887c40fbaa776460bb1b9e26a4498ca4e",
+  "tasks": [
+    {
+      "key": "16ae5bf080d714ae6416dd1da80edf3ad2983f48aa9b6cc0fcc87a692cb40812",
+      "result": {
+        "accounting": {
+          "dollar_cost": null,
+          "http_attempts": 1,
+          "known_total_tokens": 5,
+          "logical_calls": 1,
+          "requested_samples": 1,
+          "responses_missing_usage": 0,
+          "total_tokens": 5
+        },
+        "admission": "not_evaluated",
+        "code_sha256": "b950c7033562ad45f6433b6fd248d407676620eb0e567599ff1cfe1ab32327f3",
+        "extraction": {
+          "code": "x = (\n",
+          "end_line": 2,
+          "start_line": 2,
+          "status": "fenced_python"
+        },
+        "finish_reason": "stop",
+        "generation_condition": "free",
+        "identity": {
+          "attempt": 1,
+          "seed": 11,
+          "slot": "free"
+        },
+        "message": "```python\nx = (\n```",
+        "reported_model": "artificial-builder",
+        "response_id": "loopback-2",
+        "response_sha256": "97c8cd63428222cb465cad9d368ff52a1dfc88c62c1e64401588a171bc94a73f",
+        "strategy": null,
+        "syntax_error": {
+          "line": 1,
+          "message": "'(' was never closed",
+          "offset": 5
+        },
+        "usage": {
+          "completion_tokens": 3,
+          "prompt_tokens": 2,
+          "total_tokens": 5
+        }
+      }
+    },
+    {
+      "key": "90859491bad8d8b9fcd5418fba9d80f81b8fe9b5be9b104b4d14904d2729db9a",
+      "result": {
+        "accounting": {
+          "dollar_cost": null,
+          "http_attempts": 1,
+          "known_total_tokens": 5,
+          "logical_calls": 1,
+          "requested_samples": 1,
+          "responses_missing_usage": 0,
+          "total_tokens": 5
+        },
+        "admission": "not_evaluated",
+        "code_sha256": "ad873dc427b95123f52081edd41026d5339bd85a98cc0e1b04d31c69f906d3c3",
+        "extraction": {
+          "code": "PROMPT = \"\"\"Example:\n```sql\nSELECT 1\n```\n\"\"\"\n",
+          "end_line": 6,
+          "start_line": 2,
+          "status": "fenced_python"
+        },
+        "finish_reason": "stop",
+        "generation_condition": "free",
+        "identity": {
+          "attempt": 0,
+          "seed": 10,
+          "slot": "free"
+        },
+        "message": "```python\nPROMPT = \"\"\"Example:\n```sql\nSELECT 1\n```\n\"\"\"\n```",
+        "reported_model": "artificial-builder",
+        "response_id": "loopback-1",
+        "response_sha256": "122a5c5ba9c6b0e48d5e36245561accaf16823ad12a7cf659eab0ed889fda82f",
+        "strategy": null,
+        "syntax_error": null,
+        "usage": {
+          "completion_tokens": 3,
+          "prompt_tokens": 2,
+          "total_tokens": 5
+        }
+      }
+    },
+    {
+      "key": "9c7743a642c37dc0edc77f72eee830f20d5cd22984dcbcf696c4ccf1a219b16d",
+      "result": {
+        "accounting": {
+          "dollar_cost": null,
+          "http_attempts": 1,
+          "known_total_tokens": 5,
+          "logical_calls": 1,
+          "requested_samples": 1,
+          "responses_missing_usage": 0,
+          "total_tokens": 5
+        },
+        "admission": "not_evaluated",
+        "code_sha256": "ad873dc427b95123f52081edd41026d5339bd85a98cc0e1b04d31c69f906d3c3",
+        "extraction": {
+          "code": "PROMPT = \"\"\"Example:\n```sql\nSELECT 1\n```\n\"\"\"\n",
+          "end_line": 6,
+          "start_line": 2,
+          "status": "fenced_python"
+        },
+        "finish_reason": "stop",
+        "generation_condition": "forced",
+        "identity": {
+          "attempt": 0,
+          "seed": 10,
+          "slot": "forced"
+        },
+        "message": "```python\nPROMPT = \"\"\"Example:\n```sql\nSELECT 1\n```\n\"\"\"\n```",
+        "reported_model": "artificial-builder",
+        "response_id": "loopback-4",
+        "response_sha256": "b7473ca2fb6f252ba659339bbd7edad6fb6c2d1faf24cdf4b85d1764e6f40251",
+        "strategy": null,
+        "syntax_error": null,
+        "usage": {
+          "completion_tokens": 3,
+          "prompt_tokens": 2,
+          "total_tokens": 5
+        }
+      }
+    },
+    {
+      "key": "a9559e66737241a648011e2d8907a72e1a87a65989fde7cfca102dcd496e6e62",
+      "result": {
+        "accounting": {
+          "dollar_cost": null,
+          "http_attempts": 1,
+          "known_total_tokens": 5,
+          "logical_calls": 1,
+          "requested_samples": 1,
+          "responses_missing_usage": 0,
+          "total_tokens": 5
+        },
+        "admission": "not_evaluated",
+        "code_sha256": "ad873dc427b95123f52081edd41026d5339bd85a98cc0e1b04d31c69f906d3c3",
+        "extraction": {
+          "code": "PROMPT = \"\"\"Example:\n```sql\nSELECT 1\n```\n\"\"\"\n",
+          "end_line": 6,
+          "start_line": 2,
+          "status": "fenced_python"
+        },
+        "finish_reason": "stop",
+        "generation_condition": "free",
+        "identity": {
+          "attempt": 2,
+          "seed": 12,
+          "slot": "free"
+        },
+        "message": "```python\nPROMPT = \"\"\"Example:\n```sql\nSELECT 1\n```\n\"\"\"\n```",
+        "reported_model": "artificial-builder",
+        "response_id": "loopback-3",
+        "response_sha256": "0083b70cb0fb6f6509c4d658f7a031e20210ec275089b7176686e6a22c539f32",
+        "strategy": null,
+        "syntax_error": null,
+        "usage": {
+          "completion_tokens": 3,
+          "prompt_tokens": 2,
+          "total_tokens": 5
+        }
+      }
+    },
+    {
+      "key": "b3811f0ee663663b579904c839cc5a7528dade793819e65e90a7ddb18c880740",
+      "result": {
+        "accounting": {
+          "dollar_cost": null,
+          "http_attempts": 1,
+          "known_total_tokens": 5,
+          "logical_calls": 1,
+          "requested_samples": 1,
+          "responses_missing_usage": 0,
+          "total_tokens": 5
+        },
+        "admission": "not_evaluated",
+        "code_sha256": "ad873dc427b95123f52081edd41026d5339bd85a98cc0e1b04d31c69f906d3c3",
+        "extraction": {
+          "code": "PROMPT = \"\"\"Example:\n```sql\nSELECT 1\n```\n\"\"\"\n",
+          "end_line": 6,
+          "start_line": 2,
+          "status": "fenced_python"
+        },
+        "finish_reason": "stop",
+        "generation_condition": "forced",
+        "identity": {
+          "attempt": 2,
+          "seed": 12,
+          "slot": "forced"
+        },
+        "message": "```python\nPROMPT = \"\"\"Example:\n```sql\nSELECT 1\n```\n\"\"\"\n```",
+        "reported_model": "artificial-builder",
+        "response_id": "loopback-6",
+        "response_sha256": "025e839b40224d148b2ce4a4ee226edd239232a7f48407a7f7cec0cb6134f36c",
+        "strategy": null,
+        "syntax_error": null,
+        "usage": {
+          "completion_tokens": 3,
+          "prompt_tokens": 2,
+          "total_tokens": 5
+        }
+      }
+    },
+    {
+      "key": "eeef04a71e56b1a8a17fb624c0a4058bbbd7890790e41ff2476331e6f6936b8c",
+      "result": {
+        "accounting": {
+          "dollar_cost": null,
+          "http_attempts": 1,
+          "known_total_tokens": 5,
+          "logical_calls": 1,
+          "requested_samples": 1,
+          "responses_missing_usage": 0,
+          "total_tokens": 5
+        },
+        "admission": "not_evaluated",
+        "code_sha256": "b950c7033562ad45f6433b6fd248d407676620eb0e567599ff1cfe1ab32327f3",
+        "extraction": {
+          "code": "x = (\n",
+          "end_line": 2,
+          "start_line": 2,
+          "status": "fenced_python"
+        },
+        "finish_reason": "stop",
+        "generation_condition": "forced",
+        "identity": {
+          "attempt": 1,
+          "seed": 11,
+          "slot": "forced"
+        },
+        "message": "```python\nx = (\n```",
+        "reported_model": "artificial-builder",
+        "response_id": "loopback-5",
+        "response_sha256": "7f4b34c6762d5a848ef18869914bb1cfd3552755cd2c7d1fbceabb2379c8151a",
+        "strategy": null,
+        "syntax_error": {
+          "line": 1,
+          "message": "'(' was never closed",
+          "offset": 5
+        },
+        "usage": {
+          "completion_tokens": 3,
+          "prompt_tokens": 2,
+          "total_tokens": 5
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "identity": {
+        "attempt": 0,
+        "seed": 10,
+        "slot": "free"
+      },
+      "kind": "task_start",
+      "task": "90859491bad8d8b9fcd5418fba9d80f81b8fe9b5be9b104b4d14904d2729db9a",
+      "time_ns": 1789051881990143900
+    },
+    {
+      "id": 2,
+      "cache_hit": false,
+      "kind": "logical_start",
+      "n": 1,
+      "request": {
+        "max_tokens": 100,
+        "messages": [
+          {
+            "content": "生成一个Python文件。",
+            "role": "user"
+          }
+        ],
+        "model": "artificial-builder",
+        "n": 1,
+        "seed": 10,
+        "temperature": 0.7
+      },
+      "task": "90859491bad8d8b9fcd5418fba9d80f81b8fe9b5be9b104b4d14904d2729db9a",
+      "time_ns": 1789051881991764500
+    },
+    {
+      "id": 3,
+      "kind": "http_start",
+      "logical": 2,
+      "request": {
+        "max_tokens": 100,
+        "messages": [
+          {
+            "content": "生成一个Python文件。",
+            "role": "user"
+          }
+        ],
+        "model": "artificial-builder",
+        "n": 1,
+        "seed": 10,
+        "temperature": 0.7
+      },
+      "task": "90859491bad8d8b9fcd5418fba9d80f81b8fe9b5be9b104b4d14904d2729db9a",
+      "time_ns": 1789051881993513400,
+      "url": "http://127.0.0.1:12727/v1/chat/completions"
+    },
+    {
+      "id": 4,
+      "attempt": 3,
+      "body_base64": "H4sIAAAAAAAC/0WOwWrDMAyGX8X4vMK6sUthp5LbxsrW21waN1EXUUfyLBVaQt69tgcrvsiffn3SZLG3K2MDczz47rRY2gdjR+4hFOyT4hE79GFxOGPoIZV2NzB2IDnwPVmkHi65fMyNIxLKsE/ghanMi3KsQhDxP5DRZBMHqG4RFPWkVcmkkMvM27aNVx2YHG0+P943W/NqnC2vufgxBlg5yhn5DY6+mrdmvTXLShz9xerHzvMue8//a2PiMepe+QRUTn+qW4tPkenOnzNXVh/u6GWebzENIokoAQAA",
+      "body_sha256": "122a5c5ba9c6b0e48d5e36245561accaf16823ad12a7cf659eab0ed889fda82f",
+      "content_encoding": "gzip",
+      "content_type": "application/json",
+      "kind": "builder_response_bytes",
+      "request_id": null,
+      "status": 200,
+      "task": "90859491bad8d8b9fcd5418fba9d80f81b8fe9b5be9b104b4d14904d2729db9a",
+      "time_ns": 1789051881997400900
+    },
+    {
+      "id": 5,
+      "attempt": 3,
+      "kind": "http_end",
+      "response_sha256": "122a5c5ba9c6b0e48d5e36245561accaf16823ad12a7cf659eab0ed889fda82f",
+      "status": 200,
+      "task": "90859491bad8d8b9fcd5418fba9d80f81b8fe9b5be9b104b4d14904d2729db9a",
+      "time_ns": 1789051881999740900,
+      "usage": {
+        "completion_tokens": 3,
+        "prompt_tokens": 2,
+        "total_tokens": 5
+      }
+    },
+    {
+      "id": 6,
+      "kind": "candidate_extracted",
+      "result": {
+        "admission": "not_evaluated",
+        "code_sha256": "ad873dc427b95123f52081edd41026d5339bd85a98cc0e1b04d31c69f906d3c3",
+        "extraction": {
+          "code": "PROMPT = \"\"\"Example:\n```sql\nSELECT 1\n```\n\"\"\"\n",
+          "end_line": 6,
+          "start_line": 2,
+          "status": "fenced_python"
+        },
+        "finish_reason": "stop",
+        "generation_condition": "free",
+        "identity": {
+          "attempt": 0,
+          "seed": 10,
+          "slot": "free"
+        },
+        "message": "```python\nPROMPT = \"\"\"Example:\n```sql\nSELECT 1\n```\n\"\"\"\n```",
+        "reported_model": "artificial-builder",
+        "response_id": "loopback-1",
+        "response_sha256": "122a5c5ba9c6b0e48d5e36245561accaf16823ad12a7cf659eab0ed889fda82f",
+        "strategy": null,
+        "syntax_error": null,
+        "usage": {
+          "completion_tokens": 3,
+          "prompt_tokens": 2,
+          "total_tokens": 5
+        }
+      },
+      "task": "90859491bad8d8b9fcd5418fba9d80f81b8fe9b5be9b104b4d14904d2729db9a",
+      "time_ns": 1789051882001796500
+    },
+    {
+      "id": 7,
+      "kind": "logical_end",
+      "logical": 2,
+      "task": "90859491bad8d8b9fcd5418fba9d80f81b8fe9b5be9b104b4d14904d2729db9a",
+      "time_ns": 1789051882003533200
+    },
+    {
+      "id": 8,
+      "identity": {
+        "attempt": 1,
+        "seed": 11,
+        "slot": "free"
+      },
+      "kind": "task_start",
+      "task": "16ae5bf080d714ae6416dd1da80edf3ad2983f48aa9b6cc0fcc87a692cb40812",
+      "time_ns": 1789051882009041400
+    },
+    {
+      "id": 9,
+      "cache_hit": false,
+      "kind": "logical_start",
+      "n": 1,
+      "request": {
+        "max_tokens": 100,
+        "messages": [
+          {
+            "content": "生成一个Python文件。",
+            "role": "user"
+          }
+        ],
+        "model": "artificial-builder",
+        "n": 1,
+        "seed": 11,
+        "temperature": 0.7
+      },
+      "task": "16ae5bf080d714ae6416dd1da80edf3ad2983f48aa9b6cc0fcc87a692cb40812",
+      "time_ns": 1789051882010655800
+    },
+    {
+      "id": 10,
+      "kind": "http_start",
+      "logical": 9,
+      "request": {
+        "max_tokens": 100,
+        "messages": [
+          {
+            "content": "生成一个Python文件。",
+            "role": "user"
+          }
+        ],
+        "model": "artificial-builder",
+        "n": 1,
+        "seed": 11,
+        "temperature": 0.7
+      },
+      "task": "16ae5bf080d714ae6416dd1da80edf3ad2983f48aa9b6cc0fcc87a692cb40812",
+      "time_ns": 1789051882012132900,
+      "url": "http://127.0.0.1:12727/v1/chat/completions"
+    },
+    {
+      "id": 11,
+      "attempt": 10,
+      "body_base64": "H4sIAAAAAAAC/0WOQQqDQAxFryKz6qJCsXRT6Elq0VHTGhyTYRLBIt690UXdfd7/eWRx2Ll75gJzbHw75IU7Z27kDsKGfVJ8Y4s+5M2EoYO01W3P2ILY4Lk4pA5mixcr3kgofZXAC9N2L8pxF4KI/4ChxSUOsLtFUNST7komBYvG67qOX+2ZSpqzR3YqyYhb15fNpr8lJh6jVsoD0PZJsUvGGECR6eBX48rqw4Fu6/oDnUFU5vcAAAA=",
+      "body_sha256": "97c8cd63428222cb465cad9d368ff52a1dfc88c62c1e64401588a171bc94a73f",
+      "content_encoding": "gzip",
+      "content_type": "application/json",
+      "kind": "builder_response_bytes",
+      "request_id": null,
+      "status": 200,
+      "task": "16ae5bf080d714ae6416dd1da80edf3ad2983f48aa9b6cc0fcc87a692cb40812",
+      "time_ns": 1789051882015610100
+    },
+    {
+      "id": 12,
+      "attempt": 10,
+      "kind": "http_end",
+      "response_sha256": "97c8cd63428222cb465cad9d368ff52a1dfc88c62c1e64401588a171bc94a73f",
+      "status": 200,
+      "task": "16ae5bf080d714ae6416dd1da80edf3ad2983f48aa9b6cc0fcc87a692cb40812",
+      "time_ns": 1789051882017980800,
+      "usage": {
+        "completion_tokens": 3,
+        "prompt_tokens": 2,
+        "total_tokens": 5
+      }
+    },
+    {
+      "id": 13,
+      "kind": "candidate_extracted",
+      "result": {
+        "admission": "not_evaluated",
+        "code_sha256": "b950c7033562ad45f6433b6fd248d407676620eb0e567599ff1cfe1ab32327f3",
+        "extraction": {
+          "code": "x = (\n",
+          "end_line": 2,
+          "start_line": 2,
+          "status": "fenced_python"
+        },
+        "finish_reason": "stop",
+        "generation_condition": "free",
+        "identity": {
+          "attempt": 1,
+          "seed": 11,
+          "slot": "free"
+        },
+        "message": "```python\nx = (\n```",
+        "reported_model": "artificial-builder",
+        "response_id": "loopback-2",
+        "response_sha256": "97c8cd63428222cb465cad9d368ff52a1dfc88c62c1e64401588a171bc94a73f",
+        "strategy": null,
+        "syntax_error": {
+          "line": 1,
+          "message": "'(' was never closed",
+          "offset": 5
+        },
+        "usage": {
+          "completion_tokens": 3,
+          "prompt_tokens": 2,
+          "total_tokens": 5
+        }
+      },
+      "task": "16ae5bf080d714ae6416dd1da80edf3ad2983f48aa9b6cc0fcc87a692cb40812",
+      "time_ns": 1789051882019812000
+    },
+    {
+      "id": 14,
+      "kind": "logical_end",
+      "logical": 9,
+      "task": "16ae5bf080d714ae6416dd1da80edf3ad2983f48aa9b6cc0fcc87a692cb40812",
+      "time_ns": 1789051882021653500
+    },
+    {
+      "id": 15,
+      "identity": {
+        "attempt": 2,
+        "seed": 12,
+        "slot": "free"
+      },
+      "kind": "task_start",
+      "task": "a9559e66737241a648011e2d8907a72e1a87a65989fde7cfca102dcd496e6e62",
+      "time_ns": 1789051882027795000
+    },
+    {
+      "id": 16,
+      "cache_hit": false,
+      "kind": "logical_start",
+      "n": 1,
+      "request": {
+        "max_tokens": 100,
+        "messages": [
+          {
+            "content": "生成一个Python文件。",
+            "role": "user"
+          }
+        ],
+        "model": "artificial-builder",
+        "n": 1,
+        "seed": 12,
+        "temperature": 0.7
+      },
+      "task": "a9559e66737241a648011e2d8907a72e1a87a65989fde7cfca102dcd496e6e62",
+      "time_ns": 1789051882029493800
+    },
+    {
+      "id": 17,
+      "kind": "http_start",
+      "logical": 16,
+      "request": {
+        "max_tokens": 100,
+        "messages": [
+          {
+            "content": "生成一个Python文件。",
+            "role": "user"
+          }
+        ],
+        "model": "artificial-builder",
+        "n": 1,
+        "seed": 12,
+        "temperature": 0.7
+      },
+      "task": "a9559e66737241a648011e2d8907a72e1a87a65989fde7cfca102dcd496e6e62",
+      "time_ns": 1789051882031128600,
+      "url": "http://127.0.0.1:12727/v1/chat/completions"
+    },
+    {
+      "id": 18,
+      "attempt": 17,
+      "body_base64": "H4sIAAAAAAAC/0WOwWrDMAyGX8X4vEK7skthp5HbxsrW2zwaN1EXUUfyLBU6Qt69tgctvsiffn3SZLG3G2MDczz47rRY2wdjR+4hFOyT4hE79GFxOGPoIZV2NzB2IDnwNVmkHi65XObGEQll2CfwwlTmRTlWIYj4H8hosokDVLcIinrSqmRSyGXmbdvGPx2YHG0/3t+2O/NsnC2vufgxBtg4yhn5DY4+m9fmZWdWlTj6j9WPnefv7D3f1sbEY9S98gmonP5YtxafItOdrzNXVh/u6Gmer7mtvUAoAQAA",
+      "body_sha256": "0083b70cb0fb6f6509c4d658f7a031e20210ec275089b7176686e6a22c539f32",
+      "content_encoding": "gzip",
+      "content_type": "application/json",
+      "kind": "builder_response_bytes",
+      "request_id": null,
+      "status": 200,
+      "task": "a9559e66737241a648011e2d8907a72e1a87a65989fde7cfca102dcd496e6e62",
+      "time_ns": 1789051882035079200
+    },
+    {
+      "id": 19,
+      "attempt": 17,
+      "kind": "http_end",
+      "response_sha256": "0083b70cb0fb6f6509c4d658f7a031e20210ec275089b7176686e6a22c539f32",
+      "status": 200,
+      "task": "a9559e66737241a648011e2d8907a72e1a87a65989fde7cfca102dcd496e6e62",
+      "time_ns": 1789051882037690900,
+      "usage": {
+        "completion_tokens": 3,
+        "prompt_tokens": 2,
+        "total_tokens": 5
+      }
+    },
+    {
+      "id": 20,
+      "kind": "candidate_extracted",
+      "result": {
+        "admission": "not_evaluated",
+        "code_sha256": "ad873dc427b95123f52081edd41026d5339bd85a98cc0e1b04d31c69f906d3c3",
+        "extraction": {
+          "code": "PROMPT = \"\"\"Example:\n```sql\nSELECT 1\n```\n\"\"\"\n",
+          "end_line": 6,
+          "start_line": 2,
+          "status": "fenced_python"
+        },
+        "finish_reason": "stop",
+        "generation_condition": "free",
+        "identity": {
+          "attempt": 2,
+          "seed": 12,
+          "slot": "free"
+        },
+        "message": "```python\nPROMPT = \"\"\"Example:\n```sql\nSELECT 1\n```\n\"\"\"\n```",
+        "reported_model": "artificial-builder",
+        "response_id": "loopback-3",
+        "response_sha256": "0083b70cb0fb6f6509c4d658f7a031e20210ec275089b7176686e6a22c539f32",
+        "strategy": null,
+        "syntax_error": null,
+        "usage": {
+          "completion_tokens": 3,
+          "prompt_tokens": 2,
+          "total_tokens": 5
+        }
+      },
+      "task": "a9559e66737241a648011e2d8907a72e1a87a65989fde7cfca102dcd496e6e62",
+      "time_ns": 1789051882039554200
+    },
+    {
+      "id": 21,
+      "kind": "logical_end",
+      "logical": 16,
+      "task": "a9559e66737241a648011e2d8907a72e1a87a65989fde7cfca102dcd496e6e62",
+      "time_ns": 1789051882041330300
+    },
+    {
+      "id": 22,
+      "identity": {
+        "attempt": 0,
+        "seed": 10,
+        "slot": "forced"
+      },
+      "kind": "task_start",
+      "task": "9c7743a642c37dc0edc77f72eee830f20d5cd22984dcbcf696c4ccf1a219b16d",
+      "time_ns": 1789051882047297700
+    },
+    {
+      "id": 23,
+      "cache_hit": false,
+      "kind": "logical_start",
+      "n": 1,
+      "request": {
+        "max_tokens": 100,
+        "messages": [
+          {
+            "content": "生成一个Python文件。",
+            "role": "user"
+          }
+        ],
+        "model": "artificial-builder",
+        "n": 1,
+        "seed": 10,
+        "temperature": 0.7
+      },
+      "task": "9c7743a642c37dc0edc77f72eee830f20d5cd22984dcbcf696c4ccf1a219b16d",
+      "time_ns": 1789051882049251800
+    },
+    {
+      "id": 24,
+      "kind": "http_start",
+      "logical": 23,
+      "request": {
+        "max_tokens": 100,
+        "messages": [
+          {
+            "content": "生成一个Python文件。",
+            "role": "user"
+          }
+        ],
+        "model": "artificial-builder",
+        "n": 1,
+        "seed": 10,
+        "temperature": 0.7
+      },
+      "task": "9c7743a642c37dc0edc77f72eee830f20d5cd22984dcbcf696c4ccf1a219b16d",
+      "time_ns": 1789051882051030900,
+      "url": "http://127.0.0.1:12727/v1/chat/completions"
+    },
+    {
+      "id": 25,
+      "attempt": 24,
+      "body_base64": "H4sIAAAAAAAC/0WOwU7DMAyGXyXKmUkM2GUSp6k3EBPstqA1az1qLbVD7ElDVd+dJEhMuTiff3/2ZLG3a2MDczz67rx4snfGjtxDKNgnxRN26MPieMHQQyrtbmDsQHJgP1mkHq65vM+NExLKcEjghanMi3KsQhDxX5DRZBMHqG4RFPWkVcmkkMvM27aNPzowOdq+v71ud+bZOFtec/VjDLB2lDPyHRx9NC/NZmeWlTj6i9WPnefP7L38r42Jx6gH5TNQOf2hbi0+RaYbf8xcWX24odU8/wIkmqOlKAEAAA==",
+      "body_sha256": "b7473ca2fb6f252ba659339bbd7edad6fb6c2d1faf24cdf4b85d1764e6f40251",
+      "content_encoding": "gzip",
+      "content_type": "application/json",
+      "kind": "builder_response_bytes",
+      "request_id": null,
+      "status": 200,
+      "task": "9c7743a642c37dc0edc77f72eee830f20d5cd22984dcbcf696c4ccf1a219b16d",
+      "time_ns": 1789051882054466300
+    },
+    {
+      "id": 26,
+      "attempt": 24,
+      "kind": "http_end",
+      "response_sha256": "b7473ca2fb6f252ba659339bbd7edad6fb6c2d1faf24cdf4b85d1764e6f40251",
+      "status": 200,
+      "task": "9c7743a642c37dc0edc77f72eee830f20d5cd22984dcbcf696c4ccf1a219b16d",
+      "time_ns": 1789051882056861500,
+      "usage": {
+        "completion_tokens": 3,
+        "prompt_tokens": 2,
+        "total_tokens": 5
+      }
+    },
+    {
+      "id": 27,
+      "kind": "candidate_extracted",
+      "result": {
+        "admission": "not_evaluated",
+        "code_sha256": "ad873dc427b95123f52081edd41026d5339bd85a98cc0e1b04d31c69f906d3c3",
+        "extraction": {
+          "code": "PROMPT = \"\"\"Example:\n```sql\nSELECT 1\n```\n\"\"\"\n",
+          "end_line": 6,
+          "start_line": 2,
+          "status": "fenced_python"
+        },
+        "finish_reason": "stop",
+        "generation_condition": "forced",
+        "identity": {
+          "attempt": 0,
+          "seed": 10,
+          "slot": "forced"
+        },
+        "message": "```python\nPROMPT = \"\"\"Example:\n```sql\nSELECT 1\n```\n\"\"\"\n```",
+        "reported_model": "artificial-builder",
+        "response_id": "loopback-4",
+        "response_sha256": "b7473ca2fb6f252ba659339bbd7edad6fb6c2d1faf24cdf4b85d1764e6f40251",
+        "strategy": null,
+        "syntax_error": null,
+        "usage": {
+          "completion_tokens": 3,
+          "prompt_tokens": 2,
+          "total_tokens": 5
+        }
+      },
+      "task": "9c7743a642c37dc0edc77f72eee830f20d5cd22984dcbcf696c4ccf1a219b16d",
+      "time_ns": 1789051882058484700
+    },
+    {
+      "id": 28,
+      "kind": "logical_end",
+      "logical": 23,
+      "task": "9c7743a642c37dc0edc77f72eee830f20d5cd22984dcbcf696c4ccf1a219b16d",
+      "time_ns": 1789051882059979400
+    },
+    {
+      "id": 29,
+      "identity": {
+        "attempt": 1,
+        "seed": 11,
+        "slot": "forced"
+      },
+      "kind": "task_start",
+      "task": "eeef04a71e56b1a8a17fb624c0a4058bbbd7890790e41ff2476331e6f6936b8c",
+      "time_ns": 1789051882065850600
+    },
+    {
+      "id": 30,
+      "cache_hit": false,
+      "kind": "logical_start",
+      "n": 1,
+      "request": {
+        "max_tokens": 100,
+        "messages": [
+          {
+            "content": "生成一个Python文件。",
+            "role": "user"
+          }
+        ],
+        "model": "artificial-builder",
+        "n": 1,
+        "seed": 11,
+        "temperature": 0.7
+      },
+      "task": "eeef04a71e56b1a8a17fb624c0a4058bbbd7890790e41ff2476331e6f6936b8c",
+      "time_ns": 1789051882067378000
+    },
+    {
+      "id": 31,
+      "kind": "http_start",
+      "logical": 30,
+      "request": {
+        "max_tokens": 100,
+        "messages": [
+          {
+            "content": "生成一个Python文件。",
+            "role": "user"
+          }
+        ],
+        "model": "artificial-builder",
+        "n": 1,
+        "seed": 11,
+        "temperature": 0.7
+      },
+      "task": "eeef04a71e56b1a8a17fb624c0a4058bbbd7890790e41ff2476331e6f6936b8c",
+      "time_ns": 1789051882069234600,
+      "url": "http://127.0.0.1:12727/v1/chat/completions"
+    },
+    {
+      "id": 32,
+      "attempt": 31,
+      "body_base64": "H4sIAAAAAAAC/0WOQQqDQAxFryKz6qJCaXFT6ElqqaPGGhyTYRLBIt690UXdfd7/eWRx2Lp75gJzrH0z5IU7Z27kFsKGfVLssEEf8nrC0ELa6qZnbEBs8FwcUguzxYsVHRJK/07ghWm7F+W4C0HEf8DQ4hIH2N0iKOpJdyWTgkXjVVXFr/ZMJc3ZIzuVZMSt68tm098SE49R38oD0PbJdZeMMYAi08FvxpXVhwMV6/oDvOVVUvcAAAA=",
+      "body_sha256": "7f4b34c6762d5a848ef18869914bb1cfd3552755cd2c7d1fbceabb2379c8151a",
+      "content_encoding": "gzip",
+      "content_type": "application/json",
+      "kind": "builder_response_bytes",
+      "request_id": null,
+      "status": 200,
+      "task": "eeef04a71e56b1a8a17fb624c0a4058bbbd7890790e41ff2476331e6f6936b8c",
+      "time_ns": 1789051882072195200
+    },
+    {
+      "id": 33,
+      "attempt": 31,
+      "kind": "http_end",
+      "response_sha256": "7f4b34c6762d5a848ef18869914bb1cfd3552755cd2c7d1fbceabb2379c8151a",
+      "status": 200,
+      "task": "eeef04a71e56b1a8a17fb624c0a4058bbbd7890790e41ff2476331e6f6936b8c",
+      "time_ns": 1789051882074475900,
+      "usage": {
+        "completion_tokens": 3,
+        "prompt_tokens": 2,
+        "total_tokens": 5
+      }
+    },
+    {
+      "id": 34,
+      "kind": "candidate_extracted",
+      "result": {
+        "admission": "not_evaluated",
+        "code_sha256": "b950c7033562ad45f6433b6fd248d407676620eb0e567599ff1cfe1ab32327f3",
+        "extraction": {
+          "code": "x = (\n",
+          "end_line": 2,
+          "start_line": 2,
+          "status": "fenced_python"
+        },
+        "finish_reason": "stop",
+        "generation_condition": "forced",
+        "identity": {
+          "attempt": 1,
+          "seed": 11,
+          "slot": "forced"
+        },
+        "message": "```python\nx = (\n```",
+        "reported_model": "artificial-builder",
+        "response_id": "loopback-5",
+        "response_sha256": "7f4b34c6762d5a848ef18869914bb1cfd3552755cd2c7d1fbceabb2379c8151a",
+        "strategy": null,
+        "syntax_error": {
+          "line": 1,
+          "message": "'(' was never closed",
+          "offset": 5
+        },
+        "usage": {
+          "completion_tokens": 3,
+          "prompt_tokens": 2,
+          "total_tokens": 5
+        }
+      },
+      "task": "eeef04a71e56b1a8a17fb624c0a4058bbbd7890790e41ff2476331e6f6936b8c",
+      "time_ns": 1789051882076395400
+    },
+    {
+      "id": 35,
+      "kind": "logical_end",
+      "logical": 30,
+      "task": "eeef04a71e56b1a8a17fb624c0a4058bbbd7890790e41ff2476331e6f6936b8c",
+      "time_ns": 1789051882078123200
+    },
+    {
+      "id": 36,
+      "identity": {
+        "attempt": 2,
+        "seed": 12,
+        "slot": "forced"
+      },
+      "kind": "task_start",
+      "task": "b3811f0ee663663b579904c839cc5a7528dade793819e65e90a7ddb18c880740",
+      "time_ns": 1789051882083607300
+    },
+    {
+      "id": 37,
+      "cache_hit": false,
+      "kind": "logical_start",
+      "n": 1,
+      "request": {
+        "max_tokens": 100,
+        "messages": [
+          {
+            "content": "生成一个Python文件。",
+            "role": "user"
+          }
+        ],
+        "model": "artificial-builder",
+        "n": 1,
+        "seed": 12,
+        "temperature": 0.7
+      },
+      "task": "b3811f0ee663663b579904c839cc5a7528dade793819e65e90a7ddb18c880740",
+      "time_ns": 1789051882085321700
+    },
+    {
+      "id": 38,
+      "kind": "http_start",
+      "logical": 37,
+      "request": {
+        "max_tokens": 100,
+        "messages": [
+          {
+            "content": "生成一个Python文件。",
+            "role": "user"
+          }
+        ],
+        "model": "artificial-builder",
+        "n": 1,
+        "seed": 12,
+        "temperature": 0.7
+      },
+      "task": "b3811f0ee663663b579904c839cc5a7528dade793819e65e90a7ddb18c880740",
+      "time_ns": 1789051882086791100,
+      "url": "http://127.0.0.1:12727/v1/chat/completions"
+    },
+    {
+      "id": 39,
+      "attempt": 38,
+      "body_base64": "H4sIAAAAAAAC/0WOwU7DMAyGXyXKmUkMxA6TOE29gZhgtwWtWetRa6kdYk8aqvruJEFiysX5/PuzJ4u9XRsbmOPRd+fFyt4ZO3IPoWCfFE/YoQ+L4wVDD6m0u4GxA8mB/WSRerjm8j43TkgowyGBF6YyL8qxCkHEf0FGk00coLpFUNSTViWTQi4zb9s2/ujA5Gj7/va63Zln42x5zdWPMcDaUc7Id3D00bw0m51ZVuLoL1Y/dp4/s/fyvzYmHqMelM9A5fSHurX4FJlu/DFzZfXhhp7m+ResOjxsKAEAAA==",
+      "body_sha256": "025e839b40224d148b2ce4a4ee226edd239232a7f48407a7f7cec0cb6134f36c",
+      "content_encoding": "gzip",
+      "content_type": "application/json",
+      "kind": "builder_response_bytes",
+      "request_id": null,
+      "status": 200,
+      "task": "b3811f0ee663663b579904c839cc5a7528dade793819e65e90a7ddb18c880740",
+      "time_ns": 1789051882090166500
+    },
+    {
+      "id": 40,
+      "attempt": 38,
+      "kind": "http_end",
+      "response_sha256": "025e839b40224d148b2ce4a4ee226edd239232a7f48407a7f7cec0cb6134f36c",
+      "status": 200,
+      "task": "b3811f0ee663663b579904c839cc5a7528dade793819e65e90a7ddb18c880740",
+      "time_ns": 1789051882092446200,
+      "usage": {
+        "completion_tokens": 3,
+        "prompt_tokens": 2,
+        "total_tokens": 5
+      }
+    },
+    {
+      "id": 41,
+      "kind": "candidate_extracted",
+      "result": {
+        "admission": "not_evaluated",
+        "code_sha256": "ad873dc427b95123f52081edd41026d5339bd85a98cc0e1b04d31c69f906d3c3",
+        "extraction": {
+          "code": "PROMPT = \"\"\"Example:\n```sql\nSELECT 1\n```\n\"\"\"\n",
+          "end_line": 6,
+          "start_line": 2,
+          "status": "fenced_python"
+        },
+        "finish_reason": "stop",
+        "generation_condition": "forced",
+        "identity": {
+          "attempt": 2,
+          "seed": 12,
+          "slot": "forced"
+        },
+        "message": "```python\nPROMPT = \"\"\"Example:\n```sql\nSELECT 1\n```\n\"\"\"\n```",
+        "reported_model": "artificial-builder",
+        "response_id": "loopback-6",
+        "response_sha256": "025e839b40224d148b2ce4a4ee226edd239232a7f48407a7f7cec0cb6134f36c",
+        "strategy": null,
+        "syntax_error": null,
+        "usage": {
+          "completion_tokens": 3,
+          "prompt_tokens": 2,
+          "total_tokens": 5
+        }
+      },
+      "task": "b3811f0ee663663b579904c839cc5a7528dade793819e65e90a7ddb18c880740",
+      "time_ns": 1789051882094448100
+    },
+    {
+      "id": 42,
+      "kind": "logical_end",
+      "logical": 37,
+      "task": "b3811f0ee663663b579904c839cc5a7528dade793819e65e90a7ddb18c880740",
+      "time_ns": 1789051882096082800
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+{
+  "scope": "Paired extraction analysis of an externally hash-pinned, completed raw pool.\n\nNo candidate is imported or executed. This isolates extraction on the same\nmessages; it is not neutral validity, admission, or a full historical bridge.\n",
+  "pool_sha256": "02ceb2fbdfdc11ceba24ce1e4a49bbfc64e2c0bcc4e16f19da8814a41bfb611d",
+  "run_id": "ad75cc3f3c1db10bb0fc72c62d15d95887c40fbaa776460bb1b9e26a4498ca4e",
+  "n_attempts": 6,
+  "source_bindings": {
+    "E:\\projects\\AI4AI-Harness\\experiment\\revision\\common_pool_extraction_compare.py": "320010ae0519766ad0447e96e2818c6b79caadce107447fb27d0aeeff08ea56d",
+    "E:\\projects\\AI4AI-Harness\\experiment\\phase2\\generate.py": "20d847647c69cf6276df157b1b6763c8ac841b019ee7bbb89fa4b19e04a12d47",
+    "E:\\projects\\AI4AI-Harness\\experiment\\revision\\code_responses.py": "ec28862d63909d7df370501f31bbabc5007d071adaa0e1fa3a1d5b0b662a3ba4",
+    "E:\\projects\\AI4AI-Harness\\experiment\\revision\\generation_extraction_audit.py": "6537bb785863e8d45284e9de802ce871ce681e4df74c41ef0986ed0c41a65136"
+  },
+  "paired_counts": [
+    {
+      "condition": "free",
+      "strategy": null,
+      "legacy_valid": false,
+      "new_valid": false,
+      "count": 1
+    },
+    {
+      "condition": "free",
+      "strategy": null,
+      "legacy_valid": false,
+      "new_valid": true,
+      "count": 2
+    },
+    {
+      "condition": "forced",
+      "strategy": null,
+      "legacy_valid": false,
+      "new_valid": true,
+      "count": 2
+    },
+    {
+      "condition": "forced",
+      "strategy": null,
+      "legacy_valid": false,
+      "new_valid": false,
+      "count": 1
+    }
+  ],
+  "rows": [
+    {
+      "task_key": "16ae5bf080d714ae6416dd1da80edf3ad2983f48aa9b6cc0fcc87a692cb40812",
+      "identity": {
+        "attempt": 1,
+        "seed": 11,
+        "slot": "free"
+      },
+      "generation_condition": "free",
+      "strategy": null,
+      "legacy_syntax_valid": false,
+      "new_syntax_valid": false,
+      "legacy_truncated": false,
+      "new_status": "fenced_python",
+      "legacy_code_sha256": "a17c34e85f5e4a8f57680476df04a529157ea87a173c2fa095b3acb7019fb885",
+      "new_code_sha256": "b950c7033562ad45f6433b6fd248d407676620eb0e567599ff1cfe1ab32327f3",
+      "same_code_bytes": false
+    },
+    {
+      "task_key": "90859491bad8d8b9fcd5418fba9d80f81b8fe9b5be9b104b4d14904d2729db9a",
+      "identity": {
+        "attempt": 0,
+        "seed": 10,
+        "slot": "free"
+      },
+      "generation_condition": "free",
+      "strategy": null,
+      "legacy_syntax_valid": false,
+      "new_syntax_valid": true,
+      "legacy_truncated": false,
+      "new_status": "fenced_python",
+      "legacy_code_sha256": "c77a66b7d610af5b2c24bd89d9859cc8fa8415454308ac3a4f1224aa552e6da2",
+      "new_code_sha256": "ad873dc427b95123f52081edd41026d5339bd85a98cc0e1b04d31c69f906d3c3",
+      "same_code_bytes": false
+    },
+    {
+      "task_key": "9c7743a642c37dc0edc77f72eee830f20d5cd22984dcbcf696c4ccf1a219b16d",
+      "identity": {
+        "attempt": 0,
+        "seed": 10,
+        "slot": "forced"
+      },
+      "generation_condition": "forced",
+      "strategy": null,
+      "legacy_syntax_valid": false,
+      "new_syntax_valid": true,
+      "legacy_truncated": false,
+      "new_status": "fenced_python",
+      "legacy_code_sha256": "c77a66b7d610af5b2c24bd89d9859cc8fa8415454308ac3a4f1224aa552e6da2",
+      "new_code_sha256": "ad873dc427b95123f52081edd41026d5339bd85a98cc0e1b04d31c69f906d3c3",
+      "same_code_bytes": false
+    },
+    {
+      "task_key": "a9559e66737241a648011e2d8907a72e1a87a65989fde7cfca102dcd496e6e62",
+      "identity": {
+        "attempt": 2,
+        "seed": 12,
+        "slot": "free"
+      },
+      "generation_condition": "free",
+      "strategy": null,
+      "legacy_syntax_valid": false,
+      "new_syntax_valid": true,
+      "legacy_truncated": false,
+      "new_status": "fenced_python",
+      "legacy_code_sha256": "c77a66b7d610af5b2c24bd89d9859cc8fa8415454308ac3a4f1224aa552e6da2",
+      "new_code_sha256": "ad873dc427b95123f52081edd41026d5339bd85a98cc0e1b04d31c69f906d3c3",
+      "same_code_bytes": false
+    },
+    {
+      "task_key": "b3811f0ee663663b579904c839cc5a7528dade793819e65e90a7ddb18c880740",
+      "identity": {
+        "attempt": 2,
+        "seed": 12,
+        "slot": "forced"
+      },
+      "generation_condition": "forced",
+      "strategy": null,
+      "legacy_syntax_valid": false,
+      "new_syntax_valid": true,
+      "legacy_truncated": false,
+      "new_status": "fenced_python",
+      "legacy_code_sha256": "c77a66b7d610af5b2c24bd89d9859cc8fa8415454308ac3a4f1224aa552e6da2",
+      "new_code_sha256": "ad873dc427b95123f52081edd41026d5339bd85a98cc0e1b04d31c69f906d3c3",
+      "same_code_bytes": false
+    },
+    {
+      "task_key": "eeef04a71e56b1a8a17fb624c0a4058bbbd7890790e41ff2476331e6f6936b8c",
+      "identity": {
+        "attempt": 1,
+        "seed": 11,
+        "slot": "forced"
+      },
+      "generation_condition": "forced",
+      "strategy": null,
+      "legacy_syntax_valid": false,
+      "new_syntax_valid": false,
+      "legacy_truncated": false,
+      "new_status": "fenced_python",
+      "legacy_code_sha256": "a17c34e85f5e4a8f57680476df04a529157ea87a173c2fa095b3acb7019fb885",
+      "new_code_sha256": "b950c7033562ad45f6433b6fd248d407676620eb0e567599ff1cfe1ab32327f3",
+      "same_code_bytes": false
+    }
+  ]
+}

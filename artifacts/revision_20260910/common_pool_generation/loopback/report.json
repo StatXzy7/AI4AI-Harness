@@ -1,0 +1,11 @@
+{
+  "scope": "loopback HTTP only; artificial responses and token counts; no provider calls",
+  "first_requests": 6,
+  "repeat_requests": 0,
+  "raw_compressed_bodies_match": true,
+  "repeat_export_identical": true,
+  "syntax_failures": 2,
+  "completed_attempts": 6,
+  "admission": "not_evaluated",
+  "source_sha256": "846867d31e6a5906e0fafb6533cce7f29cd8061a4e54f1ecbc2869f3afd2d68e"
+}

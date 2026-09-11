@@ -1,0 +1,39 @@
+{
+  "case": {
+    "strategy": "error_classify",
+    "name": "executable_other_column",
+    "initial": "SELECT amount FROM ledger"
+  },
+  "final": "SELECT amount FROM ledger",
+  "trace": [
+    {
+      "kind": "llm",
+      "prompt": "You are a SQL expert. Given the database schema below, write a single SQL query that answers the question.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\nReturn only the SQL query, without any explanation or markdown formatting.",
+      "system": "",
+      "temperature": 0.0,
+      "n": 1,
+      "response": "SELECT amount FROM ledger",
+      "response_role": "initial_sql",
+      "target_step": null,
+      "seq": 0
+    },
+    {
+      "kind": "execute",
+      "sql": "SELECT amount FROM ledger",
+      "ok": true,
+      "rows": [
+        [
+          10.0
+        ],
+        [
+          20.0
+        ]
+      ],
+      "error": null
+    }
+  ],
+  "error": null,
+  "interface_issues": [],
+  "admission": "not_evaluated",
+  "scope": "source-assigned exposed-candidate interface diagnostic; not calibration"
+}

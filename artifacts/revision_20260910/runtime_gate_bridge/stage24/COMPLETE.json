@@ -1,0 +1,8 @@
+{
+  "results_sha256": "2062ff494053938a4466bcd5d938ea5336c431dd6296a9d2f243dcf84dbf9e05",
+  "manifest_sha256": "965e09e739a9a750b1cd7ad3ce13557971e37a5060567e82a059eba8682c16c2",
+  "salt": "runtime_bridge_stage24",
+  "result_count": 8,
+  "available": 7,
+  "scope": "finite archived-source interface diagnostic; no calibration or admission"
+}

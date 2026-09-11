@@ -1,0 +1,25 @@
+{
+  "builder_ranking": [
+    "glm",
+    "qwen",
+    "kimi",
+    "minimax",
+    "deepseek",
+    "ernie"
+  ],
+  "selected_builders": [
+    "glm",
+    "qwen"
+  ],
+  "generation_seeds": [
+    20260911,
+    20260912
+  ],
+  "configs": [
+    "artifacts/revision_20260911/common_pool_batch1/glm.json",
+    "artifacts/revision_20260911/common_pool_batch1/qwen.json"
+  ],
+  "planned_attempts": 192,
+  "generation_only": true,
+  "legacy_constants_sha256": "02d0e2d31b133691a420bbbde5c973ce10806af8cf607696fde392962dbdb82d"
+}

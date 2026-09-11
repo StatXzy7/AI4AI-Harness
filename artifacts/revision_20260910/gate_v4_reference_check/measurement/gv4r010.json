@@ -1,0 +1,140 @@
+{
+  "identity": {
+    "case_id": "gv4r010",
+    "strategy": "schema_link",
+    "callable_name": "control_quartz",
+    "profile": "tables_columns_json"
+  },
+  "result": {
+    "version": "gate-v4",
+    "strategy": "schema_link",
+    "profile": "tables_columns_json",
+    "structural_verdict": "review_required",
+    "runs": [
+      {
+        "case": {
+          "strategy": "schema_link",
+          "name": "ledger_json",
+          "linking": {
+            "tables": [
+              "ledger"
+            ],
+            "columns": [
+              "ledger.id"
+            ]
+          },
+          "final": "SELECT id FROM ledger"
+        },
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Return relevant tables and columns as JSON.\nShape: {\"tables\":[\"table\"],\"columns\":[\"table.column\"]}\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+            "system": "",
+            "temperature": 0.0,
+            "n": 1,
+            "response": "{\"tables\": [\"ledger\"], \"columns\": [\"ledger.id\"]}",
+            "response_role": "linking_json",
+            "target_step": null
+          },
+          {
+            "kind": "llm",
+            "prompt": "Write one SQLite query. The linked payload is advisory; use any identifier from the full schema when convenient.\nAdvisory linked JSON:\n{\"columns\": [\"ledger.id\"], \"tables\": [\"ledger\"]}\nFull schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+            "system": "",
+            "temperature": 0.0,
+            "n": 1,
+            "response": "SELECT id FROM ledger",
+            "response_role": "final_sql",
+            "target_step": null
+          }
+        ],
+        "error": null,
+        "interface_issues": [],
+        "admission": "not_evaluated",
+        "scope": "source-assigned exposed-candidate interface diagnostic; not calibration",
+        "status": "review_required"
+      },
+      {
+        "case": {
+          "strategy": "schema_link",
+          "name": "unused_json",
+          "linking": {
+            "tables": [
+              "unused"
+            ],
+            "columns": [
+              "unused.label"
+            ]
+          },
+          "final": "SELECT label FROM unused"
+        },
+        "final": "SELECT label FROM unused",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Return relevant tables and columns as JSON.\nShape: {\"tables\":[\"table\"],\"columns\":[\"table.column\"]}\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+            "system": "",
+            "temperature": 0.0,
+            "n": 1,
+            "response": "{\"tables\": [\"unused\"], \"columns\": [\"unused.label\"]}",
+            "response_role": "linking_json",
+            "target_step": null
+          },
+          {
+            "kind": "llm",
+            "prompt": "Write one SQLite query. The linked payload is advisory; use any identifier from the full schema when convenient.\nAdvisory linked JSON:\n{\"columns\": [\"unused.label\"], \"tables\": [\"unused\"]}\nFull schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+            "system": "",
+            "temperature": 0.0,
+            "n": 1,
+            "response": "SELECT label FROM unused",
+            "response_role": "final_sql",
+            "target_step": null
+          }
+        ],
+        "error": null,
+        "interface_issues": [],
+        "admission": "not_evaluated",
+        "scope": "source-assigned exposed-candidate interface diagnostic; not calibration",
+        "status": "review_required"
+      },
+      {
+        "case": {
+          "strategy": "schema_link",
+          "name": "malformed_json",
+          "linking": null,
+          "final": "SELECT id FROM ledger"
+        },
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Return relevant tables and columns as JSON.\nShape: {\"tables\":[\"table\"],\"columns\":[\"table.column\"]}\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+            "system": "",
+            "temperature": 0.0,
+            "n": 1,
+            "response": "not JSON",
+            "response_role": "linking_json",
+            "target_step": null
+          },
+          {
+            "kind": "llm",
+            "prompt": "Write one SQLite query. The linked payload is advisory; use any identifier from the full schema when convenient.\nAdvisory linked JSON:\n{\"raw_linker_response\": \"not JSON\", \"status\": \"invalid\"}\nFull schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+            "system": "",
+            "temperature": 0.0,
+            "n": 1,
+            "response": "SELECT id FROM ledger",
+            "response_role": "final_sql",
+            "target_step": null
+          }
+        ],
+        "error": null,
+        "interface_issues": [],
+        "admission": "not_evaluated",
+        "scope": "source-assigned exposed-candidate interface diagnostic; not calibration",
+        "status": "review_required"
+      }
+    ],
+    "admission": "not_evaluated",
+    "scope": "Unified development measurement, with explicit source-assigned response roles.\n\nFrozen v3 supplies five unchanged strategy probes. Typed schema/decomposition and\nreal SQLite feedback supply the remaining three. This module never admits a\ncandidate: semantic decisions and independently frozen reference checks remain\nseparate. Unsupported response profiles are review-required, not rejection.\n"
+  }
+}

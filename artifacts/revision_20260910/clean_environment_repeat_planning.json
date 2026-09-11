@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "scope": "same-checkout isolated-venv simulation rerun; not independent research replication",
+  "artifact_bytes_exact_equal": true,
+  "repeat_planning_sha256": "3275c1ec3c646d5968067c474dda257c912cef9e8cdb4b11cfa80759ccff77fc"
+}

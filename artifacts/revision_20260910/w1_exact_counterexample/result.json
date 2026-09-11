@@ -1,0 +1,132 @@
+{
+  "scope": "Expected canonical W1 div-only minus top-acc statistic under fresh iid nine database binary states; fixed pools/split schedule, not deployment utility",
+  "canonical_validation": {
+    "count_patterns": 30,
+    "canonical_comparisons": 60
+  },
+  "endpoint_implementation_checks": [
+    {
+      "state": 0,
+      "weight_vectors": 200,
+      "max_abs_difference": 0.0
+    },
+    {
+      "state": 1,
+      "weight_vectors": 200,
+      "max_abs_difference": 0.0
+    }
+  ],
+  "metric_order": [
+    "oracle_accuracy",
+    "best_fixed",
+    "headroom",
+    "dev_selected_fixed_accuracy"
+  ],
+  "results": [
+    {
+      "p": "1/10",
+      "expected_statistic_fraction": [
+        "10287/100000",
+        "477981/100000000",
+        "9809019/100000000",
+        "0"
+      ],
+      "expected_statistic_pp": [
+        10.287,
+        0.477981,
+        9.809019,
+        0.0
+      ],
+      "homogeneous_event_probability_exact": "38742049/100000000",
+      "headroom_coverage_upper_bound_exact": "61257951/100000000",
+      "headroom_coverage_upper_bound": 0.61257951,
+      "rejects_universal_95_percent_coverage": true
+    },
+    {
+      "p": "3/10",
+      "expected_statistic_fraction": [
+        "32781/100000",
+        "7576821/100000000",
+        "25204179/100000000",
+        "0"
+      ],
+      "expected_statistic_pp": [
+        32.781,
+        7.576821000000001,
+        25.204179,
+        0.0
+      ],
+      "homogeneous_event_probability_exact": "4037329/100000000",
+      "headroom_coverage_upper_bound_exact": "95962671/100000000",
+      "headroom_coverage_upper_bound": 0.95962671,
+      "rejects_universal_95_percent_coverage": false
+    },
+    {
+      "p": "1/2",
+      "expected_statistic_fraction": [
+        "15/32",
+        "45/256",
+        "75/256",
+        "0"
+      ],
+      "expected_statistic_pp": [
+        46.875,
+        17.578125,
+        29.296875,
+        0.0
+      ],
+      "homogeneous_event_probability_exact": "1/256",
+      "headroom_coverage_upper_bound_exact": "255/256",
+      "headroom_coverage_upper_bound": 0.99609375,
+      "rejects_universal_95_percent_coverage": false
+    },
+    {
+      "p": "7/10",
+      "expected_statistic_fraction": [
+        "36729/100000",
+        "17419941/100000000",
+        "19309059/100000000",
+        "0"
+      ],
+      "expected_statistic_pp": [
+        36.729,
+        17.419941,
+        19.309059,
+        0.0
+      ],
+      "homogeneous_event_probability_exact": "4037329/100000000",
+      "headroom_coverage_upper_bound_exact": "95962671/100000000",
+      "headroom_coverage_upper_bound": 0.95962671,
+      "rejects_universal_95_percent_coverage": false
+    },
+    {
+      "p": "9/10",
+      "expected_statistic_fraction": [
+        "7623/100000",
+        "4249341/100000000",
+        "3373659/100000000",
+        "0"
+      ],
+      "expected_statistic_pp": [
+        7.623,
+        4.249341,
+        3.3736589999999995,
+        0.0
+      ],
+      "homogeneous_event_probability_exact": "38742049/100000000",
+      "headroom_coverage_upper_bound_exact": "61257951/100000000",
+      "headroom_coverage_upper_bound": 0.61257951,
+      "rejects_universal_95_percent_coverage": true
+    }
+  ],
+  "interpretation": "An upper bound, not exact coverage. Fixed empirical endpoints force exclusion of the positive expected headroom statistic. No BIRD-specific coverage estimate and no proof that other interval constructions are impossible.",
+  "protocol_sha256": "280640a2c4cfc04dfe455d19c5d998d890e5323fb1eb31df595cbe172aa75f66",
+  "source_freeze_sha256": "735526fb835ed692eaf2aa9fe87e93254de108c42c1197bd40d808b387a15613",
+  "bindings": {
+    "artifacts/revision_20260910/w1_exact_counterexample/protocol.json": "280640a2c4cfc04dfe455d19c5d998d890e5323fb1eb31df595cbe172aa75f66",
+    "experiment/revision/w1_exact_counterexample.py": "5146e51f96dc2e7bff24ee641a34c9ddaa684ab10d24026c250fdc272da0bfaa",
+    "experiment/revision/selection.py": "b0c75f72e4b6cf3e3fdeb150fed9460b625d497d71a6e84ae66fa5a4b4f3085c",
+    "experiment/revision/selection_weights.py": "4d44052327174557d1c7264d7b3c2db2476ef80cf915f863b81400f992af3592",
+    "experiment/revision/replay.py": "b87ba0aae2b610053c418b7a8373532bfe1c53a2a2dcfb9d345f548f2693ea86"
+  }
+}

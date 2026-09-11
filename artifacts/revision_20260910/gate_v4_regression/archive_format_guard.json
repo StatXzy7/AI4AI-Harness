@@ -1,0 +1,12 @@
+{
+  "case": {
+    "id": "archive_format_guard",
+    "strategy": "format_guard",
+    "path": null,
+    "source_sha256": null,
+    "role": "archived_candidate",
+    "profile": null
+  },
+  "result": null,
+  "admission": "not_evaluated"
+}

@@ -1,0 +1,11 @@
+# 阶段25：真实候选的响应格式与SQLite输入
+
+开发协议在执行前固定；不是新独立校准或实验放行。只使用阶段22名册中schema_link、decompose、error_classify三份既有C候选；不改候选或旧gate/adapter，不读取benchmark结果，不调用模型API。
+
+响应角色由已读源码指定，跨模型审核须在执行前确认：schema_link第一调用要求tables/columns JSON；decompose第一调用要求JSON列表，后续当前目标位于单独的Current sub-question to answer字段，完整计划中的其他步骤仅作上下文；error_classify本地分类，无中间LLM类别请求。未支持的字段/请求保留为interface_issues，不按最终SQL较好与否换profile或补答案。
+
+固定11场景：schema-link两种合法JSON载荷（ledger.id、unused.label）加一种坏JSON；decompose两组相同两步计划与不同SQL注释载荷；error-classify成功、SQLite语法错误、缺列、缺表、不完整SQL，以及可执行的另一列查询。schema的对照只检查给定载荷如何被消费，unused载荷不代表模型正确识别了原问题的相关表。decompose回复为可执行SQL并带不可由步骤名替代的payload，最终组装须看到两份实际载荷；当前字段缺失/重复/未知时保持未决，不按调用次序猜测目标。
+
+SQLite每场景为全新内存库，Table ledger(id, amount)/Table unused(label)与既有adapter schema一致，执行结果和错误直接来自sqlite3，保存SQLite版本。初始SQL由solver stub注入，后续只有完整错误进入请求时才给修复SQL。它测本地错误识别及动作消费，不模拟真实模型准确率。可执行另一列查询不产生SQLite错误；它仅检查执行成功的分支，不把正确执行当成答对或假造“语义错误”反馈。
+
+保存全场景设置、源码/协议/环境版本、完整请求/回复/执行轨迹、最终返回和接口问题；不生成自动conforms/pass。新目录拒绝覆盖，运行前后验证输入哈希，COMPLETE绑定manifest/results；完整计数仅表示这11例开发诊断完成。保留阶段24旧输入下的观察。执行后独立复核必须分别判断格式消费、子问题与组装数据流、错误类动作，不能以最终SQL符合stub预设认定候选机制成立。

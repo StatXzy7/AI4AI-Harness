@@ -1,0 +1,9 @@
+# A重复/clone交错采集入口：已验证的执行准备
+
+新增interleaved_collect，保留原isolated_collect及其历史证据。新父级入口在每repeat内按冻结SHA256 salt排列题目，在每题内排列全部harness成员，使各组在题目块内交错。原独立worker、Job清理、完整用量、未决停止与零自动重试保持。完整schedule/hash/salt及新入口源码进入manifest。
+
+三项测试通过（13.040秒）：完整repeat×task×member每格一次，输入列表顺序不影响结果；8个真实Windows隔离单元对本机人工HTTP的实际顺序、每单元5人工tokens和进程清理；usage缺失时首个单元保留pending并停止。Ruff、Black通过；机械与spec跨模型审核均9/10 ready，仅限执行准备。
+
+以旧先导两道曝光题、bare/同源clone/race及两repeat生成12单元DRAFT preflight，绑定511源码。bare与clone使用同一源码路径且保留不同调度id。完整collect拒绝DRAFT身份，未创建采集输出、未调用提供方。配置、顺序和测试日志见artifacts/revision_20260911/interleaved_preflight。测试临时worker原始文件按fixture清理，不声称这些原始账本已长期归档。
+
+正式A还需完整候选来源和群组映射、任务/发现验证分工、预算与失败规则、固定资源比较和推断设计。这次不证明provider独立/平稳，不保证各组实际成本相等，不构成重复/clone科学结果。下一步在完整raw pool与候选审计后使用本入口冻结实际A采集。论文总体仍4/10 not ready；本轮不改PDF。

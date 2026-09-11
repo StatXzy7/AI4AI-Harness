@@ -1,0 +1,21 @@
+{
+  "stage": 30,
+  "status": "FROZEN_BEFORE_CALCULATION",
+  "target": "Expected canonical W1 div-only minus top-acc statistic under fresh iid nine database binary states; fixed pools/split schedule, not deployment utility",
+  "dgp": "9 iid Bernoulli(p) database states, one task each; 16 candidates ordered eight state0 specialists then eight state1 specialists; zero bare; all18 cells identical; fixed100 four-dev/five-test splits",
+  "k": 8,
+  "p_grid": [
+    "1/10",
+    "3/10",
+    "1/2",
+    "7/10",
+    "9/10"
+  ],
+  "interval_candidate": "equal-tail 95 percent positive-weight joint reselection percentile interval",
+  "test": "Exact endpoint-event upper bound for unconditional coverage. On all-zero/all-one data every weighting gives zero paired difference. Compute exact expected statistics by independent Binomial(4,p) and Binomial(5,p) counts, validate all30 count combinations against canonical selections/evaluate. No empirical effect inputs, no model calls.",
+  "claim_limit": "Counterexample can reject universal coverage; cannot estimate coverage for observed BIRD process or prove no other valid interval exists.",
+  "bindings": {
+    "experiment/revision/selection.py": "b0c75f72e4b6cf3e3fdeb150fed9460b625d497d71a6e84ae66fa5a4b4f3085c",
+    "experiment/revision/selection_weights.py": "4d44052327174557d1c7264d7b3c2db2476ef80cf915f863b81400f992af3592"
+  }
+}

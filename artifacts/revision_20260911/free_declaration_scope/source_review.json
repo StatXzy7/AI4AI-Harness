@@ -1,0 +1,8 @@
+{
+  "reviewer": "gpt-5.5",
+  "score": 9,
+  "verdict": "ready",
+  "scope": "Source applicability finding, not candidate outcomes or scientific readiness",
+  "bindings_checked": 5,
+  "main_claim": "forced eight contracts do not automatically cover free four declarations"
+}

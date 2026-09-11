@@ -1,0 +1,8 @@
+{
+  "command": "python -m unittest experiment.revision.test_common_pool_extraction_compare -v",
+  "exit_code": 0,
+  "tests": 3,
+  "duration_seconds": 0.028,
+  "ruff_exit_code": 0,
+  "scope": "offline fixtures only; no live candidate analysis"
+}

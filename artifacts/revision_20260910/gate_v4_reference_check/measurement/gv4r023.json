@@ -1,0 +1,56 @@
+{
+  "identity": {
+    "case_id": "gv4r023",
+    "strategy": "format_guard",
+    "callable_name": "control_nova",
+    "profile": null
+  },
+  "result": {
+    "version": "gate-v4",
+    "strategy": "format_guard",
+    "profile": null,
+    "structural_verdict": "review_required",
+    "runs": [
+      {
+        "probe": "format_original",
+        "status": "review_required",
+        "reasons": [
+          "semantic_prompt_review_required"
+        ],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Use the supplied schema and question. Output only one fenced SQL block, with the fence language set to sql and no explanation.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+            "system": "Your entire answer must be one ```sql fenced block with no extra prose.",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger"
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "format_changed_question",
+        "status": "review_required",
+        "reasons": [
+          "semantic_prompt_review_required"
+        ],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Use the supplied schema and question. Output only one fenced SQL block, with the fence language set to sql and no explanation.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger amounts.",
+            "system": "Your entire answer must be one ```sql fenced block with no extra prose.",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger"
+          }
+        ],
+        "error": null
+      }
+    ],
+    "admission": "not_evaluated",
+    "scope": "Unified development measurement, with explicit source-assigned response roles.\n\nFrozen v3 supplies five unchanged strategy probes. Typed schema/decomposition and\nreal SQLite feedback supply the remaining three. This module never admits a\ncandidate: semantic decisions and independently frozen reference checks remain\nseparate. Unsupported response profiles are review-required, not rejection.\n"
+  }
+}

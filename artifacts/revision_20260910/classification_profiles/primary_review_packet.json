@@ -1,0 +1,949 @@
+{
+  "scope": "Independent action review of source-assigned primary exposed-control regression only",
+  "cases": [
+    {
+      "case_id": "vc025",
+      "source_assigned_role": "classify_then_repair",
+      "runs": [
+        {
+          "probe": "success_no_repair",
+          "final": "SELECT id FROM ledger",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nWrite SQL.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ]
+        },
+        {
+          "probe": "syntax_a",
+          "final": "SELECT amount FROM ledger",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nWrite SQL.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [independent-v3-20260910_syntax_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Classify this failed SQL feedback as syntax, schema, or semantics.\nSQL:\nSELECT id FROM ledger\nExact feedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v3-20260910_syntax_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "syntax"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Correct the SQL grammar and punctuation while preserving intent.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nExact execution feedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v3-20260910_syntax_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ]
+        },
+        {
+          "probe": "syntax_b",
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nWrite SQL.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [independent-v3-20260910_syntax_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Classify this failed SQL feedback as syntax, schema, or semantics.\nSQL:\nSELECT id FROM ledger\nExact feedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v3-20260910_syntax_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "syntax"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Correct the SQL grammar and punctuation while preserving intent.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nExact execution feedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v3-20260910_syntax_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ]
+        },
+        {
+          "probe": "schema_a",
+          "final": "SELECT amount FROM ledger",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nWrite SQL.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [independent-v3-20260910_schema_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Classify this failed SQL feedback as syntax, schema, or semantics.\nSQL:\nSELECT id FROM ledger\nExact feedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v3-20260910_schema_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "schema"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Replace invalid table or column names using the provided schema.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nExact execution feedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v3-20260910_schema_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ]
+        },
+        {
+          "probe": "schema_b",
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nWrite SQL.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [independent-v3-20260910_schema_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Classify this failed SQL feedback as syntax, schema, or semantics.\nSQL:\nSELECT id FROM ledger\nExact feedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v3-20260910_schema_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "schema"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Replace invalid table or column names using the provided schema.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nExact execution feedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v3-20260910_schema_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ]
+        },
+        {
+          "probe": "semantics_a",
+          "final": "SELECT amount FROM ledger",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nWrite SQL.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [independent-v3-20260910_semantics_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Classify this failed SQL feedback as syntax, schema, or semantics.\nSQL:\nSELECT id FROM ledger\nExact feedback:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v3-20260910_semantics_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "semantics"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Revise the query logic so the requested meaning is represented.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nExact execution feedback:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v3-20260910_semantics_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ]
+        },
+        {
+          "probe": "semantics_b",
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nWrite SQL.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [independent-v3-20260910_semantics_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Classify this failed SQL feedback as syntax, schema, or semantics.\nSQL:\nSELECT id FROM ledger\nExact feedback:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v3-20260910_semantics_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "semantics"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Revise the query logic so the requested meaning is represented.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nExact execution feedback:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v3-20260910_semantics_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "vc026",
+      "source_assigned_role": "direct_repair",
+      "runs": [
+        {
+          "probe": "success_no_repair",
+          "final": "SELECT id FROM ledger",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL for the database task.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ]
+        },
+        {
+          "probe": "syntax_a",
+          "final": "SELECT amount FROM ledger",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL for the database task.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [independent-v3-20260910_syntax_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Failure class: syntax\nRequired repair action: Fix the SQL syntax error indicated by the executor.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nExact feedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v3-20260910_syntax_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ]
+        },
+        {
+          "probe": "syntax_b",
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL for the database task.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [independent-v3-20260910_syntax_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Failure class: syntax\nRequired repair action: Fix the SQL syntax error indicated by the executor.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nExact feedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v3-20260910_syntax_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ]
+        },
+        {
+          "probe": "schema_a",
+          "final": "SELECT amount FROM ledger",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL for the database task.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [independent-v3-20260910_schema_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Failure class: semantics\nRequired repair action: Change the query construction to match the question intent.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nExact feedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v3-20260910_schema_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ]
+        },
+        {
+          "probe": "schema_b",
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL for the database task.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [independent-v3-20260910_schema_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Failure class: semantics\nRequired repair action: Change the query construction to match the question intent.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nExact feedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v3-20260910_schema_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ]
+        },
+        {
+          "probe": "semantics_a",
+          "final": "SELECT amount FROM ledger",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL for the database task.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [independent-v3-20260910_semantics_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Failure class: semantics\nRequired repair action: Change the query construction to match the question intent.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nExact feedback:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v3-20260910_semantics_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ]
+        },
+        {
+          "probe": "semantics_b",
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Draft SQL for the database task.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [independent-v3-20260910_semantics_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Failure class: semantics\nRequired repair action: Change the query construction to match the question intent.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nExact feedback:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v3-20260910_semantics_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "vc027",
+      "source_assigned_role": "direct_repair",
+      "runs": [
+        {
+          "probe": "success_no_repair",
+          "final": "SELECT id FROM ledger",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nWrite SQL.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ]
+        },
+        {
+          "probe": "syntax_a",
+          "final": "SELECT amount FROM ledger",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nWrite SQL.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [independent-v3-20260910_syntax_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "The SQL failed. It might be syntax, schema, or semantics. Try again.\nFeedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v3-20260910_syntax_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ]
+        },
+        {
+          "probe": "syntax_b",
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nWrite SQL.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [independent-v3-20260910_syntax_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "The SQL failed. It might be syntax, schema, or semantics. Try again.\nFeedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v3-20260910_syntax_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ]
+        },
+        {
+          "probe": "schema_a",
+          "final": "SELECT amount FROM ledger",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nWrite SQL.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [independent-v3-20260910_schema_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "The SQL failed. It might be syntax, schema, or semantics. Try again.\nFeedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v3-20260910_schema_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ]
+        },
+        {
+          "probe": "schema_b",
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nWrite SQL.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [independent-v3-20260910_schema_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "The SQL failed. It might be syntax, schema, or semantics. Try again.\nFeedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v3-20260910_schema_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ]
+        },
+        {
+          "probe": "semantics_a",
+          "final": "SELECT amount FROM ledger",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nWrite SQL.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [independent-v3-20260910_semantics_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "The SQL failed. It might be syntax, schema, or semantics. Try again.\nFeedback:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v3-20260910_semantics_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT amount FROM ledger"
+            }
+          ]
+        },
+        {
+          "probe": "semantics_b",
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nWrite SQL.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [independent-v3-20260910_semantics_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "The SQL failed. It might be syntax, schema, or semantics. Try again.\nFeedback:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v3-20260910_semantics_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "vc028",
+      "source_assigned_role": "classify_then_repair",
+      "runs": [
+        {
+          "probe": "success_no_repair",
+          "final": "SELECT id FROM ledger",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nWrite SQL.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": true,
+              "rows": [
+                [
+                  "A"
+                ]
+              ],
+              "error": null
+            }
+          ]
+        },
+        {
+          "probe": "syntax_a",
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nWrite SQL.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [independent-v3-20260910_syntax_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Classify the failure as syntax, schema, or semantics.\nFeedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v3-20260910_syntax_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "syntax"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Rewrite the SQL in a cleaner form for the original database task.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ]
+        },
+        {
+          "probe": "syntax_b",
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nWrite SQL.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "syntax failure [independent-v3-20260910_syntax_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Classify the failure as syntax, schema, or semantics.\nFeedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v3-20260910_syntax_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "syntax"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Rewrite the SQL in a cleaner form for the original database task.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ]
+        },
+        {
+          "probe": "schema_a",
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nWrite SQL.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [independent-v3-20260910_schema_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Classify the failure as syntax, schema, or semantics.\nFeedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v3-20260910_schema_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "schema"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Rewrite the SQL in a cleaner form for the original database task.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ]
+        },
+        {
+          "probe": "schema_b",
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nWrite SQL.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "schema failure [independent-v3-20260910_schema_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Classify the failure as syntax, schema, or semantics.\nFeedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v3-20260910_schema_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "schema"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Rewrite the SQL in a cleaner form for the original database task.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ]
+        },
+        {
+          "probe": "semantics_a",
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nWrite SQL.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [independent-v3-20260910_semantics_a]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Classify the failure as syntax, schema, or semantics.\nFeedback:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v3-20260910_semantics_a]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "semantics"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Rewrite the SQL in a cleaner form for the original database task.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ]
+        },
+        {
+          "probe": "semantics_b",
+          "final": "SELECT id FROM ledger WHERE id > 0",
+          "error": null,
+          "trace": [
+            {
+              "kind": "llm",
+              "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nWrite SQL.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger"
+            },
+            {
+              "kind": "execute",
+              "sql": "SELECT id FROM ledger",
+              "ok": false,
+              "rows": [],
+              "error": "semantics failure [independent-v3-20260910_semantics_b]"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Classify the failure as syntax, schema, or semantics.\nFeedback:\n{'ok': False, 'rows': [], 'error': 'semantics failure [independent-v3-20260910_semantics_b]'}",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "semantics"
+            },
+            {
+              "kind": "llm",
+              "prompt": "Rewrite the SQL in a cleaner form for the original database task.",
+              "system": "",
+              "n": 1,
+              "temperature": 0.0,
+              "response": "SELECT id FROM ledger WHERE id > 0"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,202 @@
+{
+  "identity": {
+    "case_id": "gv4r013",
+    "strategy": "two_view",
+    "callable_name": "control_pine",
+    "profile": null
+  },
+  "result": {
+    "version": "gate-v4",
+    "strategy": "two_view",
+    "profile": null,
+    "structural_verdict": "review_required",
+    "runs": [
+      {
+        "probe": "first_empty",
+        "status": "review_required",
+        "reasons": [
+          "formulation_semantics_review_required"
+        ],
+        "final": "SELECT amount FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Construct SQL directly from base tables with explicit joins and filters.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger"
+          },
+          {
+            "kind": "llm",
+            "prompt": "Construct an alternative SQL formulation using CTE stages before the final projection.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT amount FROM ledger"
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": true,
+            "rows": [],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "B"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "second_empty",
+        "status": "review_required",
+        "reasons": [
+          "formulation_semantics_review_required"
+        ],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Construct SQL directly from base tables with explicit joins and filters.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger"
+          },
+          {
+            "kind": "llm",
+            "prompt": "Construct an alternative SQL formulation using CTE stages before the final projection.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT amount FROM ledger"
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "both_nonempty",
+        "status": "review_required",
+        "reasons": [
+          "formulation_semantics_review_required"
+        ],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Construct SQL directly from base tables with explicit joins and filters.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger"
+          },
+          {
+            "kind": "llm",
+            "prompt": "Construct an alternative SQL formulation using CTE stages before the final projection.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT amount FROM ledger"
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "B"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "first_failed",
+        "status": "review_required",
+        "reasons": [
+          "formulation_semantics_review_required"
+        ],
+        "final": "SELECT amount FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Construct SQL directly from base tables with explicit joins and filters.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger"
+          },
+          {
+            "kind": "llm",
+            "prompt": "Construct an alternative SQL formulation using CTE stages before the final projection.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT amount FROM ledger"
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": false,
+            "rows": [],
+            "error": "syntax"
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "B"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      }
+    ],
+    "admission": "not_evaluated",
+    "scope": "Unified development measurement, with explicit source-assigned response roles.\n\nFrozen v3 supplies five unchanged strategy probes. Typed schema/decomposition and\nreal SQLite feedback supply the remaining three. This module never admits a\ncandidate: semantic decisions and independently frozen reference checks remain\nseparate. Unsupported response profiles are review-required, not rejection.\n"
+  }
+}

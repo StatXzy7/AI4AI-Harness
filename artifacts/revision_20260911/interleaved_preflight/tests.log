@@ -1,0 +1,8 @@
+test_actual_workers_follow_schedule_and_complete_all_cells (experiment.revision.test_interleaved_collect.InterleavedTests.test_actual_workers_follow_schedule_and_complete_all_cells) ... ok
+test_complete_task_blocks_and_order_independence (experiment.revision.test_interleaved_collect.InterleavedTests.test_complete_task_blocks_and_order_independence) ... ok
+test_missing_usage_stops_before_next_scheduled_cell (experiment.revision.test_interleaved_collect.InterleavedTests.test_missing_usage_stops_before_next_scheduled_cell) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 13.040s
+
+OK

@@ -1,0 +1,340 @@
+{
+  "strategy": "error_classify",
+  "path": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_error_classify.py",
+  "availability": "available",
+  "result": {
+    "strategy": "error_classify",
+    "verdict": "review_required",
+    "scope": "v3 exposed-control development; independent calibration and production adapter pending",
+    "runs": [
+      {
+        "probe": "success_no_repair",
+        "status": "pass",
+        "reasons": [],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "You are a SQL expert. Given the database schema below, write a single SQL query that answers the question.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\nReturn only the SQL query, without any explanation or markdown formatting.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger",
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "syntax_a",
+        "status": "review_required",
+        "reasons": [
+          "unambiguous_error_class_not_observed",
+          "classification_action_semantics_review_required"
+        ],
+        "final": "SELECT amount FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "You are a SQL expert. Given the database schema below, write a single SQL query that answers the question.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\nReturn only the SQL query, without any explanation or markdown formatting.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger",
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": false,
+            "rows": [],
+            "error": "syntax failure [runtime_bridge_stage24_syntax_a]"
+          },
+          {
+            "kind": "llm",
+            "prompt": "You are a SQL expert. A previous SQL query failed or was incorrect.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\n### Previous SQL\nSELECT id FROM ledger\n\n### Error Message\nsyntax failure [runtime_bridge_stage24_syntax_a]\n\nThe previous SQL query failed with a semantics issue: it may run but not answer the question correctly. Read the question carefully and write a corrected SQL query that uses the schema accurately. Return only the corrected SQL query.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT amount FROM ledger",
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "syntax_b",
+        "status": "review_required",
+        "reasons": [
+          "unambiguous_error_class_not_observed",
+          "classification_action_semantics_review_required"
+        ],
+        "final": "SELECT id FROM ledger WHERE id > 0",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "You are a SQL expert. Given the database schema below, write a single SQL query that answers the question.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\nReturn only the SQL query, without any explanation or markdown formatting.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger",
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": false,
+            "rows": [],
+            "error": "syntax failure [runtime_bridge_stage24_syntax_b]"
+          },
+          {
+            "kind": "llm",
+            "prompt": "You are a SQL expert. A previous SQL query failed or was incorrect.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\n### Previous SQL\nSELECT id FROM ledger\n\n### Error Message\nsyntax failure [runtime_bridge_stage24_syntax_b]\n\nThe previous SQL query failed with a semantics issue: it may run but not answer the question correctly. Read the question carefully and write a corrected SQL query that uses the schema accurately. Return only the corrected SQL query.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger WHERE id > 0",
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger WHERE id > 0",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "schema_a",
+        "status": "review_required",
+        "reasons": [
+          "unambiguous_error_class_not_observed",
+          "classification_action_semantics_review_required"
+        ],
+        "final": "SELECT amount FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "You are a SQL expert. Given the database schema below, write a single SQL query that answers the question.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\nReturn only the SQL query, without any explanation or markdown formatting.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger",
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": false,
+            "rows": [],
+            "error": "schema failure [runtime_bridge_stage24_schema_a]"
+          },
+          {
+            "kind": "llm",
+            "prompt": "You are a SQL expert. A previous SQL query failed or was incorrect.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\n### Previous SQL\nSELECT id FROM ledger\n\n### Error Message\nschema failure [runtime_bridge_stage24_schema_a]\n\nThe previous SQL query failed with a semantics issue: it may run but not answer the question correctly. Read the question carefully and write a corrected SQL query that uses the schema accurately. Return only the corrected SQL query.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT amount FROM ledger",
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "schema_b",
+        "status": "review_required",
+        "reasons": [
+          "unambiguous_error_class_not_observed",
+          "classification_action_semantics_review_required"
+        ],
+        "final": "SELECT id FROM ledger WHERE id > 0",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "You are a SQL expert. Given the database schema below, write a single SQL query that answers the question.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\nReturn only the SQL query, without any explanation or markdown formatting.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger",
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": false,
+            "rows": [],
+            "error": "schema failure [runtime_bridge_stage24_schema_b]"
+          },
+          {
+            "kind": "llm",
+            "prompt": "You are a SQL expert. A previous SQL query failed or was incorrect.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\n### Previous SQL\nSELECT id FROM ledger\n\n### Error Message\nschema failure [runtime_bridge_stage24_schema_b]\n\nThe previous SQL query failed with a semantics issue: it may run but not answer the question correctly. Read the question carefully and write a corrected SQL query that uses the schema accurately. Return only the corrected SQL query.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger WHERE id > 0",
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger WHERE id > 0",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "semantics_a",
+        "status": "review_required",
+        "reasons": [
+          "unambiguous_error_class_not_observed",
+          "classification_action_semantics_review_required"
+        ],
+        "final": "SELECT amount FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "You are a SQL expert. Given the database schema below, write a single SQL query that answers the question.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\nReturn only the SQL query, without any explanation or markdown formatting.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger",
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": false,
+            "rows": [],
+            "error": "semantics failure [runtime_bridge_stage24_semantics_a]"
+          },
+          {
+            "kind": "llm",
+            "prompt": "You are a SQL expert. A previous SQL query failed or was incorrect.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\n### Previous SQL\nSELECT id FROM ledger\n\n### Error Message\nsemantics failure [runtime_bridge_stage24_semantics_a]\n\nThe previous SQL query failed with a semantics issue: it may run but not answer the question correctly. Read the question carefully and write a corrected SQL query that uses the schema accurately. Return only the corrected SQL query.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT amount FROM ledger",
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "semantics_b",
+        "status": "review_required",
+        "reasons": [
+          "unambiguous_error_class_not_observed",
+          "classification_action_semantics_review_required"
+        ],
+        "final": "SELECT id FROM ledger WHERE id > 0",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "You are a SQL expert. Given the database schema below, write a single SQL query that answers the question.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\nReturn only the SQL query, without any explanation or markdown formatting.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger",
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": false,
+            "rows": [],
+            "error": "semantics failure [runtime_bridge_stage24_semantics_b]"
+          },
+          {
+            "kind": "llm",
+            "prompt": "You are a SQL expert. A previous SQL query failed or was incorrect.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\n### Previous SQL\nSELECT id FROM ledger\n\n### Error Message\nsemantics failure [runtime_bridge_stage24_semantics_b]\n\nThe previous SQL query failed with a semantics issue: it may run but not answer the question correctly. Read the question carefully and write a corrected SQL query that uses the schema accurately. Return only the corrected SQL query.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger WHERE id > 0",
+            "seq": 0
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger WHERE id > 0",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "cross_class_action",
+        "status": "review_required",
+        "reasons": [
+          "same_action_template_across_error_classes"
+        ],
+        "final": null,
+        "trace": [],
+        "error": null
+      }
+    ]
+  },
+  "admission": "not_evaluated"
+}

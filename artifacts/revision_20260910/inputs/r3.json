@@ -1,0 +1,24 @@
+{
+  "purpose": "post-review archived-repeat snapshot; not a prospective freeze",
+  "acquisition_group": "r3",
+  "files": [
+    {
+      "file": "../../phase2/r3_rep0.jsonl",
+      "bytes": 188534,
+      "sha256": "cb2b0de219f15d0b7ccf2948cefc8a682b6f7237f4663f928fbd6e9a8a8c1827",
+      "sha256_16": "cb2b0de219f15d0b"
+    },
+    {
+      "file": "../../phase2/r3_rep1.jsonl",
+      "bytes": 192112,
+      "sha256": "a2e0ced076053b8d9ad0f1c0f9d6922a9547f8347ee1d3ffe3e671f84620cc82",
+      "sha256_16": "a2e0ced076053b8d"
+    },
+    {
+      "file": "../../phase2/r3_rep2.jsonl",
+      "bytes": 193055,
+      "sha256": "623b38d7f8bfae561284fb5fa376f3d9f6a2f73f3b09af9863ec2d48e290231b",
+      "sha256_16": "623b38d7f8bfae56"
+    }
+  ]
+}

@@ -1,0 +1,2910 @@
+{
+  "scope": "Legacy extraction audit; no historical full-response recovery or counterfactual admission",
+  "source_log_count": 36,
+  "counts": {
+    "C": {
+      "slots": 18,
+      "admitted": 0,
+      "neutral_valid_attempts": 0,
+      "attempts": 54,
+      "syntax_error_logged": 38,
+      "unterminated_logged": 38,
+      "truncated_true": 0,
+      "extracted_files_present": 38,
+      "files_conflicting_with_no_fence_log": 0,
+      "saved_file_syntax_error": 38
+    },
+    "D": {
+      "slots": 18,
+      "admitted": 0,
+      "neutral_valid_attempts": 0,
+      "attempts": 54,
+      "syntax_error_logged": 33,
+      "unterminated_logged": 33,
+      "truncated_true": 0,
+      "extracted_files_present": 36,
+      "files_conflicting_with_no_fence_log": 3,
+      "saved_file_syntax_error": 36
+    }
+  },
+  "synthetic_cases": [
+    {
+      "case": "plain_control",
+      "original_code": "def prompt():\n    return \"Return SQL only.\"\n",
+      "provider_response": "```python\ndef prompt():\n    return \"Return SQL only.\"\n```",
+      "original_syntax_error": null,
+      "extracted_code": "def prompt():\n    return \"Return SQL only.\"",
+      "extracted_syntax_error": null,
+      "legacy_truncated_flag": false,
+      "code_preserved": true
+    },
+    {
+      "case": "inline_sql_fence",
+      "original_code": "def prompt():\n    return \"Return only a ```sql fenced answer.\"\n",
+      "provider_response": "```python\ndef prompt():\n    return \"Return only a ```sql fenced answer.\"\n```",
+      "original_syntax_error": null,
+      "extracted_code": "def prompt():\n    return \"Return only a",
+      "extracted_syntax_error": {
+        "message": "unterminated string literal (detected at line 2)",
+        "line": 2,
+        "offset": 12
+      },
+      "legacy_truncated_flag": false,
+      "code_preserved": false
+    },
+    {
+      "case": "docstring_sql_fence",
+      "original_code": "\"\"\"Require a ```sql fenced answer.\"\"\"\ndef prompt():\n    return \"SQL\"\n",
+      "provider_response": "```python\n\"\"\"Require a ```sql fenced answer.\"\"\"\ndef prompt():\n    return \"SQL\"\n```",
+      "original_syntax_error": null,
+      "extracted_code": "\"\"\"Require a",
+      "extracted_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "legacy_truncated_flag": false,
+      "code_preserved": false
+    },
+    {
+      "case": "regex_sql_fence",
+      "original_code": "import re\nPATTERN = re.compile(r\"^```sql(.*?)```$\")\n",
+      "provider_response": "```python\nimport re\nPATTERN = re.compile(r\"^```sql(.*?)```$\")\n```",
+      "original_syntax_error": null,
+      "extracted_code": "import re\nPATTERN = re.compile(r\"^",
+      "extracted_syntax_error": {
+        "message": "unterminated string literal (detected at line 2)",
+        "line": 2,
+        "offset": 22
+      },
+      "legacy_truncated_flag": false,
+      "code_preserved": false
+    }
+  ],
+  "attempts": [
+    {
+      "arm": "C",
+      "builder": "deepseek",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/C_deepseek_s0.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated string literal (detected at line 10) (p2_C_deepseek_s0_format_guard.py, line 10)",
+        "secs": 90.5
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_deepseek_s0/p2_C_deepseek_s0_format_guard_raw0.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated string literal (detected at line 10)",
+        "line": 10,
+        "offset": 9
+      },
+      "saved_tail": "xtracted query.\"\"\"\nimport re\n\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\n\nclass P2P2CDeepseekS0FormatGuard(SQLHarness):\n    _FENCE_RE = re.compile(\n        r\"^\\s*"
+    },
+    {
+      "arm": "C",
+      "builder": "deepseek",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/C_deepseek_s0.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_C_deepseek_s0_format_guard.py, line 1)",
+        "secs": 141.5
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_deepseek_s0/p2_C_deepseek_s0_format_guard_raw1.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Ask DeepSeek to return SQL in a strict single"
+    },
+    {
+      "arm": "C",
+      "builder": "deepseek",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/C_deepseek_s0.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated string literal (detected at line 10) (p2_C_deepseek_s0_format_guard.py, line 10)",
+        "secs": 46.8
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_deepseek_s0/p2_C_deepseek_s0_format_guard_raw2.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated string literal (detected at line 10)",
+        "line": 10,
+        "offset": 13
+      },
+      "saved_tail": "nerator. \"\n            \"Given a database schema and a natural language question, produce the correct SQL query. \"\n            \"Output ONLY a SQL query inside a markdown code fence:"
+    },
+    {
+      "arm": "C",
+      "builder": "deepseek",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/C_deepseek_s1.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated string literal (detected at line 11) (p2_C_deepseek_s1_format_guard.py, line 11)",
+        "secs": 89.6
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_deepseek_s1/p2_C_deepseek_s1_format_guard_raw0.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated string literal (detected at line 11)",
+        "line": 11,
+        "offset": 13
+      },
+      "saved_tail": "\n    def solve(self, question: str) -> str:\n        system_prompt = (\n            \"You are a SQL generation assistant. \"\n            \"You must output exactly one SQL query inside a"
+    },
+    {
+      "arm": "C",
+      "builder": "deepseek",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/C_deepseek_s1.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated string literal (detected at line 23) (p2_C_deepseek_s1_format_guard.py, line 23)",
+        "secs": 67.5
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_deepseek_s1/p2_C_deepseek_s1_format_guard_raw1.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated string literal (detected at line 23)",
+        "line": 23,
+        "offset": 13
+      },
+      "saved_tail": " a precise text-to-SQL generator.\\n\"\n            \"Output requirements:\\n\"\n            \"1. Use only the provided schema.\\n\"\n            \"2. Return exactly one SQL statement inside a"
+    },
+    {
+      "arm": "C",
+      "builder": "deepseek",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/C_deepseek_s1.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_C_deepseek_s1_format_guard.py, line 1)",
+        "secs": 130.6
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_deepseek_s1/p2_C_deepseek_s1_format_guard_raw2.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"P2P2CDeepseekS1FormatGuard enforces a strict"
+    },
+    {
+      "arm": "C",
+      "builder": "deepseek",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/C_deepseek_s2.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 44.5
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_deepseek_s2/p2_C_deepseek_s2_format_guard_raw0.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "C",
+      "builder": "deepseek",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/C_deepseek_s2.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_C_deepseek_s2_format_guard.py, line 1)",
+        "secs": 124.6
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_deepseek_s2/p2_C_deepseek_s2_format_guard_raw1.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Enforces a strict single"
+    },
+    {
+      "arm": "C",
+      "builder": "deepseek",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/C_deepseek_s2.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated string literal (detected at line 31) (p2_C_deepseek_s2_format_guard.py, line 31)",
+        "secs": 106.4
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_deepseek_s2/p2_C_deepseek_s2_format_guard_raw2.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated string literal (detected at line 31)",
+        "line": 31,
+        "offset": 21
+      },
+      "saved_tail": "f strict_sql is None:\n                current_prompt = self._append_feedback(\n                    base_prompt,\n                    \"Your previous answer did not contain exactly one"
+    },
+    {
+      "arm": "C",
+      "builder": "ernie",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/C_ernie_s0.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated string literal (detected at line 7) (p2_C_ernie_s0_format_guard.py, line 7)",
+        "secs": 65.6
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_ernie_s0/p2_C_ernie_s0_format_guard_raw0.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated string literal (detected at line 7)",
+        "line": 7,
+        "offset": 25
+      },
+      "saved_tail": "ge\n\nclass P2P2CErnieS0FormatGuard(SQLHarness):\n    def solve(self, question: str) -> str:\n        system_prompt = \"You are a SQL expert. You must output ONLY the SQL query inside a"
+    },
+    {
+      "arm": "C",
+      "builder": "ernie",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/C_ernie_s0.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated f-string literal (detected at line 11) (p2_C_ernie_s0_format_guard.py, line 11)",
+        "secs": 65.9
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_ernie_s0/p2_C_ernie_s0_format_guard_raw1.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated f-string literal (detected at line 11)",
+        "line": 11,
+        "offset": 13
+      },
+      "saved_tail": "\n        prompt = (\n            f\"Given the following database schema:\\n{self.schema}\\n\\n\"\n            f\"Question: {question}\\n\\n\"\n            f\"Provide ONLY the SQL query inside a"
+    },
+    {
+      "arm": "C",
+      "builder": "ernie",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/C_ernie_s0.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated string literal (detected at line 13) (p2_C_ernie_s0_format_guard.py, line 13)",
+        "secs": 94.3
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_ernie_s0/p2_C_ernie_s0_format_guard_raw2.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated string literal (detected at line 13)",
+        "line": 13,
+        "offset": 13
+      },
+      "saved_tail": "\\n{self.schema}\\n\\n\"\n            f\"Question: {question}\\n\\n\"\n            \"Generate a SQL query that answers the question. \"\n            \"You must output ONLY the SQL query inside a"
+    },
+    {
+      "arm": "C",
+      "builder": "ernie",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/C_ernie_s1.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated string literal (detected at line 14) (p2_C_ernie_s1_format_guard.py, line 14)",
+        "secs": 68.0
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_ernie_s1/p2_C_ernie_s1_format_guard_raw0.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated string literal (detected at line 14)",
+        "line": 14,
+        "offset": 13
+      },
+      "saved_tail": " the schema:\\n{self.schema}\\n\\n\"\n            f\"Question: {question}\\n\\n\"\n            \"Write a SQL query that answers the question. \"\n            \"You must output the query inside a"
+    },
+    {
+      "arm": "C",
+      "builder": "ernie",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/C_ernie_s1.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated string literal (detected at line 11) (p2_C_ernie_s1_format_guard.py, line 11)",
+        "secs": 54.4
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_ernie_s1/p2_C_ernie_s1_format_guard_raw1.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated string literal (detected at line 11)",
+        "line": 11,
+        "offset": 13
+      },
+      "saved_tail": "mphasizes output format and schema fidelity\n        system_prompt = (\n            \"You are a precise SQL generator. You must output ONLY the final SQL query \"\n            \"inside a"
+    },
+    {
+      "arm": "C",
+      "builder": "ernie",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/C_ernie_s1.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 12) (p2_C_ernie_s1_format_guard.py, line 10)",
+        "secs": 55.1
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_ernie_s1/p2_C_ernie_s1_format_guard_raw2.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 12)",
+        "line": 10,
+        "offset": 9
+      },
+      "saved_tail": "ness):\n    def solve(self, question: str) -> str:\n        \"\"\"\n        Generate a SQL query for the given question using the provided schema,\n        ensuring the output is inside a"
+    },
+    {
+      "arm": "C",
+      "builder": "ernie",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/C_ernie_s2.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated f-string literal (detected at line 14) (p2_C_ernie_s2_format_guard.py, line 14)",
+        "secs": 60.2
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_ernie_s2/p2_C_ernie_s2_format_guard_raw0.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated f-string literal (detected at line 14)",
+        "line": 14,
+        "offset": 13
+      },
+      "saved_tail": "  f\"{self.schema}\\n\\n\"\n            f\"Question: {question}\\n\\n\"\n            f\"Write the SQL query to answer the question. \"\n            f\"You MUST output ONLY the SQL query inside a"
+    },
+    {
+      "arm": "C",
+      "builder": "ernie",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/C_ernie_s2.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated f-string literal (detected at line 15) (p2_C_ernie_s2_format_guard.py, line 15)",
+        "secs": 39.2
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_ernie_s2/p2_C_ernie_s2_format_guard_raw1.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated f-string literal (detected at line 15)",
+        "line": 15,
+        "offset": 13
+      },
+      "saved_tail": "\n            f\"Answer the following question: {question}\\n\\n\"\n            f\"Respond with ONLY a SQL query that answers the question. \"\n            f\"The query must be enclosed in a"
+    },
+    {
+      "arm": "C",
+      "builder": "ernie",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/C_ernie_s2.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_C_ernie_s2_format_guard.py, line 1)",
+        "secs": 101.0
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_ernie_s2/p2_C_ernie_s2_format_guard_raw2.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Harness that iteratively prompts a frozen LLM to produce a schema-faithful SQL query inside a"
+    },
+    {
+      "arm": "C",
+      "builder": "glm",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/C_glm_s0.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 304.4
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_glm_s0/p2_C_glm_s0_format_guard_raw0.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "C",
+      "builder": "glm",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/C_glm_s0.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_C_glm_s0_format_guard.py, line 1)",
+        "secs": 181.4
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_glm_s0/p2_C_glm_s0_format_guard_raw1.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"A format-guarded harness that locks a frozen text-to-SQL solver behind a strict one-"
+    },
+    {
+      "arm": "C",
+      "builder": "glm",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/C_glm_s0.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 225.2
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_glm_s0/p2_C_glm_s0_format_guard_raw2.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "C",
+      "builder": "glm",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/C_glm_s1.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 339.9
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_glm_s1/p2_C_glm_s1_format_guard_raw0.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "C",
+      "builder": "glm",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/C_glm_s1.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 360.8
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_glm_s1/p2_C_glm_s1_format_guard_raw1.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "C",
+      "builder": "glm",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/C_glm_s1.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 239.9
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_glm_s1/p2_C_glm_s1_format_guard_raw2.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "C",
+      "builder": "glm",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/C_glm_s2.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_C_glm_s2_format_guard.py, line 1)",
+        "secs": 43.3
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_glm_s2/p2_C_glm_s2_format_guard_raw0.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Guard a frozen weak solver by demanding a single fenced"
+    },
+    {
+      "arm": "C",
+      "builder": "glm",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/C_glm_s2.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 349.0
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_glm_s2/p2_C_glm_s2_format_guard_raw1.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "C",
+      "builder": "glm",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/C_glm_s2.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 227.5
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_glm_s2/p2_C_glm_s2_format_guard_raw2.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "C",
+      "builder": "kimi",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/C_kimi_s0.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_C_kimi_s0_format_guard.py, line 1)",
+        "secs": 189.0
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_kimi_s0/p2_C_kimi_s0_format_guard_raw0.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Format-guard Text-to-SQL harness that prompts the frozen solver for exactly one"
+    },
+    {
+      "arm": "C",
+      "builder": "kimi",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/C_kimi_s0.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_C_kimi_s0_format_guard.py, line 1)",
+        "secs": 404.7
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_kimi_s0/p2_C_kimi_s0_format_guard_raw1.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"FormatGuard harness that forces the frozen Kimi solver to emit exactly one"
+    },
+    {
+      "arm": "C",
+      "builder": "kimi",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/C_kimi_s0.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_C_kimi_s0_format_guard.py, line 1)",
+        "secs": 450.9
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_kimi_s0/p2_C_kimi_s0_format_guard_raw2.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Enforces strict"
+    },
+    {
+      "arm": "C",
+      "builder": "kimi",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/C_kimi_s1.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_C_kimi_s1_format_guard.py, line 1)",
+        "secs": 211.0
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_kimi_s1/p2_C_kimi_s1_format_guard_raw0.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Strict-format Text-to-SQL harness: it forces the frozen solver to answer with exactly one fenced"
+    },
+    {
+      "arm": "C",
+      "builder": "kimi",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/C_kimi_s1.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_C_kimi_s1_format_guard.py, line 1)",
+        "secs": 108.5
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_kimi_s1/p2_C_kimi_s1_format_guard_raw1.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Format-guard harness that forces the frozen weak solver to emit schema-faithful SQL inside a single"
+    },
+    {
+      "arm": "C",
+      "builder": "kimi",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/C_kimi_s1.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 480.5
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_kimi_s1/p2_C_kimi_s1_format_guard_raw2.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "C",
+      "builder": "kimi",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/C_kimi_s2.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_C_kimi_s2_format_guard.py, line 1)",
+        "secs": 396.0
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_kimi_s2/p2_C_kimi_s2_format_guard_raw0.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Format-guard Text-to-SQL harness: it constrains the frozen solver to answer with exactly one"
+    },
+    {
+      "arm": "C",
+      "builder": "kimi",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/C_kimi_s2.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_C_kimi_s2_format_guard.py, line 1)",
+        "secs": 147.8
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_kimi_s2/p2_C_kimi_s2_format_guard_raw1.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Format-guard harness that forces the frozen solver to answer with exactly one"
+    },
+    {
+      "arm": "C",
+      "builder": "kimi",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/C_kimi_s2.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_C_kimi_s2_format_guard.py, line 1)",
+        "secs": 330.2
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_kimi_s2/p2_C_kimi_s2_format_guard_raw2.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Guard a frozen weak Text-to-SQL solver by requiring exactly one"
+    },
+    {
+      "arm": "C",
+      "builder": "minimax",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/C_minimax_s0.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_C_minimax_s0_format_guard.py, line 1)",
+        "secs": 12.9
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_minimax_s0/p2_C_minimax_s0_format_guard_raw0.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Prompt-to-prompt format-guarded harness enforcing strict"
+    },
+    {
+      "arm": "C",
+      "builder": "minimax",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/C_minimax_s0.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_C_minimax_s0_format_guard.py, line 1)",
+        "secs": 67.6
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_minimax_s0/p2_C_minimax_s0_format_guard_raw1.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Wraps a frozen weak Text-to-SQL solver with strict output-format guarding that enforces"
+    },
+    {
+      "arm": "C",
+      "builder": "minimax",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/C_minimax_s0.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_C_minimax_s0_format_guard.py, line 1)",
+        "secs": 13.7
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_minimax_s0/p2_C_minimax_s0_format_guard_raw2.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Harness wrapping a weak Text-to-SQL solver with strict"
+    },
+    {
+      "arm": "C",
+      "builder": "minimax",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/C_minimax_s1.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_C_minimax_s1_format_guard.py, line 1)",
+        "secs": 20.0
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_minimax_s1/p2_C_minimax_s1_format_guard_raw0.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"P2P-to-C format-guard harness: post-processes weak solver output to enforce a clean"
+    },
+    {
+      "arm": "C",
+      "builder": "minimax",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/C_minimax_s1.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_C_minimax_s1_format_guard.py, line 1)",
+        "secs": 16.6
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_minimax_s1/p2_C_minimax_s1_format_guard_raw1.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Format-guard harness enforcing strict"
+    },
+    {
+      "arm": "C",
+      "builder": "minimax",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/C_minimax_s1.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated string literal (detected at line 16) (p2_C_minimax_s1_format_guard.py, line 16)",
+        "secs": 77.1
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_minimax_s1/p2_C_minimax_s1_format_guard_raw2.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated string literal (detected at line 16)",
+        "line": 16,
+        "offset": 5
+      },
+      "saved_tail": "ema. Output rules are strict \"\n    \"and will be machine-validated: (1) emit exactly one fenced SQL code block delimited by \"\n    \"triple-backticks with the language tag 'sql' (i.e."
+    },
+    {
+      "arm": "C",
+      "builder": "minimax",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/C_minimax_s2.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_C_minimax_s2_format_guard.py, line 1)",
+        "secs": 37.9
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_minimax_s2/p2_C_minimax_s2_format_guard_raw0.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Format-guard harness that retries the weak solver until it emits a single"
+    },
+    {
+      "arm": "C",
+      "builder": "minimax",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/C_minimax_s2.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_C_minimax_s2_format_guard.py, line 1)",
+        "secs": 7.8
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_minimax_s2/p2_C_minimax_s2_format_guard_raw1.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Prompt-to-prompt correction harness that enforces strict"
+    },
+    {
+      "arm": "C",
+      "builder": "minimax",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/C_minimax_s2.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 9) (p2_C_minimax_s2_format_guard.py, line 8)",
+        "secs": 9.5
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_minimax_s2/p2_C_minimax_s2_format_guard_raw2.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 9)",
+        "line": 8,
+        "offset": 5
+      },
+      "saved_tail": "2CMinimaxS2FormatGuard(SQLHarness):\n    \"\"\"Persona 2 + Persona 2C: a format-guard harness that emphasizes output format\n    and schema fidelity, requiring the final answer inside a"
+    },
+    {
+      "arm": "C",
+      "builder": "qwen",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/C_qwen_s0.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated string literal (detected at line 12) (p2_C_qwen_s0_format_guard.py, line 12)",
+        "secs": 387.2
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_qwen_s0/p2_C_qwen_s0_format_guard_raw0.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated string literal (detected at line 12)",
+        "line": 12,
+        "offset": 9
+      },
+      "saved_tail": "ard(SQLHarness):\n    MAX_ATTEMPTS = 3\n\n    _SYSTEM = (\n        \"You are a precise Text-to-SQL engine. \"\n        \"Your entire reply must be exactly one SQL statement inside a single"
+    },
+    {
+      "arm": "C",
+      "builder": "qwen",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/C_qwen_s0.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated string literal (detected at line 73) (p2_C_qwen_s0_format_guard.py, line 73)",
+        "secs": 422.2
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_qwen_s0/p2_C_qwen_s0_format_guard_raw1.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated string literal (detected at line 73)",
+        "line": 73,
+        "offset": 13
+      },
+      "saved_tail": "\n\n    def _system_prompt(self) -> str:\n        return (\n            \"You are a strict Text-to-SQL assistant. \"\n            \"Your entire reply must be exactly one SQL query inside a"
+    },
+    {
+      "arm": "C",
+      "builder": "qwen",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/C_qwen_s0.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 610.3
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_qwen_s0/p2_C_qwen_s0_format_guard_raw2.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "C",
+      "builder": "qwen",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/C_qwen_s1.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 282.6
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_qwen_s1/p2_C_qwen_s1_format_guard_raw0.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "C",
+      "builder": "qwen",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/C_qwen_s1.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 509.5
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_qwen_s1/p2_C_qwen_s1_format_guard_raw1.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "C",
+      "builder": "qwen",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/C_qwen_s1.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 448.6
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_qwen_s1/p2_C_qwen_s1_format_guard_raw2.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "C",
+      "builder": "qwen",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/C_qwen_s2.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 336.4
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_qwen_s2/p2_C_qwen_s2_format_guard_raw0.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "C",
+      "builder": "qwen",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/C_qwen_s2.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 348.6
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_qwen_s2/p2_C_qwen_s2_format_guard_raw1.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "C",
+      "builder": "qwen",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/C_qwen_s2.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 531.5
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/C_qwen_s2/p2_C_qwen_s2_format_guard_raw2.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "D",
+      "builder": "deepseek",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/D_deepseek_s0.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 115.7
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_deepseek_s0/p2_D_deepseek_s0_format_guard_raw0.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "D",
+      "builder": "deepseek",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/D_deepseek_s0.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated string literal (detected at line 13) (p2_D_deepseek_s0_format_guard.py, line 13)",
+        "secs": 211.2
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_deepseek_s0/p2_D_deepseek_s0_format_guard_raw1.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated string literal (detected at line 13)",
+        "line": 13,
+        "offset": 13
+      },
+      "saved_tail": "and columns in the schema; do not invent names.\\n\"\n            \"The final answer must be exactly one SQL code block in this format, with no text before or after:\\n\\n\"\n            \""
+    },
+    {
+      "arm": "D",
+      "builder": "deepseek",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/D_deepseek_s0.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_deepseek_s0_format_guard.py, line 1)",
+        "secs": 108.7
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_deepseek_s0/p2_D_deepseek_s0_format_guard_raw2.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Uses a zero-shot DeepSeek prompt to enforce a single"
+    },
+    {
+      "arm": "D",
+      "builder": "deepseek",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/D_deepseek_s1.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_deepseek_s1_format_guard.py, line 1)",
+        "secs": 92.1
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_deepseek_s1/p2_D_deepseek_s1_format_guard_raw0.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Prompt, extract, execute, and repair to guarantee a single"
+    },
+    {
+      "arm": "D",
+      "builder": "deepseek",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/D_deepseek_s1.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_deepseek_s1_format_guard.py, line 1)",
+        "secs": 58.2
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_deepseek_s1/p2_D_deepseek_s1_format_guard_raw1.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Enforces a strict"
+    },
+    {
+      "arm": "D",
+      "builder": "deepseek",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/D_deepseek_s1.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated string literal (detected at line 9) (p2_D_deepseek_s1_format_guard.py, line 9)",
+        "secs": 100.6
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_deepseek_s1/p2_D_deepseek_s1_format_guard_raw2.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated string literal (detected at line 9)",
+        "line": 9,
+        "offset": 28
+      },
+      "saved_tail": "ith corrective prompts.\"\"\"\nimport re\n\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\n\nclass P2P2DDeepseekS1FormatGuard(SQLHarness):\n    _FENCE_RE = re.compile(r\"\\A\\s*"
+    },
+    {
+      "arm": "D",
+      "builder": "deepseek",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/D_deepseek_s2.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated string literal (detected at line 11) (p2_D_deepseek_s2_format_guard.py, line 11)",
+        "secs": 66.4
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_deepseek_s2/p2_D_deepseek_s2_format_guard_raw0.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated string literal (detected at line 11)",
+        "line": 11,
+        "offset": 13
+      },
+      "saved_tail": "m_prompt = (\n            \"You are a precise text-to-SQL translator. \"\n            \"Use only the database schema provided below. \"\n            \"Output exactly one SQL query inside a"
+    },
+    {
+      "arm": "D",
+      "builder": "deepseek",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/D_deepseek_s2.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_deepseek_s2_format_guard.py, line 1)",
+        "secs": 109.9
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_deepseek_s2/p2_D_deepseek_s2_format_guard_raw1.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"A Text-to-SQL harness that repeatedly demands a single"
+    },
+    {
+      "arm": "D",
+      "builder": "deepseek",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/D_deepseek_s2.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_deepseek_s2_format_guard.py, line 1)",
+        "secs": 229.7
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_deepseek_s2/p2_D_deepseek_s2_format_guard_raw2.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Harness that enforces a single"
+    },
+    {
+      "arm": "D",
+      "builder": "ernie",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/D_ernie_s0.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_ernie_s0_format_guard.py, line 1)",
+        "secs": 20.5
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_ernie_s0/p2_D_ernie_s0_format_guard_raw0.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Generates a Text-to-SQL query by prompting a frozen LLM with strict schema and format instructions and extracts the SQL from a"
+    },
+    {
+      "arm": "D",
+      "builder": "ernie",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/D_ernie_s0.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_ernie_s0_format_guard.py, line 1)",
+        "secs": 39.1
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_ernie_s0/p2_D_ernie_s0_format_guard_raw1.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Uses a frozen weak LLM with iterative format enforcement and schema-aware execution validation to extract valid SQL inside a"
+    },
+    {
+      "arm": "D",
+      "builder": "ernie",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/D_ernie_s0.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_ernie_s0_format_guard.py, line 1)",
+        "secs": 32.7
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_ernie_s0/p2_D_ernie_s0_format_guard_raw2.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"A harness that uses a single LLM call with strict format instructions to generate a Text-to-SQL query, extracting and returning the SQL from a"
+    },
+    {
+      "arm": "D",
+      "builder": "ernie",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/D_ernie_s1.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_ernie_s1_format_guard.py, line 1)",
+        "secs": 23.7
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_ernie_s1/p2_D_ernie_s1_format_guard_raw0.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"A format-guarded Text-to-SQL harness that enforces schema fidelity and extracts SQL from a"
+    },
+    {
+      "arm": "D",
+      "builder": "ernie",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/D_ernie_s1.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 103.4
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_ernie_s1/p2_D_ernie_s1_format_guard_raw1.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "D",
+      "builder": "ernie",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/D_ernie_s1.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_ernie_s1_format_guard.py, line 1)",
+        "secs": 33.8
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_ernie_s1/p2_D_ernie_s1_format_guard_raw2.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Iteratively prompts a frozen LLM for SQL within a"
+    },
+    {
+      "arm": "D",
+      "builder": "ernie",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/D_ernie_s2.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated string literal (detected at line 16) (p2_D_ernie_s2_format_guard.py, line 16)",
+        "secs": 41.6
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_ernie_s2/p2_D_ernie_s2_format_guard_raw0.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated string literal (detected at line 16)",
+        "line": 16,
+        "offset": 13
+      },
+      "saved_tail": "swers the question.\\n\"\n            \"- The query must strictly adhere to the provided schema (use exact table and column names).\\n\"\n            \"- Output ONLY the SQL query inside a"
+    },
+    {
+      "arm": "D",
+      "builder": "ernie",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/D_ernie_s2.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 31.8
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_ernie_s2/p2_D_ernie_s2_format_guard_raw1.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": true,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"A harness that enforces strict SQL output formatting via a"
+    },
+    {
+      "arm": "D",
+      "builder": "ernie",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/D_ernie_s2.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted f-string literal (detected at line 18) (p2_D_ernie_s2_format_guard.py, line 9)",
+        "secs": 90.5
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_ernie_s2/p2_D_ernie_s2_format_guard_raw2.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted f-string literal (detected at line 18)",
+        "line": 9,
+        "offset": 18
+      },
+      "saved_tail": "n: {question}\n\nCRITICAL INSTRUCTIONS:\n1. Use ONLY the table and column names exactly as provided in the schema. Do not invent or modify names.\n2. Your final answer MUST be inside a"
+    },
+    {
+      "arm": "D",
+      "builder": "glm",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/D_glm_s0.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_glm_s0_format_guard.py, line 1)",
+        "secs": 330.4
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_glm_s0/p2_D_glm_s0_format_guard_raw0.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"FormatGuard harness that enforces, in control flow, a strict output contract: it re-prompts a frozen weak Text-to-SQL solver until its entire reply is exactly one"
+    },
+    {
+      "arm": "D",
+      "builder": "glm",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/D_glm_s0.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 210.2
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_glm_s0/p2_D_glm_s0_format_guard_raw1.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "D",
+      "builder": "glm",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/D_glm_s0.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 206.3
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_glm_s0/p2_D_glm_s0_format_guard_raw2.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "D",
+      "builder": "glm",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/D_glm_s1.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 246.7
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_glm_s1/p2_D_glm_s1_format_guard_raw0.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "D",
+      "builder": "glm",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/D_glm_s1.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 332.9
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_glm_s1/p2_D_glm_s1_format_guard_raw1.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "D",
+      "builder": "glm",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/D_glm_s1.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_glm_s1_format_guard.py, line 1)",
+        "secs": 292.9
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_glm_s1/p2_D_glm_s1_format_guard_raw2.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"P2P2DGlmS1FormatGuard enforces, in control flow, a strict output contract on the frozen solver -- the entire reply must be exactly one"
+    },
+    {
+      "arm": "D",
+      "builder": "glm",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/D_glm_s2.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 264.0
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_glm_s2/p2_D_glm_s2_format_guard_raw0.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "D",
+      "builder": "glm",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/D_glm_s2.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 315.1
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_glm_s2/p2_D_glm_s2_format_guard_raw1.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "D",
+      "builder": "glm",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/D_glm_s2.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 249.9
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_glm_s2/p2_D_glm_s2_format_guard_raw2.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "D",
+      "builder": "kimi",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/D_kimi_s0.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_kimi_s0_format_guard.py, line 1)",
+        "secs": 143.4
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_kimi_s0/p2_D_kimi_s0_format_guard_raw0.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Format-guard harness: force the frozen weak solver to emit schema-faithful SQL inside a single"
+    },
+    {
+      "arm": "D",
+      "builder": "kimi",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/D_kimi_s0.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_kimi_s0_format_guard.py, line 1)",
+        "secs": 236.3
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_kimi_s0/p2_D_kimi_s0_format_guard_raw1.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Format-guard Text-to-SQL harness: forces the LLM to answer with exactly one"
+    },
+    {
+      "arm": "D",
+      "builder": "kimi",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/D_kimi_s0.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_kimi_s0_format_guard.py, line 1)",
+        "secs": 438.6
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_kimi_s0/p2_D_kimi_s0_format_guard_raw2.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Format-guard harness: re-prompts the frozen weak solver in a validate-and-repair loop until its reply is exactly one schema-faithful query inside a single"
+    },
+    {
+      "arm": "D",
+      "builder": "kimi",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/D_kimi_s1.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 13) (p2_D_kimi_s1_format_guard.py, line 10)",
+        "secs": 228.7
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_kimi_s1/p2_D_kimi_s1_format_guard_raw0.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 13)",
+        "line": 10,
+        "offset": 5
+      },
+      "saved_tail": "  \"\"\"Strict output-format + schema-fidelity guard around the frozen weak solver.\n\n    Control-flow strategy:\n      1. Prompt with the schema and a hard format contract: exactly one"
+    },
+    {
+      "arm": "D",
+      "builder": "kimi",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/D_kimi_s1.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_kimi_s1_format_guard.py, line 1)",
+        "secs": 394.3
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_kimi_s1/p2_D_kimi_s1_format_guard_raw1.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Format-guard harness that re-asks the frozen solver until its reply is exactly one"
+    },
+    {
+      "arm": "D",
+      "builder": "kimi",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/D_kimi_s1.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_kimi_s1_format_guard.py, line 1)",
+        "secs": 358.4
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_kimi_s1/p2_D_kimi_s1_format_guard_raw2.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Format-guard harness that forces a weak Text-to-SQL solver to emit schema-faithful SQL inside a single"
+    },
+    {
+      "arm": "D",
+      "builder": "kimi",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/D_kimi_s2.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_kimi_s2_format_guard.py, line 1)",
+        "secs": 258.3
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_kimi_s2/p2_D_kimi_s2_format_guard_raw0.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Format-guard harness that forces the frozen solver to emit one schema-faithful SQL query inside a lone"
+    },
+    {
+      "arm": "D",
+      "builder": "kimi",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/D_kimi_s2.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 428.9
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_kimi_s2/p2_D_kimi_s2_format_guard_raw1.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": true,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Format-and-schema-fidelity harness: it forces the frozen solver to answer with a single"
+    },
+    {
+      "arm": "D",
+      "builder": "kimi",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/D_kimi_s2.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_kimi_s2_format_guard.py, line 1)",
+        "secs": 394.2
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_kimi_s2/p2_D_kimi_s2_format_guard_raw2.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Format-guard harness: demand a single"
+    },
+    {
+      "arm": "D",
+      "builder": "minimax",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/D_minimax_s0.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 8) (p2_D_minimax_s0_format_guard.py, line 8)",
+        "secs": 30.0
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_minimax_s0/p2_D_minimax_s0_format_guard_raw0.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 8)",
+        "line": 8,
+        "offset": 5
+      },
+      "saved_tail": "-formed queries.\"\"\"\nimport re\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\n\nclass P2P2DMinimaxS0FormatGuard(SQLHarness):\n    \"\"\"Format-guarded harness that enforces"
+    },
+    {
+      "arm": "D",
+      "builder": "minimax",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/D_minimax_s0.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_minimax_s0_format_guard.py, line 1)",
+        "secs": 14.9
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_minimax_s0/p2_D_minimax_s0_format_guard_raw1.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Wraps a frozen weak Text-to-SQL solver with a strict format guard that enforces a single"
+    },
+    {
+      "arm": "D",
+      "builder": "minimax",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/D_minimax_s0.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_minimax_s0_format_guard.py, line 1)",
+        "secs": 40.5
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_minimax_s0/p2_D_minimax_s0_format_guard_raw2.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Format-fence guard that retries when the weak solver's output lacks a"
+    },
+    {
+      "arm": "D",
+      "builder": "minimax",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/D_minimax_s1.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_minimax_s1_format_guard.py, line 1)",
+        "secs": 11.6
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_minimax_s1/p2_D_minimax_s1_format_guard_raw0.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Wraps a frozen Text-to-SQL solver with strict format guarding requiring fenced"
+    },
+    {
+      "arm": "D",
+      "builder": "minimax",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/D_minimax_s1.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 39.2
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_minimax_s1/p2_D_minimax_s1_format_guard_raw1.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "D",
+      "builder": "minimax",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/D_minimax_s1.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_minimax_s1_format_guard.py, line 1)",
+        "secs": 23.6
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_minimax_s1/p2_D_minimax_s1_format_guard_raw2.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Wraps a frozen weak Text-to-SQL solver with a strict output-format guard that mandates a fenced"
+    },
+    {
+      "arm": "D",
+      "builder": "minimax",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/D_minimax_s2.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_minimax_s2_format_guard.py, line 1)",
+        "secs": 30.9
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_minimax_s2/p2_D_minimax_s2_format_guard_raw0.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Prompt-to-prompt 2-stage format-guard harness that fences the final SQL in a"
+    },
+    {
+      "arm": "D",
+      "builder": "minimax",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/D_minimax_s2.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_minimax_s2_format_guard.py, line 1)",
+        "secs": 10.0
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_minimax_s2/p2_D_minimax_s2_format_guard_raw1.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Wraps a weak Text-to-SQL solver with strict output-format guarding, requiring a fenced"
+    },
+    {
+      "arm": "D",
+      "builder": "minimax",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/D_minimax_s2.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 2.2
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_minimax_s2/p2_D_minimax_s2_format_guard_raw2.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": true,
+      "saved_syntax_error": {
+        "message": "unterminated string literal (detected at line 12)",
+        "line": 12,
+        "offset": 13
+      },
+      "saved_tail": " Text-to-SQL generator.\\n\"\n            \"STRICT OUTPUT FORMAT RULES:\\n\"\n            \"1. You MUST output exactly one SQL query.\\n\"\n            \"2. The SQL query MUST be enclosed in a"
+    },
+    {
+      "arm": "D",
+      "builder": "qwen",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/D_qwen_s0.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 214.5
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_qwen_s0/p2_D_qwen_s0_format_guard_raw0.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "D",
+      "builder": "qwen",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/D_qwen_s0.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 327.1
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_qwen_s0/p2_D_qwen_s0_format_guard_raw1.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "D",
+      "builder": "qwen",
+      "seed": 0,
+      "log_path": "artifacts/phase2/gen/D_qwen_s0.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 542.5
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_qwen_s0/p2_D_qwen_s0_format_guard_raw2.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "D",
+      "builder": "qwen",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/D_qwen_s1.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 682.9
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_qwen_s1/p2_D_qwen_s1_format_guard_raw0.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "D",
+      "builder": "qwen",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/D_qwen_s1.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 565.5
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_qwen_s1/p2_D_qwen_s1_format_guard_raw1.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "D",
+      "builder": "qwen",
+      "seed": 1,
+      "log_path": "artifacts/phase2/gen/D_qwen_s1.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 602.9
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_qwen_s1/p2_D_qwen_s1_format_guard_raw2.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "D",
+      "builder": "qwen",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/D_qwen_s2.json",
+      "slot_index": 7,
+      "attempt_index": 0,
+      "log_record": {
+        "attempt": 0,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "reason": "APITimeoutError('Request timed out.')",
+        "secs": 900.0
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_qwen_s2/p2_D_qwen_s2_format_guard_raw0.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    },
+    {
+      "arm": "D",
+      "builder": "qwen",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/D_qwen_s2.json",
+      "slot_index": 7,
+      "attempt_index": 1,
+      "log_record": {
+        "attempt": 1,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "neutral_detail": "SyntaxError: unterminated triple-quoted string literal (detected at line 1) (p2_D_qwen_s2_format_guard.py, line 1)",
+        "secs": 300.6
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_qwen_s2/p2_D_qwen_s2_format_guard_raw1.py",
+      "extracted_present": true,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": {
+        "message": "unterminated triple-quoted string literal (detected at line 1)",
+        "line": 1,
+        "offset": 1
+      },
+      "saved_tail": "\"\"\"Harness that forces a frozen weak solver to produce schema-faithful SQL by validating and retrying until the answer is an executable single"
+    },
+    {
+      "arm": "D",
+      "builder": "qwen",
+      "seed": 2,
+      "log_path": "artifacts/phase2/gen/D_qwen_s2.json",
+      "slot_index": 7,
+      "attempt_index": 2,
+      "log_record": {
+        "attempt": 2,
+        "neutral_valid": false,
+        "mechanism_pass": false,
+        "truncated": false,
+        "reason": "no python fence",
+        "secs": 407.0
+      },
+      "slot_admitted": false,
+      "extracted_path": "artifacts/phase2/raw/D_qwen_s2/p2_D_qwen_s2_format_guard_raw2.py",
+      "extracted_present": false,
+      "raw_conflicts_with_no_fence_log": false,
+      "saved_syntax_error": null,
+      "saved_tail": null
+    }
+  ],
+  "bindings": {
+    "experiment/phase2/generate.py": "20d847647c69cf6276df157b1b6763c8ac841b019ee7bbb89fa4b19e04a12d47",
+    "experiment/revision/generation_extraction_audit.py": "6537bb785863e8d45284e9de802ce871ce681e4df74c41ef0986ed0c41a65136",
+    "artifacts/phase2/gen/C_deepseek_s0.json": "b8ebef3b11b4fdd0adf78060c74580af4c6cf42e8433a951bba4276e6210d901",
+    "artifacts/phase2/raw/C_deepseek_s0/p2_C_deepseek_s0_format_guard_raw0.py": "5e1aef27ca25c74c8458650302b6b65dd893584b942b96e1c29bf472d2c184f8",
+    "artifacts/phase2/raw/C_deepseek_s0/p2_C_deepseek_s0_format_guard_raw1.py": "69437cf871ea3eb89885066fc5bb7334aff4e1d6de7bb43406da09711186d5b3",
+    "artifacts/phase2/raw/C_deepseek_s0/p2_C_deepseek_s0_format_guard_raw2.py": "03aacf4d06fa551c814c8769311edb5db8a9461dc916e1b648cbc251d690644f",
+    "artifacts/phase2/gen/C_deepseek_s1.json": "d3a20e92d5e477115ba67fd97f9852698001e84215ad37e21539eb5d444e9d8a",
+    "artifacts/phase2/raw/C_deepseek_s1/p2_C_deepseek_s1_format_guard_raw0.py": "92097a830dfd58de875d1200243b0d6dd06c39937ec5e0e24df56d4c83437689",
+    "artifacts/phase2/raw/C_deepseek_s1/p2_C_deepseek_s1_format_guard_raw1.py": "5040afe8ef4df66db9e0bef9a95ea5797e50ada86fba78ab21170555eda01781",
+    "artifacts/phase2/raw/C_deepseek_s1/p2_C_deepseek_s1_format_guard_raw2.py": "cab7b9f5eb40c7321c447898d531365926fc7669e5c45e533ddd43d0414ab7a0",
+    "artifacts/phase2/gen/C_deepseek_s2.json": "66ba68d422456f36f666424dcb2da7f50cfcecb569956d887d5c25635d48de41",
+    "artifacts/phase2/raw/C_deepseek_s2/p2_C_deepseek_s2_format_guard_raw1.py": "e486c82dfd5539ca95a2757ee8caccb6b0f4a0db4be70c0df524607d360557de",
+    "artifacts/phase2/raw/C_deepseek_s2/p2_C_deepseek_s2_format_guard_raw2.py": "7e14e07d0ce05011b47d19621df3b2a7b0a02a90dbea1b2475fce0d1a05936d7",
+    "artifacts/phase2/gen/C_ernie_s0.json": "9fd444fdfaf27b2c2a85eb1cfb16dbe41538e65ab71b3c83a87138934e3b6daf",
+    "artifacts/phase2/raw/C_ernie_s0/p2_C_ernie_s0_format_guard_raw0.py": "acc5fa85a59eb0665cb858ba0edba8e55d4ea48c3d223430252ada349a1e0e4e",
+    "artifacts/phase2/raw/C_ernie_s0/p2_C_ernie_s0_format_guard_raw1.py": "c2eec18010793a611292980bf5e8fa61b2f35ea6428ab4327aa0531d4e1a7e36",
+    "artifacts/phase2/raw/C_ernie_s0/p2_C_ernie_s0_format_guard_raw2.py": "298adf131a17be7e3accad555bba1106393c09aa4a9c9097c478b43d5d2951d6",
+    "artifacts/phase2/gen/C_ernie_s1.json": "996d2081c96b183ce35892780a20133b8a497898fdc9089531a435050eee99f1",
+    "artifacts/phase2/raw/C_ernie_s1/p2_C_ernie_s1_format_guard_raw0.py": "35e5b6b719382916e7eadeebceebd6eb46f5d89fabb55d1fca09604ea4eecc38",
+    "artifacts/phase2/raw/C_ernie_s1/p2_C_ernie_s1_format_guard_raw1.py": "d7fa13a30b7c53c9d9195ae58360ba7f669b87d6b8cc707551a8513c1dfab7fb",
+    "artifacts/phase2/raw/C_ernie_s1/p2_C_ernie_s1_format_guard_raw2.py": "bceda7a1a9e1585ec0e776de1a2d519879e6aa355caf3c1468751ae183361d87",
+    "artifacts/phase2/gen/C_ernie_s2.json": "854547850426de627e223c03e94b438e2d5f25061c892f7c132bad860b2267a6",
+    "artifacts/phase2/raw/C_ernie_s2/p2_C_ernie_s2_format_guard_raw0.py": "5897d9ff5b16f29fd674b9b6e078bd2498232078d4eaf67200a3cf602a4d0b78",
+    "artifacts/phase2/raw/C_ernie_s2/p2_C_ernie_s2_format_guard_raw1.py": "ed3bb5e21133a0c665a542d6428fb56e49ada8f4eeda69883b9797892166ff5b",
+    "artifacts/phase2/raw/C_ernie_s2/p2_C_ernie_s2_format_guard_raw2.py": "63aa99b352f5daee4c07cb27ae1a79aec162e4cd220c070cfe415f27b2d7dd04",
+    "artifacts/phase2/gen/C_glm_s0.json": "a6a4372f0ff909d63c31386a5926c39ec8aa747bc09a722f65037e7ea012cd6c",
+    "artifacts/phase2/raw/C_glm_s0/p2_C_glm_s0_format_guard_raw1.py": "d69027b1e0b51ef835f033a6b35964e6b9d88a0d0c56eae1288ca00f5eb96023",
+    "artifacts/phase2/gen/C_glm_s1.json": "023619aa475ebbf383c956456dc03b3bfe3a6358800d36ea3cbcabe54638b6ae",
+    "artifacts/phase2/gen/C_glm_s2.json": "d9121d831320e7ac7570a93ce91907b86fb14483be5492aaf9ca72c16e5a3583",
+    "artifacts/phase2/raw/C_glm_s2/p2_C_glm_s2_format_guard_raw0.py": "0952812c232ea8739320f917b7e832fd65532102d037e4da5c153d7db6811e5c",
+    "artifacts/phase2/gen/C_kimi_s0.json": "8134ce78d69f0baf00f85596cc9bb3c568afae6dbbd4b0828db37bac7e6f83aa",
+    "artifacts/phase2/raw/C_kimi_s0/p2_C_kimi_s0_format_guard_raw0.py": "783e4c31a4e7dbf967de212ee45896aa00ead398e8b5a220ddbff3f603acdb2a",
+    "artifacts/phase2/raw/C_kimi_s0/p2_C_kimi_s0_format_guard_raw1.py": "ce9f2c422be44c5b27b7ae28539e8076bdf8a5d470cfe99c9e10aeaace21dd05",
+    "artifacts/phase2/raw/C_kimi_s0/p2_C_kimi_s0_format_guard_raw2.py": "c256b5e9002a648cf3176721613eef2407ca6cfbe02046eceb68c382c3be3e69",
+    "artifacts/phase2/gen/C_kimi_s1.json": "c8cb7bf4b6b25b65c5417e52d862238f2ee7ede87bf83c460ba251c2915d30e1",
+    "artifacts/phase2/raw/C_kimi_s1/p2_C_kimi_s1_format_guard_raw0.py": "4b5184a7636528dc98d9302056f31e5431d06072f28c13ce3fa4af7539c675b1",
+    "artifacts/phase2/raw/C_kimi_s1/p2_C_kimi_s1_format_guard_raw1.py": "357d813000ddc56b4ae770563a286f49a113156d44c822c61240ae124dd5c04c",
+    "artifacts/phase2/gen/C_kimi_s2.json": "0a52723bc3fdc773364edde7f950809c862664413b5f14b980b526b79aca6fcb",
+    "artifacts/phase2/raw/C_kimi_s2/p2_C_kimi_s2_format_guard_raw0.py": "19c643140002784f5447622fe54c64b51704bd65e4066f0ce2376d7f63654aad",
+    "artifacts/phase2/raw/C_kimi_s2/p2_C_kimi_s2_format_guard_raw1.py": "c8072c0566ee7ebf18a844f8bd125bd746034e18b66e15d78783e3412dabac18",
+    "artifacts/phase2/raw/C_kimi_s2/p2_C_kimi_s2_format_guard_raw2.py": "e94e695a66018adefa888df4c011d38e8d7f2267db164aaff648c0fd0b4d7ade",
+    "artifacts/phase2/gen/C_minimax_s0.json": "026002fc2bcd7f09c04e20f8070d5da63eee6180a4c20ec8ff98d3e56f7182cd",
+    "artifacts/phase2/raw/C_minimax_s0/p2_C_minimax_s0_format_guard_raw0.py": "a5eaa8e254514842e0260f5c3748c12e62b6dc12d3461bbef6b256643bf334f8",
+    "artifacts/phase2/raw/C_minimax_s0/p2_C_minimax_s0_format_guard_raw1.py": "f93601606bb81fff8ab2405608c5e8e0bb1ddf7f0d90aeeae95b6f2f55a3f192",
+    "artifacts/phase2/raw/C_minimax_s0/p2_C_minimax_s0_format_guard_raw2.py": "614e576802b14be709f00ff70cb7b6159f7f9caef853ce530e7c437824fcdfbe",
+    "artifacts/phase2/gen/C_minimax_s1.json": "be1daedca67b2ea1d07228670409020b84439fc8498854fb9c27befea93ff99f",
+    "artifacts/phase2/raw/C_minimax_s1/p2_C_minimax_s1_format_guard_raw0.py": "bc8aeef1c75651857cc1d537e4bf5d4b1d90a148e9d73e5cac5328d167027d1e",
+    "artifacts/phase2/raw/C_minimax_s1/p2_C_minimax_s1_format_guard_raw1.py": "a44023edb7645745db24f9c594122ef4d52fca05cfd5806fa96ea08438866cfc",
+    "artifacts/phase2/raw/C_minimax_s1/p2_C_minimax_s1_format_guard_raw2.py": "4fff89e76279d2be3655560fff87f0a3ea0014c4483b2aacbce3ca4066ca5d66",
+    "artifacts/phase2/gen/C_minimax_s2.json": "64d35a958cf4b1f324d02737736512fb0c6d1821c348c82d4b0fa31538e55368",
+    "artifacts/phase2/raw/C_minimax_s2/p2_C_minimax_s2_format_guard_raw0.py": "aa56ad94246391e767f3247a957134949559f1dc4837fb750568b269ff9e77a6",
+    "artifacts/phase2/raw/C_minimax_s2/p2_C_minimax_s2_format_guard_raw1.py": "fcdd88c737d80cafda6b0e5a7eae8a205c67a0fd9300e26e5e18357aa7414530",
+    "artifacts/phase2/raw/C_minimax_s2/p2_C_minimax_s2_format_guard_raw2.py": "6918cf0a61a70cc41545076b78262354462fbd044e11022b336642ee057b6caf",
+    "artifacts/phase2/gen/C_qwen_s0.json": "07af6f48bc3e34932765a1b6315b38fdb912815930a7574dd1b91a8ac2da9748",
+    "artifacts/phase2/raw/C_qwen_s0/p2_C_qwen_s0_format_guard_raw0.py": "ae8e8cfe2e2349b0720acf54b4ec9203fc3af1759322eb38af91dc554d97c305",
+    "artifacts/phase2/raw/C_qwen_s0/p2_C_qwen_s0_format_guard_raw1.py": "7856fbebc0ca131d128971c557a9118c1ebe40c42abdf2d8aa0896b3d552d628",
+    "artifacts/phase2/gen/C_qwen_s1.json": "9936c9ed28dc76551b9020a0ed64c5081597023decbeaa0a16dc6f060b57db0a",
+    "artifacts/phase2/gen/C_qwen_s2.json": "3a69d772f80b18ac63356279898f2da39dec061158cecca932a49a353ac84855",
+    "artifacts/phase2/gen/D_deepseek_s0.json": "7b6ffb6cfda3f72c1db987b347ede93a7e8cd01d161c52d6048c9a69b81d1551",
+    "artifacts/phase2/raw/D_deepseek_s0/p2_D_deepseek_s0_format_guard_raw1.py": "e3e790bcedd07a59393de6de5ed69d62b8ccf860034b6303aab4c4c80696bb1b",
+    "artifacts/phase2/raw/D_deepseek_s0/p2_D_deepseek_s0_format_guard_raw2.py": "570602d5d472cf807f485786336d74d34249167c56777ba06496f11408c80c30",
+    "artifacts/phase2/gen/D_deepseek_s1.json": "7b3ccc591d27f1d2e794e0c5be7f523cab9114efb6755561521e24f63c1e72dc",
+    "artifacts/phase2/raw/D_deepseek_s1/p2_D_deepseek_s1_format_guard_raw0.py": "5918732c587613ac3fd31cc9af8932bc61bad20fc9d9f76c30cd6643f2b8bbdb",
+    "artifacts/phase2/raw/D_deepseek_s1/p2_D_deepseek_s1_format_guard_raw1.py": "98cae97d4ba79a9615d9c7c35be90a13cd2ee947f9a9c372c8596b807709503e",
+    "artifacts/phase2/raw/D_deepseek_s1/p2_D_deepseek_s1_format_guard_raw2.py": "1e58a210235d1d369831584f0ece5831afcb0368a027b3207703d5a9b14098dd",
+    "artifacts/phase2/gen/D_deepseek_s2.json": "1eca807aa7d05ff71b4f9bfe732f15c98ab8ac10c3cfa94b31ba519b4c0c3153",
+    "artifacts/phase2/raw/D_deepseek_s2/p2_D_deepseek_s2_format_guard_raw0.py": "ad77d93f3805c38d7134e14b0b1c40815b8e3b072a3c2ca1ca3f551aa0b0a680",
+    "artifacts/phase2/raw/D_deepseek_s2/p2_D_deepseek_s2_format_guard_raw1.py": "5a765365a893a36055acfc2df12b4c1e24309a019599538c397a86ce05066e73",
+    "artifacts/phase2/raw/D_deepseek_s2/p2_D_deepseek_s2_format_guard_raw2.py": "25b62eefe99d901c6a00d0aeb89095d8c26acaa53f2ae061e0a27c609e995519",
+    "artifacts/phase2/gen/D_ernie_s0.json": "79d05b108f17ac1a3f145e3571b5d9bd542bfb737be0392c8febe7d28263731e",
+    "artifacts/phase2/raw/D_ernie_s0/p2_D_ernie_s0_format_guard_raw0.py": "9c3648b0a32e172825c06deb77afc83e5696ca59a7203004f792b36f8a5fe247",
+    "artifacts/phase2/raw/D_ernie_s0/p2_D_ernie_s0_format_guard_raw1.py": "c76e4d104d94a556382ff587a615d39c6e1b833929e6aef420a709f61f58b8a5",
+    "artifacts/phase2/raw/D_ernie_s0/p2_D_ernie_s0_format_guard_raw2.py": "f4a63fc4dc676d6c6dd57d901cf305d5ca2a5e172a6fe1eb9084914239a0c7e7",
+    "artifacts/phase2/gen/D_ernie_s1.json": "3bf5cbe1d1aa5692ff9546f6c6a0595f24b1831000d75bc40827cc0203ae589e",
+    "artifacts/phase2/raw/D_ernie_s1/p2_D_ernie_s1_format_guard_raw0.py": "8084bf48e2c58c08dc8b9694d9540bb66368730931d44651cb4fd1d10b9d55c7",
+    "artifacts/phase2/raw/D_ernie_s1/p2_D_ernie_s1_format_guard_raw2.py": "5a691821badcad83425dc3da8ccdf84e704d3441f26c6da15fa0b257d2e42176",
+    "artifacts/phase2/gen/D_ernie_s2.json": "b55fb9ac07f1ccb565e3220b68a022c0637869043a2749f70f37570bef834bf8",
+    "artifacts/phase2/raw/D_ernie_s2/p2_D_ernie_s2_format_guard_raw0.py": "9d3defb8204ba684c8c7b011e542f02a8b15c16fd2ce1a4ebcb94639efc34575",
+    "artifacts/phase2/raw/D_ernie_s2/p2_D_ernie_s2_format_guard_raw1.py": "1871dbf50486111b1276389f3b06f17560c61d30f390c067b2ce56e9b0c0faba",
+    "artifacts/phase2/raw/D_ernie_s2/p2_D_ernie_s2_format_guard_raw2.py": "ff223c6bf3915dd555c740383c6364b4b958dd0453f80a047d553eb9061bbbb7",
+    "artifacts/phase2/gen/D_glm_s0.json": "daa913534ba38532e0ee54ed90e51cfa74c40a5fc32fee997aa820af65ae6aeb",
+    "artifacts/phase2/raw/D_glm_s0/p2_D_glm_s0_format_guard_raw0.py": "2f331bddb9cdc6cad0d9e41bc0bc2f6ab887e44ff1a728eb2647a03af3482d56",
+    "artifacts/phase2/gen/D_glm_s1.json": "059a410001326ed355a2fd9702145881aff79dbf4a8a670d4bb6922a901fa0a0",
+    "artifacts/phase2/raw/D_glm_s1/p2_D_glm_s1_format_guard_raw2.py": "104a3441234335badd70eb4e0e2c12a2e50c724d3df6809c392bbb34a55b1b01",
+    "artifacts/phase2/gen/D_glm_s2.json": "e615595af1e777968ffb1158bdcb7997440e333ba8ac17e14d3119af6f74b92d",
+    "artifacts/phase2/gen/D_kimi_s0.json": "24a089ccda2d2fe573b6fa4d9d1cd132fce90da9a99a83aaea9183919e976229",
+    "artifacts/phase2/raw/D_kimi_s0/p2_D_kimi_s0_format_guard_raw0.py": "881724a33c38bdd6843dd20dec98fe5a63f8cab04502499f8e27a277b3db3739",
+    "artifacts/phase2/raw/D_kimi_s0/p2_D_kimi_s0_format_guard_raw1.py": "7173d26497e7d97daf206d7747217f7d09f3cfeb1ffeae75f310b9873d2db156",
+    "artifacts/phase2/raw/D_kimi_s0/p2_D_kimi_s0_format_guard_raw2.py": "bb6eb6efae810db226485edd3f9c9084312f681660f7b6c4c4a6e77fb03aebd5",
+    "artifacts/phase2/gen/D_kimi_s1.json": "db9fe144282c9a832300e34cbef93be52929733cfaf7dce27ab7c9b9d47786a3",
+    "artifacts/phase2/raw/D_kimi_s1/p2_D_kimi_s1_format_guard_raw0.py": "24e70f89c6353c4320daf8955bbb58db1545b72cb201cfac86ffd4193180d57c",
+    "artifacts/phase2/raw/D_kimi_s1/p2_D_kimi_s1_format_guard_raw1.py": "ee66027ef75d8cc8f848b2f74587fc8b361e65c40d1d8fc4e98c6fc362412265",
+    "artifacts/phase2/raw/D_kimi_s1/p2_D_kimi_s1_format_guard_raw2.py": "3fc082fe7039abe01e29a3da9a9194a0bcff287af49bafa5ca67b302f0623cc0",
+    "artifacts/phase2/gen/D_kimi_s2.json": "0bcad6c9f66ff3c52ae44f6ac1a58e6e1a069ddb3bcf87fac74ac5a905f4b094",
+    "artifacts/phase2/raw/D_kimi_s2/p2_D_kimi_s2_format_guard_raw0.py": "621db2a10165c41937495ae5e0ca38059ae90035e66dc49c2da918f6bbf42f7e",
+    "artifacts/phase2/raw/D_kimi_s2/p2_D_kimi_s2_format_guard_raw1.py": "68021c889f0afad74ea09dede18b3a9f7866cf562f5085084aa593e9af46be1f",
+    "artifacts/phase2/raw/D_kimi_s2/p2_D_kimi_s2_format_guard_raw2.py": "ef55d10495b20cd7178bb755219e266e79b21341dd7f85734b24c46ed40d3e9c",
+    "artifacts/phase2/gen/D_minimax_s0.json": "805fe694dab6e464e978f16ad842edae058701219c104a8900cf78f47ac18ffa",
+    "artifacts/phase2/raw/D_minimax_s0/p2_D_minimax_s0_format_guard_raw0.py": "70d3d7359ef42148b201c3b3e17c070fbd2c8841c61f9a241933c6b876574553",
+    "artifacts/phase2/raw/D_minimax_s0/p2_D_minimax_s0_format_guard_raw1.py": "e5a7bb1b10a7e942d61cfc1ebf42a59dd5328f56d97e972da178a9d300bc8880",
+    "artifacts/phase2/raw/D_minimax_s0/p2_D_minimax_s0_format_guard_raw2.py": "5206225a608da0f55ed628070b521d7a4b7398bba28d65af521d58d5465e644b",
+    "artifacts/phase2/gen/D_minimax_s1.json": "bda21251b649fe9cbf9a79a21c6b6c3316b3e5451c9f8469cd9fcb513886e467",
+    "artifacts/phase2/raw/D_minimax_s1/p2_D_minimax_s1_format_guard_raw0.py": "7ea7bcccc746da45b55cf2080a68504d6c138774079d5c9d800883557f764caf",
+    "artifacts/phase2/raw/D_minimax_s1/p2_D_minimax_s1_format_guard_raw2.py": "3bb456dd54540dfafad5aed2a424ad7d70e5c31d5961f2699025aeb55ec733b0",
+    "artifacts/phase2/gen/D_minimax_s2.json": "829c6516c06b1adf7bb11ccdd4ba41f66ce9682abc7e0e14be778ff904826ed2",
+    "artifacts/phase2/raw/D_minimax_s2/p2_D_minimax_s2_format_guard_raw0.py": "df4909098f8bc08a5870bf7ac32e2730504982128e0b08ebb65fbb1fe555c0e3",
+    "artifacts/phase2/raw/D_minimax_s2/p2_D_minimax_s2_format_guard_raw1.py": "3215556cb4050e4092ebbd4b74c60beea04cfdc13ec68325c25b3953ed4bd8dd",
+    "artifacts/phase2/raw/D_minimax_s2/p2_D_minimax_s2_format_guard_raw2.py": "aae04eb8715846fdd43326368c806381cbbc0735dd1d00f8dd16a2a63497c112",
+    "artifacts/phase2/gen/D_qwen_s0.json": "a4b617de00c243a72e30f2f43699b659b64fe3df73031f44bb3f340c49930e2f",
+    "artifacts/phase2/gen/D_qwen_s1.json": "50cd569fbd2d82c263f218222dad534115165b49d9c303bee9d64bc1e814d5b0",
+    "artifacts/phase2/gen/D_qwen_s2.json": "11b451ea1f03869e964c7bcb28491f6910ffbd1d4da9f14cef10ba94ad938f24",
+    "artifacts/phase2/raw/D_qwen_s2/p2_D_qwen_s2_format_guard_raw1.py": "411cb9ee5ed63a06258180741e53aa4b4f184ccbd7a47d6b53e471f6aaf16e33"
+  },
+  "expected_log_roster": [
+    "C_deepseek_s0.json",
+    "C_deepseek_s1.json",
+    "C_deepseek_s2.json",
+    "C_ernie_s0.json",
+    "C_ernie_s1.json",
+    "C_ernie_s2.json",
+    "C_glm_s0.json",
+    "C_glm_s1.json",
+    "C_glm_s2.json",
+    "C_kimi_s0.json",
+    "C_kimi_s1.json",
+    "C_kimi_s2.json",
+    "C_minimax_s0.json",
+    "C_minimax_s1.json",
+    "C_minimax_s2.json",
+    "C_qwen_s0.json",
+    "C_qwen_s1.json",
+    "C_qwen_s2.json",
+    "D_deepseek_s0.json",
+    "D_deepseek_s1.json",
+    "D_deepseek_s2.json",
+    "D_ernie_s0.json",
+    "D_ernie_s1.json",
+    "D_ernie_s2.json",
+    "D_glm_s0.json",
+    "D_glm_s1.json",
+    "D_glm_s2.json",
+    "D_kimi_s0.json",
+    "D_kimi_s1.json",
+    "D_kimi_s2.json",
+    "D_minimax_s0.json",
+    "D_minimax_s1.json",
+    "D_minimax_s2.json",
+    "D_qwen_s0.json",
+    "D_qwen_s1.json",
+    "D_qwen_s2.json"
+  ],
+  "limitation": "The inspected generator code saves extracted code, not complete builder messages. The per-attempt logs do not bind the executed generator source SHA. Synthetic reproduction proves the parser can truncate valid code at an inner fence; saved prefixes and failure logs do not prove every historical failure had this cause. Files coexisting with a no-python-fence log are conflicting artifacts, not attributed to that logged attempt as its generated code."
+}

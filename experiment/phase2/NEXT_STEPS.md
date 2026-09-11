@@ -1,5 +1,9 @@
 # Phase-II Immediate Action Items
 
+> Historical planning document, not an execution instruction for the current state.
+> The speculative budgets, completion counts and dates below are superseded by
+> `../../review-stage/REVISION_20260910.md` and `../../review-stage/REVISED_EXPERIMENT_PLAN.md`.
+
 ## Current Status (2026-09-04, evening — factual)
 
 **Generation:** 24/72 runs complete (seed 0 done for 6 builders × 4 arms)

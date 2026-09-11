@@ -1,0 +1,21 @@
+{
+  "mechanical": {
+    "reviewer": "gpt-5.5",
+    "score": 8,
+    "verdict": "ready with warning",
+    "warning": "Black formatting",
+    "resolution": "Both new files formatted, three tests and Ruff pass"
+  },
+  "spec_initial": {
+    "score": 8,
+    "verdict": "almost",
+    "finding": "Requested explicit marker path; withdrawn after spec clarification"
+  },
+  "spec_final": {
+    "reviewer": "gpt-5.5",
+    "score": 9,
+    "verdict": "ready",
+    "reason": "external pool SHA plus producer companion marker meets intended scope"
+  },
+  "scientific_verdict": "not ready"
+}

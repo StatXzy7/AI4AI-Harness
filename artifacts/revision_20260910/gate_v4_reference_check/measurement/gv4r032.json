@@ -1,0 +1,75 @@
+{
+  "identity": {
+    "case_id": "gv4r032",
+    "strategy": "hint_guard",
+    "callable_name": "control_fog",
+    "profile": null
+  },
+  "result": {
+    "version": "gate-v4",
+    "strategy": "hint_guard",
+    "profile": null,
+    "structural_verdict": "review_required",
+    "runs": [
+      {
+        "probe": "no_hint",
+        "status": "review_required",
+        "reasons": [
+          "semantic_prompt_review_required"
+        ],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Return one SQLite query.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nMandatory constraint: sort the final rows in ascending order.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger"
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "hint_0",
+        "status": "review_required",
+        "reasons": [
+          "semantic_prompt_review_required"
+        ],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Return one SQLite query.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nHint: id must exceed 317.\nMandatory Hint constraint:\nid must exceed 317.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger"
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "hint_1",
+        "status": "review_required",
+        "reasons": [
+          "semantic_prompt_review_required"
+        ],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Return one SQLite query.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nHint: id must exceed 941.\nMandatory Hint constraint:\nid must exceed 941.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger"
+          }
+        ],
+        "error": null
+      }
+    ],
+    "admission": "not_evaluated",
+    "scope": "Unified development measurement, with explicit source-assigned response roles.\n\nFrozen v3 supplies five unchanged strategy probes. Typed schema/decomposition and\nreal SQLite feedback supply the remaining three. This module never admits a\ncandidate: semantic decisions and independently frozen reference checks remain\nseparate. Unsupported response profiles are review-required, not rejection.\n"
+  }
+}

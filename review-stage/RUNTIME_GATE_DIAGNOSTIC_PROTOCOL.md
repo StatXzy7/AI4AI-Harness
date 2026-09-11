@@ -1,0 +1,9 @@
+# 阶段24：归档候选的真实接口诊断
+
+本文件在首次执行前固定。范围为阶段22源码名册中七份既有forced-ungated候选及一项缺失，不读benchmark结果、不连接模型API、不改候选、不重构历史缺失format_guard、不准入。每类取词典序第一份的规则沿用既有source_manifest.json，运行失败或合同失败不替换样本。
+
+使用原始SQLHarness基类和原始extract_sql，既有gate_runtime_adapter只替换solver/database为合成spy；使用冻结gate_v3、salt=runtime_bridge_stage24。记录七类全部既定scenarios、原始prompt/response/execute/final及结构诊断。error_classify的cross_class_action附加记录不是独立运行。源码、仪器、adapter、协议在执行前绑定，结果逐候选保存，新目录拒绝覆盖或重跑；COMPLETE仅表示这次有限诊断记录完成。
+
+源码预期需要审阅的边界：schema_link要求tables/columns JSON但原探针返回普通文本，且候选DDL提取与实际Table行格式可能不匹配；decompose把全部计划同时放入子问题请求，可能产生探针归属歧义；error_classify在本地用SQLite错误短语分类，原探针的合成错误措辞未必对应其解析条件。不得把这些自动标记直接解释成候选机制不符合。two_view是否执行所有生成候选需查具体轨迹与合同，不能仅据候选docstring接受。
+
+本次不按结果改探针重跑或选更好的响应profile。先保留原仪器观察，再从源码及完整轨迹分别标注：候选可观察行为、测量接口限制、是否足以判断合同。已有开发集／独立控制校准结论保持原状。这不是八类独立校准，更不是完整B、A–D/W1或论文的验收。后续接口修复需单独版本及相应验证。

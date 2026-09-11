@@ -1,0 +1,35 @@
+{
+  "recorded_at_utc": "2026-09-10T11:31:47.934092+00:00",
+  "status": "review_package_ready_launch_not_ready",
+  "bindings": {
+    "review-stage\\PROVIDER_PILOT.md": "12429ce1226f73bc5ecc2a724d2b28d62dbf9fc3318e903a3f86ffe385a4281c",
+    "artifacts\\revision_20260910\\provider_pilot\\acquisition.draft.json": "68c6afd21e7c51a5b4591ed501d2741372f287a866574764aecfa4dd7ad94ea3",
+    "artifacts\\revision_20260910\\provider_pilot\\split.json": "2e8cbd02150ed68a99e4af0a77452b02962abfc134d8e6c023ea22726e7400e6",
+    "artifacts\\revision_20260910\\provider_pilot\\preflight.json": "18e95ef92d8b8904b5749f6818de1db25f7ae09d7d826bae8b77944022b5814d",
+    "artifacts\\revision_20260910\\provider_inventory.json": "a3c0e744d3928a8d5c6dbcf2a410c18fd4c321cd86f72b22617567e7627193c0"
+  },
+  "offline_prepare": "PASS",
+  "source_bindings_checked": 510,
+  "generation_requests": 0,
+  "external_read_only_models_requests": 1,
+  "mechanical_review": {
+    "score": 9,
+    "verdict": "ready",
+    "scope": "review package only"
+  },
+  "spec_review": {
+    "score": 9,
+    "verdict": "ready",
+    "scope": "review package only"
+  },
+  "cross_model_scientific_clearance": false,
+  "remaining": [
+    "account-specific price and conservative cost bound or hard allowance",
+    "user spending ceiling",
+    "final non-DRAFT identity and frozen hashes",
+    "cross-model review",
+    "actual provider pilot",
+    "full reviewer A-D evidence"
+  ],
+  "paper_changed": false
+}

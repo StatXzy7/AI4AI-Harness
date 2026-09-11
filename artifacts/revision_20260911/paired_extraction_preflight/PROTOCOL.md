@@ -1,0 +1,7 @@
+# 同回复配对提取分析
+
+固定对象为完整共同池中全部原始回复的message文本。相同文本分别应用未修改generate.py的extract_block与code_responses.extract_python；只比较提取状态、非空Python语法有效性和代码字节hash。不执行候选、不调用模型、不计算neutral有效性、gate通过率、benchmark收益或完整旧新流程因果效应。
+
+池必须先经单独的真实采集完整性审计，再向本分析传入外部冻结的pool SHA；本脚本的marker/count/无pending检查只是入口一致性，不替代逐HTTP/body/usage审计。Qwen仍在运行，因此当前只用已归档六请求人工loopback数据检查可执行性，不查看新候选质量。实际分析计划保留全部96尝试、free/forced、各策略和seed身份；无回复、提取失败、语法无效均留在分母。空字符串即使ast.parse成功也不算有效代码。语法有效也不能叫neutral有效。
+
+分层输出旧有效/新有效四格计数，另保存逐尝试code hash与提取状态；字节不同可能仅为空白变化，不等同语义变化。单builder有限池仅作配对描述，不根据结果挑选策略、减少分母、补采或停止生成。它只能识别同一回复上的提取器差异，不能解释历史阶段的全部差异。

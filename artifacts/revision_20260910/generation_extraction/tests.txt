@@ -1,0 +1,8 @@
+test_missing_outer_close_uses_legacy_truncation_flag (experiment.revision.test_generation_extraction_audit.LegacyExtractionTests.test_missing_outer_close_uses_legacy_truncation_flag) ... ok
+test_plain_python_is_preserved (experiment.revision.test_generation_extraction_audit.LegacyExtractionTests.test_plain_python_is_preserved) ... ok
+test_three_valid_python_forms_are_cut_at_inner_fences (experiment.revision.test_generation_extraction_audit.LegacyExtractionTests.test_three_valid_python_forms_are_cut_at_inner_fences) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.009s
+
+OK

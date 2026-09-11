@@ -1,0 +1,13 @@
+{
+  "included_constants": [
+    "BUILDERS",
+    "DECLARE",
+    "PROMPT_FORCED",
+    "PROMPT_FREE",
+    "SKELETON",
+    "STRATEGIES"
+  ],
+  "serialization": "json.dumps(values, sort_keys=True, ensure_ascii=False) with default separators, then UTF-8, no added newline",
+  "sha256": "02d0e2d31b133691a420bbbde5c973ce10806af8cf607696fde392962dbdb82d",
+  "matches_plan": true
+}

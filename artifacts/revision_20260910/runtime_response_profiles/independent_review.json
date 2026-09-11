@@ -1,0 +1,290 @@
+{
+  "model": "gpt-5.6-sol",
+  "review_role": "independent cross-model trace reviewer",
+  "reviewed_at_utc": "2026-09-10T15:09:53.378956+00:00",
+  "scope": "Eleven fixed source-assigned response-profile diagnostics for three exposed archived candidates. No benchmark, provider call, gate calibration, candidate admission, or scientific performance inference.",
+  "integrity": {
+    "results_sha256": "8c8f4de65561bc10e80779eac3c3d376123b0e4f6871aac1927b0ac28e34f23d",
+    "manifest_sha256": "70b9e2ca3b1b303b9b5af5135c9ce832f749a9563db63937cc5c8499290ce451",
+    "hashes_match": true,
+    "scenario_count": 11,
+    "all_error_null": true,
+    "all_interface_issues_empty": true,
+    "all_admission_not_evaluated": true
+  },
+  "finite_score": 9.6,
+  "finite_verdict": "ready",
+  "verdict_scope": "artifact integrity, response-format consumption, decompose data flow, and SQLite error-action observations only",
+  "cases": [
+    {
+      "strategy": "schema_link",
+      "name": "ledger_json",
+      "assessment": "format_consumed",
+      "finding": "The requested JSON tables/columns payload is parsed and converted into explicit ledger-only table/column instructions. The full two-table schema remains visible, so this proves payload consumption and prompt restriction, not physical removal of unrelated schema text or semantic relevance.",
+      "evidence": [
+        {
+          "probe": "ledger_json",
+          "trace_index": 0,
+          "field": "response",
+          "quote": "{\"tables\": [\"ledger\"], \"columns\": [\"ledger.id\"]}"
+        },
+        {
+          "probe": "ledger_json",
+          "trace_index": 1,
+          "field": "prompt",
+          "quote": "Linked tables (use only these tables): ledger.\nLinked columns (use only these columns): ledger.id."
+        },
+        {
+          "probe": "ledger_json",
+          "trace_index": 1,
+          "field": "prompt",
+          "quote": "Table unused(label)"
+        }
+      ]
+    },
+    {
+      "strategy": "schema_link",
+      "name": "unused_json",
+      "assessment": "format_consumed_counterfactual",
+      "finding": "The counterfactual unused JSON payload changes the explicit linked table/column instructions and final stub response. This tests consumption only; it does not claim unused is relevant to the natural-language question. The full schema remains present.",
+      "evidence": [
+        {
+          "probe": "unused_json",
+          "trace_index": 0,
+          "field": "response",
+          "quote": "{\"tables\": [\"unused\"], \"columns\": [\"unused.label\"]}"
+        },
+        {
+          "probe": "unused_json",
+          "trace_index": 1,
+          "field": "prompt",
+          "quote": "Linked tables (use only these tables): unused.\nLinked columns (use only these columns): unused.label."
+        },
+        {
+          "probe": "unused_json",
+          "trace_index": 1,
+          "field": "prompt",
+          "quote": "Table ledger(id, amount)"
+        }
+      ]
+    },
+    {
+      "strategy": "schema_link",
+      "name": "malformed_json",
+      "assessment": "fallback_observed",
+      "finding": "Malformed linking text produces the candidate fallback that explicitly says no linked set was produced and supplies the full schema. This is an observable fallback, not evidence of successful linking.",
+      "evidence": [
+        {
+          "probe": "malformed_json",
+          "trace_index": 0,
+          "field": "response",
+          "quote": "not JSON"
+        },
+        {
+          "probe": "malformed_json",
+          "trace_index": 1,
+          "field": "prompt",
+          "quote": "No explicit linked set was produced; use the full schema below"
+        }
+      ]
+    },
+    {
+      "strategy": "decompose",
+      "name": "parts_0",
+      "assessment": "target_and_payload_flow_supported",
+      "finding": "The dedicated current-subquestion field selects steps 0 then 1 in order; both distinct executable SQL payloads are executed, the first is carried into the second request with status, and both appear in the assembly request. The final SQL is stub-provided and does not prove semantic assembly quality.",
+      "evidence": [
+        {
+          "probe": "parts_0",
+          "trace_index": 1,
+          "field": "prompt",
+          "quote": "Current sub-question to answer:\nList ledger identifiers."
+        },
+        {
+          "probe": "parts_0",
+          "trace_index": 3,
+          "field": "prompt",
+          "quote": "q1 (execution succeeded: 2 rows returned):\nSELECT id FROM ledger /* payload_0_0 */"
+        },
+        {
+          "probe": "parts_0",
+          "trace_index": 5,
+          "field": "prompt",
+          "quote": "SELECT amount FROM ledger /* payload_0_1 */"
+        }
+      ]
+    },
+    {
+      "strategy": "decompose",
+      "name": "parts_1",
+      "assessment": "target_and_payload_flow_supported",
+      "finding": "The second payload-labelled replicate shows the same ordered target resolution and carries both actual SQL payloads into assembly while returning the alternate stub final. This supports data flow, not correctness of the decomposition or final SQL.",
+      "evidence": [
+        {
+          "probe": "parts_1",
+          "trace_index": 1,
+          "field": "target_step",
+          "value": 0
+        },
+        {
+          "probe": "parts_1",
+          "trace_index": 3,
+          "field": "target_step",
+          "value": 1
+        },
+        {
+          "probe": "parts_1",
+          "trace_index": 5,
+          "field": "prompt",
+          "quote": "SELECT id FROM ledger /* payload_1_0 */\n),\nq2 AS (\nSELECT amount FROM ledger /* payload_1_1 */"
+        }
+      ]
+    },
+    {
+      "strategy": "error_classify",
+      "name": "success",
+      "assessment": "success_short_circuit_supported",
+      "finding": "The initial SQL executes successfully and no repair request occurs. Correct execution on this fixture is not a general semantic-correctness result.",
+      "evidence": [
+        {
+          "probe": "success",
+          "trace_index": 1,
+          "field": "ok",
+          "value": true
+        },
+        {
+          "probe": "success",
+          "trace_index": 1,
+          "field": "rows",
+          "value": [
+            [
+              1
+            ],
+            [
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "strategy": "error_classify",
+      "name": "sqlite_syntax",
+      "assessment": "syntax_action_supported",
+      "finding": "SQLite emits a real syntax error; the next request includes the exact message and selects the syntax-specific action before executing a repair successfully.",
+      "evidence": [
+        {
+          "probe": "sqlite_syntax",
+          "trace_index": 1,
+          "field": "error",
+          "quote": "near \"SELEC\": syntax error"
+        },
+        {
+          "probe": "sqlite_syntax",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "The previous SQL query failed with a syntax issue."
+        }
+      ]
+    },
+    {
+      "strategy": "error_classify",
+      "name": "sqlite_missing_column",
+      "assessment": "schema_action_supported",
+      "finding": "SQLite emits a real missing-column error; the exact error is carried into a schema-specific repair request.",
+      "evidence": [
+        {
+          "probe": "sqlite_missing_column",
+          "trace_index": 1,
+          "field": "error",
+          "quote": "no such column: absent"
+        },
+        {
+          "probe": "sqlite_missing_column",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "The previous SQL query failed with a schema issue"
+        }
+      ]
+    },
+    {
+      "strategy": "error_classify",
+      "name": "sqlite_missing_table",
+      "assessment": "schema_action_supported",
+      "finding": "SQLite emits a real missing-table error; the exact error is carried into a schema-specific repair request.",
+      "evidence": [
+        {
+          "probe": "sqlite_missing_table",
+          "trace_index": 1,
+          "field": "error",
+          "quote": "no such table: absent"
+        },
+        {
+          "probe": "sqlite_missing_table",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "The previous SQL query failed with a schema issue"
+        }
+      ]
+    },
+    {
+      "strategy": "error_classify",
+      "name": "sqlite_incomplete",
+      "assessment": "syntax_action_supported",
+      "finding": "SQLite emits real incomplete-input feedback; the candidate maps it to the syntax-specific repair action and the stub supplies an executable repair.",
+      "evidence": [
+        {
+          "probe": "sqlite_incomplete",
+          "trace_index": 1,
+          "field": "error",
+          "quote": "incomplete input"
+        },
+        {
+          "probe": "sqlite_incomplete",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "The previous SQL query failed with a syntax issue."
+        }
+      ]
+    },
+    {
+      "strategy": "error_classify",
+      "name": "executable_other_column",
+      "assessment": "execution_only_semantics_unresolved",
+      "finding": "The alternate-column query executes successfully and therefore triggers no error classification or repair. This establishes the success branch only; it does not show that the SQL answers the question or test semantic-error detection.",
+      "evidence": [
+        {
+          "probe": "executable_other_column",
+          "trace_index": 0,
+          "field": "response",
+          "quote": "SELECT amount FROM ledger"
+        },
+        {
+          "probe": "executable_other_column",
+          "trace_index": 1,
+          "field": "ok",
+          "value": true
+        }
+      ]
+    }
+  ],
+  "strategy_conclusions": [
+    {
+      "strategy": "schema_link",
+      "conclusion": "Valid tables/columns JSON is consumed into explicit use-only instructions and malformed JSON invokes the documented fallback. Because the original candidate promises SQL generation over a linked subset, retaining full schema text alongside explicit restrictions does not alone establish nonconformance; it also does not satisfy the newer gate-v3 physical unrelated-table-removal criterion."
+    },
+    {
+      "strategy": "decompose",
+      "conclusion": "Within both fixtures, dedicated current-target attribution, ordered execution, previous-step carry-forward, and inclusion of both real SQL payloads in assembly are directly observed. Semantic quality remains untested."
+    },
+    {
+      "strategy": "error_classify",
+      "conclusion": "Four real SQLite failures map to the expected syntax/schema actions and carry exact feedback; successful execution bypasses repair. No semantic-error scenario or model repair accuracy is established."
+    }
+  ],
+  "limits": [
+    "Final SQL values are preassigned stub responses and are evidence of interface consumption only.",
+    "Empty interface_issues and null errors are execution observations, not automatic conformance labels.",
+    "These exposed, finite diagnostics do not update independent gate calibration and do not authorize admission or broader A-D/W1 claims."
+  ]
+}

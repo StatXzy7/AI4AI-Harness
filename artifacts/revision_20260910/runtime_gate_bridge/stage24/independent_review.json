@@ -1,0 +1,391 @@
+{
+  "model": "gpt-5.6-sol",
+  "review_role": "independent cross-model source-and-trace reviewer",
+  "reviewed_at_utc": "2026-09-10T15:00:26.704663+00:00",
+  "scope": "Finite post-run review of seven fixed archived C candidates over 27 frozen synthetic scenarios; cross_class_action is one derived meta-record. No benchmark, provider, calibration, admission, or scientific performance claim.",
+  "bindings_verified": {
+    "results_sha256": "2062ff494053938a4466bcd5d938ea5336c431dd6296a9d2f243dcf84dbf9e05",
+    "manifest_sha256": "965e09e739a9a750b1cd7ad3ce13557971e37a5060567e82a059eba8682c16c2",
+    "salt": "runtime_bridge_stage24",
+    "result_count": 8,
+    "available": 7,
+    "hashes_match": true,
+    "scenario_count_excluding_cross_class_action": 27,
+    "cross_class_meta_records": 1
+  },
+  "finite_score": 9.4,
+  "finite_verdict": "ready",
+  "verdict_scope": "artifact integrity and bounded diagnostic interpretation only; not candidate admission or gate calibration",
+  "strategies": [
+    {
+      "strategy": "repair",
+      "assessment": "supported_in_fixture",
+      "behavior": "On success it executes once and returns without repair. On each injected failure it carries the exact failed SQL and error into one repair request, executes the replacement, and stops on success.",
+      "fixture_limit": "Only two synthetic strings labelled syntax failure are exercised; this does not establish behavior across real SQLite/provider errors or more than one failed repair.",
+      "scenarios": [
+        {
+          "probe": "success_no_repair",
+          "status": "pass",
+          "reasons": []
+        },
+        {
+          "probe": "syntax_a",
+          "status": "pass",
+          "reasons": []
+        },
+        {
+          "probe": "syntax_b",
+          "status": "pass",
+          "reasons": []
+        }
+      ],
+      "evidence": [
+        {
+          "probe": "syntax_a",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "It failed with this SQLite error:\nsyntax failure [runtime_bridge_stage24_syntax_a]"
+        },
+        {
+          "probe": "syntax_a",
+          "trace_index": 3,
+          "field": "sql",
+          "quote": "SELECT amount FROM ledger"
+        }
+      ]
+    },
+    {
+      "strategy": "vote3",
+      "assessment": "supported_in_fixture",
+      "behavior": "It requests n=3, executes all three SQL strings, groups identical result rows, follows the two-result majority under order and majority flips, and chooses the first SQL representing the winning row group.",
+      "fixture_limit": "The spy assigns rows by fixture; this verifies arbitration mechanics, not SQL correctness, semantic equivalence, or robustness to malformed/non-string samples.",
+      "scenarios": [
+        {
+          "probe": "late_majority",
+          "status": "pass",
+          "reasons": []
+        },
+        {
+          "probe": "permuted_majority",
+          "status": "pass",
+          "reasons": []
+        },
+        {
+          "probe": "flipped_majority",
+          "status": "pass",
+          "reasons": []
+        },
+        {
+          "probe": "equivalent_results",
+          "status": "pass",
+          "reasons": []
+        },
+        {
+          "probe": "execution_majority_flipped",
+          "status": "pass",
+          "reasons": []
+        },
+        {
+          "probe": "execution_majority_AB",
+          "status": "pass",
+          "reasons": []
+        }
+      ],
+      "evidence": [
+        {
+          "probe": "late_majority",
+          "trace_index": 0,
+          "field": "n",
+          "value": 3
+        },
+        {
+          "probe": "flipped_majority",
+          "trace_index": null,
+          "field": "final",
+          "quote": "SELECT id FROM ledger"
+        }
+      ]
+    },
+    {
+      "strategy": "schema_link",
+      "assessment": "indeterminate_interface_mismatch",
+      "behavior": "The source asks for a tables/columns JSON object. Both fixture replies are plain text, parsing yields no linked set, and the second request explicitly falls back to the full schema, including unused(label).",
+      "fixture_limit": "Because neither response has the requested JSON shape and the candidate DDL reducer is not exercised against its expected CREATE TABLE representation, these runs cannot determine whether valid linking output would be parsed, reduced, and carried forward. The observed fail cannot by itself be attributed to mechanism nonconformance.",
+      "scenarios": [
+        {
+          "probe": "link_0",
+          "status": "fail",
+          "reasons": [
+            "counterfactual_output_mismatch",
+            "linked_subset_not_carried_forward"
+          ]
+        },
+        {
+          "probe": "link_1",
+          "status": "fail",
+          "reasons": [
+            "counterfactual_output_mismatch",
+            "linked_subset_not_carried_forward"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "probe": "link_0",
+          "trace_index": 0,
+          "field": "response",
+          "quote": "ledger(id) [runtime_bridge_stage24_link_0]"
+        },
+        {
+          "probe": "link_0",
+          "trace_index": 1,
+          "field": "prompt",
+          "quote": "No explicit linked set was produced; use the full schema below"
+        }
+      ]
+    },
+    {
+      "strategy": "hint_guard",
+      "assessment": "prompt_behavior_supported_semantics_unresolved",
+      "behavior": "The no-hint request contains no extracted hard-requirement block. Each Hint line is copied verbatim into a mandatory hard-requirements block, and the two counterfactual values change that block.",
+      "fixture_limit": "The scripted SQL response is unchanged and cannot show that a real solver obeys either requirement; the trace supports prompt transformation only, not semantic enforcement or answer correctness.",
+      "scenarios": [
+        {
+          "probe": "no_hint",
+          "status": "review_required",
+          "reasons": [
+            "semantic_prompt_review_required"
+          ]
+        },
+        {
+          "probe": "hint_0",
+          "status": "review_required",
+          "reasons": [
+            "semantic_prompt_review_required"
+          ]
+        },
+        {
+          "probe": "hint_1",
+          "status": "review_required",
+          "reasons": [
+            "semantic_prompt_review_required"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "probe": "hint_0",
+          "trace_index": 0,
+          "field": "prompt",
+          "quote": "Hard requirements extracted from the Hint line (these must all be satisfied):\nid must exceed 317."
+        },
+        {
+          "probe": "hint_1",
+          "trace_index": 0,
+          "field": "prompt",
+          "quote": "Hard requirements extracted from the Hint line (these must all be satisfied):\nid must exceed 941."
+        }
+      ]
+    },
+    {
+      "strategy": "two_view",
+      "assessment": "nonconforms_execute_both",
+      "behavior": "It generates two differently instructed requests. It executes both only when the first result is empty or failed. When the first result is non-empty it returns immediately, leaving the second generated SQL unexecuted.",
+      "fixture_limit": "The canned SQL strings do not themselves exhibit JOIN and subquery formulations, so semantic independence remains unresolved. The short-circuit finding is nevertheless directly observable and violates the original source declaration to execute both candidates.",
+      "scenarios": [
+        {
+          "probe": "first_empty",
+          "status": "review_required",
+          "reasons": [
+            "formulation_semantics_review_required"
+          ]
+        },
+        {
+          "probe": "second_empty",
+          "status": "fail",
+          "reasons": [
+            "candidate_not_executed",
+            "formulation_semantics_review_required"
+          ]
+        },
+        {
+          "probe": "both_nonempty",
+          "status": "fail",
+          "reasons": [
+            "candidate_not_executed",
+            "formulation_semantics_review_required"
+          ]
+        },
+        {
+          "probe": "first_failed",
+          "status": "review_required",
+          "reasons": [
+            "formulation_semantics_review_required"
+          ]
+        }
+      ],
+      "source_evidence": [
+        {
+          "file": "experiment/phase2/generate.py",
+          "source_quote": "execute both, and return the result that is non-empty or, if both are, the first."
+        }
+      ],
+      "evidence": [
+        {
+          "probe": "second_empty",
+          "trace_index": null,
+          "field": "reason",
+          "quote": "candidate_not_executed"
+        },
+        {
+          "probe": "both_nonempty",
+          "trace_index": null,
+          "field": "reason",
+          "quote": "candidate_not_executed"
+        }
+      ]
+    },
+    {
+      "strategy": "decompose",
+      "assessment": "indeterminate_attribution",
+      "behavior": "The source obtains a two-part plan, issues two subquestion SQL requests, executes both, carries the first SQL and execution status into the second request, then requests final assembly.",
+      "fixture_limit": "Each subquestion prompt includes the full ordered decomposition as well as the current sub-question; both sentinel part identifiers therefore appear in multiple requests. The frozen probe cannot uniquely attribute response consumption to a part, and its unrelated canned SQL does not establish semantic decomposition or assembly.",
+      "scenarios": [
+        {
+          "probe": "parts_0",
+          "status": "review_required",
+          "reasons": [
+            "decomposition_request_attribution_ambiguous"
+          ]
+        },
+        {
+          "probe": "parts_1",
+          "status": "review_required",
+          "reasons": [
+            "decomposition_request_attribution_ambiguous"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "probe": "parts_0",
+          "trace_index": 3,
+          "field": "prompt",
+          "quote": "q1 (execution succeeded: 1 rows returned):"
+        },
+        {
+          "probe": "parts_1",
+          "trace_index": 5,
+          "field": "decomposition_ambiguous",
+          "value": true
+        }
+      ]
+    },
+    {
+      "strategy": "error_classify",
+      "assessment": "indeterminate_fixture_vocabulary",
+      "behavior": "Success stops after one execution. For all injected failures it repairs once and carries the exact error forward. The candidate maps the literal fixture phrases syntax failure and schema failure to its default semantics branch; semantics failure also maps to semantics.",
+      "fixture_limit": "The source recognizers contain phrases such as syntax error, near, no such table, and unknown column, while this fixture uses generic syntax failure/schema failure. Thus the run demonstrates an exact vocabulary mismatch, not classifier behavior on representative SQLite errors; class-specific conformity remains unresolved. The derived cross_class_action record is not an eighth scenario.",
+      "scenarios": [
+        {
+          "probe": "success_no_repair",
+          "status": "pass",
+          "reasons": []
+        },
+        {
+          "probe": "syntax_a",
+          "status": "review_required",
+          "reasons": [
+            "unambiguous_error_class_not_observed",
+            "classification_action_semantics_review_required"
+          ]
+        },
+        {
+          "probe": "syntax_b",
+          "status": "review_required",
+          "reasons": [
+            "unambiguous_error_class_not_observed",
+            "classification_action_semantics_review_required"
+          ]
+        },
+        {
+          "probe": "schema_a",
+          "status": "review_required",
+          "reasons": [
+            "unambiguous_error_class_not_observed",
+            "classification_action_semantics_review_required"
+          ]
+        },
+        {
+          "probe": "schema_b",
+          "status": "review_required",
+          "reasons": [
+            "unambiguous_error_class_not_observed",
+            "classification_action_semantics_review_required"
+          ]
+        },
+        {
+          "probe": "semantics_a",
+          "status": "review_required",
+          "reasons": [
+            "unambiguous_error_class_not_observed",
+            "classification_action_semantics_review_required"
+          ]
+        },
+        {
+          "probe": "semantics_b",
+          "status": "review_required",
+          "reasons": [
+            "unambiguous_error_class_not_observed",
+            "classification_action_semantics_review_required"
+          ]
+        }
+      ],
+      "source_evidence": [
+        {
+          "file": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_error_classify.py",
+          "source_quote": "r\"syntax error\""
+        },
+        {
+          "file": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_error_classify.py",
+          "source_quote": "r\"no such table\""
+        }
+      ],
+      "evidence": [
+        {
+          "probe": "syntax_a",
+          "trace_index": 1,
+          "field": "error",
+          "quote": "syntax failure [runtime_bridge_stage24_syntax_a]"
+        },
+        {
+          "probe": "syntax_a",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "The previous SQL query failed with a semantics issue"
+        }
+      ],
+      "derived_meta": {
+        "probe": "cross_class_action",
+        "status": "review_required",
+        "reason": "same_action_template_across_error_classes",
+        "interpretation": "consistent with the fixture vocabulary mismatch; not an independent scenario or proof of behavior on recognized classes"
+      }
+    },
+    {
+      "strategy": "format_guard",
+      "assessment": "unavailable",
+      "behavior": "No archived candidate exists in the fixed roster.",
+      "fixture_limit": "No source or runtime behavior was measured; absence must not be replaced or treated as a failed scenario.",
+      "scenarios": [],
+      "evidence": []
+    }
+  ],
+  "overall_findings": [
+    "COMPLETE now binds both results.json and manifest.json; both hashes verify, with 8 roster rows, 7 available candidates, 27 scenarios, and one derived cross-class meta-record.",
+    "The only directly established source-contract deviation is two_view short-circuiting the second execution when the first candidate is non-empty.",
+    "schema_link, decompose, and error_classify remain indeterminate for the stated interface reasons; automatic fail/review_required labels do not resolve candidate conformity.",
+    "repair and vote3 mechanics are supported only within the finite synthetic fixtures; hint_guard supports prompt transformation but not downstream semantic obedience.",
+    "No result here calibrates the gate, admits a candidate, measures benchmark performance, or validates the wider experiment."
+  ]
+}

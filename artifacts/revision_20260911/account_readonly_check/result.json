@@ -1,0 +1,29 @@
+{
+  "observed_unix": 1789062797.6137161,
+  "scope": "two GET probes only; no generation",
+  "credential_saved": false,
+  "results": [
+    {
+      "path": "/v1/dashboard/billing/subscription",
+      "method": "GET",
+      "endpoint_status": "exploratory read-only compatibility probe; not documented as supported",
+      "http_status": 404,
+      "content_type": "application/json",
+      "top_level_keys": [
+        "detail"
+      ],
+      "numeric_billing_fields": {}
+    },
+    {
+      "path": "/v1/usage",
+      "method": "GET",
+      "endpoint_status": "exploratory read-only compatibility probe; not documented as supported",
+      "http_status": 404,
+      "content_type": "application/json",
+      "top_level_keys": [
+        "detail"
+      ],
+      "numeric_billing_fields": {}
+    }
+  ]
+}

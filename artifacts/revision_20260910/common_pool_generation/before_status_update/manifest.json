@@ -1,0 +1,17 @@
+[
+  {
+    "original": "review-stage/REVISION_20260910.md",
+    "snapshot": "artifacts/revision_20260910/common_pool_generation/before_status_update/review-stage__REVISION_20260910.md",
+    "sha256": "024bb1bbb379439e370af99620e1df9b07b5ff97937ce92972c2e008fc2ba3b3"
+  },
+  {
+    "original": "review-stage/REVISED_EXPERIMENT_PLAN.md",
+    "snapshot": "artifacts/revision_20260910/common_pool_generation/before_status_update/review-stage__REVISED_EXPERIMENT_PLAN.md",
+    "sha256": "457fc179e2f930df4d72522063abaaa50e14872f3fb30ef44611b7c9afec76fd"
+  },
+  {
+    "original": "experiment/revision/README.md",
+    "snapshot": "artifacts/revision_20260910/common_pool_generation/before_status_update/experiment__revision__README.md",
+    "sha256": "acbc57aef0852ddc77a6aaa8aed252e9b768559fb1cef0df0608d2880c29d58d"
+  }
+]

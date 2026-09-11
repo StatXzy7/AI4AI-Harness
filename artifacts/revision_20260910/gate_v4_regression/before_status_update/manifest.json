@@ -1,0 +1,17 @@
+[
+  {
+    "original": "review-stage/REVISION_20260910.md",
+    "snapshot": "artifacts/revision_20260910/gate_v4_regression/before_status_update/review-stage__REVISION_20260910.md",
+    "sha256": "032d8480897d334759567ec10e5573d7a478173adfc222c1368a974ec8117f64"
+  },
+  {
+    "original": "review-stage/REVISED_EXPERIMENT_PLAN.md",
+    "snapshot": "artifacts/revision_20260910/gate_v4_regression/before_status_update/review-stage__REVISED_EXPERIMENT_PLAN.md",
+    "sha256": "3b67d11166233a844ba3bdfa57feb7bdf0fdceee8915c8d1f8abfe496e1995a8"
+  },
+  {
+    "original": "experiment/revision/README.md",
+    "snapshot": "artifacts/revision_20260910/gate_v4_regression/before_status_update/experiment__revision__README.md",
+    "sha256": "6a6fd6ce2910dc3716e3575a0ba768b2176ca104c19e2234a34bd346f69b2e18"
+  }
+]

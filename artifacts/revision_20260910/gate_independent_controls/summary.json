@@ -1,0 +1,492 @@
+{
+  "recorded_at_utc": "2026-09-10T12:56:34.051560+00:00",
+  "scope": "finite independently authored controls; disputed references and unresolved semantics retained; no population error rate estimate",
+  "bindings": {
+    "artifacts\\revision_20260910\\gate_independent_controls\\PROTOCOL.md": "087443809c59b5a00ee9297a9dd68be6c8a855d90280d57e48ec242856ca1bc4",
+    "artifacts\\revision_20260910\\gate_independent_controls\\measurement_freeze.json": "8d658137251c28f356e93abb705e687b741838d7cc9d18ad2a149bedaaf38890",
+    "artifacts\\revision_20260910\\gate_independent_controls\\author_labels.json": "29fa9f7b2afacb9a7b8ff6335616c510074823ba3f0229a3b932eef8c1aeee4a",
+    "artifacts\\revision_20260910\\gate_independent_controls\\results.json": "875d104d1c960e5545114e13e5ba692c432dbb21c1ef502057090237c456835b",
+    "artifacts\\revision_20260910\\gate_independent_controls\\review_packet.json": "9bf6d964a6f731a7c66c1a80c3dcc5e778e92c4d7aa93b32ea2baae197040aba",
+    "artifacts\\revision_20260910\\gate_independent_controls\\adjudication.json": "06592f0c3fa973089f2679999c8cea28285cd3df02198043b6851d5385f6e9c7",
+    "artifacts\\revision_20260910\\gate_independent_controls\\adjudication.initial.json": "15c7b10dcb82e3b51ec2aeec23f17f23f00b5761b80dd143681ec2c2650edaa1",
+    "artifacts\\revision_20260910\\gate_independent_controls\\COMPLETE.json": "242eef420241149ceefea5171112a5c8edbcd4aa27378d27838aac0b65df8a7f"
+  },
+  "evidence_references_checked": 72,
+  "rows": [
+    {
+      "case_id": "ic001",
+      "strategy": "repair",
+      "author_reference": "conforms",
+      "source_review": "conforms",
+      "semantic_review": null,
+      "structural_state": "pass",
+      "hybrid_state": "structural_conforms",
+      "reference_disputed": false,
+      "comparison_outcome": "accepted",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic002",
+      "strategy": "repair",
+      "author_reference": "conforms",
+      "source_review": "conforms",
+      "semantic_review": null,
+      "structural_state": "pass",
+      "hybrid_state": "structural_conforms",
+      "reference_disputed": false,
+      "comparison_outcome": "accepted",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic003",
+      "strategy": "repair",
+      "author_reference": "nonconforms",
+      "source_review": "nonconforms",
+      "semantic_review": null,
+      "structural_state": "fail",
+      "hybrid_state": "fail",
+      "reference_disputed": false,
+      "comparison_outcome": "rejected",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic004",
+      "strategy": "repair",
+      "author_reference": "nonconforms",
+      "source_review": "nonconforms",
+      "semantic_review": null,
+      "structural_state": "fail",
+      "hybrid_state": "fail",
+      "reference_disputed": false,
+      "comparison_outcome": "rejected",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic005",
+      "strategy": "vote3",
+      "author_reference": "conforms",
+      "source_review": "conforms",
+      "semantic_review": null,
+      "structural_state": "pass",
+      "hybrid_state": "structural_conforms",
+      "reference_disputed": false,
+      "comparison_outcome": "accepted",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic006",
+      "strategy": "vote3",
+      "author_reference": "conforms",
+      "source_review": "conforms",
+      "semantic_review": null,
+      "structural_state": "pass",
+      "hybrid_state": "structural_conforms",
+      "reference_disputed": false,
+      "comparison_outcome": "accepted",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic007",
+      "strategy": "vote3",
+      "author_reference": "nonconforms",
+      "source_review": "nonconforms",
+      "semantic_review": null,
+      "structural_state": "fail",
+      "hybrid_state": "fail",
+      "reference_disputed": false,
+      "comparison_outcome": "rejected",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic008",
+      "strategy": "vote3",
+      "author_reference": "nonconforms",
+      "source_review": "nonconforms",
+      "semantic_review": null,
+      "structural_state": "fail",
+      "hybrid_state": "fail",
+      "reference_disputed": false,
+      "comparison_outcome": "rejected",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic009",
+      "strategy": "schema_link",
+      "author_reference": "conforms",
+      "source_review": "nonconforms",
+      "semantic_review": null,
+      "structural_state": "fail",
+      "hybrid_state": "fail",
+      "reference_disputed": true,
+      "comparison_outcome": "disputed",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic010",
+      "strategy": "schema_link",
+      "author_reference": "conforms",
+      "source_review": "nonconforms",
+      "semantic_review": null,
+      "structural_state": "fail",
+      "hybrid_state": "fail",
+      "reference_disputed": true,
+      "comparison_outcome": "disputed",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic011",
+      "strategy": "schema_link",
+      "author_reference": "nonconforms",
+      "source_review": "nonconforms",
+      "semantic_review": null,
+      "structural_state": "fail",
+      "hybrid_state": "fail",
+      "reference_disputed": false,
+      "comparison_outcome": "rejected",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic012",
+      "strategy": "schema_link",
+      "author_reference": "nonconforms",
+      "source_review": "nonconforms",
+      "semantic_review": null,
+      "structural_state": "fail",
+      "hybrid_state": "fail",
+      "reference_disputed": false,
+      "comparison_outcome": "rejected",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic013",
+      "strategy": "hint_guard",
+      "author_reference": "conforms",
+      "source_review": "conforms",
+      "semantic_review": "conforms",
+      "structural_state": "review_required",
+      "hybrid_state": "hybrid_conforms",
+      "reference_disputed": false,
+      "comparison_outcome": "accepted",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic014",
+      "strategy": "hint_guard",
+      "author_reference": "conforms",
+      "source_review": "conforms",
+      "semantic_review": "conforms",
+      "structural_state": "review_required",
+      "hybrid_state": "hybrid_conforms",
+      "reference_disputed": false,
+      "comparison_outcome": "accepted",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic015",
+      "strategy": "hint_guard",
+      "author_reference": "nonconforms",
+      "source_review": "nonconforms",
+      "semantic_review": "nonconforms",
+      "structural_state": "review_required",
+      "hybrid_state": "hybrid_nonconforms",
+      "reference_disputed": false,
+      "comparison_outcome": "rejected",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic016",
+      "strategy": "hint_guard",
+      "author_reference": "nonconforms",
+      "source_review": "nonconforms",
+      "semantic_review": "nonconforms",
+      "structural_state": "review_required",
+      "hybrid_state": "hybrid_nonconforms",
+      "reference_disputed": false,
+      "comparison_outcome": "rejected",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic017",
+      "strategy": "two_view",
+      "author_reference": "conforms",
+      "source_review": "conforms",
+      "semantic_review": "conforms",
+      "structural_state": "review_required",
+      "hybrid_state": "hybrid_conforms",
+      "reference_disputed": false,
+      "comparison_outcome": "accepted",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic018",
+      "strategy": "two_view",
+      "author_reference": "conforms",
+      "source_review": "nonconforms",
+      "semantic_review": "indeterminate",
+      "structural_state": "fail",
+      "hybrid_state": "fail",
+      "reference_disputed": true,
+      "comparison_outcome": "disputed",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic019",
+      "strategy": "two_view",
+      "author_reference": "nonconforms",
+      "source_review": "nonconforms",
+      "semantic_review": "nonconforms",
+      "structural_state": "fail",
+      "hybrid_state": "fail",
+      "reference_disputed": false,
+      "comparison_outcome": "rejected",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic020",
+      "strategy": "two_view",
+      "author_reference": "nonconforms",
+      "source_review": "nonconforms",
+      "semantic_review": "nonconforms",
+      "structural_state": "fail",
+      "hybrid_state": "fail",
+      "reference_disputed": false,
+      "comparison_outcome": "rejected",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic021",
+      "strategy": "decompose",
+      "author_reference": "conforms",
+      "source_review": "conforms",
+      "semantic_review": null,
+      "structural_state": "fail",
+      "hybrid_state": "fail",
+      "reference_disputed": false,
+      "comparison_outcome": "rejected",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic022",
+      "strategy": "decompose",
+      "author_reference": "conforms",
+      "source_review": "conforms",
+      "semantic_review": null,
+      "structural_state": "pass",
+      "hybrid_state": "structural_conforms",
+      "reference_disputed": false,
+      "comparison_outcome": "accepted",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic023",
+      "strategy": "decompose",
+      "author_reference": "nonconforms",
+      "source_review": "nonconforms",
+      "semantic_review": null,
+      "structural_state": "fail",
+      "hybrid_state": "fail",
+      "reference_disputed": false,
+      "comparison_outcome": "rejected",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic024",
+      "strategy": "decompose",
+      "author_reference": "nonconforms",
+      "source_review": "nonconforms",
+      "semantic_review": null,
+      "structural_state": "fail",
+      "hybrid_state": "fail",
+      "reference_disputed": false,
+      "comparison_outcome": "rejected",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic025",
+      "strategy": "error_classify",
+      "author_reference": "conforms",
+      "source_review": "conforms",
+      "semantic_review": "conforms",
+      "structural_state": "fail",
+      "hybrid_state": "fail",
+      "reference_disputed": false,
+      "comparison_outcome": "rejected",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic026",
+      "strategy": "error_classify",
+      "author_reference": "conforms",
+      "source_review": "conforms",
+      "semantic_review": "conforms",
+      "structural_state": "fail",
+      "hybrid_state": "fail",
+      "reference_disputed": false,
+      "comparison_outcome": "rejected",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic027",
+      "strategy": "error_classify",
+      "author_reference": "nonconforms",
+      "source_review": "nonconforms",
+      "semantic_review": "nonconforms",
+      "structural_state": "fail",
+      "hybrid_state": "fail",
+      "reference_disputed": false,
+      "comparison_outcome": "rejected",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic028",
+      "strategy": "error_classify",
+      "author_reference": "nonconforms",
+      "source_review": "nonconforms",
+      "semantic_review": "nonconforms",
+      "structural_state": "fail",
+      "hybrid_state": "fail",
+      "reference_disputed": false,
+      "comparison_outcome": "rejected",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic029",
+      "strategy": "format_guard",
+      "author_reference": "conforms",
+      "source_review": "conforms",
+      "semantic_review": "conforms",
+      "structural_state": "review_required",
+      "hybrid_state": "hybrid_conforms",
+      "reference_disputed": false,
+      "comparison_outcome": "accepted",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic030",
+      "strategy": "format_guard",
+      "author_reference": "conforms",
+      "source_review": "conforms",
+      "semantic_review": "conforms",
+      "structural_state": "review_required",
+      "hybrid_state": "hybrid_conforms",
+      "reference_disputed": false,
+      "comparison_outcome": "accepted",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic031",
+      "strategy": "format_guard",
+      "author_reference": "nonconforms",
+      "source_review": "nonconforms",
+      "semantic_review": "nonconforms",
+      "structural_state": "review_required",
+      "hybrid_state": "hybrid_nonconforms",
+      "reference_disputed": false,
+      "comparison_outcome": "rejected",
+      "production_admission": false
+    },
+    {
+      "case_id": "ic032",
+      "strategy": "format_guard",
+      "author_reference": "nonconforms",
+      "source_review": "nonconforms",
+      "semantic_review": "nonconforms",
+      "structural_state": "review_required",
+      "hybrid_state": "hybrid_nonconforms",
+      "reference_disputed": false,
+      "comparison_outcome": "rejected",
+      "production_admission": false
+    }
+  ],
+  "structural_counts": {
+    "pass": 5,
+    "fail": 18,
+    "review_required": 9
+  },
+  "source_review_counts": {
+    "conforms": 13,
+    "nonconforms": 19
+  },
+  "semantic_review_counts": {
+    "conforms": 7,
+    "nonconforms": 8,
+    "indeterminate": 1
+  },
+  "hybrid_counts": {
+    "structural_conforms": 5,
+    "fail": 18,
+    "hybrid_conforms": 5,
+    "hybrid_nonconforms": 4
+  },
+  "disputed_case_ids": [
+    "ic009",
+    "ic010",
+    "ic018"
+  ],
+  "undisputed_comparison": {
+    "conforms": {
+      "accepted": 10,
+      "rejected": 3
+    },
+    "nonconforms": {
+      "rejected": 16
+    }
+  },
+  "confirmed_false_rejection_case_ids": [
+    "ic021",
+    "ic025",
+    "ic026"
+  ],
+  "by_strategy": {
+    "decompose": {
+      "pass": 1,
+      "fail": 3,
+      "review_required": 0,
+      "execution_failure": 0
+    },
+    "error_classify": {
+      "pass": 0,
+      "fail": 4,
+      "review_required": 0,
+      "execution_failure": 0
+    },
+    "format_guard": {
+      "pass": 0,
+      "fail": 0,
+      "review_required": 4,
+      "execution_failure": 0
+    },
+    "hint_guard": {
+      "pass": 0,
+      "fail": 0,
+      "review_required": 4,
+      "execution_failure": 0
+    },
+    "repair": {
+      "pass": 2,
+      "fail": 2,
+      "review_required": 0,
+      "execution_failure": 0
+    },
+    "schema_link": {
+      "pass": 0,
+      "fail": 4,
+      "review_required": 0,
+      "execution_failure": 0
+    },
+    "two_view": {
+      "pass": 0,
+      "fail": 3,
+      "review_required": 1,
+      "execution_failure": 0
+    },
+    "vote3": {
+      "pass": 2,
+      "fail": 2,
+      "review_required": 0,
+      "execution_failure": 0
+    }
+  },
+  "finite_control_verdict": "not ready",
+  "B_experiment_complete": false
+}

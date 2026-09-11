@@ -1,0 +1,9 @@
+{
+  "recorded_at_utc": "2026-09-10T12:30:30.917915+00:00",
+  "stage": "instrument and protocol fixed before control author dispatch",
+  "bindings": {
+    "experiment\\revision\\gate_v2.py": "fff11167e55a9f2e18230b145de3f967e2006a53587bb624fc9f32d5e7c7dd18",
+    "review-stage\\GATE_V2_CONTRACTS.md": "80870579629bad16ec4f06b2953138cbb707424d91922853c10647c20e2f49bb",
+    "artifacts\\revision_20260910\\gate_independent_controls\\PROTOCOL.md": "983a1c9de4060166c9f92a09d4d43a3c1bdf2037d63be66340b44dfe09b6b2ad"
+  }
+}

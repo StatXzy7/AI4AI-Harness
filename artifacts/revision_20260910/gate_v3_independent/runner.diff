@@ -1,0 +1,63 @@
+diff --git a/experiment/revision/independent_gate_measure.py b/experiment/revision/independent_gate_v3_measure.py
+index c395d76..6b949de 100644
+--- a/experiment/revision/independent_gate_measure.py
++++ b/experiment/revision/independent_gate_v3_measure.py
+@@ -10,16 +10,16 @@ from collections import Counter
+ from datetime import datetime, timezone
+ from pathlib import Path
+ 
+-from experiment.revision.gate_v2 import SCHEMA, STRATEGIES, evaluate, scenarios
++from experiment.revision.gate_v3 import SCHEMA, STRATEGIES, evaluate, scenarios
+ 
+ ROOT = Path(__file__).resolve().parents[2]
+-OUT = ROOT / 'artifacts/revision_20260910/gate_independent_controls'
+-SALT = 'independent-v1-20260910'
+-SEMANTIC = ('hint_guard', 'format_guard', 'two_view', 'error_classify')
+-REQUIRED = ('experiment/revision/gate_v2.py', 'experiment/revision/independent_gate_controls.py',
+-            'experiment/revision/independent_gate_measure.py', 'review-stage/GATE_V2_CONTRACTS.md',
+-            'artifacts/revision_20260910/gate_independent_controls/PROTOCOL.md',
+-            'artifacts/revision_20260910/gate_independent_controls/author_labels.json')
++OUT = ROOT / 'artifacts/revision_20260910/gate_v3_independent'
++SALT = 'independent-v3-20260910'
++SEMANTIC = ('hint_guard', 'format_guard', 'two_view', 'error_classify', 'decompose')
++REQUIRED = ('experiment/revision/gate_v3.py', 'experiment/revision/independent_gate_v3_controls.py',
++            'experiment/revision/independent_gate_v3_measure.py', 'artifacts/revision_20260910/gate_v3_independent/CONTRACT.md',
++            'artifacts/revision_20260910/gate_v3_independent/PROTOCOL.md',
++            'artifacts/revision_20260910/gate_v3_independent/author_labels.json')
+ 
+ 
+ def sha(path):
+@@ -52,7 +52,7 @@ def main():
+         raise ValueError('Only --package-only is supported')
+     if not package_only and any((OUT / name).exists() for name in ('results.json', 'review_packet.json', 'measurement_started.json')):
+         raise FileExistsError('Measurement evidence already exists; do not replace or automatically rerun')
+-    module = importlib.import_module('experiment.revision.independent_gate_controls')
++    module = importlib.import_module('experiment.revision.independent_gate_v3_controls')
+     controls = module.CASES
+     counts = Counter(c['strategy'] for c in controls)
+     if len(controls) != 32 or len({c['case_id'] for c in controls}) != 32 or counts != Counter({s: 4 for s in STRATEGIES}):
+@@ -64,7 +64,7 @@ def main():
+     roster = [{'case_id': c['case_id'], 'strategy': c['strategy'], 'callable_name': c['solve'].__name__} for c in controls]
+     if roster != freeze['case_roster']:
+         raise ValueError('Control roster/order changed')
+-    source_path = ROOT / 'experiment/revision/independent_gate_controls.py'
++    source_path = ROOT / 'experiment/revision/independent_gate_v3_controls.py'
+     source = source_path.read_text(encoding='utf-8')
+     if package_only:
+         saved = json.loads((OUT / 'results.json').read_text(encoding='utf-8'))
+@@ -103,8 +103,13 @@ def main():
+         probes = {p.name: p for p in scenarios(result['strategy'], salt=SALT)}
+         # No automatic verdict, reasons, or author-reference labels are exposed.
+         runs = [{'probe': r['probe'], 'question': probes[r['probe']].question if r['probe'] in probes else None,
+-                 'trace': r['trace'], 'final': r['final'], 'error': r['error']}
+-                for r in result['runs']]
++                 'trace': [{k: v for k, v in event.items() if k not in {
++                     'decomposition_step', 'decomposition_candidates', 'decomposition_ambiguous'}}
++                     for event in r['trace']], 'final': r['final'], 'error': r['error']}
++                for r in result['runs']
++                # This conditional, empty meta-run encodes an instrument
++                # observation, not an API event. Keep it only in raw results.
++                if not (r['probe'] == 'cross_class_action' and not r['trace'])]
+         runs_hash = hashlib.sha256(json.dumps(runs, sort_keys=True, ensure_ascii=False,
+                                              separators=(',', ':')).encode('utf-8')).hexdigest()
+         packet.append({**identity, 'schema': SCHEMA, 'runs': runs, 'runs_sha256': runs_hash,

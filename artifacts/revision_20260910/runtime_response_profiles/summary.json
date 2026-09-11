@@ -1,0 +1,204 @@
+[
+  {
+    "name": "ledger_json",
+    "strategy": "schema_link",
+    "llm_requests": 2,
+    "executions": 0,
+    "response_roles": [
+      "linking_json",
+      "final_sql"
+    ],
+    "targets": [
+      null,
+      null
+    ],
+    "errors": [],
+    "final": "SELECT id FROM ledger",
+    "interface_issues": [],
+    "full_schema_retained": true
+  },
+  {
+    "name": "unused_json",
+    "strategy": "schema_link",
+    "llm_requests": 2,
+    "executions": 0,
+    "response_roles": [
+      "linking_json",
+      "final_sql"
+    ],
+    "targets": [
+      null,
+      null
+    ],
+    "errors": [],
+    "final": "SELECT label FROM unused",
+    "interface_issues": [],
+    "full_schema_retained": true
+  },
+  {
+    "name": "malformed_json",
+    "strategy": "schema_link",
+    "llm_requests": 2,
+    "executions": 0,
+    "response_roles": [
+      "linking_json",
+      "final_sql"
+    ],
+    "targets": [
+      null,
+      null
+    ],
+    "errors": [],
+    "final": "SELECT id FROM ledger",
+    "interface_issues": [],
+    "full_schema_retained": true
+  },
+  {
+    "name": "parts_0",
+    "strategy": "decompose",
+    "llm_requests": 4,
+    "executions": 2,
+    "response_roles": [
+      "plan",
+      "subquestion_sql",
+      "subquestion_sql",
+      "assembly_sql"
+    ],
+    "targets": [
+      null,
+      0,
+      1,
+      null
+    ],
+    "errors": [],
+    "final": "SELECT id FROM ledger",
+    "interface_issues": []
+  },
+  {
+    "name": "parts_1",
+    "strategy": "decompose",
+    "llm_requests": 4,
+    "executions": 2,
+    "response_roles": [
+      "plan",
+      "subquestion_sql",
+      "subquestion_sql",
+      "assembly_sql"
+    ],
+    "targets": [
+      null,
+      0,
+      1,
+      null
+    ],
+    "errors": [],
+    "final": "SELECT amount FROM ledger",
+    "interface_issues": []
+  },
+  {
+    "name": "success",
+    "strategy": "error_classify",
+    "llm_requests": 1,
+    "executions": 1,
+    "response_roles": [
+      "initial_sql"
+    ],
+    "targets": [
+      null
+    ],
+    "errors": [],
+    "final": "SELECT id FROM ledger",
+    "interface_issues": []
+  },
+  {
+    "name": "sqlite_syntax",
+    "strategy": "error_classify",
+    "llm_requests": 2,
+    "executions": 2,
+    "response_roles": [
+      "initial_sql",
+      "repair_sql"
+    ],
+    "targets": [
+      null,
+      null
+    ],
+    "errors": [
+      "near \"SELEC\": syntax error"
+    ],
+    "final": "SELECT id FROM ledger",
+    "interface_issues": []
+  },
+  {
+    "name": "sqlite_missing_column",
+    "strategy": "error_classify",
+    "llm_requests": 2,
+    "executions": 2,
+    "response_roles": [
+      "initial_sql",
+      "repair_sql"
+    ],
+    "targets": [
+      null,
+      null
+    ],
+    "errors": [
+      "no such column: absent"
+    ],
+    "final": "SELECT id FROM ledger",
+    "interface_issues": []
+  },
+  {
+    "name": "sqlite_missing_table",
+    "strategy": "error_classify",
+    "llm_requests": 2,
+    "executions": 2,
+    "response_roles": [
+      "initial_sql",
+      "repair_sql"
+    ],
+    "targets": [
+      null,
+      null
+    ],
+    "errors": [
+      "no such table: absent"
+    ],
+    "final": "SELECT id FROM ledger",
+    "interface_issues": []
+  },
+  {
+    "name": "sqlite_incomplete",
+    "strategy": "error_classify",
+    "llm_requests": 2,
+    "executions": 2,
+    "response_roles": [
+      "initial_sql",
+      "repair_sql"
+    ],
+    "targets": [
+      null,
+      null
+    ],
+    "errors": [
+      "incomplete input"
+    ],
+    "final": "SELECT id FROM ledger",
+    "interface_issues": []
+  },
+  {
+    "name": "executable_other_column",
+    "strategy": "error_classify",
+    "llm_requests": 1,
+    "executions": 1,
+    "response_roles": [
+      "initial_sql"
+    ],
+    "targets": [
+      null
+    ],
+    "errors": [],
+    "final": "SELECT amount FROM ledger",
+    "interface_issues": []
+  }
+]

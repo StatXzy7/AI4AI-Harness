@@ -1,0 +1,790 @@
+{
+  "reviewer_model": "gpt-5.5",
+  "source_sha256": "4df6313a7c9b41b4deccb58192f9de4c7a3b15036d62157aa1e922d61b39bb4e",
+  "scope": "source and actual traces only; hidden labels and automatic conclusions; blind Spec-axis review of 32 Gate-v4 reference traces; no author labels or automatic conclusions consumed",
+  "score": 8,
+  "verdict": "almost",
+  "cases": [
+    {
+      "case_id": "gv4r001",
+      "strategy": "schema_link",
+      "decision": "conforms",
+      "reason": "Linked tables/columns JSON is parsed into the second SQL request and constrains allowed identifiers; malformed JSON is carried as invalid rather than treated as full-schema permission.",
+      "evidence": [
+        {
+          "probe": "unused_json",
+          "event_index": 1,
+          "field": "prompt",
+          "quote": "Write one SQLite query under this binding identifier boundary.\nUse only table and column identifiers in Selected schema JSON.\nIf its status is invalid, recompute a restricted allowlist before SQL; do not treat invalid input as permission to use every identifier.\nSelected schema JSON:\n{\"columns\": [\"unused.label\"], \"tables\": [\"unused\"]}\nOriginal schema for identifier verification:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers."
+        },
+        {
+          "probe": "unused_json",
+          "event_index": null,
+          "field": "final",
+          "quote": "SELECT label FROM unused"
+        },
+        {
+          "probe": "malformed_json",
+          "event_index": 1,
+          "field": "prompt",
+          "quote": "Write one SQLite query under this binding identifier boundary.\nUse only table and column identifiers in Selected schema JSON.\nIf its status is invalid, recompute a restricted allowlist before SQL; do not treat invalid input as permission to use every identifier.\nSelected schema JSON:\n{\"raw_linker_response\": \"not JSON\", \"status\": \"invalid\"}\nOriginal schema for identifier verification:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers."
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r002",
+      "strategy": "repair",
+      "decision": "nonconforms",
+      "reason": "The repair branch executes the initial SQL, but the repair prompt omits the exact SQLite error, so the failure feedback is not fed back as required.",
+      "evidence": [
+        {
+          "probe": "syntax_a",
+          "event_index": 1,
+          "field": "error",
+          "quote": "syntax failure [stage28_v4_reference_20260911_syntax_a]"
+        },
+        {
+          "probe": "syntax_a",
+          "event_index": 2,
+          "field": "prompt",
+          "quote": "Repair the previous SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r003",
+      "strategy": "error_classify",
+      "decision": "conforms",
+      "reason": "Successful execution stops without repair; failed executions are classified by LLM and the consumed category drives category-specific repair/diagnostic prompts, including unresolved categories.",
+      "evidence": [
+        {
+          "probe": "sqlite_missing_column",
+          "event_index": 2,
+          "field": "response",
+          "quote": "schema"
+        },
+        {
+          "probe": "sqlite_missing_column",
+          "event_index": 3,
+          "field": "prompt",
+          "quote": "Consumed category: schema\nRequired action: Replace invalid identifiers using only tables and columns in the schema.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT absent FROM ledger\nExact execution feedback:\n{\"ok\": false, \"rows\": [], \"error\": \"no such column: absent\", \"error_type\": \"OperationalError\"}"
+        },
+        {
+          "probe": "category_ambiguous",
+          "event_index": 3,
+          "field": "prompt",
+          "quote": "Consumed category: syntax or schema\nRequired action: The category was unresolved; inspect the exact feedback before repairing the SQL.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELEC id FROM ledger\nExact execution feedback:\n{\"ok\": false, \"rows\": [], \"error\": \"near \\\"SELEC\\\": syntax error\", \"error_type\": \"OperationalError\"}"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r004",
+      "strategy": "vote3",
+      "decision": "nonconforms",
+      "reason": "It samples and executes three candidates, but at least one majority-by-executed-rows counterfactual selects the first candidate instead of the row-majority result.",
+      "evidence": [
+        {
+          "probe": "execution_majority_flipped",
+          "event_index": 2,
+          "field": "rows",
+          "quote": [
+            [
+              "same"
+            ]
+          ]
+        },
+        {
+          "probe": "execution_majority_flipped",
+          "event_index": 3,
+          "field": "rows",
+          "quote": [
+            [
+              "same"
+            ]
+          ]
+        },
+        {
+          "probe": "execution_majority_flipped",
+          "event_index": null,
+          "field": "final",
+          "quote": "SELECT id FROM ledger"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r005",
+      "strategy": "hint_guard",
+      "decision": "conforms",
+      "reason": "Hint lines are parsed out of the question and restated as mandatory constraints while no-hint input is passed without a fabricated Hint requirement.",
+      "evidence": [
+        {
+          "probe": "hint_0",
+          "event_index": 0,
+          "field": "prompt",
+          "quote": "Schema exactly as supplied:\nTable ledger(id, amount)\nTable unused(label)\nQuestion exactly as supplied:\nReturn ledger identifiers.\nHint: id must exceed 317.\nThe following Hint content must be satisfied: id must exceed 317.\nReturn one SQLite query."
+        },
+        {
+          "probe": "hint_1",
+          "event_index": 0,
+          "field": "prompt",
+          "quote": "Schema exactly as supplied:\nTable ledger(id, amount)\nTable unused(label)\nQuestion exactly as supplied:\nReturn ledger identifiers.\nHint: id must exceed 941.\nThe following Hint content must be satisfied: id must exceed 941.\nReturn one SQLite query."
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r006",
+      "strategy": "decompose",
+      "decision": "nonconforms",
+      "reason": "The plan is ordered, but execution answers the second sub-question before the first; the later assemble prompt reorders labels, so the actual answering order is not sequential.",
+      "evidence": [
+        {
+          "probe": "parts_0",
+          "event_index": 0,
+          "field": "response",
+          "quote": "[\"List ledger identifiers.\", \"List ledger amounts.\"]"
+        },
+        {
+          "probe": "parts_0",
+          "event_index": 1,
+          "field": "prompt",
+          "quote": "Resolve the current step.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nCurrent sub-question to answer:\nList ledger amounts."
+        },
+        {
+          "probe": "parts_0",
+          "event_index": 2,
+          "field": "prompt",
+          "quote": "Resolve the current step.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nCurrent sub-question to answer:\nList ledger identifiers."
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r007",
+      "strategy": "format_guard",
+      "decision": "conforms",
+      "reason": "The format request explicitly requires exactly one sql fenced block with no outside text and carries the supplied schema/question through the prompt.",
+      "evidence": [
+        {
+          "probe": "format_original",
+          "event_index": 0,
+          "field": "prompt",
+          "quote": "Return exactly one ```sql fenced block and no text outside the fence.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers."
+        },
+        {
+          "probe": "format_changed_question",
+          "event_index": 0,
+          "field": "prompt",
+          "quote": "Return exactly one ```sql fenced block and no text outside the fence.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger amounts."
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r008",
+      "strategy": "two_view",
+      "decision": "conforms",
+      "reason": "Two candidate formulations are requested, both generated candidates are executed, and the final SQL follows the non-empty/first-if-both rule across counterfactuals.",
+      "evidence": [
+        {
+          "probe": "first_empty",
+          "event_index": 0,
+          "field": "response",
+          "quote": [
+            "SELECT id FROM ledger",
+            "SELECT amount FROM ledger"
+          ]
+        },
+        {
+          "probe": "first_empty",
+          "event_index": 2,
+          "field": "rows",
+          "quote": [
+            [
+              "B"
+            ]
+          ]
+        },
+        {
+          "probe": "first_empty",
+          "event_index": null,
+          "field": "final",
+          "quote": "SELECT amount FROM ledger"
+        },
+        {
+          "probe": "both_nonempty",
+          "event_index": null,
+          "field": "final",
+          "quote": "SELECT id FROM ledger"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r009",
+      "strategy": "repair",
+      "decision": "conforms",
+      "reason": "Initial success stops after execution; failure prompts include the complete feedback record with the exact stage-specific SQLite error before regenerating.",
+      "evidence": [
+        {
+          "probe": "success_no_repair",
+          "event_index": 1,
+          "field": "ok",
+          "quote": true
+        },
+        {
+          "probe": "syntax_a",
+          "event_index": 2,
+          "field": "prompt",
+          "quote": "Correct the SQL using every field in this failure record:\n{\"schema\": \"Table ledger(id, amount)\\nTable unused(label)\", \"question\": \"Return ledger identifiers.\", \"previous_sql\": \"SELECT id FROM ledger\", \"exact_execution_feedback\": {\"ok\": false, \"rows\": [], \"error\": \"syntax failure [stage28_v4_reference_20260911_syntax_a]\"}}"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r010",
+      "strategy": "schema_link",
+      "decision": "nonconforms",
+      "reason": "The linked JSON is produced but explicitly marked advisory, and the second SQL prompt allows any identifier from the full schema, so it does not constrain SQL generation.",
+      "evidence": [
+        {
+          "probe": "unused_json",
+          "event_index": 0,
+          "field": "response",
+          "quote": "{\"tables\": [\"unused\"], \"columns\": [\"unused.label\"]}"
+        },
+        {
+          "probe": "unused_json",
+          "event_index": 1,
+          "field": "prompt",
+          "quote": "Write one SQLite query. The linked payload is advisory; use any identifier from the full schema when convenient.\nAdvisory linked JSON:\n{\"columns\": [\"unused.label\"], \"tables\": [\"unused\"]}\nFull schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers."
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r011",
+      "strategy": "vote3",
+      "decision": "conforms",
+      "reason": "The trace uses n=3 at temperature 0.7, executes all three candidates, and selects the majority executed result in flipped and equivalent-row scenarios.",
+      "evidence": [
+        {
+          "probe": "late_majority",
+          "event_index": 0,
+          "field": "n",
+          "quote": 3
+        },
+        {
+          "probe": "late_majority",
+          "event_index": 0,
+          "field": "temperature",
+          "quote": 0.7
+        },
+        {
+          "probe": "execution_majority_flipped",
+          "event_index": null,
+          "field": "final",
+          "quote": "SELECT amount FROM ledger"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r012",
+      "strategy": "error_classify",
+      "decision": "nonconforms",
+      "reason": "Local classification is visible, but all repair prompts collapse different categories into the same generic rewrite action instead of applying strategy-specific fixes.",
+      "evidence": [
+        {
+          "probe": "sqlite_syntax",
+          "event_index": 2,
+          "field": "prompt",
+          "quote": "Failure category: syntax\nRequired action: Rewrite the SQL more carefully.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELEC id FROM ledger\nExact execution feedback:\n{\"ok\": false, \"rows\": [], \"error\": \"near \\\"SELEC\\\": syntax error\", \"error_type\": \"OperationalError\"}"
+        },
+        {
+          "probe": "sqlite_missing_column",
+          "event_index": 2,
+          "field": "prompt",
+          "quote": "Failure category: schema\nRequired action: Rewrite the SQL more carefully.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT absent FROM ledger\nExact execution feedback:\n{\"ok\": false, \"rows\": [], \"error\": \"no such column: absent\", \"error_type\": \"OperationalError\"}"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r013",
+      "strategy": "two_view",
+      "decision": "conforms",
+      "reason": "The two prompts represent distinct formulations, both SQL candidates are executed, and selection follows second-when-first-empty, first-when-second-empty, and first-when-both-nonempty.",
+      "evidence": [
+        {
+          "probe": "first_empty",
+          "event_index": 0,
+          "field": "prompt",
+          "quote": "Construct SQL directly from base tables with explicit joins and filters.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers."
+        },
+        {
+          "probe": "first_empty",
+          "event_index": 1,
+          "field": "prompt",
+          "quote": "Construct an alternative SQL formulation using CTE stages before the final projection.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers."
+        },
+        {
+          "probe": "both_nonempty",
+          "event_index": null,
+          "field": "final",
+          "quote": "SELECT id FROM ledger"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r014",
+      "strategy": "hint_guard",
+      "decision": "nonconforms",
+      "reason": "The Hint text appears only as part of the original question; it is not parsed and restated as a hard requirement before SQL generation.",
+      "evidence": [
+        {
+          "probe": "hint_0",
+          "event_index": 0,
+          "field": "prompt",
+          "quote": "Return one SQLite query.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nHint: id must exceed 317."
+        },
+        {
+          "probe": "hint_1",
+          "event_index": 0,
+          "field": "prompt",
+          "quote": "Return one SQLite query.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nHint: id must exceed 941."
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r015",
+      "strategy": "decompose",
+      "decision": "conforms",
+      "reason": "Sub-questions are planned, answered in order through explicit Current sub-question fields, and the actual returned payloads are included in the final assembly prompt.",
+      "evidence": [
+        {
+          "probe": "parts_0",
+          "event_index": 1,
+          "field": "prompt",
+          "quote": "Resolve the current step.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nEarlier returned answers:\n\nCurrent sub-question to answer:\nList ledger identifiers."
+        },
+        {
+          "probe": "parts_0",
+          "event_index": 2,
+          "field": "prompt",
+          "quote": "Resolve the current step.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nEarlier returned answers:\nSELECT id FROM ledger /* payload_0_0 */\nCurrent sub-question to answer:\nList ledger amounts."
+        },
+        {
+          "probe": "parts_0",
+          "event_index": 3,
+          "field": "prompt",
+          "quote": "Build one SQLite query using both returned partial answers.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nFirst partial answer:\nSELECT id FROM ledger /* payload_0_0 */\nSecond partial answer:\nSELECT amount FROM ledger /* payload_0_1 */"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r016",
+      "strategy": "format_guard",
+      "decision": "nonconforms",
+      "reason": "The prompt asks for raw SQLite without a markdown fence, which directly contradicts the required sql-fenced final answer format.",
+      "evidence": [
+        {
+          "probe": "format_original",
+          "event_index": 0,
+          "field": "prompt",
+          "quote": "Return raw SQLite text only, without a markdown fence or explanation.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers."
+        },
+        {
+          "probe": "format_changed_question",
+          "event_index": 0,
+          "field": "prompt",
+          "quote": "Return raw SQLite text only, without a markdown fence or explanation.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger amounts."
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r017",
+      "strategy": "vote3",
+      "decision": "nonconforms",
+      "reason": "Although it requests n=3 and executes candidates, multiple counterfactuals return the first sample rather than the majority result.",
+      "evidence": [
+        {
+          "probe": "late_majority",
+          "event_index": 0,
+          "field": "response",
+          "quote": [
+            "SELECT id FROM ledger",
+            "SELECT amount FROM ledger",
+            "SELECT amount FROM ledger"
+          ]
+        },
+        {
+          "probe": "late_majority",
+          "event_index": null,
+          "field": "final",
+          "quote": "SELECT id FROM ledger"
+        },
+        {
+          "probe": "flipped_majority",
+          "event_index": null,
+          "field": "final",
+          "quote": "SELECT amount FROM ledger"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r018",
+      "strategy": "repair",
+      "decision": "conforms",
+      "reason": "The initial SQL is executed, success returns immediately, and failure repair prompts carry the exact execution feedback including the stage-specific error.",
+      "evidence": [
+        {
+          "probe": "success_no_repair",
+          "event_index": 1,
+          "field": "ok",
+          "quote": true
+        },
+        {
+          "probe": "syntax_b",
+          "event_index": 2,
+          "field": "prompt",
+          "quote": "Repair the failed query from the complete execution record.\nDatabase schema:\nTable ledger(id, amount)\nTable unused(label)\nUser question:\nReturn ledger identifiers.\nFailed SQL:\nSELECT id FROM ledger\nExact execution feedback:\n{\"ok\": false, \"rows\": [], \"error\": \"syntax failure [stage28_v4_reference_20260911_syntax_b]\"}"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r019",
+      "strategy": "schema_link",
+      "decision": "conforms",
+      "reason": "Schema linking creates a typed JSON selection and turns it into a binding allowlist; malformed JSON becomes INVALID_SELECTION with recomputation guidance.",
+      "evidence": [
+        {
+          "probe": "unused_json",
+          "event_index": 1,
+          "field": "prompt",
+          "quote": "Construct SQL using the binding allowlist below. No identifier outside it may appear unless INVALID_SELECTION explicitly requires recomputing a restricted allowlist first.\nBinding allowlist:\nTables: unused\nColumns: unused.label\nOriginal schema for validation:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers."
+        },
+        {
+          "probe": "malformed_json",
+          "event_index": 1,
+          "field": "prompt",
+          "quote": "Construct SQL using the binding allowlist below. No identifier outside it may appear unless INVALID_SELECTION explicitly requires recomputing a restricted allowlist first.\nBinding allowlist:\nINVALID_SELECTION: recompute a restricted allowlist before writing SQL\nOriginal schema for validation:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers."
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r020",
+      "strategy": "error_classify",
+      "decision": "conforms",
+      "reason": "Local classification maps syntax/schema/semantics failures to distinct required actions and leaves successful execution unrepaired.",
+      "evidence": [
+        {
+          "probe": "success",
+          "event_index": 1,
+          "field": "ok",
+          "quote": true
+        },
+        {
+          "probe": "sqlite_syntax",
+          "event_index": 2,
+          "field": "prompt",
+          "quote": "Failure category: syntax\nRequired action: Repair SQL grammar and token placement while preserving the task intent.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELEC id FROM ledger\nExact execution feedback:\n{\"ok\": false, \"rows\": [], \"error\": \"near \\\"SELEC\\\": syntax error\", \"error_type\": \"OperationalError\"}"
+        },
+        {
+          "probe": "sqlite_numeric_overflow",
+          "event_index": 2,
+          "field": "prompt",
+          "quote": "Failure category: semantics\nRequired action: Revise joins, filters, or aggregation so the query represents the task intent.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT abs(-9223372036854775808)\nExact execution feedback:\n{\"ok\": false, \"rows\": [], \"error\": \"integer overflow\", \"error_type\": \"OperationalError\"}"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r021",
+      "strategy": "hint_guard",
+      "decision": "conforms",
+      "reason": "The Hint line is copied into a separate mandatory constraint field, with the exact numeric payload changing across probes.",
+      "evidence": [
+        {
+          "probe": "hint_0",
+          "event_index": 0,
+          "field": "prompt",
+          "quote": "Produce one SQLite query.\nOriginal schema:\nTable ledger(id, amount)\nTable unused(label)\nOriginal question:\nReturn ledger identifiers.\nHint: id must exceed 317.\nMandatory constraint taken from the Hint:\nid must exceed 317."
+        },
+        {
+          "probe": "hint_1",
+          "event_index": 0,
+          "field": "prompt",
+          "quote": "Produce one SQLite query.\nOriginal schema:\nTable ledger(id, amount)\nTable unused(label)\nOriginal question:\nReturn ledger identifiers.\nHint: id must exceed 941.\nMandatory constraint taken from the Hint:\nid must exceed 941."
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r022",
+      "strategy": "two_view",
+      "decision": "nonconforms",
+      "reason": "Both views are generated and executed, but when both executions return non-empty rows the final SQL chooses the second candidate instead of the required first.",
+      "evidence": [
+        {
+          "probe": "both_nonempty",
+          "event_index": 2,
+          "field": "rows",
+          "quote": [
+            [
+              "A"
+            ]
+          ]
+        },
+        {
+          "probe": "both_nonempty",
+          "event_index": 3,
+          "field": "rows",
+          "quote": [
+            [
+              "B"
+            ]
+          ]
+        },
+        {
+          "probe": "both_nonempty",
+          "event_index": null,
+          "field": "final",
+          "quote": "SELECT amount FROM ledger"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r023",
+      "strategy": "format_guard",
+      "decision": "conforms",
+      "reason": "The format constraint is present in both the user prompt and system prompt, requiring one sql fenced block and no explanation while preserving the supplied question.",
+      "evidence": [
+        {
+          "probe": "format_original",
+          "event_index": 0,
+          "field": "prompt",
+          "quote": "Use the supplied schema and question. Output only one fenced SQL block, with the fence language set to sql and no explanation.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers."
+        },
+        {
+          "probe": "format_original",
+          "event_index": 0,
+          "field": "system",
+          "quote": "Your entire answer must be one ```sql fenced block with no extra prose."
+        },
+        {
+          "probe": "format_changed_question",
+          "event_index": 0,
+          "field": "prompt",
+          "quote": "Use the supplied schema and question. Output only one fenced SQL block, with the fence language set to sql and no explanation.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger amounts."
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r024",
+      "strategy": "decompose",
+      "decision": "nonconforms",
+      "reason": "It answers the planned sub-questions, but the final assembly prompt uses only planned step names and omits the actual returned payloads, so returned answers are not consumed.",
+      "evidence": [
+        {
+          "probe": "parts_0",
+          "event_index": 1,
+          "field": "response",
+          "quote": "SELECT id FROM ledger /* payload_0_0 */"
+        },
+        {
+          "probe": "parts_0",
+          "event_index": 2,
+          "field": "response",
+          "quote": "SELECT amount FROM ledger /* payload_0_1 */"
+        },
+        {
+          "probe": "parts_0",
+          "event_index": 3,
+          "field": "prompt",
+          "quote": "Build one SQLite query from the two planned step names.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPlanned step 1:\nList ledger identifiers.\nPlanned step 2:\nList ledger amounts."
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r025",
+      "strategy": "schema_link",
+      "decision": "nonconforms",
+      "reason": "The first call emits linked tables/columns JSON, but the SQL call ignores that payload and asks from the complete schema, so no identifier boundary constrains generation.",
+      "evidence": [
+        {
+          "probe": "unused_json",
+          "event_index": 0,
+          "field": "response",
+          "quote": "{\"tables\": [\"unused\"], \"columns\": [\"unused.label\"]}"
+        },
+        {
+          "probe": "unused_json",
+          "event_index": 1,
+          "field": "prompt",
+          "quote": "Write one SQLite query from the complete schema.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers."
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r026",
+      "strategy": "vote3",
+      "decision": "conforms",
+      "reason": "The vote path samples three independent candidates with n=3/temp 0.7, executes each candidate, and follows the majority result in row-majority counterfactuals.",
+      "evidence": [
+        {
+          "probe": "late_majority",
+          "event_index": 0,
+          "field": "temperature",
+          "quote": 0.7
+        },
+        {
+          "probe": "late_majority",
+          "event_index": 0,
+          "field": "n",
+          "quote": 3
+        },
+        {
+          "probe": "execution_majority_flipped",
+          "event_index": null,
+          "field": "final",
+          "quote": "SELECT amount FROM ledger"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r027",
+      "strategy": "repair",
+      "decision": "nonconforms",
+      "reason": "The harness rewrites even after a successful execution, violating the repair strategy condition that regeneration occurs if execution fails.",
+      "evidence": [
+        {
+          "probe": "success_no_repair",
+          "event_index": 1,
+          "field": "ok",
+          "quote": true
+        },
+        {
+          "probe": "success_no_repair",
+          "event_index": 2,
+          "field": "prompt",
+          "quote": "Review and rewrite the previous SQL using the execution record.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nExact execution feedback:\n{\"ok\": true, \"rows\": [[\"A\"]], \"error\": null}"
+        },
+        {
+          "probe": "success_no_repair",
+          "event_index": null,
+          "field": "final",
+          "quote": "SELECT id FROM ledger WHERE id > 0"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r028",
+      "strategy": "error_classify",
+      "decision": "nonconforms",
+      "reason": "It classifies failures through the LLM, but the repair prompt does not consume the category into a category-specific action; syntax and schema both receive the same generic rewrite instruction.",
+      "evidence": [
+        {
+          "probe": "sqlite_syntax",
+          "event_index": 2,
+          "field": "response",
+          "quote": "syntax"
+        },
+        {
+          "probe": "sqlite_syntax",
+          "event_index": 3,
+          "field": "prompt",
+          "quote": "Rewrite the SQL more carefully.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELEC id FROM ledger\nExact execution feedback:\n{\"ok\": false, \"rows\": [], \"error\": \"near \\\"SELEC\\\": syntax error\", \"error_type\": \"OperationalError\"}"
+        },
+        {
+          "probe": "sqlite_missing_column",
+          "event_index": 3,
+          "field": "prompt",
+          "quote": "Rewrite the SQL more carefully.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT absent FROM ledger\nExact execution feedback:\n{\"ok\": false, \"rows\": [], \"error\": \"no such column: absent\", \"error_type\": \"OperationalError\"}"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r029",
+      "strategy": "two_view",
+      "decision": "conforms",
+      "reason": "Two independent formulations are requested in separate calls, both are executed, and the final SQL follows the non-empty/first-if-both selection rule.",
+      "evidence": [
+        {
+          "probe": "first_empty",
+          "event_index": 0,
+          "field": "prompt",
+          "quote": "Start from the principal entity and attach only required relations.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers."
+        },
+        {
+          "probe": "first_empty",
+          "event_index": 1,
+          "field": "prompt",
+          "quote": "Start from the requested metric or aggregate and trace backward to entities.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers."
+        },
+        {
+          "probe": "both_nonempty",
+          "event_index": null,
+          "field": "final",
+          "quote": "SELECT id FROM ledger"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r030",
+      "strategy": "format_guard",
+      "decision": "nonconforms",
+      "reason": "The format instruction asks for explanatory text before and after the sql fence, contradicting the no-extra-text final-answer requirement.",
+      "evidence": [
+        {
+          "probe": "format_original",
+          "event_index": 0,
+          "field": "prompt",
+          "quote": "Explain the approach, then provide one ```sql fenced block, then add a short verification note.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers."
+        },
+        {
+          "probe": "format_changed_question",
+          "event_index": 0,
+          "field": "prompt",
+          "quote": "Explain the approach, then provide one ```sql fenced block, then add a short verification note.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger amounts."
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r031",
+      "strategy": "decompose",
+      "decision": "conforms",
+      "reason": "The decomposition is ordered, later steps carry previous returned answers, and the assembly prompt consumes both actual payloads before returning final SQL.",
+      "evidence": [
+        {
+          "probe": "parts_1",
+          "event_index": 1,
+          "field": "response",
+          "quote": "SELECT id FROM ledger /* payload_1_0 */"
+        },
+        {
+          "probe": "parts_1",
+          "event_index": 2,
+          "field": "prompt",
+          "quote": "Answer only the current decomposition step, using earlier context when useful.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nEarlier sub-question:\nList ledger identifiers.\nEarlier returned answer:\nSELECT id FROM ledger /* payload_1_0 */\nCurrent sub-question to answer:\nList ledger amounts."
+        },
+        {
+          "probe": "parts_1",
+          "event_index": 3,
+          "field": "prompt",
+          "quote": "Assemble one SQLite query from both returned decomposition answers.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nReturned answer 1:\nSELECT id FROM ledger /* payload_1_0 */\nReturned answer 2:\nSELECT amount FROM ledger /* payload_1_1 */"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r032",
+      "strategy": "hint_guard",
+      "decision": "conforms",
+      "reason": "The Hint content is parsed out and restated as a mandatory Hint constraint with probe-specific numeric values.",
+      "evidence": [
+        {
+          "probe": "hint_0",
+          "event_index": 0,
+          "field": "prompt",
+          "quote": "Return one SQLite query.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nHint: id must exceed 317.\nMandatory Hint constraint:\nid must exceed 317."
+        },
+        {
+          "probe": "hint_1",
+          "event_index": 0,
+          "field": "prompt",
+          "quote": "Return one SQLite query.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nHint: id must exceed 941.\nMandatory Hint constraint:\nid must exceed 941."
+        }
+      ]
+    }
+  ]
+}

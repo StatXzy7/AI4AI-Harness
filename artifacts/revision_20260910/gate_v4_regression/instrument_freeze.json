@@ -1,0 +1,34 @@
+{
+  "status": "FROZEN_FOR_INDEPENDENT_REFERENCE_CHECK_ONLY",
+  "recorded_at_utc": "2026-09-10T15:24:29.633956+00:00",
+  "scope": "development instrument, not provider launch or scientific experiment authorization",
+  "bindings": {
+    "artifacts/revision_20260910/runtime_gate_bridge/source_manifest.json": "709929f9d351d059b1f91e7daaee679408d37b08508b3dd8fa7bd12d184328db",
+    "experiment/revision/gate_v4_report.py": "600a3d17d9116fafb03056d1b4b132b863edc9b4ab1eefad5d65557e6d3c1fd8",
+    "experiment/revision/gate_v4.py": "9b607eb755d94b86ad74c23bb9505cea2710cb92155bcad94e9e7bd0b3f97fac",
+    "experiment/revision/gate_v3.py": "93e68080d0de32b29d349593e54535857c9acbfacaa42ebd8e70477298ca9827",
+    "experiment/revision/gate_v2.py": "fff11167e55a9f2e18230b145de3f967e2006a53587bb624fc9f32d5e7c7dd18",
+    "experiment/revision/runtime_response_profiles.py": "65baf9b7cf3a79fff3d3814d87dca62fd8af331f08f16536680a9537e986fd57",
+    "experiment/revision/gate_runtime_adapter.py": "529c9d02a58c0613f32de1ab04e60f83d27d5e57052a54f2805da3f08a69b238",
+    "experiment/revision/common_pool.py": "b697e032d19791df06d0af2fbde0af37fe842f104698c5d03ddd112f4c064624",
+    "external/TTHE/text_to_sql/harness_base.py": "a25324fa098706aa74b3396ede06dd5a4b45b584a0b3e0fc7043949287b0d063",
+    "external/TTHE/ase/llm.py": "c57bb5d5adcc58c2c00b9279ff0b8bef372f08d26bd1abbb4e31bbac595f16ec",
+    "review-stage/GATE_V4_CONTRACT.md": "5fb46b099eddbacdcaed278bad5fef0ce56e44d091adcd2e9dfd7bde31f8addb",
+    "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_repair.py": "64b17889de12ebe40aca5f1a5a0f287eb70656bb0f7485b61c8e031463bea2a7",
+    "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_vote3.py": "8910d3ab1a010fc7b1c27ca4c0ddb8698e76b2c8879e6fa8b65826bdc23c5a1b",
+    "external/TTHE/text_to_sql/agents/p2_C_deepseek_s1_schema_link.py": "99542e3e0c703f1c3a0f93649e50416b6035085be55b08335b64b2e901cd46a0",
+    "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_hint_guard.py": "def3837c363969ba6b4b323ff293faff32665bb87ddb4827b70a0d65c46e6b1d",
+    "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_two_view.py": "7263a85db95f0acb132d063f390c6111ce6a12700ba16db18708e6823f8a1f37",
+    "external/TTHE/text_to_sql/agents/p2_C_deepseek_s1_decompose.py": "e353221cc20bce5849d44f7fa92b6d3002bbbd1f2572eed807dae0ef82be11d5",
+    "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_error_classify.py": "7960116a8c4026e466ef73e509ffcb183ec09b499f50fc515c79678b10864035",
+    "external/TTHE/text_to_sql/agents/neg_uncond_twocall.py": "d9f18f4c7a6219dc3e5468dabeebe9f372c921a15f49ce83501fa7bc33cec815",
+    "external/TTHE/text_to_sql/agents/neg_selectfirst.py": "532fecc72d92349a129317541e60197486731085cbbfd041cbd3386f4871b288",
+    "experiment/revision/gate_controls.py": "27d586acf9bd29463417046ce28648f76ebf495d8c4f3052a9644ad4bc241ff3"
+  },
+  "gate_v4_sha256": "9b607eb755d94b86ad74c23bb9505cea2710cb92155bcad94e9e7bd0b3f97fac",
+  "limitations": [
+    "Only supported source-assigned response profiles are executed; unsupported stays indeterminate",
+    "Typed three strategies require independent source/trace decisions",
+    "Known reference coverage, actual common pool and benchmark outcomes remain incomplete"
+  ]
+}

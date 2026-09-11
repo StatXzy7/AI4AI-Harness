@@ -1,0 +1,31 @@
+{
+  "scope": "offline candidate inference development calibration; method not ready; not formal A or independent cross-model scientific clearance",
+  "n_settings": 8,
+  "n_reference_per_setting": 3000,
+  "n_calibration_per_setting": 300,
+  "n_bootstrap_per_dataset_per_method": 399,
+  "total_simulated_datasets": 26400,
+  "total_bootstrap_recalculations": 1915200,
+  "all_revision_tests": 46,
+  "new_inference_tests": 5,
+  "tests": "PASS in existing isolated replay_env",
+  "ruff": "PASS",
+  "visual_inspection": "three-panel PNG inspected; labels/units/legend/caption visible",
+  "completed_session_id": 91611,
+  "execution_exit_code": 0,
+  "provenance": "simulation launched with isolated replay_env; full Monte Carlo run completed once; no independent full rerun claimed",
+  "review": "bounded code and mathematical review9/10 ready to run calibration; plot Wilson endpoint roundoff fixed and checked at coverage0 and1; not method clearance",
+  "source_and_artifact_hashes": {
+    "artifacts/revision_20260910/repeat_inference.json": "a5731bb8dde9cbfbcbd98f7ab4adf60072dee80a3a767c40ada43a80d0323bab",
+    "experiment/revision/render_inference.py": "d44d5de5a9443d0d93d42da06fb06c16f9e1bd13c838c5da68b16f84fa37c05c",
+    "experiment/revision/replay.py": "b87ba0aae2b610053c418b7a8373532bfe1c53a2a2dcfb9d345f548f2693ea86",
+    "artifacts/revision_20260910/repeat_inference.png": "053648d9ffa976a5866876751a075f88a76fec1e45b9a203acdc1977334eda99",
+    "artifacts/revision_20260910/repeat_inference.pdf": "67071477b3d3a83d2ad4c9e588d23a8e2a84168a54863bf841a5baa5a0e61078",
+    "experiment/revision/repeat_inference.py": "94d00e237f14d09e500bb9cd4835282809e34a6264447f4d59d7c966e4523a63",
+    "experiment/revision/repeat_planning.py": "8d673ff72ac6c4dcac7e44948b1d35f2ff15b070df6a8baf81422085622cc048",
+    "artifacts/revision_20260910/sensitivity.json": "381e8f35a355cf085881cb6dd37ce9868609e5d58937387b1026b582487a3bea",
+    "experiment/revision/test_repeat_inference.py": "fdf362dd3fab7835aa69fa27dd08f3eb66bed64cc2ffdddc5962d43ce488f38e",
+    "review-stage/REPEAT_INFERENCE_CALIBRATION.md": "0b1189b9fa65ba68f12a371f70982fb0d535260855307214657eb8a9d5ce4a15"
+  },
+  "report_review": "9/10 ready for accuracy of development calibration report; no method clearance; Markdown table spacing corrected"
+}

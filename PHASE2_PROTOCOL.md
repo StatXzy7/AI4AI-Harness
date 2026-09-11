@@ -1,5 +1,12 @@
 # PHASE-II PROTOCOL — AUTHORITATIVE MERGED VERSION
 
+> **2026-09-10 status note:** the freeze-time statements below are historical,
+> not current completion claims. All 72 A–D generation units and archived
+> primary/factorial analyses now exist. Post-review corrections and outstanding
+> experiments are tracked in `review-stage/REVISION_20260910.md`. The original
+> gate and raw outcomes are preserved; the new statistical replay is explicitly
+> post-review and has no new confirmatory freeze or submission tag.
+
 > This is the single authoritative protocol document. It supersedes, in full:
 > `PHASE2_FREEZE.md` (v1.0–v1.2), `PHASE2_SAP.md` (v1.0–v1.5), and
 > `experiment/phase2/SAP_v2.md`. Those files are retained as tombstones pointing here.
@@ -310,3 +317,43 @@ population: 14 distinct sources, 12 PASS / 4 M1 / 3 M2 / 1 M3).
    scrubbing is the user's decision; rotation is the effective remedy either way.
 4. ICLR 2027 compliance (2027 template, mandatory AI-use disclosure, `\iclrfinalcopy` off,
    bibliography placeholders) — to be done during paper revision, before submission.
+
+## 12. Post-review record (2026-09-10; retrospective, not pre-outcome)
+
+- **D16 documentation recovery:** historical analysis code referenced D16 to resolve
+  concurrent conflicting collection records by first-write-wins, but no D16 entry
+  was present above. This paragraph records that omission retrospectively; it does
+  not establish when that policy was first chosen. The revised replay uses frozen
+  manifest file order followed by line order and reports conflicts under both judges.
+- **R1 actual generation budget:** `run_slot` stopped at the first admission, giving
+  at most three raw attempts, not exactly three. Actual A/B/C/D totals are
+  269/255/273/324. Token expenditure has not been completely recovered.
+- **R2 implemented gate:** two allowed prompt strategies map to `plain`, return
+  `NO_MECHANISM_declared`, and cannot satisfy strict `PASS` admission. The old
+  intervention combines nontrivial-mechanism screening and verification. It remains
+  unchanged; a repaired gate requires its own contracts, calibration and experiment.
+- **R3 corrected statistical replay:** original primary code omitted within-DB task
+  sampling and drew task sets independently across cells; factorial intervals only
+  resampled cell summaries. The new version uses shared DB/within-DB task draws,
+  fixed builders with seeds resampled within builder, one common AD baseline for all
+  core arms, and explicit sign-flip/CI scopes. BC manifest order differs from the old
+  factorial script order. These choices are post-review corrections, not silently
+  retroactive preregistration. Output: `artifacts/revision_20260910/`.
+- **R4 scope:** K-matched/W1/W3/R2 legacy migration, clone controls, gate-v2,
+  bridge and independent utility validation remain outstanding. New API experiments
+  require a finalized prospective plan and budget; no such run was launched in this
+  revision. Current credentials/revocation were not verified with the provider.
+
+- **R5 follow-up to R4:** K-matched and R2 canonical migration is now complete
+  with shared task/seed bootstrap, all 18 cells retained, and explicit bare-inclusive
+  versus bare-excluded estimands. W1/W3 remain legacy. The logical-call audit has
+  no token-usage records and does not establish billed cost. A new isolated venv
+  reproduced all main and sensitivity result objects exactly; full API-runtime
+  restoration remains unverified. See the current revision status and manifests.
+
+- **R6 follow-up:** W1/W3 descriptive analyses now use the canonical loader. W3
+  retains the lossy legacy SQL text transform without semantic-equivalence claims.
+  W1 versions a deterministic split/draw schedule: historical set-derived cell
+  order was not preserved, so original random draws cannot be recovered exactly.
+  Shared-bare and candidate-only estimands are separate. Legacy cell-only CIs
+  are withdrawn; task/database and re-selection uncertainty remains outstanding.

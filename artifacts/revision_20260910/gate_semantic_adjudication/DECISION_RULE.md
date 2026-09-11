@@ -1,0 +1,15 @@
+# 开发集语义裁决规则：在发送审核材料前固定
+
+作用域：14例既有开发轨迹，不是独立校准集，不是benchmark结果，不改变历史准入。此规则用于完成四类声明的独立语义审阅，不能关闭B实验。
+
+材料固定：`gate_v2_semantic_review_packet.json` SHA256 `7f2c1085b53e7ee30e50958ad7e823c65b7aff10734ed11cbaa72cb30ea00dce`；`review-stage/GATE_V2_CONTRACTS.md` SHA256 `80870579629bad16ec4f06b2953138cbb707424d91922853c10647c20e2f49bb`。每例显示源码与全部轨迹哈希由审核者独立核验。原函数源码哈希由父执行者校验对应关系；审核者不接收原函数名、预期标签或当前gate判决。
+
+执行/开发作者模型为GPT-6；本轮裁决使用gpt-5.5。模型标识按实际工具设置记录；更细服务端构建版本不可见，明确记unknown。不同模型满足本项目跨模型来源要求，但单模型裁决不是专家共识，且不保证与实现模型的错误统计独立。
+
+裁决预算：同一审核者一次完整审阅14例，每例必须给 `conforms / nonconforms / indeterminate` 之一，引用probe、trace下标和请求原文，说明要求的正负性、原约束是否保留和对应语义。允许一次仅为缺证据/记录歧义的澄清；澄清不能看预期标签、benchmark或修改材料。无需外部付费API；不将应用内代理消耗报告为零成本。
+
+合并规则：结构fail或execution_failure保留原状态，语义意见另列；结构review_required且裁决conforms，仅成为development_semantic_conforms；裁决nonconforms成为development_semantic_nonconforms；裁决indeterminate仍待审。结构pass也不自动成为生产准入。两类结果不一致时完整保留，不依据原正负标签推翻独立裁决；不以多数票或作者裁量补成PASS。
+
+审核者只读本规则、合同第1至3节和无标签packet，不读取带label的development报告、gate_controls.py或原稿benchmark成绩。父执行者在裁决文件落盘且哈希固定前不作语义结论或标签匹配。裁决完成后才作身份映射和状态表；表称开发集裁决分布，不称误放率/误拒率。
+
+本次不修改gate、fixture或原控制集。若揭示语义缺口，记录下一版合同的具体修订候选；这14例在之后任何版本中均已曝光，不能转称独立校准。

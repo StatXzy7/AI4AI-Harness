@@ -1,0 +1,112 @@
+{
+  "bindings": {
+    "artifacts/revision_20260910/runtime_gate_bridge/source_manifest.json": "709929f9d351d059b1f91e7daaee679408d37b08508b3dd8fa7bd12d184328db",
+    "review-stage/RUNTIME_GATE_DIAGNOSTIC_PROTOCOL.md": "a928f1fc4c29e2670ab1dce3ea7b975120b2d4960f9cea30cb7aa78420c7e1cd",
+    "experiment/revision/runtime_gate_diagnostic.py": "f620c0c2b720ff48da855d8805c1c477ee141b403c1cd2302c72cee4ba576940",
+    "experiment/revision/gate_runtime_adapter.py": "529c9d02a58c0613f32de1ab04e60f83d27d5e57052a54f2805da3f08a69b238",
+    "experiment/revision/gate_v3.py": "93e68080d0de32b29d349593e54535857c9acbfacaa42ebd8e70477298ca9827",
+    "experiment/revision/gate_v2.py": "fff11167e55a9f2e18230b145de3f967e2006a53587bb624fc9f32d5e7c7dd18",
+    "experiment/revision/common_pool.py": "b697e032d19791df06d0af2fbde0af37fe842f104698c5d03ddd112f4c064624",
+    "experiment/phase2/generate.py": "20d847647c69cf6276df157b1b6763c8ac841b019ee7bbb89fa4b19e04a12d47",
+    "review-stage/GATE_V2_CONTRACTS.md": "80870579629bad16ec4f06b2953138cbb707424d91922853c10647c20e2f49bb",
+    "external/TTHE/text_to_sql/harness_base.py": "a25324fa098706aa74b3396ede06dd5a4b45b584a0b3e0fc7043949287b0d063",
+    "external/TTHE/ase/llm.py": "c57bb5d5adcc58c2c00b9279ff0b8bef372f08d26bd1abbb4e31bbac595f16ec",
+    "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_repair.py": "64b17889de12ebe40aca5f1a5a0f287eb70656bb0f7485b61c8e031463bea2a7",
+    "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_vote3.py": "8910d3ab1a010fc7b1c27ca4c0ddb8698e76b2c8879e6fa8b65826bdc23c5a1b",
+    "external/TTHE/text_to_sql/agents/p2_C_deepseek_s1_schema_link.py": "99542e3e0c703f1c3a0f93649e50416b6035085be55b08335b64b2e901cd46a0",
+    "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_hint_guard.py": "def3837c363969ba6b4b323ff293faff32665bb87ddb4827b70a0d65c46e6b1d",
+    "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_two_view.py": "7263a85db95f0acb132d063f390c6111ce6a12700ba16db18708e6823f8a1f37",
+    "external/TTHE/text_to_sql/agents/p2_C_deepseek_s1_decompose.py": "e353221cc20bce5849d44f7fa92b6d3002bbbd1f2572eed807dae0ef82be11d5",
+    "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_error_classify.py": "7960116a8c4026e466ef73e509ffcb183ec09b499f50fc515c79678b10864035"
+  },
+  "salt": "runtime_bridge_stage24",
+  "selection": {
+    "scope": "Archived forced-ungated candidate interface diagnostics; no benchmark outcomes read",
+    "selection_rule": "For each of the eight named strategies, choose lexicographically first existing p2_C_*_<strategy>.py by filename. Do not replace unavailable or failing cases.",
+    "cases": [
+      {
+        "strategy": "repair",
+        "path": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_repair.py",
+        "sha256": "64b17889de12ebe40aca5f1a5a0f287eb70656bb0f7485b61c8e031463bea2a7",
+        "available_count": 17,
+        "imports": [
+          "from ..harness_base import SQLHarness",
+          "from .. import bridge"
+        ]
+      },
+      {
+        "strategy": "vote3",
+        "path": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_vote3.py",
+        "sha256": "8910d3ab1a010fc7b1c27ca4c0ddb8698e76b2c8879e6fa8b65826bdc23c5a1b",
+        "available_count": 18,
+        "imports": [
+          "from ..harness_base import SQLHarness",
+          "from .. import bridge"
+        ]
+      },
+      {
+        "strategy": "schema_link",
+        "path": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s1_schema_link.py",
+        "sha256": "99542e3e0c703f1c3a0f93649e50416b6035085be55b08335b64b2e901cd46a0",
+        "available_count": 11,
+        "imports": [
+          "from ..harness_base import SQLHarness",
+          "from .. import bridge",
+          "import json",
+          "import re"
+        ]
+      },
+      {
+        "strategy": "hint_guard",
+        "path": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_hint_guard.py",
+        "sha256": "def3837c363969ba6b4b323ff293faff32665bb87ddb4827b70a0d65c46e6b1d",
+        "available_count": 14,
+        "imports": [
+          "import re",
+          "from typing import List",
+          "from ..harness_base import SQLHarness",
+          "from .. import bridge"
+        ]
+      },
+      {
+        "strategy": "two_view",
+        "path": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_two_view.py",
+        "sha256": "7263a85db95f0acb132d063f390c6111ce6a12700ba16db18708e6823f8a1f37",
+        "available_count": 17,
+        "imports": [
+          "from ..harness_base import SQLHarness",
+          "from .. import bridge"
+        ]
+      },
+      {
+        "strategy": "decompose",
+        "path": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s1_decompose.py",
+        "sha256": "e353221cc20bce5849d44f7fa92b6d3002bbbd1f2572eed807dae0ef82be11d5",
+        "available_count": 12,
+        "imports": [
+          "import json",
+          "import re",
+          "from ..harness_base import SQLHarness",
+          "from .. import bridge"
+        ]
+      },
+      {
+        "strategy": "error_classify",
+        "path": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_error_classify.py",
+        "sha256": "7960116a8c4026e466ef73e509ffcb183ec09b499f50fc515c79678b10864035",
+        "available_count": 12,
+        "imports": [
+          "import re",
+          "from ..harness_base import SQLHarness",
+          "from .. import bridge"
+        ]
+      },
+      {
+        "strategy": "format_guard",
+        "path": null,
+        "available_count": 0
+      }
+    ]
+  },
+  "scope": "One retained diagnostic of seven archived candidates with the frozen v3 gate.\n\nSelection is source-only and fixed by the stage22 manifest. Missing format_guard\nis retained as unavailable. Synthetic outcomes do not admit or score candidates.\n"
+}

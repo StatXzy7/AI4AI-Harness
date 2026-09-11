@@ -1,0 +1,21 @@
+# Gate-v4统一开发测量合同
+
+版本：阶段26 development。保留全部旧gate与已曝光测量，不改变生产准入或旧结果。修正来自阶段21分类回复角色、阶段24真实候选接口检查及阶段25源码指定profile/SQLite诊断。目标是为共同候选池提供一致测量入口，当前不是最终科学冻结或费用批准。
+
+## 八类策略的统一入口
+
+repair、vote3、hint_guard、two_view、format_guard复用冻结v3的全部既定场景；旧结构pass/fail/review作为structural_verdict保存，不等于admission。two_view仍要求执行两份，因为原生成声明明确execute both。hint/format及two-view表述语义仍需独立裁决，不靠最后答对或关键词自动放行。
+
+schema_link、decompose、error_classify采用已验证的源码指定响应接口。profile必须在执行前通过源码审阅指定并绑定候选SHA；不得试多个profile后选更好结果。未支持或未指定的接口直接保持review_required且不执行，不计为机制失败。当前支持schema tables/columns JSON、独立Current sub-question字段、local_classifier与llm_classifier；其他合法响应形式仍需独立适配，不能据不支持而拒绝。
+
+schema-link的符合对象是关联载荷确实约束后续SQL请求；物理裁掉全量schema不是必要条件。三场景含两不同JSON和坏JSON，完整请求/回复供独立语义审阅，避免把仅复制但否定约束也当符合。给定载荷测试消费，不测试关联模型准确率；坏JSON回退不自动等于原声明不符合。
+
+decompose两场景使用相同两步计划与不同可执行SQL载荷，独立字段确定当前目标、实际执行与组装轨迹完整保留。目标缺失/多义标接口未决，不从最终结果选择目标。符合需要顺序回答与实际载荷进入组装；仅四调用或字段出现不足以证明符合。
+
+error_classify使用内存SQLite的两成功场景、四种语法/名称错误及整数溢出。整数溢出只探测残余执行错误类别，不代表检测答错；它是否属于声明的semantics动作需在参考控制审阅时明确，不把其动作准确率推广为语义正确性。local_classifier不注入中间类别；llm_classifier在真实执行失败后注入预定类别，再返回修复SQL，并额外保留无效/歧义类别两个诊断场景。注入正确类别只测动作消费，不证明模型分类准确。成功不应额外修复，反馈、错误类别与修复动作对应必须审阅；持续两次修复失败等边界仍需独立控制扩展。
+
+## 判定与校准边界
+
+新typed三类结果全部review_required，保留error/interface_issues而非以fixture执行异常直接判候选不符合。最终混合规则必须使用独立源码/轨迹裁决，并保留indeterminate；不可把待审计作拒绝，也不可把固定SQL stub返回值当机制符合依据。旧五类有限结构结果也不直接形成生产准入。
+
+下一步在统一入口下重放已曝光控制与七份归档候选，检查原错误与负例没有丢失；然后独立构造并静态核验新参考，冻结后一次测量，覆盖8类各至少两符合/两不符合。旧控制不能充作新独立校准。共同pool在真实生成、费用及协议冻结完成前仍不执行。完整B及A/C/D/W1目标保留。

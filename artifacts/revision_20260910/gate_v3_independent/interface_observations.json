@@ -1,0 +1,164 @@
+{
+  "scope": "Selected immutable API traces for interface/dataflow inspection; no new evaluation and no reference-label change",
+  "results_sha256": "f731c6d6a09ad340531e0f1b26ead5b5b66a92a57da93533dfebd1aab71e470e",
+  "observations": [
+    {
+      "case_id": "vc025",
+      "probe": "syntax_a",
+      "trace": [
+        {
+          "kind": "llm",
+          "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nWrite SQL.",
+          "system": "",
+          "n": 1,
+          "temperature": 0.0,
+          "response": "SELECT id FROM ledger"
+        },
+        {
+          "kind": "execute",
+          "sql": "SELECT id FROM ledger",
+          "ok": false,
+          "rows": [],
+          "error": "syntax failure [independent-v3-20260910_syntax_a]"
+        },
+        {
+          "kind": "llm",
+          "prompt": "Classify this failed SQL feedback as syntax, schema, or semantics.\nSQL:\nSELECT id FROM ledger\nExact feedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v3-20260910_syntax_a]'}",
+          "system": "",
+          "n": 1,
+          "temperature": 0.0,
+          "response": "SELECT amount FROM ledger"
+        },
+        {
+          "kind": "llm",
+          "prompt": "Revise the query logic so the requested meaning is represented.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nExact execution feedback:\n{'ok': False, 'rows': [], 'error': 'syntax failure [independent-v3-20260910_syntax_a]'}",
+          "system": "",
+          "n": 1,
+          "temperature": 0.0,
+          "response": "SELECT amount FROM ledger"
+        }
+      ],
+      "final": "SELECT amount FROM ledger"
+    },
+    {
+      "case_id": "vc025",
+      "probe": "schema_a",
+      "trace": [
+        {
+          "kind": "llm",
+          "prompt": "Schema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nWrite SQL.",
+          "system": "",
+          "n": 1,
+          "temperature": 0.0,
+          "response": "SELECT id FROM ledger"
+        },
+        {
+          "kind": "execute",
+          "sql": "SELECT id FROM ledger",
+          "ok": false,
+          "rows": [],
+          "error": "schema failure [independent-v3-20260910_schema_a]"
+        },
+        {
+          "kind": "llm",
+          "prompt": "Classify this failed SQL feedback as syntax, schema, or semantics.\nSQL:\nSELECT id FROM ledger\nExact feedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v3-20260910_schema_a]'}",
+          "system": "",
+          "n": 1,
+          "temperature": 0.0,
+          "response": "SELECT amount FROM ledger"
+        },
+        {
+          "kind": "llm",
+          "prompt": "Revise the query logic so the requested meaning is represented.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nExact execution feedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v3-20260910_schema_a]'}",
+          "system": "",
+          "n": 1,
+          "temperature": 0.0,
+          "response": "SELECT amount FROM ledger"
+        }
+      ],
+      "final": "SELECT amount FROM ledger"
+    },
+    {
+      "case_id": "vc026",
+      "probe": "schema_a",
+      "trace": [
+        {
+          "kind": "llm",
+          "prompt": "Draft SQL for the database task.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+          "system": "",
+          "n": 1,
+          "temperature": 0.0,
+          "response": "SELECT id FROM ledger"
+        },
+        {
+          "kind": "execute",
+          "sql": "SELECT id FROM ledger",
+          "ok": false,
+          "rows": [],
+          "error": "schema failure [independent-v3-20260910_schema_a]"
+        },
+        {
+          "kind": "llm",
+          "prompt": "Failure class: semantics\nRequired repair action: Change the query construction to match the question intent.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nPrevious SQL:\nSELECT id FROM ledger\nExact feedback:\n{'ok': False, 'rows': [], 'error': 'schema failure [independent-v3-20260910_schema_a]'}",
+          "system": "",
+          "n": 1,
+          "temperature": 0.0,
+          "response": "SELECT amount FROM ledger"
+        }
+      ],
+      "final": "SELECT amount FROM ledger"
+    },
+    {
+      "case_id": "vc005",
+      "probe": "late_majority",
+      "trace": [
+        {
+          "kind": "llm",
+          "prompt": "Return three independent SQL candidates for this question.",
+          "system": "",
+          "n": 3,
+          "temperature": 0.3,
+          "response": [
+            "SELECT id FROM ledger",
+            "SELECT amount FROM ledger",
+            "SELECT amount FROM ledger"
+          ]
+        },
+        {
+          "kind": "execute",
+          "sql": "SELECT id FROM ledger",
+          "ok": true,
+          "rows": [
+            [
+              "A"
+            ]
+          ],
+          "error": null
+        },
+        {
+          "kind": "execute",
+          "sql": "SELECT amount FROM ledger",
+          "ok": true,
+          "rows": [
+            [
+              "B"
+            ]
+          ],
+          "error": null
+        },
+        {
+          "kind": "execute",
+          "sql": "SELECT amount FROM ledger",
+          "ok": true,
+          "rows": [
+            [
+              "B"
+            ]
+          ],
+          "error": null
+        }
+      ],
+      "final": "SELECT amount FROM ledger"
+    }
+  ]
+}

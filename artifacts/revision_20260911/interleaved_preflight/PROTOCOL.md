@@ -1,0 +1,9 @@
+# 重复/clone交错调度：开发入口验收
+
+旧isolated_collect按repeat-harness-task运行，保留不改。新interleaved_collect复用其prepare输入验证、独立worker、Job清理、事件导入和未知请求停止规则；只改变父级调度。每repeat按SHA256固定salt及task身份排列题目，在每个task内按salt/repeat/task/harness身份排列所有成员。成员运行相邻，所有成员完成后才进入下一题；repeat顺序来自配置。它减小组间大块时间分离，不保证提供方平稳、独立或无缓存。
+
+完整schedule及其hash、salt和新入口源码hash进入manifest，因此配置/salt/源码变化不能恢复为同一次采集。clone保留不同调度id，复用相同源码；真实协议仍需固定群组与来源映射，不能由名字包含clone推导等价。调度不得依赖答案或改为正确即停止。原worker的失败/用量未知会保留pending并停止，不自动重试。
+
+当前三项离线测试覆盖完整笛卡尔积、输入列表排列不影响哈希顺序、同task/repeat所有成员相邻；真实Windows Job与本机HTTP测试覆盖8单元顺序、单元用量、清理，以及未知usage停止。HTTP和tokens均为人工，测试临时目录按原fixture清理，不声称保存了这些测试的完整raw账本。
+
+另使用真实接口先导的两道已曝光题目和bare/bare_clone/race、2repeat，仅生成DRAFT preflight的12单元清单，不执行模型或读取新候选质量。它不是A正式样本量冻结，不是固定资源匹配，也不是克隆/互补结论。正式调用仍须完整池/候选来源、预冻结研究设计与预算/失败规则及独立启动审核；用户已经授权的连接与模型无需再次询问。

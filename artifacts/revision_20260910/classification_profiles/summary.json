@@ -1,0 +1,57 @@
+{
+  "scope": "Exposed controls only; no automatic admission",
+  "total_runs": 84,
+  "primary_runs": 28,
+  "diagnostic_runs": 56,
+  "execution_errors": 0,
+  "cases": [
+    {
+      "case_id": "vc025",
+      "primary_profile": "classify_then_repair",
+      "primary_runs": 7,
+      "component_status": "review_required",
+      "primary_execution_errors": 0,
+      "primary_structural_flags": {},
+      "diagnostic_runs": 21
+    },
+    {
+      "case_id": "vc026",
+      "primary_profile": "direct_repair",
+      "primary_runs": 7,
+      "component_status": "review_required",
+      "primary_execution_errors": 0,
+      "primary_structural_flags": {},
+      "diagnostic_runs": 7
+    },
+    {
+      "case_id": "vc027",
+      "primary_profile": "direct_repair",
+      "primary_runs": 7,
+      "component_status": "review_required",
+      "primary_execution_errors": 0,
+      "primary_structural_flags": {},
+      "diagnostic_runs": 7
+    },
+    {
+      "case_id": "vc028",
+      "primary_profile": "classify_then_repair",
+      "primary_runs": 7,
+      "component_status": "review_required",
+      "primary_execution_errors": 0,
+      "primary_structural_flags": {
+        "counterfactual_output_mismatch": 3
+      },
+      "diagnostic_runs": 21
+    }
+  ],
+  "independent_calibration_complete": false,
+  "B_complete": false,
+  "full_goal_verdict": "not ready",
+  "independent_action_verdicts": {
+    "vc025": "conforms",
+    "vc026": "nonconforms",
+    "vc027": "nonconforms",
+    "vc028": "nonconforms"
+  },
+  "action_evidence_verified": 22
+}

@@ -1,0 +1,342 @@
+{
+  "identity": {
+    "case_id": "gv4r011",
+    "strategy": "vote3",
+    "callable_name": "control_raven",
+    "profile": null
+  },
+  "result": {
+    "version": "gate-v4",
+    "strategy": "vote3",
+    "profile": null,
+    "structural_verdict": "pass",
+    "runs": [
+      {
+        "probe": "late_majority",
+        "status": "pass",
+        "reasons": [],
+        "final": "SELECT amount FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Generate three independently sampled SQLite candidates.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+            "system": "",
+            "n": 3,
+            "temperature": 0.7,
+            "response": [
+              "SELECT id FROM ledger",
+              "SELECT amount FROM ledger",
+              "SELECT amount FROM ledger"
+            ]
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "B"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "B"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "permuted_majority",
+        "status": "pass",
+        "reasons": [],
+        "final": "SELECT amount FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Generate three independently sampled SQLite candidates.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+            "system": "",
+            "n": 3,
+            "temperature": 0.7,
+            "response": [
+              "SELECT amount FROM ledger",
+              "SELECT amount FROM ledger",
+              "SELECT id FROM ledger"
+            ]
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "B"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "B"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "flipped_majority",
+        "status": "pass",
+        "reasons": [],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Generate three independently sampled SQLite candidates.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+            "system": "",
+            "n": 3,
+            "temperature": 0.7,
+            "response": [
+              "SELECT amount FROM ledger",
+              "SELECT id FROM ledger",
+              "SELECT id FROM ledger"
+            ]
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "B"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "equivalent_results",
+        "status": "pass",
+        "reasons": [],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Generate three independently sampled SQLite candidates.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+            "system": "",
+            "n": 3,
+            "temperature": 0.7,
+            "response": [
+              "SELECT id FROM ledger",
+              "SELECT amount FROM ledger",
+              "SELECT id FROM ledger WHERE id > 0"
+            ]
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "same"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "B"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger WHERE id > 0",
+            "ok": true,
+            "rows": [
+              [
+                "same"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "execution_majority_flipped",
+        "status": "pass",
+        "reasons": [],
+        "final": "SELECT amount FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Generate three independently sampled SQLite candidates.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+            "system": "",
+            "n": 3,
+            "temperature": 0.7,
+            "response": [
+              "SELECT id FROM ledger",
+              "SELECT amount FROM ledger",
+              "SELECT id FROM ledger WHERE id > 0"
+            ]
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "same"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger WHERE id > 0",
+            "ok": true,
+            "rows": [
+              [
+                "same"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "execution_majority_AB",
+        "status": "pass",
+        "reasons": [],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Generate three independently sampled SQLite candidates.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.",
+            "system": "",
+            "n": 3,
+            "temperature": 0.7,
+            "response": [
+              "SELECT id FROM ledger",
+              "SELECT amount FROM ledger",
+              "SELECT id FROM ledger WHERE id > 0"
+            ]
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "same"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT amount FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "same"
+              ]
+            ],
+            "error": null
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger WHERE id > 0",
+            "ok": true,
+            "rows": [
+              [
+                "C"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      }
+    ],
+    "admission": "not_evaluated",
+    "scope": "Unified development measurement, with explicit source-assigned response roles.\n\nFrozen v3 supplies five unchanged strategy probes. Typed schema/decomposition and\nreal SQLite feedback supply the remaining three. This module never admits a\ncandidate: semantic decisions and independently frozen reference checks remain\nseparate. Unsupported response profiles are review-required, not rejection.\n"
+  }
+}

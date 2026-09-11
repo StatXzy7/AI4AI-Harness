@@ -1,0 +1,298 @@
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LC_ALL = "C.UTF-8",
+	LC_CTYPE = "C",
+	LC_NUMERIC = "C",
+	LC_COLLATE = "C",
+	LC_TIME = (unset),
+	LC_MONETARY = (unset),
+	LANG = "C.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the system default locale ("Chinese (Simplified)_China.936").
+Initial Win CP for (console input, console output, system): (CP65001, CP65001, CP936)
+I changed them all to CP936
+Rc files read (in order):
+  NONE
+Latexmk: This is Latexmk, John Collins, 9 March 2026. Version 4.88.
+Force everything to be remade.
+Latexmk: applying rule 'bibtex main'...
+Rule 'bibtex main':  Reasons for rerun
+Category 'other':
+  Rerun of 'bibtex main' forced or previously required:
+    Reason or flag: 'go_mode'
+
+------------
+Run number 1 of rule 'bibtex main'
+------------
+------------
+Running 'bibtex  "main.aux"'
+------------
+This is BibTeX, Version 0.99e (TeX Live 2026)
+The top-level auxiliary file: main.aux
+The style file: iclr2027_conference.bst
+Database file #1: ../latex/references.bib
+Latexmk: applying rule 'xelatex'...
+Rule 'xelatex':  Reasons for rerun
+Category 'other':
+  Rerun of 'xelatex' forced or previously required:
+    Reason or flag: 'go_mode'
+
+------------
+Run number 1 of rule 'xelatex'
+------------
+------------
+Running 'xelatex -no-pdf -interaction=nonstopmode -halt-on-error -recorder  "main.tex"'
+------------
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+ restricted \write18 enabled.
+entering extended mode
+(./main.tex
+LaTeX2e <2025-11-01>
+L3 programming layer <2026-03-20>
+(d:/texlive/2026/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2025/01/22 v1.4n Standard LaTeX document class
+(d:/texlive/2026/texmf-dist/tex/latex/base/size10.clo))
+(./iclr2027_conference.sty
+(d:/texlive/2026/texmf-dist/tex/latex/eso-pic/eso-pic.sty
+(d:/texlive/2026/texmf-dist/tex/latex/graphics/keyval.sty)
+(d:/texlive/2026/texmf-dist/tex/latex/xcolor/xcolor.sty
+(d:/texlive/2026/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(d:/texlive/2026/texmf-dist/tex/latex/graphics-def/xetex.def)
+(d:/texlive/2026/texmf-dist/tex/latex/graphics/mathcolor.ltx))) (./fancyhdr.sty
+) (./natbib.sty)) (d:/texlive/2026/texmf-dist/tex/latex/psnfss/times.sty)
+(d:/texlive/2026/texmf-dist/tex/latex/ctex/ctex.sty
+(d:/texlive/2026/texmf-dist/tex/latex/l3kernel/expl3.sty
+(d:/texlive/2026/texmf-dist/tex/latex/l3backend/l3backend-xetex.def))
+(d:/texlive/2026/texmf-dist/tex/latex/ctex/ctexhook.sty)
+(d:/texlive/2026/texmf-dist/tex/latex/ctex/ctexpatch.sty)
+(d:/texlive/2026/texmf-dist/tex/latex/base/fix-cm.sty
+(d:/texlive/2026/texmf-dist/tex/latex/base/ts1enc.def))
+(d:/texlive/2026/texmf-dist/tex/latex/ctex/config/ctexopts.cfg)
+(d:/texlive/2026/texmf-dist/tex/latex/ctex/engine/ctex-engine-xetex.def
+(d:/texlive/2026/texmf-dist/tex/xelatex/xecjk/xeCJK.sty
+(d:/texlive/2026/texmf-dist/tex/latex/l3packages/xtemplate/xtemplate.sty)
+(d:/texlive/2026/texmf-dist/tex/latex/fontspec/fontspec.sty
+(d:/texlive/2026/texmf-dist/tex/latex/l3packages/xparse/xparse.sty)
+(d:/texlive/2026/texmf-dist/tex/latex/fontspec/fontspec-xetex.sty
+(d:/texlive/2026/texmf-dist/tex/latex/base/fontenc.sty)
+(d:/texlive/2026/texmf-dist/tex/latex/fontspec/fontspec.cfg)))
+(d:/texlive/2026/texmf-dist/tex/xelatex/xecjk/xeCJK.cfg)))
+(d:/texlive/2026/texmf-dist/tex/latex/zhnumber/zhnumber.sty
+(d:/texlive/2026/texmf-dist/tex/latex/zhnumber/zhnumber-utf8.cfg))
+(d:/texlive/2026/texmf-dist/tex/latex/ctex/scheme/ctex-scheme-chinese.def
+(d:/texlive/2026/texmf-dist/tex/latex/ctex/config/ctex-name-utf8.cfg))
+(d:/texlive/2026/texmf-dist/tex/latex/tools/indentfirst.sty)
+(d:/texlive/2026/texmf-dist/tex/latex/ctex/ctex-c5size.clo)
+(d:/texlive/2026/texmf-dist/tex/latex/ctex/fontset/ctex-fontset-windows.def))
+(d:/texlive/2026/texmf-dist/tex/latex/ctex/config/ctex.cfg)
+(d:/texlive/2026/texmf-dist/tex/latex/hyperref/hyperref.sty
+(d:/texlive/2026/texmf-dist/tex/generic/iftex/iftex.sty)
+(d:/texlive/2026/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty)
+(d:/texlive/2026/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty)
+(d:/texlive/2026/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+(d:/texlive/2026/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty)
+(d:/texlive/2026/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+(d:/texlive/2026/texmf-dist/tex/generic/infwarerr/infwarerr.sty)))
+(d:/texlive/2026/texmf-dist/tex/latex/hycolor/hycolor.sty)
+(d:/texlive/2026/texmf-dist/tex/latex/hyperref/nameref.sty
+(d:/texlive/2026/texmf-dist/tex/latex/refcount/refcount.sty)
+(d:/texlive/2026/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
+(d:/texlive/2026/texmf-dist/tex/latex/kvoptions/kvoptions.sty)))
+(d:/texlive/2026/texmf-dist/tex/latex/etoolbox/etoolbox.sty)
+(d:/texlive/2026/texmf-dist/tex/generic/stringenc/stringenc.sty)
+(d:/texlive/2026/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(d:/texlive/2026/texmf-dist/tex/generic/intcalc/intcalc.sty)
+(d:/texlive/2026/texmf-dist/tex/latex/hyperref/puenc.def)
+(d:/texlive/2026/texmf-dist/tex/latex/url/url.sty)
+(d:/texlive/2026/texmf-dist/tex/generic/bitset/bitset.sty
+(d:/texlive/2026/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty)))
+(d:/texlive/2026/texmf-dist/tex/latex/hyperref/hxetex.def
+(d:/texlive/2026/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+(d:/texlive/2026/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty)))
+(d:/texlive/2026/texmf-dist/tex/latex/graphics/graphicx.sty
+(d:/texlive/2026/texmf-dist/tex/latex/graphics/graphics.sty
+(d:/texlive/2026/texmf-dist/tex/latex/graphics/trig.sty)
+(d:/texlive/2026/texmf-dist/tex/latex/graphics-cfg/graphics.cfg)))
+(d:/texlive/2026/texmf-dist/tex/latex/booktabs/booktabs.sty)
+(d:/texlive/2026/texmf-dist/tex/latex/tools/array.sty)
+(d:/texlive/2026/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(d:/texlive/2026/texmf-dist/tex/latex/amsmath/amstext.sty
+(d:/texlive/2026/texmf-dist/tex/latex/amsmath/amsgen.sty))
+(d:/texlive/2026/texmf-dist/tex/latex/amsmath/amsbsy.sty)
+(d:/texlive/2026/texmf-dist/tex/latex/amsmath/amsopn.sty))
+(d:/texlive/2026/texmf-dist/tex/latex/amsfonts/amssymb.sty
+(d:/texlive/2026/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
+(../latex/revision_numbers.tex) (./main.aux) (./main.out) (./main.out)
+
+LaTeX Font Warning: Font shape `TU/SimSun(0)/m/sc' undefined
+(Font)              using `TU/SimSun(0)/m/n' instead on input line 18.
+
+(d:/texlive/2026/texmf-dist/tex/latex/amsfonts/umsa.fd)
+(d:/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd) (./sec_intro.tex
+[1]) (./sec_related.tex
+Underfull \vbox (badness 3679) has occurred while \output is active [2])
+(./sec_phase1.tex
+Underfull \vbox (badness 10000) has occurred while \output is active [3]
+[4]
+Underfull \vbox (badness 3568) has occurred while \output is active [5])
+(./sec_phase2.tex
+Underfull \hbox (badness 10000) in paragraph at lines 4--5
+ []\TU/SimSun(0)/b/n/10.53937 实 际 实 施 的 处 理。| [] \TU/SimSun(0)/m/sc/10.53937 原 
+门 控 将 \TU/lmtt/m/n/10.53937 hint_guard \TU/SimSun(0)/m/sc/10.53937 和 \TU/lmtt/m
+/n/10.53937 format_guard \TU/SimSun(0)/m/sc/10.53937 映 射 到 返 回
+
+Underfull \hbox (badness 1571) in paragraph at lines 4--5
+\TU/lmtt/m/n/10.53937 NO_MECHANISM_declared \TU/SimSun(0)/m/sc/10.53937 的 普 通 场
+ 景，|  而 准 入 要 求 \TU/lmtt/m/n/10.53937 PASS\TU/SimSun(0)/m/sc/10.53937 。|  因 此，|
+  八 个 强 制 策 略
+[6] [7]) (./sec_results.tex (../latex/revision_primary_table.tex)
+(../latex/revision_factorial_table.tex)
+(../latex/revision_decomposition_table.tex) [8]
+Underfull \vbox (badness 10000) has occurred while \output is active [9])
+(./sec_discussion.tex) (./sec_conclusion.tex) [10] (./main.bbl [11]
+Underfull \hbox (badness 1028) in paragraph at lines 95--99
+[]\TU/lmr/m/n/10.53937 Jun Nie, Yonggang Zhang, Jun Song, Qianshu Cai, Dahai Yu
+, Xinmei Tian,
+[12]) (./sec_appendix.tex [13] (../latex/revision_sensitivity_table.tex)
+(../latex/revision_cost_table.tex)
+Underfull \vbox (badness 2521) has occurred while \output is active [14]
+Underfull \hbox (badness 1635) in paragraph at lines 31--32
+[]\TU/lmr/m/n/10.53937 pair \TU/SimSun(0)/m/sc/10.53937 级 \TU/lmr/m/n/10.53937 
+SQL \TU/SimSun(0)/m/sc/10.53937 不 相 似 度 仅 在 判 定 一 致、|  且 两 份 \TU/lmr/m/n/10.539
+37 SQL \TU/SimSun(0)/m/sc/10.53937 非 空 的 题 目 上 平 均 $\OT1/cmr/m/n/10.53937 (1 \O
+MS/cmsy/m/n/10.53937 ^^@
+
+Underfull \vbox (badness 1412) has occurred while \output is active [15]
+(../latex/revision_selection_table.tex)
+Underfull \vbox (badness 1024) has occurred while \output is active [16]
+Underfull \hbox (badness 10000) in paragraph at lines 54--54
+[]|\TU/lmtt/m/n/9.03374 GLM-5.3-Flash\TU/lmr/m/n/9.03374 , \TU/lmtt/m/n/9.03374
+ Qwen3.8-Flash\TU/lmr/m/n/9.03374 ,
+
+Underfull \hbox (badness 10000) in paragraph at lines 55--55
+[]|\TU/lmtt/m/n/9.03374 GLM-5.3\TU/lmr/m/n/9.03374 , \TU/lmtt/m/n/9.03374 Qwen3
+.8-Max\TU/lmr/m/n/9.03374 ,
+
+Underfull \hbox (badness 10000) in paragraph at lines 55--55
+\TU/lmtt/m/n/9.03374 DeepSeek-V4-Pro\TU/lmr/m/n/9.03374 , \TU/lmtt/m/n/9.03374 
+Kimi-K3\TU/lmr/m/n/9.03374 , \TU/lmtt/m/n/9.03374 MiniMax-M3\TU/lmr/m/n/9.03374
+ ,
+
+Underfull \hbox (badness 10000) in paragraph at lines 65--66
+[]\TU/lmtt/m/n/9.03374 Calculate the percentage of the cards availabe in Chines
+e
+
+Underfull \hbox (badness 10000) in paragraph at lines 69--70
+[]\TU/lmtt/m/n/9.03374 'Chinese Simplified' is the language; percentage = Divid
+e(Sum(id
+
+Underfull \hbox (badness 10000) in paragraph at lines 73--74
+[]\TU/lmtt/m/n/9.03374 SELECT CAST(SUM(CASE WHEN T2.language = 'Chinese Simplif
+ied' THEN
+
+Underfull \hbox (badness 10000) in paragraph at lines 73--74
+\TU/lmtt/m/n/9.03374 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS 
+T1 INNER
+[17]
+Underfull \hbox (badness 10000) in paragraph at lines 77--78
+[]\TU/lmtt/m/n/9.03374 SELECT SUM(CASE WHEN language = 'Chinese Simplified' THE
+N 1 ELSE 0
+
+Underfull \hbox (badness 10000) in paragraph at lines 84--85
+[]\TU/lmtt/m/n/9.03374 with "only a single read-only SELECT is allowed". The pr
+evious
+) (./sec_crossdomain.tex
+
+Package natbib Warning: Citation `math500' on page 18 undefined on input line 3
+.
+
+[18])
+
+Package natbib Warning: There were undefined citations.
+
+[19] (./main.aux
+
+Package natbib Warning: Citation(s) may have changed.
+(natbib)                Rerun to get citations correct.
+
+)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ )
+(see the transcript file for additional information)
+Output written on main.xdv (19 pages, 382228 bytes).
+Transcript written on main.log.
+Latexmk: Getting log file 'main.log'
+Latexmk: Examining 'main.fls'
+Latexmk: Examining 'main.log'
+Latexmk: Found input bbl file 'main.bbl'
+Latexmk: References changed.
+Latexmk: Log file says output to 'main.xdv'
+Latexmk: Using bibtex to make bibliography file(s).
+  ===Source file 'main.bbl' for 'xelatex'
+Latexmk: Found bibliography file(s):
+  ../latex/references.bib
+Latexmk: applying rule 'bibtex main'...
+Rule 'bibtex main':  Reasons for rerun
+Changed files or newly in use/created:
+  main.aux
+
+------------
+Run number 2 of rule 'bibtex main'
+------------
+------------
+Running 'bibtex  "main.aux"'
+------------
+This is BibTeX, Version 0.99e (TeX Live 2026)
+The top-level auxiliary file: main.aux
+The style file: iclr2027_conference.bst
+Database file #1: ../latex/references.bib
+Latexmk: applying rule 'xelatex'...
+Rule 'xelatex':  Reasons for rerun
+Changed files or newly in use/created:
+  main.aux
+
+------------
+Run number 2 of rule 'xelatex'
+------------
+------------
+Running 'xelatex -no-pdf -interaction=nonstopmode -halt-on-error -recorder  "main.tex"'
+------------
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+ restricted \write18 enabled.
+entering extended mode
+! I can't write on file `main.log'.
+(Press Enter to retry, or Control-Z to exit; default file extension is `.log')
+Please type another transcript file name
+! Emergency stop
+No pages of output.
+Latexmk: Getting log file 'main.log'
+Latexmk: Examining 'main.fls'
+Latexmk: Examining 'main.log'
+Latexmk: Found input bbl file 'main.bbl'
+Latexmk: References changed.
+Latexmk: Log file says output to 'main.xdv'
+Latexmk: Using bibtex to make bibliography file(s).
+  ===Source file 'main.bbl' for 'xelatex'
+Latexmk: Found bibliography file(s):
+  ../latex/references.bib
+Latexmk: Summary of warnings from last run of *latex:
+  Latex failed to resolve 1 citation(s)
+Latexmk: ====Problematic refs and citations with line #s in .tex file:
+  Citation `math500' on page 18 undefined on input line 3
+Latexmk: Errors, so I did not complete making targets
+Collected error summary (may duplicate other messages):
+  xelatex: Command for 'xelatex' gave return code 1
+      Refer to 'main.log' and/or above output for details
+
+Latexmk: Sometimes, the -f option can be used to get latexmk
+  to try to force complete processing.
+  But normally, you will need to correct the file(s) that caused the
+  error, and then rerun latexmk.
+  In some cases, it is best to clean out generated files before rerunning
+  latexmk after you've corrected the files.
+Reverting Windows console CPs to (in,out) = (65001,65001)
+D:\texlive\2026\bin\windows\runscript.tlu:933: command failed with exit code 12:
+perl.exe d:\texlive\2026\texmf-dist\scripts\latexmk\latexmk.pl -g -xelatex -interaction=nonstopmode -halt-on-error main.tex

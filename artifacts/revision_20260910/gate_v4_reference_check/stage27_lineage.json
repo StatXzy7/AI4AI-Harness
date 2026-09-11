@@ -1,0 +1,113 @@
+{
+  "resolved": 27,
+  "bindings": {
+    "artifacts/revision_20260910/gate_v4_calibration/initial_static_comparison.json": {
+      "sha256": "59d9f18064e551bf5f1f00434ac663d75fa5fe1e6ec73d4e603b9ee201928201",
+      "snapshot": "artifacts/revision_20260910/gate_v4_calibration/initial_static_comparison.json"
+    },
+    "artifacts/revision_20260910/gate_v4_calibration/protocol_clarification_review.json": {
+      "sha256": "6a602e7fda43b46fa7318974f7470e9684de0e94d20f71f13e41b999d3222c01",
+      "snapshot": "artifacts/revision_20260910/gate_v4_calibration/protocol_clarification_review.json"
+    },
+    "artifacts/revision_20260910/gate_v4_calibration/protocol_review.json": {
+      "sha256": "e8d76a2910e85658afe09689f87aa60afc019d2acadfad9e4051c6df8728ab20",
+      "snapshot": "artifacts/revision_20260910/gate_v4_calibration/protocol_review.json"
+    },
+    "artifacts/revision_20260910/gate_v4_calibration/runner_review.json": {
+      "sha256": "8f3b9fef1ae84bdbe9f72b875953b98c076437f15e918412afa854951fe5fd8a",
+      "snapshot": "artifacts/revision_20260910/gate_v4_calibration/runner_review.json"
+    },
+    "artifacts/revision_20260910/gate_v4_calibration/source_review.json": {
+      "sha256": "cd48c3b1086bdbaea6be6a669805f0c7790f16ad13ea22f7ca891ea9ddcc66da",
+      "snapshot": "artifacts/revision_20260910/gate_v4_calibration/source_review.json"
+    },
+    "artifacts/revision_20260910/gate_v4_calibration/stage26_lineage.json": {
+      "sha256": "bdefe50a33796a60b02f890306b00ca8731be40327fab1d96e4ba0ebbdfbb999",
+      "snapshot": "artifacts/revision_20260910/gate_v4_calibration/stage26_lineage.json"
+    },
+    "artifacts/revision_20260910/gate_v4_calibration/static_preflight_result.json": {
+      "sha256": "5cb2c16874e6978222ab8ed076a21e771a7f7adc27378a8f5ec9469a51830535",
+      "snapshot": "artifacts/revision_20260910/gate_v4_calibration/static_preflight_result.json"
+    },
+    "artifacts/revision_20260910/gate_v4_calibration/vote_contract_clarification.json": {
+      "sha256": "f50e9e578a82ac2487bec8eafc66f58d6cb12a849ce0dccfa0d8c2ba80643e59",
+      "snapshot": "artifacts/revision_20260910/gate_v4_calibration/vote_contract_clarification.json"
+    },
+    "artifacts/revision_20260910/gate_v4_calibration/before_status_update/experiment__revision__README.md": {
+      "sha256": "327d952154c423710240aef8295f98f9e79b2b0b87293cfc6398723c04f8df41",
+      "snapshot": "artifacts/revision_20260910/gate_v4_calibration/before_status_update/experiment__revision__README.md"
+    },
+    "artifacts/revision_20260910/gate_v4_calibration/before_status_update/manifest.json": {
+      "sha256": "4fb7522734425bca6e925b122a52a5261064e182e63fe75df70b10434cc3dd16",
+      "snapshot": "artifacts/revision_20260910/gate_v4_calibration/before_status_update/manifest.json"
+    },
+    "artifacts/revision_20260910/gate_v4_calibration/before_status_update/review-stage__REVISED_EXPERIMENT_PLAN.md": {
+      "sha256": "baac7b42266a96820f3ea107ac409b1326b2886239e5c38e418aa7f00eaebac8",
+      "snapshot": "artifacts/revision_20260910/gate_v4_calibration/before_status_update/review-stage__REVISED_EXPERIMENT_PLAN.md"
+    },
+    "artifacts/revision_20260910/gate_v4_calibration/before_status_update/review-stage__REVISION_20260910.md": {
+      "sha256": "559d84da340c06ea5482f9b395a7acc05eece03bc0017bea5224128cd9258178",
+      "snapshot": "artifacts/revision_20260910/gate_v4_calibration/before_status_update/review-stage__REVISION_20260910.md"
+    },
+    "artifacts/revision_20260910/gate_v4_calibration/initial_reference/author_reference.json": {
+      "sha256": "8a132e11bfb3f7b3b4486512576438e5ef87eb355cc905279b5c0b4d060d0243",
+      "snapshot": "artifacts/revision_20260910/gate_v4_calibration/initial_reference/author_reference.json"
+    },
+    "artifacts/revision_20260910/gate_v4_calibration/initial_reference/AUTHOR_STATEMENT.md": {
+      "sha256": "f469aef98f9316cd81e5795f17bc4c33e8b5ae1b584d03639f0862a74dc391b8",
+      "snapshot": "artifacts/revision_20260910/gate_v4_calibration/initial_reference/AUTHOR_STATEMENT.md"
+    },
+    "artifacts/revision_20260910/gate_v4_calibration/initial_reference/controls.py": {
+      "sha256": "4d39ab1d202394e2a396c7a4c8de95d3f11493552fc72b3734d408cb426f8276",
+      "snapshot": "artifacts/revision_20260910/gate_v4_calibration/initial_reference/controls.py"
+    },
+    "artifacts/revision_20260910/gate_v4_calibration/initial_reference/inventory.json": {
+      "sha256": "731c211dcc39ba527ab7298d5eefbdd8a0a4a429c7cd83d8993518e41f9f31c2",
+      "snapshot": "artifacts/revision_20260910/gate_v4_calibration/initial_reference/inventory.json"
+    },
+    "artifacts/revision_20260910/gate_v4_calibration/initial_reference/manifest.json": {
+      "sha256": "f02a7a0ef0b3c7f8e5db17a0a4123822f845bd3fa7e04d9f4e3b0da59129e94a",
+      "snapshot": "artifacts/revision_20260910/gate_v4_calibration/initial_reference/manifest.json"
+    },
+    "artifacts/revision_20260910/gate_v4_calibration/initial_reference/source_review.json": {
+      "sha256": "cd48c3b1086bdbaea6be6a669805f0c7790f16ad13ea22f7ca891ea9ddcc66da",
+      "snapshot": "artifacts/revision_20260910/gate_v4_calibration/initial_reference/source_review.json"
+    },
+    "experiment/revision/independent_gate_v4_measure.py": {
+      "sha256": "ed0a59ea81f2267239b5cdcec0ce2d560a383714e563b66e2ae0b1fcbf291d6f",
+      "snapshot": "experiment/revision/independent_gate_v4_measure.py"
+    },
+    "experiment/revision/test_independent_gate_v4_measure.py": {
+      "sha256": "a5d4d3ab575f372995edbef9268921ef42d2a2b28f51cde064c7539e314265cf",
+      "snapshot": "experiment/revision/test_independent_gate_v4_measure.py"
+    },
+    "review-stage/GATE_V4_CALIBRATION_PROTOCOL.md": {
+      "sha256": "fb76d5f72fa23c4ac65ed4aba4fd68d3f68cfcf1a3101054d1d381aa9e22bafd",
+      "snapshot": "review-stage/GATE_V4_CALIBRATION_PROTOCOL.md"
+    },
+    "review-stage/GATE_V4_REFERENCE_PREFLIGHT.md": {
+      "sha256": "d569c920a143e7c583be1d904ec9c075dde95013cf927f9fd351dc690bc44b46",
+      "snapshot": "review-stage/GATE_V4_REFERENCE_PREFLIGHT.md"
+    },
+    "review-stage/REVISION_20260910.md": {
+      "sha256": "a168ed580ecf8af54755a4b08359902ab3bda02f8aae04e908049d99488ecff8",
+      "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_status_update/review-stage__REVISION_20260910.md"
+    },
+    "review-stage/REVISED_EXPERIMENT_PLAN.md": {
+      "sha256": "d34bf632f739a76c25c085d561aa2534178cb64f5f2345ebf100c551e5626d1f",
+      "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_status_update/review-stage__REVISED_EXPERIMENT_PLAN.md"
+    },
+    "experiment/revision/README.md": {
+      "sha256": "0b459dabd51b97df48041cd87c86085b5a4d2a40946cc31f163885f0c1ddff44",
+      "snapshot": "artifacts/revision_20260910/gate_v4_reference_check/before_status_update/experiment__revision__README.md"
+    },
+    "experiment/phase2/generate.py": {
+      "sha256": "20d847647c69cf6276df157b1b6763c8ac841b019ee7bbb89fa4b19e04a12d47",
+      "snapshot": "experiment/phase2/generate.py"
+    },
+    "artifacts/revision_20260910/gate_v4_regression/instrument_freeze.json": {
+      "sha256": "145fc6a89d5021624e6d91d06241d6e835f36a6ad6814d6711e5cb0535a07909",
+      "snapshot": "artifacts/revision_20260910/gate_v4_regression/instrument_freeze.json"
+    }
+  }
+}

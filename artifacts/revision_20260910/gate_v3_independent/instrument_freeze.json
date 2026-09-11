@@ -1,0 +1,9 @@
+{
+  "recorded_at_utc": "2026-09-10T13:26:14.192555+00:00",
+  "stage": "instrument and contract fixed before new control author dispatch",
+  "bindings": {
+    "experiment/revision/gate_v3.py": "93e68080d0de32b29d349593e54535857c9acbfacaa42ebd8e70477298ca9827",
+    "artifacts/revision_20260910/gate_v3_independent/CONTRACT.md": "53fa8902694c48b3a197aed844e5c60ab69cd6e13a61ece0351bbc9b4b1ad595",
+    "artifacts/revision_20260910/gate_v3_independent/PROTOCOL.md": "c0ff14a9009fc43bf334fe8b0225eeb886942ccae3fb128b14cda76a1ef18a63"
+  }
+}

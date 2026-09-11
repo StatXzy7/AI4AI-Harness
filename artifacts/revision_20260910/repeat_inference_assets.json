@@ -1,0 +1,7 @@
+{
+  "artifacts/revision_20260910/repeat_inference.json": "a5731bb8dde9cbfbcbd98f7ab4adf60072dee80a3a767c40ada43a80d0323bab",
+  "experiment/revision/render_inference.py": "d44d5de5a9443d0d93d42da06fb06c16f9e1bd13c838c5da68b16f84fa37c05c",
+  "experiment/revision/replay.py": "b87ba0aae2b610053c418b7a8373532bfe1c53a2a2dcfb9d345f548f2693ea86",
+  "artifacts/revision_20260910/repeat_inference.png": "053648d9ffa976a5866876751a075f88a76fec1e45b9a203acdc1977334eda99",
+  "artifacts/revision_20260910/repeat_inference.pdf": "67071477b3d3a83d2ad4c9e588d23a8e2a84168a54863bf841a5baa5a0e61078"
+}

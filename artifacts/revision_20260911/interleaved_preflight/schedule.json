@@ -1,0 +1,62 @@
+[
+  {
+    "repeat": 0,
+    "harness": "race",
+    "task": "card_games#25"
+  },
+  {
+    "repeat": 0,
+    "harness": "bare",
+    "task": "card_games#25"
+  },
+  {
+    "repeat": 0,
+    "harness": "bare_clone",
+    "task": "card_games#25"
+  },
+  {
+    "repeat": 0,
+    "harness": "bare_clone",
+    "task": "card_games#15"
+  },
+  {
+    "repeat": 0,
+    "harness": "race",
+    "task": "card_games#15"
+  },
+  {
+    "repeat": 0,
+    "harness": "bare",
+    "task": "card_games#15"
+  },
+  {
+    "repeat": 1,
+    "harness": "bare",
+    "task": "card_games#15"
+  },
+  {
+    "repeat": 1,
+    "harness": "race",
+    "task": "card_games#15"
+  },
+  {
+    "repeat": 1,
+    "harness": "bare_clone",
+    "task": "card_games#15"
+  },
+  {
+    "repeat": 1,
+    "harness": "race",
+    "task": "card_games#25"
+  },
+  {
+    "repeat": 1,
+    "harness": "bare_clone",
+    "task": "card_games#25"
+  },
+  {
+    "repeat": 1,
+    "harness": "bare",
+    "task": "card_games#25"
+  }
+]

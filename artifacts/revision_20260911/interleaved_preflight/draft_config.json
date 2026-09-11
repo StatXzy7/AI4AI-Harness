@@ -1,0 +1,41 @@
+{
+  "acquisition_id": "draft-interleaved-preflight-20260911",
+  "cache_mode": "off",
+  "solver": {
+    "base_url": "https://llmapi.paratera.com/v1",
+    "model": "GLM-5.3-Flash",
+    "thinking_style": "none",
+    "reasoning_effort": "high",
+    "temperature_override": 0.0,
+    "max_tokens": 4096,
+    "timeout_seconds": 120,
+    "status_retries": 0,
+    "retry_delay_seconds": 0
+  },
+  "api_key_env": "INTERLEAVED_PREPARE_ONLY_KEY",
+  "dataset_root": "E:\\projects\\AI4AI-Harness\\external\\data\\bird\\dev_20240627",
+  "split_path": "E:\\projects\\AI4AI-Harness\\artifacts\\revision_20260910\\provider_pilot\\split.json",
+  "protocol_path": "E:\\projects\\AI4AI-Harness\\artifacts\\revision_20260911\\interleaved_preflight\\PROTOCOL.md",
+  "repeats": [
+    0,
+    1
+  ],
+  "harnesses": [
+    {
+      "id": "bare",
+      "source": "external/TTHE/text_to_sql/agents/bare.py"
+    },
+    {
+      "id": "bare_clone",
+      "source": "external/TTHE/text_to_sql/agents/bare.py"
+    },
+    {
+      "id": "race",
+      "source": "external/TTHE/text_to_sql/agents/cand_bird_g1_b0r1_g1.py"
+    }
+  ],
+  "worker_wall_seconds": 300,
+  "drain_seconds": 130,
+  "output": "E:\\projects\\AI4AI-Harness\\artifacts\\revision_20260911\\interleaved_preflight\\DRAFT_NOT_LAUNCHED",
+  "schedule_salt": "revision-interleaving-v1"
+}

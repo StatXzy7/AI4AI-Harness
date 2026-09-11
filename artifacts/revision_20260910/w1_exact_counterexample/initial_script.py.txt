@@ -1,0 +1,124 @@
+"""Exact failure bound for a proposed W1 percentile interval, not BIRD coverage.
+
+Nine independent binary database states, fixed 4/5 splits, two specialist types.
+Every cell has the same fixed candidate pool. Overlapping splits remain dependent.
+The calculation averages their expectations; it never treats them as samples.
+"""
+from __future__ import annotations
+
+import json
+import math
+import random
+from fractions import Fraction
+from pathlib import Path
+
+import numpy as np
+
+from experiment.revision.replay import ROOT, digest
+from experiment.revision.selection import evaluate, selections
+from experiment.revision.selection_weights import positive_weights, weighted_choices, weighted_evaluate
+
+OUT = ROOT / 'artifacts/revision_20260910/w1_exact_counterexample'
+
+
+def exact_metrics(dev_ones: int, test_ones: int) -> tuple[Fraction, ...]:
+    """Canonical div-only minus top-acc, including its original tie asymmetry."""
+    test_one = Fraction(test_ones, 5)
+    top = test_one if dev_ones >= 3 else 1 - test_one
+    # Top-acc resolves 2/2 toward low-index zero specialists. Greedy starts at
+    # the highest-index best member. With all-one dev, it retains eight ones;
+    # otherwise it contains both types (including all-zero dev via score ties).
+    oracle = test_one if dev_ones == 4 else Fraction(1)
+    best = test_one if dev_ones == 4 else max(test_one, 1 - test_one)
+    return oracle - top, best - top, oracle - best, Fraction(0)
+
+
+def matrix(dev_ones: int, test_ones: int) -> np.ndarray:
+    state = np.array([1] * dev_ones + [0] * (4 - dev_ones)
+                     + [1] * test_ones + [0] * (5 - test_ones))
+    return np.vstack([np.tile(1 - state, (8, 1)), np.tile(state, (8, 1))])
+
+
+def validate_canonical() -> dict:
+    """Exhaust all count patterns against production selection and both views."""
+    checked = 0
+    for a in range(5):
+        for b in range(6):
+            pool = matrix(a, b)
+            chosen = selections(pool, 8, np.arange(4), random.Random(0), n_random=1)
+            expected = np.array([float(x) for x in exact_metrics(a, b)])
+            for bare in (None, np.zeros(9)):
+                actual = (evaluate(pool, chosen['div-only'], np.arange(4), np.arange(4, 9), bare)
+                          - evaluate(pool, chosen['top-acc'], np.arange(4), np.arange(4, 9), bare))
+                np.testing.assert_allclose(actual, expected, atol=1e-12, rtol=0)
+                checked += 1
+    return {'count_patterns': 30, 'canonical_comparisons': checked}
+
+
+def endpoint_check() -> list[dict]:
+    """Finite implementation check supplements, rather than proves, the algebra."""
+    weights = np.vstack([np.ones(9), positive_weights(list(range(9)), 199, 20260911)])
+    dw, tw = weights.copy(), weights.copy()
+    dw[:, 4:] = 0
+    tw[:, :4] = 0
+    checks = []
+    for state in (0, 1):
+        pool = matrix(4 * state, 5 * state)
+        scores = {}
+        for method in ('top-acc', 'div-only'):
+            choices = weighted_choices(pool, dw, 8, method)
+            scores[method] = weighted_evaluate(pool, choices[:, None, :], dw, tw, np.zeros(9))
+        delta = scores['div-only'] - scores['top-acc']
+        np.testing.assert_allclose(delta, 0, atol=1e-12, rtol=0)
+        checks.append({'state': state, 'weight_vectors': len(weights),
+                       'max_abs_difference': float(np.abs(delta).max())})
+    return checks
+
+
+def calculate(p: Fraction) -> dict:
+    truth = [Fraction(0) for _ in range(4)]
+    mass = Fraction(0)
+    for a in range(5):
+        for b in range(6):
+            probability = (math.comb(4, a) * math.comb(5, b)
+                           * p ** (a + b) * (1 - p) ** (9 - a - b))
+            mass += probability
+            for i, value in enumerate(exact_metrics(a, b)):
+                truth[i] += probability * value
+    assert mass == 1
+    assert truth[2] > 0
+    excluded_mass = p ** 9 + (1 - p) ** 9
+    return {'p': str(p), 'expected_statistic_fraction': [str(x) for x in truth],
+            'expected_statistic_pp': [100 * float(x) for x in truth],
+            'homogeneous_event_probability_exact': str(excluded_mass),
+            'headroom_coverage_upper_bound_exact': str(1 - excluded_mass),
+            'headroom_coverage_upper_bound': float(1 - excluded_mass),
+            'rejects_universal_95_percent_coverage': 1 - excluded_mass < Fraction(95, 100)}
+
+
+def main() -> None:
+    result_path = OUT / 'result.json'
+    if result_path.exists():
+        raise FileExistsError(result_path)
+    protocol_path = OUT / 'protocol.json'
+    protocol = json.loads(protocol_path.read_text(encoding='utf-8'))
+    bindings = dict(protocol['bindings'])
+    bindings[str(Path(__file__).relative_to(ROOT)).replace('\\', '/')] = digest(Path(__file__))
+    for name, value in bindings.items():
+        assert digest(ROOT / name) == value, name
+    result = {'scope': protocol['target'], 'canonical_validation': validate_canonical(),
+              'endpoint_implementation_checks': endpoint_check(),
+              'metric_order': ['oracle_accuracy', 'best_fixed', 'headroom', 'dev_selected_fixed_accuracy'],
+              'results': [calculate(Fraction(p)) for p in protocol['p_grid']],
+              'interpretation': 'An upper bound, not exact coverage. Fixed empirical endpoints '
+              'force exclusion of the positive expected headroom statistic. No BIRD-specific '
+              'coverage estimate and no proof that other interval constructions are impossible.',
+              'protocol_sha256': digest(protocol_path), 'bindings': bindings}
+    for name, value in bindings.items():
+        assert digest(ROOT / name) == value, name
+    result_path.write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8')
+    print(json.dumps(result, indent=2))
+
+
+if __name__ == '__main__':
+    main()

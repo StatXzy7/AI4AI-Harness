@@ -1,0 +1,106 @@
+{
+  "reviewer_model": "gpt-5.5",
+  "source_sha256": "4df6313a7c9b41b4deccb58192f9de4c7a3b15036d62157aa1e922d61b39bb4e",
+  "scope": "clarification-only blind review for gv4r008 and gv4r032; first trace_review.json preserved; no author labels, static labels, automatic status, reruns, measurements, APIs, or benchmarks consumed",
+  "cases": [
+    {
+      "case_id": "gv4r008",
+      "strategy": "two_view",
+      "original_decision": "conforms",
+      "final_decision": "nonconforms",
+      "reason": "The execution and non-empty/first-if-both selection rule are observable, but the source implements one LLM request with n=2 rather than two independently formulated SQL constructions. The prompt asks for two candidates based on different construction approaches, yet the trace only proves a two-sample response from the same request; it does not provide separate formulation prompts such as join-based versus subquery-based. I therefore correct the first review: this should not be counted as conforming to the full two_view contract.",
+      "evidence": [
+        {
+          "source_line_start": 494,
+          "source_line_end": 505,
+          "quote": "def control_finch(io: ControlIO, question: str) -> str:\n    candidates = _responses(\n        io.llm(\n            \"Return two candidates based on different construction approaches.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\",\n            n=2,\n        ),\n        2,\n    )\n    results = [io.execute(candidate) for candidate in candidates]\n    return _first_nonempty(candidates, results)"
+        },
+        {
+          "probe": "first_empty",
+          "event_index": 0,
+          "field": "prompt",
+          "quote": "Return two candidates based on different construction approaches.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers."
+        },
+        {
+          "probe": "first_empty",
+          "event_index": 0,
+          "field": "n",
+          "quote": 2
+        },
+        {
+          "probe": "first_empty",
+          "event_index": 0,
+          "field": "response",
+          "quote": [
+            "SELECT id FROM ledger",
+            "SELECT amount FROM ledger"
+          ]
+        },
+        {
+          "probe": "both_nonempty",
+          "event_index": 1,
+          "field": "rows",
+          "quote": [
+            [
+              "A"
+            ]
+          ]
+        },
+        {
+          "probe": "both_nonempty",
+          "event_index": 2,
+          "field": "rows",
+          "quote": [
+            [
+              "B"
+            ]
+          ]
+        },
+        {
+          "probe": "both_nonempty",
+          "event_index": null,
+          "field": "final",
+          "quote": "SELECT id FROM ledger"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r032",
+      "strategy": "hint_guard",
+      "original_decision": "conforms",
+      "final_decision": "nonconforms",
+      "reason": "The Hint branches parse and restate the Hint content, but the no-Hint branch injects a new mandatory ordering constraint that is neither in the question nor in a Hint line. Because hint_guard should parse the Hint line and restate its constraints as hard requirements while preserving the original question when no Hint is present, the no-Hint counterfactual makes the case nonconforming. This corrects the first review, whose reason covered only the Hint-present probes.",
+      "evidence": [
+        {
+          "source_line_start": 440,
+          "source_line_end": 452,
+          "quote": "def control_fog(io: ControlIO, question: str) -> str:\n    hint = _hint_body(question)\n    if hint:\n        requirement = f\"Mandatory Hint constraint:\\n{hint}\"\n    else:\n        requirement = \"Mandatory constraint: sort the final rows in ascending order.\"\n    return _extract_sql(\n        io.llm(\n            \"Return one SQLite query.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\\n\"\n            f\"{requirement}\"\n        )"
+        },
+        {
+          "probe": "no_hint",
+          "event_index": 0,
+          "field": "prompt",
+          "quote": "Return one SQLite query.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nMandatory constraint: sort the final rows in ascending order."
+        },
+        {
+          "probe": "no_hint",
+          "event_index": null,
+          "field": "final",
+          "quote": "SELECT id FROM ledger"
+        },
+        {
+          "probe": "hint_0",
+          "event_index": 0,
+          "field": "prompt",
+          "quote": "Return one SQLite query.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nHint: id must exceed 317.\nMandatory Hint constraint:\nid must exceed 317."
+        },
+        {
+          "probe": "hint_1",
+          "event_index": 0,
+          "field": "prompt",
+          "quote": "Return one SQLite query.\nSchema:\nTable ledger(id, amount)\nTable unused(label)\nQuestion:\nReturn ledger identifiers.\nHint: id must exceed 941.\nMandatory Hint constraint:\nid must exceed 941."
+        }
+      ]
+    }
+  ]
+}

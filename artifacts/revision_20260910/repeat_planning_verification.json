@@ -1,0 +1,20 @@
+{
+  "status": "PASS for scoped simulation/asset checks",
+  "formal_design_verdict": "not ready",
+  "n_sim_per_setting": 1000,
+  "n_settings": 24,
+  "total_simulated_datasets": 24000,
+  "combined_revision_tests": 41,
+  "simulation_tests": 5,
+  "ruff": "PASS",
+  "figure_visually_inspected": true,
+  "simulation_sha256": "3275c1ec3c646d5968067c474dda257c912cef9e8cdb4b11cfa80759ccff77fc",
+  "assets_manifest_sha256": "38640ee5011e73e744fb63a400503ffd8487a06bf53835265ed1005051a731c6",
+  "planning_document_sha256": "712f2f8f0f1d94c193899e3a9746bf2fece27e86fffcf82063bb080f000b9657",
+  "independent_venv_rerun_sha256": "dd92c3a09ab81fc756dddc777096790a9ca812fe6f00c3be2f2489369a0df249",
+  "limits": [
+    "no power/coverage validation",
+    "no database clustering",
+    "no cost match or sample-size freeze"
+  ]
+}

@@ -1,0 +1,625 @@
+[
+  {
+    "case": {
+      "strategy": "schema_link",
+      "name": "ledger_json",
+      "linking": {
+        "tables": [
+          "ledger"
+        ],
+        "columns": [
+          "ledger.id"
+        ]
+      },
+      "final": "SELECT id FROM ledger"
+    },
+    "final": "SELECT id FROM ledger",
+    "trace": [
+      {
+        "kind": "llm",
+        "prompt": "You are given a database schema and a question.\nIdentify ONLY the tables and columns needed to answer the question.\nReturn a JSON object with two keys:\n  \"tables\": list of table names\n  \"columns\": list of column names, optionally qualified as \"table.column\"\nDo not include any explanation or markdown.\n\nSchema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\n",
+        "system": "You are a precise database schema linker.",
+        "temperature": 0.0,
+        "n": 1,
+        "response": "{\"tables\": [\"ledger\"], \"columns\": [\"ledger.id\"]}",
+        "response_role": "linking_json",
+        "target_step": null,
+        "seq": 0
+      },
+      {
+        "kind": "llm",
+        "prompt": "Using only the linked schema subset below, write a single SQLite SELECT query that answers the question.\n\nLinked tables (use only these tables): ledger.\nLinked columns (use only these columns): ledger.id.\nDo not reference any table or column outside these lists.\n\nLinked schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\n\nReturn only the SQL query, with no markdown fences or explanation.",
+        "system": "You are an expert SQL writer that strictly follows the linked schema.",
+        "temperature": 0.0,
+        "n": 1,
+        "response": "SELECT id FROM ledger",
+        "response_role": "final_sql",
+        "target_step": null,
+        "seq": 0
+      }
+    ],
+    "error": null,
+    "interface_issues": [],
+    "admission": "not_evaluated",
+    "scope": "source-assigned exposed-candidate interface diagnostic; not calibration"
+  },
+  {
+    "case": {
+      "strategy": "schema_link",
+      "name": "unused_json",
+      "linking": {
+        "tables": [
+          "unused"
+        ],
+        "columns": [
+          "unused.label"
+        ]
+      },
+      "final": "SELECT label FROM unused"
+    },
+    "final": "SELECT label FROM unused",
+    "trace": [
+      {
+        "kind": "llm",
+        "prompt": "You are given a database schema and a question.\nIdentify ONLY the tables and columns needed to answer the question.\nReturn a JSON object with two keys:\n  \"tables\": list of table names\n  \"columns\": list of column names, optionally qualified as \"table.column\"\nDo not include any explanation or markdown.\n\nSchema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\n",
+        "system": "You are a precise database schema linker.",
+        "temperature": 0.0,
+        "n": 1,
+        "response": "{\"tables\": [\"unused\"], \"columns\": [\"unused.label\"]}",
+        "response_role": "linking_json",
+        "target_step": null,
+        "seq": 0
+      },
+      {
+        "kind": "llm",
+        "prompt": "Using only the linked schema subset below, write a single SQLite SELECT query that answers the question.\n\nLinked tables (use only these tables): unused.\nLinked columns (use only these columns): unused.label.\nDo not reference any table or column outside these lists.\n\nLinked schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\n\nReturn only the SQL query, with no markdown fences or explanation.",
+        "system": "You are an expert SQL writer that strictly follows the linked schema.",
+        "temperature": 0.0,
+        "n": 1,
+        "response": "SELECT label FROM unused",
+        "response_role": "final_sql",
+        "target_step": null,
+        "seq": 0
+      }
+    ],
+    "error": null,
+    "interface_issues": [],
+    "admission": "not_evaluated",
+    "scope": "source-assigned exposed-candidate interface diagnostic; not calibration"
+  },
+  {
+    "case": {
+      "strategy": "schema_link",
+      "name": "malformed_json",
+      "linking": null,
+      "final": "SELECT id FROM ledger"
+    },
+    "final": "SELECT id FROM ledger",
+    "trace": [
+      {
+        "kind": "llm",
+        "prompt": "You are given a database schema and a question.\nIdentify ONLY the tables and columns needed to answer the question.\nReturn a JSON object with two keys:\n  \"tables\": list of table names\n  \"columns\": list of column names, optionally qualified as \"table.column\"\nDo not include any explanation or markdown.\n\nSchema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\n",
+        "system": "You are a precise database schema linker.",
+        "temperature": 0.0,
+        "n": 1,
+        "response": "not JSON",
+        "response_role": "linking_json",
+        "target_step": null,
+        "seq": 0
+      },
+      {
+        "kind": "llm",
+        "prompt": "Using only the linked schema subset below, write a single SQLite SELECT query that answers the question.\n\nNo explicit linked set was produced; use the full schema below but select only the relevant tables and columns.\n\nLinked schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\n\nReturn only the SQL query, with no markdown fences or explanation.",
+        "system": "You are an expert SQL writer that strictly follows the linked schema.",
+        "temperature": 0.0,
+        "n": 1,
+        "response": "SELECT id FROM ledger",
+        "response_role": "final_sql",
+        "target_step": null,
+        "seq": 0
+      }
+    ],
+    "error": null,
+    "interface_issues": [],
+    "admission": "not_evaluated",
+    "scope": "source-assigned exposed-candidate interface diagnostic; not calibration"
+  },
+  {
+    "case": {
+      "strategy": "decompose",
+      "name": "parts_0",
+      "steps": [
+        "List ledger identifiers.",
+        "List ledger amounts."
+      ],
+      "answers": [
+        "SELECT id FROM ledger /* payload_0_0 */",
+        "SELECT amount FROM ledger /* payload_0_1 */"
+      ],
+      "final": "SELECT id FROM ledger"
+    },
+    "final": "SELECT id FROM ledger",
+    "trace": [
+      {
+        "kind": "llm",
+        "prompt": "You are an expert SQL planner. Given a database schema and a complex natural language question, break the question into a minimal ordered list of sub-questions. Each sub-question should be answerable by a single SELECT query against the schema and should contribute toward the final SQL answer. Order the sub-questions from base data retrieval to final computation.\n\nSchema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\n\nReturn ONLY a JSON list of strings, for example: [\"sub-question 1\", \"sub-question 2\"]. No explanation.",
+        "system": "",
+        "temperature": 0.0,
+        "n": 1,
+        "response": "[\"List ledger identifiers.\", \"List ledger amounts.\"]",
+        "response_role": "plan",
+        "target_step": null,
+        "seq": 0
+      },
+      {
+        "kind": "llm",
+        "prompt": "You are an expert SQL query generator.\n\nDatabase schema:\nTable ledger(id, amount)\nTable unused(label)\n\nOriginal question:\nReturn ledger identifiers.\n\nOrdered decomposition:\n1. List ledger identifiers.\n2. List ledger amounts.\n\nPreviously generated CTE definitions and status:\n(none)\n\nCurrent sub-question to answer:\nList ledger identifiers.\n\nWrite a single SELECT query that answers only this current sub-question. It will be used as a CTE named `q1`. Ensure all referenced tables/columns exist in the schema. Return ONLY SQL, without markdown fences or explanation.",
+        "system": "",
+        "temperature": 0.0,
+        "n": 1,
+        "response": "SELECT id FROM ledger /* payload_0_0 */",
+        "response_role": "subquestion_sql",
+        "target_step": 0,
+        "seq": 0
+      },
+      {
+        "kind": "execute",
+        "sql": "SELECT id FROM ledger /* payload_0_0 */",
+        "ok": true,
+        "rows": [
+          [
+            1
+          ],
+          [
+            2
+          ]
+        ],
+        "error": null
+      },
+      {
+        "kind": "llm",
+        "prompt": "You are an expert SQL query generator.\n\nDatabase schema:\nTable ledger(id, amount)\nTable unused(label)\n\nOriginal question:\nReturn ledger identifiers.\n\nOrdered decomposition:\n1. List ledger identifiers.\n2. List ledger amounts.\n\nPreviously generated CTE definitions and status:\nq1 (execution succeeded: 2 rows returned):\nSELECT id FROM ledger /* payload_0_0 */\n\nCurrent sub-question to answer:\nList ledger amounts.\n\nWrite a single SELECT query that answers only this current sub-question. It will be used as a CTE named `q2`. Ensure all referenced tables/columns exist in the schema. Return ONLY SQL, without markdown fences or explanation.",
+        "system": "",
+        "temperature": 0.0,
+        "n": 1,
+        "response": "SELECT amount FROM ledger /* payload_0_1 */",
+        "response_role": "subquestion_sql",
+        "target_step": 1,
+        "seq": 0
+      },
+      {
+        "kind": "execute",
+        "sql": "SELECT amount FROM ledger /* payload_0_1 */",
+        "ok": true,
+        "rows": [
+          [
+            10.0
+          ],
+          [
+            20.0
+          ]
+        ],
+        "error": null
+      },
+      {
+        "kind": "llm",
+        "prompt": "You are an expert SQL query writer.\n\nDatabase schema:\nTable ledger(id, amount)\nTable unused(label)\n\nOriginal question:\nReturn ledger identifiers.\n\nOrdered decomposition:\n1. List ledger identifiers.\n2. List ledger amounts.\n\nIntermediate CTEs already generated:\nq1 AS (\nSELECT id FROM ledger /* payload_0_0 */\n),\nq2 AS (\nSELECT amount FROM ledger /* payload_0_1 */\n)\n\nWrite a final SQL query that answers the original question. Use the provided CTE definitions in a WITH clause where appropriate. Return ONLY SQL, without markdown fences or explanation.",
+        "system": "",
+        "temperature": 0.0,
+        "n": 1,
+        "response": "SELECT id FROM ledger",
+        "response_role": "assembly_sql",
+        "target_step": null,
+        "seq": 0
+      }
+    ],
+    "error": null,
+    "interface_issues": [],
+    "admission": "not_evaluated",
+    "scope": "source-assigned exposed-candidate interface diagnostic; not calibration"
+  },
+  {
+    "case": {
+      "strategy": "decompose",
+      "name": "parts_1",
+      "steps": [
+        "List ledger identifiers.",
+        "List ledger amounts."
+      ],
+      "answers": [
+        "SELECT id FROM ledger /* payload_1_0 */",
+        "SELECT amount FROM ledger /* payload_1_1 */"
+      ],
+      "final": "SELECT amount FROM ledger"
+    },
+    "final": "SELECT amount FROM ledger",
+    "trace": [
+      {
+        "kind": "llm",
+        "prompt": "You are an expert SQL planner. Given a database schema and a complex natural language question, break the question into a minimal ordered list of sub-questions. Each sub-question should be answerable by a single SELECT query against the schema and should contribute toward the final SQL answer. Order the sub-questions from base data retrieval to final computation.\n\nSchema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\n\nReturn ONLY a JSON list of strings, for example: [\"sub-question 1\", \"sub-question 2\"]. No explanation.",
+        "system": "",
+        "temperature": 0.0,
+        "n": 1,
+        "response": "[\"List ledger identifiers.\", \"List ledger amounts.\"]",
+        "response_role": "plan",
+        "target_step": null,
+        "seq": 0
+      },
+      {
+        "kind": "llm",
+        "prompt": "You are an expert SQL query generator.\n\nDatabase schema:\nTable ledger(id, amount)\nTable unused(label)\n\nOriginal question:\nReturn ledger identifiers.\n\nOrdered decomposition:\n1. List ledger identifiers.\n2. List ledger amounts.\n\nPreviously generated CTE definitions and status:\n(none)\n\nCurrent sub-question to answer:\nList ledger identifiers.\n\nWrite a single SELECT query that answers only this current sub-question. It will be used as a CTE named `q1`. Ensure all referenced tables/columns exist in the schema. Return ONLY SQL, without markdown fences or explanation.",
+        "system": "",
+        "temperature": 0.0,
+        "n": 1,
+        "response": "SELECT id FROM ledger /* payload_1_0 */",
+        "response_role": "subquestion_sql",
+        "target_step": 0,
+        "seq": 0
+      },
+      {
+        "kind": "execute",
+        "sql": "SELECT id FROM ledger /* payload_1_0 */",
+        "ok": true,
+        "rows": [
+          [
+            1
+          ],
+          [
+            2
+          ]
+        ],
+        "error": null
+      },
+      {
+        "kind": "llm",
+        "prompt": "You are an expert SQL query generator.\n\nDatabase schema:\nTable ledger(id, amount)\nTable unused(label)\n\nOriginal question:\nReturn ledger identifiers.\n\nOrdered decomposition:\n1. List ledger identifiers.\n2. List ledger amounts.\n\nPreviously generated CTE definitions and status:\nq1 (execution succeeded: 2 rows returned):\nSELECT id FROM ledger /* payload_1_0 */\n\nCurrent sub-question to answer:\nList ledger amounts.\n\nWrite a single SELECT query that answers only this current sub-question. It will be used as a CTE named `q2`. Ensure all referenced tables/columns exist in the schema. Return ONLY SQL, without markdown fences or explanation.",
+        "system": "",
+        "temperature": 0.0,
+        "n": 1,
+        "response": "SELECT amount FROM ledger /* payload_1_1 */",
+        "response_role": "subquestion_sql",
+        "target_step": 1,
+        "seq": 0
+      },
+      {
+        "kind": "execute",
+        "sql": "SELECT amount FROM ledger /* payload_1_1 */",
+        "ok": true,
+        "rows": [
+          [
+            10.0
+          ],
+          [
+            20.0
+          ]
+        ],
+        "error": null
+      },
+      {
+        "kind": "llm",
+        "prompt": "You are an expert SQL query writer.\n\nDatabase schema:\nTable ledger(id, amount)\nTable unused(label)\n\nOriginal question:\nReturn ledger identifiers.\n\nOrdered decomposition:\n1. List ledger identifiers.\n2. List ledger amounts.\n\nIntermediate CTEs already generated:\nq1 AS (\nSELECT id FROM ledger /* payload_1_0 */\n),\nq2 AS (\nSELECT amount FROM ledger /* payload_1_1 */\n)\n\nWrite a final SQL query that answers the original question. Use the provided CTE definitions in a WITH clause where appropriate. Return ONLY SQL, without markdown fences or explanation.",
+        "system": "",
+        "temperature": 0.0,
+        "n": 1,
+        "response": "SELECT amount FROM ledger",
+        "response_role": "assembly_sql",
+        "target_step": null,
+        "seq": 0
+      }
+    ],
+    "error": null,
+    "interface_issues": [],
+    "admission": "not_evaluated",
+    "scope": "source-assigned exposed-candidate interface diagnostic; not calibration"
+  },
+  {
+    "case": {
+      "strategy": "error_classify",
+      "name": "success",
+      "initial": "SELECT id FROM ledger"
+    },
+    "final": "SELECT id FROM ledger",
+    "trace": [
+      {
+        "kind": "llm",
+        "prompt": "You are a SQL expert. Given the database schema below, write a single SQL query that answers the question.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\nReturn only the SQL query, without any explanation or markdown formatting.",
+        "system": "",
+        "temperature": 0.0,
+        "n": 1,
+        "response": "SELECT id FROM ledger",
+        "response_role": "initial_sql",
+        "target_step": null,
+        "seq": 0
+      },
+      {
+        "kind": "execute",
+        "sql": "SELECT id FROM ledger",
+        "ok": true,
+        "rows": [
+          [
+            1
+          ],
+          [
+            2
+          ]
+        ],
+        "error": null
+      }
+    ],
+    "error": null,
+    "interface_issues": [],
+    "admission": "not_evaluated",
+    "scope": "source-assigned exposed-candidate interface diagnostic; not calibration"
+  },
+  {
+    "case": {
+      "strategy": "error_classify",
+      "name": "sqlite_syntax",
+      "initial": "SELEC id FROM ledger"
+    },
+    "final": "SELECT id FROM ledger",
+    "trace": [
+      {
+        "kind": "llm",
+        "prompt": "You are a SQL expert. Given the database schema below, write a single SQL query that answers the question.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\nReturn only the SQL query, without any explanation or markdown formatting.",
+        "system": "",
+        "temperature": 0.0,
+        "n": 1,
+        "response": "SELEC id FROM ledger",
+        "response_role": "initial_sql",
+        "target_step": null,
+        "seq": 0
+      },
+      {
+        "kind": "execute",
+        "sql": "SELEC id FROM ledger",
+        "ok": false,
+        "rows": [],
+        "error": "near \"SELEC\": syntax error",
+        "error_type": "OperationalError"
+      },
+      {
+        "kind": "llm",
+        "prompt": "You are a SQL expert. A previous SQL query failed or was incorrect.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\n### Previous SQL\nSELEC id FROM ledger\n\n### Error Message\nnear \"SELEC\": syntax error\n\nThe previous SQL query failed with a syntax issue. Fix the SQL syntax and return only the corrected SQL query. Do not change the intended meaning of the query.",
+        "system": "",
+        "temperature": 0.0,
+        "n": 1,
+        "response": "SELECT id FROM ledger",
+        "response_role": "repair_sql",
+        "target_step": null,
+        "seq": 0
+      },
+      {
+        "kind": "execute",
+        "sql": "SELECT id FROM ledger",
+        "ok": true,
+        "rows": [
+          [
+            1
+          ],
+          [
+            2
+          ]
+        ],
+        "error": null
+      }
+    ],
+    "error": null,
+    "interface_issues": [],
+    "admission": "not_evaluated",
+    "scope": "source-assigned exposed-candidate interface diagnostic; not calibration"
+  },
+  {
+    "case": {
+      "strategy": "error_classify",
+      "name": "sqlite_missing_column",
+      "initial": "SELECT absent FROM ledger"
+    },
+    "final": "SELECT id FROM ledger",
+    "trace": [
+      {
+        "kind": "llm",
+        "prompt": "You are a SQL expert. Given the database schema below, write a single SQL query that answers the question.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\nReturn only the SQL query, without any explanation or markdown formatting.",
+        "system": "",
+        "temperature": 0.0,
+        "n": 1,
+        "response": "SELECT absent FROM ledger",
+        "response_role": "initial_sql",
+        "target_step": null,
+        "seq": 0
+      },
+      {
+        "kind": "execute",
+        "sql": "SELECT absent FROM ledger",
+        "ok": false,
+        "rows": [],
+        "error": "no such column: absent",
+        "error_type": "OperationalError"
+      },
+      {
+        "kind": "llm",
+        "prompt": "You are a SQL expert. A previous SQL query failed or was incorrect.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\n### Previous SQL\nSELECT absent FROM ledger\n\n### Error Message\nno such column: absent\n\nThe previous SQL query failed with a schema issue, such as an invalid table or column reference. Use only table and column names exactly as they appear in the schema. Check all joins, aliases, and identifiers. Return only the corrected SQL query.",
+        "system": "",
+        "temperature": 0.0,
+        "n": 1,
+        "response": "SELECT id FROM ledger",
+        "response_role": "repair_sql",
+        "target_step": null,
+        "seq": 0
+      },
+      {
+        "kind": "execute",
+        "sql": "SELECT id FROM ledger",
+        "ok": true,
+        "rows": [
+          [
+            1
+          ],
+          [
+            2
+          ]
+        ],
+        "error": null
+      }
+    ],
+    "error": null,
+    "interface_issues": [],
+    "admission": "not_evaluated",
+    "scope": "source-assigned exposed-candidate interface diagnostic; not calibration"
+  },
+  {
+    "case": {
+      "strategy": "error_classify",
+      "name": "sqlite_missing_table",
+      "initial": "SELECT id FROM absent"
+    },
+    "final": "SELECT id FROM ledger",
+    "trace": [
+      {
+        "kind": "llm",
+        "prompt": "You are a SQL expert. Given the database schema below, write a single SQL query that answers the question.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\nReturn only the SQL query, without any explanation or markdown formatting.",
+        "system": "",
+        "temperature": 0.0,
+        "n": 1,
+        "response": "SELECT id FROM absent",
+        "response_role": "initial_sql",
+        "target_step": null,
+        "seq": 0
+      },
+      {
+        "kind": "execute",
+        "sql": "SELECT id FROM absent",
+        "ok": false,
+        "rows": [],
+        "error": "no such table: absent",
+        "error_type": "OperationalError"
+      },
+      {
+        "kind": "llm",
+        "prompt": "You are a SQL expert. A previous SQL query failed or was incorrect.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\n### Previous SQL\nSELECT id FROM absent\n\n### Error Message\nno such table: absent\n\nThe previous SQL query failed with a schema issue, such as an invalid table or column reference. Use only table and column names exactly as they appear in the schema. Check all joins, aliases, and identifiers. Return only the corrected SQL query.",
+        "system": "",
+        "temperature": 0.0,
+        "n": 1,
+        "response": "SELECT id FROM ledger",
+        "response_role": "repair_sql",
+        "target_step": null,
+        "seq": 0
+      },
+      {
+        "kind": "execute",
+        "sql": "SELECT id FROM ledger",
+        "ok": true,
+        "rows": [
+          [
+            1
+          ],
+          [
+            2
+          ]
+        ],
+        "error": null
+      }
+    ],
+    "error": null,
+    "interface_issues": [],
+    "admission": "not_evaluated",
+    "scope": "source-assigned exposed-candidate interface diagnostic; not calibration"
+  },
+  {
+    "case": {
+      "strategy": "error_classify",
+      "name": "sqlite_incomplete",
+      "initial": "SELECT id FROM"
+    },
+    "final": "SELECT id FROM ledger",
+    "trace": [
+      {
+        "kind": "llm",
+        "prompt": "You are a SQL expert. Given the database schema below, write a single SQL query that answers the question.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\nReturn only the SQL query, without any explanation or markdown formatting.",
+        "system": "",
+        "temperature": 0.0,
+        "n": 1,
+        "response": "SELECT id FROM",
+        "response_role": "initial_sql",
+        "target_step": null,
+        "seq": 0
+      },
+      {
+        "kind": "execute",
+        "sql": "SELECT id FROM",
+        "ok": false,
+        "rows": [],
+        "error": "incomplete input",
+        "error_type": "OperationalError"
+      },
+      {
+        "kind": "llm",
+        "prompt": "You are a SQL expert. A previous SQL query failed or was incorrect.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\n### Previous SQL\nSELECT id FROM\n\n### Error Message\nincomplete input\n\nThe previous SQL query failed with a syntax issue. Fix the SQL syntax and return only the corrected SQL query. Do not change the intended meaning of the query.",
+        "system": "",
+        "temperature": 0.0,
+        "n": 1,
+        "response": "SELECT id FROM ledger",
+        "response_role": "repair_sql",
+        "target_step": null,
+        "seq": 0
+      },
+      {
+        "kind": "execute",
+        "sql": "SELECT id FROM ledger",
+        "ok": true,
+        "rows": [
+          [
+            1
+          ],
+          [
+            2
+          ]
+        ],
+        "error": null
+      }
+    ],
+    "error": null,
+    "interface_issues": [],
+    "admission": "not_evaluated",
+    "scope": "source-assigned exposed-candidate interface diagnostic; not calibration"
+  },
+  {
+    "case": {
+      "strategy": "error_classify",
+      "name": "executable_other_column",
+      "initial": "SELECT amount FROM ledger"
+    },
+    "final": "SELECT amount FROM ledger",
+    "trace": [
+      {
+        "kind": "llm",
+        "prompt": "You are a SQL expert. Given the database schema below, write a single SQL query that answers the question.\n\n### Database Schema\nTable ledger(id, amount)\nTable unused(label)\n\n### Question\nReturn ledger identifiers.\n\nReturn only the SQL query, without any explanation or markdown formatting.",
+        "system": "",
+        "temperature": 0.0,
+        "n": 1,
+        "response": "SELECT amount FROM ledger",
+        "response_role": "initial_sql",
+        "target_step": null,
+        "seq": 0
+      },
+      {
+        "kind": "execute",
+        "sql": "SELECT amount FROM ledger",
+        "ok": true,
+        "rows": [
+          [
+            10.0
+          ],
+          [
+            20.0
+          ]
+        ],
+        "error": null
+      }
+    ],
+    "error": null,
+    "interface_issues": [],
+    "admission": "not_evaluated",
+    "scope": "source-assigned exposed-candidate interface diagnostic; not calibration"
+  }
+]

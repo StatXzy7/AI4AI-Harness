@@ -1,0 +1,17 @@
+{
+  "mechanical": {
+    "reviewer_model": "gpt-5.5",
+    "score": 8.5,
+    "verdict": "almost",
+    "finding": "Initial git apply return codes not independently preserved in files; report now explicitly limits this detail to tool-session evidence. All392 snapshot payload hashes and five normalized runtime files independently verified.",
+    "scope": "restoration evidence only; not paper-wide readiness"
+  },
+  "spec": {
+    "reviewer_model": "gpt-5.5",
+    "score": 8.5,
+    "verdict": "almost",
+    "finding": "No blocking overclaim; W1 unfinished status should be explicit in final sentence, now added. Prior failed traceback standalone logs unavailable, honestly disclosed.",
+    "scope": "claim boundaries for mock/demo and remaining A-D/W1"
+  },
+  "independence": "Reviewers differ from root implementer model. Separate axes; mechanical reviewer was sent other-axis score and scoped outcome in a late status message, so do not treat score agreement as blind replication."
+}

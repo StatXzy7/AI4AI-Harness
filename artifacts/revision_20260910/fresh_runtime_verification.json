@@ -1,0 +1,34 @@
+{
+  "created_utc": "2026-09-10T10:57:52.176448+00:00",
+  "scope": "new development acquisition; original full population, provider independence and formal protocol not cleared",
+  "all_revision_tests": 66,
+  "new_runtime_tests": 8,
+  "tests": "PASS in runtime_env CPython3.13.9",
+  "ruff": "PASS for all experiment/revision",
+  "paper_hash_checks": 42,
+  "paper_verifier": "PASS",
+  "paper_source_results_and_pdfs_unchanged": true,
+  "new_paid_api_calls": 0,
+  "new_empirical_outcomes": 0,
+  "retained_fixture_cells": 4,
+  "retained_fixture_http_requests": 4,
+  "resume_additional_http_requests": 0,
+  "retained_source_hash_checks": 508,
+  "reviews": {
+    "code": "9/10 ready - bounded development implementation",
+    "spec": "9/10 ready - bounded development implementation",
+    "cross_model_scientific_clearance": false
+  },
+  "formal_runtime_verdict": "not ready - task process isolation and live provider checks remain",
+  "inputs_and_artifacts": {
+    "experiment/revision/fresh_runtime.py": "e8ee2447355ae9b2f59c8fb8ebd9b122b4b19466359afe5315ba1c0224d648f6",
+    "experiment/revision/fresh_collect.py": "4c95e7dafb3488abd9764106defe40b88e4519c2d1a82db28d49f92b3936bcdd",
+    "experiment/revision/test_fresh_runtime.py": "28a231c702ff227ef2fa7b81bbc0d58817fb63af37bfb0820e999ae5866262fe",
+    "review-stage/FRESH_ACQUISITION.md": "2e686cff5836a1942e0e9013a9eb8ec56d1bd63ede99b8b8cb9145067def87c4",
+    "artifacts/revision_20260910/fresh_runtime_smoke.json": "773864d117391b08ea570628eb45e7a70a6fbde65d46370fa20cfd062c5aa7ae",
+    "artifacts/revision_20260910/fresh_runtime_tests.txt": "2df0d0262ecccb34ef415d066166574f13aee086773d88ec5067810a45237004",
+    "artifacts/revision_20260910/requirements-runtime.lock.txt": "4a3ba2814c636143f78075dac1fd2d566a913ba604de0963f7fa7ed1e18ee71e",
+    "artifacts/revision_20260910/verification.json": "bc9f99a817f59737cbdeb9e6726712173ba2ffd0a431e3c00b2adfd9dd766d40",
+    "artifacts/revision_20260910/chinese_sync_verification.json": "fb046e3c6fcf6415cd70b17d0dc2d23225a0258191a93c5134642c5f198f7826"
+  }
+}

@@ -1,0 +1,395 @@
+{
+  "recorded_at_utc": "2026-09-10T12:19:48.2551456Z",
+  "reviewer_model": "gpt-5.5",
+  "backend_build": "unknown",
+  "implementation_model": "GPT-6",
+  "rule_sha256": "2bce94c257bb11aff46da8b6d19eb88a1ce661d839945c9285247d3659c53128",
+  "packet_sha256": "7f2c1085b53e7ee30e50958ad7e823c65b7aff10734ed11cbaa72cb30ea00dce",
+  "contract_sha256": "80870579629bad16ec4f06b2953138cbb707424d91922853c10647c20e2f49bb",
+  "scope": "Fourteen exposed development semantic-review cases only. No expected labels, benchmark scores, gate source, external API calls, or production calibration were used.",
+  "cases": [
+    {
+      "case_id": "ad2d9cb9459e88ad",
+      "strategy": "hint_guard",
+      "displayed_source_sha256": "20a8e8c143386ea01b19f8834d8c6616bce03bcaee0c7317651c6dc419c71cdd",
+      "runs_sha256": "35378a5c88a762bb10e03dab479f05f0b49e076b8454e771980175702dbf66eb",
+      "verdict": "conforms",
+      "rationale": "The request preserves the schema and original question, uses one sample, and turns each hint into a separate affirmative hard requirement outside the original question. This judges instruction expression only, not whether the scripted solver obeyed the hint.",
+      "evidence": [
+        {
+          "probe": "hint_0",
+          "trace_index": 0,
+          "field": "prompt",
+          "quote": "Hint: id must exceed 317.\nHard requirement: id must exceed 317."
+        },
+        {
+          "probe": "hint_1",
+          "trace_index": 0,
+          "field": "prompt",
+          "quote": "Hint: id must exceed 941.\nHard requirement: id must exceed 941."
+        }
+      ]
+    },
+    {
+      "case_id": "06e9792944d4bb95",
+      "strategy": "two_view",
+      "displayed_source_sha256": "bea0e42ea4ed842648f876bb6ed88474b088f3abdb306ccd52ff1a6d350d3580",
+      "runs_sha256": "7cb780786d18b8c9f2aecf3e376f66ee274174080a23f9247486fa02a8cdc8ab",
+      "verdict": "conforms",
+      "rationale": "The traces show two distinct formulation requests that preserve the schema and question, both candidates are executed, and selection changes with empty or failed execution outcomes. The SQL returned by the scripted solver is not used as proof of semantic correctness.",
+      "evidence": [
+        {
+          "probe": "first_empty",
+          "trace_index": 0,
+          "field": "prompt",
+          "quote": "Use a join formulation."
+        },
+        {
+          "probe": "first_empty",
+          "trace_index": 1,
+          "field": "prompt",
+          "quote": "Use a subquery formulation."
+        },
+        {
+          "probe": "first_failed",
+          "trace_index": 2,
+          "field": "ok",
+          "value": false
+        },
+        {
+          "probe": "first_failed",
+          "trace_index": 2,
+          "field": "error",
+          "quote": "syntax"
+        },
+        {
+          "probe": "first_failed",
+          "trace_index": 3,
+          "field": "sql",
+          "quote": "SELECT amount FROM ledger"
+        }
+      ]
+    },
+    {
+      "case_id": "0917b9d4e9db1c67",
+      "strategy": "error_classify",
+      "displayed_source_sha256": "e7799adee1cc17ee7f8518576802845efef627825f8a0474e8c7fa4530973251",
+      "runs_sha256": "e75594557085796463191e911958a968dde5b17fc8ba8775ae7f2fe1ddc38bb1",
+      "verdict": "conforms",
+      "rationale": "Success does not trigger repair. Failed probes preserve the schema and question, include the exact error, emit one explicit category, and use category-specific repair actions with meaningful differences across syntax, schema, and semantics.",
+      "evidence": [
+        {
+          "probe": "success_no_repair",
+          "trace_index": 1,
+          "field": "ok",
+          "value": true
+        },
+        {
+          "probe": "syntax_a",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "syntax-specific fix: correct grammar"
+        },
+        {
+          "probe": "schema_a",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "schema-specific fix: correct table and column references"
+        },
+        {
+          "probe": "semantics_a",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "semantics-specific fix: correct the query logic"
+        }
+      ]
+    },
+    {
+      "case_id": "2a329097a273e436",
+      "strategy": "format_guard",
+      "displayed_source_sha256": "c4978624aba572f0deae93679799bee00a510b97f463cd4664419bfd13f082a0",
+      "runs_sha256": "9102ffd767d9e9b933c0aac3464d7e1b0d08a624d6896f8a90fb9457ed590733",
+      "verdict": "conforms",
+      "rationale": "The single request preserves the schema and question and adds clear affirmative output-format constraints: schema-defined names, SQL fence only, and no extra text. Solver compliance is not assumed.",
+      "evidence": [
+        {
+          "probe": "format_original",
+          "trace_index": 0,
+          "field": "prompt",
+          "quote": "Use only schema-defined names. Return only a ```sql fence, no extra text."
+        },
+        {
+          "probe": "format_changed_question",
+          "trace_index": 0,
+          "field": "prompt",
+          "quote": "Return ledger amounts.\nUse only schema-defined names."
+        }
+      ]
+    },
+    {
+      "case_id": "499f63e93901fc3d",
+      "strategy": "hint_guard",
+      "displayed_source_sha256": "fc8dfd58c16f6b18dc0054be249fd84c172e7b8ba7e22b7daa2307d1fdb6f734",
+      "runs_sha256": "008720639531a79b375c9a0c1f4ecffb0def97b5493eb9cf299f0b64cc68a271",
+      "verdict": "nonconforms",
+      "rationale": "The request preserves the original question and hint text but only passes the question through. It does not express the hint as an added hard requirement outside the original question, which the contract treats as a pure-transmission counterexample.",
+      "evidence": [
+        {
+          "probe": "hint_0",
+          "trace_index": 0,
+          "field": "prompt",
+          "quote": "Return ledger identifiers.\nHint: id must exceed 317."
+        },
+        {
+          "probe": "hint_1",
+          "trace_index": 0,
+          "field": "prompt",
+          "quote": "Return ledger identifiers.\nHint: id must exceed 941."
+        }
+      ]
+    },
+    {
+      "case_id": "c2c4471de9fb165c",
+      "strategy": "two_view",
+      "displayed_source_sha256": "a43fe589bb60873869c636c7f32b7325d6536b96ffbc2115f7789ca6fa864c5b",
+      "runs_sha256": "6db1dd3326add9c66499185474427f997df57e1642e52e6ff8a03b297bb1d041",
+      "verdict": "nonconforms",
+      "rationale": "Two non-identical formulation requests exist and both candidates are executed, but the final decision ignores execution outcomes and always returns the first candidate. This fails the two-view arbitration semantics.",
+      "evidence": [
+        {
+          "probe": "first_failed",
+          "trace_index": 2,
+          "field": "sql",
+          "quote": "SELECT id FROM ledger"
+        },
+        {
+          "probe": "first_failed",
+          "trace_index": 2,
+          "field": "ok",
+          "value": false
+        },
+        {
+          "probe": "first_failed",
+          "trace_index": 2,
+          "field": "error",
+          "quote": "syntax"
+        },
+        {
+          "probe": "first_failed",
+          "trace_index": 3,
+          "field": "sql",
+          "quote": "SELECT amount FROM ledger"
+        },
+        {
+          "probe": "first_failed",
+          "trace_index": 3,
+          "field": "ok",
+          "value": true
+        },
+        {
+          "probe": "first_failed",
+          "trace_index": null,
+          "field": "final",
+          "quote": "SELECT id FROM ledger"
+        }
+      ]
+    },
+    {
+      "case_id": "db505f03d6ea3020",
+      "strategy": "error_classify",
+      "displayed_source_sha256": "1bd068a7d04ba70d58affa07bd10509270c813298a602e6566aa7fb1d6a0bb64",
+      "runs_sha256": "0c758f4a45609654f422e3d154ac4297a95d95184a6639efdc397a934ae0f099",
+      "verdict": "nonconforms",
+      "rationale": "The failed path carries the previous SQL and exact error while preserving schema and question, so it is a repair pattern. It does not classify the error into a single explicit category or choose category-specific actions.",
+      "evidence": [
+        {
+          "probe": "syntax_a",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "Previous SQL: SELECT id FROM ledger\nError: syntax failure"
+        },
+        {
+          "probe": "schema_a",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "Previous SQL: SELECT id FROM ledger\nError: schema failure"
+        }
+      ]
+    },
+    {
+      "case_id": "284f459c9fb93b8f",
+      "strategy": "format_guard",
+      "displayed_source_sha256": "fc8dfd58c16f6b18dc0054be249fd84c172e7b8ba7e22b7daa2307d1fdb6f734",
+      "runs_sha256": "1d731f78fff485bcd7300142d1e89c1e454502f235009393e39f6b0afd2cbff2",
+      "verdict": "nonconforms",
+      "rationale": "The request preserves schema and question, but it is pure transmission and contains no explicit SQL fence, no-extra-text, or schema-name format constraint. A baseline solver response cannot supply the required format-guard semantics.",
+      "evidence": [
+        {
+          "probe": "format_original",
+          "trace_index": 0,
+          "field": "prompt",
+          "quote": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger identifiers."
+        },
+        {
+          "probe": "format_changed_question",
+          "trace_index": 0,
+          "field": "prompt",
+          "quote": "Table ledger(id, amount)\nTable unused(label)\nReturn ledger amounts."
+        }
+      ]
+    },
+    {
+      "case_id": "09d850799979bd50",
+      "strategy": "error_classify",
+      "displayed_source_sha256": "43a77bd86500af4c380be1cf7942b816e17896de96c72017651545bf706e8849",
+      "runs_sha256": "1e39722625f432a1a3c7b1cdfd068f81f1918dc70ac13647005da72380f94f5f",
+      "verdict": "nonconforms",
+      "rationale": "The failure prompt lists all categories together and omits the original schema and question in the repair request. It does not provide a single explicit classification or class-specific action.",
+      "evidence": [
+        {
+          "probe": "syntax_a",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "syntax schema semantics\nsyntax failure"
+        },
+        {
+          "probe": "schema_a",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "syntax schema semantics\nschema failure"
+        },
+        {
+          "probe": "semantics_a",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "syntax schema semantics\nsemantics failure"
+        }
+      ]
+    },
+    {
+      "case_id": "0e4fd93c08c6611f",
+      "strategy": "two_view",
+      "displayed_source_sha256": "158627006c581ed90180dabd734714f518e9d7b15db0d83626b7c2bcde422e81",
+      "runs_sha256": "6633f75c40ce09eb9ed9e8d363ce8da53d706391c4c633d55ecb23a4a034b2ee",
+      "verdict": "nonconforms",
+      "rationale": "The arbitration follows execution outcomes, but the two requests differ only by trailing whitespace. That is a surface-character change, not two semantically different construction views.",
+      "evidence": [
+        {
+          "probe": "first_empty",
+          "trace_index": 0,
+          "field": "prompt",
+          "quote": "Return ledger identifiers."
+        },
+        {
+          "probe": "first_empty",
+          "trace_index": 1,
+          "field": "prompt",
+          "quote": "Return ledger identifiers. "
+        }
+      ]
+    },
+    {
+      "case_id": "dcac8d75a60928c7",
+      "strategy": "hint_guard",
+      "displayed_source_sha256": "ba73d41eb102f272c4ee1dd0960583f2de43a28d1f20fc0545dac2b1d9cb6083",
+      "runs_sha256": "af2db8db4d0989ced1cf61a4d08f612de2573dba97703050ea1498d402b68e8a",
+      "verdict": "nonconforms",
+      "rationale": "The prompt preserves schema and original question, but the added instruction explicitly negates the hint rather than affirming it as a hard constraint. That is a direct semantic conflict.",
+      "evidence": [
+        {
+          "probe": "hint_0",
+          "trace_index": 0,
+          "field": "prompt",
+          "quote": "Hint: id must exceed 317.\nIgnore this requirement: id must exceed 317."
+        },
+        {
+          "probe": "hint_1",
+          "trace_index": 0,
+          "field": "prompt",
+          "quote": "Hint: id must exceed 941.\nIgnore this requirement: id must exceed 941."
+        }
+      ]
+    },
+    {
+      "case_id": "9a91bf220064bf98",
+      "strategy": "format_guard",
+      "displayed_source_sha256": "372cbd170e452c8f14605653cdf69613dddd560cdadfce56ca65f8a89165cd48",
+      "runs_sha256": "5f2101748cdb398cec5c43c98107d53996c2ad58a6fcd6ee80c518dafd81f9a1",
+      "verdict": "nonconforms",
+      "rationale": "The prompt preserves schema and question but gives a negative format instruction that conflicts with the required SQL-fence-only behavior. The simulated final SQL is not evidence that the instruction was semantically valid.",
+      "evidence": [
+        {
+          "probe": "format_original",
+          "trace_index": 0,
+          "field": "prompt",
+          "quote": "Do NOT return only a ```sql fence; include explanatory prose."
+        },
+        {
+          "probe": "format_changed_question",
+          "trace_index": 0,
+          "field": "prompt",
+          "quote": "Return ledger amounts.\nDo NOT return only a ```sql fence"
+        }
+      ]
+    },
+    {
+      "case_id": "83026ff72aee0c95",
+      "strategy": "error_classify",
+      "displayed_source_sha256": "2cdd90ffd8352772dbfce6c052aeb7b357494b4b5c15aba99013c3601029925d",
+      "runs_sha256": "4575e721709bda7e3d475560931b660610b0f0507e09b0cfcbb64487df73fdeb",
+      "verdict": "nonconforms",
+      "rationale": "The failed path names one category, but the action is only punctuation plus a generic retry instruction and it drops the original schema and question. The class-specific semantic action requirement is therefore not met.",
+      "evidence": [
+        {
+          "probe": "syntax_a",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "syntax! Try again."
+        },
+        {
+          "probe": "schema_a",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "schema? Try again."
+        },
+        {
+          "probe": "semantics_a",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "semantics. Try again."
+        }
+      ]
+    },
+    {
+      "case_id": "22805004218aae1e",
+      "strategy": "error_classify",
+      "displayed_source_sha256": "95711b13fa5fcb85fd3039bb418e7f39eb24e1049322757f4361497f7a93b129",
+      "runs_sha256": "8ca232a46f987574eadfbf1770274ceeb957d6ac1ef5a9e9e6109b0fb0703913",
+      "verdict": "nonconforms",
+      "rationale": "The failed path uses a single category, but schema errors are mapped to 'correct grammar' rather than table or column repair, and the repair prompt omits the original schema and question. This is not a semantically reasonable error-class action.",
+      "evidence": [
+        {
+          "probe": "syntax_a",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "syntax correct grammar"
+        },
+        {
+          "probe": "schema_a",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "schema correct grammar"
+        },
+        {
+          "probe": "semantics_a",
+          "trace_index": 2,
+          "field": "prompt",
+          "quote": "semantics correct query logic"
+        }
+      ]
+    }
+  ],
+  "clarification_once": "Evidence format repaired after the single allowed clarification: quote values are substrings of the referenced string field; non-string evidence uses field plus exact typed value.",
+  "initial_sha256": "2632f35e656f31de4ffd71f055db7a8f2b259f2467fd490b43403486f90ab9d3",
+  "revised_at_utc": "2026-09-10T12:23:56.005923Z"
+}

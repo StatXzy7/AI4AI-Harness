@@ -1,0 +1,26 @@
+{
+  "reviewer": "gpt-5.5",
+  "score": 9,
+  "verdict": "ready",
+  "scope": "bilingual source vocabulary clarification only",
+  "initial_review_retained": true,
+  "english_pages": 19,
+  "chinese_pages": 22,
+  "english_main_pages": 9,
+  "english_prefix_pages_unchanged": 17,
+  "chinese_prefix_pages_unchanged": 20,
+  "visual_pages": [
+    "en18",
+    "en19",
+    "zh21",
+    "zh22"
+  ],
+  "visual_result": "readable, no clipped paragraph or new overflow",
+  "baseline_font_warning": "SimSun smallcaps fallback unchanged; no missing glyph warnings",
+  "build_exit_codes": {
+    "english": 0,
+    "chinese_pass1": 0,
+    "chinese_pass2": 0,
+    "chinese_pdf": 0
+  }
+}

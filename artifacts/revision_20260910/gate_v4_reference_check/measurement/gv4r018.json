@@ -1,0 +1,110 @@
+{
+  "identity": {
+    "case_id": "gv4r018",
+    "strategy": "repair",
+    "callable_name": "control_aurora",
+    "profile": null
+  },
+  "result": {
+    "version": "gate-v4",
+    "strategy": "repair",
+    "profile": null,
+    "structural_verdict": "pass",
+    "runs": [
+      {
+        "probe": "success_no_repair",
+        "status": "pass",
+        "reasons": [],
+        "final": "SELECT id FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Create one SQLite query.\nDatabase schema:\nTable ledger(id, amount)\nTable unused(label)\nUser question:\nReturn ledger identifiers.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger"
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": true,
+            "rows": [
+              [
+                "A"
+              ]
+            ],
+            "error": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "syntax_a",
+        "status": "pass",
+        "reasons": [],
+        "final": "SELECT amount FROM ledger",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Create one SQLite query.\nDatabase schema:\nTable ledger(id, amount)\nTable unused(label)\nUser question:\nReturn ledger identifiers.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger"
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": false,
+            "rows": [],
+            "error": "syntax failure [stage28_v4_reference_20260911_syntax_a]"
+          },
+          {
+            "kind": "llm",
+            "prompt": "Repair the failed query from the complete execution record.\nDatabase schema:\nTable ledger(id, amount)\nTable unused(label)\nUser question:\nReturn ledger identifiers.\nFailed SQL:\nSELECT id FROM ledger\nExact execution feedback:\n{\"ok\": false, \"rows\": [], \"error\": \"syntax failure [stage28_v4_reference_20260911_syntax_a]\"}",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT amount FROM ledger"
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "syntax_b",
+        "status": "pass",
+        "reasons": [],
+        "final": "SELECT id FROM ledger WHERE id > 0",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "Create one SQLite query.\nDatabase schema:\nTable ledger(id, amount)\nTable unused(label)\nUser question:\nReturn ledger identifiers.",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger"
+          },
+          {
+            "kind": "execute",
+            "sql": "SELECT id FROM ledger",
+            "ok": false,
+            "rows": [],
+            "error": "syntax failure [stage28_v4_reference_20260911_syntax_b]"
+          },
+          {
+            "kind": "llm",
+            "prompt": "Repair the failed query from the complete execution record.\nDatabase schema:\nTable ledger(id, amount)\nTable unused(label)\nUser question:\nReturn ledger identifiers.\nFailed SQL:\nSELECT id FROM ledger\nExact execution feedback:\n{\"ok\": false, \"rows\": [], \"error\": \"syntax failure [stage28_v4_reference_20260911_syntax_b]\"}",
+            "system": "",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger WHERE id > 0"
+          }
+        ],
+        "error": null
+      }
+    ],
+    "admission": "not_evaluated",
+    "scope": "Unified development measurement, with explicit source-assigned response roles.\n\nFrozen v3 supplies five unchanged strategy probes. Typed schema/decomposition and\nreal SQLite feedback supply the remaining three. This module never admits a\ncandidate: semantic decisions and independently frozen reference checks remain\nseparate. Unsupported response profiles are review-required, not rejection.\n"
+  }
+}

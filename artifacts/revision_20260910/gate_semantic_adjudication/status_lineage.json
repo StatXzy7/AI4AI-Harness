@@ -1,0 +1,27 @@
+{
+  "historical_verification": "artifacts/revision_20260910/launch_guards/verification.json",
+  "historical_verification_sha256": "1944cc22fd3363b7ac784c6dad74e70e80e4b15fea0526511b98a1af3d352181",
+  "superseded_status_bindings": [
+    {
+      "original_path": "review-stage/REVISION_20260910.md",
+      "prior_sha256": "4cb7390eb5b05f45a61be91879371d7f731be92ae13a8807ee0a482bf8c16237",
+      "snapshot_path": "artifacts\\revision_20260910\\gate_semantic_adjudication\\before_status_update\\review-stage__REVISION_20260910.md",
+      "current_sha256": "f6479f7db8318ad7379ad7a6c8d39508dd59980928b2e8bdbf95310602aaf4fc",
+      "method": "reconstruct pre-append bytes and require exact prior SHA256 match"
+    },
+    {
+      "original_path": "experiment/revision/README.md",
+      "prior_sha256": "0a2448a243410a5592095ff40b9ea4a6ac4e274faf1a577dfa6d3adf90a70222",
+      "snapshot_path": "artifacts\\revision_20260910\\gate_semantic_adjudication\\before_status_update\\experiment__revision__README.md",
+      "current_sha256": "683198e86fcb8dfc3f59d0d080a4672936996fb9039f5ac675b73af09fd52252",
+      "method": "reconstruct pre-append bytes and require exact prior SHA256 match"
+    },
+    {
+      "original_path": "review-stage/REVISED_EXPERIMENT_PLAN.md",
+      "prior_sha256": "d56620488d75906825e9325f28e301be03c50e8e361c4ba1c8376d9419d254ff",
+      "snapshot_path": "artifacts\\revision_20260910\\gate_semantic_adjudication\\before_status_update\\review-stage__REVISED_EXPERIMENT_PLAN.md",
+      "current_sha256": "38f0cbcfd42653e28c0424d8dc5beaed34fa13cbbb14f4c5dcd5836d6506c5ed",
+      "method": "reconstruct pre-append bytes and require exact prior SHA256 match"
+    }
+  ]
+}

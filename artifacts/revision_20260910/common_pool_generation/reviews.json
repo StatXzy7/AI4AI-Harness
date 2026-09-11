@@ -1,0 +1,24 @@
+{
+  "scope": "Stage23 software and loopback-demo contract; not scientific or provider clearance",
+  "implementer": "GPT-6",
+  "mechanical": {
+    "initial_score": 6,
+    "initial_verdict": "not ready",
+    "findings": [
+      "response.content was decoded before preservation",
+      "missing message could complete pool"
+    ],
+    "final_score": 9,
+    "final_verdict": "ready",
+    "tests_independently_run": 12
+  },
+  "independent_contract": {
+    "model": "gpt-5.6-sol",
+    "initial_score": 8.4,
+    "initial_verdict": "almost",
+    "final_score": 9.5,
+    "final_verdict": "ready",
+    "tests_independently_run": 12
+  },
+  "after_review": "Only tests changed: pending-result assertion and export-interruption regression; implementer final 13 PASS. Demo measured after code review. No provider calls."
+}

@@ -1,0 +1,131 @@
+{
+  "resolved": 25,
+  "total": 25,
+  "bindings": [
+    {
+      "original": "artifacts/revision_20260910/common_pool_generation/before_status_update/experiment__revision__README.md",
+      "resolved": "artifacts/revision_20260910/common_pool_generation/before_status_update/experiment__revision__README.md",
+      "sha256": "acbc57aef0852ddc77a6aaa8aed252e9b768559fb1cef0df0608d2880c29d58d"
+    },
+    {
+      "original": "artifacts/revision_20260910/common_pool_generation/before_status_update/manifest.json",
+      "resolved": "artifacts/revision_20260910/common_pool_generation/before_status_update/manifest.json",
+      "sha256": "070cd45b868207e2723eda12b212b1d6939e989dfa1936bdc9973ee08f0d1e7b"
+    },
+    {
+      "original": "artifacts/revision_20260910/common_pool_generation/before_status_update/review-stage__REVISED_EXPERIMENT_PLAN.md",
+      "resolved": "artifacts/revision_20260910/common_pool_generation/before_status_update/review-stage__REVISED_EXPERIMENT_PLAN.md",
+      "sha256": "457fc179e2f930df4d72522063abaaa50e14872f3fb30ef44611b7c9afec76fd"
+    },
+    {
+      "original": "artifacts/revision_20260910/common_pool_generation/before_status_update/review-stage__REVISION_20260910.md",
+      "resolved": "artifacts/revision_20260910/common_pool_generation/before_status_update/review-stage__REVISION_20260910.md",
+      "sha256": "024bb1bbb379439e370af99620e1df9b07b5ff97937ce92972c2e008fc2ba3b3"
+    },
+    {
+      "original": "artifacts/revision_20260910/common_pool_generation/loopback/config.json",
+      "resolved": "artifacts/revision_20260910/common_pool_generation/loopback/config.json",
+      "sha256": "7c99de24017330b4b82268b80e5308c978ae144e36689f92cbe5e0e472280430"
+    },
+    {
+      "original": "artifacts/revision_20260910/common_pool_generation/loopback/DEMO_PROTOCOL.md",
+      "resolved": "artifacts/revision_20260910/common_pool_generation/loopback/DEMO_PROTOCOL.md",
+      "sha256": "8dde5f9a82cc081a0069d71a703a13e550684e6ceb17d24ca1e9f2a789e3f83d"
+    },
+    {
+      "original": "artifacts/revision_20260910/common_pool_generation/loopback/pool/ledger.sqlite",
+      "resolved": "artifacts/revision_20260910/common_pool_generation/loopback/pool/ledger.sqlite",
+      "sha256": "e5b402dd584d635b7dab07f6d6f4d625bd430fe6e345fbc34a156d0b9805a265"
+    },
+    {
+      "original": "artifacts/revision_20260910/common_pool_generation/loopback/pool/pool.json",
+      "resolved": "artifacts/revision_20260910/common_pool_generation/loopback/pool/pool.json",
+      "sha256": "02ceb2fbdfdc11ceba24ce1e4a49bbfc64e2c0bcc4e16f19da8814a41bfb611d"
+    },
+    {
+      "original": "artifacts/revision_20260910/common_pool_generation/loopback/pool/POOL_COMPLETE.json",
+      "resolved": "artifacts/revision_20260910/common_pool_generation/loopback/pool/POOL_COMPLETE.json",
+      "sha256": "a0c173e087af7647653e95d64182bd950adc9403827bee4c7d05dc3274be2619"
+    },
+    {
+      "original": "artifacts/revision_20260910/common_pool_generation/loopback/pool/writer.lock",
+      "resolved": "artifacts/revision_20260910/common_pool_generation/loopback/pool/writer.lock",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "artifacts/revision_20260910/common_pool_generation/loopback/report.json",
+      "resolved": "artifacts/revision_20260910/common_pool_generation/loopback/report.json",
+      "sha256": "46886765e37ea6632afe8af6b07cb323d672e00c30b6e18a178a32c5ad6bfdfd"
+    },
+    {
+      "original": "artifacts/revision_20260910/common_pool_generation/loopback/requests.json",
+      "resolved": "artifacts/revision_20260910/common_pool_generation/loopback/requests.json",
+      "sha256": "169436f3dd848e4faf2322505a0f333b070cefa30147d0243ebf025bdb08b2ec"
+    },
+    {
+      "original": "artifacts/revision_20260910/common_pool_generation/reviews.json",
+      "resolved": "artifacts/revision_20260910/common_pool_generation/reviews.json",
+      "sha256": "aefb9a2dd5655a03fef284fc2ed9256c72c43416f84ef227faec77aef5c1aae2"
+    },
+    {
+      "original": "artifacts/revision_20260910/common_pool_generation/ruff.txt",
+      "resolved": "artifacts/revision_20260910/common_pool_generation/ruff.txt",
+      "sha256": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0"
+    },
+    {
+      "original": "artifacts/revision_20260910/common_pool_generation/stage22_lineage.json",
+      "resolved": "artifacts/revision_20260910/common_pool_generation/stage22_lineage.json",
+      "sha256": "f637af66a4d58404cb990b78a7882e519cf5c25f3550ff0779b4420ee86f9634"
+    },
+    {
+      "original": "artifacts/revision_20260910/common_pool_generation/tests.txt",
+      "resolved": "artifacts/revision_20260910/common_pool_generation/tests.txt",
+      "sha256": "1aa2144524aefa5e4bd1fdb3513612a88e7ff29d62c49fad6937f141bfa0e532"
+    },
+    {
+      "original": "experiment/revision/code_responses.py",
+      "resolved": "experiment/revision/code_responses.py",
+      "sha256": "ec28862d63909d7df370501f31bbabc5007d071adaa0e1fa3a1d5b0b662a3ba4"
+    },
+    {
+      "original": "experiment/revision/common_pool.py",
+      "resolved": "experiment/revision/common_pool.py",
+      "sha256": "b697e032d19791df06d0af2fbde0af37fe842f104698c5d03ddd112f4c064624"
+    },
+    {
+      "original": "experiment/revision/common_pool_demo.py",
+      "resolved": "experiment/revision/common_pool_demo.py",
+      "sha256": "846867d31e6a5906e0fafb6533cce7f29cd8061a4e54f1ecbc2869f3afd2d68e"
+    },
+    {
+      "original": "experiment/revision/fresh_runtime.py",
+      "resolved": "experiment/revision/fresh_runtime.py",
+      "sha256": "e8ee2447355ae9b2f59c8fb8ebd9b122b4b19466359afe5315ba1c0224d648f6"
+    },
+    {
+      "original": "experiment/revision/README.md",
+      "resolved": "artifacts/revision_20260910/runtime_gate_bridge/stage24/before_status_update/experiment__revision__README.md",
+      "sha256": "6bdbecfeedacc5920eb3d2017a65e2f9f3bb6beaf5b49ce9c4e8d5a4c0174dc5"
+    },
+    {
+      "original": "experiment/revision/test_common_pool.py",
+      "resolved": "experiment/revision/test_common_pool.py",
+      "sha256": "4b0ac4d130d32ad0388d7d111d06ad39849056ffca7c27f107999e6e05beef27"
+    },
+    {
+      "original": "review-stage/COMMON_POOL_GENERATION.md",
+      "resolved": "review-stage/COMMON_POOL_GENERATION.md",
+      "sha256": "d00caa6c7fd5392ce6220bd4226c1944a2abbe2c85235392a5a44b8f9a2d2170"
+    },
+    {
+      "original": "review-stage/REVISED_EXPERIMENT_PLAN.md",
+      "resolved": "artifacts/revision_20260910/runtime_gate_bridge/stage24/before_status_update/review-stage__REVISED_EXPERIMENT_PLAN.md",
+      "sha256": "0ed3a5fdcfb04c43b7b949746a161d4a64d5d3efe0005c09bafb749f3b9f99d7"
+    },
+    {
+      "original": "review-stage/REVISION_20260910.md",
+      "resolved": "artifacts/revision_20260910/runtime_gate_bridge/stage24/before_status_update/review-stage__REVISION_20260910.md",
+      "sha256": "9f665727e10594853b653225f6c3a5d3df09d31603f89b6837311b07d953b31b"
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+diff --git a/experiment/revision/gate_v2.py b/experiment/revision/gate_v3.py
+index 2626826..a10fa3c 100644
+--- a/experiment/revision/gate_v2.py
++++ b/experiment/revision/gate_v3.py
+@@ -1,4 +1,7 @@
+-"""Development gate-v2 instrument. Synthetic probes only; never benchmark labels.
++"""Development gate-v3 instrument. Synthetic probes only; never benchmark labels.
++
++Versioned copy of frozen v2: preserve old measurements while repairing request
++attribution and treating category keywords as observations, not hard verdicts.
+ 
+ This is a versioned observable contract, not a general semantic verifier. A
+ passing development control is not independent calibration or release approval.
+@@ -51,6 +54,7 @@ class ProbeIO:
+         self.probe = probe
+         self.trace = []
+         self.samples = 0
++        self.answered_steps = set()
+ 
+     def llm(self, prompt, system='', temperature=0., n=1):
+         if not isinstance(prompt, str) or not isinstance(system, str):
+@@ -60,6 +64,7 @@ class ProbeIO:
+         if self.samples+n > 12:
+             raise RuntimeError('probe solver-call limit exceeded')
+         p = self.probe
++        attribution = {}
+         # These scripts respond to content, not merely call position, for dataflow probes.
+         if p.strategy in ('repair','error_classify') and self.samples > 0:
+             response = p.expected if p.error and p.error in prompt+system else SQL_C
+@@ -69,14 +74,25 @@ class ProbeIO:
+             if all(a in prompt+system for a in p.answers):
+                 response = p.expected
+             else:
+-                response = next((a for step,a in zip(p.steps,p.answers) if step in prompt+system), 'UNRELATED')
++                mentioned = [i for i,step in enumerate(p.steps) if step in prompt+system]
++                unseen = [i for i in mentioned if i not in self.answered_steps]
++                candidates = unseen or mentioned
++                # An earlier answered step can legitimately appear as context.
++                # Multiple still-unanswered steps do not identify a unique target.
++                index = candidates[0] if len(candidates) == 1 else None
++                attribution = dict(decomposition_step=index,
++                    decomposition_candidates=candidates,
++                    decomposition_ambiguous=len(candidates) > 1)
++                response = p.answers[index] if index is not None else 'UNRELATED'
++                if index is not None:
++                    self.answered_steps.add(index)
+         else:
+             response = None
+         values = [response if response is not None else p.responses[min(self.samples+j,len(p.responses)-1)] for j in range(n)]
+         self.samples += n
+         result = values if n > 1 else values[0]
+         self.trace.append(dict(kind='llm', prompt=prompt, system=system, n=n,
+-                               temperature=temperature, response=copy.deepcopy(result)))
++                               temperature=temperature, response=copy.deepcopy(result), **attribution))
+         return result
+ 
+     def execute(self, sql):
+@@ -86,7 +102,7 @@ class ProbeIO:
+         return result
+ 
+ 
+-def scenarios(strategy, salt='v2dev'):
++def scenarios(strategy, salt='v3dev'):
+     if strategy not in STRATEGIES:
+         raise ValueError('unknown explicit strategy')
+     def p(name, **kwargs):
+@@ -202,11 +218,19 @@ def assess(probe, final, trace):
+             reasons.append('linked_subset_not_carried_forward')
+     elif strategy=='decompose':
+         later=calls[1:]
+-        indices=[next((i for i,c in enumerate(later[:-1]) if step in text(c)), -1) for step in probe.steps]
+-        if len(calls)<4 or any(i<0 for i in indices) or indices != sorted(set(indices)):
++        ambiguous = any(c.get('decomposition_ambiguous', False) for c in later)
++        indices = [c.get('decomposition_step') for c in later[:-1]]
++        known = [i for i in indices if i is not None]
++        if (len(calls)<4 or known != sorted(set(known)) or
++                (not ambiguous and indices != list(range(len(probe.steps))))):
+             reasons.append('ordered_subquestions_not_answered')
+-        if not later or not all(answer in text(later[-1]) for answer in probe.answers):
++        if not ambiguous and (not later or not all(answer in text(later[-1]) for answer in probe.answers)):
+             reasons.append('partial_answers_not_assembled')
++        if ambiguous:
++            # A scripted response to an unassigned request cannot support an
++            # output/assembly failure. Retain independent structural failures.
++            reasons = [r for r in reasons if r != 'counterfactual_output_mismatch']
++            reasons.append('decomposition_request_attribution_ambiguous')
+     return reasons
+ 
+ 
+@@ -219,9 +243,11 @@ def run_probe(solve: Callable, probe):
+         reasons=assess(probe,final,io.trace)
+         # Wording/paraphrase uncertainty must not reproduce the old false "no mechanism" verdict.
+         semantic={'semantic_prompt_review_required','formulation_semantics_review_required',
+-                  'classification_action_semantics_review_required'}
++                  'classification_action_semantics_review_required',
++                  'decomposition_request_attribution_ambiguous'}
+         observational={'explicit_hint_restatement_not_observed','explicit_sql_only_fence_requirement_not_observed',
+-                       'original_question_or_schema_not_preserved'}
++                       'original_question_or_schema_not_preserved',
++                       'unambiguous_error_class_not_observed'}
+         hard=[r for r in reasons if r not in semantic|observational]
+         status='fail' if hard else ('review_required' if reasons else 'pass')
+         return dict(probe=probe.name,status=status,reasons=reasons,final=final,trace=io.trace,error=None)
+@@ -230,7 +256,7 @@ def run_probe(solve: Callable, probe):
+                     error=f'{type(exc).__name__}: {exc}')
+ 
+ 
+-def evaluate(solve, strategy, salt='v2dev'):
++def evaluate(solve, strategy, salt='v3dev'):
+     probes=scenarios(strategy,salt)
+     runs=[run_probe(solve,p) for p in probes]
+     if strategy=='error_classify':
+@@ -243,7 +269,9 @@ def evaluate(solve, strategy, salt='v2dev'):
+                 r'\b(syntax|schema|semantics)\b','CLASS',t.replace(p.error,'ERROR'),flags=re.I))) for t in texts)
+         categories=list(templates)
+         if any(templates[a]&templates[b] for i,a in enumerate(categories) for b in categories[i+1:]):
+-            runs.append(dict(probe='cross_class_action',status='fail',reasons=['same_action_template_across_error_classes'],final=None,trace=[],error=None))
++            # Shared text can be an intermediate classification request rather
++            # than the repair action. Template equality is a review lead only.
++            runs.append(dict(probe='cross_class_action',status='review_required',reasons=['same_action_template_across_error_classes'],final=None,trace=[],error=None))
+     statuses={r['status'] for r in runs}
+     verdict=next((s for s in ('execution_failure','fail','review_required') if s in statuses),'pass')
+-    return dict(strategy=strategy,verdict=verdict,scope='development probes; independent calibration and production adapter pending',runs=runs)
++    return dict(strategy=strategy,verdict=verdict,scope='v3 exposed-control development; independent calibration and production adapter pending',runs=runs)

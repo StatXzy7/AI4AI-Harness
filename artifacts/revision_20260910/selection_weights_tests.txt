@@ -1,0 +1,15 @@
+test_dev_fixed_is_not_test_best_and_bare_is_retained (experiment.revision.test_selection.SelectionTests.test_dev_fixed_is_not_test_best_and_bare_is_retained) ... ok
+test_pipeline_replays_membership_and_all_methods_without_ci (experiment.revision.test_selection.SelectionTests.test_pipeline_replays_membership_and_all_methods_without_ci) ... ok
+test_selection_is_unaffected_by_heldout_labels (experiment.revision.test_selection.SelectionTests.test_selection_is_unaffected_by_heldout_labels) ... ok
+test_archived_mixed_objective_float_tie_regression (experiment.revision.test_selection_weights.SelectionWeightTests.test_archived_mixed_objective_float_tie_regression) ... ok
+test_choices_ignore_heldout_and_agree_with_scalar_weighted_objective (experiment.revision.test_selection_weights.SelectionWeightTests.test_choices_ignore_heldout_and_agree_with_scalar_weighted_objective) ... ok
+test_empty_side_exact_small_case (experiment.revision.test_selection_weights.SelectionWeightTests.test_empty_side_exact_small_case) ... ok
+test_reselection_and_bare_dev_ties (experiment.revision.test_selection_weights.SelectionWeightTests.test_reselection_and_bare_dev_ties) ... ok
+test_shared_random_coverage_matches_direct_weighted_evaluation (experiment.revision.test_selection_weights.SelectionWeightTests.test_shared_random_coverage_matches_direct_weighted_evaluation) ... ok
+test_uniform_choices_and_metrics_match_canonical (experiment.revision.test_selection_weights.SelectionWeightTests.test_uniform_choices_and_metrics_match_canonical) ... ok
+test_weights_are_positive_reproducible_and_group_normalized (experiment.revision.test_selection_weights.SelectionWeightTests.test_weights_are_positive_reproducible_and_group_normalized) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.123s
+
+OK

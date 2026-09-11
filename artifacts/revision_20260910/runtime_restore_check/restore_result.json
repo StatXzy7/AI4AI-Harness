@@ -1,0 +1,23 @@
+{
+  "upstream_commit": "69a614d04f2a7f3eacb64a63193078ab4be56ba5",
+  "upstream_zip_sha256": "e4cbf21a6546989ba051ce799a0a9168e85e6b1ffa9fdf8d0124a6865d63f6f2",
+  "snapshot_sha256": "e8c11946a275330e59029ec5a1ce2999df0358d5184b4d807e17399e259f9cb7",
+  "verified_zip_members": 392,
+  "archived_source_count": 391,
+  "compiled_python_files": 444,
+  "patched_runtime_sha256": {
+    "ase/db.py": "e275dd12e4db025358a6d5ca24831d9291a0b10f7b8aa41a98506806875020c2",
+    "ase/solver_cache.py": "8f3f5dc350f512029fb9cde126b77ba1bebb287eb3c2b2f1773edfc2518c5995",
+    "text_to_sql/bridge.py": "e2694af2623abc83b837a6a9332ccf4c6ec4d109260746750141b7f1368dc7ad",
+    "text_to_sql/claude_wrapper.py": "61c1201346cee0fdf9654d61c85e70975a55c1e9d9a0a2918921c465b408db22",
+    "text_to_sql/optimize.py": "f55e3f271d1ba95262b8d2f3a46dd1ee31101b4e08c5135d2fb3a30b7ca3f767"
+  },
+  "patched_runtime_matches_current": {
+    "ase/db.py": false,
+    "ase/solver_cache.py": false,
+    "text_to_sql/bridge.py": false,
+    "text_to_sql/claude_wrapper.py": false,
+    "text_to_sql/optimize.py": false
+  },
+  "scope": "isolated source restoration; environment and offline smoke pending; no benchmark or provider calls"
+}

@@ -1,0 +1,11 @@
+{
+  "provider_name": "paratera-glm-ziqian",
+  "provider_id": "74bb3538-adf6-48b2-96be-a169e893e1eb",
+  "credential_source": "CC Switch providers.settings_config.env.ANTHROPIC_AUTH_TOKEN read-only; no token persisted",
+  "base_url": "https://llmapi.paratera.com/v1",
+  "legacy_key_matches": true,
+  "read_only_models_status": 200,
+  "target_present": true,
+  "generation_calls_so_far": 0,
+  "account_price_available": false
+}

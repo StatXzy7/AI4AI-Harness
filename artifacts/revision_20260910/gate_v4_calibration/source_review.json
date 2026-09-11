@@ -1,0 +1,519 @@
+{
+  "reviewer_model": "gpt-5.5",
+  "source_sha256": "4d39ab1d202394e2a396c7a4c8de95d3f11493552fc72b3734d408cb426f8276",
+  "scope": "Independent blind static source review of 32 fresh Gate-v4 reference controls before first measurement. Read-only review used public Gate-v4 contract/protocol, the unlabeled inventory, the reference control source, the SQLHarness interface, and the public STRATEGIES declarations only. Author labels, gate implementations, prior controls, measurements, diagnostics, providers, and benchmarks were not read or executed.",
+  "score": "6/10",
+  "verdict": "not ready",
+  "cases": [
+    {
+      "case_id": "gv4r001",
+      "strategy": "schema_link",
+      "profile": "tables_columns_json",
+      "decision": "indeterminate",
+      "reason": "Mechanism source constrains later SQL through selected schema JSON, but the declared profile is incompatible with the clarified frozen response shape: this code only accepts tables as a list of {name, columns} objects, while the profile returns top-level tables and columns string arrays. Profile incompatibility makes this reference unresolved rather than a mechanism failure.",
+      "evidence": [
+        {
+          "path": "review-stage/GATE_V4_CALIBRATION_PROTOCOL.md",
+          "line_start": 27,
+          "line_end": 27,
+          "quote": "静态接口核对确认，冻结的tables_columns_json回复为顶层tables与columns两个字符串数组，例如{\"tables\":[\"ledger\"],\"columns\":[\"ledger.id\"]}；tables内嵌{name,columns}对象属于另一响应形状。源码审核须分别判断机制实现与该profile兼容性，不兼容不能算机制失败。此澄清来自执行前常量核对，参考尚未进入仪器；v4仪器不修改。"
+        },
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 108,
+          "line_end": 120,
+          "quote": "    if not isinstance(parsed, dict) or not isinstance(parsed.get(\"tables\"), list):\n        return None\n    cleaned_tables: list[dict[str, object]] = []\n    for table in parsed[\"tables\"]:\n        if not isinstance(table, dict):\n            return None\n        name = table.get(\"name\")\n        columns = table.get(\"columns\")\n        if not isinstance(name, str) or not isinstance(columns, list):\n            return None\n        if not all(isinstance(column, str) for column in columns):\n            return None\n        cleaned_tables.append({\"name\": name, \"columns\": columns})"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r002",
+      "strategy": "repair",
+      "profile": null,
+      "decision": "nonconforms",
+      "reason": "It executes the draft and repairs on failure, but the repair prompt omits the exact execution feedback/error, which is required by the repair declaration.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 230,
+          "line_end": 239,
+          "quote": "    execution = io.execute(candidate)\n    if execution.get(\"ok\"):\n        return candidate\n    return _extract_sql(\n        io.llm(\n            \"Repair the previous SQL.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\\n\"\n            f\"Previous SQL:\\n{candidate}\"\n        )"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r003",
+      "strategy": "error_classify",
+      "profile": "llm_classifier",
+      "decision": "conforms",
+      "reason": "On failure it requests exactly one syntax/schema/semantics category, consumes that category, maps it to a class-specific repair action, and includes the exact execution feedback. Success returns without repair.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 699,
+          "line_end": 718,
+          "quote": "    result = io.execute(candidate)\n    if result.get(\"ok\"):\n        return candidate\n    category_reply = io.llm(\n        \"Return exactly one category: syntax, schema, or semantics.\\n\"\n        f\"Schema:\\n{io.schema}\\n\"\n        f\"Question:\\n{question}\\n\"\n        f\"Failed SQL:\\n{candidate}\\n\"\n        f\"Exact execution feedback:\\n{_feedback(result)}\"\n    )\n    kind = str(category_reply).strip().lower()\n    return _extract_sql(\n        io.llm(\n            f\"Consumed category: {kind}\\n\"\n            f\"Required action: {_repair_action(kind)}\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\\n\"\n            f\"Previous SQL:\\n{candidate}\\n\"\n            f\"Exact execution feedback:\\n{_feedback(result)}\"\n        )"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r004",
+      "strategy": "vote3",
+      "profile": null,
+      "decision": "nonconforms",
+      "reason": "It executes the three candidates but votes by identical SQL text, not by majority execution result.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 308,
+          "line_end": 315,
+          "quote": "    results = [io.execute(candidate) for candidate in candidates]\n    counts: dict[str, int] = {}\n    first_seen: dict[str, int] = {}\n    for index, candidate in enumerate(candidates):\n        counts[candidate] = counts.get(candidate, 0) + 1\n        first_seen.setdefault(candidate, index)\n    winner = max(counts, key=lambda sql: (counts[sql], -first_seen[sql]))\n    return winner if results else candidates[0]"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r005",
+      "strategy": "hint_guard",
+      "profile": null,
+      "decision": "conforms",
+      "reason": "It extracts the Hint body and makes that content a must-satisfy instruction before requesting SQL.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 425,
+          "line_end": 435,
+          "quote": "def control_saffron(io: ControlIO, question: str) -> str:\n    hint = _hint_body(question)\n    instruction = \"Return one SQLite query.\"\n    if hint:\n        instruction = f\"The following Hint content must be satisfied: {hint}\\n{instruction}\"\n    prompt = (\n        f\"Schema exactly as supplied:\\n{io.schema}\\n\"\n        f\"Question exactly as supplied:\\n{question}\\n\"\n        f\"{instruction}\"\n    )\n    return _extract_sql(io.llm(prompt, temperature=0.0, n=1))"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r006",
+      "strategy": "decompose",
+      "profile": "dedicated_current_subquestion",
+      "decision": "nonconforms",
+      "reason": "It obtains two ordered sub-questions but answers the second step before the first, violating the ordered decomposition requirement even though the final assembly labels both returned answers.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 636,
+          "line_end": 663,
+          "quote": "def control_delta(io: ControlIO, question: str) -> str:\n    step_one, step_two = _two_step_plan(\n        io.llm(\n            \"Return two ordered sub-questions as JSON.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\"\n        )\n    )\n    second_answer = io.llm(\n        \"Resolve the current step.\\n\"\n        f\"Schema:\\n{io.schema}\\n\"\n        f\"Question:\\n{question}\\n\"\n        f\"Current sub-question to answer:\\n{step_two}\"\n    )\n    first_answer = io.llm(\n        \"Resolve the current step.\\n\"\n        f\"Schema:\\n{io.schema}\\n\"\n        f\"Question:\\n{question}\\n\"\n        f\"Current sub-question to answer:\\n{step_one}\"\n    )\n    return _extract_sql(\n        io.llm(\n            \"Assemble one SQLite query from both returned answers.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\\n\"\n            f\"Returned answer for step 1:\\n{first_answer}\\n\"\n            f\"Returned answer for step 2:\\n{second_answer}\"\n        )"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r007",
+      "strategy": "format_guard",
+      "profile": null,
+      "decision": "conforms",
+      "reason": "It requires exactly one sql fenced block and no text outside the fence.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 775,
+          "line_end": 783,
+          "quote": "def control_harbor(io: ControlIO, question: str) -> str:\n    return _extract_sql(\n        io.llm(\n            \"Return exactly one ```sql fenced block and no text outside the fence.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\",\n            n=1,\n        )\n    )"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r008",
+      "strategy": "two_view",
+      "profile": null,
+      "decision": "nonconforms",
+      "reason": "It makes one LLM request for two candidates rather than two independent formulation requests, although it executes both returned candidates and uses the non-empty selector.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 502,
+          "line_end": 513,
+          "quote": "def control_finch(io: ControlIO, question: str) -> str:\n    candidates = _responses(\n        io.llm(\n            \"Return two candidates based on different construction approaches.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\",\n            n=2,\n        ),\n        2,\n    )\n    results = [io.execute(candidate) for candidate in candidates]\n    return _first_nonempty(candidates, results)"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r009",
+      "strategy": "repair",
+      "profile": null,
+      "decision": "conforms",
+      "reason": "It creates a candidate, executes it, returns on success, and on failure sends a repair record containing exact execution feedback.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 205,
+          "line_end": 218,
+          "quote": "    execution = io.execute(candidate)\n    if execution.get(\"ok\"):\n        return candidate\n    repair_record = {\n        \"schema\": io.schema,\n        \"question\": question,\n        \"previous_sql\": candidate,\n        \"exact_execution_feedback\": execution,\n    }\n    return _extract_sql(\n        io.llm(\n            \"Correct the SQL using every field in this failure record:\\n\"\n            + json.dumps(repair_record, ensure_ascii=False, default=str)\n        )"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r010",
+      "strategy": "schema_link",
+      "profile": "tables_columns_json",
+      "decision": "indeterminate",
+      "reason": "The source is mechanism-nonconforming because the linked payload is only advisory and the full schema may be used, but the declared profile is also incompatible with the clarified frozen response shape. The reference therefore has a profile/interface problem and is unresolved for premeasurement calibration.",
+      "evidence": [
+        {
+          "path": "review-stage/GATE_V4_CALIBRATION_PROTOCOL.md",
+          "line_start": 27,
+          "line_end": 27,
+          "quote": "静态接口核对确认，冻结的tables_columns_json回复为顶层tables与columns两个字符串数组，例如{\"tables\":[\"ledger\"],\"columns\":[\"ledger.id\"]}；tables内嵌{name,columns}对象属于另一响应形状。源码审核须分别判断机制实现与该profile兼容性，不兼容不能算机制失败。此澄清来自执行前常量核对，参考尚未进入仪器；v4仪器不修改。"
+        },
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 385,
+          "line_end": 392,
+          "quote": "    payload = _selection_payload(linked)\n    return _extract_sql(\n        io.llm(\n            \"Write one SQLite query. The linked payload is advisory; use any identifier from \"\n            \"the full schema when convenient.\\n\"\n            f\"Advisory linked JSON:\\n{payload}\\n\"\n            f\"Full schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\""
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r011",
+      "strategy": "vote3",
+      "profile": null,
+      "decision": "conforms",
+      "reason": "It requests three candidates, executes all three, and selects by majority over successful execution row results with first-seen tie breaking.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 263,
+          "line_end": 275,
+          "quote": "def control_raven(io: ControlIO, question: str) -> str:\n    candidates = _responses(\n        io.llm(\n            \"Generate three independently sampled SQLite candidates.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\",\n            temperature=0.35,\n            n=3,\n        ),\n        3,\n    )\n    results = [io.execute(candidate) for candidate in candidates]\n    return _majority_by_rows(candidates, results)"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r012",
+      "strategy": "error_classify",
+      "profile": "local_classifier",
+      "decision": "nonconforms",
+      "reason": "It classifies the failure locally, but the repair prompt uses one generic action instead of applying syntax/schema/semantics-specific fixes.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 730,
+          "line_end": 741,
+          "quote": "    result = io.execute(candidate)\n    if result.get(\"ok\"):\n        return candidate\n    kind = _local_error_class(result)\n    return _extract_sql(\n        io.llm(\n            f\"Failure category: {kind}\\n\"\n            \"Required action: Rewrite the SQL more carefully.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\\n\"\n            f\"Previous SQL:\\n{candidate}\\n\"\n            f\"Exact execution feedback:\\n{_feedback(result)}\""
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r013",
+      "strategy": "two_view",
+      "profile": null,
+      "decision": "conforms",
+      "reason": "It issues two semantically different formulation requests, executes both, and returns the first non-empty successful result, with first preferred when both are non-empty.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 464,
+          "line_end": 482,
+          "quote": "def control_pine(io: ControlIO, question: str) -> str:\n    direct = _extract_sql(\n        io.llm(\n            \"Construct SQL directly from base tables with explicit joins and filters.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\"\n        )\n    )\n    staged = _extract_sql(\n        io.llm(\n            \"Construct an alternative SQL formulation using CTE stages before the final \"\n            \"projection.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\"\n        )\n    )\n    candidates = [direct, staged]\n    results = [io.execute(candidate) for candidate in candidates]\n    return _first_nonempty(candidates, results)"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r014",
+      "strategy": "hint_guard",
+      "profile": null,
+      "decision": "nonconforms",
+      "reason": "It passes the whole question through but does not parse the Hint line or restate its constraints as hard requirements.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 438,
+          "line_end": 445,
+          "quote": "def control_slate(io: ControlIO, question: str) -> str:\n    return _extract_sql(\n        io.llm(\n            \"Return one SQLite query.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\"\n        )\n    )"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r015",
+      "strategy": "decompose",
+      "profile": "dedicated_current_subquestion",
+      "decision": "conforms",
+      "reason": "It obtains two ordered sub-questions, answers each current sub-question in order with prior context, and assembles the final SQL using both returned partial answers.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 574,
+          "line_end": 601,
+          "quote": "def control_iris(io: ControlIO, question: str) -> str:\n    steps = _two_step_plan(\n        io.llm(\n            \"Plan two ordered sub-questions and return only their JSON array.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\"\n        )\n    )\n    answers: list[str | list[str]] = []\n    for step in steps:\n        prior = \"\\n\".join(str(answer) for answer in answers)\n        answers.append(\n            io.llm(\n                \"Resolve the current step.\\n\"\n                f\"Schema:\\n{io.schema}\\n\"\n                f\"Question:\\n{question}\\n\"\n                f\"Earlier returned answers:\\n{prior}\\n\"\n                f\"Current sub-question to answer:\\n{step}\"\n            )\n        )\n    return _extract_sql(\n        io.llm(\n            \"Build one SQLite query using both returned partial answers.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\\n\"\n            f\"First partial answer:\\n{answers[0]}\\n\"\n            f\"Second partial answer:\\n{answers[1]}\"\n        )"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r016",
+      "strategy": "format_guard",
+      "profile": null,
+      "decision": "nonconforms",
+      "reason": "It explicitly asks for raw SQL without a markdown fence, opposite to the required fenced-only format.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 799,
+          "line_end": 807,
+          "quote": "def control_willow(io: ControlIO, question: str) -> str:\n    return _extract_sql(\n        io.llm(\n            \"Return raw SQLite text only, without a markdown fence or explanation.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\",\n            n=1,\n        )\n    )"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r017",
+      "strategy": "vote3",
+      "profile": null,
+      "decision": "nonconforms",
+      "reason": "It executes all three candidates but returns the first successful candidate rather than a majority execution result.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 318,
+          "line_end": 333,
+          "quote": "def control_pebble(io: ControlIO, question: str) -> str:\n    candidates = _responses(\n        io.llm(\n            \"Generate three SQLite candidates.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\",\n            temperature=0.35,\n            n=3,\n        ),\n        3,\n    )\n    results = [io.execute(candidate) for candidate in candidates]\n    for candidate, result in zip(candidates, results, strict=True):\n        if result.get(\"ok\"):\n            return candidate\n    return candidates[0]"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r018",
+      "strategy": "repair",
+      "profile": null,
+      "decision": "conforms",
+      "reason": "It generates SQL, executes it, returns successful SQL unchanged, and on failure repairs using the complete exact execution feedback.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 175,
+          "line_end": 193,
+          "quote": "def control_aurora(io: ControlIO, question: str) -> str:\n    draft = _extract_sql(\n        io.llm(\n            \"Create one SQLite query.\\n\"\n            f\"Database schema:\\n{io.schema}\\n\"\n            f\"User question:\\n{question}\"\n        )\n    )\n    outcome = io.execute(draft)\n    if outcome.get(\"ok\"):\n        return draft\n    repaired = io.llm(\n        \"Repair the failed query from the complete execution record.\\n\"\n        f\"Database schema:\\n{io.schema}\\n\"\n        f\"User question:\\n{question}\\n\"\n        f\"Failed SQL:\\n{draft}\\n\"\n        f\"Exact execution feedback:\\n{_feedback(outcome)}\"\n    )\n    return _extract_sql(repaired)"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r019",
+      "strategy": "schema_link",
+      "profile": "tables_columns_json",
+      "decision": "indeterminate",
+      "reason": "Mechanism source uses a binding allowlist to constrain later SQL, but it cannot consume the clarified tables_columns_json profile shape because _schema_selection requires nested table objects. This is a profile/interface incompatibility, so the case is unresolved.",
+      "evidence": [
+        {
+          "path": "review-stage/GATE_V4_CALIBRATION_PROTOCOL.md",
+          "line_start": 27,
+          "line_end": 27,
+          "quote": "静态接口核对确认，冻结的tables_columns_json回复为顶层tables与columns两个字符串数组，例如{\"tables\":[\"ledger\"],\"columns\":[\"ledger.id\"]}；tables内嵌{name,columns}对象属于另一响应形状。源码审核须分别判断机制实现与该profile兼容性，不兼容不能算机制失败。此澄清来自执行前常量核对，参考尚未进入仪器；v4仪器不修改。"
+        },
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 358,
+          "line_end": 374,
+          "quote": "def control_birch(io: ControlIO, question: str) -> str:\n    linked = io.llm(\n        \"Return the relevant tables and columns as typed JSON.\\n\"\n        'JSON contract: {\"tables\":[{\"name\":\"...\",\"columns\":[\"...\"]}]}\\n'\n        f\"Schema catalog:\\n{io.schema}\\n\"\n        f\"Question:\\n{question}\"\n    )\n    allowlist = _selection_lines(linked)\n    return _extract_sql(\n        io.llm(\n            \"Construct SQL using the binding allowlist below. No identifier outside it may \"\n            \"appear unless INVALID_SELECTION explicitly requires recomputing a restricted \"\n            \"allowlist first.\\n\"\n            f\"Binding allowlist:\\n{allowlist}\\n\"\n            f\"Original schema for validation:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\"\n        )"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r020",
+      "strategy": "error_classify",
+      "profile": "local_classifier",
+      "decision": "conforms",
+      "reason": "It executes first, returns success without repair, otherwise classifies locally into syntax/schema/semantics and applies the mapped class-specific repair action with exact feedback. Integer overflow is covered as residual execution error routed to semantics by the local classifier contract.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 146,
+          "line_end": 160,
+          "quote": "def _local_error_class(result: dict[str, Any]) -> str:\n    text = str(result.get(\"error\") or \"\").lower()\n    schema_signals = (\n        \"schema failure\",\n        \"no such table\",\n        \"no such column\",\n        \"unknown table\",\n        \"unknown column\",\n    )\n    syntax_signals = (\"syntax\", \"parse\", \"incomplete input\", \"near \")\n    if any(signal in text for signal in schema_signals):\n        return \"schema\"\n    if any(signal in text for signal in syntax_signals):\n        return \"syntax\"\n    return \"semantics\""
+        },
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 675,
+          "line_end": 687,
+          "quote": "    result = io.execute(candidate)\n    if result.get(\"ok\"):\n        return candidate\n    kind = _local_error_class(result)\n    return _extract_sql(\n        io.llm(\n            f\"Failure category: {kind}\\n\"\n            f\"Required action: {_repair_action(kind)}\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\\n\"\n            f\"Previous SQL:\\n{candidate}\\n\"\n            f\"Exact execution feedback:\\n{_feedback(result)}\"\n        )"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r021",
+      "strategy": "hint_guard",
+      "profile": null,
+      "decision": "conforms",
+      "reason": "It parses the Hint body and appends it as a mandatory constraint before the SQL request.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 413,
+          "line_end": 422,
+          "quote": "def control_lotus(io: ControlIO, question: str) -> str:\n    hint = _hint_body(question)\n    parts = [\n        \"Produce one SQLite query.\",\n        f\"Original schema:\\n{io.schema}\",\n        f\"Original question:\\n{question}\",\n    ]\n    if hint:\n        parts.append(f\"Mandatory constraint taken from the Hint:\\n{hint}\")\n    return _extract_sql(io.llm(\"\\n\".join(parts)))"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r022",
+      "strategy": "two_view",
+      "profile": null,
+      "decision": "nonconforms",
+      "reason": "It executes two formulation requests, but if both are non-empty it returns the second result, contrary to the required first-result preference.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 516,
+          "line_end": 539,
+          "quote": "def control_marrow(io: ControlIO, question: str) -> str:\n    first = _extract_sql(\n        io.llm(\n            \"Use a join-first query construction.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\"\n        )\n    )\n    second = _extract_sql(\n        io.llm(\n            \"Use an aggregation-first query construction.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\"\n        )\n    )\n    candidates = [first, second]\n    results = [io.execute(candidate) for candidate in candidates]\n    second_ready = bool(results[1].get(\"ok\")) and bool(results[1].get(\"rows\"))\n    first_ready = bool(results[0].get(\"ok\")) and bool(results[0].get(\"rows\"))\n    if second_ready:\n        return second\n    if first_ready:\n        return first\n    return first"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r023",
+      "strategy": "format_guard",
+      "profile": null,
+      "decision": "conforms",
+      "reason": "It requires the whole answer to be one sql fenced block with no extra prose, both in the prompt and system message.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 786,
+          "line_end": 796,
+          "quote": "def control_nova(io: ControlIO, question: str) -> str:\n    return _extract_sql(\n        io.llm(\n            \"Use the supplied schema and question. Output only one fenced SQL block, with \"\n            \"the fence language set to sql and no explanation.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\",\n            system=\"Your entire answer must be one ```sql fenced block with no extra prose.\",\n            n=1,\n        )\n    )"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r024",
+      "strategy": "decompose",
+      "profile": "dedicated_current_subquestion",
+      "decision": "nonconforms",
+      "reason": "It asks both current sub-questions, but discards their returned answers and assembles only from step names, so actual payloads do not enter final assembly.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 613,
+          "line_end": 632,
+          "quote": "    io.llm(\n        \"Resolve the current step.\\n\"\n        f\"Schema:\\n{io.schema}\\n\"\n        f\"Question:\\n{question}\\n\"\n        f\"Current sub-question to answer:\\n{step_one}\"\n    )\n    io.llm(\n        \"Resolve the current step.\\n\"\n        f\"Schema:\\n{io.schema}\\n\"\n        f\"Question:\\n{question}\\n\"\n        f\"Current sub-question to answer:\\n{step_two}\"\n    )\n    return _extract_sql(\n        io.llm(\n            \"Build one SQLite query from the two planned step names.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\\n\"\n            f\"Planned step 1:\\n{step_one}\\n\"\n            f\"Planned step 2:\\n{step_two}\"\n        )"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r025",
+      "strategy": "schema_link",
+      "profile": "tables_columns_json",
+      "decision": "indeterminate",
+      "reason": "The source ignores the linked response and writes from the complete schema, but because the declared profile is incompatible with the clarified frozen response shape, this reference should be treated as unresolved for calibration rather than a clean schema_link nonconform.",
+      "evidence": [
+        {
+          "path": "review-stage/GATE_V4_CALIBRATION_PROTOCOL.md",
+          "line_start": 27,
+          "line_end": 27,
+          "quote": "静态接口核对确认，冻结的tables_columns_json回复为顶层tables与columns两个字符串数组，例如{\"tables\":[\"ledger\"],\"columns\":[\"ledger.id\"]}；tables内嵌{name,columns}对象属于另一响应形状。源码审核须分别判断机制实现与该profile兼容性，不兼容不能算机制失败。此澄清来自执行前常量核对，参考尚未进入仪器；v4仪器不修改。"
+        },
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 397,
+          "line_end": 409,
+          "quote": "def control_spruce(io: ControlIO, question: str) -> str:\n    io.llm(\n        \"Return relevant tables and columns as JSON.\\n\"\n        'Shape: {\"tables\":[{\"name\":\"...\",\"columns\":[\"...\"]}]}\\n'\n        f\"Schema:\\n{io.schema}\\n\"\n        f\"Question:\\n{question}\"\n    )\n    return _extract_sql(\n        io.llm(\n            \"Write one SQLite query from the complete schema.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\"\n        )"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r026",
+      "strategy": "vote3",
+      "profile": null,
+      "decision": "conforms",
+      "reason": "It makes three independent approach prompts, executes all three candidates, and returns the candidate whose successful execution rows have the majority.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 278,
+          "line_end": 294,
+          "quote": "def control_onyx(io: ControlIO, question: str) -> str:\n    approaches = (\n        \"Begin from the entities named in the question.\",\n        \"Begin from the requested output and work backward through joins.\",\n        \"Build the query by validating filters before aggregation.\",\n    )\n    candidates = [\n        _extract_sql(\n            io.llm(\n                f\"{approach}\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\",\n                temperature=0.2,\n            )\n        )\n        for approach in approaches\n    ]\n    results = [io.execute(candidate) for candidate in candidates]\n    return _majority_by_rows(candidates, results)"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r027",
+      "strategy": "repair",
+      "profile": null,
+      "decision": "nonconforms",
+      "reason": "It always asks for a rewrite after execution, including successful execution, so it is not conditional repair only after failure.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 243,
+          "line_end": 259,
+          "quote": "def control_coral(io: ControlIO, question: str) -> str:\n    candidate = _extract_sql(\n        io.llm(\n            \"Draft one SQLite query.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\"\n        )\n    )\n    execution = io.execute(candidate)\n    return _extract_sql(\n        io.llm(\n            \"Review and rewrite the previous SQL using the execution record.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\\n\"\n            f\"Previous SQL:\\n{candidate}\\n\"\n            f\"Exact execution feedback:\\n{_feedback(execution)}\"\n        )"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r028",
+      "strategy": "error_classify",
+      "profile": "llm_classifier",
+      "decision": "nonconforms",
+      "reason": "It asks for a category but discards it and applies a generic rewrite, so the classification does not drive a class-specific fix.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 754,
+          "line_end": 770,
+          "quote": "    result = io.execute(candidate)\n    if result.get(\"ok\"):\n        return candidate\n    io.llm(\n        \"Return exactly one category: syntax, schema, or semantics.\\n\"\n        f\"Schema:\\n{io.schema}\\n\"\n        f\"Question:\\n{question}\\n\"\n        f\"Failed SQL:\\n{candidate}\\n\"\n        f\"Exact execution feedback:\\n{_feedback(result)}\"\n    )\n    return _extract_sql(\n        io.llm(\n            \"Rewrite the SQL more carefully.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\\n\"\n            f\"Previous SQL:\\n{candidate}\\n\"\n            f\"Exact execution feedback:\\n{_feedback(result)}\""
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r029",
+      "strategy": "two_view",
+      "profile": null,
+      "decision": "conforms",
+      "reason": "It uses two independent formulation prompts, executes both candidates, and applies the first-nonempty selector.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 485,
+          "line_end": 499,
+          "quote": "def control_breeze(io: ControlIO, question: str) -> str:\n    approaches = (\n        \"Start from the principal entity and attach only required relations.\",\n        \"Start from the requested metric or aggregate and trace backward to entities.\",\n    )\n    candidates = [\n        _extract_sql(\n            io.llm(\n                f\"{approach}\\nSchema:\\n{io.schema}\\nQuestion:\\n{question}\"\n            )\n        )\n        for approach in approaches\n    ]\n    results = [io.execute(candidate) for candidate in candidates]\n    return _first_nonempty(candidates, results)"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r030",
+      "strategy": "format_guard",
+      "profile": null,
+      "decision": "nonconforms",
+      "reason": "It explicitly requests prose before and after the fenced SQL block, violating the no-extra-text format declaration.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 810,
+          "line_end": 819,
+          "quote": "def control_umber(io: ControlIO, question: str) -> str:\n    return _extract_sql(\n        io.llm(\n            \"Explain the approach, then provide one ```sql fenced block, then add a short \"\n            \"verification note.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\",\n            n=1,\n        )\n    )"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r031",
+      "strategy": "decompose",
+      "profile": "dedicated_current_subquestion",
+      "decision": "conforms",
+      "reason": "It plans exactly two ordered sub-questions, answers step one then step two with earlier context, and assembles from both returned answers.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 542,
+          "line_end": 570,
+          "quote": "def control_jade(io: ControlIO, question: str) -> str:\n    plan = io.llm(\n        \"Return exactly two ordered sub-questions as a JSON array.\\n\"\n        f\"Schema:\\n{io.schema}\\n\"\n        f\"Question:\\n{question}\"\n    )\n    step_one, step_two = _two_step_plan(plan)\n    first_answer = io.llm(\n        \"Answer only the current decomposition step.\\n\"\n        f\"Schema:\\n{io.schema}\\n\"\n        f\"Question:\\n{question}\\n\"\n        f\"Current sub-question to answer:\\n{step_one}\"\n    )\n    second_answer = io.llm(\n        \"Answer only the current decomposition step, using earlier context when useful.\\n\"\n        f\"Schema:\\n{io.schema}\\n\"\n        f\"Question:\\n{question}\\n\"\n        f\"Earlier sub-question:\\n{step_one}\\n\"\n        f\"Earlier returned answer:\\n{first_answer}\\n\"\n        f\"Current sub-question to answer:\\n{step_two}\"\n    )\n    return _extract_sql(\n        io.llm(\n            \"Assemble one SQLite query from both returned decomposition answers.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\\n\"\n            f\"Returned answer 1:\\n{first_answer}\\n\"\n            f\"Returned answer 2:\\n{second_answer}\"\n        )"
+        }
+      ]
+    },
+    {
+      "case_id": "gv4r032",
+      "strategy": "hint_guard",
+      "profile": null,
+      "decision": "nonconforms",
+      "reason": "It parses and uses a real Hint when present, but fabricates an unrelated mandatory ascending-sort constraint when no Hint exists; as a reference implementation of hint_guard, that adds a hard requirement not derived from the Hint line.",
+      "evidence": [
+        {
+          "path": "experiment/revision/v4_reference_controls/controls.py",
+          "line_start": 448,
+          "line_end": 460,
+          "quote": "def control_fog(io: ControlIO, question: str) -> str:\n    hint = _hint_body(question)\n    if hint:\n        requirement = f\"Mandatory Hint constraint:\\n{hint}\"\n    else:\n        requirement = \"Mandatory constraint: sort the final rows in ascending order.\"\n    return _extract_sql(\n        io.llm(\n            \"Return one SQLite query.\\n\"\n            f\"Schema:\\n{io.schema}\\n\"\n            f\"Question:\\n{question}\\n\"\n            f\"{requirement}\"\n        )"
+        }
+      ]
+    }
+  ]
+}

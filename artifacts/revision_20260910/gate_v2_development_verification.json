@@ -1,0 +1,14 @@
+{
+  "status": "PASS for recorded development checks only",
+  "release_verdict": "not ready",
+  "gate_and_adapter_tests": 11,
+  "combined_revision_tests": 36,
+  "ruff": "PASS",
+  "input_hashes_checked": 16,
+  "semantic_packet_cases": 14,
+  "report_sha256": "55e5adc87b6b8699352266232481e58a1f858306790dbddef60193b599d7f1b1",
+  "packet_sha256": "7f2c1085b53e7ee30e50958ad7e823c65b7aff10734ed11cbaa72cb30ea00dce",
+  "independent_calibration": false,
+  "independent_semantic_adjudication": false,
+  "packet_per_case_source_and_runs_hashes": "PASS"
+}

@@ -1,0 +1,13 @@
+test_category_reply_occurs_only_after_failure_and_before_sql (experiment.revision.test_gate_v4.GateV4Tests.test_category_reply_occurs_only_after_failure_and_before_sql) ... ok
+test_context_preservation_is_not_automatic_schema_rejection (experiment.revision.test_gate_v4.GateV4Tests.test_context_preservation_is_not_automatic_schema_rejection) ... ok
+test_old_single_call_contract_still_requires_review (experiment.revision.test_gate_v4.GateV4Tests.test_old_single_call_contract_still_requires_review) ... ok
+test_unassigned_profile_never_executes_or_rejects (experiment.revision.test_gate_v4.GateV4Tests.test_unassigned_profile_never_executes_or_rejects) ... ok
+test_current_field_ignores_other_steps_in_context_but_rejects_ambiguity (experiment.revision.test_runtime_response_profiles.ProfileTests.test_current_field_ignores_other_steps_in_context_but_rejects_ambiguity) ... ok
+test_json_fields_and_invalid_input_are_preserved (experiment.revision.test_runtime_response_profiles.ProfileTests.test_json_fields_and_invalid_input_are_preserved) ... ok
+test_partial_answers_must_be_carried_to_assembly (experiment.revision.test_runtime_response_profiles.ProfileTests.test_partial_answers_must_be_carried_to_assembly) ... ok
+test_sqlite_feedback_is_actual_and_dropped_feedback_does_not_receive_fix (experiment.revision.test_runtime_response_profiles.ProfileTests.test_sqlite_feedback_is_actual_and_dropped_feedback_does_not_receive_fix) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.003s
+
+OK

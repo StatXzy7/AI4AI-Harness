@@ -1,0 +1,172 @@
+{
+  "recorded_at_utc": "2026-09-10T12:25:41.364982+00:00",
+  "scope": "exposed development adjudication only; not independent calibration or B release",
+  "inputs": {
+    "artifacts\\revision_20260910\\gate_semantic_adjudication\\adjudication.json": "907d6c6df607060c54d2cc839310cf040c68d2519e6d961cff8c26d2c5400aa4",
+    "artifacts\\revision_20260910\\gate_semantic_adjudication\\DECISION_RULE.md": "2bce94c257bb11aff46da8b6d19eb88a1ce661d839945c9285247d3659c53128",
+    "artifacts\\revision_20260910\\gate_v2_semantic_review_packet.json": "7f2c1085b53e7ee30e50958ad7e823c65b7aff10734ed11cbaa72cb30ea00dce",
+    "artifacts\\revision_20260910\\gate_v2_development.json": "55e5adc87b6b8699352266232481e58a1f858306790dbddef60193b599d7f1b1"
+  },
+  "source_trace_mapping_checked": 14,
+  "literal_or_typed_evidence_checked": 40,
+  "rows": [
+    {
+      "case_id": "ad2d9cb9459e88ad",
+      "strategy": "hint_guard",
+      "development_source_name": "hint_guard",
+      "structural_verdict": "review_required",
+      "semantic_verdict": "conforms",
+      "combined_development_state": "development_semantic_conforms",
+      "production_admission": false
+    },
+    {
+      "case_id": "06e9792944d4bb95",
+      "strategy": "two_view",
+      "development_source_name": "two_view",
+      "structural_verdict": "review_required",
+      "semantic_verdict": "conforms",
+      "combined_development_state": "development_semantic_conforms",
+      "production_admission": false
+    },
+    {
+      "case_id": "0917b9d4e9db1c67",
+      "strategy": "error_classify",
+      "development_source_name": "error_classify",
+      "structural_verdict": "review_required",
+      "semantic_verdict": "conforms",
+      "combined_development_state": "development_semantic_conforms",
+      "production_admission": false
+    },
+    {
+      "case_id": "2a329097a273e436",
+      "strategy": "format_guard",
+      "development_source_name": "format_guard",
+      "structural_verdict": "review_required",
+      "semantic_verdict": "conforms",
+      "combined_development_state": "development_semantic_conforms",
+      "production_admission": false
+    },
+    {
+      "case_id": "499f63e93901fc3d",
+      "strategy": "hint_guard",
+      "development_source_name": "passthrough",
+      "structural_verdict": "review_required",
+      "semantic_verdict": "nonconforms",
+      "combined_development_state": "development_semantic_nonconforms",
+      "production_admission": false
+    },
+    {
+      "case_id": "c2c4471de9fb165c",
+      "strategy": "two_view",
+      "development_source_name": "two_view_ignore_rows",
+      "structural_verdict": "fail",
+      "semantic_verdict": "nonconforms",
+      "combined_development_state": "fail",
+      "production_admission": false
+    },
+    {
+      "case_id": "db505f03d6ea3020",
+      "strategy": "error_classify",
+      "development_source_name": "repair",
+      "structural_verdict": "fail",
+      "semantic_verdict": "nonconforms",
+      "combined_development_state": "fail",
+      "production_admission": false
+    },
+    {
+      "case_id": "284f459c9fb93b8f",
+      "strategy": "format_guard",
+      "development_source_name": "passthrough",
+      "structural_verdict": "review_required",
+      "semantic_verdict": "nonconforms",
+      "combined_development_state": "development_semantic_nonconforms",
+      "production_admission": false
+    },
+    {
+      "case_id": "09d850799979bd50",
+      "strategy": "error_classify",
+      "development_source_name": "all_classes",
+      "structural_verdict": "fail",
+      "semantic_verdict": "nonconforms",
+      "combined_development_state": "fail",
+      "production_admission": false
+    },
+    {
+      "case_id": "0e4fd93c08c6611f",
+      "strategy": "two_view",
+      "development_source_name": "whitespace_views",
+      "structural_verdict": "fail",
+      "semantic_verdict": "nonconforms",
+      "combined_development_state": "fail",
+      "production_admission": false
+    },
+    {
+      "case_id": "dcac8d75a60928c7",
+      "strategy": "hint_guard",
+      "development_source_name": "negated_hint",
+      "structural_verdict": "review_required",
+      "semantic_verdict": "nonconforms",
+      "combined_development_state": "development_semantic_nonconforms",
+      "production_admission": false
+    },
+    {
+      "case_id": "9a91bf220064bf98",
+      "strategy": "format_guard",
+      "development_source_name": "negated_format",
+      "structural_verdict": "review_required",
+      "semantic_verdict": "nonconforms",
+      "combined_development_state": "development_semantic_nonconforms",
+      "production_admission": false
+    },
+    {
+      "case_id": "83026ff72aee0c95",
+      "strategy": "error_classify",
+      "development_source_name": "punctuation_classes",
+      "structural_verdict": "fail",
+      "semantic_verdict": "nonconforms",
+      "combined_development_state": "fail",
+      "production_admission": false
+    },
+    {
+      "case_id": "22805004218aae1e",
+      "strategy": "error_classify",
+      "development_source_name": "shared_two_actions",
+      "structural_verdict": "fail",
+      "semantic_verdict": "nonconforms",
+      "combined_development_state": "fail",
+      "production_admission": false
+    }
+  ],
+  "semantic_counts": {
+    "conforms": 4,
+    "nonconforms": 10
+  },
+  "combined_counts": {
+    "development_semantic_conforms": 4,
+    "development_semantic_nonconforms": 4,
+    "fail": 6
+  },
+  "by_strategy": {
+    "error_classify": {
+      "conforms": 1,
+      "nonconforms": 4,
+      "indeterminate": 0
+    },
+    "format_guard": {
+      "conforms": 1,
+      "nonconforms": 2,
+      "indeterminate": 0
+    },
+    "hint_guard": {
+      "conforms": 1,
+      "nonconforms": 2,
+      "indeterminate": 0
+    },
+    "two_view": {
+      "conforms": 1,
+      "nonconforms": 2,
+      "indeterminate": 0
+    }
+  },
+  "release_verdict": "not ready"
+}

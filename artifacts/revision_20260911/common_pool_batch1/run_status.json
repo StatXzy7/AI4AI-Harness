@@ -1,0 +1,9 @@
+{
+  "status": "STOPPED_INCOMPLETE",
+  "planned_attempts": 192,
+  "started_unix": 1789060716.4263344,
+  "completed_builders": [],
+  "active_builder": "glm",
+  "finished_unix": 1789060896.9891553,
+  "error_type": "RuntimeError"
+}

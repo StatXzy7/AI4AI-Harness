@@ -1,0 +1,94 @@
+{
+  "case": {
+    "strategy": "decompose",
+    "name": "parts_0",
+    "steps": [
+      "List ledger identifiers.",
+      "List ledger amounts."
+    ],
+    "answers": [
+      "SELECT id FROM ledger /* payload_0_0 */",
+      "SELECT amount FROM ledger /* payload_0_1 */"
+    ],
+    "final": "SELECT id FROM ledger"
+  },
+  "final": "SELECT id FROM ledger",
+  "trace": [
+    {
+      "kind": "llm",
+      "prompt": "You are an expert SQL planner. Given a database schema and a complex natural language question, break the question into a minimal ordered list of sub-questions. Each sub-question should be answerable by a single SELECT query against the schema and should contribute toward the final SQL answer. Order the sub-questions from base data retrieval to final computation.\n\nSchema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\n\nReturn ONLY a JSON list of strings, for example: [\"sub-question 1\", \"sub-question 2\"]. No explanation.",
+      "system": "",
+      "temperature": 0.0,
+      "n": 1,
+      "response": "[\"List ledger identifiers.\", \"List ledger amounts.\"]",
+      "response_role": "plan",
+      "target_step": null,
+      "seq": 0
+    },
+    {
+      "kind": "llm",
+      "prompt": "You are an expert SQL query generator.\n\nDatabase schema:\nTable ledger(id, amount)\nTable unused(label)\n\nOriginal question:\nReturn ledger identifiers.\n\nOrdered decomposition:\n1. List ledger identifiers.\n2. List ledger amounts.\n\nPreviously generated CTE definitions and status:\n(none)\n\nCurrent sub-question to answer:\nList ledger identifiers.\n\nWrite a single SELECT query that answers only this current sub-question. It will be used as a CTE named `q1`. Ensure all referenced tables/columns exist in the schema. Return ONLY SQL, without markdown fences or explanation.",
+      "system": "",
+      "temperature": 0.0,
+      "n": 1,
+      "response": "SELECT id FROM ledger /* payload_0_0 */",
+      "response_role": "subquestion_sql",
+      "target_step": 0,
+      "seq": 0
+    },
+    {
+      "kind": "execute",
+      "sql": "SELECT id FROM ledger /* payload_0_0 */",
+      "ok": true,
+      "rows": [
+        [
+          1
+        ],
+        [
+          2
+        ]
+      ],
+      "error": null
+    },
+    {
+      "kind": "llm",
+      "prompt": "You are an expert SQL query generator.\n\nDatabase schema:\nTable ledger(id, amount)\nTable unused(label)\n\nOriginal question:\nReturn ledger identifiers.\n\nOrdered decomposition:\n1. List ledger identifiers.\n2. List ledger amounts.\n\nPreviously generated CTE definitions and status:\nq1 (execution succeeded: 2 rows returned):\nSELECT id FROM ledger /* payload_0_0 */\n\nCurrent sub-question to answer:\nList ledger amounts.\n\nWrite a single SELECT query that answers only this current sub-question. It will be used as a CTE named `q2`. Ensure all referenced tables/columns exist in the schema. Return ONLY SQL, without markdown fences or explanation.",
+      "system": "",
+      "temperature": 0.0,
+      "n": 1,
+      "response": "SELECT amount FROM ledger /* payload_0_1 */",
+      "response_role": "subquestion_sql",
+      "target_step": 1,
+      "seq": 0
+    },
+    {
+      "kind": "execute",
+      "sql": "SELECT amount FROM ledger /* payload_0_1 */",
+      "ok": true,
+      "rows": [
+        [
+          10.0
+        ],
+        [
+          20.0
+        ]
+      ],
+      "error": null
+    },
+    {
+      "kind": "llm",
+      "prompt": "You are an expert SQL query writer.\n\nDatabase schema:\nTable ledger(id, amount)\nTable unused(label)\n\nOriginal question:\nReturn ledger identifiers.\n\nOrdered decomposition:\n1. List ledger identifiers.\n2. List ledger amounts.\n\nIntermediate CTEs already generated:\nq1 AS (\nSELECT id FROM ledger /* payload_0_0 */\n),\nq2 AS (\nSELECT amount FROM ledger /* payload_0_1 */\n)\n\nWrite a final SQL query that answers the original question. Use the provided CTE definitions in a WITH clause where appropriate. Return ONLY SQL, without markdown fences or explanation.",
+      "system": "",
+      "temperature": 0.0,
+      "n": 1,
+      "response": "SELECT id FROM ledger",
+      "response_role": "assembly_sql",
+      "target_step": null,
+      "seq": 0
+    }
+  ],
+  "error": null,
+  "interface_issues": [],
+  "admission": "not_evaluated",
+  "scope": "source-assigned exposed-candidate interface diagnostic; not calibration"
+}

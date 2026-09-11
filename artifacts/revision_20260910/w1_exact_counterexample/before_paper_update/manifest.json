@@ -1,0 +1,132 @@
+[
+  {
+    "path": "paper/latex/sec_appendix.tex",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/paper/latex/sec_appendix.tex",
+    "sha256": "5c4520303425cb495ffec80835333d4859b127716a4136a46fd5168107a69fcd"
+  },
+  {
+    "path": "paper/latex/sec_discussion.tex",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/paper/latex/sec_discussion.tex",
+    "sha256": "82103e431a607da12786f6ba56faf3065c7e6d0ed91435c9555b7771b952ae2d"
+  },
+  {
+    "path": "paper/latex/main.aux",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/paper/latex/main.aux",
+    "sha256": "760888d474fa3dd9bf7db5d75495049d8308fb83357a2624d99358085a033434"
+  },
+  {
+    "path": "paper/latex/main.bbl",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/paper/latex/main.bbl",
+    "sha256": "3c4f01c9ea536f872d840deef1f88a56d8a80ab0a9d911368f384d36111be0e5"
+  },
+  {
+    "path": "paper/latex/main.blg",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/paper/latex/main.blg",
+    "sha256": "be17451e34338bee01c983447e3445ef29589c4987ff990b7f853511eac6149d"
+  },
+  {
+    "path": "paper/latex/main.fdb_latexmk",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/paper/latex/main.fdb_latexmk",
+    "sha256": "2bfb2024e30ac855d20f92ffd00002b6a84c4c51a7151a9f828bfedda3ee78e9"
+  },
+  {
+    "path": "paper/latex/main.fls",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/paper/latex/main.fls",
+    "sha256": "17ccf4295db7568bc4cecc9d3eced28b5f6c548df6cd9b17e32939fcfbfbaa0a"
+  },
+  {
+    "path": "paper/latex/main.log",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/paper/latex/main.log",
+    "sha256": "84fbb04266ec5c140c9401863020ea6b7c626b422d350a1d0c7afd9b70777fbe"
+  },
+  {
+    "path": "paper/latex/main.out",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/paper/latex/main.out",
+    "sha256": "6b97464e8261614364e318055a56682c5c0a09bdeff8667eb3013dc772e39d1f"
+  },
+  {
+    "path": "paper/latex/main.pdf",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/paper/latex/main.pdf",
+    "sha256": "66fbd200f5fd0bdf04c7a72b6e7fafa7819216f1f165eb06810730b8d91e2403"
+  },
+  {
+    "path": "paper/latex/main.tex",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/paper/latex/main.tex",
+    "sha256": "1a66d4bf81d8feace9dfa1602111ba114a391ac3025def4310fbf6bba00e2c12"
+  },
+  {
+    "path": "paper/latex_zh/sec_appendix.tex",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/paper/latex_zh/sec_appendix.tex",
+    "sha256": "5725b0ed5b5e84bdd8e03491991fc0c57fe16bdd30fa6fedcff4e03cbed7e1bc"
+  },
+  {
+    "path": "paper/latex_zh/sec_discussion.tex",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/paper/latex_zh/sec_discussion.tex",
+    "sha256": "d0d19818fb74e6f61df3f1f44402b0dd5cb7d49caa0c7d097ac7c72856f39d21"
+  },
+  {
+    "path": "paper/latex_zh/main.aux",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/paper/latex_zh/main.aux",
+    "sha256": "7182744bce8dd7622095e8bf6dbe6a0e4a28880ddb4b3e28ff7336b320dde8cc"
+  },
+  {
+    "path": "paper/latex_zh/main.bbl",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/paper/latex_zh/main.bbl",
+    "sha256": "3c4f01c9ea536f872d840deef1f88a56d8a80ab0a9d911368f384d36111be0e5"
+  },
+  {
+    "path": "paper/latex_zh/main.blg",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/paper/latex_zh/main.blg",
+    "sha256": "5f817fcceaf518d6da95a7314ba28001bcd02b5b21440c866b79395b41f19036"
+  },
+  {
+    "path": "paper/latex_zh/main.fdb_latexmk",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/paper/latex_zh/main.fdb_latexmk",
+    "sha256": "9a9c2a35c34c15cdce703853b6fe9783c62fd52561d3a9ad7d51f0ef06859d49"
+  },
+  {
+    "path": "paper/latex_zh/main.fls",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/paper/latex_zh/main.fls",
+    "sha256": "23859254c415cbc7ea1b46c5b27a0b4fccacd21e5d420b9c673bf1c131227c6a"
+  },
+  {
+    "path": "paper/latex_zh/main.log",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/paper/latex_zh/main.log",
+    "sha256": "7be9992a7e8c2b6d2ffcb86c2182379b0378a73fa5a2fb59d809cd49c58ed4db"
+  },
+  {
+    "path": "paper/latex_zh/main.out",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/paper/latex_zh/main.out",
+    "sha256": "c4e597e3a0235c44d7b810cc07ea17029c3a76aebb7e211447e33b8d12b5de2c"
+  },
+  {
+    "path": "paper/latex_zh/main.pdf",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/paper/latex_zh/main.pdf",
+    "sha256": "31eda140875b8741b87b7328c8262d6570e6c59c90870fb6cbe2723cb226c2f2"
+  },
+  {
+    "path": "paper/latex_zh/main.tex",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/paper/latex_zh/main.tex",
+    "sha256": "945d5a5f43ca4b23d72b21729719ba239882878e1fc7927e14ec621deec0290c"
+  },
+  {
+    "path": "paper/latex_zh/main.xdv",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/paper/latex_zh/main.xdv",
+    "sha256": "c9b6e77056290750d5c72b44e0ed18fe5ce31b52980464ce3a3d07ce0198b70a"
+  },
+  {
+    "path": "artifacts/revision_20260910/verification.json",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/artifacts/revision_20260910/verification.json",
+    "sha256": "3a5ed700b75b3577b1137aa462bae69799ec720ba2abcdf66d9da9a0f4f4ebda"
+  },
+  {
+    "path": "artifacts/revision_20260910/chinese_sync_verification.json",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/artifacts/revision_20260910/chinese_sync_verification.json",
+    "sha256": "0464cf18e83af14b1123ec38f997cb4e4f78a8ef8cde43054cb3166a656e9d86"
+  },
+  {
+    "path": "paper/latex_zh/build_utf8.log",
+    "snapshot": "artifacts/revision_20260910/w1_exact_counterexample/before_paper_update/paper/latex_zh/build_utf8.log",
+    "sha256": "222e0ffef902e934b49aa4be24dfcf515a80237d11a652880473f1fcd965eb23"
+  }
+]

@@ -1,0 +1,59 @@
+{
+  "recorded_at_utc": "2026-09-10T12:16:11.316475+00:00",
+  "status": "software_guards_ready_real_launch_not_ready",
+  "bindings": {
+    "experiment\\revision\\isolated_collect.py": "96b5e8cc259db12307f8c00461a8d39c672fdfd28dff4073302de23df3d99fae",
+    "experiment\\revision\\test_isolated_collect.py": "89c97665f0951f2ebf66e937a678bf34f5d2c49d92b3fb6c9d0d5022bb219001",
+    "review-stage\\PROVIDER_LAUNCH_GUARDS.md": "54a5c0c885c028c0afbc4df872ad91d3adabed3e8a2083047e88714dd79f24e1",
+    "review-stage\\REVISION_20260910.md": "4cb7390eb5b05f45a61be91879371d7f731be92ae13a8807ee0a482bf8c16237",
+    "experiment\\revision\\README.md": "0a2448a243410a5592095ff40b9ea4a6ac4e274faf1a577dfa6d3adf90a70222",
+    "artifacts\\revision_20260910\\verification.json": "f978c4b8cebe7662849de337661cb81994eb037ad374ec325aa968434158a859",
+    "artifacts\\revision_20260910\\chinese_sync_verification.json": "23175b594281e9c7d9d13f9e2cceff405ac8b18a4e3e50deaaa073f24102f96f",
+    "artifacts\\revision_20260910\\launch_guards\\before\\isolated_collect.py": "195bd514c6f0e890c7a5c812b3f4839ae52711533491a13b58931cc2a460ee7e",
+    "artifacts\\revision_20260910\\launch_guards\\before\\test_isolated_collect.py": "66d314623f59c31aa8e77d54682df8d20b0f65a5b1a4cadc183b2a8b64c51348",
+    "artifacts\\revision_20260910\\launch_guards\\tests.txt": "15edc9706fbe616427e035a5b7bd899a66e243f6723b699cb02478b5b84b5304",
+    "artifacts\\revision_20260910\\launch_guards\\preflight.json": "0c809d5f354aeed783204f0e4b3a672a121ed7d5adcd15331187f94f4fb474a1",
+    "artifacts\\revision_20260910\\launch_guards\\acquisition.draft.json": "4a52b30ba513a2bb02373beef8c87e69895e7961cc61dfc8676abdbe1aef5c54",
+    "artifacts\\revision_20260910\\launch_guards\\reviews.md": "25529a28fa2bddfd679bfa831b1032dc157b6826c420136ed5622cbbf6097d44",
+    "review-stage/REVISED_EXPERIMENT_PLAN.md": "d56620488d75906825e9325f28e301be03c50e8e361c4ba1c8376d9419d254ff"
+  },
+  "full_revision_tests": {
+    "passed": 81,
+    "seconds": 29.4,
+    "provider": "loopback fixtures only"
+  },
+  "ruff": "PASS via D:/anaconda3/Scripts/ruff.exe (runtime env has no ruff)",
+  "paper_verification": "PASS 42 hashes, sample sizes, page count, decomposition",
+  "bilingual_sources_and_pdf_bindings": "PASS",
+  "offline_prepare": {
+    "cells": 12,
+    "source_bindings": 510,
+    "draft_launch_rejected": true
+  },
+  "cross_model_review": {
+    "executor": "GPT-6",
+    "reviewer": "gpt-5.5",
+    "initial_score": 7,
+    "software_score": 9,
+    "software_verdict": "ready",
+    "launch_verdict": "not ready",
+    "independent_local_isolation_tests_passed": 8
+  },
+  "mechanical_review": {
+    "same_model": true,
+    "score": 9,
+    "verdict": "ready",
+    "scope": "two software guard fixes"
+  },
+  "generation_requests": 0,
+  "paper_changed": false,
+  "remaining": [
+    "user spending ceiling authorization",
+    "account-specific cost bound or hard allowance",
+    "final non-DRAFT freeze and hashes",
+    "actual provider pilot",
+    "full reviewer A-D and W1 scientific evidence"
+  ],
+  "paper_score": 4,
+  "paper_verdict": "not ready"
+}

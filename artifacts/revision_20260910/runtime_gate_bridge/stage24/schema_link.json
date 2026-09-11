@@ -1,0 +1,73 @@
+{
+  "strategy": "schema_link",
+  "path": "external/TTHE/text_to_sql/agents/p2_C_deepseek_s1_schema_link.py",
+  "availability": "available",
+  "result": {
+    "strategy": "schema_link",
+    "verdict": "fail",
+    "scope": "v3 exposed-control development; independent calibration and production adapter pending",
+    "runs": [
+      {
+        "probe": "link_0",
+        "status": "fail",
+        "reasons": [
+          "counterfactual_output_mismatch",
+          "linked_subset_not_carried_forward"
+        ],
+        "final": "SELECT id FROM ledger WHERE id > 0",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "You are given a database schema and a question.\nIdentify ONLY the tables and columns needed to answer the question.\nReturn a JSON object with two keys:\n  \"tables\": list of table names\n  \"columns\": list of column names, optionally qualified as \"table.column\"\nDo not include any explanation or markdown.\n\nSchema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\n",
+            "system": "You are a precise database schema linker.",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "ledger(id) [runtime_bridge_stage24_link_0]",
+            "seq": 0
+          },
+          {
+            "kind": "llm",
+            "prompt": "Using only the linked schema subset below, write a single SQLite SELECT query that answers the question.\n\nNo explicit linked set was produced; use the full schema below but select only the relevant tables and columns.\n\nLinked schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\n\nReturn only the SQL query, with no markdown fences or explanation.",
+            "system": "You are an expert SQL writer that strictly follows the linked schema.",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger WHERE id > 0",
+            "seq": 0
+          }
+        ],
+        "error": null
+      },
+      {
+        "probe": "link_1",
+        "status": "fail",
+        "reasons": [
+          "counterfactual_output_mismatch",
+          "linked_subset_not_carried_forward"
+        ],
+        "final": "SELECT id FROM ledger WHERE id > 0",
+        "trace": [
+          {
+            "kind": "llm",
+            "prompt": "You are given a database schema and a question.\nIdentify ONLY the tables and columns needed to answer the question.\nReturn a JSON object with two keys:\n  \"tables\": list of table names\n  \"columns\": list of column names, optionally qualified as \"table.column\"\nDo not include any explanation or markdown.\n\nSchema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\n",
+            "system": "You are a precise database schema linker.",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "ledger(id) [runtime_bridge_stage24_link_1]",
+            "seq": 0
+          },
+          {
+            "kind": "llm",
+            "prompt": "Using only the linked schema subset below, write a single SQLite SELECT query that answers the question.\n\nNo explicit linked set was produced; use the full schema below but select only the relevant tables and columns.\n\nLinked schema:\nTable ledger(id, amount)\nTable unused(label)\n\nQuestion:\nReturn ledger identifiers.\n\nReturn only the SQL query, with no markdown fences or explanation.",
+            "system": "You are an expert SQL writer that strictly follows the linked schema.",
+            "n": 1,
+            "temperature": 0.0,
+            "response": "SELECT id FROM ledger WHERE id > 0",
+            "seq": 0
+          }
+        ],
+        "error": null
+      }
+    ]
+  },
+  "admission": "not_evaluated"
+}

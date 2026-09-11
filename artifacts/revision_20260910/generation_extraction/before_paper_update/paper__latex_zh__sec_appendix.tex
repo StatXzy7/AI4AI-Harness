@@ -1,0 +1,121 @@
+\section{Phase-I 来源与条件详述}\label{app:phase1-provenance}
+\paragraph{发现研究属性。}Phase I（\S\ref{sec:phase1}、\S\ref{sec:boundary}）属于发现研究。151 道评估题中有 24 道与首日协议开发测量重叠；人工控制在检查首日轨迹后设计，其观测提升空间是描述结果，不是稳定互补性的盲估计；仓库历史为事后初始化，决策日志的变更记录是事件先后顺序的依据。Phase-I 准入阈值为联合修复率 $\geq15\%$、提升空间 $\geq5$ 个百分点、至少三组非空且成对不同的修复集合，在 151 题评估前已于内部决策日志冻结。v6 到 v7 的阈值调整（20\% 到 15\%）已披露，两种阈值均接纳同样种群。这是内部评估前冻结，不是外部预注册。
+\paragraph{数据检查。}两次首日运行中，bare 在 60 题上翻转 3 题，因此两列结果基于略有不同的 bare 错题集合。Phase-I 使用结果行集合相等的代理评分器；在两份有最终 SQL 日志的 Phase-I 矩阵上，它相对官方 BIRD 评分器一致偏保守，没有把官方判错的答案判对，一致率为 0.97--0.99。
+\paragraph{Phase-I 种群。}种子基线为单次调用的 \texttt{bare} 和 TTHE 预置的执行反馈循环 \texttt{react}。\emph{旧提议者协议}从 GLM-5.3-Flash 构建器的 TTHE 优化循环输出中选择六个候选；只使用与评估集不相交的 36 道题，按评估前冻结的规则选择行为多样性。\emph{策略强制自由形式}使用 GLM-5.3-Flash、Qwen3.8-Flash、DeepSeek-V4-Flash-Vision-Exp，各指定八种机制；GLM 种群采用有日志的重跑（$K=3$），原 09-01 运行记录零接纳，但工具未保存，观察无法审核。\emph{Harness IR} 从声明式机制规格确定性编译六个 harness：上下文属于 \{plain, schema\_link, hint\_guard, link+hint\}，另含候选生成温度、逐候选执行、修复轮次和选择规则，因此声明机制按构造存在于控制流程。\emph{人工正控制}为 \S\ref{sec:positive} 的四个手写 harness。
+\paragraph{生成来源缺口。}09-01 的自由形式种群在会话中生成，工具未保存，逐尝试日志不存在，因此不能审核这些运行的预算相等，也不作此主张。准入是在评估时做导入／冒烟检查，不是 Phase-II 反事实一致性门控。2026-09-03 留存的 \texttt{builder\_generate3.py} 记录每次尝试（重试设置、16,384 token 预算、阶段和结束原因）；完整逐策略表及 3/8、7/8、8/8 的接纳排序来自该工具，相对冻结的准入决定属于事后记录。
+
+\section{Phase-II 协议摘要与偏差日志}\label{app:phase2-protocol}
+权威协议为代码材料中的 \texttt{PHASE2\_PROTOCOL.md}，包含估计目标、划分、仪器、排除规则和历史偏差日志，冻结提交见 \texttt{PROTOCOL\_FREEZE.txt}。摘要如下：$2\times2$ 析因加开放机制组；六构建器乘三个种子；每槽位最多三次尝试，首次接纳即停，不补齐；污染登记失败则拒绝继续，整体禁用两个开发库；九库 1,169 题验证集与预抽取 core-400，存在已披露的 18 题冒烟接触例外；官方 BIRD 评分器强制 30 秒超时；响应缓存以模型身份为键并跨进程加锁，D13 记录并修复采集中发现的缓存并发问题；主对比为配对单元上的 D$-$A，原计划使用分层 bootstrap 与置换推断；共同核心集的析因次要检验经 Holm 校正，K-matched 仅为敏感性分析。D1--D13 记录了 18 题冒烟测试、观察验证性结果前的校准修正、凭据处理事件及补救、产物分歧隔离，每项均有理由与日期。
+
+审后修正另见 \texttt{review-stage/REVISION\_20260910.md}，不替换历史冻结。实际门控结构性拒绝两种允许的提示层策略，实际生成成本在各组不同。修正表格共用基线记录，并采用正文说明的数据库／题目重采样。
+\paragraph{修正后的 K-matched 与 R2 重放。}\label{app:r2}
+两项重放与主分析共用按 manifest 顺序加载的 canonical 数据和跨单元数据库／库内题目抽样，在固定构建器内部重采样种子，共 10,000 次。K-matching 对每个 A/B、C/D 对使用较小候选数，精确枚举全部均匀候选子集；各子集保留 bare，每次题目抽样都在子集内部重新计算最佳固定成员。这是规模敏感性分析，不是因果中介分解。
+
+R2 在 400 题上采集 70 个 harness，各 A/D 单元按可用情况取最前两个可调用的已接纳候选。两份关闭缓存采集文件虽均存为 \texttt{repeat=0}，仍保留独立采集身份，并将源码哈希与缓存运行核对。没有匹配 bare 采集，因此两种条件的提升空间都不含 bare。修正分析保留单成员单元（其子集提升空间为零），共 18 个配对单元。相对缓存结果有 \RevisionRtwoFlips/28,000 次判定翻转（\RevisionRtwoFlipPercent\%）；D 组两次关闭缓存采集间为 \RevisionRtwoRepeatFlips/14,400（\RevisionRtwoRepeatPercent\%）。
+
+仅为解释旧结果，若限制至两组都至少有两个成员的 16 单元，D$-$A 在缓存下为 $\RevisionRtwoLegacyCached$ 个百分点，关闭缓存后为 $\RevisionRtwoLegacyOff$。这说明它与全单元估计的差别；两种分析均不能识别未来执行方差、单独缓存效应或相对克隆的稳定互补优势，采集时间与缓存条件并未分离。
+\begin{table}[t]\centering\small
+\input{../latex/revision_sensitivity_table}
+\caption{core-400、18 单元的修正敏感性结果，CI 未校正。K-matched 始终保留 bare；R2 排除 bare，并以已观察采集组为条件。}\label{tab:sensitivity}
+\end{table}
+\paragraph{记录成本与缺失账单。}相同 canonical 核心记录在 \RevisionCostRows{} 条候选—题目记录中包含 \RevisionLogicalCalls{} 次逻辑 solver 调用（表~\ref{tab:cost}）。它们包括缓存服务的请求，不等于供应商计费 API 请求。所检查记录均没有 token usage 字段，不据调用数估算 token 或货币支出。实际生成尝试数、接纳候选数和执行调用数保持为不同测量。种群成本均值对各构建器—种子单元等权，不含 bare；零候选种群贡献零次 solver 调用。
+\begin{table}[t]\centering\small
+\input{../latex/revision_cost_table}
+\caption{core-400 canonical 描述性成本审核，每组 18 单元。逻辑调用不是计费请求或 token 数；末列为各单元候选种群每题调用数的均值。}\label{tab:cost}
+\end{table}
+
+\section{探索性指纹与选择分析}\label{app:rich}
+两项分析均为对存档验证性单元的事后分析：18 个构建器乘种子单元、384 个接纳候选、core-400 结果。版本化的 \texttt{experiment/revision/} 脚本共用主重分析的 canonical loader、冻结题目清单、成员关系及源码检查。这些题目已被分析过，结果仍属描述性，不能视为独立迁移验证。
+\paragraph{丰富指纹。}为单独考察 loader 变化，W3 保留旧的有损 SQL 文本变换：删除分号，将反引号替换为引号，按单引号分段后将偶数段转为小写，再合并空白。这不是 SQL 解析或语义归一化，可能改变字面量及带引号标识符。在两份非空变换 SQL 完全相同的 $\RevisionWthreeSameSQL$ 个 pair--task 观察中，$\RevisionWthreeSameDisagreements$ 个判定不同。这是观察到的一致性，不是构造保证的性质。
+
+pair 级 SQL 不相似度仅在判定一致、且两份 SQL 非空的题目上平均 $(1-\text{token-Jaccard})$。它与整体结果分歧的 Spearman 相关为：4,386 个单元内 pair 上 $\RevisionWthreeRho$，1,010 个组内 pair 上 $\RevisionWthreeWithinRho$。各 pair 共享候选与题目，SQL 指标还以判定一致为条件，因此这些相关没有独立性假设下的显著性或因果解释。
+
+R2 首次关闭缓存的 70-harness 采集中，调用数在 $\RevisionWthreeCallChanges/28000$ 次比较中变化，判定在 $\RevisionRtwoFlips/28000$ 次中变化；变换 SQL 在 $\RevisionWthreeSQLChanges/\RevisionWthreeSQLN$ 次中变化（$\RevisionWthreeSQLPercent\%$）。64 次比较缺少两份非空 SQL，仅从 SQL 分母排除。变化 SQL 对的平均 token Jaccard 为 $\RevisionWthreeJaccard$。这些通道各自的变化率不能定义效应大小的噪声地板。逻辑调用成本单列于表~\ref{tab:cost}。
+\paragraph{多样性感知选择。}每个单元合并各组全部接纳候选。重分析保留旧种子、100 次数据库半分、每划分每单元 200 次随机子集抽样和候选选择规则，但记录了新的确定顺序：历史由集合遍历生成的单元顺序未存档，仅靠种子无法恢复相同的历史划分和抽样。开发数据库用于选择，其补集用于评估；这些重叠划分不是 1,800 次独立实验。方法包括开发准确率 top-$k$、均匀随机子集、贪心开发 oracle 覆盖，以及贪心平均准确率加 $\lambda$ 倍 oracle 覆盖，$\lambda\in\{0.25,0.5,1,2\}$。每次划分内的候选选择均在该次评估前固定。
+
+表~\ref{tab:selection} 在每个评估子集中保留共同 AD bare，$k$ 只计候选；JSON 还保留 candidate-only 数值以区分历史估计目标。Oracle 和 Best 使用留出结果作描述性上界；Dev-fixed 则仅按开发准确率选一个成员，并列时按成员名升序、bare 优先。确定性方法已保留一个全局开发最优候选，因此该比较器的差异可能来自保留了哪个并列最优，而不是最大开发准确率提高。
+
+在 $k=8$ 时，div-only 相对 top-acc 的 oracle 变化为 $\RevisionWoneOracle$ 个百分点、best-fixed 为 $\RevisionWoneBest$、headroom 为 $\RevisionWoneHeadroom$，dev-fixed 为 $\RevisionWoneFixed$。它们是不同量，均非独立验证的路由收益。旧的仅按单元计算的 CI 已撤回；当前表为描述性结果，涵盖数据库／题目抽样与重新选择的推断仍未完成。旧归一化提升空间比率只保留于历史产物，不进入修订主张。
+\begin{table}[t]\centering\small
+\input{../latex/revision_selection_table}
+\caption{canonical 描述性 W1 重分析。每池含 $k$ 个已选候选及共同 bare；对 18 单元、100 个重叠数据库划分取均值，无 CI。Dev-fixed 仅在开发数据上选择；Best 使用留出结果。}\label{tab:selection}
+\end{table}
+
+\section{Phase-I 补充结果}\label{app:phase1-results}
+各 harness 准确率、逐折 LOHO 表、bootstrap 区间、修复集合审核、K 子采样曲线、任务留出控制及第二目标重复结果均列于匿名代码材料及对应生成脚本。第二目标固定为 Qwen3.8-Flash：观测坍缩模式再次出现，策略强制种群仍有提升空间，提示侧人工控制未整体迁移。
+
+\section{模型与版本}\label{app:models}
+表~\ref{tab:models} 列出模型角色及发送给 API 的精确版本字符串。全部模型通过同一商业 OpenAI 兼容聚合供应商访问，BIRD 数据采集窗口为 2026-08-30 至 2026-09-08。冻结目标始终以温度 0 调用；Phase-II 生成温度 0.7、预算 16,384 token，Phase-I 设置按工具记录。Phase I 使用代理执行评分器；Phase II 使用官方 BIRD 评分器（30 秒超时），旧评分器用于次要审核；MATH-500 使用附录~\ref{app:crossdomain} 的答案比较器。报告的准确率均不是 LLM 评判结果。
+\begin{table}[h]\centering\small
+\begin{tabular}{p{0.22\linewidth}p{0.52\linewidth}p{0.16\linewidth}}\toprule
+角色 & 模型精确版本字符串 & 阶段 \\\midrule
+冻结目标 & \texttt{GLM-5.3-Flash}（温度 0） & I--II \\
+第二冻结目标 & \texttt{Qwen3.8-Flash} & I \\
+Phase-I 构建器 & \texttt{GLM-5.3-Flash}, \texttt{Qwen3.8-Flash}, \texttt{DeepSeek-V4-Flash-Vision-Exp} & \S\ref{sec:phase1probes} \\
+Phase-II 构建器 & \texttt{GLM-5.3}, \texttt{Qwen3.8-Max}, \texttt{DeepSeek-V4-Pro}, \texttt{Kimi-K3}, \texttt{MiniMax-M3}, \texttt{ERNIE-5.0-Thinking-Preview} & II \\
+评分器 & 代理／官方 BIRD 执行评分器；MATH 答案比较器 & 见正文 \\\bottomrule
+\end{tabular}
+\caption{完整模型清单。目标在各阶段内保持冻结，Phase-II 构建器来自六个独立实验室。}\label{tab:models}
+\end{table}
+
+\section{Phase-I 轨迹审核实例}\label{app:examples}
+以下将一项 BIRD 任务在被审 harness 中的执行过程展开，说明 \S\ref{sec:taxonomy} 的失败分类。产物原文来自首日轨迹审核（5 个 harness 乘 10 题）；日志将 SQL 摘录限制为 120 字符，截断以 \emph{[trunc.]} 标出。完整源码和轨迹见代码材料。
+\paragraph{题目。}BIRD 开发集问题 352（\texttt{card\_games} 数据库；题目按原文保留，包括拼写错误）：
+\begin{quote}\small\ttfamily
+Calculate the percentage of the cards availabe in Chinese Simplified.
+\end{quote}
+BIRD 提示为：
+\begin{quote}\small\ttfamily
+'Chinese Simplified' is the language; percentage = Divide(Sum(id where language = 'Chinese Simplified'), Count(id)) *100
+\end{quote}
+标准 SQL 如下。它与 bare SQL 在发布数据库上分别执行得 8.7734 与 8.7728，官方评分器将二者区分：
+\begin{quote}\small\ttfamily
+SELECT CAST(SUM(CASE WHEN T2.language = 'Chinese Simplified' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN foreign\_data AS T2 ON T1.uuid = T2.uuid
+\end{quote}
+bare 返回：
+\begin{quote}\small\ttfamily
+SELECT SUM(CASE WHEN language = 'Chinese Simplified' THEN 1 ELSE 0 END) * 100.0 / COUNT(id) AS percentage FROM foreign\_data;
+\end{quote}
+它被官方评分器判错。bare 查询直接在 \texttt{foreign\_data} 上计数，标准查询先与 \texttt{cards} 连接再计数；提示未明确写出该连接。
+\paragraph{\react{}：T2，机制存在但未触发。}控制流程确实执行 SQL，并在数据库报错时重试。但第一次调用的提示与 bare 逐字节相同，该题生成的 SQL 未报错，错误触发的重试不发生，最终 SQL 与 bare 相同。全部 10 道审核题均出现这一模式：有 SQL 执行，10/10 最终 SQL 与 bare 逐字节相同。反馈循环真实存在，但这些题上修复分支未激活；需要受控故障注入检验反馈是否改变输出。
+\paragraph{\texttt{cand\_bird\_g1\_b0r1\_g0}：代码不同、观测行为相同。}该候选确为不同程序：以守护线程监视单次 coder 调用，若超过 40 秒则发出一次对冲重问。机制存在，但审核中 API 调用停滞这一触发条件未出现；SQL 执行次数为零，10 题最终 SQL 均与 bare 相同。即使新增机制真实存在，也可能因未触发而不产生观测行为差异。
+\paragraph{\texttt{cand\_bird\_g1\_b1r1\_g1}：T3，多轮路径失效。}实际实现“执行—检查—修复”的被审候选返回自然语言说明作为最终 SQL。在 bare 答对的题目 ``State the alternative languages available for card named Annul numbered 29.'' 上，其日志最终 SQL 开头原文为：
+\begin{quote}\small\ttfamily
+with "only a single read-only SELECT is allowed". The previous "query" was actually just prose text (the model wrote rea\emph{[trunc.]}
+\end{quote}
+修复提示要求修复“实际上只是自然语言说明”的查询，冻结目标继续输出推理说明；没有找到 SQL 块，推理文本便被提交为查询，导致该题由 bare 正确翻为 harness 错误。
+
+\section{独立构造的仪器控制集}\label{app:gatecontrols}
+我们用32例新构造的控制检验审后Gate-v2开发仪器，与开发探针时使用的控制集分开。仪器先固定，另一模型仅接收公开合同与调用接口，不接触仪器实现或早期控制。作者为八类机制各提供两例预期符合和两例预期不符合的实现。首次执行前，对控制源码、作者参考标签、仪器、测量程序和执行顺序记录哈希。本次没有运行benchmark或提供方生成，首次测量记录原样保留。
+
+\begin{table}[h]
+\centering\small
+\begin{tabular}{lrrr}\toprule
+声明机制 & 结构通过 & 结构失败 & 待语义审阅 \\\midrule
+修复 & 2 & 2 & 0 \\
+执行结果投票 & 2 & 2 & 0 \\
+模式链接 & 0 & 4 & 0 \\
+Hint约束 & 0 & 0 & 4 \\
+双视图 & 0 & 3 & 1 \\
+分解 & 1 & 3 & 0 \\
+错误分类 & 0 & 4 & 0 \\
+格式约束 & 0 & 0 & 4 \\\midrule
+合计 & 5 & 18 & 9 \\\bottomrule
+\end{tabular}
+\caption{固定开发仪器对32例独立构造控制的首次测量。没有执行失败。这些是仪器状态，不是正确性标签或生成种群错误率；作者预期正负标签须另行审核。}\label{tab:gatecontrols}
+\end{table}
+
+九例待审项全部保留。第三模型接收完整控制源码与轨迹，不接收作者参考标签或自动判决，对全部32例做源码合同审阅，并对指定四类机制做语义裁决。
+
+独立源码审阅支持一例分解控制和两例错误分类控制符合合同，但仪器拒绝了它们。分解stub返回请求中首先匹配到的计划步骤的载荷；因此，下一步请求保留前一步上下文时，又取得了前一步载荷。分类检查移除了精确错误文本，但仍将普通的\texttt{Schema:}标题计入类别，使提取的类别集合与预期错误类别不符。这些是仪器在对应控制上的失败，不是实际目标模型的失败。
+
+三例作者预期正例存在争议：两例模式链接控制仍保留无关表，一例双视图控制批量请求候选且错误处理空结果。原标签和审阅分歧单独保留。在作者标签与源码审阅一致的29例中，仪器拒绝了13例符合控制中的3例；16例不符合控制在指定语义审阅后均被拒绝。因此，仪器未通过本批有限控制检验。这些计数不估计生成种群的错误率。
+
+指定16例的语义裁决为7例符合、8例不符合、1例待定。待定例已有结构失败，该状态保持不变，未将其语义强行改判。
+
+该小型、人为平衡的控制集不是生成harness的随机样本；即使全部通过，也不能验证生产接口或替代同一raw pool上的准入政策比较。源码、冻结输入、完整轨迹与裁决保留在配套修订产物中。
+
+\paragraph{修订仪器与新的独立控制集。}
+Gate-v3修正了分解请求的步骤归属，并将类别关键词及共享请求模板作为审阅线索，不再据此自动拒绝。固定该版本后，作者与审核模型分别使用新上下文构造、审阅另一批32例控制，每类仍为两例预期正例与两例预期负例。审阅材料隐藏作者标签、自动判决和仪器生成的归属元数据。全部32例接受源码审阅；原四类提示或表述机制加上分解，共20例接受语义或数据流审阅。结构结果为8通过、10失败、14待审，没有执行异常。经一次留痕的证据澄清，源码审阅为15符合、17不符合；语义审阅为8符合、11不符合、1待定。
+
+待定的分类控制请求中间错误类别，合成接口却返回SQL文本，随后默认分支选择了语义修复动作。这证明fixture的响应类型不匹配，不能据此断言真实solver分类错误。另一例分类控制存在参考争议：其源码将给定的模式错误消息归入语义错误并采用相应动作。在31例无争议参考中，15例符合控制有14例接受、1例未决；16例不符合控制全部拒绝。由于仍有未决案例，且错误分类缺少足够的双方认可正控制，预定的有限检验仍未通过。一例投票控制的符合结论仅限于执行结果仲裁，不证明其候选生成以实际任务为条件。这些有限机制检查不能验证完整harness运行，也不能替代计划中的共同候选池政策比较。

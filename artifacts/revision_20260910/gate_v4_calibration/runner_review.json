@@ -1,0 +1,21 @@
+{
+  "scope": "stage27 runner mechanical review only; no reference measurement",
+  "initial_score": 7,
+  "initial_verdict": "not ready",
+  "initial_finding": "Missing mandatory common_pool dependency and no consistency check with instrument freeze bindings",
+  "resolution": "Required helper dependencies, instrument binding equality, early existing-output refusal, and omission/conflict regression test",
+  "final_score": 9,
+  "final_verdict": "ready",
+  "reviewer": "/root/revision_code_review",
+  "tests_passed": 3,
+  "ruff": "PASS",
+  "reference_source_read": false,
+  "measurement_run": false,
+  "final_increment_review": {
+    "score": 9,
+    "verdict": "ready",
+    "change": "Bind original experiment/phase2/generate.py STRATEGIES source; test fixture synchronized",
+    "tests_passed": 3,
+    "ruff": "PASS"
+  }
+}

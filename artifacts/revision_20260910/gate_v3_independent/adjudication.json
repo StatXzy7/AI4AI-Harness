@@ -1,0 +1,463 @@
+{
+  "model": "gpt-5.6-sol",
+  "backend_build": "unknown",
+  "scope": "independently authored synthetic controls, not benchmark or population error rates",
+  "packet_sha256": "365cb1640c795e4e37599de85eb6bb7d02bd63cccda4922f3476c601e76020df",
+  "source_sha256": "35f9427837c97e0ae838eeb3348ca4b30d632bc8403a887186861b59cce7ab6e",
+  "protocol_sha256": "c0ff14a9009fc43bf334fe8b0225eeb886942ccae3fb128b14cda76a1ef18a63",
+  "contract_sha256": "53fa8902694c48b3a197aed844e5c60ab69cd6e13a61ece0351bbc9b4b1ad595",
+  "initial_adjudication_sha256": "ef83f22bbb9e44229913b12b1c98cceed58dd16dd5b5b9ba5ff79bb440ae12a6",
+  "clarification_once": true,
+  "clarifications": [
+    {
+      "case_id": "vc025",
+      "field": "semantic_verdict",
+      "old": "nonconforms",
+      "new": "indeterminate",
+      "reason": "The finite trace proves that the classifier call returned SQL text and that the fallback then selected a semantics action for syntax/schema feedback. Because the returned text is not an interpretable class, this trace cannot distinguish a source mechanism defect from the scripted classification interface failing to supply a class; it therefore does not establish real classifier semantics. The static source still contains a classification request and correct per-class action mapping, so source_contract_verdict remains conforms.",
+      "evidence": [
+        {"source_quote": "if \"syntax\" in lower or \"parse\" in lower:\n        return \"syntax\"\n    return \"semantics\""},
+        {"probe": "syntax_a", "trace_index": 2, "field": "response", "quote": "SELECT amount FROM ledger"},
+        {"probe": "syntax_a", "trace_index": 3, "field": "prompt", "quote": "Revise the query logic so the requested meaning is represented."}
+      ]
+    },
+    {
+      "case_id": "vc026",
+      "field": "source_contract_verdict",
+      "old": "conforms",
+      "new": "nonconforms",
+      "reason": "Source-contract review requires correct classification behavior on the supplied finite inputs, not merely the presence of three named branches. The source recognizes only no-such-table, no-such-column, or unknown signals as schema; the supplied literal schema failure matches none of them and deterministically falls through to semantics. This finite source defect and the observed downstream request agree. No claim is made about unobserved database-error wording.",
+      "evidence": [
+        {"source_quote": "if \"no such table\" in lower or \"no such column\" in lower or \"unknown\" in lower:\n        kind = \"schema\""},
+        {"source_quote": "else:\n        kind = \"semantics\"\n        action = \"Change the query construction to match the question intent.\""},
+        {"probe": "schema_a", "trace_index": 1, "field": "error", "quote": "schema failure [independent-v3-20260910_schema_a]"},
+        {"probe": "schema_a", "trace_index": 2, "field": "prompt", "quote": "Failure class: semantics\nRequired repair action: Change the query construction to match the question intent."}
+      ]
+    },
+    {
+      "case_id": "vc005",
+      "field": "source_contract_verdict",
+      "old": "conforms",
+      "new": "conforms",
+      "reason": "Conforms is retained only for the public vote3 arbitration contract: three candidates are requested, all are executed, and successful result rows determine the majority. The candidate-generation request does not interpolate question or io.schema, so this verdict does not establish task-conditioned SQL generation or broader harness validity; those properties are outside the stated vote3 requirements and cannot be added during adjudication.",
+      "evidence": [
+        {"source_quote": "sqls = _as_three(io.llm(\n        \"Return three independent SQL candidates for this question.\",\n        n=3,"},
+        {"source_quote": "results = [io.execute(sql) for sql in sqls]\n    return _majority_sql(sqls, results)"},
+        {"source_quote": "key = _rows_key(result.get(\"rows\", []))\n        buckets[key] = buckets.get(key, 0) + 1"}
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "vc001",
+      "strategy": "repair",
+      "source_contract_verdict": "conforms",
+      "source_rationale": "Executes one initial candidate, returns immediately on success, and conditionally supplies schema, question, prior SQL, and exact execution feedback to one repair request.",
+      "semantic_verdict": null,
+      "semantic_rationale": null,
+      "evidence": [
+        {"source_quote": "result = io.execute(first)\n    if result.get(\"ok\"):\n        return first"},
+        {"source_quote": "f\"Previous SQL:\\n{first}\\n\"\n        f\"Execution feedback:\\n{_feedback(result)}\""}
+      ]
+    },
+    {
+      "case_id": "vc002",
+      "strategy": "repair",
+      "source_contract_verdict": "conforms",
+      "source_rationale": "Uses a single initial generation and execution, exits on success, and makes one failure-only repair request carrying all required context and exact feedback.",
+      "semantic_verdict": null,
+      "semantic_rationale": null,
+      "evidence": [
+        {"source_quote": "outcome = io.execute(sql)\n    if outcome.get(\"ok\"):\n        return sql"},
+        {"source_quote": "\"previous_sql\": sql,\n        \"execution_feedback\": _feedback(outcome),"},
+        {"source_quote": "f\"Question:\\n{context['question']}\\n\"\n        f\"Previous SQL:\\n{context['previous_sql']}\\n\"\n        f\"Exact feedback:\\n{context['execution_feedback']}\""}
+      ]
+    },
+    {
+      "case_id": "vc003",
+      "strategy": "repair",
+      "source_contract_verdict": "nonconforms",
+      "source_rationale": "Always generates and returns a second candidate after execution, including when the initial execution succeeds, violating conditional repair and success short-circuiting.",
+      "semantic_verdict": null,
+      "semantic_rationale": null,
+      "evidence": [
+        {"source_quote": "result = io.execute(first)\n    second = io.llm("},
+        {"source_quote": "\"Produce a second SQL candidate after reviewing the attempt.\\n\""},
+        {"source_quote": "return _extract_sql(second)"}
+      ]
+    },
+    {
+      "case_id": "vc004",
+      "strategy": "repair",
+      "source_contract_verdict": "nonconforms",
+      "source_rationale": "The failure-only retry omits the schema, question, previous SQL, and exact execution feedback required in the repair request.",
+      "semantic_verdict": null,
+      "semantic_rationale": null,
+      "evidence": [
+        {"source_quote": "result = io.execute(sql)\n    if result.get(\"ok\"):\n        return sql"},
+        {"source_quote": "return _extract_sql(io.llm(\"The query failed. Try a better SQL answer.\"))"}
+      ]
+    },
+    {
+      "case_id": "vc005",
+      "strategy": "vote3",
+      "source_contract_verdict": "conforms",
+      "source_rationale": "Requests three samples, executes every extracted candidate, and delegates selection to row-result majority logic rather than SQL-string voting.",
+      "semantic_verdict": null,
+      "semantic_rationale": null,
+      "evidence": [
+        {"source_quote": "n=3,\n        temperature=0.3,"},
+        {"source_quote": "results = [io.execute(sql) for sql in sqls]\n    return _majority_sql(sqls, results)"},
+        {"source_quote": "key = _rows_key(result.get(\"rows\", []))\n        buckets[key] = buckets.get(key, 0) + 1"}
+      ]
+    },
+    {
+      "case_id": "vc006",
+      "strategy": "vote3",
+      "source_contract_verdict": "conforms",
+      "source_rationale": "Generates three candidates through distinct requests, executes all three, and selects using the successful-result-row majority helper.",
+      "semantic_verdict": null,
+      "semantic_rationale": null,
+      "evidence": [
+        {"source_quote": "for prefix in prompts:\n        sqls.append(_extract_sql(io.llm("},
+        {"source_quote": "for sql in sqls:\n        results.append(io.execute(sql))\n    return _majority_sql(sqls, results)"},
+        {"source_quote": "best_key = max(buckets, key=lambda key: (buckets[key], -first_index[key]))\n    return sqls[first_index[best_key]]"}
+      ]
+    },
+    {
+      "case_id": "vc007",
+      "strategy": "vote3",
+      "source_contract_verdict": "nonconforms",
+      "source_rationale": "Although all candidates are executed, selection counts identical SQL strings and ignores the execution-result rows, contrary to result-majority voting.",
+      "semantic_verdict": null,
+      "semantic_rationale": null,
+      "evidence": [
+        {"source_quote": "results = [io.execute(sql) for sql in sqls]"},
+        {"source_quote": "for index, sql in enumerate(sqls):\n        counts[sql] = counts.get(sql, 0) + 1"},
+        {"source_quote": "chosen = max(counts, key=lambda sql: (counts[sql], -first_seen[sql]))"}
+      ]
+    },
+    {
+      "case_id": "vc008",
+      "strategy": "vote3",
+      "source_contract_verdict": "nonconforms",
+      "source_rationale": "Returns on the first successful execution, so later candidates may never execute and no majority of successful result rows is computed.",
+      "semantic_verdict": null,
+      "semantic_rationale": null,
+      "evidence": [
+        {"source_quote": "for sql in sqls:\n        result = io.execute(sql)\n        if result.get(\"ok\"):\n            return sql"},
+        {"source_quote": "return sqls[0] if sqls else \"\""}
+      ]
+    },
+    {
+      "case_id": "vc009",
+      "strategy": "schema_link",
+      "source_contract_verdict": "conforms",
+      "source_rationale": "First obtains a question-conditioned linked subset, then supplies that returned subset and the question to a separate SQL request without reintroducing the full schema.",
+      "semantic_verdict": null,
+      "semantic_rationale": null,
+      "evidence": [
+        {"source_quote": "linked = io.llm(\n        \"Identify only the tables and columns needed for this question.\\n\""},
+        {"source_quote": "\"Write SQL using only this linked schema subset.\\n\"\n        f\"Linked schema subset:\\n{linked}\\n\"\n        f\"Question:\\n{question}\""}
+      ]
+    },
+    {
+      "case_id": "vc010",
+      "strategy": "schema_link",
+      "source_contract_verdict": "conforms",
+      "source_rationale": "Selects relevant schema lines with question and full schema, then uses only the returned subset in the subsequent SQL-generation prompt.",
+      "semantic_verdict": null,
+      "semantic_rationale": null,
+      "evidence": [
+        {"source_quote": "\"Select the relevant schema lines for the task. Remove unrelated tables.\\n\""},
+        {"source_quote": "subset = str(io.llm(subset_prompt)).strip()"},
+        {"source_quote": "\"Use the following selected tables and columns to write the SQL.\",\n        subset,\n        \"Question:\","}
+      ]
+    },
+    {
+      "case_id": "vc011",
+      "strategy": "schema_link",
+      "source_contract_verdict": "nonconforms",
+      "source_rationale": "Calls a linker but reintroduces the complete original schema in the SQL request, so unrelated tables are not removed from the solver view.",
+      "semantic_verdict": null,
+      "semantic_rationale": null,
+      "evidence": [
+        {"source_quote": "linked = io.llm(\n        \"Find relevant tables and columns.\\n\""},
+        {"source_quote": "f\"Full schema:\\n{io.schema}\\n\"\n        f\"Linked notes:\\n{linked}\\n\""}
+      ]
+    },
+    {
+      "case_id": "vc012",
+      "strategy": "schema_link",
+      "source_contract_verdict": "nonconforms",
+      "source_rationale": "Uses only one request that asks the solver to link internally and emit SQL; no returned linked subset is passed into a subsequent request.",
+      "semantic_verdict": null,
+      "semantic_rationale": null,
+      "evidence": [
+        {"source_quote": "sql = io.llm(\n        \"Identify the needed tables internally, then write the SQL.\\n\""},
+        {"source_quote": "return _extract_sql(sql)"}
+      ]
+    },
+    {
+      "case_id": "vc013",
+      "strategy": "hint_guard",
+      "source_contract_verdict": "conforms",
+      "source_rationale": "Uses one solver sample, preserves the original schema and question, and conditionally restates the extracted Hint content as a hard requirement without inventing one when absent.",
+      "semantic_verdict": "conforms",
+      "semantic_rationale": "The observed hint prompt affirmatively labels the exact changing Hint content as a hard requirement; the no-hint prompt contains no fabricated requirement.",
+      "evidence": [
+        {"source_quote": "if hint:\n        prompt += f\"Hard requirement from the Hint: {hint}\\n\""},
+        {"probe": "hint_0", "trace_index": 0, "field": "prompt", "quote": "Hint: id must exceed 317.\nHard requirement from the Hint: id must exceed 317."},
+        {"probe": "no_hint", "trace_index": 0, "field": "n", "value": 1}
+      ]
+    },
+    {
+      "case_id": "vc014",
+      "strategy": "hint_guard",
+      "source_contract_verdict": "conforms",
+      "source_rationale": "Uses one sample, carries the original schema/question, and only when a Hint exists appends its extracted content under an affirmative mandatory instruction.",
+      "semantic_verdict": "conforms",
+      "semantic_rationale": "Both changing Hint traces repeat the actual content under an affirmative must-be-satisfied instruction, while the no-hint trace preserves the task without adding a hint.",
+      "evidence": [
+        {"source_quote": "if hint:\n        parts.extend([\"The hint is mandatory and must be satisfied:\", hint])"},
+        {"probe": "hint_1", "trace_index": 0, "field": "prompt", "quote": "The hint is mandatory and must be satisfied:\nid must exceed 941."},
+        {"probe": "no_hint", "trace_index": 0, "field": "prompt", "quote": "Use the original schema and original question."}
+      ]
+    },
+    {
+      "case_id": "vc015",
+      "strategy": "hint_guard",
+      "source_contract_verdict": "nonconforms",
+      "source_rationale": "Merely embeds the original question, including any Hint, and never extracts or affirmatively restates the Hint's content as a hard requirement.",
+      "semantic_verdict": "nonconforms",
+      "semantic_rationale": "The hint traces show only the Hint inside the copied question followed by a generic SQL request, with no affirmative mandatory restatement.",
+      "evidence": [
+        {"source_quote": "f\"Question:\\n{question}\\n\"\n        \"Write a SQL query.\""},
+        {"probe": "hint_0", "trace_index": 0, "field": "prompt", "quote": "Question:\nReturn ledger identifiers.\nHint: id must exceed 317.\nWrite a SQL query."}
+      ]
+    },
+    {
+      "case_id": "vc016",
+      "strategy": "hint_guard",
+      "source_contract_verdict": "nonconforms",
+      "source_rationale": "Adds a fixed date-column hard requirement for every question and does not affirmatively restate the actual Hint content.",
+      "semantic_verdict": "nonconforms",
+      "semantic_rationale": "The no-hint trace fabricates a date requirement, and the hint trace retains that unrelated requirement instead of making the actual numeric Hint mandatory.",
+      "evidence": [
+        {"source_quote": "\"Hard requirement: prefer the most recent date column whenever possible.\\n\""},
+        {"probe": "no_hint", "trace_index": 0, "field": "prompt", "quote": "Hard requirement: prefer the most recent date column whenever possible."},
+        {"probe": "hint_1", "trace_index": 0, "field": "prompt", "quote": "Hint: id must exceed 941.\nHard requirement: prefer the most recent date column whenever possible."}
+      ]
+    },
+    {
+      "case_id": "vc017",
+      "strategy": "two_view",
+      "source_contract_verdict": "conforms",
+      "source_rationale": "Makes two separate, meaningfully different direct-versus-staged construction requests, executes both, and applies the required first-nonempty preference and fallback.",
+      "semantic_verdict": "conforms",
+      "semantic_rationale": "Trace prompts express distinct construction approaches, and the observed empty/nonempty branches select the required candidate while both candidates are executed.",
+      "evidence": [
+        {"probe": "first_empty", "trace_index": 0, "field": "prompt", "quote": "Write a direct SELECT query with straightforward joins and filters."},
+        {"probe": "first_empty", "trace_index": 1, "field": "prompt", "quote": "Write an alternative SQL query using a CTE or staged aggregation approach."},
+        {"probe": "first_empty", "trace_index": 2, "field": "rows", "value": []},
+        {"probe": "first_empty", "trace_index": null, "field": "final", "quote": "SELECT amount FROM ledger"}
+      ]
+    },
+    {
+      "case_id": "vc018",
+      "strategy": "two_view",
+      "source_contract_verdict": "conforms",
+      "source_rationale": "Uses two separate entity-first and metric-first solver requests, executes both outputs, and implements the prescribed preference order.",
+      "semantic_verdict": "conforms",
+      "semantic_rationale": "The two observed prompts encode different construction starting points, and traces confirm correct fallback to the second only when the first is failed or empty.",
+      "evidence": [
+        {"probe": "first_failed", "trace_index": 0, "field": "prompt", "quote": "Start from the main entity table, then join only what is needed."},
+        {"probe": "first_failed", "trace_index": 1, "field": "prompt", "quote": "Start from the requested measure or aggregate, then connect entities."},
+        {"probe": "first_failed", "trace_index": 2, "field": "ok", "value": false},
+        {"probe": "first_failed", "trace_index": null, "field": "final", "quote": "SELECT amount FROM ledger"}
+      ]
+    },
+    {
+      "case_id": "vc019",
+      "strategy": "two_view",
+      "source_contract_verdict": "nonconforms",
+      "source_rationale": "Obtains both candidates from one batched n=2 call, while the contract requires two distinct solver requests and explicitly rejects one batched request as two formulations.",
+      "semantic_verdict": "nonconforms",
+      "semantic_rationale": "Every observed run has a single solver trace with n=2 before execution, so the required two-request construction is absent even though both returned candidates are executed.",
+      "evidence": [
+        {"source_quote": "\"Produce two differently reasoned SQL candidates in one response batch.\\n\""},
+        {"source_quote": "n=2,"},
+        {"probe": "first_empty", "trace_index": 0, "field": "n", "value": 2}
+      ]
+    },
+    {
+      "case_id": "vc020",
+      "strategy": "two_view",
+      "source_contract_verdict": "nonconforms",
+      "source_rationale": "Although it creates and executes two distinct views, it chooses the second whenever the second is successful/nonempty, including when both are nonempty, reversing the required first preference.",
+      "semantic_verdict": "nonconforms",
+      "semantic_rationale": "In the both_nonempty trace both executions have rows, yet the run returns the second SQL rather than the required first SQL.",
+      "evidence": [
+        {"source_quote": "if _successful_nonempty(second_result):\n        return second\n    if _successful_nonempty(first_result):\n        return first"},
+        {"probe": "both_nonempty", "trace_index": 2, "field": "rows", "value": [["A"]]},
+        {"probe": "both_nonempty", "trace_index": 3, "field": "rows", "value": [["B"]]},
+        {"probe": "both_nonempty", "trace_index": null, "field": "final", "quote": "SELECT amount FROM ledger"}
+      ]
+    },
+    {
+      "case_id": "vc021",
+      "strategy": "decompose",
+      "source_contract_verdict": "conforms",
+      "source_rationale": "Requests an ordered two-step plan, answers each subquestion sequentially, passes the first real answer into step two, and passes both real answers into final assembly.",
+      "semantic_verdict": "conforms",
+      "semantic_rationale": "Observed payloads returned from step one and step two are retained in order and both appear in the final assembly prompt; the earlier answer is also available to step two.",
+      "evidence": [
+        {"source_quote": "f\"Subquestion 1:\\n{step1}\\nAnswer 1:\\n{answer1}\\nSubquestion 2:\\n{step2}\""},
+        {"probe": "parts_0", "trace_index": 2, "field": "prompt", "quote": "Answer 1:\nPAYLOAD_70823e45a6d8d0a3\nSubquestion 2:"},
+        {"probe": "parts_0", "trace_index": 3, "field": "prompt", "quote": "Partial answer 1:\nPAYLOAD_70823e45a6d8d0a3\nPartial answer 2:\nPAYLOAD_2b3690a2cbfd29d8"}
+      ]
+    },
+    {
+      "case_id": "vc022",
+      "strategy": "decompose",
+      "source_contract_verdict": "conforms",
+      "source_rationale": "Resolves the two planned steps in order, includes earlier returned answers as allowed context, and supplies both returned partials to final SQL assembly.",
+      "semantic_verdict": "conforms",
+      "semantic_rationale": "The traces preserve the actual first payload in the second-step request and preserve both actual payloads in the final request across both probes.",
+      "evidence": [
+        {"source_quote": "prior = \"\\n\".join(f\"Earlier answer {i + 1}: {value}\" for i, value in enumerate(partials))"},
+        {"probe": "parts_1", "trace_index": 2, "field": "prompt", "quote": "Earlier answer 1: PAYLOAD_6c0a73e0335f9728"},
+        {"probe": "parts_1", "trace_index": 3, "field": "prompt", "quote": "First returned partial answer:\nPAYLOAD_6c0a73e0335f9728\nSecond returned partial answer:\nPAYLOAD_fd0e5e3a0553a363"}
+      ]
+    },
+    {
+      "case_id": "vc023",
+      "strategy": "decompose",
+      "source_contract_verdict": "nonconforms",
+      "source_rationale": "Requests each step but discards both returned answers, then assembles from the subquestion strings rather than the real partial-answer values.",
+      "semantic_verdict": "nonconforms",
+      "semantic_rationale": "The traces contain two distinct returned payloads, but neither payload appears in the final assembly request; only the plan step names are used.",
+      "evidence": [
+        {"source_quote": "io.llm(f\"Answer this subquestion:\\n{steps[0]}\")\n    io.llm(f\"Answer this subquestion:\\n{steps[1]}\")"},
+        {"probe": "parts_0", "trace_index": 1, "field": "response", "quote": "PAYLOAD_70823e45a6d8d0a3"},
+        {"probe": "parts_0", "trace_index": 3, "field": "prompt", "quote": "Subquestion 1:\nindependent-v3-20260910_part_0\nSubquestion 2:\nindependent-v3-20260910_part_1"}
+      ]
+    },
+    {
+      "case_id": "vc024",
+      "strategy": "decompose",
+      "source_contract_verdict": "nonconforms",
+      "source_rationale": "Combines both planned subquestions into one answer request, so it does not request an answer to each subquestion in order as required.",
+      "semantic_verdict": "nonconforms",
+      "semantic_rationale": "Each run shows one combined answer request containing both still-unanswered steps, followed directly by final assembly, rather than two ordered partial-answer requests.",
+      "evidence": [
+        {"source_quote": "combined = io.llm(\n        \"Answer both planned subquestions together in one response.\\n\""},
+        {"probe": "parts_0", "trace_index": 1, "field": "prompt", "quote": "Answer both planned subquestions together in one response."},
+        {"probe": "parts_0", "trace_index": 2, "field": "prompt", "quote": "Combined note:\nUNRELATED"}
+      ]
+    },
+    {
+      "case_id": "vc025",
+      "strategy": "error_classify",
+      "source_contract_verdict": "conforms",
+      "source_rationale": "The source conditionally classifies failure feedback and contains distinct affirmative syntax, schema, and semantics repair actions while carrying schema, question, prior SQL, and exact feedback into repair.",
+      "semantic_verdict": "indeterminate",
+      "semantic_rationale": "The observed classifier reply is SQL text rather than an interpretable class, after which the source fallback selects semantics and emits a logic-repair action for syntax/schema feedback. That establishes the finite data-flow path but cannot separate source classification semantics from a scripted interface reply that failed to provide a class, so semantic conformance is unresolved.",
+      "evidence": [
+        {"source_quote": "if \"syntax\" in lower or \"parse\" in lower:\n        return \"syntax\"\n    return \"semantics\""},
+        {"probe": "syntax_a", "trace_index": 1, "field": "error", "quote": "syntax failure [independent-v3-20260910_syntax_a]"},
+        {"probe": "syntax_a", "trace_index": 2, "field": "response", "quote": "SELECT amount FROM ledger"},
+        {"probe": "syntax_a", "trace_index": 3, "field": "prompt", "quote": "Revise the query logic so the requested meaning is represented."}
+      ]
+    },
+    {
+      "case_id": "vc026",
+      "strategy": "error_classify",
+      "source_contract_verdict": "nonconforms",
+      "source_rationale": "For the supplied finite input, the source's schema branch recognizes no-such-table, no-such-column, or unknown signals but not the literal schema failure feedback, which deterministically falls through to semantics. Having three branches is insufficient when the observed class is routed to the wrong class-specific action.",
+      "semantic_verdict": "nonconforms",
+      "semantic_rationale": "For the observed literal schema-failure feedback, the source's signal rules fall through to semantics and the downstream request explicitly applies a semantics action, so the repair action does not correspond to the observed class.",
+      "evidence": [
+        {"source_quote": "if \"no such table\" in lower or \"no such column\" in lower or \"unknown\" in lower:\n        kind = \"schema\""},
+        {"source_quote": "else:\n        kind = \"semantics\"\n        action = \"Change the query construction to match the question intent.\""},
+        {"probe": "schema_a", "trace_index": 1, "field": "error", "quote": "schema failure [independent-v3-20260910_schema_a]"},
+        {"probe": "schema_a", "trace_index": 2, "field": "prompt", "quote": "Failure class: semantics\nRequired repair action: Change the query construction to match the question intent."}
+      ]
+    },
+    {
+      "case_id": "vc027",
+      "strategy": "error_classify",
+      "source_contract_verdict": "nonconforms",
+      "source_rationale": "After failure it merely lists all three classes and issues a generic retry, without classifying into one class or applying a class-appropriate affirmative action.",
+      "semantic_verdict": "nonconforms",
+      "semantic_rationale": "Across syntax, schema, and semantics traces the same generic might-be-any-class retry is sent; no downstream class-specific repair action is present.",
+      "evidence": [
+        {"source_quote": "\"The SQL failed. It might be syntax, schema, or semantics. Try again.\\n\""},
+        {"probe": "schema_b", "trace_index": 2, "field": "prompt", "quote": "The SQL failed. It might be syntax, schema, or semantics. Try again."}
+      ]
+    },
+    {
+      "case_id": "vc028",
+      "strategy": "error_classify",
+      "source_contract_verdict": "nonconforms",
+      "source_rationale": "Discards the classification response and follows it with a generic rewrite request lacking any class-specific action and the exact feedback.",
+      "semantic_verdict": "nonconforms",
+      "semantic_rationale": "The observed downstream repair request is identical across error classes and contains no classification result, feedback, or affirmative class-appropriate repair action.",
+      "evidence": [
+        {"source_quote": "io.llm(\n        \"Classify the failure as syntax, schema, or semantics.\\n\""},
+        {"source_quote": "return _extract_sql(io.llm(\n        \"Rewrite the SQL in a cleaner form for the original database task.\"\n    ))"},
+        {"probe": "semantics_a", "trace_index": 3, "field": "prompt", "quote": "Rewrite the SQL in a cleaner form for the original database task."}
+      ]
+    },
+    {
+      "case_id": "vc029",
+      "strategy": "format_guard",
+      "source_contract_verdict": "conforms",
+      "source_rationale": "Uses one sample, preserves the supplied schema and question, and affirmatively requires exactly one SQL-fenced answer with no extra prose.",
+      "semantic_verdict": "conforms",
+      "semantic_rationale": "Both traces preserve the changing original question and use an unambiguous affirmative fenced-SQL-only instruction without contradictory prose requests.",
+      "evidence": [
+        {"source_quote": "\"Return exactly one fenced SQL answer and no extra prose.\\n\"\n        \"The answer must be in a ```sql code fence.\\n\""},
+        {"probe": "format_changed_question", "trace_index": 0, "field": "prompt", "quote": "Question:\nReturn ledger amounts."},
+        {"probe": "format_original", "trace_index": 0, "field": "n", "value": 1}
+      ]
+    },
+    {
+      "case_id": "vc030",
+      "strategy": "format_guard",
+      "source_contract_verdict": "conforms",
+      "source_rationale": "Uses one solver sample, includes the original schema/question, and affirmatively requires only one sql-language fenced block with no explanation in both prompt and system text.",
+      "semantic_verdict": "conforms",
+      "semantic_rationale": "Observed prompt and system instructions consistently require fenced SQL only, and the changed question is preserved verbatim.",
+      "evidence": [
+        {"source_quote": "\"Output only a fenced SQL block with no explanation.\",\n        \"Fence language must be sql.\","},
+        {"probe": "format_changed_question", "trace_index": 0, "field": "prompt", "quote": "Question:\nReturn ledger amounts."},
+        {"probe": "format_original", "trace_index": 0, "field": "system", "quote": "You answer with only one fenced SQL block."}
+      ]
+    },
+    {
+      "case_id": "vc031",
+      "strategy": "format_guard",
+      "source_contract_verdict": "nonconforms",
+      "source_rationale": "Affirmatively requests raw SQL without markdown fences, directly contradicting the required fenced-SQL-only format.",
+      "semantic_verdict": "nonconforms",
+      "semantic_rationale": "The observed instruction explicitly says without markdown fences, so it negates rather than enforces the declared format mechanism.",
+      "evidence": [
+        {"source_quote": "\"Return raw SQL only without markdown fences or explanation.\\n\""},
+        {"probe": "format_original", "trace_index": 0, "field": "prompt", "quote": "Return raw SQL only without markdown fences or explanation."}
+      ]
+    },
+    {
+      "case_id": "vc032",
+      "strategy": "format_guard",
+      "source_contract_verdict": "nonconforms",
+      "source_rationale": "Requests a fenced block but also requires reasoning before it and a note after it, contradicting the no-extra-prose requirement.",
+      "semantic_verdict": "nonconforms",
+      "semantic_rationale": "The trace explicitly asks for explanatory prose on both sides of the fence, so the format instruction is affirmative but internally incompatible with the contract.",
+      "evidence": [
+        {"source_quote": "\"Return a fenced SQL block, but first explain the reasoning and then add a brief note after it.\\n\""},
+        {"probe": "format_changed_question", "trace_index": 0, "field": "prompt", "quote": "Return a fenced SQL block, but first explain the reasoning and then add a brief note after it."}
+      ]
+    }
+  ]
+}

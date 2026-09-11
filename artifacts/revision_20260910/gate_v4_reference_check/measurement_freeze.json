@@ -1,0 +1,242 @@
+{
+  "status": "FROZEN_FOR_ONE_REFERENCE_MEASUREMENT",
+  "source_path": "experiment/revision/v4_reference_controls/controls.py",
+  "inventory_path": "artifacts/revision_20260910/gate_v4_references/inventory.json",
+  "author_reference_path": "artifacts/revision_20260910/gate_v4_references/author_reference.json",
+  "source_review_path": "artifacts/revision_20260910/gate_v4_calibration/source_review_corrected.json",
+  "instrument_freeze_path": "artifacts/revision_20260910/gate_v4_regression/instrument_freeze.json",
+  "output": "artifacts/revision_20260910/gate_v4_reference_check/measurement",
+  "salt": "stage28_v4_reference_20260911",
+  "planned_scenarios": 124,
+  "roster": [
+    {
+      "case_id": "gv4r001",
+      "strategy": "schema_link",
+      "callable_name": "control_orchid",
+      "profile": "tables_columns_json"
+    },
+    {
+      "case_id": "gv4r002",
+      "strategy": "repair",
+      "callable_name": "control_cobalt",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r003",
+      "strategy": "error_classify",
+      "callable_name": "control_lantern",
+      "profile": "llm_classifier"
+    },
+    {
+      "case_id": "gv4r004",
+      "strategy": "vote3",
+      "callable_name": "control_mica",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r005",
+      "strategy": "hint_guard",
+      "callable_name": "control_saffron",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r006",
+      "strategy": "decompose",
+      "callable_name": "control_delta",
+      "profile": "dedicated_current_subquestion"
+    },
+    {
+      "case_id": "gv4r007",
+      "strategy": "format_guard",
+      "callable_name": "control_harbor",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r008",
+      "strategy": "two_view",
+      "callable_name": "control_finch",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r009",
+      "strategy": "repair",
+      "callable_name": "control_maple",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r010",
+      "strategy": "schema_link",
+      "callable_name": "control_quartz",
+      "profile": "tables_columns_json"
+    },
+    {
+      "case_id": "gv4r011",
+      "strategy": "vote3",
+      "callable_name": "control_raven",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r012",
+      "strategy": "error_classify",
+      "callable_name": "control_ember",
+      "profile": "local_classifier"
+    },
+    {
+      "case_id": "gv4r013",
+      "strategy": "two_view",
+      "callable_name": "control_pine",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r014",
+      "strategy": "hint_guard",
+      "callable_name": "control_slate",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r015",
+      "strategy": "decompose",
+      "callable_name": "control_iris",
+      "profile": "dedicated_current_subquestion"
+    },
+    {
+      "case_id": "gv4r016",
+      "strategy": "format_guard",
+      "callable_name": "control_willow",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r017",
+      "strategy": "vote3",
+      "callable_name": "control_pebble",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r018",
+      "strategy": "repair",
+      "callable_name": "control_aurora",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r019",
+      "strategy": "schema_link",
+      "callable_name": "control_birch",
+      "profile": "tables_columns_json"
+    },
+    {
+      "case_id": "gv4r020",
+      "strategy": "error_classify",
+      "callable_name": "control_cedar",
+      "profile": "local_classifier"
+    },
+    {
+      "case_id": "gv4r021",
+      "strategy": "hint_guard",
+      "callable_name": "control_lotus",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r022",
+      "strategy": "two_view",
+      "callable_name": "control_marrow",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r023",
+      "strategy": "format_guard",
+      "callable_name": "control_nova",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r024",
+      "strategy": "decompose",
+      "callable_name": "control_flint",
+      "profile": "dedicated_current_subquestion"
+    },
+    {
+      "case_id": "gv4r025",
+      "strategy": "schema_link",
+      "callable_name": "control_spruce",
+      "profile": "tables_columns_json"
+    },
+    {
+      "case_id": "gv4r026",
+      "strategy": "vote3",
+      "callable_name": "control_onyx",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r027",
+      "strategy": "repair",
+      "callable_name": "control_coral",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r028",
+      "strategy": "error_classify",
+      "callable_name": "control_elm",
+      "profile": "llm_classifier"
+    },
+    {
+      "case_id": "gv4r029",
+      "strategy": "two_view",
+      "callable_name": "control_breeze",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r030",
+      "strategy": "format_guard",
+      "callable_name": "control_umber",
+      "profile": null
+    },
+    {
+      "case_id": "gv4r031",
+      "strategy": "decompose",
+      "callable_name": "control_jade",
+      "profile": "dedicated_current_subquestion"
+    },
+    {
+      "case_id": "gv4r032",
+      "strategy": "hint_guard",
+      "callable_name": "control_fog",
+      "profile": null
+    }
+  ],
+  "bindings": {
+    "artifacts/revision_20260910/runtime_gate_bridge/source_manifest.json": "709929f9d351d059b1f91e7daaee679408d37b08508b3dd8fa7bd12d184328db",
+    "experiment/revision/gate_v4_report.py": "600a3d17d9116fafb03056d1b4b132b863edc9b4ab1eefad5d65557e6d3c1fd8",
+    "experiment/revision/gate_v4.py": "9b607eb755d94b86ad74c23bb9505cea2710cb92155bcad94e9e7bd0b3f97fac",
+    "experiment/revision/gate_v3.py": "93e68080d0de32b29d349593e54535857c9acbfacaa42ebd8e70477298ca9827",
+    "experiment/revision/gate_v2.py": "fff11167e55a9f2e18230b145de3f967e2006a53587bb624fc9f32d5e7c7dd18",
+    "experiment/revision/runtime_response_profiles.py": "65baf9b7cf3a79fff3d3814d87dca62fd8af331f08f16536680a9537e986fd57",
+    "experiment/revision/gate_runtime_adapter.py": "529c9d02a58c0613f32de1ab04e60f83d27d5e57052a54f2805da3f08a69b238",
+    "experiment/revision/common_pool.py": "b697e032d19791df06d0af2fbde0af37fe842f104698c5d03ddd112f4c064624",
+    "external/TTHE/text_to_sql/harness_base.py": "a25324fa098706aa74b3396ede06dd5a4b45b584a0b3e0fc7043949287b0d063",
+    "external/TTHE/ase/llm.py": "c57bb5d5adcc58c2c00b9279ff0b8bef372f08d26bd1abbb4e31bbac595f16ec",
+    "review-stage/GATE_V4_CONTRACT.md": "5fb46b099eddbacdcaed278bad5fef0ce56e44d091adcd2e9dfd7bde31f8addb",
+    "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_repair.py": "64b17889de12ebe40aca5f1a5a0f287eb70656bb0f7485b61c8e031463bea2a7",
+    "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_vote3.py": "8910d3ab1a010fc7b1c27ca4c0ddb8698e76b2c8879e6fa8b65826bdc23c5a1b",
+    "external/TTHE/text_to_sql/agents/p2_C_deepseek_s1_schema_link.py": "99542e3e0c703f1c3a0f93649e50416b6035085be55b08335b64b2e901cd46a0",
+    "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_hint_guard.py": "def3837c363969ba6b4b323ff293faff32665bb87ddb4827b70a0d65c46e6b1d",
+    "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_two_view.py": "7263a85db95f0acb132d063f390c6111ce6a12700ba16db18708e6823f8a1f37",
+    "external/TTHE/text_to_sql/agents/p2_C_deepseek_s1_decompose.py": "e353221cc20bce5849d44f7fa92b6d3002bbbd1f2572eed807dae0ef82be11d5",
+    "external/TTHE/text_to_sql/agents/p2_C_deepseek_s0_error_classify.py": "7960116a8c4026e466ef73e509ffcb183ec09b499f50fc515c79678b10864035",
+    "external/TTHE/text_to_sql/agents/neg_uncond_twocall.py": "d9f18f4c7a6219dc3e5468dabeebe9f372c921a15f49ce83501fa7bc33cec815",
+    "external/TTHE/text_to_sql/agents/neg_selectfirst.py": "532fecc72d92349a129317541e60197486731085cbbfd041cbd3386f4871b288",
+    "experiment/revision/gate_controls.py": "27d586acf9bd29463417046ce28648f76ebf495d8c4f3052a9644ad4bc241ff3",
+    "experiment/revision/v4_reference_controls/controls.py": "4df6313a7c9b41b4deccb58192f9de4c7a3b15036d62157aa1e922d61b39bb4e",
+    "artifacts/revision_20260910/gate_v4_references/inventory.json": "783541ce2a35bd850eb35bf1d129e5587c74af7efa4844a7c1848e9a7d81fda3",
+    "artifacts/revision_20260910/gate_v4_references/author_reference.json": "cee4ad1cbd903cd03077ee06385bef148e4d7f0759cd39da167de1f29367849f",
+    "artifacts/revision_20260910/gate_v4_calibration/source_review_corrected.json": "712d351383b2e7bc4faabd02a55e000c73ccf93598756b694775f99ab9d5f632",
+    "artifacts/revision_20260910/gate_v4_regression/instrument_freeze.json": "145fc6a89d5021624e6d91d06241d6e835f36a6ad6814d6711e5cb0535a07909",
+    "artifacts/revision_20260910/gate_v4_references/AUTHOR_STATEMENT.md": "86b4e9738236401fd6ff336399ec3172302eb6fa48c0f83db849651f331aa462",
+    "experiment/revision/independent_gate_v4_measure.py": "ed0a59ea81f2267239b5cdcec0ce2d560a383714e563b66e2ae0b1fcbf291d6f",
+    "experiment/revision/test_independent_gate_v4_measure.py": "a5d4d3ab575f372995edbef9268921ef42d2a2b28f51cde064c7539e314265cf",
+    "experiment/revision/code_responses.py": "ec28862d63909d7df370501f31bbabc5007d071adaa0e1fa3a1d5b0b662a3ba4",
+    "experiment/revision/fresh_runtime.py": "e8ee2447355ae9b2f59c8fb8ebd9b122b4b19466359afe5315ba1c0224d648f6",
+    "experiment/phase2/generate.py": "20d847647c69cf6276df157b1b6763c8ac841b019ee7bbb89fa4b19e04a12d47",
+    "review-stage/GATE_V4_CALIBRATION_PROTOCOL.md": "fb76d5f72fa23c4ac65ed4aba4fd68d3f68cfcf1a3101054d1d381aa9e22bafd",
+    "artifacts/revision_20260910/gate_v4_reference_check/static_reference_confirmation.json": "63721df73f2a3d9bbf72ad6f9b183510e3bc0fca74a29f91bacbeed7b4c8a2cf",
+    "artifacts/revision_20260910/gate_v4_reference_check/scenario_plan.json": "495ec4551c5b6e2c16771935e5a6462138b86785911e14ae6ac7f6dd82495fd2"
+  }
+}
