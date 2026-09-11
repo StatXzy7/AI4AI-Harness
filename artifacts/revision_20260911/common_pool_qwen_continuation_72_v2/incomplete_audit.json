@@ -1,0 +1,37 @@
+{
+  "status": "STOPPED_INCOMPLETE",
+  "pool_id": "common-pool-20260911-qwen-continuation-72-v2",
+  "terminal_evidence": "launcher process is no longer present; no pool.json or POOL_COMPLETE.json was published",
+  "planned_attempts": 72,
+  "task_rows_registered": 14,
+  "completed_attempts": 13,
+  "pending_attempts": 1,
+  "not_started_attempts": 58,
+  "event_count": 94,
+  "unknown_events": [],
+  "last_event": {
+    "kind": "http_start",
+    "logical": 93,
+    "request": {
+      "max_tokens": 16384,
+      "messages": [
+        {
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot2(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): First identify the tables/columns mentioned in the question, then write the SQL against the linked subset.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot2.\n",
+          "role": "user"
+        }
+      ],
+      "model": "Qwen3.8-Max",
+      "n": 1,
+      "seed": 2026091107,
+      "temperature": 0.7
+    },
+    "task": "4e6220628761a468e3933f45864f167e8a8388ce85fe6fdfac18d40ecc38ee05",
+    "time_ns": 1789136153563996800,
+    "url": "https://llmapi.paratera.com/v1/chat/completions"
+  },
+  "pool_json_present": false,
+  "pool_complete_present": false,
+  "scientific_use": "prohibited: incomplete continuation; do not merge, gate, benchmark, or use for quality/cost/superiority claims",
+  "retry_policy": "no automatic retry or resume of pending/unknown provider requests",
+  "ledger_sha256": "ce1faa5e0dc6c31b48e2e9aba50ae4bf660017c2165a32d5de447803506a213a"
+}

@@ -91,6 +91,13 @@ The old 16-cell comparison is reconciled in Appendix~\ref{app:r2}. These are
 instability measurements, not standard errors or a detectability floor for
 the mean treatment effect. They do not establish that every contrast is
 unchanged, or identify what fraction of between-harness disagreement is noise.
+As a direct same-code diagnostic, treating the three bare executions as if
+they were three different population members gives 72.25\% one-run oracle
+accuracy versus 65.75\% for the best fixed execution, a descriptive 6.50\,pp
+gap on the same 400 tasks. This is an artificial resampling comparison: the
+source hash is identical across the three executions, so it is evidence that
+one-run headroom can arise from execution sampling, not evidence for stable
+complementarity.
 
 Let $p_{h,x}$ denote the probability that harness $h$ answers task $x$
 correctly across independent executions. For a pool including bare, define

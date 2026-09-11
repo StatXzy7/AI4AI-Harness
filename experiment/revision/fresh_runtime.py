@@ -101,10 +101,10 @@ class RunStore:
             ends = [e for e in events if e['kind'] == 'http_end']
             logical = {e['id'] for e in events if e['kind'] == 'logical_start'}
             closed = {e['logical'] for e in events if e['kind'] in ('logical_end', 'logical_error')}
-            if (any(e['kind'] == 'http_unknown' for e in events)
+            if (any(e['kind'] in ('http_unknown', 'resource_budget_rejected') for e in events)
                     or starts != {e['attempt'] for e in ends} or len(starts) != len(ends)
                     or logical != closed):
-                raise RuntimeError('Task has unknown or unfinished requests; do not mark it complete')
+                raise RuntimeError('Task has unknown, budget-rejected, or unfinished requests; do not mark it complete')
             usage = [e['usage'] for e in ends]
             def known(item):
                 return (isinstance(item, dict) and
@@ -116,6 +116,10 @@ class RunStore:
                 'http_attempts': len(starts), 'responses_missing_usage': sum(not known(u) for u in usage),
                 'known_total_tokens': sum(u['total_tokens'] for u in usage if known(u)),
                 'total_tokens': sum(u['total_tokens'] for u in usage) if all(known(u) for u in usage) else None,
+                'reserved_output_tokens': sum(e.get('requested_output_tokens', 0)
+                                             for e in events if e['kind'] == 'logical_start'),
+                'reserved_request_bytes': sum(e.get('requested_request_bytes', 0)
+                                             for e in events if e['kind'] == 'logical_start'),
                 'dollar_cost': None}}
             changed = self.db.execute('UPDATE tasks SET result=? WHERE key=? AND result IS NULL',
                                       (canonical(result), key)).rowcount
@@ -129,6 +133,30 @@ class RunStore:
                               for k, v in self.db.execute('SELECT key,result FROM tasks ORDER BY key')],
                     'events': [{'id': i, **json.loads(v)}
                                for i, v in self.db.execute('SELECT id,value FROM events ORDER BY id')]}
+
+
+@dataclass(frozen=True)
+class ResourceBudget:
+    """Per-cell request ceiling enforced before a provider request is sent."""
+
+    max_logical_calls: int
+    max_requested_samples: int
+    max_output_tokens: int
+    max_request_bytes: int = 1_000_000
+
+    def __post_init__(self):
+        if any(type(value) is not int or value < 1 for value in (
+                self.max_logical_calls, self.max_requested_samples,
+                self.max_output_tokens, self.max_request_bytes)):
+            raise ValueError('Resource budget limits must be positive integers')
+
+    @classmethod
+    def from_mapping(cls, value):
+        if value is None:
+            return None
+        if not isinstance(value, dict):
+            raise ValueError('resource_budget must be an object')
+        return cls(**value)
 
 
 @dataclass(frozen=True)
@@ -189,10 +217,19 @@ class AuditedTransport(httpx.BaseTransport):
 
 
 class FreshSolver:
-    def __init__(self, store, settings, api_key):
+    def __init__(self, store, settings, api_key, resource_budget=None):
         if store.manifest['solver'] != asdict(settings) or store.manifest['cache_mode'] != 'off':
             raise ValueError('Solver differs from the acquisition manifest')
+        manifest_budget = ResourceBudget.from_mapping(store.manifest.get('resource_budget'))
+        if manifest_budget != resource_budget:
+            raise ValueError('Resource budget differs from the acquisition manifest')
         self.store, self.settings = store, settings
+        self.resource_budget = resource_budget
+        self.budget_lock = threading.Lock()
+        self.reserved_logical_calls = 0
+        self.reserved_samples = 0
+        self.reserved_output_tokens = 0
+        self.reserved_request_bytes = 0
         # Collector executes one task at a time. Harness-created joined threads
         # share that task; n-sample workers still carry their own sample context.
         self.task = None
@@ -231,6 +268,7 @@ class FreshSolver:
             raise ValueError('Solver needs a bound task and a positive integer sample count')
         settings = self.settings
         effective = settings.temperature_override if settings.temperature_override is not None else temperature
+        reserved_output_tokens = n * settings.max_tokens
         kwargs = {'model': settings.model, 'messages': [{'role': 'system', 'content': system},
                                                        {'role': 'user', 'content': prompt}],
                   'max_tokens': settings.max_tokens}
@@ -238,9 +276,37 @@ class FreshSolver:
             kwargs['extra_body'] = {'thinking': {'type': 'enabled'}, 'reasoning_effort': settings.reasoning_effort}
         else:
             kwargs['temperature'] = effective
+        request_bytes = len(canonical(kwargs).encode('utf-8'))
+        budget = self.resource_budget
+        if budget is not None:
+            with self.budget_lock:
+                next_calls = self.reserved_logical_calls + 1
+                next_samples = self.reserved_samples + n
+                next_output_tokens = self.reserved_output_tokens + reserved_output_tokens
+                next_request_bytes = self.reserved_request_bytes + n * request_bytes
+                if (next_calls > budget.max_logical_calls
+                        or next_samples > budget.max_requested_samples
+                        or next_output_tokens > budget.max_output_tokens
+                        or next_request_bytes > budget.max_request_bytes):
+                    self.store.event(
+                        'resource_budget_rejected', task=task, seq=seq, n=n,
+                        requested_output_tokens=reserved_output_tokens,
+                        reserved_logical_calls=self.reserved_logical_calls,
+                        reserved_samples=self.reserved_samples,
+                        reserved_output_tokens=self.reserved_output_tokens,
+                        reserved_request_bytes=self.reserved_request_bytes,
+                        requested_request_bytes=n * request_bytes,
+                        limits=asdict(budget))
+                    raise RuntimeError('Per-cell resource budget exhausted before provider request')
+                self.reserved_logical_calls = next_calls
+                self.reserved_samples = next_samples
+                self.reserved_output_tokens = next_output_tokens
+                self.reserved_request_bytes = next_request_bytes
         logical = self.store.event('logical_start', task=task, n=n, seq=seq, cache_hit=False,
                                    requested_temperature=temperature, effective_temperature=effective,
-                                   transmitted_temperature=kwargs.get('temperature'), request=kwargs)
+                                   transmitted_temperature=kwargs.get('temperature'), request=kwargs,
+                                   requested_output_tokens=reserved_output_tokens,
+                                   requested_request_bytes=n * request_bytes)
 
         def one(index):
             token = self.sample.set({'task': task, 'logical': logical, 'sample': index})

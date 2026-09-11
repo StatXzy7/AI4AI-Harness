@@ -1,0 +1,18 @@
+{
+  "request": {
+    "model": "Qwen3.8-Max",
+    "messages": "redacted-in-report",
+    "temperature": 0,
+    "max_tokens": 16,
+    "n": 1
+  },
+  "started_unix": 1789127985.014081,
+  "status": 200,
+  "headers": {
+    "content-type": "application/json"
+  },
+  "response_sha256": "688404921a0a9f8511c302c1ad17e8bdbfb45fb8756c6ad9a5fac3ec852f2929",
+  "body_bytes": 719,
+  "elapsed_seconds": 3.7745256423950195,
+  "body": "{\"id\":\"chatcmpl-a3344064-8d3b-96d7-ab8a-9ee0e6a89268\",\"created\":1789127986,\"model\":\"Qwen3.8-Max\",\"object\":\"chat.completion\",\"choices\":[{\"finish_reason\":\"stop\",\"index\":0,\"message\":{\"content\":\"OK\",\"role\":\"assistant\",\"reasoning_content\":\"We need respond to user: \\\"Reply with exactly OK.\\\" Need final exactly OK. Ensure no extra.\",\"provider_specific_fields\":{\"refusal\":null,\"reasoning_content\":\"We need respond to user: \\\"Reply with exactly OK.\\\" Need final exactly OK. Ensure no extra.\"}},\"provider_specific_fields\":{}}],\"usage\":{\"completion_tokens\":24,\"prompt_tokens\":66,\"total_tokens\":90,\"completion_tokens_details\":{\"reasoning_tokens\":21,\"text_tokens\":24},\"prompt_tokens_details\":{\"cached_tokens\":0,\"text_tokens\":66}}}"
+}

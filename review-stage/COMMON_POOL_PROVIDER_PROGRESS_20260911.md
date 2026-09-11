@@ -22,3 +22,13 @@
 ### 2026-09-10 Qwen continuation terminal audit
 
 The separately frozen Qwen continuation stopped on a ReadTimeout at attempt 157 after 22/96 completed requests; 1 request remains unknown and 73 were not started. `pool.json` and `POOL_COMPLETE.json` are absent. All 17 freeze bindings match. The preserved audit is `artifacts/revision_20260911/common_pool_qwen_continuation/incomplete_audit.json`; no candidate-quality analysis or automatic resend is authorized by the frozen protocol.
+
+### 2026-09-11 continuation attempts after the 22/96 stop
+
+Two separately identified continuation directories were observed to terminate and were audited from their SQLite ledgers. `common_pool_qwen_continuation_72_v2` registered 14 of 72 planned attempts: 13 returned results and 1 remained pending after an `http_start` with no matching completion event. `common_pool_qwen_continuation_73` registered 1 of 73 planned attempts: it remained pending after an `http_unknown` event and 72 attempts were not started. Neither directory contains `pool.json` or `POOL_COMPLETE.json`.
+
+The terminal audits are `artifacts/revision_20260911/common_pool_qwen_continuation_72_v2/incomplete_audit.json` and `artifacts/revision_20260911/common_pool_qwen_continuation_73/incomplete_audit.json`. The partial returned responses are retained for provenance only. They are not merged, gate-scored, benchmark-scored, or used for quality, cost, superiority, or A--D claims; pending and unknown provider requests are not retried automatically.
+
+### Offline R3 same-code diagnostic
+
+The existing three cache-off repeats of the same `bare` source on the 400-item core were replayed without model calls. If the three executions are incorrectly treated as three population members, the descriptive one-run oracle is 72.25%, best fixed is 65.75%, and the apparent gap is 6.50 pp; pairwise repeat disagreement is 9.25--10.00%. The result is recorded in `artifacts/revision_20260911/r3_bare_repeat_diagnostic.json`. Because all three source hashes are identical, this is a same-code resampling diagnostic only: it does not estimate `H_stable`, real-vs-clone advantage, selector utility, or any A--D result.

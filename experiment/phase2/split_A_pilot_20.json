@@ -1,0 +1,45 @@
+{
+  "created": "2026-09-11",
+  "purpose": "A provider instrument pilot; selected before any new provider execution",
+  "source_split": "experiment/phase2/split_p2_test_core.json",
+  "source_split_sha256": "c31cfa745381cf19e826213854a008ef03631db852dd2b0dcf3a6b00435377d6",
+  "selection_rule": "sort SHA256(salt|db_id|task_index), take first 20",
+  "selection_salt": "A-pilot-task-selection-20260911-v1",
+  "selected_count": 20,
+  "by_db": {
+    "california_schools": [
+      25
+    ],
+    "codebase_community": [
+      15,
+      55,
+      155,
+      156
+    ],
+    "european_football_2": [
+      107
+    ],
+    "student_club": [
+      32,
+      90,
+      132
+    ],
+    "superhero": [
+      14,
+      26,
+      33,
+      38
+    ],
+    "thrombosis_prediction": [
+      122
+    ],
+    "toxicology": [
+      3,
+      11,
+      86,
+      94,
+      121,
+      141
+    ]
+  }
+}

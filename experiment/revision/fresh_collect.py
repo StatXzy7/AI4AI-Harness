@@ -19,7 +19,8 @@ import tempfile
 import threading
 import time
 
-from experiment.revision.fresh_runtime import FreshSolver, RunStore, SolverSettings, digest
+from experiment.revision.fresh_runtime import (FreshSolver, ResourceBudget, RunStore,
+                                                SolverSettings, digest)
 
 ROOT = Path(__file__).resolve().parents[2]
 TTHE = ROOT / 'external/TTHE'
@@ -55,6 +56,7 @@ def collect(config):
     if 'text_to_sql.bridge' in sys.modules:
         raise RuntimeError('Use a fresh interpreter for each collector invocation')
     settings = SolverSettings(**config['solver'])
+    resource_budget = ResourceBudget.from_mapping(config.get('resource_budget'))
     api_key = os.environ.get(config['api_key_env'])
     if not api_key:
         raise ValueError('Configured provider key is absent')
@@ -102,7 +104,9 @@ def collect(config):
     source_hashes = {str(p.relative_to(ROOT)).replace('\\', '/'): file_hash(p) for p in measured}
     manifest = {'version': 'fresh-acquisition-v1-development',
                 'acquisition_id': config['acquisition_id'], 'cache_mode': 'off',
-                'solver': asdict(settings), 'api_key_env': config['api_key_env'],
+                'solver': asdict(settings),
+                'resource_budget': asdict(resource_budget) if resource_budget else None,
+                'api_key_env': config['api_key_env'],
                 'harnesses': harnesses, 'repeats': repeats, 'tasks_sha256': digest(tasks),
                 'split_sha256': file_hash(split_path), 'source_sha256': source_hashes,
                 'protocol_sha256': file_hash(config['protocol_path']),
@@ -147,7 +151,7 @@ def collect(config):
                         task_key, needs_work = store.begin(cell)
                         if not needs_work:
                             continue
-                        solver = FreshSolver(store, settings, api_key)
+                        solver = FreshSolver(store, settings, api_key, resource_budget)
                         def frozen_solver(prompt, system='', temperature=0.0, n=1, seq=0, _solver=solver):
                             override = getattr(bridge._tls, 'temp_override', None)
                             return _solver(prompt, system, override if override is not None else temperature, n, seq)

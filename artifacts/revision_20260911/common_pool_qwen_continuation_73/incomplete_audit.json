@@ -1,0 +1,32 @@
+{
+  "status": "STOPPED_INCOMPLETE",
+  "pool_id": "common-pool-20260911-qwen-continuation-73",
+  "terminal_evidence": "launcher process is no longer present; no pool.json or POOL_COMPLETE.json was published",
+  "planned_attempts": 73,
+  "task_rows_registered": 1,
+  "completed_attempts": 0,
+  "pending_attempts": 1,
+  "not_started_attempts": 72,
+  "event_count": 4,
+  "unknown_events": [
+    {
+      "attempt": 3,
+      "error_type": "ReadTimeout",
+      "kind": "http_unknown",
+      "task": "f143d2f0ae53ead857eeaf582d40a15f9218c63ced1f65a67460044c5564d109",
+      "time_ns": 1789112038652104800
+    }
+  ],
+  "last_event": {
+    "attempt": 3,
+    "error_type": "ReadTimeout",
+    "kind": "http_unknown",
+    "task": "f143d2f0ae53ead857eeaf582d40a15f9218c63ced1f65a67460044c5564d109",
+    "time_ns": 1789112038652104800
+  },
+  "pool_json_present": false,
+  "pool_complete_present": false,
+  "scientific_use": "prohibited: incomplete continuation; do not merge, gate, benchmark, or use for quality/cost/superiority claims",
+  "retry_policy": "no automatic retry or resume of pending/unknown provider requests",
+  "ledger_sha256": "d69430995d2424f71f0f6fa4a57e9809d65a8fc95e88a11757e30660c14f6bc1"
+}

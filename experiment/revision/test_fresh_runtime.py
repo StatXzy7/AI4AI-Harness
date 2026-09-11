@@ -14,7 +14,8 @@ import threading
 import time
 import unittest
 
-from experiment.revision.fresh_runtime import FreshSolver, RunStore, SolverSettings
+from experiment.revision.fresh_runtime import (FreshSolver, ResourceBudget, RunStore,
+                                                SolverSettings)
 from experiment.revision.fresh_collect import ROOT, fetch_readonly, file_hash, validate_inputs
 
 
@@ -171,6 +172,42 @@ class FreshRuntimeTests(unittest.TestCase):
                     self.assertTrue(all(e['request_id'] for e in ends))
                 finally:
                     solver.close()
+
+    def test_per_cell_resource_budget_rejects_before_provider_request(self):
+        with provider() as (url, calls), tempfile.TemporaryDirectory() as folder:
+            settings = SolverSettings(url, 'fixture')
+            budget = ResourceBudget(max_logical_calls=1, max_requested_samples=1,
+                                   max_output_tokens=settings.max_tokens)
+            manifest = {'solver': asdict(settings), 'cache_mode': 'off',
+                        'resource_budget': asdict(budget)}
+            with RunStore(folder, manifest) as store:
+                solver = FreshSolver(store, settings, 'dummy', budget)
+                try:
+                    key, _ = store.begin({'task': 'budgeted'})
+                    with solver.bind(key):
+                        solver('FIRST')
+                        with self.assertRaisesRegex(RuntimeError, 'resource budget'):
+                            solver('SECOND')
+                    with self.assertRaisesRegex(RuntimeError, 'budget-rejected'):
+                        store.finish(key, {'ok': True})
+                    snapshot = store.snapshot()
+                    self.assertEqual(len(calls), 1)
+                    self.assertIsNone(snapshot['tasks'][0]['result'])
+                    rejected = [e for e in snapshot['events']
+                                if e['kind'] == 'resource_budget_rejected']
+                    self.assertEqual(len(rejected), 1)
+                    self.assertEqual(rejected[0]['limits'], asdict(budget))
+                finally:
+                    solver.close()
+
+    def test_resource_budget_is_bound_to_manifest(self):
+        with provider() as (url, _), tempfile.TemporaryDirectory() as folder:
+            settings = SolverSettings(url, 'fixture')
+            manifest = {'solver': asdict(settings), 'cache_mode': 'off',
+                        'resource_budget': asdict(ResourceBudget(2, 2, 64000))}
+            with RunStore(folder, manifest) as store:
+                with self.assertRaisesRegex(ValueError, 'Resource budget'):
+                    FreshSolver(store, settings, 'dummy', ResourceBudget(1, 1, 32000))
 
     def test_missing_usage_is_unknown_and_thinking_temperature_is_explicit(self):
         with provider() as (url, _), tempfile.TemporaryDirectory() as folder:

@@ -23,6 +23,8 @@
 \subsection{执行波动与稳定互补性问题}
 存档 R3 审核报告：三次关闭缓存重复中，14.5\% 的题目至少发生过一次 bare 正确性变化。canonical R2 重放得到同一 harness 的判定翻转 \RevisionRtwoFlips/28,000（\RevisionRtwoFlipPercent\%）。保留全部 18 个单元（含两个 A 子集仅有单成员的单元）后，子集 D$-$A 从 $\RevisionRtwoCached$ 变为 $\RevisionRtwoOff$ 个百分点，变化 $\RevisionRtwoChange$（95\% CI $\RevisionRtwoChangeCI$）。R2 未采集匹配的 bare 重复，因此其子集提升空间不包含 bare，与主估计目标不同。旧 16 单元比较见附录~\ref{app:r2}。这些是不稳定性测量，既非标准误，也非平均处理效应的可检测下限；它们不能证明所有对比均不变，也不能识别 harness 间分歧有多少来自噪声。
 
+作为直接的同代码诊断，若把三次 bare 执行错误地当作三个不同的种群成员，在相同 400 题上得到 72.25\% 的单次 oracle 准确率、65.75\% 的最佳固定执行准确率，表观差距为 6.50 个百分点。这只是人为的重复采样比较：三次执行的源码哈希相同，因此它说明单次运行提升空间可以来自执行采样，不能作为稳定互补性的证据。
+
 令 $p_{h,x}$ 为 harness $h$ 在独立执行中答对任务 $x$ 的概率。对包含 bare 的种群，定义
 \[
 H_{\rm stable}=\frac1n\sum_x\max_h p_{h,x}-\max_h\frac1n\sum_x p_{h,x}.

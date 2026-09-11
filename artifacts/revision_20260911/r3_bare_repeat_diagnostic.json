@@ -1,0 +1,46 @@
+{
+  "status": "DIAGNOSTIC_ONLY",
+  "purpose": "same-code cache-off repeat diagnostic; not A, not clone comparison, not H_stable estimate, not paper confirmatory evidence",
+  "target": "GLM-5.3-Flash",
+  "harness": "bare",
+  "cache_condition": "no_cache",
+  "n_repeats": 3,
+  "n_tasks": 400,
+  "task_ids_complete": true,
+  "accuracy_by_repeat": {
+    "0": 0.6375,
+    "1": 0.65,
+    "2": 0.6575
+  },
+  "pairwise_repeat_disagreement": {
+    "0-1": 0.0975,
+    "0-2": 0.1,
+    "1-2": 0.0925
+  },
+  "repeat_as_members_observed_oracle_accuracy": 0.7225,
+  "best_fixed_repeat_accuracy": 0.6575,
+  "repeat_as_members_observed_headroom": 0.06500000000000006,
+  "interpretation": "Treating independent executions of one source file as different members creates this descriptive one-run gap; it does not identify stable complementarity because all members share identical code.",
+  "inputs": [
+    {
+      "path": "artifacts/phase2/r3_rep0.jsonl",
+      "sha256": "cb2b0de219f15d0b7ccf2948cefc8a682b6f7237f4663f928fbd6e9a8a8c1827",
+      "bytes": 188534
+    },
+    {
+      "path": "artifacts/phase2/r3_rep1.jsonl",
+      "sha256": "a2e0ced076053b8d9ad0f1c0f9d6922a9547f8347ee1d3ffe3e671f84620cc82",
+      "bytes": 192112
+    },
+    {
+      "path": "artifacts/phase2/r3_rep2.jsonl",
+      "sha256": "623b38d7f8bfae561284fb5fa376f3d9f6a2f73f3b09af9863ec2d48e290231b",
+      "bytes": 193055
+    }
+  ],
+  "row_counts_by_repeat": {
+    "0": 400,
+    "1": 400,
+    "2": 400
+  }
+}

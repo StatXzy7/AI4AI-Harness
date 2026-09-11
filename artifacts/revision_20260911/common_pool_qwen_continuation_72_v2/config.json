@@ -1,0 +1,1385 @@
+{
+  "status": "FROZEN",
+  "pool_id": "common-pool-20260911-qwen-continuation-72-v2",
+  "builder": {
+    "base_url": "https://llmapi.paratera.com/v1",
+    "model": "Qwen3.8-Max",
+    "max_tokens": 16384,
+    "temperature": 0.7,
+    "timeout_seconds": 900
+  },
+  "api_key_env": "PARATERA_API_KEY",
+  "protocol_path": "artifacts/revision_20260911/qwen_timeout_continuation_design_01.md",
+  "output": "artifacts/revision_20260911/common_pool_qwen_continuation_72_v2/qwen",
+  "slots": [
+    {
+      "id": "s20260911-free-00-a0",
+      "generation_seed": 20260911,
+      "slot_index": 0,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260911Slot0",
+      "seeds": [
+        2026091100
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot0(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot0.\n"
+        }
+      ],
+      "identity_slot": "s20260911-free-00",
+      "attempt_index": 0
+    },
+    {
+      "id": "s20260911-free-00-a1",
+      "generation_seed": 20260911,
+      "slot_index": 0,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260911Slot0",
+      "seeds": [
+        2026091101
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot0(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot0.\n"
+        }
+      ],
+      "identity_slot": "s20260911-free-00",
+      "attempt_index": 1
+    },
+    {
+      "id": "s20260911-free-00-a2",
+      "generation_seed": 20260911,
+      "slot_index": 0,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260911Slot0",
+      "seeds": [
+        2026091102
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot0(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot0.\n"
+        }
+      ],
+      "identity_slot": "s20260911-free-00",
+      "attempt_index": 2
+    },
+    {
+      "id": "s20260911-forced-06-a0",
+      "generation_seed": 20260911,
+      "slot_index": 6,
+      "generation_condition": "forced",
+      "strategy": "error_classify",
+      "class_name": "RevisionHarness20260911Slot6",
+      "seeds": [
+        2026091118
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot6(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Generate SQL, execute it; classify the failure (syntax / schema / semantics) and apply a strategy-specific fix for each class, up to 2 rounds.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot6.\n"
+        }
+      ],
+      "identity_slot": "s20260911-forced-06",
+      "attempt_index": 0
+    },
+    {
+      "id": "s20260911-forced-06-a1",
+      "generation_seed": 20260911,
+      "slot_index": 6,
+      "generation_condition": "forced",
+      "strategy": "error_classify",
+      "class_name": "RevisionHarness20260911Slot6",
+      "seeds": [
+        2026091119
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot6(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Generate SQL, execute it; classify the failure (syntax / schema / semantics) and apply a strategy-specific fix for each class, up to 2 rounds.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot6.\n"
+        }
+      ],
+      "identity_slot": "s20260911-forced-06",
+      "attempt_index": 1
+    },
+    {
+      "id": "s20260911-forced-06-a2",
+      "generation_seed": 20260911,
+      "slot_index": 6,
+      "generation_condition": "forced",
+      "strategy": "error_classify",
+      "class_name": "RevisionHarness20260911Slot6",
+      "seeds": [
+        2026091120
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot6(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Generate SQL, execute it; classify the failure (syntax / schema / semantics) and apply a strategy-specific fix for each class, up to 2 rounds.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot6.\n"
+        }
+      ],
+      "identity_slot": "s20260911-forced-06",
+      "attempt_index": 2
+    },
+    {
+      "id": "s20260912-free-00-a0",
+      "generation_seed": 20260912,
+      "slot_index": 0,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260912Slot0",
+      "seeds": [
+        2026091200
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot0(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot0.\n"
+        }
+      ],
+      "identity_slot": "s20260912-free-00",
+      "attempt_index": 0
+    },
+    {
+      "id": "s20260912-free-00-a1",
+      "generation_seed": 20260912,
+      "slot_index": 0,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260912Slot0",
+      "seeds": [
+        2026091201
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot0(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot0.\n"
+        }
+      ],
+      "identity_slot": "s20260912-free-00",
+      "attempt_index": 1
+    },
+    {
+      "id": "s20260912-free-00-a2",
+      "generation_seed": 20260912,
+      "slot_index": 0,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260912Slot0",
+      "seeds": [
+        2026091202
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot0(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot0.\n"
+        }
+      ],
+      "identity_slot": "s20260912-free-00",
+      "attempt_index": 2
+    },
+    {
+      "id": "s20260911-forced-07-a0",
+      "generation_seed": 20260911,
+      "slot_index": 7,
+      "generation_condition": "forced",
+      "strategy": "format_guard",
+      "class_name": "RevisionHarness20260911Slot7",
+      "seeds": [
+        2026091121
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot7(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Emphasize output format and schema fidelity; require the final answer inside a ```sql fence with no extra text.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot7.\n"
+        }
+      ],
+      "identity_slot": "s20260911-forced-07",
+      "attempt_index": 0
+    },
+    {
+      "id": "s20260911-forced-07-a1",
+      "generation_seed": 20260911,
+      "slot_index": 7,
+      "generation_condition": "forced",
+      "strategy": "format_guard",
+      "class_name": "RevisionHarness20260911Slot7",
+      "seeds": [
+        2026091122
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot7(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Emphasize output format and schema fidelity; require the final answer inside a ```sql fence with no extra text.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot7.\n"
+        }
+      ],
+      "identity_slot": "s20260911-forced-07",
+      "attempt_index": 1
+    },
+    {
+      "id": "s20260911-forced-07-a2",
+      "generation_seed": 20260911,
+      "slot_index": 7,
+      "generation_condition": "forced",
+      "strategy": "format_guard",
+      "class_name": "RevisionHarness20260911Slot7",
+      "seeds": [
+        2026091123
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot7(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Emphasize output format and schema fidelity; require the final answer inside a ```sql fence with no extra text.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot7.\n"
+        }
+      ],
+      "identity_slot": "s20260911-forced-07",
+      "attempt_index": 2
+    },
+    {
+      "id": "s20260911-forced-02-a0",
+      "generation_seed": 20260911,
+      "slot_index": 2,
+      "generation_condition": "forced",
+      "strategy": "schema_link",
+      "class_name": "RevisionHarness20260911Slot2",
+      "seeds": [
+        2026091106
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot2(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): First identify the tables/columns mentioned in the question, then write the SQL against the linked subset.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot2.\n"
+        }
+      ],
+      "identity_slot": "s20260911-forced-02",
+      "attempt_index": 0
+    },
+    {
+      "id": "s20260911-forced-02-a1",
+      "generation_seed": 20260911,
+      "slot_index": 2,
+      "generation_condition": "forced",
+      "strategy": "schema_link",
+      "class_name": "RevisionHarness20260911Slot2",
+      "seeds": [
+        2026091107
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot2(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): First identify the tables/columns mentioned in the question, then write the SQL against the linked subset.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot2.\n"
+        }
+      ],
+      "identity_slot": "s20260911-forced-02",
+      "attempt_index": 1
+    },
+    {
+      "id": "s20260911-forced-02-a2",
+      "generation_seed": 20260911,
+      "slot_index": 2,
+      "generation_condition": "forced",
+      "strategy": "schema_link",
+      "class_name": "RevisionHarness20260911Slot2",
+      "seeds": [
+        2026091108
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot2(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): First identify the tables/columns mentioned in the question, then write the SQL against the linked subset.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot2.\n"
+        }
+      ],
+      "identity_slot": "s20260911-forced-02",
+      "attempt_index": 2
+    },
+    {
+      "id": "s20260912-free-02-a0",
+      "generation_seed": 20260912,
+      "slot_index": 2,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260912Slot2",
+      "seeds": [
+        2026091206
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot2(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot2.\n"
+        }
+      ],
+      "identity_slot": "s20260912-free-02",
+      "attempt_index": 0
+    },
+    {
+      "id": "s20260912-free-02-a1",
+      "generation_seed": 20260912,
+      "slot_index": 2,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260912Slot2",
+      "seeds": [
+        2026091207
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot2(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot2.\n"
+        }
+      ],
+      "identity_slot": "s20260912-free-02",
+      "attempt_index": 1
+    },
+    {
+      "id": "s20260912-free-02-a2",
+      "generation_seed": 20260912,
+      "slot_index": 2,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260912Slot2",
+      "seeds": [
+        2026091208
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot2(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot2.\n"
+        }
+      ],
+      "identity_slot": "s20260912-free-02",
+      "attempt_index": 2
+    },
+    {
+      "id": "s20260912-forced-05-a0",
+      "generation_seed": 20260912,
+      "slot_index": 5,
+      "generation_condition": "forced",
+      "strategy": "decompose",
+      "class_name": "RevisionHarness20260912Slot5",
+      "seeds": [
+        2026091215
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot5(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Break the question into ordered sub-questions, answer each with a small LLM call, then assemble the final SQL.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot5.\n"
+        }
+      ],
+      "identity_slot": "s20260912-forced-05",
+      "attempt_index": 0
+    },
+    {
+      "id": "s20260912-forced-05-a1",
+      "generation_seed": 20260912,
+      "slot_index": 5,
+      "generation_condition": "forced",
+      "strategy": "decompose",
+      "class_name": "RevisionHarness20260912Slot5",
+      "seeds": [
+        2026091216
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot5(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Break the question into ordered sub-questions, answer each with a small LLM call, then assemble the final SQL.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot5.\n"
+        }
+      ],
+      "identity_slot": "s20260912-forced-05",
+      "attempt_index": 1
+    },
+    {
+      "id": "s20260912-forced-05-a2",
+      "generation_seed": 20260912,
+      "slot_index": 5,
+      "generation_condition": "forced",
+      "strategy": "decompose",
+      "class_name": "RevisionHarness20260912Slot5",
+      "seeds": [
+        2026091217
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot5(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Break the question into ordered sub-questions, answer each with a small LLM call, then assemble the final SQL.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot5.\n"
+        }
+      ],
+      "identity_slot": "s20260912-forced-05",
+      "attempt_index": 2
+    },
+    {
+      "id": "s20260911-forced-05-a0",
+      "generation_seed": 20260911,
+      "slot_index": 5,
+      "generation_condition": "forced",
+      "strategy": "decompose",
+      "class_name": "RevisionHarness20260911Slot5",
+      "seeds": [
+        2026091115
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot5(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Break the question into ordered sub-questions, answer each with a small LLM call, then assemble the final SQL.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot5.\n"
+        }
+      ],
+      "identity_slot": "s20260911-forced-05",
+      "attempt_index": 0
+    },
+    {
+      "id": "s20260911-forced-05-a1",
+      "generation_seed": 20260911,
+      "slot_index": 5,
+      "generation_condition": "forced",
+      "strategy": "decompose",
+      "class_name": "RevisionHarness20260911Slot5",
+      "seeds": [
+        2026091116
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot5(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Break the question into ordered sub-questions, answer each with a small LLM call, then assemble the final SQL.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot5.\n"
+        }
+      ],
+      "identity_slot": "s20260911-forced-05",
+      "attempt_index": 1
+    },
+    {
+      "id": "s20260911-forced-05-a2",
+      "generation_seed": 20260911,
+      "slot_index": 5,
+      "generation_condition": "forced",
+      "strategy": "decompose",
+      "class_name": "RevisionHarness20260911Slot5",
+      "seeds": [
+        2026091117
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot5(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Break the question into ordered sub-questions, answer each with a small LLM call, then assemble the final SQL.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot5.\n"
+        }
+      ],
+      "identity_slot": "s20260911-forced-05",
+      "attempt_index": 2
+    },
+    {
+      "id": "s20260911-forced-00-a0",
+      "generation_seed": 20260911,
+      "slot_index": 0,
+      "generation_condition": "forced",
+      "strategy": "repair",
+      "class_name": "RevisionHarness20260911Slot0",
+      "seeds": [
+        2026091100
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot0(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Generate SQL, then EXECUTE it via self.execute(); if execution fails, feed the exact SQLite error back and regenerate up to 2 times.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot0.\n"
+        }
+      ],
+      "identity_slot": "s20260911-forced-00",
+      "attempt_index": 0
+    },
+    {
+      "id": "s20260911-forced-00-a1",
+      "generation_seed": 20260911,
+      "slot_index": 0,
+      "generation_condition": "forced",
+      "strategy": "repair",
+      "class_name": "RevisionHarness20260911Slot0",
+      "seeds": [
+        2026091101
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot0(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Generate SQL, then EXECUTE it via self.execute(); if execution fails, feed the exact SQLite error back and regenerate up to 2 times.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot0.\n"
+        }
+      ],
+      "identity_slot": "s20260911-forced-00",
+      "attempt_index": 1
+    },
+    {
+      "id": "s20260911-forced-00-a2",
+      "generation_seed": 20260911,
+      "slot_index": 0,
+      "generation_condition": "forced",
+      "strategy": "repair",
+      "class_name": "RevisionHarness20260911Slot0",
+      "seeds": [
+        2026091102
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot0(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Generate SQL, then EXECUTE it via self.execute(); if execution fails, feed the exact SQLite error back and regenerate up to 2 times.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot0.\n"
+        }
+      ],
+      "identity_slot": "s20260911-forced-00",
+      "attempt_index": 2
+    },
+    {
+      "id": "s20260912-free-04-a0",
+      "generation_seed": 20260912,
+      "slot_index": 4,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260912Slot4",
+      "seeds": [
+        2026091212
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot4(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot4.\n"
+        }
+      ],
+      "identity_slot": "s20260912-free-04",
+      "attempt_index": 0
+    },
+    {
+      "id": "s20260912-free-04-a1",
+      "generation_seed": 20260912,
+      "slot_index": 4,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260912Slot4",
+      "seeds": [
+        2026091213
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot4(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot4.\n"
+        }
+      ],
+      "identity_slot": "s20260912-free-04",
+      "attempt_index": 1
+    },
+    {
+      "id": "s20260912-free-04-a2",
+      "generation_seed": 20260912,
+      "slot_index": 4,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260912Slot4",
+      "seeds": [
+        2026091214
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot4(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot4.\n"
+        }
+      ],
+      "identity_slot": "s20260912-free-04",
+      "attempt_index": 2
+    },
+    {
+      "id": "s20260911-forced-04-a0",
+      "generation_seed": 20260911,
+      "slot_index": 4,
+      "generation_condition": "forced",
+      "strategy": "two_view",
+      "class_name": "RevisionHarness20260911Slot4",
+      "seeds": [
+        2026091112
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot4(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Write the SQL from two independent formulations (e.g. join-based and subquery-based), execute both, and return the result that is non-empty or, if both are, the first.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot4.\n"
+        }
+      ],
+      "identity_slot": "s20260911-forced-04",
+      "attempt_index": 0
+    },
+    {
+      "id": "s20260911-forced-04-a1",
+      "generation_seed": 20260911,
+      "slot_index": 4,
+      "generation_condition": "forced",
+      "strategy": "two_view",
+      "class_name": "RevisionHarness20260911Slot4",
+      "seeds": [
+        2026091113
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot4(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Write the SQL from two independent formulations (e.g. join-based and subquery-based), execute both, and return the result that is non-empty or, if both are, the first.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot4.\n"
+        }
+      ],
+      "identity_slot": "s20260911-forced-04",
+      "attempt_index": 1
+    },
+    {
+      "id": "s20260911-forced-04-a2",
+      "generation_seed": 20260911,
+      "slot_index": 4,
+      "generation_condition": "forced",
+      "strategy": "two_view",
+      "class_name": "RevisionHarness20260911Slot4",
+      "seeds": [
+        2026091114
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot4(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Write the SQL from two independent formulations (e.g. join-based and subquery-based), execute both, and return the result that is non-empty or, if both are, the first.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot4.\n"
+        }
+      ],
+      "identity_slot": "s20260911-forced-04",
+      "attempt_index": 2
+    },
+    {
+      "id": "s20260912-free-03-a0",
+      "generation_seed": 20260912,
+      "slot_index": 3,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260912Slot3",
+      "seeds": [
+        2026091209
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot3(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot3.\n"
+        }
+      ],
+      "identity_slot": "s20260912-free-03",
+      "attempt_index": 0
+    },
+    {
+      "id": "s20260912-free-03-a1",
+      "generation_seed": 20260912,
+      "slot_index": 3,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260912Slot3",
+      "seeds": [
+        2026091210
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot3(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot3.\n"
+        }
+      ],
+      "identity_slot": "s20260912-free-03",
+      "attempt_index": 1
+    },
+    {
+      "id": "s20260912-free-03-a2",
+      "generation_seed": 20260912,
+      "slot_index": 3,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260912Slot3",
+      "seeds": [
+        2026091211
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot3(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot3.\n"
+        }
+      ],
+      "identity_slot": "s20260912-free-03",
+      "attempt_index": 2
+    },
+    {
+      "id": "s20260912-free-06-a0",
+      "generation_seed": 20260912,
+      "slot_index": 6,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260912Slot6",
+      "seeds": [
+        2026091218
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot6(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot6.\n"
+        }
+      ],
+      "identity_slot": "s20260912-free-06",
+      "attempt_index": 0
+    },
+    {
+      "id": "s20260912-free-06-a1",
+      "generation_seed": 20260912,
+      "slot_index": 6,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260912Slot6",
+      "seeds": [
+        2026091219
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot6(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot6.\n"
+        }
+      ],
+      "identity_slot": "s20260912-free-06",
+      "attempt_index": 1
+    },
+    {
+      "id": "s20260912-free-06-a2",
+      "generation_seed": 20260912,
+      "slot_index": 6,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260912Slot6",
+      "seeds": [
+        2026091220
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot6(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot6.\n"
+        }
+      ],
+      "identity_slot": "s20260912-free-06",
+      "attempt_index": 2
+    },
+    {
+      "id": "s20260912-forced-04-a0",
+      "generation_seed": 20260912,
+      "slot_index": 4,
+      "generation_condition": "forced",
+      "strategy": "two_view",
+      "class_name": "RevisionHarness20260912Slot4",
+      "seeds": [
+        2026091212
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot4(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Write the SQL from two independent formulations (e.g. join-based and subquery-based), execute both, and return the result that is non-empty or, if both are, the first.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot4.\n"
+        }
+      ],
+      "identity_slot": "s20260912-forced-04",
+      "attempt_index": 0
+    },
+    {
+      "id": "s20260912-forced-04-a1",
+      "generation_seed": 20260912,
+      "slot_index": 4,
+      "generation_condition": "forced",
+      "strategy": "two_view",
+      "class_name": "RevisionHarness20260912Slot4",
+      "seeds": [
+        2026091213
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot4(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Write the SQL from two independent formulations (e.g. join-based and subquery-based), execute both, and return the result that is non-empty or, if both are, the first.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot4.\n"
+        }
+      ],
+      "identity_slot": "s20260912-forced-04",
+      "attempt_index": 1
+    },
+    {
+      "id": "s20260912-forced-04-a2",
+      "generation_seed": 20260912,
+      "slot_index": 4,
+      "generation_condition": "forced",
+      "strategy": "two_view",
+      "class_name": "RevisionHarness20260912Slot4",
+      "seeds": [
+        2026091214
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot4(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Write the SQL from two independent formulations (e.g. join-based and subquery-based), execute both, and return the result that is non-empty or, if both are, the first.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot4.\n"
+        }
+      ],
+      "identity_slot": "s20260912-forced-04",
+      "attempt_index": 2
+    },
+    {
+      "id": "s20260911-forced-01-a0",
+      "generation_seed": 20260911,
+      "slot_index": 1,
+      "generation_condition": "forced",
+      "strategy": "vote3",
+      "class_name": "RevisionHarness20260911Slot1",
+      "seeds": [
+        2026091103
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot1(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Ask the solver for 3 independent SQL attempts (n=3, temperature=0.7), execute all that parse, return the majority result.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot1.\n"
+        }
+      ],
+      "identity_slot": "s20260911-forced-01",
+      "attempt_index": 0
+    },
+    {
+      "id": "s20260911-forced-01-a1",
+      "generation_seed": 20260911,
+      "slot_index": 1,
+      "generation_condition": "forced",
+      "strategy": "vote3",
+      "class_name": "RevisionHarness20260911Slot1",
+      "seeds": [
+        2026091104
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot1(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Ask the solver for 3 independent SQL attempts (n=3, temperature=0.7), execute all that parse, return the majority result.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot1.\n"
+        }
+      ],
+      "identity_slot": "s20260911-forced-01",
+      "attempt_index": 1
+    },
+    {
+      "id": "s20260911-forced-01-a2",
+      "generation_seed": 20260911,
+      "slot_index": 1,
+      "generation_condition": "forced",
+      "strategy": "vote3",
+      "class_name": "RevisionHarness20260911Slot1",
+      "seeds": [
+        2026091105
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot1(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Ask the solver for 3 independent SQL attempts (n=3, temperature=0.7), execute all that parse, return the majority result.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot1.\n"
+        }
+      ],
+      "identity_slot": "s20260911-forced-01",
+      "attempt_index": 2
+    },
+    {
+      "id": "s20260912-forced-02-a0",
+      "generation_seed": 20260912,
+      "slot_index": 2,
+      "generation_condition": "forced",
+      "strategy": "schema_link",
+      "class_name": "RevisionHarness20260912Slot2",
+      "seeds": [
+        2026091206
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot2(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): First identify the tables/columns mentioned in the question, then write the SQL against the linked subset.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot2.\n"
+        }
+      ],
+      "identity_slot": "s20260912-forced-02",
+      "attempt_index": 0
+    },
+    {
+      "id": "s20260912-forced-02-a1",
+      "generation_seed": 20260912,
+      "slot_index": 2,
+      "generation_condition": "forced",
+      "strategy": "schema_link",
+      "class_name": "RevisionHarness20260912Slot2",
+      "seeds": [
+        2026091207
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot2(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): First identify the tables/columns mentioned in the question, then write the SQL against the linked subset.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot2.\n"
+        }
+      ],
+      "identity_slot": "s20260912-forced-02",
+      "attempt_index": 1
+    },
+    {
+      "id": "s20260912-forced-02-a2",
+      "generation_seed": 20260912,
+      "slot_index": 2,
+      "generation_condition": "forced",
+      "strategy": "schema_link",
+      "class_name": "RevisionHarness20260912Slot2",
+      "seeds": [
+        2026091208
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot2(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): First identify the tables/columns mentioned in the question, then write the SQL against the linked subset.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot2.\n"
+        }
+      ],
+      "identity_slot": "s20260912-forced-02",
+      "attempt_index": 2
+    },
+    {
+      "id": "s20260912-forced-00-a0",
+      "generation_seed": 20260912,
+      "slot_index": 0,
+      "generation_condition": "forced",
+      "strategy": "repair",
+      "class_name": "RevisionHarness20260912Slot0",
+      "seeds": [
+        2026091200
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot0(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Generate SQL, then EXECUTE it via self.execute(); if execution fails, feed the exact SQLite error back and regenerate up to 2 times.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot0.\n"
+        }
+      ],
+      "identity_slot": "s20260912-forced-00",
+      "attempt_index": 0
+    },
+    {
+      "id": "s20260912-forced-00-a1",
+      "generation_seed": 20260912,
+      "slot_index": 0,
+      "generation_condition": "forced",
+      "strategy": "repair",
+      "class_name": "RevisionHarness20260912Slot0",
+      "seeds": [
+        2026091201
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot0(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Generate SQL, then EXECUTE it via self.execute(); if execution fails, feed the exact SQLite error back and regenerate up to 2 times.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot0.\n"
+        }
+      ],
+      "identity_slot": "s20260912-forced-00",
+      "attempt_index": 1
+    },
+    {
+      "id": "s20260912-forced-00-a2",
+      "generation_seed": 20260912,
+      "slot_index": 0,
+      "generation_condition": "forced",
+      "strategy": "repair",
+      "class_name": "RevisionHarness20260912Slot0",
+      "seeds": [
+        2026091202
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot0(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Generate SQL, then EXECUTE it via self.execute(); if execution fails, feed the exact SQLite error back and regenerate up to 2 times.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot0.\n"
+        }
+      ],
+      "identity_slot": "s20260912-forced-00",
+      "attempt_index": 2
+    },
+    {
+      "id": "s20260911-free-07-a0",
+      "generation_seed": 20260911,
+      "slot_index": 7,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260911Slot7",
+      "seeds": [
+        2026091121
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot7(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot7.\n"
+        }
+      ],
+      "identity_slot": "s20260911-free-07",
+      "attempt_index": 0
+    },
+    {
+      "id": "s20260911-free-07-a1",
+      "generation_seed": 20260911,
+      "slot_index": 7,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260911Slot7",
+      "seeds": [
+        2026091122
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot7(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot7.\n"
+        }
+      ],
+      "identity_slot": "s20260911-free-07",
+      "attempt_index": 1
+    },
+    {
+      "id": "s20260911-free-07-a2",
+      "generation_seed": 20260911,
+      "slot_index": 7,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260911Slot7",
+      "seeds": [
+        2026091123
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot7(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot7.\n"
+        }
+      ],
+      "identity_slot": "s20260911-free-07",
+      "attempt_index": 2
+    },
+    {
+      "id": "s20260912-forced-03-a0",
+      "generation_seed": 20260912,
+      "slot_index": 3,
+      "generation_condition": "forced",
+      "strategy": "hint_guard",
+      "class_name": "RevisionHarness20260912Slot3",
+      "seeds": [
+        2026091209
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot3(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Parse the 'Hint:' line from the question and restate its constraints as hard requirements before writing SQL.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot3.\n"
+        }
+      ],
+      "identity_slot": "s20260912-forced-03",
+      "attempt_index": 0
+    },
+    {
+      "id": "s20260912-forced-03-a1",
+      "generation_seed": 20260912,
+      "slot_index": 3,
+      "generation_condition": "forced",
+      "strategy": "hint_guard",
+      "class_name": "RevisionHarness20260912Slot3",
+      "seeds": [
+        2026091210
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot3(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Parse the 'Hint:' line from the question and restate its constraints as hard requirements before writing SQL.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot3.\n"
+        }
+      ],
+      "identity_slot": "s20260912-forced-03",
+      "attempt_index": 1
+    },
+    {
+      "id": "s20260912-forced-03-a2",
+      "generation_seed": 20260912,
+      "slot_index": 3,
+      "generation_condition": "forced",
+      "strategy": "hint_guard",
+      "class_name": "RevisionHarness20260912Slot3",
+      "seeds": [
+        2026091211
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot3(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nSTRATEGY (implement it faithfully, in the control flow -- not only in the prompt): Parse the 'Hint:' line from the question and restate its constraints as hard requirements before writing SQL.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot3.\n"
+        }
+      ],
+      "identity_slot": "s20260912-forced-03",
+      "attempt_index": 2
+    },
+    {
+      "id": "s20260911-free-01-a0",
+      "generation_seed": 20260911,
+      "slot_index": 1,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260911Slot1",
+      "seeds": [
+        2026091103
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot1(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot1.\n"
+        }
+      ],
+      "identity_slot": "s20260911-free-01",
+      "attempt_index": 0
+    },
+    {
+      "id": "s20260911-free-01-a1",
+      "generation_seed": 20260911,
+      "slot_index": 1,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260911Slot1",
+      "seeds": [
+        2026091104
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot1(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot1.\n"
+        }
+      ],
+      "identity_slot": "s20260911-free-01",
+      "attempt_index": 1
+    },
+    {
+      "id": "s20260911-free-01-a2",
+      "generation_seed": 20260911,
+      "slot_index": 1,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260911Slot1",
+      "seeds": [
+        2026091105
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot1(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot1.\n"
+        }
+      ],
+      "identity_slot": "s20260911-free-01",
+      "attempt_index": 2
+    },
+    {
+      "id": "s20260912-free-07-a0",
+      "generation_seed": 20260912,
+      "slot_index": 7,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260912Slot7",
+      "seeds": [
+        2026091221
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot7(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot7.\n"
+        }
+      ],
+      "identity_slot": "s20260912-free-07",
+      "attempt_index": 0
+    },
+    {
+      "id": "s20260912-free-07-a1",
+      "generation_seed": 20260912,
+      "slot_index": 7,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260912Slot7",
+      "seeds": [
+        2026091222
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot7(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot7.\n"
+        }
+      ],
+      "identity_slot": "s20260912-free-07",
+      "attempt_index": 1
+    },
+    {
+      "id": "s20260912-free-07-a2",
+      "generation_seed": 20260912,
+      "slot_index": 7,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260912Slot7",
+      "seeds": [
+        2026091223
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot7(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot7.\n"
+        }
+      ],
+      "identity_slot": "s20260912-free-07",
+      "attempt_index": 2
+    },
+    {
+      "id": "s20260912-free-05-a0",
+      "generation_seed": 20260912,
+      "slot_index": 5,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260912Slot5",
+      "seeds": [
+        2026091215
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot5(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot5.\n"
+        }
+      ],
+      "identity_slot": "s20260912-free-05",
+      "attempt_index": 0
+    },
+    {
+      "id": "s20260912-free-05-a1",
+      "generation_seed": 20260912,
+      "slot_index": 5,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260912Slot5",
+      "seeds": [
+        2026091216
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot5(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot5.\n"
+        }
+      ],
+      "identity_slot": "s20260912-free-05",
+      "attempt_index": 1
+    },
+    {
+      "id": "s20260912-free-05-a2",
+      "generation_seed": 20260912,
+      "slot_index": 5,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260912Slot5",
+      "seeds": [
+        2026091217
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260912Slot5(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260912Slot5.\n"
+        }
+      ],
+      "identity_slot": "s20260912-free-05",
+      "attempt_index": 2
+    },
+    {
+      "id": "s20260911-free-03-a0",
+      "generation_seed": 20260911,
+      "slot_index": 3,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260911Slot3",
+      "seeds": [
+        2026091109
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot3(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot3.\n"
+        }
+      ],
+      "identity_slot": "s20260911-free-03",
+      "attempt_index": 0
+    },
+    {
+      "id": "s20260911-free-03-a1",
+      "generation_seed": 20260911,
+      "slot_index": 3,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260911Slot3",
+      "seeds": [
+        2026091110
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot3(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot3.\n"
+        }
+      ],
+      "identity_slot": "s20260911-free-03",
+      "attempt_index": 1
+    },
+    {
+      "id": "s20260911-free-03-a2",
+      "generation_seed": 20260911,
+      "slot_index": 3,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260911Slot3",
+      "seeds": [
+        2026091111
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot3(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot3.\n"
+        }
+      ],
+      "identity_slot": "s20260911-free-03",
+      "attempt_index": 2
+    },
+    {
+      "id": "s20260911-free-06-a0",
+      "generation_seed": 20260911,
+      "slot_index": 6,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260911Slot6",
+      "seeds": [
+        2026091118
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot6(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot6.\n"
+        }
+      ],
+      "identity_slot": "s20260911-free-06",
+      "attempt_index": 0
+    },
+    {
+      "id": "s20260911-free-06-a1",
+      "generation_seed": 20260911,
+      "slot_index": 6,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260911Slot6",
+      "seeds": [
+        2026091119
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot6(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot6.\n"
+        }
+      ],
+      "identity_slot": "s20260911-free-06",
+      "attempt_index": 1
+    },
+    {
+      "id": "s20260911-free-06-a2",
+      "generation_seed": 20260911,
+      "slot_index": 6,
+      "generation_condition": "free",
+      "strategy": null,
+      "class_name": "RevisionHarness20260911Slot6",
+      "seeds": [
+        2026091120
+      ],
+      "messages": [
+        {
+          "role": "user",
+          "content": "You are designing an executable HARNESS that wraps a FROZEN weak solver for Text-to-SQL.\n\nThe harness is a Python class:\n```python\nfrom ..harness_base import SQLHarness\nfrom .. import bridge\n\nclass RevisionHarness20260911Slot6(SQLHarness):\n    def solve(self, question: str) -> str:\n        # self.schema: str, self.llm(prompt, system=\"\", temperature=0.0, n=1)\n        # self.execute(sql) -> {\"ok\": bool, \"rows\": [...], \"error\": str}\n        # bridge.extract_sql(text) -> str\n        ...\n        return final_sql_string\n```\n\nYour task: invent an improvement over a single greedy generation call, and implement it. You\nchoose what the improvement is -- no mechanism is prescribed. Make it a real change to the\ncontrol flow, not only a longer prompt.\n\nDeclare the mechanism you implemented by putting EXACTLY ONE of these lines as the\nsecond line of the file, immediately after the docstring:\n\n    # MECHANISM: repair      -- you execute SQL and feed execution errors back for regeneration\n    # MECHANISM: vote        -- you draw multiple samples and select among them\n    # MECHANISM: twostage    -- an earlier LLM stage produces an artifact a later stage consumes\n    # MECHANISM: plain       -- a single generation call, no control-flow mechanism\n\nDeclare what you ACTUALLY built. The declaration is checked against the execution trace.\n\nWrite the COMPLETE Python file. First line: a one-sentence docstring describing the mechanism.\nClass name MUST be exactly RevisionHarness20260911Slot6.\n"
+        }
+      ],
+      "identity_slot": "s20260911-free-06",
+      "attempt_index": 2
+    }
+  ],
+  "source_ledger": "artifacts/revision_20260911/common_pool_qwen_continuation/qwen/ledger.sqlite"
+}

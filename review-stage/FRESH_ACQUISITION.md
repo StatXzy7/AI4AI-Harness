@@ -10,6 +10,7 @@
 - 每个 cell 创建新的 solver，任务身份不可换绑；harness 的已 join 线程共享当前任务，模型多样本线程分别记录 sample 身份。所有请求直接到提供方客户端，无应用层响应缓存。
 - SDK 隐式重试、HTTP 重定向及环境代理关闭。显式 HTTP 状态重试由 manifest 记录；连接/读取失败保留 unknown，不自动重新请求。没有旧客户端的额外超时后台线程池。
 - HTTP transport 记录每次尝试的实际发送内容、状态、响应 ID、request ID、原始 JSON 响应及 usage。逻辑调用数、请求样本数、HTTP 尝试数分别统计；缺失 usage 使总 tokens 保持 null，同时单列已知 tokens。金额始终为 null，不能由 fixture tokens 推算预算或账单。
+- 可选的 `resource_budget` 绑定到 manifest，并在每个 cell 的 provider 请求发出前限制逻辑调用数、请求样本数、请求体字节数和请求的最大输出 token 额度。超限请求写入 `resource_budget_rejected` 并停止该 cell；账本同时记录已保留的输出 token 与请求体字节预算。该合同提供固定的执行上限，不能把它解释成提供方美元账单或精确 token 计费。
 - 完成 cell 前检查该任务全部 HTTP 和逻辑事件是否闭合；unknown 或未闭合请求拒绝完成。发生 source/data 变化，或遗留后台线程，持久记录 `run_invalid`；即使之后恢复原文件，也不能重新接受旧完成行。
 - 候选源码逐 cell 校验，指定源码目录与数据库在结束时再整体核验。留存示例绑定 508 个 Python 文件，范围为 `ase`、`text_to_sql` 递归目录及两个新模块；包版本另列。不是任意外部导入依赖、系统库或提供方版本的完整冻结。
 
@@ -47,7 +48,7 @@ python -m experiment.revision.fresh_collect --config reviewed_acquisition.json
 python -m unittest experiment.revision.test_fresh_runtime -v
 ```
 
-配置必须显式提供 `acquisition_id`、`cache_mode: off`、`solver`、`api_key_env`、`dataset_root`、`split_path`、`protocol_path`、`repeats`、`harnesses` 和 `output`。每个 harness 项为 `id` 与项目相对 `source`；clone 可使用不同 id 引用同一份源码。示例构造和实际命令在集成测试中完整保留。持久权威记录是输出目录的 `ledger.sqlite`，成功导出的 `snapshot.json` 是其可读快照。
+配置必须显式提供 `acquisition_id`、`cache_mode: off`、`solver`、`api_key_env`、`dataset_root`、`split_path`、`protocol_path`、`repeats`、`harnesses` 和 `output`。正式固定资源实验还必须提供 `resource_budget`，包含正整数 `max_logical_calls`、`max_requested_samples`、`max_output_tokens` 和 `max_request_bytes`。每个 harness 项为 `id` 与项目相对 `source`；clone 可使用不同 id 引用同一份源码。示例构造和实际命令在集成测试中完整保留。持久权威记录是输出目录的 `ledger.sqlite`，成功导出的 `snapshot.json` 是其可读快照。
 
 ## 仍未完成，不能据此关闭的要求
 

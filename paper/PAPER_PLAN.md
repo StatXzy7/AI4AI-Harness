@@ -7,7 +7,7 @@
 
 ## 当前论文状态(prompt-1 修订完成)
 
-**标题:** Behavioral Collapse in AI-Generated Harness Populations(短标题,修复断词)
+**标题:** From One-Run Diversity to Stable Complementarity in AI-Generated Harness Populations
 **主文:** 9 页(§1–8),共 12 页(AI 声明 p10 不计页限、参考文献 p11、附录 p12)
 **构建:** pdfTeX TeX Live 2026;exit 0;0 LaTeX error;0 undefined citation/reference;
 main.pdf sha256[:16] = `1988c3f162ae629b`

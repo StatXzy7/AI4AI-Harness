@@ -22,7 +22,8 @@ import time
 import uuid
 
 from experiment.revision.fresh_collect import ROOT, TTHE, fetch_readonly, file_hash, validate_inputs
-from experiment.revision.fresh_runtime import FreshSolver, RunStore, SolverSettings, digest
+from experiment.revision.fresh_runtime import (FreshSolver, ResourceBudget, RunStore,
+                                                SolverSettings, digest)
 from experiment.revision.windows_job import SuspendedWorker, WindowsJob
 
 
@@ -35,6 +36,7 @@ def require_launch_identity(record):
 
 def prepare(config):
     settings = SolverSettings(**config['solver'])
+    resource_budget = ResourceBudget.from_mapping(config.get('resource_budget'))
     for field in ('worker_wall_seconds', 'drain_seconds'):
         if not math.isfinite(config[field]) or config[field] <= 0:
             raise ValueError('Worker wall and drain intervals must be finite and positive')
@@ -81,7 +83,9 @@ def prepare(config):
     hashes = {str(path): file_hash(path) for path in sources}
     manifest = {'version': 'isolated-acquisition-v2-development', 'acquisition_id': config['acquisition_id'],
                 'missing_usage_policy': 'stop-before-next-cell-preserve-pending-v1',
-                'cache_mode': 'off', 'solver': asdict(settings), 'api_key_env': config['api_key_env'],
+                'cache_mode': 'off', 'solver': asdict(settings),
+                'resource_budget': asdict(resource_budget) if resource_budget else None,
+                'api_key_env': config['api_key_env'],
                 'worker_wall_seconds': config['worker_wall_seconds'], 'drain_seconds': config['drain_seconds'],
                 'task_order': 'repeat-harness-task', 'harnesses': harnesses, 'repeats': repeats,
                 'tasks_sha256': digest(tasks), 'split_sha256': file_hash(config['split_path']),
@@ -177,7 +181,8 @@ def worker(request, gate):
         task_key, needed = store.begin(cell)
         if not needed:
             raise RuntimeError('Worker output must be fresh; parent alone handles resume')
-        solver = FreshSolver(store, SolverSettings(**manifest['solver']), api_key)
+        solver = FreshSolver(store, SolverSettings(**manifest['solver']), api_key,
+                             ResourceBudget.from_mapping(manifest.get('resource_budget')))
         def frozen(prompt, system='', temperature=0., n=1, seq=0):
             override = getattr(bridge._tls, 'temp_override', None)
             return solver(prompt, system, override if override is not None else temperature, n, seq)
