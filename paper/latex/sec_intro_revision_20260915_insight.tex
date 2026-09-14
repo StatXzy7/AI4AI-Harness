@@ -1,0 +1,61 @@
+An LLM harness is the program of prompts, tools, and control flow that wraps
+a frozen model. Automatically generating many such programs creates an
+evaluation problem: what evidence shows that a new program provides a new
+capability? Different source code may execute the same path; different paths
+may produce the same answer; different answers on one run may reflect
+execution randomness rather than a repeatable advantage.
+
+We study this problem on BIRD text-to-SQL \citep{bird2021}. In a Phase-I
+discovery population, 21 of 66 generated-candidate pairs had identical
+correctness vectors. Including the shipped \react{} harness and \bare{}
+baseline gives 36 identical pairs out of 91. Pairwise code similarity had
+no observed rank association with outcome disagreement ($\rho=-0.01$).
+Trace inspection found three distinct situations: claimed mechanisms absent
+from control flow, mechanisms present but untriggered on the inspected
+tasks, and broken multi-turn implementations. These observations motivate
+an audit of the measurement process; they do not establish that generated
+harnesses generally collapse.
+
+A subsequent pre-specified factorial study crossed strategy forcing and
+conformance gating over six builders and three seeds. Its primary
+evaluation used 1{,}169 questions from nine databases outside protocol
+development, with one disclosed 18-item smoke-test exception. Under this
+revised setting, free ungated generation already produced 8.6\,pp observed
+oracle headroom. The Phase-I pattern therefore did not recur, but changes
+in generation, judge, data, and execution prevent attribution to any one
+protocol component without a controlled bridge.
+
+The original gate also changes the admissible strategy space: two allowed
+single-call prompt transformations cannot pass its mechanism check.
+Consequently, the intervention combines mechanism screening with
+verification. We preserve that experiment and report a versioned
+post-review reanalysis rather than treating it as a repaired-gate trial.
+The primary contrast remains $\RevisionPrimaryDelta$\,pp (95\% CI
+$\RevisionPrimaryCI$). This unresolved estimate neither demonstrates
+improvement nor establishes equivalence.
+
+Our contribution at this stage is an empirical account of three measurement
+boundaries:
+\begin{enumerate}
+\tightlist
+\item \textbf{Code, trace, and outcome diversity differ.} Discovery examples
+show why an inactive branch and a missing mechanism require different tests.
+\item \textbf{Admission and inference define the comparison.} A factorial
+study and an explicit correction of its data and statistical chain show
+which intervention was actually evaluated and what its estimate supports.
+\item \textbf{Observed oracle value is not stable or usable value.} Repeat
+instability and exploratory selection results motivate separate reporting
+of oracle accuracy, best-fixed accuracy, repeated-run advantages, and
+realized selector performance.
+\end{enumerate}
+The decisive remaining question is whether a real harness population
+outperforms an equal-budget population of independent executions of the
+same code, with advantages that survive independent repeats. The current
+study has not completed that control. We therefore treat stable
+complementarity as an estimand to be tested, not a discovered property.
+
+This boundary suggests a sharper object for population construction:
+useful routing depends on stable task--harness interaction after execution noise
+is separated. A corresponding design hypothesis is to value a candidate by its
+residual error coverage over the current population, rather than by standalone
+accuracy; the present study motivates but does not test this principle.

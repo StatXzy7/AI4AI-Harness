@@ -1,0 +1,693 @@
+{
+  "version": "insight-analysis-20260915-v1",
+  "counterexamples": {
+    "counterexample_A": {
+      "status": "constructed, not measured",
+      "q_h_by_task": {
+        "h0": [
+          0.9,
+          0.6
+        ],
+        "h1": [
+          0.8,
+          0.2
+        ]
+      },
+      "best_fixed": 0.75,
+      "oracle": 0.75,
+      "C_Z": 0.0,
+      "interpretation": "h0 is best on every task; heterogeneity does not create routing value"
+    },
+    "counterexample_B": {
+      "status": "constructed, not measured",
+      "p_h": {
+        "h0": 0.8,
+        "h1": 0.7
+      },
+      "residual_coverage_h1_over_h0": 0.13999999999999996,
+      "reverse_disagreement": 0.24000000000000005,
+      "ex_post_oracle": 0.94,
+      "best_fixed": 0.8,
+      "C_Z": 0.0,
+      "cost_note": "two executions cost more than one; oracle is ex-post"
+    }
+  },
+  "identity_check": {
+    "checked_grid_cases": 625,
+    "max_absolute_error": 2.7755575615628914e-17,
+    "identity": "E[max(q0,q1)]-max(E[q0],E[q1])=(E|d|-|Ed|)/2",
+    "scope": "two actions, common resource/cost scale, Z excludes post-answer information"
+  },
+  "input_inventory": {
+    "files": [
+      {
+        "manifest": "primary_input_manifest.json",
+        "file": "ad_shard0.jsonl",
+        "sha256_16_manifest": "c3827816ee5dd93a",
+        "sha256_16_observed": "c3827816ee5dd93a",
+        "bytes_manifest": 11824642,
+        "bytes_observed": 11824642,
+        "rows_parsed": 24364,
+        "unique_harness_task_repeat": 24364,
+        "conflicting_duplicate_keys": 0,
+        "repeats": [
+          0
+        ],
+        "cache_modes": [
+          false
+        ],
+        "targets": [
+          "GLM-5.3-Flash"
+        ],
+        "provider_or_model_fields": [],
+        "non_null_cost_fields": {
+          "latency_ms": 24364,
+          "n_llm_calls": 24364,
+          "n_execs": 24364
+        }
+      },
+      {
+        "manifest": "primary_input_manifest.json",
+        "file": "ad_shard1.jsonl",
+        "sha256_16_manifest": "a686de3333afbeac",
+        "sha256_16_observed": "a686de3333afbeac",
+        "bytes_manifest": 15015704,
+        "bytes_observed": 15015704,
+        "rows_parsed": 30112,
+        "unique_harness_task_repeat": 30112,
+        "conflicting_duplicate_keys": 0,
+        "repeats": [
+          0
+        ],
+        "cache_modes": [
+          false
+        ],
+        "targets": [
+          "GLM-5.3-Flash"
+        ],
+        "provider_or_model_fields": [],
+        "non_null_cost_fields": {
+          "latency_ms": 30112,
+          "n_llm_calls": 30112,
+          "n_execs": 30112
+        }
+      },
+      {
+        "manifest": "primary_input_manifest.json",
+        "file": "ad_shard2.jsonl",
+        "sha256_16_manifest": "dfa7085d44b5be40",
+        "sha256_16_observed": "dfa7085d44b5be40",
+        "bytes_manifest": 15672034,
+        "bytes_observed": 15672034,
+        "rows_parsed": 31830,
+        "unique_harness_task_repeat": 31830,
+        "conflicting_duplicate_keys": 0,
+        "repeats": [
+          0
+        ],
+        "cache_modes": [
+          false
+        ],
+        "targets": [
+          "GLM-5.3-Flash"
+        ],
+        "provider_or_model_fields": [],
+        "non_null_cost_fields": {
+          "latency_ms": 31830,
+          "n_llm_calls": 31830,
+          "n_execs": 31830
+        }
+      },
+      {
+        "manifest": "primary_input_manifest.json",
+        "file": "ad_shard3.jsonl",
+        "sha256_16_manifest": "9d93e05f5053450b",
+        "sha256_16_observed": "9d93e05f5053450b",
+        "bytes_manifest": 14236289,
+        "bytes_observed": 14236289,
+        "rows_parsed": 28594,
+        "unique_harness_task_repeat": 28594,
+        "conflicting_duplicate_keys": 0,
+        "repeats": [
+          0
+        ],
+        "cache_modes": [
+          false
+        ],
+        "targets": [
+          "GLM-5.3-Flash"
+        ],
+        "provider_or_model_fields": [],
+        "non_null_cost_fields": {
+          "latency_ms": 28594,
+          "n_llm_calls": 28594,
+          "n_execs": 28594
+        }
+      },
+      {
+        "manifest": "primary_input_manifest.json",
+        "file": "ad_s2.jsonl",
+        "sha256_16_manifest": "ad215ff17fe19194",
+        "sha256_16_observed": "ad215ff17fe19194",
+        "bytes_manifest": 9133262,
+        "bytes_observed": 9133262,
+        "rows_parsed": 18654,
+        "unique_harness_task_repeat": 18654,
+        "conflicting_duplicate_keys": 0,
+        "repeats": [
+          0
+        ],
+        "cache_modes": [
+          false
+        ],
+        "targets": [
+          "GLM-5.3-Flash"
+        ],
+        "provider_or_model_fields": [],
+        "non_null_cost_fields": {
+          "latency_ms": 18654,
+          "n_llm_calls": 18654,
+          "n_execs": 18654
+        }
+      },
+      {
+        "manifest": "primary_input_manifest.json",
+        "file": "ad_boost_A1.jsonl",
+        "sha256_16_manifest": "1dc69baed510c4db",
+        "sha256_16_observed": "1dc69baed510c4db",
+        "bytes_manifest": 19284665,
+        "bytes_observed": 19284665,
+        "rows_parsed": 39545,
+        "unique_harness_task_repeat": 36021,
+        "conflicting_duplicate_keys": 271,
+        "repeats": [
+          0
+        ],
+        "cache_modes": [
+          false
+        ],
+        "targets": [
+          "GLM-5.3-Flash"
+        ],
+        "provider_or_model_fields": [],
+        "non_null_cost_fields": {
+          "latency_ms": 39545,
+          "n_llm_calls": 39545,
+          "n_execs": 39545
+        }
+      },
+      {
+        "manifest": "primary_input_manifest.json",
+        "file": "ad_boost_A2.jsonl",
+        "sha256_16_manifest": "a6257d256557dcbd",
+        "sha256_16_observed": "a6257d256557dcbd",
+        "bytes_manifest": 6258282,
+        "bytes_observed": 6258282,
+        "rows_parsed": 13049,
+        "unique_harness_task_repeat": 13049,
+        "conflicting_duplicate_keys": 0,
+        "repeats": [
+          0
+        ],
+        "cache_modes": [
+          false
+        ],
+        "targets": [
+          "GLM-5.3-Flash"
+        ],
+        "provider_or_model_fields": [],
+        "non_null_cost_fields": {
+          "latency_ms": 13049,
+          "n_llm_calls": 13049,
+          "n_execs": 13049
+        }
+      },
+      {
+        "manifest": "primary_input_manifest.json",
+        "file": "ad_boost_D1.jsonl",
+        "sha256_16_manifest": "81a7d4549d7362b0",
+        "sha256_16_observed": "81a7d4549d7362b0",
+        "bytes_manifest": 1742793,
+        "bytes_observed": 1742793,
+        "rows_parsed": 3489,
+        "unique_harness_task_repeat": 3489,
+        "conflicting_duplicate_keys": 0,
+        "repeats": [
+          0
+        ],
+        "cache_modes": [
+          false
+        ],
+        "targets": [
+          "GLM-5.3-Flash"
+        ],
+        "provider_or_model_fields": [],
+        "non_null_cost_fields": {
+          "latency_ms": 3489,
+          "n_llm_calls": 3489,
+          "n_execs": 3489
+        }
+      },
+      {
+        "manifest": "primary_input_manifest.json",
+        "file": "ad_resume0.jsonl",
+        "sha256_16_manifest": "1da7702e8f2285f1",
+        "sha256_16_observed": "1da7702e8f2285f1",
+        "bytes_manifest": 7526140,
+        "bytes_observed": 7526140,
+        "rows_parsed": 15480,
+        "unique_harness_task_repeat": 15197,
+        "conflicting_duplicate_keys": 23,
+        "repeats": [
+          0
+        ],
+        "cache_modes": [
+          false
+        ],
+        "targets": [
+          "GLM-5.3-Flash"
+        ],
+        "provider_or_model_fields": [],
+        "non_null_cost_fields": {
+          "latency_ms": 15480,
+          "n_llm_calls": 15480,
+          "n_execs": 15480
+        }
+      },
+      {
+        "manifest": "primary_input_manifest.json",
+        "file": "ad_resume1.jsonl",
+        "sha256_16_manifest": "b2f739e3e500ef66",
+        "sha256_16_observed": "b2f739e3e500ef66",
+        "bytes_manifest": 10674735,
+        "bytes_observed": 10674735,
+        "rows_parsed": 21660,
+        "unique_harness_task_repeat": 18704,
+        "conflicting_duplicate_keys": 260,
+        "repeats": [
+          0
+        ],
+        "cache_modes": [
+          false
+        ],
+        "targets": [
+          "GLM-5.3-Flash"
+        ],
+        "provider_or_model_fields": [],
+        "non_null_cost_fields": {
+          "latency_ms": 21660,
+          "n_llm_calls": 21660,
+          "n_execs": 21660
+        }
+      },
+      {
+        "manifest": "primary_input_manifest.json",
+        "file": "ad_resume2.jsonl",
+        "sha256_16_manifest": "5642c09343e9c885",
+        "sha256_16_observed": "5642c09343e9c885",
+        "bytes_manifest": 12386702,
+        "bytes_observed": 12386702,
+        "rows_parsed": 24724,
+        "unique_harness_task_repeat": 17535,
+        "conflicting_duplicate_keys": 473,
+        "repeats": [
+          0
+        ],
+        "cache_modes": [
+          false
+        ],
+        "targets": [
+          "GLM-5.3-Flash"
+        ],
+        "provider_or_model_fields": [],
+        "non_null_cost_fields": {
+          "latency_ms": 24724,
+          "n_llm_calls": 24724,
+          "n_execs": 24724
+        }
+      },
+      {
+        "manifest": "primary_input_manifest.json",
+        "file": "ad_resume3.jsonl",
+        "sha256_16_manifest": "393d6d4d1245a979",
+        "sha256_16_observed": "393d6d4d1245a979",
+        "bytes_manifest": 19662117,
+        "bytes_observed": 19662117,
+        "rows_parsed": 40145,
+        "unique_harness_task_repeat": 18704,
+        "conflicting_duplicate_keys": 782,
+        "repeats": [
+          0
+        ],
+        "cache_modes": [
+          false
+        ],
+        "targets": [
+          "GLM-5.3-Flash"
+        ],
+        "provider_or_model_fields": [],
+        "non_null_cost_fields": {
+          "latency_ms": 40145,
+          "n_llm_calls": 40145,
+          "n_execs": 40145
+        }
+      },
+      {
+        "manifest": "primary_input_manifest.json",
+        "file": "ad_final0.jsonl",
+        "sha256_16_manifest": "b0992feb62dceab7",
+        "sha256_16_observed": "b0992feb62dceab7",
+        "bytes_manifest": 1132559,
+        "bytes_observed": 1132559,
+        "rows_parsed": 2338,
+        "unique_harness_task_repeat": 2338,
+        "conflicting_duplicate_keys": 0,
+        "repeats": [
+          0
+        ],
+        "cache_modes": [
+          false
+        ],
+        "targets": [
+          "GLM-5.3-Flash"
+        ],
+        "provider_or_model_fields": [],
+        "non_null_cost_fields": {
+          "latency_ms": 2338,
+          "n_llm_calls": 2338,
+          "n_execs": 2338
+        }
+      },
+      {
+        "manifest": "primary_input_manifest.json",
+        "file": "ad_final1.jsonl",
+        "sha256_16_manifest": "265d00aacc20612f",
+        "sha256_16_observed": "265d00aacc20612f",
+        "bytes_manifest": 2880500,
+        "bytes_observed": 2880500,
+        "rows_parsed": 5845,
+        "unique_harness_task_repeat": 5845,
+        "conflicting_duplicate_keys": 0,
+        "repeats": [
+          0
+        ],
+        "cache_modes": [
+          false
+        ],
+        "targets": [
+          "GLM-5.3-Flash"
+        ],
+        "provider_or_model_fields": [],
+        "non_null_cost_fields": {
+          "latency_ms": 5845,
+          "n_llm_calls": 5845,
+          "n_execs": 5845
+        }
+      },
+      {
+        "manifest": "primary_input_manifest.json",
+        "file": "ad_final2.jsonl",
+        "sha256_16_manifest": "0a36631e68820804",
+        "sha256_16_observed": "0a36631e68820804",
+        "bytes_manifest": 2868274,
+        "bytes_observed": 2868274,
+        "rows_parsed": 5845,
+        "unique_harness_task_repeat": 5845,
+        "conflicting_duplicate_keys": 0,
+        "repeats": [
+          0
+        ],
+        "cache_modes": [
+          false
+        ],
+        "targets": [
+          "GLM-5.3-Flash"
+        ],
+        "provider_or_model_fields": [],
+        "non_null_cost_fields": {
+          "latency_ms": 5845,
+          "n_llm_calls": 5845,
+          "n_execs": 5845
+        }
+      },
+      {
+        "manifest": "primary_input_manifest.json",
+        "file": "ad_last.jsonl",
+        "sha256_16_manifest": "e3b0c44298fc1c14",
+        "sha256_16_observed": "e3b0c44298fc1c14",
+        "bytes_manifest": 0,
+        "bytes_observed": 0,
+        "rows_parsed": 0,
+        "unique_harness_task_repeat": 0,
+        "conflicting_duplicate_keys": 0,
+        "repeats": [],
+        "cache_modes": [],
+        "targets": [],
+        "provider_or_model_fields": [],
+        "non_null_cost_fields": {}
+      },
+      {
+        "manifest": "bc_input_manifest.json",
+        "file": "run_BC_core.jsonl",
+        "sha256_16_manifest": "8499aad1cb2c9530",
+        "sha256_16_observed": "8499aad1cb2c9530",
+        "bytes_manifest": 13543642,
+        "bytes_observed": 13543642,
+        "rows_parsed": 27537,
+        "unique_harness_task_repeat": 27537,
+        "conflicting_duplicate_keys": 0,
+        "repeats": [
+          0
+        ],
+        "cache_modes": [
+          false
+        ],
+        "targets": [
+          "GLM-5.3-Flash"
+        ],
+        "provider_or_model_fields": [],
+        "non_null_cost_fields": {
+          "latency_ms": 27537,
+          "n_llm_calls": 27537,
+          "n_execs": 27537
+        }
+      },
+      {
+        "manifest": "bc_input_manifest.json",
+        "file": "bc_boost1.jsonl",
+        "sha256_16_manifest": "d69732275557d975",
+        "sha256_16_observed": "d69732275557d975",
+        "bytes_manifest": 20566876,
+        "bytes_observed": 20566876,
+        "rows_parsed": 42000,
+        "unique_harness_task_repeat": 42000,
+        "conflicting_duplicate_keys": 0,
+        "repeats": [
+          0
+        ],
+        "cache_modes": [
+          false
+        ],
+        "targets": [
+          "GLM-5.3-Flash"
+        ],
+        "provider_or_model_fields": [],
+        "non_null_cost_fields": {
+          "latency_ms": 42000,
+          "n_llm_calls": 42000,
+          "n_execs": 42000
+        }
+      },
+      {
+        "manifest": "bc_input_manifest.json",
+        "file": "bc_boost2.jsonl",
+        "sha256_16_manifest": "b5208629eb629596",
+        "sha256_16_observed": "b5208629eb629596",
+        "bytes_manifest": 9524810,
+        "bytes_observed": 9524810,
+        "rows_parsed": 18589,
+        "unique_harness_task_repeat": 18551,
+        "conflicting_duplicate_keys": 0,
+        "repeats": [
+          0
+        ],
+        "cache_modes": [
+          false
+        ],
+        "targets": [
+          "GLM-5.3-Flash"
+        ],
+        "provider_or_model_fields": [],
+        "non_null_cost_fields": {
+          "latency_ms": 18589,
+          "n_llm_calls": 18589,
+          "n_execs": 18589
+        }
+      },
+      {
+        "manifest": "bc_input_manifest.json",
+        "file": "bc_s2.jsonl",
+        "sha256_16_manifest": "77b41b947b29e6fd",
+        "sha256_16_observed": "77b41b947b29e6fd",
+        "bytes_manifest": 3269877,
+        "bytes_observed": 3269877,
+        "rows_parsed": 6583,
+        "unique_harness_task_repeat": 6583,
+        "conflicting_duplicate_keys": 0,
+        "repeats": [
+          0
+        ],
+        "cache_modes": [
+          false
+        ],
+        "targets": [
+          "GLM-5.3-Flash"
+        ],
+        "provider_or_model_fields": [],
+        "non_null_cost_fields": {
+          "latency_ms": 6583,
+          "n_llm_calls": 6583,
+          "n_execs": 6583
+        }
+      },
+      {
+        "manifest": "bc_input_manifest.json",
+        "file": "bc_final.jsonl",
+        "sha256_16_manifest": "f84cc0389edcfb78",
+        "sha256_16_observed": "f84cc0389edcfb78",
+        "bytes_manifest": 4257588,
+        "bytes_observed": 4257588,
+        "rows_parsed": 8558,
+        "unique_harness_task_repeat": 8558,
+        "conflicting_duplicate_keys": 0,
+        "repeats": [
+          0
+        ],
+        "cache_modes": [
+          false
+        ],
+        "targets": [
+          "GLM-5.3-Flash"
+        ],
+        "provider_or_model_fields": [],
+        "non_null_cost_fields": {
+          "latency_ms": 8558,
+          "n_llm_calls": 8558,
+          "n_execs": 8558
+        }
+      },
+      {
+        "manifest": "bc_input_manifest.json",
+        "file": "bc_last.jsonl",
+        "sha256_16_manifest": "e26fa97d0f94a358",
+        "sha256_16_observed": "e26fa97d0f94a358",
+        "bytes_manifest": 1170674,
+        "bytes_observed": 1170674,
+        "rows_parsed": 2351,
+        "unique_harness_task_repeat": 2351,
+        "conflicting_duplicate_keys": 0,
+        "repeats": [
+          0
+        ],
+        "cache_modes": [
+          false
+        ],
+        "targets": [
+          "GLM-5.3-Flash"
+        ],
+        "provider_or_model_fields": [],
+        "non_null_cost_fields": {
+          "latency_ms": 2351,
+          "n_llm_calls": 2351,
+          "n_execs": 2351
+        }
+      },
+      {
+        "manifest": "bc_input_manifest.json",
+        "file": "bc_rem0.jsonl",
+        "sha256_16_manifest": "aeef96bbf836f9c6",
+        "sha256_16_observed": "aeef96bbf836f9c6",
+        "bytes_manifest": 3419152,
+        "bytes_observed": 3419152,
+        "rows_parsed": 6800,
+        "unique_harness_task_repeat": 6800,
+        "conflicting_duplicate_keys": 0,
+        "repeats": [
+          0
+        ],
+        "cache_modes": [
+          false
+        ],
+        "targets": [
+          "GLM-5.3-Flash"
+        ],
+        "provider_or_model_fields": [],
+        "non_null_cost_fields": {
+          "latency_ms": 6800,
+          "n_llm_calls": 6800,
+          "n_execs": 6800
+        }
+      },
+      {
+        "manifest": "bc_input_manifest.json",
+        "file": "bc_rem1.jsonl",
+        "sha256_16_manifest": "ab184a6e9bbe911e",
+        "sha256_16_observed": "ab184a6e9bbe911e",
+        "bytes_manifest": 3668861,
+        "bytes_observed": 3668861,
+        "rows_parsed": 7249,
+        "unique_harness_task_repeat": 6800,
+        "conflicting_duplicate_keys": 37,
+        "repeats": [
+          0
+        ],
+        "cache_modes": [
+          false
+        ],
+        "targets": [
+          "GLM-5.3-Flash"
+        ],
+        "provider_or_model_fields": [],
+        "non_null_cost_fields": {
+          "latency_ms": 7249,
+          "n_llm_calls": 7249,
+          "n_execs": 7249
+        }
+      },
+      {
+        "manifest": "bc_input_manifest.json",
+        "file": "bc_rem2.jsonl",
+        "sha256_16_manifest": "7dd430299c9b2dcb",
+        "sha256_16_observed": "7dd430299c9b2dcb",
+        "bytes_manifest": 3555855,
+        "bytes_observed": 3555855,
+        "rows_parsed": 7200,
+        "unique_harness_task_repeat": 7200,
+        "conflicting_duplicate_keys": 0,
+        "repeats": [
+          0
+        ],
+        "cache_modes": [
+          false
+        ],
+        "targets": [
+          "GLM-5.3-Flash"
+        ],
+        "provider_or_model_fields": [],
+        "non_null_cost_fields": {
+          "latency_ms": 7200,
+          "n_llm_calls": 7200,
+          "n_execs": 7200
+        }
+      }
+    ],
+    "primary_and_bc_manifest_files": 25,
+    "manifest_hash_match_all": true,
+    "interpretation": "input inventory only; duplicate resolution remains the canonical first-write rule in completeness_report.json"
+  },
+  "existing_w1": {
+    "artifact": "artifacts/phase2/w1_selection.json",
+    "status": "post-hoc exploratory; dev/test split by database halves; not a frozen selector",
+    "relationship": "div-only is the existing greedy oracle-coverage baseline; no new algorithm is introduced"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "source": "paper/latex/main_revision_20260915_insight.tex",
+  "pdf": "paper/latex/main_revision_20260915_insight.pdf",
+  "build": "latexmk -pdf -interaction=nonstopmode -halt-on-error",
+  "build_exit_code": 0,
+  "pdf_pages": 19,
+  "main_text_end_page": 9,
+  "abstract_word_count": 193,
+  "undefined_references": 0,
+  "undefined_citations": 0,
+  "overfull_boxes": 0,
+  "underfull_warnings": 16,
+  "visual_pages_checked": [1, 9, 10],
+  "math500_main_result": {
+    "harnesses": 35,
+    "eval_tasks": 400,
+    "disagreement_percent": 10.6,
+    "oracle_percent": 98.5,
+    "best_fixed_percent": 93.75,
+    "headroom_pp": 4.75,
+    "scope": "one-seed exploratory free-arm probe; not pooled with BIRD"
+  },
+  "insight_scope": "stable task-harness interaction and residual-error coverage are framed as a measurement/design principle; positive intervention evidence is absent"
+}

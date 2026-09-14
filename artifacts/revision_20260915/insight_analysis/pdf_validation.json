@@ -1,0 +1,13 @@
+{
+  "source": "paper/latex/main_revision_20260915_insight.tex",
+  "pdf": "paper/latex/main_revision_20260915_insight.pdf",
+  "build_command": "latexmk -pdf -interaction=nonstopmode -halt-on-error main_revision_20260915_insight.tex",
+  "build_exit_code": 0,
+  "pdf_pages": 20,
+  "main_text_end_page": 9,
+  "undefined_references": 0,
+  "undefined_citations": 0,
+  "visual_check": {"rendered_page": 1, "status": "passed; title, abstract and introduction legible"},
+  "warnings": {"underfull_boxes": "present in appendix/code examples; no overfull boxes observed", "locale": "TeX Live locale warning only"},
+  "scope": "English isolated revision after related-work synchronization"
+}

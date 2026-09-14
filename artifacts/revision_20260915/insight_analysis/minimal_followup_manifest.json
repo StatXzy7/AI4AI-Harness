@@ -1,0 +1,16 @@
+{
+  "version": "insight-followup-v1",
+  "status": "plan_only_not_authorized_or_run",
+  "purpose": "identify the smallest missing evidence for pre-execution selection value",
+  "frozen_before_new_results": true,
+  "common_candidate_pool": "same 18 builder-seed cells plus bare, with source hashes recorded",
+  "policy_set": ["top-accuracy", "random", "existing_W1_div-only", "depth-2_decision-aware_with_fixed-baseline-fallback"],
+  "tasks": {"development": "existing development databases only", "held_out": "new task/database block not used by prior W1 or Phase-II analyses"},
+  "per_candidate": {"repeats": 3, "baseline": "same bare execution block for every candidate", "cache": "cache-off", "required_fields": ["official_correct", "repeat", "source_hash", "latency_ms", "n_llm_calls", "n_execs", "provider_cost_if_available"]},
+  "answers": {
+    "repeat_validation": "whether development-selected repair and harm signs persist on independent execution",
+    "policy_utility": "whether a frozen selector improves held-out net utility over bare and the full-pool best-fixed comparator",
+    "cost": "whether any gain survives logical/API calls, tokens, latency and monetary cost"
+  },
+  "stop_rules": ["do not resend preserved unknown/unclosed requests", "do not claim stable complementarity if baseline or repeat blocks are incomplete", "do not run without explicit budget and authorization"]
+}
