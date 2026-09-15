@@ -1,0 +1,34 @@
+You are an independent research-methods and measurement auditor. This is a RE-REVIEW after a prior external review scored this work 4/10 with five P0 blocking issues. That prior review is pasted at the end of this prompt. The executor claims all five P0s are fixed, the control package was extended, and the manuscript was restructured. Your job: verify independently, from code and artifacts, not from the executor's summary. Read the specified artifacts directly; do not accept fix summaries as evidence.
+
+Prior-review P0 issues to re-check one by one:
+- P0-1 S3 stability order-dependence and conflation of "stable ranking" with "complementarity" (experiment/diagnostics/core.py, s3_stability). Verify: permutation invariance is structural (canonical member-id pair direction, not just sorted inputs); the two estimands are separated (stable_ranking / stable_complementarity); a globally dominant member cannot produce a complementarity SUPPORT; the reviewer's counterexample (permuting member list flips the population conclusion) is now impossible.
+- P0-2 repeat identity: s3_stability must refuse merges across differing condition fields, differing per-member source_hashes, or byte-identical matrices.
+- P0-3 A-class execution state and cost semantics: judge replay carries an executed/not-executed status and a not-run check can never render A SUPPORTED; BIRD adapter reads per-record n_llm_calls (calls_status per_record) instead of claiming "no cost data"; s5 cost_evidence distinguishes not-provided vs absent-in-archive.
+- P0-4 control/challenge chain: blinded phase must re-execute CH1/CH2 from the frozen spec under current code with spec+code hash binding (experiment/diagnostics/challenges.py, cli.run_controls); missing spec is a hard block; historical result replay is a separate command (verify-challenges) labeled HISTORICAL_REPLAY and never enters current metrics; directory-sorted "latest result" selection is gone.
+- P0-5 plan alignment: review-stage/DIAGNOSTIC_PLAN_V2_20260915.md documents amendments without overwriting the frozen v1.3; control package v2 (16 original frozen expectations unchanged + 4 repeat-based classes C9-C12 x 2 instances); denominators stated.
+
+Also verify the two new findings claimed this round (they cut against the executor, so check them hard):
+- The prior "judge v2 changed none (0 flips)" artifact is NOT reproducible from committed code; a hash-bound re-execution finds 14 flips (all v1 false rejects on task math500_split#103). Check artifacts/diagnostics/20260915/20260915_diagnose_math_57a1616d/math_judge_v2_flips.csv, the updated DECISION_IMPACT.csv, CLAIM_LEDGER.json C-10, and whether the paper (paper/latex/sec_crossdomain.tex, sec_appendix.tex) states this honestly rather than hiding it.
+- The stored astra_challenges_result.json CH2 numbers (best_fixed 0.94) are unreachable under the spec's generating rule (forces 0.79); spec-faithful re-execution yields D SUPPORTED, E REFUTED matching the auditor's pre-committed expectation. Check challenge_spec.json, experiment/diagnostics/challenges.py, and the challenge_execution block in artifacts/diagnostics/20260915/20260915_controls_4c4b4a3b/control_validation_blinded.json.
+
+Then assess the manuscript (paper/latex/main.tex + sec_*.tex, built main.pdf):
+- New main-text section 6 (sec_diagnostics.tex): does the two-action identity and the C-rank/C-comp split enter the main text, with validation results, rather than living only in an appendix?
+- Does the contribution now read as a validated diagnostic (invariant-tested, hash-bound validation, refusal gates) rather than only a reflections report?
+- Are the five claim classes, identity gates, and abstention semantics consistent between plan v2, code, tests, appendix, and main text?
+- Is the main text within the 9-page ICLR limit in the current build (check the .log/.aux: endofmain page), and are the page-limit-critical moves (relocated figure/table/subsections to appendix) done without breaking references?
+- Is any claim now overclaimed relative to evidence (e.g., validation on synthetic controls being sold as field validation)?
+
+Validation status you may rely on: unit tests 29/29 pass (python -m unittest experiment.diagnostics.test_diagnostics); calibration run artifacts/diagnostics/20260915/20260915_controls_46d54a63 (12 controls, 0 wrong); blinded run 20260915_controls_4c4b4a3b (12 controls + 2 challenges, 0 wrong, challenge_execution hash-bound). You may re-run read-only checks; anything you cannot run, list as not_executed.
+
+Report separately: measurement correctness, diagnostic validity, research-contribution completeness, manuscript-expression completeness. Use ARIS convention: score x/10 and verdict in {ready, almost, not ready}. Every remaining blocking issue must carry file location or a reproducible example, impact on conclusions, and a minimal fix. It is legitimate to judge prior issues absent, and legitimate to find new ones. Do not presume acceptance or rejection, and do not give a flattering score. If the contribution is still insufficient, name the missing verifiable evidence in priority order.
+
+Artifacts (working directory = repo root):
+- REPRODUCE.md (v2: commands + expected outputs)
+- review-stage/DIAGNOSTIC_PLAN_20260915.md (frozen v1.3, unchanged) and review-stage/DIAGNOSTIC_PLAN_V2_20260915.md (amendment layer)
+- review-stage/astra_20260915/challenge_spec.json + challenge_spec.sha256 (pre-committed)
+- experiment/diagnostics/ (core.py, controls.py, challenges.py, math_adapter.py, bird_adapter.py, cli.py, test_diagnostics.py)
+- artifacts/diagnostics/20260915/20260915_controls_46d54a63/ and 20260915_controls_4c4b4a3b/ (v2 control runs), 20260915_diagnose_math_57a1616d/, 20260915_diagnose_bird_300d3dcf/, 20260915_verify_challenges_0130d65c/
+- CLAIM_LEDGER.json (claims C-01..C-10)
+- paper/latex/ (main.tex, sec_*.tex, main.pdf, main.log, main.aux)
+
+Historical context only (do not re-litigate what is fixed): the prior review scored 4/10 not because of absent positive results but because the new diagnostic itself had order-dependent judgments and unbound validation evidence, the contribution read as a reflections report, and manuscript numbers/semantics had residual inconsistencies. The prior review's seven conditionals for 7-8/10 were: correct definitions -> invariant-satisfying implementation -> validation that can detect its own errors -> incremental value over a competent baseline -> traceable decision impact.

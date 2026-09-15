@@ -20,11 +20,10 @@ observed tasks and assumes symmetric cell contrasts.}
 \end{table}
 
 The paired estimate is $\RevisionPrimaryDelta$\,pp with unadjusted 95\% CI
-$\RevisionPrimaryCI$ and one-sided sign-flip $p=\RevisionPrimaryP$.
-We find no clear improvement; the interval does not establish equivalence.
-The full-set cell contrasts range from $\RevisionPrimaryRange$\,pp.
-These are estimates for the implemented screening policy, which excludes
-some allowed strategies, rather than a pure verification intervention.
+$\RevisionPrimaryCI$ and one-sided sign-flip $p=\RevisionPrimaryP$:
+no clear improvement, and the interval does not establish equivalence.
+Cell contrasts range from $\RevisionPrimaryRange$\,pp. These are estimates
+for the implemented screening policy, not a pure verification intervention.
 
 \begin{figure}[t]
 \centering
@@ -55,99 +54,34 @@ This cannot distinguish useful verification from the gate's structural
 exclusion of prompt transformations. The corrected fixed-$K$ gate sensitivity
 is $\RevisionKmatchedDelta$\,pp (95\% CI $\RevisionKmatchedCI$).
 Both sides are matched to the smaller candidate count within each A/B and
-C/D cell; all candidate subsets are averaged exactly and bare is always
-retained (Appendix~\ref{app:r2}). A change after subsampling
-does not identify a causal proportion mediated by population size.
-Moreover, oracle headroom is not monotone in population size: adding a
-strong fixed member can reduce it.
-
-\begin{table}[t]
-\centering\footnotesize
-\input{revision_decomposition_table}
-\caption{\textbf{Same-core headroom decomposition.} All arms use identical
-400 tasks and identical bare outcomes. $K_{\rm cand}$ excludes bare and
-$K_{\rm total}=K_{\rm cand}+1$; counts and accuracies are cell means.
-Headroom is oracle minus best-fixed accuracy, not realized routing gain.}
-\label{tab:decomp}
-\end{table}
+C/D cell, with all candidate subsets averaged exactly and bare always
+retained (Appendix~\ref{app:r2}); a change after subsampling does not
+identify a causal proportion mediated by population size, and headroom is
+not monotone in population size.
 
 For the full primary set, D$-$A changes oracle accuracy by
 $\RevisionOracleDelta$\,pp and best-fixed accuracy by
 $\RevisionBestDelta$\,pp; the same-core decomposition is in
-Table~\ref{tab:decomp}.
-
-\subsection{Parallel domain evidence for the measurement boundary}
-Table~\ref{tab:domain-main} places the two domains side by side for the
-same diagnostic question, without pooling them. MATH-500 reproduces the
-boundary: one-run disagreement and 4.75\,pp headroom coexist with bare as
-the best fixed member (93.75\%). It is exploratory and has no clone,
-repeat, repaired-gate, or selector control.
-
-\begin{table}[t]
-\centering
-\scriptsize
-\setlength{\tabcolsep}{2.5pt}
-\begin{tabular}{@{}lrrrrrr@{}}
-\toprule
-Domain / analysis & $n_H$ & $n_{eval}$ & Disagree. & Oracle & Best-fixed & $H$ (pp) \\
-\midrule
-BIRD, A / D & 18 cells & 1,169 & --- & 76.14 / 75.70\% & 67.58 / 67.30\% & 8.56 / 8.40 \\
-BIRD, D$-$A & 18 paired & 1,169 & --- & --- & --- & $-0.16$ \\
-MATH-500, free & $\RevisionMathHarnesses$ & $\RevisionMathTasks$ & $\RevisionMathDisagreement$\% & $\RevisionMathOracle$\% & $\RevisionMathBest$\% (bare) & $\RevisionMathHeadroom$ \\
-\bottomrule
-\end{tabular}
-\caption{Parallel domain evidence for the same measurement question. BIRD
-is the archived factorial analysis; MATH-500 is a one-seed exploratory
-free-arm probe. Designs are not pooled. Headroom is a one-run diagnostic,
-not selector accuracy or stable complementarity.}
-\label{tab:domain-main}
-\end{table}
+Table~\ref{tab:decomp} (Appendix~\ref{app:decomp}).
 
 \subsection{Execution variability and the stable-complementarity question}
-The archived R3 audit reports that 14.5\% of tasks changed bare correctness
-at least once across three cache-off repeats. Canonical R2 replay finds
-\RevisionRtwoFlips/28{,}000 same-harness verdict flips
-(\RevisionRtwoFlipPercent\%). Retaining all 18 cells, including two with
-singleton A subsets, changes subset D$-$A from
-$\RevisionRtwoCached$ to $\RevisionRtwoOff$\,pp; the change is
-$\RevisionRtwoChange$\,pp (95\% CI $\RevisionRtwoChangeCI$).
-R2 subset headroom excludes bare because R2 did not acquire a matched bare
-run. It is therefore distinct from the bare-inclusive primary estimand.
-The old 16-cell comparison is reconciled in Appendix~\ref{app:r2}. These are
-instability measurements, not standard errors or a detectability floor for
-the mean treatment effect. They do not establish that every contrast is
-unchanged, or identify what fraction of between-harness disagreement is noise.
-As a direct same-code diagnostic, treating the three bare executions as if
-they were three different population members gives 72.25\% one-run oracle
-accuracy versus 65.75\% for the best fixed execution, a descriptive 6.50\,pp
-gap on the same 400 tasks. This is an artificial resampling comparison: the
-source hash is identical across the three executions, so it is evidence that
-one-run headroom can arise from execution sampling, not evidence for stable
-complementarity.
+Independent executions destabilize one-run comparisons: canonical R2 replay
+finds \RevisionRtwoFlips/28{,}000 same-harness verdict flips
+(\RevisionRtwoFlipPercent\%), and retaining all 18 cells changes the subset
+D$-$A contrast by $\RevisionRtwoChange$\,pp
+(95\% CI $\RevisionRtwoChangeCI$); the archived R3 audit reports 14.5\% of
+tasks changing bare correctness at least once (Appendix~\ref{app:r2}). As a
+direct same-code diagnostic, treating the three bare executions as three
+different members gives a descriptive 6.50\,pp one-run oracle gap on the
+same 400 tasks --- evidence that one-run headroom can arise from execution
+sampling, not from new capability.
 
-Let $p_{h,x}$ denote the probability that harness $h$ answers task $x$
-correctly across independent executions. For a pool including bare, define
-\[
-H_{\rm stable}=\frac{1}{n}\sum_x\max_h p_{h,x}
--\max_h\frac{1}{n}\sum_x p_{h,x}.
-\]
-A same-code clone-only pool has identical $p_{h,x}$ across members,
-hence zero stable headroom despite potentially positive one-run headroom.
-Adding distinct bare can retain baseline--harness complementarity.
-Independent repeats estimate a fitted policy's value against its specified
-comparator. A discovery-selected fixed member may be suboptimal: beating
-it alone does not establish stable complementarity or unseen-task utility.
-The current data lack a balanced, cost-matched clone comparison, so stable
-added capability remains unestimated.
-
-\subsection{Routing and exploratory selection}\label{sec:boundary}
-The Phase-I leave-one-harness-out predictor did not beat the best fixed
-harness in the tested DeepSeek population ($-3.4$\,pp); the Qwen estimate
-was $+0.9$\,pp (CI $[-5.2,+6.9]$), and task-held-out repair AUROC was
-0.512. These predictor and split-specific results do not establish value
-prediction. The canonical W1 analysis is likewise descriptive: at $k=8$,
-diversity versus top-accuracy selection changes oracle by
-$\RevisionWoneOracle$\,pp, best-fixed by $\RevisionWoneBest$\,pp, and
-headroom by $\RevisionWoneHeadroom$\,pp; the development-selected fixed
-member changes by $\RevisionWoneFixed$\,pp. None is a validated routing
-gain (Appendix~\ref{app:rich}).
+Writing the per-task correct probabilities as $p_{h,x}$ makes the gap
+precise: the stable headroom
+$\frac1n\sum_x\max_h p_{h,x}-\max_h\frac1n\sum_x p_{h,x}$
+vanishes for a same-code clone pool despite positive one-run headroom, and
+its two-action decomposition (Eq.~\ref{eq:identity}) shows that a globally
+dominant member also yields zero. A discovery-selected fixed member may be
+suboptimal: beating it alone does not establish stable complementarity or
+unseen-task utility. The current data lack a balanced, cost-matched clone
+comparison, so stable added capability remains unestimated.

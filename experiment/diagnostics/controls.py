@@ -1,10 +1,25 @@
 """Synthetic control package for diagnostics validation (plan section 5, FROZEN).
 
-8 classes x 2 independent instances = 16 controls. Expected A-E states are frozen
-below and hashed into the control manifest BEFORE any blinded run. Calibration =
-instance #1 of each class; blinded = instance #2 of each class (+ auditor
-challenges supplied externally). Reference conclusions come from the analytic
-generating mechanism, never from the diagnostic program under test.
+v1 (frozen 2026-09-15): 8 classes x 2 independent instances = 16 controls.
+v2 (same day, per external review): adds repeat-based classes C9-C12 that
+exercise the S3 matched-repeat paths and the ranking-vs-complementarity
+distinction that v1 (all single-shot) could not cover:
+  C9  one member dominant on every task, with repeats -> stable ranking
+      difference SUPPORTED but stable complementarity REFUTED (H_stable = 0);
+      a dominance reading of a ranking result is the trap under test.
+  C10 equal overall accuracy, opposite per-stratum skill, with repeats ->
+      ranking INSUFFICIENT (no stable mean difference) but complementarity
+      SUPPORTED; the mirror-image trap: average differences miss interaction.
+  C11 three purported repeats where one carries a different execution
+      condition -> S3 must refuse the merge (INSUFFICIENT), never SUPPORT.
+  C12 three exactly identical matrices (deterministic members) -> repeated
+      executions are unverifiable; S3 must abstain, never SUPPORT.
+
+Expected A-E states are frozen below and hashed into the control manifest
+BEFORE any blinded run, derived from the generating mechanisms, never from
+running the diagnostics. Calibration = instance #1 of each class; blinded =
+instance #2 of each class (+ auditor challenges re-executed from the frozen
+spec). Reference conclusions come from the analytic generating mechanism.
 """
 from __future__ import annotations
 
@@ -33,7 +48,7 @@ def _pop(Y, member_ids, tasks, dev_ids, meta=None, condition=None, has_bare=True
     return Population(
         member_ids=member_ids,
         source_hashes=[f"h{i}" for i in range(len(member_ids))],
-        tasks=tasks, Y=np.asarray(Y, dtype=float),
+        tasks=tasks, Y=np.array(Y, dtype=float, copy=True),
         condition=condition or {"c": "synthetic"}, has_bare=has_bare,
         dev_task_ids=dev_ids, task_meta=meta or {}, calls=calls or {})
 
@@ -188,79 +203,240 @@ def gen_C8_integrity_violation(seed, mode):      # corrupted inputs (S1 must cat
     return pop
 
 
+# ---- repeat-based generators (v2): S3 paths + ranking-vs-complementarity ----
+
+def _repeat_pop(Y, member_ids, tasks, condition, repeat_index, seed,
+                dev_ids=None):
+    """One same-condition repeat with independent execution noise from `seed`."""
+    rng = np.random.default_rng(seed + 1000 * repeat_index)
+    Yr = np.array(Y, dtype=float, copy=True)
+    noise = np.isnan(Yr) | (Yr < 0)          # cells marked -1 are stochastic
+    if noise.any():
+        Yr[noise] = (rng.random(int(noise.sum())) < 0.5).astype(float)
+    return Population(
+        member_ids=member_ids,
+        source_hashes=[f"h{i}" for i in range(len(member_ids))],
+        tasks=tasks, Y=Yr, condition=dict(condition), has_bare=True,
+        dev_task_ids=dev_ids or [], task_meta={},
+        calls={}, calls_status="not_provided")
+
+
+_STOCH = -1.0   # sentinel: cell is stochastic Bernoulli(0.5), drawn per repeat
+
+
+def gen_C9_global_dominance(seed):       # ranking != complementarity
+    """dom is deterministically correct on EVERY task, a only on 30-44, bare is
+    stochastic Bernoulli(0.5) per repeat. dom is expectation-best everywhere ->
+    H_stable = 0 (complementarity REFUTED) even though the ranking difference
+    dom-a is perfectly stable (SUPPORTED) and naive pair scanning 'finds' it.
+    """
+    n, n_dev = 60, 20
+    tasks = _task_ids(n)
+    Y = np.full((3, n), _STOCH)
+    Y[0, :] = _STOCH                       # bare: stochastic per repeat
+    Y[1, 30:45] = 1.0                      # a: correct on tasks 30-44 only
+    Y[1, :] = np.where(Y[1] == _STOCH, 0.0, Y[1])
+    Y[2, :] = 1.0                          # dom: always correct
+    return {f"r{r}": _repeat_pop(Y, ["bare", "a", "dom"], tasks,
+                                 {"c": "synthetic", "timeout": 60}, r, seed,
+                                 dev_ids=tasks[:n_dev])
+            for r in range(3)}
+
+
+def gen_C10_crossover_complementarity(seed):   # equal means, real interaction
+    """m_sql deterministically correct on the 30 A tasks, m_text on the 30 B
+    tasks, bare stochastic. Mean accuracies are equal (0.5 vs 0.5) so no stable
+    MEAN difference exists (ranking INSUFFICIENT), yet per-task expectation
+    crosses: H_stable = 0.5 (complementarity SUPPORTED) and the visible stratum
+    makes it selectable (D/E SUPPORTED). The dev split covers BOTH strata
+    (10 A + 10 B tasks) - a single-stratum dev split could not learn routing."""
+    n = 60
+    tasks = _task_ids(n)
+    Y = np.full((3, n), _STOCH)
+    Y[0, :] = _STOCH                       # bare stochastic
+    Y[1, 0:30] = 1.0                       # m_sql on A tasks
+    Y[1, 30:] = 0.0
+    Y[2, 0:30] = 0.0
+    Y[2, 30:] = 1.0                        # m_text on B tasks
+    meta = {t: {"stratum": "A" if i < 30 else "B"} for i, t in enumerate(tasks)}
+    dev_ids = tasks[0:10] + tasks[30:40]   # both strata represented in dev
+    pops = {}
+    for r in range(3):
+        p = _repeat_pop(Y, ["bare", "m_sql", "m_text"], tasks,
+                        {"c": "synthetic", "timeout": 60}, r, seed,
+                        dev_ids=dev_ids)
+        p.task_meta = meta
+        pops[f"r{r}"] = p
+    return pops
+
+
+def gen_C11_condition_mixing(seed):      # one 'repeat' under a different condition
+    """Three matrices where the third was produced under timeout=61, not 60.
+    These are different execution conditions, not matched repeats: S3 must
+    refuse the merge and abstain, regardless of how clean the matrices look."""
+    n, n_dev = 60, 20
+    tasks = _task_ids(n)
+    Y = np.zeros((3, n))
+    Y[0, 0:24] = 1.0                       # bare
+    Y[1, 0:36] = 1.0                       # a
+    Y[2, 18:48] = 1.0                      # b (crossover with a)
+    Y[2, 0:18] = 0.0
+    pops = {}
+    for r in range(3):
+        cond = {"c": "synthetic", "timeout": 61 if r == 2 else 60}
+        pops[f"r{r}"] = Population(
+            member_ids=["bare", "a", "b"],
+            source_hashes=[f"h{i}" for i in range(3)],
+            tasks=tasks, Y=np.array(Y, dtype=float, copy=True),
+            condition=cond, has_bare=True, dev_task_ids=tasks[:n_dev],
+            task_meta={}, calls={}, calls_status="not_provided")
+    return pops
+
+
+def gen_C12_cloned_repeats(seed):        # identical matrices = unverifiable repeats
+    """Three byte-identical matrices (deterministic members). Independent
+    executions cannot be verified; S3 must abstain even though every other
+    signal (integrity, coverage) looks healthy."""
+    n, n_dev = 60, 20
+    tasks = _task_ids(n)
+    Y = np.zeros((3, n))
+    Y[0, 48:60] = 1.0                      # bare correct on 48-59
+    Y[1, 18:48] = 1.0                      # a on 18-47
+    Y[2, 0:36] = 1.0                       # dom on 0-35
+    pops = {}
+    for r in range(3):
+        pops[f"r{r}"] = Population(
+            member_ids=["bare", "a", "dom"],
+            source_hashes=[f"h{i}" for i in range(3)],
+            tasks=tasks, Y=np.array(Y, dtype=float, copy=True),
+            condition={"c": "synthetic", "timeout": 60}, has_bare=True,
+            dev_task_ids=tasks[:n_dev], task_meta={}, calls={},
+            calls_status="not_provided")
+    return pops
+
+
+REPEAT_CLASSES = {
+    "C9": gen_C9_global_dominance,
+    "C10": gen_C10_crossover_complementarity,
+    "C11": gen_C11_condition_mixing,
+    "C12": gen_C12_cloned_repeats,
+}
+
+
 # ---- frozen package ---------------------------------------------------------
 
 # Expected states, frozen from the generating mechanisms (NOT from running the
 # diagnostics). S1/A for clean controls = SUPPORTED; C = INSUFFICIENT everywhere
-# (single-shot synthetic data has no matched repeats).
+# in v1 classes (single-shot synthetic data has no matched repeats), likewise
+# C_comp (the complementarity estimand needs repeats by definition).
 _CLEAN_A = SUPPORTED
 _CLEAN_C = INSUFFICIENT
 CLASSES = [
     ("C1", "identical outputs, different code",
      lambda s: gen_C1_common_output(s),
-     {"A": _CLEAN_A, "B": REFUTED, "C": _CLEAN_C, "D": INSUFFICIENT, "E": INSUFFICIENT}),
+     {"A": _CLEAN_A, "B": REFUTED, "C": _CLEAN_C, "C_comp": _CLEAN_C,
+      "D": INSUFFICIENT, "E": INSUFFICIENT}),
     ("C2", "random one-shot gap, no pre-execution signal",
      lambda s: gen_C2_random_gap_no_signal(s),
-     {"A": _CLEAN_A, "B": SUPPORTED, "C": _CLEAN_C, "D": INSUFFICIENT, "E": SUPPORTED}),
+     {"A": _CLEAN_A, "B": SUPPORTED, "C": _CLEAN_C, "C_comp": _CLEAN_C,
+      "D": INSUFFICIENT, "E": SUPPORTED}),
     ("C3", "single dominant member, strata-varying gap",
      lambda s: gen_C3_single_dominant(s),
-     {"A": _CLEAN_A, "B": SUPPORTED, "C": _CLEAN_C, "D": REFUTED, "E": INSUFFICIENT}),
+     {"A": _CLEAN_A, "B": SUPPORTED, "C": _CLEAN_C, "C_comp": _CLEAN_C,
+      "D": REFUTED, "E": INSUFFICIENT}),
     ("C4", "stable complementarity identified by visible stratum (POSITIVE control)",
      lambda s: gen_C4_real_complementarity(s),
-     {"A": _CLEAN_A, "B": SUPPORTED, "C": _CLEAN_C, "D": SUPPORTED, "E": SUPPORTED}),
+     {"A": _CLEAN_A, "B": SUPPORTED, "C": _CLEAN_C, "C_comp": _CLEAN_C,
+      "D": SUPPORTED, "E": SUPPORTED}),
     ("C5", "real complementarity, Z cannot identify it (abstention control)",
      lambda s: gen_C5_complementarity_unidentifiable(s),
-     {"A": _CLEAN_A, "B": SUPPORTED, "C": _CLEAN_C, "D": REFUTED, "E": INSUFFICIENT}),
+     {"A": _CLEAN_A, "B": SUPPORTED, "C": _CLEAN_C, "C_comp": _CLEAN_C,
+      "D": REFUTED, "E": INSUFFICIENT}),
     ("C6", "dev/eval drift flips Z signal; no coverage, net utility negative",
      lambda s: gen_C6_cost_kills_gain(s),
-     {"A": _CLEAN_A, "B": SUPPORTED, "C": _CLEAN_C, "D": REFUTED, "E": REFUTED}),
+     {"A": _CLEAN_A, "B": SUPPORTED, "C": _CLEAN_C, "C_comp": _CLEAN_C,
+      "D": REFUTED, "E": REFUTED}),
     ("C7", "headroom driven by best-fixed drop; bare remains best",
      lambda s: gen_C7_headroom_from_bestfixed_drop(s),
-     {"A": _CLEAN_A, "B": SUPPORTED, "C": _CLEAN_C, "D": INSUFFICIENT, "E": INSUFFICIENT}),
+     {"A": _CLEAN_A, "B": SUPPORTED, "C": _CLEAN_C, "C_comp": _CLEAN_C,
+      "D": INSUFFICIENT, "E": INSUFFICIENT}),
     ("C8", "integrity violations caught by S1",
      None,   # per-instance generator mode set below
-     {"A": REFUTED, "B": SUPPORTED, "C": _CLEAN_C, "D": INSUFFICIENT, "E": INSUFFICIENT}),
+     {"A": REFUTED, "B": SUPPORTED, "C": _CLEAN_C, "C_comp": _CLEAN_C,
+      "D": INSUFFICIENT, "E": INSUFFICIENT}),
+    # ---- v2 repeat-based classes (S3 paths) ----
+    ("C9", "global dominance with repeats: stable ranking SUPPORTED, "
+           "complementarity REFUTED (H_stable = 0)",
+     lambda s: gen_C9_global_dominance(s),
+     {"A": _CLEAN_A, "B": REFUTED, "C": SUPPORTED, "C_comp": REFUTED,
+      "D": INSUFFICIENT, "E": INSUFFICIENT}),
+    ("C10", "crossover interaction with repeats: equal means (ranking "
+            "INSUFFICIENT) but real complementarity SUPPORTED",
+     lambda s: gen_C10_crossover_complementarity(s),
+     {"A": _CLEAN_A, "B": SUPPORTED, "C": INSUFFICIENT, "C_comp": SUPPORTED,
+      "D": SUPPORTED, "E": SUPPORTED}),
+    ("C11", "condition-mixing trap: one 'repeat' under a different timeout",
+     lambda s: gen_C11_condition_mixing(s),
+     {"A": _CLEAN_A, "B": SUPPORTED, "C": INSUFFICIENT, "C_comp": INSUFFICIENT,
+      "D": INSUFFICIENT, "E": INSUFFICIENT}),
+    ("C12", "cloned-repeats trap: identical matrices, independence unverifiable",
+     lambda s: gen_C12_cloned_repeats(s),
+     {"A": _CLEAN_A, "B": SUPPORTED, "C": INSUFFICIENT, "C_comp": INSUFFICIENT,
+      "D": INSUFFICIENT, "E": INSUFFICIENT}),
 ]
 C8_MODES = ["missing_member", "corrupt_judge"]
 
 
 def build_package() -> dict:
-    """Freeze all 16 controls + expected states; return manifest dict."""
+    """Freeze all controls + expected states; return manifest dict."""
     controls = []
     for cid, desc, gen, expected in CLASSES:
         for instance in (1, 2):
             if cid == "C8":
                 mode = C8_MODES[instance - 1]
                 pop = gen_C8_integrity_violation(1000 + instance, mode)
-                exp = expected
                 d = f"{desc} [{mode}]"
+                repeats = 1
+            elif cid in REPEAT_CLASSES:
+                pops = REPEAT_CLASSES[cid](stable_seed(cid, instance))
+                pop = pops[sorted(pops)[0]]
+                d = desc
+                repeats = len(pops)
             else:
                 pop = gen(stable_seed(cid, instance))
-                exp = expected
                 d = desc
+                repeats = 1
             controls.append({
                 "cid": cid, "cls": desc, "instance": instance,
                 "instance_phase": "calibration" if instance == 1 else "blinded",
                 "description": d,
-                "expected": exp,
+                "expected": expected,
                 "n_members": len(pop.member_ids), "n_tasks": len(pop.tasks),
+                "n_repeats": repeats,
             })
     manifest = {
-        "package": "diagnostics control package v1 (frozen pre-run)",
+        "package": "diagnostics control package v2 (v1 frozen 16 + C9-C12 "
+                   "repeat-based classes per the 2026-09-15 external review)",
         "n_classes": len(CLASSES), "n_controls": len(controls),
         "calibration": [c["cid"] + f"#{c['instance']}" for c in controls if c["instance_phase"] == "calibration"],
         "blinded": [c["cid"] + f"#{c['instance']}" for c in controls if c["instance_phase"] == "blinded"],
         "controls": controls,
         "notes": "expected states derive from the analytic generating mechanisms; "
-                 "C2/C6/C7 D/E expectations assume the frozen 1-call policy; auditor "
-                 "challenges are appended to the blinded set with their own frozen states.",
+                 "C2/C6/C7 D/E expectations assume the frozen 1-call policy; "
+                 "auditor challenges are re-executed from the frozen spec in the "
+                 "blinded phase with spec+code hash binding. v1 classes keep "
+                 "their frozen expectations unchanged.",
     }
     manifest["manifest_sha256"] = hashlib.sha256(
         json.dumps(manifest, sort_keys=True).encode()).hexdigest()
     return manifest
 
 
-def get_control(cid: str, instance: int) -> Population:
+def get_control(cid: str, instance: int):
+    """Return a Population (single-shot classes) or {repeat_key: Population}
+    (repeat-based classes C9-C12) for the given control instance."""
+    if cid in REPEAT_CLASSES:
+        return REPEAT_CLASSES[cid](stable_seed(cid, instance))
     for c, _, gen, _ in [(x[0], x[1], x[2], x[3]) for x in CLASSES]:
         if c == cid:
             if cid == "C8":

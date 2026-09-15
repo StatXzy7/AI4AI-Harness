@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import warnings
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -43,6 +44,10 @@ class Population:
     dev_task_ids: list[str] = field(default_factory=list)
     task_meta: dict = field(default_factory=dict)   # tid -> dict of pre-execution metadata
     calls: dict = field(default_factory=dict)       # (member_id, tid) -> logical calls
+    # provenance of the calls dict: "per_record" (read from archive rows),
+    # "aggregate_only" (archive reports totals the adapter did not read row-wise),
+    # "absent_in_archive_rows", "not_provided" (caller supplied no evidence either way)
+    calls_status: str = "not_provided"
     # S1 inputs for synthetic controls (real adapters pass counters separately):
     judge_replay_mismatches: int = 0
     duplicate_keys: int = 0
@@ -75,29 +80,63 @@ class Population:
 
 # ---------------------------------------------------------------- S1 integrity
 
-def s1_integrity(manifest: dict, pop: Population, judge_replay_mismatches: int,
+# Judge-replay evidence must state whether the replay was actually executed;
+# "not executed" must never be rendered as "check passed".
+JUDGE_REPLAY_EXECUTED = "executed"
+JUDGE_REPLAY_NOT_EXECUTED = "not_executed"
+JUDGE_REPLAY_INFEASIBLE = "infeasible"
+
+
+def _normalize_judge_replay(judge_replay) -> dict:
+    """Accept a status dict or a bare mismatch count (count => executed)."""
+    if isinstance(judge_replay, dict):
+        status = judge_replay.get("status", JUDGE_REPLAY_EXECUTED)
+        mism = judge_replay.get("mismatches")
+        return {"status": status, "mismatches": mism}
+    return {"status": JUDGE_REPLAY_EXECUTED, "mismatches": int(judge_replay)}
+
+
+def s1_integrity(manifest: dict, pop: Population, judge_replay,
                  duplicate_keys: int, hash_conflicts: list[str]) -> dict:
-    """Plan 3.A: manifest consistency, judge replay, identity uniqueness."""
+    """Plan 3.A (v2): manifest consistency, judge replay (with execution state),
+    identity uniqueness.
+
+    Check values: True = passed, False = violated (blocks), None = could not be
+    run (forces INSUFFICIENT_EVIDENCE, never SUPPORTED).
+    """
+    jr = _normalize_judge_replay(judge_replay)
+    if jr["status"] == JUDGE_REPLAY_EXECUTED:
+        judge_check = int(jr["mismatches"] or 0) == 0
+    else:
+        judge_check = None          # not run: cannot claim consistency
     missing_cells = int(np.isnan(pop.Y).sum())
     missing_frac = missing_cells / pop.Y.size if pop.Y.size else 0.0
     checks = {
         "manifest_member_match": manifest["member_ids"] == pop.member_ids,
         "manifest_task_match": manifest["task_ids"] == pop.tasks,
-        "judge_replay_consistent": judge_replay_mismatches == 0,
+        "judge_replay_consistent": judge_check,
         "no_duplicate_keys": duplicate_keys == 0,
         "no_source_hash_conflict": not hash_conflicts,
         "missing_cells_le_1pct": missing_frac <= 0.01,
     }
-    blocked = [k for k, ok in checks.items() if not ok]
-    state = SUPPORTED if not blocked else REFUTED
+    blocked = [k for k, ok in checks.items() if ok is False]
+    not_run = [k for k, ok in checks.items() if ok is None]
+    if blocked:
+        state = REFUTED
+    elif not_run:
+        state = INSUFFICIENT        # verification missing != verification passed
+    else:
+        state = SUPPORTED
     return {
-        "state": state, "checks": checks, "blocked": blocked,
+        "state": state, "checks": checks, "blocked": blocked, "not_run": not_run,
+        "judge_replay_status": jr["status"],
+        "judge_replay_mismatches": jr["mismatches"],
         "missing_cells": missing_cells, "missing_frac": round(missing_frac, 6),
         "duplicate_keys": duplicate_keys,
         "source_hash_conflicts": hash_conflicts,
-        "judge_replay_mismatches": judge_replay_mismatches,
-        "minimal_missing_evidence": [] if not blocked else
-            [f"repair {k} then re-run" for k in blocked],
+        "minimal_missing_evidence":
+            ([f"repair {k} then re-run" for k in blocked] +
+             [f"execute or bind evidence for {k}" for k in not_run]),
     }
 
 
@@ -106,10 +145,21 @@ def digest_file(path: Path) -> str:
 
 
 
+def _nanmean(arr, axis):
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", RuntimeWarning)
+        return np.nanmean(arr, axis=axis)
+
+
 def _acc(v) -> float:
-    """Denominator-preserving accuracy: unknown/missing cells stay in the
-    denominator (counted as not-correct) per the frozen propagation rule;
-    missing counts are reported separately, never silently dropped."""
+    """Recorded success rate: unknown/missing cells stay in the denominator and
+    count as not-correct (conservative, per the frozen propagation rule).
+
+    This is a *recorded*-outcome rate, NOT a hypothesis-free estimate of the
+    rate over unknown true correctness. Missing counts and pair-level
+    imputation bounds (see _missing_bounds_delta) are reported alongside every
+    comparison so missingness can never silently create or destroy a
+    difference."""
     v = np.asarray(v, dtype=float)
     return float(np.nansum(v)) / len(v)
 
@@ -194,67 +244,199 @@ def _resample(strata: dict, n_t: int, rng) -> np.ndarray:
 
 # --------------------------------------------------------- S3 same-condition repeats
 
-def s3_stability(pop_by_condition: dict[str, Population]) -> dict:
-    """Plan 3.C: R >= MIN_REPEATS matched conditions covering >= MIN_REPEAT_TASKS tasks.
+def _missing_bounds_delta(y1: np.ndarray, y2: np.ndarray) -> tuple[float, float]:
+    """Worst/best-case pair delta under every imputation of unknown cells.
 
-    pop_by_condition maps condition-key -> Population with identical membership and
-    task set. Without matched repeats the state is INSUFFICIENT (an explicit
-    abstention, not 'no difference').
+    Observed delta counts missing as not-correct (denominator-preserving). These
+    bounds report how much the *unknown* cells alone could move the delta, so a
+    difference is never read as identified when missingness could flip it.
+    """
+    t = len(y1)
+    lo = hi = 0.0
+    for a, b in zip(y1, y2):
+        a_vals = [0.0, 1.0] if np.isnan(a) else [float(a)]
+        b_vals = [0.0, 1.0] if np.isnan(b) else [float(b)]
+        diffs = [a - b for a in a_vals for b in b_vals]
+        lo += min(diffs)
+        hi += max(diffs)
+    return lo / t, hi / t
+
+
+def _canonical_pairs(member_ids: list[str]) -> list[tuple[int, int, str, str]]:
+    """Directional pairs keyed by member ID order, NOT list position.
+
+    Reversing or permuting the member list must not flip a pair's direction:
+    h1 is always the lexicographically smaller member id, so the delta
+    acc(h1)-acc(h2) is a property of the named pair, not of the input ordering.
+    """
+    order = sorted(range(len(member_ids)), key=lambda i: member_ids[i])
+    pairs = []
+    for x in range(len(order)):
+        for y in range(x + 1, len(order)):
+            i, j = order[x], order[y]
+            pairs.append((i, j, member_ids[i], member_ids[j]))
+    return pairs
+
+
+def s3_stability(pop_by_condition: dict[str, Population]) -> dict:
+    """Plan 3.C (v2): matched same-condition repeats, two separated estimands.
+
+    Estimand 1 (stable ranking): for a member pair, the same-condition accuracy
+    difference with task-level bootstrap CI, sign-consistent across repeats.
+    Population state SUPPORTED iff some canonical pair shows a stable
+    difference in either direction. Permutation invariance is structural:
+    pair direction is fixed by member ID, never by list position.
+
+    Estimand 2 (stable complementarity / task-harness interaction):
+    H_stable = E_x max_h q_h(x) - max_h E_x q_h(x), where q_h(x) is member h's
+    expected correctness on task x estimated across repeats. H_stable = 0 iff
+    one fixed member is expectation-best on every task (global dominance), so
+    a stable ranking difference CANNOT substitute for complementarity.
+
+    Identity gates (v2): repeats with differing `condition` fields, differing
+    per-member `source_hashes`, or exactly duplicated outcome matrices are
+    refused as matched repeats (explicit INSUFFICIENT, with the offending
+    fields listed) - mixing conditions or cloned matrices can never produce a
+    SUPPORTED/REFUTED stability claim.
     """
     conds = sorted(pop_by_condition)
+    abstain = lambda reason, extra=None: {
+        "state": INSUFFICIENT, "reason": reason,
+        "minimal_missing_evidence": [extra] if extra else []}
     if len(conds) < MIN_REPEATS:
-        return {
-            "state": INSUFFICIENT,
-            "reason": f"R={len(conds)} matched condition groups < {MIN_REPEATS}",
-            "minimal_missing_evidence": [
-                f"collect >= {MIN_REPEATS} same-condition repeats (all c fields equal) "
-                f"over >= {MIN_REPEAT_TASKS} shared tasks"],
-        }
+        return abstain(
+            f"R={len(conds)} matched condition groups < {MIN_REPEATS}",
+            f"collect >= {MIN_REPEATS} same-condition repeats (all c fields equal) "
+            f"over >= {MIN_REPEAT_TASKS} shared tasks")
     base = pop_by_condition[conds[0]]
     for c in conds[1:]:
         p = pop_by_condition[c]
         if p.member_ids != base.member_ids or p.tasks != base.tasks:
-            return {"state": INSUFFICIENT, "reason": "membership/task set differs across conditions",
-                    "minimal_missing_evidence": ["matched membership and tasks across repeats"]}
+            return abstain("membership/task set differs across conditions",
+                           "matched membership and tasks across repeats")
+    # --- identity gate 1: execution condition fields must match exactly
+    cond_fields = sorted({k for c in conds for k in pop_by_condition[c].condition})
+    cond_mismatch = {}
+    for f in cond_fields:
+        vals = {str(pop_by_condition[c].condition.get(f)) for c in conds}
+        if len(vals) > 1:
+            cond_mismatch[f] = sorted(vals)
+    if cond_mismatch:
+        return abstain(
+            "execution condition fields differ across purported repeats; "
+            "these are different conditions, not matched repeats",
+            "collect repeats under one identical execution condition")
+    # --- identity gate 2: member source identity must be constant across repeats
+    identity_conflicts = []
+    for i, m in enumerate(base.member_ids):
+        hashes = {pop_by_condition[c].source_hashes[i] for c in conds}
+        if len(hashes) > 1:
+            identity_conflicts.append({"member": m, "hashes": sorted(hashes)})
+    if identity_conflicts:
+        return abstain(
+            "member source identity differs across repeats (changed code "
+            "masquerading as same-condition repeats)",
+            "re-collect repeats under frozen member source code")
+    # --- identity gate 3: duplicated matrices are not independent executions
+    identical_pairs = []
+    for a in range(len(conds)):
+        for b in range(a + 1, len(conds)):
+            Ya, Yb = pop_by_condition[conds[a]].Y, pop_by_condition[conds[b]].Y
+            if Ya.shape == Yb.shape and np.array_equal(Ya, Yb, equal_nan=True):
+                identical_pairs.append([conds[a], conds[b]])
+    if identical_pairs:
+        return abstain(
+            "repeats contain exactly identical outcome matrices; independence "
+            "of executions cannot be verified",
+            "re-run repeats as separate executions (or bind provenance showing "
+            "independence)")
     Y = np.stack([pop_by_condition[c].Y for c in conds])       # (R, members, tasks)
     R, M, T = Y.shape
     if T < MIN_REPEAT_TASKS:
-        return {"state": INSUFFICIENT,
-                "reason": f"T={T} shared tasks < {MIN_REPEAT_TASKS}",
-                "minimal_missing_evidence": [f">= {MIN_REPEAT_TASKS} shared tasks per repeat"]}
+        return abstain(f"T={T} shared tasks < {MIN_REPEAT_TASKS}",
+                       f">= {MIN_REPEAT_TASKS} shared tasks per repeat")
     rng = np.random.default_rng(20260915)
     pair_reports = []
-    overall = INSUFFICIENT
-    for h1 in range(M):
-        for h2 in range(h1 + 1, M):
-            deltas = [_acc(Y[r, h1] - 0) - _acc(Y[r, h2] - 0) for r in range(R)]
-            boots = []
-            for _ in range(2000):
-                idx = rng.choice(T, T, replace=True)
-                boots.append(np.nansum(Y[:, h1, idx], axis=1) / T - np.nansum(Y[:, h2, idx], axis=1) / T)
-            lo, hi = np.percentile(boots, [2.5, 97.5], axis=0)  # per-repeat CIs
-            lo_all, hi_all = np.percentile(np.mean(boots, axis=1), [2.5, 97.5])
-            signs = {int(np.sign(d)) for d in deltas}
-            if lo_all > 0 and signs == {1}:
-                st = SUPPORTED
-            elif hi_all < 0 and signs == {-1}:
-                st = REFUTED
-            else:
-                st = INSUFFICIENT
-            pair_reports.append({"h1": base.member_ids[h1], "h2": base.member_ids[h2],
-                                 "state": st, "mean_delta": round(float(np.mean(deltas)), 4),
-                                 "ci95": [round(float(lo_all), 4), round(float(hi_all), 4)]})
-            if st == SUPPORTED:
-                overall = SUPPORTED
-    if overall == INSUFFICIENT and any(p["state"] == REFUTED for p in pair_reports):
-        overall = REFUTED
+    stable_diff_exists = False
+    decisive_nonconsistent = False
+    for i, j, id1, id2 in _canonical_pairs(base.member_ids):
+        deltas = [_acc(Y[r, i]) - _acc(Y[r, j]) for r in range(R)]
+        boots = []
+        for _ in range(2000):
+            idx = rng.choice(T, T, replace=True)
+            boots.append(np.nansum(Y[:, i, idx], axis=1) / T
+                         - np.nansum(Y[:, j, idx], axis=1) / T)
+        lo_all, hi_all = np.percentile(np.mean(boots, axis=1), [2.5, 97.5])
+        signs = {int(np.sign(d)) for d in deltas}
+        if lo_all > 0 and signs == {1}:
+            st = SUPPORTED
+        elif hi_all < 0 and signs == {-1}:
+            st = REFUTED        # stable difference, direction opposite canonical
+        else:
+            st = INSUFFICIENT
+            if hi_all < 0 or lo_all > 0:
+                decisive_nonconsistent = True
+        if st in (SUPPORTED, REFUTED):
+            stable_diff_exists = True
+        mlo, mhi = _missing_bounds_delta(_nanmean(Y[:, i, :], 0),
+                                         _nanmean(Y[:, j, :], 0))
+        pair_reports.append({
+            "h1": id1, "h2": id2, "state": st,
+            "mean_delta": round(float(np.mean(deltas)), 4),
+            "ci95": [round(float(lo_all), 4), round(float(hi_all), 4)],
+            "missing_sensitivity_bounds": [round(mlo, 4), round(mhi, 4)],
+            "direction_note": "h1/h2 fixed by member id order; independent of "
+                              "input member ordering"})
+    if stable_diff_exists:
+        rank_state = SUPPORTED
+    elif decisive_nonconsistent:
+        rank_state = REFUTED
+    else:
+        rank_state = INSUFFICIENT
+
+    # --- Estimand 2: stable complementarity H_stable on repeat-averaged q_h(x)
+    with np.errstate(invalid="ignore"):
+        Q = _nanmean(Y, axis=0)                     # (members, tasks) q estimates
+    q_filled = np.where(np.isnan(Q), 0.0, Q)
+    per_task_max = q_filled.max(axis=0)
+    best_fixed_idx = int(np.argmax(q_filled.mean(axis=1)))
+    h_stable = float(per_task_max.mean() - q_filled[best_fixed_idx].mean())
+    boots_h = []
+    rng_h = np.random.default_rng(20260915)
+    for _ in range(2000):
+        idx = rng_h.choice(T, T, replace=True)
+        boots_h.append(per_task_max[idx].mean() - q_filled[best_fixed_idx, idx].mean())
+    lo_h, hi_h = np.percentile(boots_h, [2.5, 97.5])
+    if lo_h > 0:
+        comp_state = SUPPORTED
+    elif hi_h <= 1e-12:
+        comp_state = REFUTED      # consistent with a single expectation-best member
+    else:
+        comp_state = INSUFFICIENT
     return {
-        "state": overall, "R": R, "shared_tasks": T,
-        "estimand": "pairwise per-member-pair accuracy difference under matched conditions; "
-                    "SUPPORTED only for a pair with CI excluding 0 and sign-consistent across repeats",
-        "pairs": pair_reports,
-        "note": ("pairing is across same-condition repeats; cross-time/provider batches are "
-                 "non_exchangeable and excluded from this estimate"),
+        "state": rank_state,
+        "R": R, "shared_tasks": T,
+        "condition_fields_verified": cond_fields,
+        "identity_checks": {"condition_mismatch": {}, "identity_conflicts": [],
+                            "identical_repeat_pairs": []},
+        "estimand": {
+            "stable_ranking": "pairwise same-condition accuracy difference (canonical "
+                              "member-id direction); SUPPORTED iff some pair is stable "
+                              "in either direction; permutation invariant by construction",
+            "stable_complementarity": "H_stable = E_x max_h q_h(x) - max_h E_x q_h(x); "
+                                      "zero iff one member is expectation-best on all "
+                                      "tasks; ranking differences do not imply this",
+        },
+        "stable_ranking": {"state": rank_state, "pairs": pair_reports},
+        "stable_complementarity": {
+            "state": comp_state, "H_stable": round(h_stable, 4),
+            "H_ci95": [round(float(lo_h), 4), round(float(hi_h), 4)],
+            "expectation_best_member": base.member_ids[best_fixed_idx],
+            "caveat": "q_h(x) estimated from R repeats; E[max] of noisy estimates is "
+                      "biased upward, so SUPPORTED near zero should be treated with "
+                      "the CI and repeat count in mind"},
+        "note": ("pairing is across same-condition repeats; cross-time/provider batches "
+                 "are non_exchangeable and excluded from this estimate"),
     }
 
 
@@ -385,10 +567,17 @@ def s5_cost(pop: Population, s4: dict) -> dict:
         return {"state": INSUFFICIENT, "reason": "pi_Z unavailable or no bare reference",
                 "minimal_missing_evidence": ["trainable dev split"]}
     if not pop.calls:
-        cost_evidence = "calls_missing"
+        # Distinguish "no evidence supplied by this adapter/caller" from
+        # "the archive contains no call records" - never conflate the two.
+        cost_evidence = {"status": pop.calls_status if pop.calls_status != "not_provided"
+                         else "calls_not_provided",
+                         "note": "absence of a populated calls dict is NOT evidence "
+                                 "that the archive lacks call records"}
     else:
         per_call = [v for v in pop.calls.values() if v is not None]
-        cost_evidence = {"median_calls": float(np.median(per_call)) if per_call else None}
+        cost_evidence = {"status": pop.calls_status if pop.calls_status != "not_provided"
+                         else "per_record",
+                         "median_calls": float(np.median(per_call)) if per_call else None}
     # U is computed on the same eval tasks as S4 by re-running the frozen choice rule
     dev_idx = [pop.tasks.index(t) for t in pop.dev_task_ids if t in pop.tasks]
     ev_idx = [j for j, t in enumerate(pop.tasks) if t not in set(pop.dev_task_ids)]

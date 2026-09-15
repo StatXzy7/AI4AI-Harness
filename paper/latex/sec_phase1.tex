@@ -44,27 +44,11 @@ Every candidate had passed a code-difference check (``all files distinct,
 non-trivial diffs''). Union repair over bare errors is 7.7\% and oracle
 headroom 3.3\,pp; \react{} differs from \bare{} on zero tasks.
 
-Figure~\ref{fig:phenomenon} makes the central relation quantitative: across
-all 91 pairs, pairwise source-code similarity under the figure's token-sequence
-metric (mean 0.190; distinct from the candidates-only normalized-character
-metric of 0.143 above) has Spearman $\rho = -0.010$ with outcome
-disagreement --- code similarity
-shows \emph{no observed rank association} with behavioral similarity in this
-population. (Pairs share harnesses and are not independent samples; we
-report $\rho$ as a descriptive summary, not an inferential test.)
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.60\linewidth]{figures/fig_phenomenon.pdf}
-\caption{\textbf{Syntactic diversity vs.\ behavioral collapse} (Phase I,
-discovery; day-1 population: 14 harnesses $\times$ 60 tasks, 91 pairs
-including the \bare{} and \react{} baselines). Each point is a harness
-pair; $x$ = token-sequence code similarity, $y$ = fraction of tasks with
-differing correctness. Code similarity does not predict outcome
-disagreement ($\rho=-0.01$); 36/91 pairs are identical on all 60 tasks.
-Raw pairs: \texttt{fig1\_phenomenon\_data.json} in the code release.}
-\label{fig:phenomenon}
-\end{figure}
+Figure~\ref{fig:phenomenon} (Appendix~\ref{app:phase1-provenance}) makes the central relation quantitative: across
+all 91 pairs, source-code similarity under the figure's token-sequence
+metric has Spearman $\rho = -0.010$ with outcome disagreement --- code
+similarity shows \emph{no observed rank association} with behavioral
+similarity here. (Pairs overlap; $\rho$ is descriptive, not inferential.)
 
 \subsection{Trace taxonomy: why code diversity fails to become behavioral
 diversity}\label{sec:taxonomy}
@@ -98,29 +82,6 @@ target, tasks, and judge as the collapsed population: oracle headroom
 \textbf{6.67\,pp} on 60 tasks and \textbf{7.28\,pp} {[}3.3, 10.0{]} on the
 151-item set, with repair/schema/hint each producing repairs the others
 miss. One disclosed caveat: the control was designed \emph{after}
-inspecting day-1 traces, so its headroom is descriptive, not a blind estimate
-of stable complementarity. The bare baseline itself flipped 3 of 60 items between the two
-day-1 runs (API nondeterminism at temperature 0).
-
-\subsection{Phase-I protocol probes and their limits}\label{sec:phase1probes}
-Phase I also probed generation-side fixes --- a strategy-forced free-form protocol
-(assigned mechanism, import/smoke acceptance) and a compiled Harness IR. Under the
-strategy-forced protocol two of three builders produced populations whose point
-estimates exceeded the pre-specified thresholds (Qwen3.8-Flash 5.96,
-DeepSeek-V4-Flash-Vision-Exp 7.95\,pp; the old-protocol arm missed at
-4.64\,pp), and per-strategy acceptance ordered with builder identity
-(GLM-5.3-Flash 3/8, Qwen3.8-Flash 7/8, DeepSeek-V4-Flash-Vision-Exp 8/8,
-under the logged tool). These
-observations motivate Phase II but are not confirmatory, for three disclosed reasons:
-the design was two nested contrasts that cannot separate protocol from builder main
-effects; the early runs lack per-attempt logs, so budget equality cannot be audited;
-and acceptance was an import/smoke check, not the counterfactual conformance gate of
-\S\ref{sec:phase2}. Full condition details are in Appendix~\ref{app:phase1-provenance}.
-
-\paragraph{Generation-null failures (M0).} Re-running the original optimize loop
-with Qwen3.8-Flash and DeepSeek-V4-Flash-Vision-Exp builders produced 40 candidates byte-identical to the
-\bare{} baseline source. Code identity alone does not imply identical stochastic
-executions. This run supplies no distinct-code population; it is reported as a distinct,
-more primitive failure mode --- the pipeline produced no distinct population at all.
-The collapse claims above rest exclusively on the genuinely distinct-source day-1
-population.
+inspecting day-1 traces, so its headroom is descriptive, not blind. The
+bare baseline itself flipped 3 of 60 items between the two day-1 runs
+(API nondeterminism at temperature 0).

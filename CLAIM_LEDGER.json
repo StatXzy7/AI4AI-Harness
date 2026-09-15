@@ -222,6 +222,39 @@
       "strongest_allowed_wording": "Stable complementarity is an estimand for future validation, not a finding here.",
       "must_retain_limits": "cost, cache, provider drift, repeat independence, and selector freeze must be controlled.",
       "prohibited_conclusions": "Do not claim stable additional capability, deployable routing, or equivalence."
+    },
+    {
+      "claim_id": "C-10",
+      "candidate_english": "A hash-bound re-execution of the endpoint-sensitive judge v2 rescore over all 14,400 archived MATH verdicts reproduces the archived verdicts except for 14 false rejects on a single interval-endpoint task (math500_split#103); the earlier 0-flip claim is not reproducible from the committed code and is superseded.",
+      "claim_type": "verification result (hash-bound re-execution)",
+      "stage": "diagnostics (this revision)",
+      "dataset_split": "MATH-500 eval 400 tasks x 36 members",
+      "builder_target_seed_repeat": "frozen archive artifacts/gsm8k_audit (manifest sha256 c0c9917459ba83e8...)",
+      "sample_unit": "member x task verdict",
+      "comparator": "archived official_correct (judge v1) vs judge v2 recomputation",
+      "metric_definition": "flip = v1 verdict != v2 verdict on the same final answer",
+      "value": "14/14,400 flips (0.097%); 0 false-accept, 14 false-reject; all on task math500_split#103",
+      "interval_test_multiple_comparison": "none; full-census recount",
+      "source_files": [
+        "artifacts/diagnostics/20260915/20260915_diagnose_math_57a1616d/math_judge_v2_flips.csv",
+        "artifacts/diagnostics/20260915/20260915_diagnose_math_57a1616d/math_diagnosis.json",
+        "experiment/diagnostics/math_adapter.py (judge_v2)",
+        "review-stage/DIAGNOSTIC_PLAN_V2_20260915.md section 8"
+      ],
+      "input_artifact_version": "manifest_sha256 c0c9917459ba83e8cf1a230069c2fb74e90a227eef80ebd76d6006ac020ddc64",
+      "replay_command": "python -m experiment.diagnostics.cli diagnose-math --dev-tasks 80",
+      "verification_status": "reproduced under committed code 0a64029 + working diagnostics revision; historical 0-flip artifact (20260915_diagnose_math_e681e438) retained as provenance only and not reproducible from committed code",
+      "strongest_allowed_wording": "under the committed endpoint-sensitive judge, 14 of 14,400 archived verdicts change, all false rejects on one interval-endpoint task; v1 replay is internally consistent",
+      "must_retain_limits": [
+        "single task, interval-endpoint answers only",
+        "does not change any qualitative conclusion",
+        "the pre-commit 0-flip artifact cannot be reproduced from committed code"
+      ],
+      "prohibited_conclusions": [
+        "judge v2 'changed none' in this archive",
+        "the diagnostics rescore was validated by the historical artifact"
+      ]
     }
-  ]
+  ],
+  "revision_note": "2026-09-15 (second revision): added C-10 per external review; C-01..C-09 unchanged. See review-stage/DIAGNOSTIC_PLAN_V2_20260915.md."
 }

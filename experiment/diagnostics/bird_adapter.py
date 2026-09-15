@@ -42,6 +42,8 @@ def load_bird() -> dict:
         dbs[tk] = {"stratum": db}
     bare_vec = rp.vector(groups["AD"], "bare", tasks)
     out = {}
+    logical_calls_total = 0
+    calls_rows_seen = 0
     for (builder, seed) in sorted({(b, s) for b, s, _ in mem}):
         for arm in "ABCD":
             names = mem[(builder, seed, arm)]
@@ -52,8 +54,22 @@ def load_bird() -> dict:
             for h in members:
                 hs = {r["code_hash"] for (tg, hh, *_), r in rows.items() if hh == h}
                 hashes.append(sorted(hs)[0] if len(hs) == 1 else "CONFLICT:" + ",".join(sorted(hs)))
+            # per-record logical calls ARE archived (n_llm_calls); read them here
+            # instead of reporting "no cost data" (review P0: recorded-but-unread
+            # must not be conflated with not-recorded)
+            calls = {}
+            for h in members:
+                for tk in tasks:
+                    r = rows.get((rp.TARGET, h, tk, 0, False))
+                    if r is not None and r.get("n_llm_calls") is not None:
+                        calls[(h, tk)] = r["n_llm_calls"]
+            logical_calls_total += sum(calls.values())
+            calls_rows_seen += len(calls)
             out[(builder, seed, arm)] = Population(
                 member_ids=members, source_hashes=hashes, tasks=tasks, Y=Y,
                 condition={"target": rp.TARGET, "repeat": 0, "no_cache": False},
-                has_bare=True, dev_task_ids=[], task_meta=dbs, calls={})
-    return {"cells": out, "tasks": tasks, "audit": audit, "generation": generation}
+                has_bare=True, dev_task_ids=[], task_meta=dbs, calls=calls,
+                calls_status="per_record")
+    return {"cells": out, "tasks": tasks, "audit": audit, "generation": generation,
+            "logical_calls_total": logical_calls_total,
+            "calls_rows_seen": calls_rows_seen}

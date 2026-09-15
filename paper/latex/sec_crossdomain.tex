@@ -27,8 +27,9 @@ reported as-is). This is a replication probe, not a factorial: no
 strategy forcing, no conformance gate.
 
 \paragraph{Results (35 harnesses, 400 eval tasks).} Mean pairwise outcome
-disagreement 10.6\% (max 33.0\%), unique outcome vectors 33 of 35 including
-bare (32 excluding bare), outcome-identical pairs 0.7\% --- no trace of
+disagreement 10.6\% (max 33.0\%); 33 of the 36 members had unique outcome
+vectors when bare is counted (32 of the 35 generated harnesses);
+outcome-identical pairs 0.7\% --- no trace of
 Phase-I-style collapse. Union repair 76.0\% of bare errors; the union of all
 generated candidates fails on 0.8\% of bare-correct tasks (a
 \emph{union-all-fail} rate, not an any-candidate or router harm). Observed
@@ -37,9 +38,12 @@ oracle coverage exceeds bare by 4.75\,pp, and the best fixed member is
 generated member is worse individually. Repeated-execution and same-code
 clone controls were not collected, so this does not establish stable
 complementarity, pre-execution selectability, or deployable utility. A
-versioned endpoint-sensitive rescoring of all 14{,}400 archived verdicts
-under a judge that distinguishes interval endpoints changes none of them
-(\ref{app:diagnostics}).
+hash-bound re-execution of the versioned endpoint-sensitive rescore of all
+14{,}400 archived verdicts changes 14 of them (0.097\%): all are v1 false
+rejects of interval-endpoint answers on a single task, so per-member
+accuracies rise by at most one task and no qualitative conclusion moves
+(\ref{app:diagnostics}). An earlier stored artifact reporting zero flips is
+not reproducible from the committed code and is retained only as provenance.
 
 \paragraph{Two failure-side observations.} First, the clean-protocol
 diversity result replicates in a second domain with a different output
@@ -60,3 +64,30 @@ any code-level audit, is what detects it.
 Phase-I collapse-inducing SQL protocol was not re-run in the math domain,
 so this replication speaks to the clean-protocol result only, not to the
 boundary of collapse.
+
+\subsection{Parallel domain evidence for the measurement boundary}
+Table~\ref{tab:domain-main} places the two domains side by side for the
+same diagnostic question, without pooling them. MATH-500 reproduces the
+boundary: one-run disagreement and 4.75\,pp headroom coexist with bare as
+the best fixed member (93.75\%). It is exploratory and has no clone,
+repeat, repaired-gate, or selector control.
+
+\begin{table}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+Domain / analysis & $n_H$ & $n_{eval}$ & Disagree. & Oracle & Best-fixed & $H$ (pp) \\
+\midrule
+BIRD, A / D & 18 cells & 1,169 & --- & 76.14 / 75.70\% & 67.58 / 67.30\% & 8.56 / 8.40 \\
+BIRD, D$-$A & 18 paired & 1,169 & --- & --- & --- & $-0.16$ \\
+MATH-500, free & $\RevisionMathHarnesses$ & $\RevisionMathTasks$ & $\RevisionMathDisagreement$\% & $\RevisionMathOracle$\% & $\RevisionMathBest$\% (bare) & $\RevisionMathHeadroom$ \\
+\bottomrule
+\end{tabular}
+\caption{Parallel domain evidence for the same measurement question. BIRD
+is the archived factorial analysis; MATH-500 is a one-seed exploratory
+free-arm probe. Designs are not pooled. Headroom is a one-run diagnostic,
+not selector accuracy or stable complementarity.}
+\label{tab:domain-main}
+\end{table}

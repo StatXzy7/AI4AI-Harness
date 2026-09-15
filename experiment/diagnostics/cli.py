@@ -3,7 +3,11 @@
 Commands:
   diagnose-math [--dev-tasks N]   Run S1-S5 on the MATH-500 archive (+ judge-v2 rescore summary)
   diagnose-bird                   Run S1-S5 on the BIRD phase2 archive (18 cells x arms)
-  controls [--phase calibration|blinded]   Freeze/run the control package, M0-M3 matrix
+  controls [--phase calibration|blinded]   Freeze/run the control package, M0-M3 matrix;
+                                           blinded RE-EXECUTES the pre-committed challenges
+                                           under the current code (spec+code hash bound)
+  verify-challenges --challenge-result P   HISTORICAL REPLAY of a stored challenge result
+                                           (provenance only; never current-code validation)
   inventory                       Full archive inventory rows (MATH + BIRD)
 
 Every run writes to a fresh artifacts/diagnostics/<date>/<run_id>/ directory; frozen
@@ -21,7 +25,7 @@ from pathlib import Path
 
 import numpy as np
 
-from experiment.diagnostics import core, controls as ctl
+from experiment.diagnostics import core, controls as ctl, challenges as chal
 from experiment.diagnostics.core import (INSUFFICIENT, REFUTED, SUPPORTED,
                                          assemble_report)
 from experiment.diagnostics.math_adapter import (build_manifest, judge_v2,
@@ -105,11 +109,14 @@ def diagnose_bird(out: Path) -> dict:
     total_conf = sum(a.get("verdict_conflicts", 0) for a in data["audit"].values())
     hash_conflicts = [f"{key}|{h}" for key, pop0 in cells.items()
                       for h in pop0.source_hashes if str(h).startswith("CONFLICT")]
+    # the loader reads archived verdicts; the judge itself is NOT re-executed on
+    # this path, so judge-replay evidence is "not executed" - never claimed pass
+    judge_replay = {"status": core.JUDGE_REPLAY_NOT_EXECUTED, "mismatches": None}
     for key, pop in sorted(cells.items()):
         manifest_mock = {"member_ids": pop.member_ids, "task_ids": pop.tasks}
         missing = int(np.isnan(pop.Y).sum())
-        s1 = core.s1_integrity(manifest_mock, pop, 0, total_dups + total_conf,
-                               hash_conflicts)
+        s1 = core.s1_integrity(manifest_mock, pop, judge_replay,
+                               total_dups + total_conf, hash_conflicts)
         s1["checks"]["missing_cells_le_1pct"] = missing / pop.Y.size <= 0.01
         s1["missing_cells"] = missing
         if missing and not s1["checks"]["missing_cells_le_1pct"] and s1["state"] == SUPPORTED:
@@ -119,7 +126,12 @@ def diagnose_bird(out: Path) -> dict:
         s4 = {"state": INSUFFICIENT,
               "reason": "BIRD archive has no dev/eval split of executions usable for "
                         "policy training; no pre-execution task features archived"}
-        s5 = {"state": INSUFFICIENT, "reason": "no per-record call counts in phase2 rows"}
+        s5 = {"state": INSUFFICIENT,
+              "reason": "per-record logical calls are archived and now read "
+                        f"(cells total {data['logical_calls_total']} calls), but no "
+                        "dev/eval split means pi_Z is untrainable, so no budgeted "
+                        "policy comparison is identified; token/dollar costs remain "
+                        "unrecoverable from these archives"}
         cell_reports["|".join(map(str, key))] = {
             "A": s1["state"], "B": s2, "C": s3_state["state"], "D": s4, "E": s5,
             "K_stats": pop.k_stats()}
@@ -135,24 +147,38 @@ def diagnose_bird(out: Path) -> dict:
     result = {"n_cells": len(cells), "n_tasks": len(data["tasks"]),
               "input_audit": data["audit"], "cell_reports": cell_reports,
               "arm_summary": summary, "C_global": s3_state,
+              "logical_calls_total": data["logical_calls_total"],
+              "calls_rows_seen": data["calls_rows_seen"],
               "note": "historical primary rows are repeat 0 / cache on -> C abstains "
-                      "by the frozen rule (plan 3.C), not an absence of difference"}
+                      "by the frozen rule (plan 3.C v2), not an absence of difference; "
+                      "judge replay is not executed on this path (A reports it as "
+                      "not_run, not passed)"}
     (out / "bird_diagnosis.json").write_text(
         json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
     return result
 
 
-def _run_diagnostic(pop: core.Population) -> dict:
-    manifest_mock = {"member_ids": pop.member_ids, "task_ids": pop.tasks}
-    s1 = core.s1_integrity(manifest_mock, pop, pop.judge_replay_mismatches,
-                           pop.duplicate_keys, [])
-    s2 = core.s2_decomposition(pop)
-    s3 = _s3_for_pop(pop)
-    s4 = core.s4_selectability(pop)
-    s5 = core.s5_cost(pop, s4)
-    return {"A": s1["state"], "B": s2["state"], "C": s3["state"], "D": s4["state"],
-            "E": s5["state"],
-            "detail": {"A": s1, "B": s2, "D": s4, "E": s5}}
+def _run_diagnostic(pop) -> dict:
+    """Run S1-S5 on a Population, or on {repeat_key: Population} for
+    repeat-based controls (S3 then evaluates the matched-repeat estimands)."""
+    if isinstance(pop, dict):
+        base = pop[sorted(pop)[0]]
+        repeats = pop
+    else:
+        base = pop
+        repeats = None
+    manifest_mock = {"member_ids": base.member_ids, "task_ids": base.tasks}
+    s1 = core.s1_integrity(manifest_mock, base, base.judge_replay_mismatches,
+                           base.duplicate_keys, [])
+    s2 = core.s2_decomposition(base)
+    s3 = (core.s3_stability(repeats) if repeats is not None
+          else _s3_for_pop(base))
+    s4 = core.s4_selectability(base)
+    s5 = core.s5_cost(base, s4)
+    return {"A": s1["state"], "B": s2["state"], "C": s3["state"],
+            "C_comp": s3.get("stable_complementarity", {}).get("state", INSUFFICIENT),
+            "D": s4["state"], "E": s5["state"],
+            "detail": {"A": s1, "B": s2, "C": s3, "D": s4, "E": s5}}
 
 
 def _m0_metrics(pop: core.Population) -> dict:
@@ -178,25 +204,31 @@ def _m1_metrics(pop: core.Population) -> dict:
 
 def run_controls(phase: str, out: Path) -> dict:
     package = ctl.build_package()
+    challenge_results = None
     if phase == "blinded":
-        ch_paths = sorted(Path(ROOT, "artifacts/diagnostics").glob(
-            "**/astra_challenges_result.json"))
-        if ch_paths:
-            ch = json.loads(ch_paths[-1].read_text())
-            spec = json.loads(Path(ROOT, "review-stage/astra_20260915/challenge_spec.json").read_text())
-            for c in spec["challenges"]:
-                package["controls"].append({
-                    "cid": c["id"], "cls": c["description"], "instance": 0,
-                    "instance_phase": "blinded_challenge",
-                    "description": c["generating_rule"][:300],
-                    "expected": {**c["expected"], "A": "SUPPORTED"},
-                    "n_members": None, "n_tasks": None,
-                    "note": "auditor challenge, pre-committed by hash; A expectation derived "
-                            "from the challenge's own no-corruption constraints"})
-            package["blinded"] = package["blinded"] + ["CH1", "CH2"]
+        # Challenges are RE-EXECUTED from the frozen spec under the current code
+        # (bound to spec + code hashes). A missing spec is a hard block, not a
+        # silent skip: the blinded set is undefined without the pre-committed
+        # challenges.
+        if not chal.SPEC_PATH.exists():
+            raise FileNotFoundError(
+                f"challenge spec missing: {chal.SPEC_PATH} - blinded validation "
+                "cannot run without the pre-committed challenges")
+        spec_sha = chal.spec_sha256()
+        expected_sha = None
+        sha_file = chal.SPEC_PATH.with_suffix(".sha256")
+        if sha_file.exists():
+            expected_sha = sha_file.read_text(encoding="utf-8").strip().split()[0]
+        if expected_sha and spec_sha != expected_sha:
+            raise ValueError(
+                f"challenge spec hash mismatch: {spec_sha} != recorded {expected_sha}")
+        challenge_results = chal.execute_challenges(_run_diagnostic)
+        package["challenges_executed"] = {
+            "spec_sha256": spec_sha, "code_sha256": challenge_results["code_sha256"]}
+        package["blinded"] = package["blinded"] + list(challenge_results["challenges"])
     (out / f"control_manifest_{phase}.json").write_text(
         json.dumps(package, indent=2), encoding="utf-8")
-    classes = ("A", "B", "C", "D", "E")
+    classes = ("A", "B", "C", "C_comp", "D", "E")
     rows = []
     for c in package["controls"]:
         if c["instance_phase"] != phase:
@@ -210,17 +242,14 @@ def run_controls(phase: str, out: Path) -> dict:
                      "got": {k: got[k] for k in classes},
                      "verdict": verdict})
     if phase == "blinded":
-        ch_paths = sorted(Path(ROOT, "artifacts/diagnostics").glob(
-            "**/astra_challenges_result.json"))
-        if ch_paths:
-            ch = json.loads(ch_paths[-1].read_text())
-            for cid in ("CH1", "CH2"):
-                rows.append({"control": cid,
-                             "description": "auditor challenge (pre-committed by hash)",
-                             "expected": ch[cid]["expected"],
-                             "got": ch[cid]["got"],
-                             "verdict": {k: ("OK" if ch[cid]["got"][k] == ch[cid]["expected"][k]
-                                             else "WRONG") for k in ch[cid]["expected"]}})
+        for cid, r in challenge_results["challenges"].items():
+            rows.append({"control": cid,
+                         "description": "auditor challenge RE-EXECUTED from spec "
+                                        "under current code (hash-bound)",
+                         "expected": r["expected"],
+                         "got": r["got"],
+                         "verdict": {k: ("OK" if r["got"][k] == r["expected"][k]
+                                         else "WRONG") for k in r["expected"]}})
     n = len(rows)
     wrong = sum(1 for r in rows if "WRONG" in r["verdict"].values())
     cells = [(r, k) for r in rows for k in r["expected"]]
@@ -249,6 +278,9 @@ def run_controls(phase: str, out: Path) -> dict:
     result = {"phase": phase, "metrics": metrics, "rows": rows,
               "thresholds": {"false_support_rate_max": 0.1,
                              "abstain_cap": "3 or 30% of N_clear"},
+              "challenge_execution": (
+                  challenge_results if challenge_results else
+                  "not applicable (calibration phase)"),
               "m0_example": _m0_metrics(ctl.get_control("C4", 1)),
               "m1_example": _m1_metrics(ctl.get_control("C4", 1)),
               "note": "M0/M1 are reported as comparison references; the full method "
@@ -256,6 +288,43 @@ def run_controls(phase: str, out: Path) -> dict:
     (out / f"control_validation_{phase}.json").write_text(
         json.dumps(result, indent=2), encoding="utf-8")
     return result
+
+
+def verify_challenges(out: Path, result_path: Path | None = None) -> dict:
+    """HISTORICAL REPLAY ONLY: verify a stored challenge result file against the
+    spec hash it records, without treating it as validation of the current code.
+
+    Current-code validation lives in `controls --phase blinded`, which
+    re-executes the challenges. This command exists so the archived auditor
+    result keeps its provenance while never being conflated with a fresh pass.
+    """
+    if result_path is None:
+        raise SystemExit(
+            "verify-challenges requires --challenge-result PATH (no directory "
+            "scanning: the newest file must never be silently selected)")
+    stored = json.loads(result_path.read_text(encoding="utf-8"))
+    spec_sha_now = chal.spec_sha256()
+    spec_sha_stored = stored.get("challenge_spec_sha256")
+    report = {
+        "result_path": str(result_path),
+        "stored_spec_sha256": spec_sha_stored,
+        "current_spec_sha256": spec_sha_now,
+        "spec_hash_matches": spec_sha_stored == spec_sha_now,
+        "code_binding_of_stored_result": stored.get("code_sha256"),
+        "status": "HISTORICAL_REPLAY",
+        "note": ("verification of what the stored run concluded at its time; "
+                 "NOT evidence that the current diagnostics code passes the "
+                 "challenges - see controls --phase blinded"),
+    }
+    if spec_sha_stored != spec_sha_now:
+        report["discrepancy"] = (
+            "the stored result was produced under a different spec binding; per "
+            "the 2026-09-15 review, its CH2 numbers are also inconsistent with "
+            "the spec's generating rule (best_fixed 0.94 is unreachable; the "
+            "spec forces 0.79). The stored file is retained for provenance only.")
+    (out / "challenge_historical_replay.json").write_text(
+        json.dumps(report, indent=2), encoding="utf-8")
+    return report
 
 
 def inventory(out: Path) -> dict:
@@ -291,10 +360,13 @@ def inventory(out: Path) -> dict:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("command", choices=["diagnose-math", "diagnose-bird",
-                                        "controls", "inventory", "all"])
+                                        "controls", "inventory", "all",
+                                        "verify-challenges"])
     ap.add_argument("--phase", default="calibration", choices=["calibration", "blinded"])
     ap.add_argument("--dev-tasks", type=int, default=80,
                     help="MATH eval tasks held out as dev split for D/E (frozen run uses 80)")
+    ap.add_argument("--challenge-result", type=str, default=None,
+                    help="explicit path for verify-challenges (no directory scanning)")
     args = ap.parse_args()
     tag = args.command.replace("-", "_")
     out = _outdir("all" if args.command == "all" else tag)
@@ -311,6 +383,9 @@ def main() -> None:
     if args.command in ("controls", "all"):
         r = run_controls(args.phase, out)
         print(json.dumps(r["metrics"], indent=1))
+    if args.command == "verify-challenges":
+        r = verify_challenges(out, Path(args.challenge_result) if args.challenge_result else None)
+        print(json.dumps(r, indent=1))
     if args.command in ("inventory", "all"):
         r = inventory(out)
         print(json.dumps(r, indent=1))

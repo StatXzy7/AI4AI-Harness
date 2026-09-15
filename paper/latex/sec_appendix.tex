@@ -51,6 +51,42 @@ per-strategy grids and the builder-acceptance ordering (3/8, 7/8, 8/8)
 come from this logged tool and are post-hoc with respect to the frozen
 admission decisions.
 
+\subsection{Phase-I protocol probes and their limits}\label{sec:phase1probes}
+Phase I also probed generation-side fixes --- a strategy-forced free-form protocol
+(assigned mechanism, import/smoke acceptance) and a compiled Harness IR. Under the
+strategy-forced protocol two of three builders produced populations whose point
+estimates exceeded the pre-specified thresholds (Qwen3.8-Flash 5.96,
+DeepSeek-V4-Flash-Vision-Exp 7.95\,pp; the old-protocol arm missed at
+4.64\,pp), and per-strategy acceptance ordered with builder identity
+(GLM-5.3-Flash 3/8, Qwen3.8-Flash 7/8, DeepSeek-V4-Flash-Vision-Exp 8/8,
+under the logged tool). These
+observations motivate Phase II but are not confirmatory, for three disclosed reasons:
+the design was two nested contrasts that cannot separate protocol from builder main
+effects; the early runs lack per-attempt logs, so budget equality cannot be audited;
+and acceptance was an import/smoke check, not the counterfactual conformance gate of
+\S\ref{sec:phase2}. Full condition details are in Appendix~\ref{app:phase1-provenance}.
+
+\paragraph{Generation-null failures (M0).} Re-running the original optimize loop
+with Qwen3.8-Flash and DeepSeek-V4-Flash-Vision-Exp builders produced 40 candidates byte-identical to the
+\bare{} baseline source. Code identity alone does not imply identical stochastic
+executions. This run supplies no distinct-code population; it is reported as a distinct,
+more primitive failure mode --- the pipeline produced no distinct population at all.
+The collapse claims above rest exclusively on the genuinely distinct-source day-1
+population.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.60\linewidth]{figures/fig_phenomenon.pdf}
+\caption{\textbf{Syntactic diversity vs.\ behavioral collapse} (Phase I,
+discovery; day-1 population: 14 harnesses $\times$ 60 tasks, 91 pairs
+including the \bare{} and \react{} baselines). Each point is a harness
+pair; $x$ = token-sequence code similarity, $y$ = fraction of tasks with
+differing correctness. Code similarity does not predict outcome
+disagreement ($\rho=-0.01$); 36/91 pairs are identical on all 60 tasks.
+Raw pairs: \texttt{fig1\_phenomenon\_data.json} in the code release.}
+\label{fig:phenomenon}
+\end{figure}
+
 \section{Phase-II Protocol Summary and Deviation Log}\label{app:phase2-protocol}
 
 The authoritative protocol (estimands, splits, instruments, exclusion
@@ -106,6 +142,15 @@ For K-matching, each A/B and C/D pair uses the smaller candidate count;
 every uniform candidate subset is enumerated exactly. Bare stays in every
 subset, and best-fixed is recomputed inside each subset on every task draw.
 This is a size sensitivity analysis, not a causal mediation decomposition.
+Retaining all 18 cells, including two with singleton A subsets, changes
+subset D$-$A from \RevisionRtwoCached\ to \RevisionRtwoOff\,pp
+(change \RevisionRtwoChange\,pp, 95\% CI \RevisionRtwoChangeCI). R2
+subset headroom excludes bare because R2 did not acquire a matched bare
+run, so it is distinct from the bare-inclusive primary estimand; the old
+16-cell comparison is reconciled here. These are instability measurements,
+not standard errors or a detectability floor for the mean treatment effect;
+they do not establish that every contrast is unchanged, or identify what
+fraction of between-harness disagreement is noise.
 
 R2 acquired 70 harnesses on 400 tasks, selecting the first two callable
 admitted candidates per A/D cell where available. The two cache-off
@@ -153,6 +198,9 @@ Logged logical calls are not billable requests or token counts. The last
 column averages candidate-population calls per task over cells.}
 \label{tab:cost}
 \end{table}
+
+\subsection{Post-review provider acquisition status}
+The post-review provider acquisition attempts did not yield a complete common pool: transport interruptions left completed responses, unclosed requests, and unstarted attempts in separate auditable states. These records are retained for provenance and missingness accounting, but are excluded from claims about population performance, cost, or stable complementarity. Thus, the manuscript does not use provider availability or partial acquisition as evidence for the unresolved clone-control question.
 
 \section{Exploratory Fingerprint and Selection Analyses}\label{app:rich}
 Both analyses are post-hoc on the archived confirmatory cells (18
@@ -248,6 +296,18 @@ $p=0.1$. Averaging identical cells or overlapping fixed splits does not
 remove this event. This bound concerns the stated construction and
 interval, not BIRD-specific coverage or the impossibility of other
 inference methods.
+
+\subsection{Routing and exploratory selection}\label{sec:boundary}
+The Phase-I leave-one-harness-out predictor did not beat the best fixed
+harness in the tested DeepSeek population ($-3.4$\,pp); the Qwen estimate
+was $+0.9$\,pp (CI $[-5.2,+6.9]$), and task-held-out repair AUROC was
+0.512. These predictor and split-specific results do not establish value
+prediction. The canonical W1 analysis is likewise descriptive: at $k=8$,
+diversity versus top-accuracy selection changes oracle by
+$\RevisionWoneOracle$\,pp, best-fixed by $\RevisionWoneBest$\,pp, and
+headroom by $\RevisionWoneHeadroom$\,pp; the development-selected fixed
+member changes by $\RevisionWoneFixed$\,pp. None is a validated routing
+gain (Appendix~\ref{app:rich}).
 
 \section{Phase-I Additional Results}\label{app:phase1-results}
 Per-harness accuracies, per-fold LOHO tables, bootstrap intervals,
@@ -509,39 +569,69 @@ rather than silently treating vote as vote3 or choosing a compatible profile
 after observing its result. This source-level scope gap does not estimate
 false-rejection rates for generated candidates.
 
+\subsection{Same-core headroom decomposition}\label{app:decomp}
+\begin{table}[t]
+\centering\footnotesize
+\input{revision_decomposition_table}
+\caption{\textbf{Same-core headroom decomposition.} All arms use identical
+400 tasks and identical bare outcomes. $K_{\rm cand}$ excludes bare and
+$K_{\rm total}=K_{\rm cand}+1$; counts and accuracies are cell means.
+Headroom is oracle minus best-fixed accuracy, not realized routing gain.}
+\label{tab:decomp}
+\end{table}
+
 \section{Diagnostics Pipeline and Validation (This Revision)}\label{app:diagnostics}
 
 \paragraph{Five question classes.} For a population of harnesses and a bare
 reference, the diagnostics pipeline evaluates five classes of claims on an
 explicit execution matrix $Y[h,x,r,c]$ (member, task, repeat, execution
 condition): \textbf{(A)} measurement sufficiency (manifest consistency,
-judge replay, identity uniqueness); \textbf{(B)} single-shot coverage
-(oracle minus best-fixed, with dev-fixed reported separately); \textbf{(C)}
-stable conditional advantage (requires $\ge 3$ matched same-condition
-repeats over $\ge 30$ shared tasks); \textbf{(D)} pre-execution
-selectability (a frozen one-call selection policy versus dev-fixed);
-\textbf{(E)} deployable net utility under a frozen 1-call budget with
-$\lambda{=}1$ harm weighting. Each class returns
-SUPPORTED, REFUTED\_WITHIN\_SCOPE, INSUFFICIENT\_EVIDENCE, or
+judge replay with an explicit executed/not-executed state, identity
+uniqueness; a check that was not run is reported as not-run and can never
+render the class SUPPORTED); \textbf{(B)} single-shot coverage (oracle minus
+best-fixed, with dev-fixed reported separately); \textbf{(C)} stability, in
+two separated estimands; \textbf{(D)} pre-execution selectability (a frozen
+one-call selection policy versus dev-fixed); \textbf{(E)} deployable net
+utility under a frozen 1-call budget with $\lambda{=}1$ harm weighting. Each
+class returns SUPPORTED, REFUTED\_WITHIN\_SCOPE, INSUFFICIENT\_EVIDENCE, or
 NOT\_APPLICABLE with scope and minimal missing evidence; classes are never
 collapsed into a single score.
 
-\paragraph{Validation on known-truth controls.} A frozen package of 8
-control classes $\times$ 2 independent instances (16 controls) with
-mechanism-derived expected states was split into calibration and blinded
-halves; thresholds and the pipeline were frozen before the blinded run, and
-the independent auditor pre-committed two additional challenge controls by
-hash. Calibration matched on all 40 state cells; the blinded set (8
-instances + 2 challenges, judged on all five classes) matched on all but
-one cell: the auditor's CH2 challenge expected the
-frozen policy to outperform dev-fixed, but with binary stratum features the
-policy provably coincides with dev-fixed, so that cell is recorded as a
-failed challenge rather than explained away. The false-support rate is 0 in
-both phases, the positive control is recognized, and the abstention cap
-holds. Concretely, the pipeline refutes ``identical outputs under
-different code,'' abstains on unidentifiable complementarity, recognizes
-stratum-visible complementarity, and catches corruption (conflicting
-verdicts, missing members) that leaves outcome-level metrics healthy.
+\paragraph{Two stability estimands.} \emph{C-rank}: pairwise same-condition
+accuracy differences with task-level bootstrap CIs and sign-consistency
+across repeats; the pair direction is fixed by member identity, so
+population conclusions are invariant to member ordering (the pre-revision
+implementation could reverse a population conclusion by permuting the member
+list; an invariant test now pins this). \emph{C-comp}: stable
+complementarity, $H_{\rm stable}=\mathbb{E}\max_h q_h(x)-\max_h\mathbb{E}
+q_h(x)$ with $q_h$ the repeat-averaged per-task correctness; it satisfies
+Eq.~\eqref{eq:identity} and is zero exactly when one member is
+expectation-best on every task, so a stable ranking difference can never
+substitute for it. Repeats with differing execution-condition fields,
+differing member source hashes, or byte-identical outcome matrices are
+refused as matched repeats and force INSUFFICIENT\_EVIDENCE. Pair-level
+imputation bounds over unknown cells are reported alongside the recorded
+success rate.
+
+\paragraph{Validation on known-truth controls.} The frozen package has two
+layers: the original eight mechanism-derived classes $\times$ 2 instances
+(16 controls, expectations unchanged), plus four repeat-based classes
+$\times$ 2 instances exercising the stability paths single-shot controls
+cannot reach --- global dominance (C-rank SUPPORTED, C-comp REFUTED),
+equal-mean crossover skill (C-rank INSUFFICIENT, C-comp SUPPORTED, and the
+visible stratum makes D/E SUPPORTED), a condition-mixing trap, and a
+cloned-repeats trap (both must abstain). Expected states are frozen in the
+hashed manifest before any blinded run and derive from the generating
+mechanisms. Invariant tests additionally assert permutation invariance,
+dominance$\neq$complementarity, and identity-refusal directly. Calibration
+matched on all state cells; the blinded set (12 controls + 2 auditor
+challenges re-executed from the pre-committed, hash-bound spec under the
+current code) matched on all $14\times 6$ cells: zero false supports, the
+positive control recognized, and the abstention cap holds. The earlier
+stored challenge result whose CH2 numbers contradict its own spec
+(best-fixed 0.94 is unreachable under the generating rule, which forces
+0.79) is retained as provenance only; spec-faithful re-execution matches the
+auditor's pre-committed expectations on every cell.
 
 \paragraph{Application to the archives.} Applied to the MATH-500 archive
 (36 members $\times$ 400 tasks) and the 18-cell BIRD Phase-II archive. On
@@ -550,18 +640,27 @@ frozen input manifests contain overlapping collection files whose rows
 duplicate on the canonical key (resolved by the archived first-write-wins
 policy, with recorded verdict-conflict counts), so the coverage numbers
 below are computed on that deduplicated view, not on a conflict-free
-archive. Subject to that scope, all cells show single-shot coverage (B SUPPORTED); stability, selectability, and
-deployability are INSUFFICIENT\_EVIDENCE by the frozen rules because the
-archives contain no matched repeats and no cost fields; on MATH the frozen
-selection policy, trained on the held-out 80 tasks, ties with dev-fixed
-(bare) on every eval task, so selectability and deployability are
-INSUFFICIENT\_EVIDENCE rather than refuted. Three published numbers were corrected
-(membership-basis of the outcome-vector count; the generated-harness
-accuracy range 0.6825--0.915, previously printed as 0.68--0.87; the
-headroom decomposition with best-fixed = bare stated explicitly), two
-overloaded metric names were disambiguated (union-all-fail vs
-any-candidate-fail), and one preserved-judgment control confirms a reported
-pair (union repair 76.0\% / union-all-fail 0.8\%) under the explicit
-definition. A versioned endpoint-sensitive judge rescored all 14{,}400
-MATH verdicts and changed none; the underlying bracket-merging defect is
-demonstrated on synthetic inputs but did not fire in this archive.
+archive; judge replay is not executed on this path and is reported as
+not-run, not passed. Subject to that scope, all cells show single-shot
+coverage (B SUPPORTED); stability, selectability, and deployability are
+INSUFFICIENT\_EVIDENCE by the frozen rules because the archives contain no
+matched repeats and no dev/eval split for policy training --- not because
+costs are absent: per-record logical calls are archived and are now read
+(288{,}104 calls across the core-subset cells), though token/dollar costs
+remain unrecoverable. On MATH the frozen selection policy, trained on the
+held-out 80 tasks, ties with dev-fixed (bare) on every eval task, so
+selectability and deployability are INSUFFICIENT\_EVIDENCE rather than
+refuted. Three published numbers were corrected (membership-basis of the
+outcome-vector count, now 33/36 members including bare and 32/35 generated
+harnesses; the generated-harness accuracy range 0.6825--0.915, previously
+printed as 0.68--0.87; the headroom decomposition with best-fixed = bare
+stated explicitly), two overloaded metric names were disambiguated
+(union-all-fail vs any-candidate-fail), and one preserved-judgment control
+confirms a reported pair (union repair 76.0\% / union-all-fail 0.8\%) under
+the explicit definition. A hash-bound re-execution of the versioned
+endpoint-sensitive judge over all 14{,}400 MATH verdicts changes 14 of them
+--- all v1 false rejects of interval-endpoint answers on one task
+(math500\_split\#103); the v1 replay itself is internally consistent, and an
+earlier stored 0-flip artifact is not reproducible from the committed code
+and is superseded. The bracket-merging defect the new judge was designed to
+catch therefore does fire in this archive, on exactly one task.

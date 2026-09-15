@@ -1,0 +1,67 @@
+The boundary results above are statements about what single-run numbers
+cannot establish. To make that boundary checkable rather than rhetorical, we
+package it as an offline diagnostic that evaluates five claim classes on an
+explicit execution matrix $Y[h,x,r,c]$ (member, task, repeat, execution
+condition) and returns one of four states per class --- SUPPORTED,
+REFUTED\_WITHIN\_SCOPE, INSUFFICIENT\_EVIDENCE, NOT\_APPLICABLE --- with
+scope and minimal missing evidence; classes are never collapsed into a
+score. \textbf{(A)}~measurement sufficiency (manifest consistency, judge
+replay with an explicit executed/not-executed state, identity uniqueness);
+\textbf{(B)}~single-shot coverage; \textbf{(C)}~stability, split into two
+estimands; \textbf{(D)}~pre-execution selectability (a frozen one-call
+policy $\pi_Z$ versus dev-fixed); \textbf{(E)}~budgeted net utility under a
+frozen 1-call budget with $\lambda{=}1$ harm weighting.
+
+\textbf{Two different stability claims.} Class C separates what earlier
+sections conflated. \emph{C-rank} asks whether some member pair has a
+same-condition accuracy difference whose interval excludes zero with
+sign-consistent repeats; its pair direction is fixed by member identity, not
+list position, so the population conclusion is structurally invariant to
+member ordering. \emph{C-comp} asks whether stable task--harness interaction
+exists. For two members with per-task correct-probability gap
+$\Delta(x)=p_1(x)-p_0(x)$,
+\begin{equation}
+H_{\rm stable} \;=\; \mathbb{E}\,\Delta(x)_+ - \bigl(\mathbb{E}\,\Delta(x)\bigr)_+
+\;=\; \tfrac{1}{2}\bigl(\mathbb{E}\,|\Delta(x)| - |\mathbb{E}\,\Delta(x)|\bigr),
+\label{eq:identity}
+\end{equation}
+so a member that is better everywhere yields a perfectly stable ranking
+difference with $H_{\rm stable}=0$: global dominance is the \emph{refutation}
+of complementarity, not evidence for it. Real interaction requires the
+per-task advantage to \emph{cross} tasks; with pre-execution features $Z$
+and $q_h(Z)=\mathbb{E}[p_h(X)\mid Z]$, any achievable selection gap
+$\mathbb{E}_Z\max_h q_h(Z)-\max_h\mathbb{E}_Z q_h(Z)$ is bounded by
+$H_{\rm stable}$. Identity gates refuse to score stability at
+all when purported repeats differ in execution-condition fields, in member
+source hashes, or contain byte-identical outcome matrices (cloned
+``repeats'').
+
+\textbf{Validation by invariants, not by output assertions.} The frozen
+control package pairs eight mechanism-derived classes (16 controls) with
+four repeat-based classes (8 controls) that exercise the paths single-shot
+controls cannot: a globally dominant member with repeats (C-rank SUPPORTED,
+C-comp REFUTED), equal-mean crossover skill (C-rank INSUFFICIENT, C-comp
+SUPPORTED, and the visible stratum makes it selectable), and
+condition-mixing and cloned-repeat traps (both must abstain). Expected
+states are frozen in a hashed manifest before any blinded run and derive
+from the generating mechanisms; invariant tests assert permutation
+invariance and dominance$\neq$complementarity directly. In the blinded
+phase (12 controls + auditor challenges re-executed from the pre-committed,
+hash-bound spec under the current code), all $14\times 6$ state cells match
+expectation: zero false supports, the positive control recognized, and the
+abstention cap holds. One recorded challenge ``failure'' from an earlier
+unbound executor is resolved by spec-faithful re-execution; the stored
+file's own numbers are unreachable under the spec it cites and are retained
+only as provenance.
+
+\textbf{The diagnostic audits its own history.} Re-running the verification
+chain under hash-bound current code surfaced a claim our own earlier
+artifact had recorded incorrectly: an endpoint-sensitive judge rescore of
+all 14{,}400 archived MATH verdicts was reported as ``changed none'', but
+the committed code produces 14 verdict flips (all false rejects of
+interval-endpoint answers on one task) and the stored 0-flip output is not
+reproducible from the committed code. On the archives the diagnostic is
+conservative: BIRD has no matched repeats and no dev/eval split for policy
+training, so C, D, and E abstain there by construction; MATH returns
+coverage without identifiable selection; decision-level impacts, including
+preserved-judgment controls, are itemized in Appendix~\ref{app:diagnostics}.

@@ -153,7 +153,6 @@ def load_population(manifest: dict, dev_task_ids: list[str] | None = None) -> tu
     tidx = {tk: j for j, tk in enumerate(tasks)}
     Y = np.full((n, t), np.nan)
     calls: dict = {}
-    replay_mismatch = 0
     v2_rows = []
     for (h, tid, rep, noc), r in records.items():
         if rep != 0 or noc:
@@ -170,8 +169,6 @@ def load_population(manifest: dict, dev_task_ids: list[str] | None = None) -> tu
         if "final_answer" in r:
             v1 = int(r["official_correct"])
             v2 = judge_v2(r.get("final_answer") or "", gold)
-            if v1 != v2:
-                replay_mismatch += 0
             v2_rows.append({"harness_id": h, "task_id": tid,
                             "v1": v1, "v2": v2,
                             "final_answer": (r.get("final_answer") or "")[-2000:]})
@@ -193,6 +190,7 @@ def load_population(manifest: dict, dev_task_ids: list[str] | None = None) -> tu
         tasks=tasks, Y=Y,
         condition=manifest["condition"], has_bare=True,
         dev_task_ids=dev_task_ids or [],
-        task_meta=manifest["task_meta"], calls=calls)
+        task_meta=manifest["task_meta"], calls=calls,
+        calls_status="per_record" if calls else "absent_in_archive_rows")
     return pop, {"duplicate_keys": dup, "verdict_conflicts": conflicts,
                  "judge_replay_mismatches": judge_replay_mismatches}, v2_rows
