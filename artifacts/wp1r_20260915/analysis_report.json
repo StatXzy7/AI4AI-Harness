@@ -1,0 +1,64 @@
+{
+ "E1_C-rank_E2_C-comp": {
+  "state": "INSUFFICIENT_EVIDENCE",
+  "reason": "R=1 matched condition groups < 3",
+  "minimal_missing_evidence": [
+   "collect >= 3 same-condition repeats (all c fields equal) over >= 30 shared tasks"
+  ]
+ },
+ "panel": [
+  "bare",
+  "gsm_deepseek_s0_g3",
+  "gsm_ernie_s0_g3",
+  "gsm_glm_s0_g6",
+  "gsm_kimi_s0_g3",
+  "gsm_kimi_s0_g4",
+  "gsm_minimax_s0_g0",
+  "gsm_minimax_s0_g3",
+  "gsm_qwen_s0_g5"
+ ],
+ "n_tasks": 43,
+ "repeats": [
+  1
+ ],
+ "clone_arm_s3": {
+  "state": "INSUFFICIENT_EVIDENCE",
+  "reason": "R=1 matched condition groups < 3",
+  "minimal_missing_evidence": [
+   "collect >= 3 same-condition repeats (all c fields equal) over >= 30 shared tasks"
+  ]
+ },
+ "E2_A86_clone_null": {
+  "state": "INSUFFICIENT",
+  "reason": "repeats present: real=[1], clone=[1]; A8.6 requires repeats 1,2,3 in both arms"
+ },
+ "E4_accounting": {
+  "eval_real": {
+   "cells": 383,
+   "logical_calls": 776,
+   "http_attempts": 1116,
+   "known_total_tokens": 1330945,
+   "conservative_cost_ceiling_cny": 58.96
+  },
+  "eval_clone": {
+   "cells": 513,
+   "logical_calls": 513,
+   "http_attempts": 513,
+   "known_total_tokens": 581893,
+   "conservative_cost_ceiling_cny": 25.78
+  },
+  "pilot": {
+   "cells": 3,
+   "logical_calls": 3,
+   "http_attempts": 3,
+   "known_total_tokens": 2405,
+   "conservative_cost_ceiling_cny": 0.11
+  },
+  "_total": {
+   "logical_calls": 1292,
+   "http_attempts": 1632,
+   "known_total_tokens": 1915243,
+   "conservative_cost_ceiling_cny": 84.85
+  }
+ }
+}

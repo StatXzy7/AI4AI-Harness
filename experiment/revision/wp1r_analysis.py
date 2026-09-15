@@ -225,12 +225,18 @@ def main():
     report['panel'] = members
     report['n_tasks'] = len(tasks)
     report['repeats'] = repeats
-    # A8.6 (requires eval_clone)
+    # A8.6 (requires eval_clone and all three repeats)
     if (WP1R / 'eval_clone' / 'ledger.sqlite').exists():
         cm, ct, cr, c_by_rep, cman, _ = matrices('eval_clone')
         c_pops = build_populations(cm, ct, c_by_rep, cman)
         report['clone_arm_s3'] = s3_stability(c_pops)
-        report['E2_A86_clone_null'] = a86_test(m_by_rep, members, c_by_rep, cm)
+        if {1, 2, 3} <= set(repeats) and {1, 2, 3} <= set(cr):
+            report['E2_A86_clone_null'] = a86_test(m_by_rep, members, c_by_rep, cm)
+        else:
+            report['E2_A86_clone_null'] = {
+                'state': 'INSUFFICIENT',
+                'reason': f'repeats present: real={repeats}, clone={cr}; '
+                          'A8.6 requires repeats 1,2,3 in both arms'}
     report['E4_accounting'] = accounting(['eval_real', 'eval_clone', 'dev_real', 'pilot'])
     out = WP1R / 'analysis_report.json'
     out.write_text(json.dumps(report, indent=1, ensure_ascii=False), encoding='utf-8')
