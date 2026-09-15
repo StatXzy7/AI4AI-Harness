@@ -1,1 +1,16 @@
 == fresh_collect_math loopback ==
+Ran 17 tests in 789.104s
+
+OK
+== diagnostics ==
+Ran 42 tests in 46.865s
+
+OK
+== isolated ==
+Ran 8 tests in 26.079s
+
+OK
+== fresh_runtime ==
+Ran 10 tests in 13.340s
+
+OK
