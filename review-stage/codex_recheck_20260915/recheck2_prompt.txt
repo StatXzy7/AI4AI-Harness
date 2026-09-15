@@ -1,0 +1,47 @@
+You are the same independent auditor who performed the re-review stored at
+review-stage/codex_recheck_20260915/recheck_last_message.txt (6.5/10, not ready,
+four blockers). The executor claims all four blockers are now fixed. Verify
+independently from code, tests, and fresh artifacts; do not accept the summary.
+
+The four blockers and the claimed fixes:
+1. E could SUPPORT without verified call records. Claimed fix: core.s5_cost now
+   gates E on budget_verified (per-record calls or Population.budget_by_construction,
+   documented as the plan's design-by-construction exception in
+   review-stage/DIAGNOSTIC_PLAN_V2_20260915.md section 10); the gate overrides the
+   utility interval; tests TestS5BudgetGate cover archive-no-calls (INSUFFICIENT),
+   construction budget (SUPPORTED), per-record calls (SUPPORTED).
+2. D did not implement the frozen five-fold CV. Claimed fix: core._fit_member_probs
+   now performs stratified 5-fold CV on dev (folds balanced over feature patterns,
+   fold-model average on eval; eval never in fitting). Stratification was chosen
+   because some controls have tiny dev splits. All frozen expectations were re-run
+   and unchanged (36/36 tests; calibration 12/12; blinded 14x6 all OK).
+3. Condition identity compared via str(). Claimed fix: canonical typed JSON
+   (json.dumps sort_keys); test_s3_condition_compare_is_type_safe covers 60 vs '60'.
+4. C-comp imputed missing repeat averages with 0. Claimed fix: if any (member, task)
+   cell has no valid repeat, C-comp abstains (INSUFFICIENT, H_stable=None, cells
+   listed); test_s3_comp_abstains_on_unidentified_expectation.
+Also: E wording changed to budget-matched policy utility in sec_diagnostics.tex,
+sec_appendix.tex, sec_crossdomain.tex.
+
+Fresh artifacts to check:
+- experiment/diagnostics/core.py (s5_cost budget gate; _fit_member_probs stratified
+  CV; canonical condition compare; C-comp unidentified gate)
+- experiment/diagnostics/test_diagnostics.py (36 tests)
+- artifacts/diagnostics/20260915/20260915_controls_46d54a63/ (calibration, pre-fix
+  run was 46d54a63? use the LATEST calibration and blinded dirs by timestamp:
+  20260915_controls_1f876a95 blinded + its calibration sibling), each with
+  control_manifest/control_validation JSONs and challenge_execution hash binding
+- artifacts/diagnostics/20260915/20260915_diagnose_math_d1afa153/ (B/D/E states
+  unchanged, 14 flips reproduced)
+- review-stage/DIAGNOSTIC_PLAN_V2_20260915.md section 10 (the amendment)
+- git commits 864f3db and 04532b3
+
+Re-check also that nothing regressed: permutation invariance tests, dominance vs
+complementarity controls C9/C10, challenge CH1/CH2 spec-faithful outcomes, and
+that the E gate does not silently relabel REFUTED results as SUPPORTED.
+
+Output: ARIS score x/10 and verdict in {ready, almost, not ready}, per-area scores
+(measurement correctness, diagnostic validity, research-contribution completeness,
+manuscript-expression completeness), and any remaining blocking issues with file
+locations. Do not presume acceptance, do not give a flattering score. Note anything
+you could not run as not_executed.

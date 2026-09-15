@@ -245,6 +245,18 @@ class TestS3Invariants(unittest.TestCase):
         self.assertEqual(s3["state"], core.INSUFFICIENT)
         self.assertIn("condition", s3["reason"])
 
+    def test_s3_condition_null_vs_missing_key_differ(self):
+        """An absent key and an explicit null are DIFFERENT conditions
+        (recheck2 blocker #3): the whole typed condition object is compared."""
+        pops = ctl.get_control("C9", 1)
+        pops["r2"].condition = {"c": "synthetic", "timeout": None}
+        s3 = core.s3_stability(pops)
+        self.assertEqual(s3["state"], core.INSUFFICIENT)
+        pops2 = ctl.get_control("C9", 1)
+        pops2["r2"].condition = {}                     # both keys absent
+        s3b = core.s3_stability(pops2)
+        self.assertEqual(s3b["state"], core.INSUFFICIENT)
+
     def test_s3_comp_abstains_on_unidentified_expectation(self):
         """A (member, task) cell with NO valid repeat across all repeats leaves
         the per-task expectation unknown; C-comp must abstain, never report
@@ -323,26 +335,79 @@ class TestS5BudgetGate(unittest.TestCase):
         s5 = core.s5_cost(pop, s4)
         self.assertEqual(s5["state"], core.SUPPORTED)
 
+    def test_aggregate_only_does_not_verify(self):
+        """An aggregate total is not per-task verification (recheck2 blocker #2)."""
+        pop = ctl.get_control("C4", 1)
+        pop.budget_by_construction = False
+        pop.calls = {}
+        pop.calls_status = "aggregate_only"
+        s4 = core.s4_selectability(pop)
+        s5 = core.s5_cost(pop, s4)
+        self.assertEqual(s5["state"], core.INSUFFICIENT)
+        self.assertIn("aggregate", s5["budget_basis"])
+
+    def test_partial_records_do_not_verify(self):
+        pop = ctl.get_control("C4", 1)
+        pop.budget_by_construction = False
+        all_pairs = [(m, t) for m in pop.member_ids for t in pop.tasks]
+        pop.calls = {p: 1 for p in all_pairs[:-5]}      # 5 cells missing
+        pop.calls_status = "per_record"
+        s4 = core.s4_selectability(pop)
+        s5 = core.s5_cost(pop, s4)
+        self.assertEqual(s5["state"], core.INSUFFICIENT)
+        self.assertEqual(s5["budget_basis"], "per_record_incomplete")
+
+    def test_over_budget_records_do_not_verify(self):
+        pop = ctl.get_control("C4", 1)
+        pop.budget_by_construction = False
+        pop.calls = {(m, t): 3 for m in pop.member_ids for t in pop.tasks}
+        pop.calls_status = "per_record"
+        s4 = core.s4_selectability(pop)
+        s5 = core.s5_cost(pop, s4)
+        self.assertEqual(s5["state"], core.INSUFFICIENT)
+        self.assertIn("over_budget", s5["budget_basis"])
+
 
 class TestS4CrossValidation(unittest.TestCase):
     """Plan 3.D conformance: the frozen policy is a 5-fold-CV fit on dev
     (recheck blocker #2)."""
 
-    def test_cv_averages_over_five_folds(self):
+    def test_cv_direction_matches_reference_implementation(self):
+        """The fold models must be TRAINED ON THE OTHER n_folds-1 FOLDS and
+        averaged (recheck2 blocker #1). Compare against an explicit reference
+        implementation with the same fold assignment."""
         import numpy as np
         rng = np.random.default_rng(0)
-        n_dev, n_ev, n_feat = 60, 30, 2
+        n_dev, n_ev, n_feat = 30, 20, 2
         X_dev = rng.normal(size=(n_dev, n_feat))
         X_ev = rng.normal(size=(n_ev, n_feat))
         w_true = np.array([1.5, -1.0])
         y_dev = (rng.random(n_dev) < core._sigmoid(X_dev @ w_true)).astype(float)
-        probs = core._fit_member_probs(X_dev, y_dev[None, :], X_ev)
-        # eval predictions exist and are probabilities in (0, 1)
-        self.assertEqual(probs.shape, (n_ev, 1))
-        self.assertTrue(np.all(probs >= 0) and np.all(probs <= 1))
-        # CV average must differ from a single full fit (folds actually used)
-        single = core._fit_member_probs.__module__  # sanity: same module
-        self.assertEqual(single, "experiment.diagnostics.core")
+        got = core._fit_member_probs(X_dev, y_dev[None, :], X_ev)
+
+        # reference: replicate the fold assignment (pattern-stratified global
+        # round-robin, same seed) and train each fold model on the OTHER folds
+        fold_rng = np.random.default_rng(20260915)
+        fold_order = fold_rng.permutation(n_dev)
+        groups = {}
+        keys = [groups.setdefault(tuple(X_dev[i]), len(groups)) for i in range(n_dev)]
+        order = sorted(range(n_dev), key=lambda i: (keys[i], fold_order[i]))
+        fold_of = np.zeros(n_dev, dtype=int)
+        for pos, i in enumerate(order):
+            fold_of[i] = pos % 5
+        preds = []
+        for f in range(5):
+            tr = fold_of != f
+            w = np.zeros(n_feat); b0 = 0.0
+            X_tr, y_tr = X_dev[tr], y_dev[tr]
+            for _ in range(2000):
+                p = core._sigmoid(X_tr @ w + b0)
+                g = (X_tr.T @ (p - y_tr)) / len(y_tr)
+                w -= 0.5 * g
+                b0 -= 0.5 * float(np.mean(p - y_tr))
+            preds.append(core._sigmoid(X_ev @ w + b0))
+        ref = np.mean(preds, axis=0)
+        np.testing.assert_allclose(got[:, 0], ref, atol=1e-8)
 
     def test_s4_positive_control_still_supported(self):
         pop = ctl.get_control("C4", 1)

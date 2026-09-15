@@ -1,0 +1,49 @@
+## Verdict
+
+**ARIS score: 5.5/10 — not ready**
+
+The typed-condition and C-comp fixes are effective for their tested cases. The E fix is incomplete, and D still does not implement the frozen estimator.
+
+### Per-area scores
+
+| Area | Score |
+|---|---:|
+| Measurement correctness | 6/10 |
+| Diagnostic validity | 4/10 |
+| Research-contribution completeness | 5/10 |
+| Manuscript-expression completeness | 7/10 |
+
+## Blocking issues
+
+1. **D’s “five-fold CV” is implemented incorrectly.**  
+   In [`core.py:529-534`](E:/projects/AI4AI-Harness/experiment/diagnostics/core.py:529), each model is trained with `fold_of == f`, i.e. on the held-out fold. The frozen amendment requires training on the other four folds (`fold_of != f`) and averaging eval predictions. The implementation therefore validates a different estimator.
+
+   The implementation also omits the frozen dev-accuracy feature vector: [`core.py:541-547`](E:/projects/AI4AI-Harness/experiment/diagnostics/core.py:541) constructs only stratum one-hot features, while the frozen plan requires dev-member accuracies plus metadata ([plan:27](E:/projects/AI4AI-Harness/review-stage/DIAGNOSTIC_PLAN_20260915.md:27)).
+
+   The added CV test is insufficient: [`test_diagnostics.py:331-345`](E:/projects/AI4AI-Harness/experiment/diagnostics/test_diagnostics.py:331) checks shape and a module name, but never compares predictions with a correct five-fold implementation.
+
+2. **The E budget gate still accepts unverifiable budgets.**  
+   [`core.py:627-628`](E:/projects/AI4AI-Harness/experiment/diagnostics/core.py:627) treats any nonempty `calls` dictionary as verified, including `aggregate_only`, partial records, or records exceeding the one-call budget. It also accepts `calls_status="per_record"` with an empty or incomplete dictionary.
+
+   The frozen contract requires complete per-task evidence and a verified ≤1-call budget ([plan:28](E:/projects/AI4AI-Harness/review-stage/DIAGNOSTIC_PLAN_20260915.md:28)). The tests cover only empty archive evidence, construction-by-design, and an all-ones synthetic mapping; they do not cover aggregate-only, partial, or over-budget records.
+
+3. **Condition identity has a residual missing-vs-null loophole.**  
+   The `60` versus `"60"` case is correctly fixed at [`core.py:327-330`](E:/projects/AI4AI-Harness/experiment/diagnostics/core.py:327), but `condition={}` and `condition={"timeout": null}` both become `.get("timeout) -> None`. Canonicalizing the whole typed condition object, rather than per-field `.get()`, is needed for complete identity semantics.
+
+## Evidence checked
+
+- Latest calibration: `20260915_controls_3367c4bc` — 12 rows, zero verdict mismatches.
+- Latest blinded run: `20260915_controls_1f876a95` — 14 rows, zero verdict mismatches.
+- CH1/CH2 hashes match the current `core.py` and `challenges.py`.
+- C9/C10 dominance-versus-complementarity outcomes are preserved.
+- CH1 remains E `SUPPORTED`; CH2 remains E `REFUTED_WITHIN_SCOPE`; no silent REFUTED→SUPPORTED relabeling was observed.
+- MATH artifact `d1afa153` retains the same A–E states and 14 judge-v2 flips.
+
+These artifacts show deterministic reruns of the committed behavior, but they do not establish conformance because the committed D implementation is wrong.
+
+## Validation limits
+
+- **Pytest: not executed.** Anaconda Python terminates with Windows status `-1073741790`; the alternate LibreOffice Python lacks NumPy/Pytest.
+- **PDF rebuild: not executed.** Existing `main.log` reports 22 pages, main text ending on page 9, and no undefined-reference warnings.
+- Ruff no-cache found three issues, including the unused `n_valid` in `core.py`.
+

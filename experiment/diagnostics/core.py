@@ -319,15 +319,21 @@ def s3_stability(pop_by_condition: dict[str, Population]) -> dict:
         if p.member_ids != base.member_ids or p.tasks != base.tasks:
             return abstain("membership/task set differs across conditions",
                            "matched membership and tasks across repeats")
-    # --- identity gate 1: execution condition fields must match exactly
-    cond_fields = sorted({k for c in conds for k in pop_by_condition[c].condition})
+    # --- identity gate 1: execution condition must be identical across repeats
+    # Canonical TYPED comparison of the whole condition object (including key
+    # presence vs explicit null): 60 != "60", {} != {"timeout": null}
+    cond_canonical = {json.dumps(pop_by_condition[c].condition, sort_keys=True)
+                      for c in conds}
     cond_mismatch = {}
-    for f in cond_fields:
-        # canonical typed JSON comparison: 60 and "60" are DIFFERENT conditions
-        vals = {json.dumps(pop_by_condition[c].condition.get(f), sort_keys=True)
-                for c in conds}
-        if len(vals) > 1:
-            cond_mismatch[f] = sorted(vals)
+    if len(cond_canonical) > 1:
+        present = sorted({k for c in conds for k in pop_by_condition[c].condition})
+        for f in present + [None]:
+            vals = {json.dumps(pop_by_condition[c].condition.get(f), sort_keys=True)
+                    for c in conds}
+            if len(vals) > 1:
+                cond_mismatch[str(f)] = sorted(vals)
+        if not cond_mismatch:
+            cond_mismatch["<whole_object>"] = sorted(cond_canonical)
     if cond_mismatch:
         return abstain(
             "execution condition fields differ across purported repeats; "
@@ -413,7 +419,7 @@ def s3_stability(pop_by_condition: dict[str, Population]) -> dict:
         return {
             "state": rank_state,
             "R": R, "shared_tasks": T,
-            "condition_fields_verified": cond_fields,
+            "condition_canonical_form": sorted(cond_canonical),
             "identity_checks": {"condition_mismatch": {}, "identity_conflicts": [],
                                 "identical_repeat_pairs": []},
             "estimand": {
@@ -454,7 +460,7 @@ def s3_stability(pop_by_condition: dict[str, Population]) -> dict:
     return {
         "state": rank_state,
         "R": R, "shared_tasks": T,
-        "condition_fields_verified": cond_fields,
+        "condition_canonical_form": sorted(cond_canonical),
         "identity_checks": {"condition_mismatch": {}, "identity_conflicts": [],
                             "identical_repeat_pairs": []},
         "estimand": {
@@ -492,23 +498,26 @@ def _sigmoid(z):
 
 def _fit_member_probs(X_dev, Y_dev, X_ev, epochs=2000, lr=0.5, n_folds=5):
     """Frozen policy core: per-member logistic P(Y_h=1 | features), trained by
-    stratified n_folds cross-validation ON THE DEV SPLIT (plan 3.D): folds are
-    balanced over feature patterns (strata), each fold model is fit on the
-    other folds, and the eval prediction is the average over fold models.
-    Eval rows never enter fitting. Folds with no valid labels are skipped.
+    stratified n_folds cross-validation ON THE DEV SPLIT (plan 3.D): each fold
+    model is TRAINED ON THE OTHER n_folds-1 FOLDS (fold_of != f) and predicts
+    the eval rows; the eval prediction is the average over fold models.
+    Folds are balanced over feature patterns (strata). Eval rows never enter
+    fitting. Folds whose complement has no valid labels are skipped.
     """
     n_m, n_dev = Y_dev.shape[0], Y_dev.shape[1]
     probs = np.zeros((X_ev.shape[0], n_m))
     fold_rng = np.random.default_rng(20260915)
     fold_order = fold_rng.permutation(n_dev)
-    groups: dict[tuple, list[int]] = {}
-    for i in range(n_dev):
-        groups.setdefault(tuple(X_dev[i]), []).append(i)
+    # Stratified fold assignment: order rows by feature pattern (random
+    # tiebreak inside a pattern), then round-robin over that order. Repeated
+    # patterns (one-hot strata) spread evenly across folds; unique patterns
+    # still yield balanced folds.
+    groups: dict[tuple, int] = {}
+    keys = [groups.setdefault(tuple(X_dev[i]), len(groups)) for i in range(n_dev)]
+    order = sorted(range(n_dev), key=lambda i: (keys[i], fold_order[i]))
     fold_of = np.zeros(n_dev, dtype=int)
-    for idxs in groups.values():
-        idxs = np.asarray(idxs)[np.argsort(fold_order[idxs])]
-        for pos, i in enumerate(idxs):
-            fold_of[i] = pos % n_folds
+    for pos, i in enumerate(order):
+        fold_of[i] = pos % n_folds
 
     def _fit_one(X_tr, y_tr):
         w = np.zeros(X_tr.shape[1])
@@ -527,7 +536,7 @@ def _fit_member_probs(X_dev, Y_dev, X_ev, epochs=2000, lr=0.5, n_folds=5):
         valid = ~np.isnan(y)
         fold_preds, fold_count = [], 0
         for f in range(n_folds):
-            tr = valid & (fold_of == f)
+            tr = valid & (fold_of != f)      # train on the OTHER folds
             if not tr.any():
                 continue
             w, b0 = _fit_one(X_dev[tr], y[tr])
@@ -549,10 +558,15 @@ def _feature_matrix(pop: Population, idxs: list[int]) -> np.ndarray:
 
 def _policy_choices(pop: Population, dev_idx: list[int], ev_idx: list[int]) -> np.ndarray:
     """Frozen pi_Z: argmax_h P_h(correct|Z(x)); abstain->bare when top-2 gap <
-    ABSTAIN_EPS. (Calibration removed the dev-accuracy log prior: it swamped
-    stratum-level signals and duplicated dev-fixed selection; frozen for blinded.)"""
+    ABSTAIN_EPS. Features per plan 3.D: task stratum one-hot PLUS the dev-set
+    member accuracy vector (constant across tasks, one column per member).
+    (Calibration removed the dev-accuracy log prior: it swamped stratum-level
+    signals and duplicated dev-fixed selection; frozen for blinded.)"""
     X_dev = _feature_matrix(pop, dev_idx)
     X_ev = _feature_matrix(pop, ev_idx)
+    dev_accs = _accs_rows(pop.Y[:, dev_idx])            # plan 3.D feature vector
+    X_dev = np.hstack([X_dev, np.tile(dev_accs, (X_dev.shape[0], 1))])
+    X_ev = np.hstack([X_ev, np.tile(dev_accs, (X_ev.shape[0], 1))])
     probs = _fit_member_probs(X_dev, pop.Y[:, dev_idx], X_ev)
     top2 = np.sort(probs, axis=1)[:, -2:]
     return np.where((top2[:, 1] - top2[:, 0]) < ABSTAIN_EPS, 0, np.argmax(probs, axis=1))
@@ -585,7 +599,6 @@ def s4_selectability(pop: Population, seed: int = 20260915) -> dict:
     pi_rate = float(np.nansum(pi_acc) / len(pi_acc))
     dev_fixed_idx = int(np.argmax(_accs_rows(pop.Y[:, dev_idx])))
     paired = pi_acc - Y_ev[dev_fixed_idx]
-    n_valid = int(valid.sum())
     rng = np.random.default_rng(seed)
     # denominator-preserving: unknown cells count as 0, stay in the denominator
     boots = [float(np.nansum(rng.choice(paired, len(paired), replace=True))) / len(paired) for _ in range(4000)]
@@ -624,8 +637,29 @@ def s5_cost(pop: Population, s4: dict) -> dict:
     if not pop.has_bare or s4.get("state") in (INSUFFICIENT,) and "dev split" in s4.get("reason", ""):
         return {"state": INSUFFICIENT, "reason": "pi_Z unavailable or no bare reference",
                 "minimal_missing_evidence": ["trainable dev split"]}
-    budget_verified = bool(pop.calls) or pop.calls_status == "per_record" \
-        or pop.budget_by_construction
+    # Budget verification (frozen contract, strict): per-record call evidence
+    # must cover every member x task cell with values <= BUDGET_CALLS. An
+    # aggregate total, partial records, or over-budget records do NOT verify
+    # the budget; only the design-by-construction exception does.
+    expected_cells = {(m, t) for m in pop.member_ids for t in pop.tasks}
+    recorded = {k for k, v in pop.calls.items() if v is not None}
+    over_budget = [v for v in pop.calls.values()
+                   if v is not None and v > BUDGET_CALLS]
+    if pop.budget_by_construction:
+        budget_verified = True
+        budget_basis = "design_by_construction (synthetic 1-call policy)"
+    elif pop.calls_status != "per_record":
+        budget_verified = False
+        budget_basis = f"calls_status={pop.calls_status} (not per-record evidence)"
+    elif recorded != expected_cells:
+        budget_verified = False
+        budget_basis = "per_record_incomplete"
+    elif over_budget:
+        budget_verified = False
+        budget_basis = f"over_budget_records(max={max(over_budget)})"
+    else:
+        budget_verified = True
+        budget_basis = "complete per-record evidence, all calls <= budget"
     if not pop.calls:
         # Distinguish "no evidence supplied by this adapter/caller" from
         # "the archive contains no call records" - never conflate the two.
@@ -671,6 +705,7 @@ def s5_cost(pop: Population, s4: dict) -> dict:
         "lambda_harm": LAMBDA_HARM, "comparator": "dev-fixed (same budget)",
         "U": round(U, 4), "U_ci95": [round(lo, 4), round(hi, 4)],
         "budget_verified": budget_verified,
+        "budget_basis": budget_basis,
         "cost_evidence": cost_evidence,
         "note": ("real dollar/token costs are not recoverable from these archives; SUPPORT "
                  "is limited to the matched 1-call budget, not billable deployment"
