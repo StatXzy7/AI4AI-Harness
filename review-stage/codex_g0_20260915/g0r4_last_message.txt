@@ -1,0 +1,22 @@
+## Verdict
+
+score: 8.8/10 ; verdict: ready
+
+## Item-by-item (1-3: VERIFIED | PARTIAL | NOT FIXED)
+
+1. **VERIFIED** — Exhaustion events now include the bound task key; `RunStore.finish()` rejects the cell. The targeted test is present, and loopback regression is 18/18 OK.
+
+2. **VERIFIED** — Frozen pilot config specifies dev, 3 tasks, bare, 1 repeat, `task_limit: 3`, the pilot output path, shared global budget, and `PARATERA_API_KEY`. Formal collector wiring and task-limit validation are present.
+
+3. **VERIFIED** — `/models` is appended to `provider_ledger.jsonl`; chat requests also record secret-free request/response bodies. A8.8 assigns the pilot’s durable full ledger to the formal collector’s RunStore SQLite. Diagnostics are 42/42 OK; the evidence index has 25 entries and all indexed hashes match.
+
+## Remaining blockers
+
+## G1 conditions (restated, one paragraph)
+
+Run the provider smoke and the frozen fresh-collector pilot of 3 dev tasks × bare × 1 repeat using the shared global budget and durable ledgers; verify provider pricing, usage completeness, and the p95 total-cost projection is ≤4000 CNY; verify pilot plus formal-arm attempts, including retries and multi-sample requests, remain ≤45,000; preserve immutable configs, manifests, hashes, RunStore/JSONL ledgers, and unresolved-request or failure evidence before formal collection.
+
+## Allowed next step
+
+Proceed to G1 provider smoke and pilot execution under the frozen configuration.
+

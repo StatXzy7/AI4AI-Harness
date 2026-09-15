@@ -1,0 +1,17 @@
+You are the same INDEPENDENT READ-ONLY REVIEWER (gate G0, round 4, final) for AI4AI-Harness. Round 3 was 6.5/10 not ready with exactly 3 remaining blockers; round-3 verdict archived at review-stage/codex_g0_20260915/g0r3_last_message.txt. Verify ONLY the three fixes (plus regressions); do not re-litigate items already marked VERIFIED in round 3 unless the fix broke them. Do not modify anything.
+
+FIXES TO VERIFY
+1. (was blocker 5) global_budget_exhausted event now carries task=<bound task key> (BudgetedTransport, experiment/revision/fresh_collect_math.py ~line 136); RunStore.finish therefore sees it and refuses the cell; a harness broad-catch can no longer seal a cell after denied requests. Targeted test: test_exhaustion_event_scoped_to_task_blocks_finish in experiment/revision/test_fresh_collect_math.py.
+2. (was blocker 1) Pilot config frozen: review-stage/WP1R_PILOT_SPEC.json + artifacts/wp1r_20260915/configs/pilot.json (3 dev tasks x bare x 1 repeat, task_limit mechanism validated in prepare/math_tasks), output artifacts/wp1r_20260915/pilot, same shared global budget path and api_key_env; runs through the SAME formal collector command per A8.8.
+3. (was blocker 9) GET /models smoke request now appended to provider_ledger.jsonl (experiment/revision/provider_check.py); A8.8 wording: pilot's durable ledger is the RunStore sqlite of the formal collector (full request/response bodies, secret-free), smoke writes JSONL.
+
+REGRESSION EVIDENCE
+artifacts/wp1r_20260915/test_logs/regression_20260915_g0r4.txt: loopback 18 OK, diagnostics 42 OK. Evidence index CURRENT_RUN_EVIDENCE_SHA256.json now 25 entries (pilot spec/config, test file, all runtime files).
+
+OUTPUT CONTRACT (exactly)
+## Verdict
+score: x/10 ; verdict: ready | almost | not ready
+## Item-by-item (1-3: VERIFIED | PARTIAL | NOT FIXED)
+## Remaining blockers (empty if none)
+## G1 conditions (restated, one paragraph)
+## Allowed next step
