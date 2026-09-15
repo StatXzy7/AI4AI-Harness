@@ -217,7 +217,7 @@ class AuditedTransport(httpx.BaseTransport):
 
 
 class FreshSolver:
-    def __init__(self, store, settings, api_key, resource_budget=None):
+    def __init__(self, store, settings, api_key, resource_budget=None, transport_factory=None):
         if store.manifest['solver'] != asdict(settings) or store.manifest['cache_mode'] != 'off':
             raise ValueError('Solver differs from the acquisition manifest')
         manifest_budget = ResourceBudget.from_mapping(store.manifest.get('resource_budget'))
@@ -236,9 +236,10 @@ class FreshSolver:
         self.active = False
         self.binding_lock = threading.Lock()
         self.sample = ContextVar('sample', default=None)
+        factory = transport_factory or (lambda: AuditedTransport(store, self.sample))
         self.client = OpenAI(api_key=api_key, base_url=settings.base_url, max_retries=0,
                              timeout=settings.timeout_seconds,
-                             http_client=httpx.Client(transport=AuditedTransport(store, self.sample),
+                             http_client=httpx.Client(transport=factory(),
                                                       follow_redirects=False, trust_env=False))
 
     def close(self):

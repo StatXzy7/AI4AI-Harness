@@ -1,0 +1,97 @@
+{
+ "salt": "wp1r-panel-v1-20260915",
+ "panel": [
+  [
+   "gsm_deepseek_s0_g3",
+   "stratum:deepseek"
+  ],
+  [
+   "gsm_ernie_s0_g3",
+   "stratum:ernie"
+  ],
+  [
+   "gsm_glm_s0_g6",
+   "stratum:glm"
+  ],
+  [
+   "gsm_kimi_s0_g3",
+   "stratum:kimi"
+  ],
+  [
+   "gsm_kimi_s0_g4",
+   "atlarge"
+  ],
+  [
+   "gsm_minimax_s0_g0",
+   "stratum:minimax"
+  ],
+  [
+   "gsm_minimax_s0_g3",
+   "atlarge"
+  ],
+  [
+   "gsm_qwen_s0_g5",
+   "stratum:qwen"
+  ]
+ ],
+ "eligible": [
+  "gsm_deepseek_s0_g0",
+  "gsm_deepseek_s0_g2",
+  "gsm_deepseek_s0_g3",
+  "gsm_deepseek_s0_g4",
+  "gsm_deepseek_s0_g6",
+  "gsm_deepseek_s0_g7",
+  "gsm_ernie_s0_g0",
+  "gsm_ernie_s0_g3",
+  "gsm_ernie_s0_g6",
+  "gsm_glm_s0_g6",
+  "gsm_kimi_s0_g3",
+  "gsm_kimi_s0_g4",
+  "gsm_minimax_s0_g0",
+  "gsm_minimax_s0_g3",
+  "gsm_minimax_s0_g4",
+  "gsm_minimax_s0_g5",
+  "gsm_minimax_s0_g6",
+  "gsm_minimax_s0_g7",
+  "gsm_qwen_s0_g0",
+  "gsm_qwen_s0_g1",
+  "gsm_qwen_s0_g5"
+ ],
+ "mean_calls": {
+  "gsm_deepseek_s0_g0": 2.9925,
+  "gsm_deepseek_s0_g1": 4.02,
+  "gsm_deepseek_s0_g2": 2.12,
+  "gsm_deepseek_s0_g3": 2.99,
+  "gsm_deepseek_s0_g4": 1.1225,
+  "gsm_deepseek_s0_g5": 5.9725,
+  "gsm_deepseek_s0_g6": 0.9875,
+  "gsm_deepseek_s0_g7": 1.99,
+  "gsm_ernie_s0_g0": 2.0125,
+  "gsm_ernie_s0_g1": 4.9875,
+  "gsm_ernie_s0_g2": 6.47,
+  "gsm_ernie_s0_g3": 1.985,
+  "gsm_ernie_s0_g4": 4.93,
+  "gsm_ernie_s0_g5": 4.9525,
+  "gsm_ernie_s0_g6": 2.975,
+  "gsm_ernie_s0_g7": 4.955,
+  "gsm_glm_s0_g5": 5.98,
+  "gsm_glm_s0_g6": 3.0225,
+  "gsm_kimi_s0_g0": 4.9925,
+  "gsm_kimi_s0_g1": 5.0225,
+  "gsm_kimi_s0_g2": 4.985,
+  "gsm_kimi_s0_g3": 0.9875,
+  "gsm_kimi_s0_g4": 2.9725,
+  "gsm_kimi_s0_g5": 4.9875,
+  "gsm_kimi_s0_g6": 4.975,
+  "gsm_minimax_s0_g0": 2.16,
+  "gsm_minimax_s0_g2": 3.985,
+  "gsm_minimax_s0_g3": 0.9975,
+  "gsm_minimax_s0_g4": 1,
+  "gsm_minimax_s0_g5": 1.125,
+  "gsm_minimax_s0_g6": 0.995,
+  "gsm_minimax_s0_g7": 1,
+  "gsm_qwen_s0_g0": 3.0025,
+  "gsm_qwen_s0_g1": 2.05,
+  "gsm_qwen_s0_g5": 2.0475
+ }
+}

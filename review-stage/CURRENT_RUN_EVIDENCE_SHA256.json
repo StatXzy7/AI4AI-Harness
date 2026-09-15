@@ -1,0 +1,15 @@
+{
+ "artifacts/gsm8k_audit/run_math500.jsonl": "a7c54c39d664dd89abd20023e93d440ceb07ee1f5fcc3c9e04b278fd4f069301",
+ "artifacts/gsm8k_audit/run_bare_math500.jsonl": "160ca7c254a64fac56e31aa5b3e9e9623fe68eee474789a0bd14dc61e711f689",
+ "artifacts/gsm8k_audit/metrics.json": "5cf5fc29918849d4cd78e6be9598e594a99797f05665ed8c7a74fc23ce7cb58c",
+ "artifacts/gsm8k_audit/math500_split.json": "908d4c3db4e1dbc964d317f116ce4fcab41e06ea7760958d78072ccddb441a62",
+ "artifacts/gsm8k_audit/task_split.json": "ed73000329e2af72c9597113989f036bef7bae172c768278de323d39b2af1afb",
+ "review-stage/DIAGNOSTIC_PLAN_20260915.md": "56127dcaabda6bbfb61f9e77c7f0be63597d4e7b367c9dfa99c5e500bc1fd0b4",
+ "review-stage/DIAGNOSTIC_PLAN_V2_20260915.md": "af411f017d0209813ed43dec06f130a66e81e91890a52b92dc62d424ae07f3dc",
+ "review-stage/NEXT_WORK_PACKAGE_REPEATS_20260915.md": "bd38cfa4461afc86a572ea6a7b10f7917f3cdc58bb9dbcfe12570e7e3a09f364",
+ "review-stage/codex_recheck_20260915/recheck5_last_message.txt": "37eb25a9801cccb9d92f30387eeffad00bc64f6bfa5912d3307524e3429be16b",
+ "CLAIM_LEDGER.json": "9d7912676f043814061253dab40c1ddf48e4ec82b89a12117eee0a5a5552e8e3",
+ "paper/latex/main.pdf": "38e6b731fad660da9623691d41931f90596dca5bfb644a506c56d31209fa742a",
+ "experiment/diagnostics/core.py": "0cd55dbcfb15aa3f20bc1ef69eb460e941ed34e63a922446357cbf1bbda9d0a3",
+ "experiment/diagnostics/cli.py": "d12167becd1754ca6dd10d2473ea7fee1e2c69177e7fa29fcc92c7a1f308de3f"
+}
