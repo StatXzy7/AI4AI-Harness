@@ -367,6 +367,19 @@ class TestS5BudgetGate(unittest.TestCase):
         self.assertEqual(s5["state"], core.INSUFFICIENT)
         self.assertIn("over_budget", s5["budget_basis"])
 
+    def test_nan_call_records_do_not_verify(self):
+        """NaN is not a verified call count (recheck3 blocker)."""
+        pop = ctl.get_control("C4", 1)
+        pop.budget_by_construction = False
+        calls = {(m, t): 1 for m in pop.member_ids for t in pop.tasks}
+        calls[(pop.member_ids[1], pop.tasks[0])] = float("nan")
+        pop.calls = calls
+        pop.calls_status = "per_record"
+        s4 = core.s4_selectability(pop)
+        s5 = core.s5_cost(pop, s4)
+        self.assertEqual(s5["state"], core.INSUFFICIENT)
+        self.assertIn("malformed", s5["budget_basis"])
+
 
 class TestS4CrossValidation(unittest.TestCase):
     """Plan 3.D conformance: the frozen policy is a 5-fold-CV fit on dev

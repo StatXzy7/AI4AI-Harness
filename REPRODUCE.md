@@ -48,9 +48,10 @@ python -m experiment.diagnostics.cli inventory       # 全量 ARCHIVE_INVENTORY.
   （core 子集 288,104 次 logical calls）。
 
 ## 5. 汇总交付（v2 本轮 run 目录）
-（第二轮复审修复后：calibration `20260915_controls_d3a32145` 与 blinded
-  `20260915_controls_e721360b` 重跑全对；D 策略为修正后的分层 5 折 CV。
-  每轮运行均绑定 spec+code SHA256。）
+（第二轮复审修复后：blinded `20260915_controls_d3a32145` 与 calibration
+  `20260915_controls_e721360b` 重跑全对 [目录名与阶段以此为准]；第三轮
+  复审修复后另有最新重跑，以时间戳最新目录为准。每轮运行均绑定
+  spec+code SHA256。）
 - `artifacts/diagnostics/20260915/20260915_diagnose_math_57a1616d/`
   （含更新版 DECISION_IMPACT.csv：追加 3 行复审驱动修正；最新重跑为
   `20260915_diagnose_math_245a88fd`，状态一致）

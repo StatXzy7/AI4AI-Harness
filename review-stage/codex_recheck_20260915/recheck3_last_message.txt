@@ -1,0 +1,50 @@
+## Verdict
+
+**ARIS score: 6.8/10 — not ready**
+
+The four claimed fixes are substantially implemented and independently exercised. One residual E-gate loophole remains blocking.
+
+| Area | Score |
+|---|---:|
+| Measurement correctness | 7/10 |
+| Diagnostic validity | 7/10 |
+| Research-contribution completeness | 5/10 |
+| Manuscript-expression completeness | 8/10 |
+
+### Verified
+
+- **CV direction:** fixed at [`core.py:499`](E:/projects/AI4AI-Harness/experiment/diagnostics/core.py:499); models train on `fold_of != f`, average eval predictions, and include dev-accuracy features. The explicit reference test passes.
+- **Condition identity:** typed whole-object canonicalization correctly distinguishes `60`/`"60"` and missing/null.
+- **C-comp missingness:** unidentified repeat cells now force `C_comp=INSUFFICIENT_EVIDENCE`.
+- **Regression controls:** permutation invariance, C9 dominance vs complementarity, C10 crossover complementarity, CH1, and CH2 all pass.
+- **Independent tests:** `unittest` ran all **40 tests successfully** in 36.44 s.
+- **Artifacts:** current hashes match the blinded manifest:
+  - `core.py`: `88c47d...e260e1`
+  - `challenges.py`: `7d7aeb...bd78de`
+  - 12 calibration rows and 14 blinded rows all match.
+  - CH1: E `SUPPORTED`; CH2: E `REFUTED_WITHIN_SCOPE`.
+  - MATH artifact retains unchanged A/B/D/E states and 14 judge-v2 flips.
+- **Manuscript:** existing `main.aux` places `endofmain` on page 9; `main.log` reports 22 total pages and no undefined-reference warnings. E wording is consistently “budget-matched policy utility.”
+
+### Remaining blocking issue
+
+1. **E budget gate accepts NaN call values.**
+
+   [`core.py:646-662`](E:/projects/AI4AI-Harness/experiment/diagnostics/core.py:646) rejects only values satisfying `v > BUDGET_CALLS`. A complete per-record dictionary containing `float("nan")` therefore passes:
+
+   ```text
+   state=SUPPORTED
+   budget_verified=True
+   budget_basis=complete per-record evidence, all calls <= budget
+   ```
+
+   This violates the claimed requirement that every recorded value be `<= BUDGET_CALLS`; NaN is not a valid verified call count. The tests at [`test_diagnostics.py:308-368`](E:/projects/AI4AI-Harness/experiment/diagnostics/test_diagnostics.py:308) do not cover non-finite or malformed values. Require finite numeric nonnegative counts and test NaN explicitly.
+
+### Evidence limitations
+
+The real MATH artifact still has only one condition group, so C is insufficient; D/E are also insufficient there. No independent real-world same-condition repeats or held-out selector-utility validation were demonstrated. These limitations are correctly expressed in the manuscript, but they prevent a ready verdict for a broader research contribution.
+
+The requested directory names are phase-reversed relative to their contents: `d3a32145` is the blinded run and `e721360b` is calibration.
+
+`pytest -q` returned exit code 1 without diagnostics; the equivalent 40-test `unittest` suite executed successfully. A fresh PDF rebuild was **not executed**; only the existing build artifacts were inspected.
+

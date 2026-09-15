@@ -638,28 +638,38 @@ def s5_cost(pop: Population, s4: dict) -> dict:
         return {"state": INSUFFICIENT, "reason": "pi_Z unavailable or no bare reference",
                 "minimal_missing_evidence": ["trainable dev split"]}
     # Budget verification (frozen contract, strict): per-record call evidence
-    # must cover every member x task cell with values <= BUDGET_CALLS. An
-    # aggregate total, partial records, or over-budget records do NOT verify
-    # the budget; only the design-by-construction exception does.
+    # must cover every member x task cell with finite, non-negative numeric
+    # values <= BUDGET_CALLS (NaN/inf/negative/non-numeric are not verified
+    # counts). An aggregate total, partial records, or malformed records do
+    # NOT verify the budget; only the design-by-construction exception does.
     expected_cells = {(m, t) for m in pop.member_ids for t in pop.tasks}
-    recorded = {k for k, v in pop.calls.items() if v is not None}
+    malformed = [v for v in pop.calls.values()
+                 if v is None or not isinstance(v, (int, float)) or isinstance(v, bool)
+                 or not np.isfinite(v) or v < 0]
     over_budget = [v for v in pop.calls.values()
-                   if v is not None and v > BUDGET_CALLS]
+                   if isinstance(v, (int, float)) and not isinstance(v, bool)
+                   and np.isfinite(v) and v > BUDGET_CALLS]
+    recorded = {k for k, v in pop.calls.items()
+                if v is not None and (not isinstance(v, (int, float)) or isinstance(v, bool)
+                                      or (np.isfinite(v) and 0 <= v <= BUDGET_CALLS))}
     if pop.budget_by_construction:
         budget_verified = True
         budget_basis = "design_by_construction (synthetic 1-call policy)"
+    elif malformed:
+        budget_verified = False
+        budget_basis = f"malformed_call_records(n={len(malformed)})"
     elif pop.calls_status != "per_record":
         budget_verified = False
         budget_basis = f"calls_status={pop.calls_status} (not per-record evidence)"
-    elif recorded != expected_cells:
-        budget_verified = False
-        budget_basis = "per_record_incomplete"
     elif over_budget:
         budget_verified = False
         budget_basis = f"over_budget_records(max={max(over_budget)})"
+    elif recorded != expected_cells:
+        budget_verified = False
+        budget_basis = "per_record_incomplete"
     else:
         budget_verified = True
-        budget_basis = "complete per-record evidence, all calls <= budget"
+        budget_basis = "complete per-record evidence, finite and within budget"
     if not pop.calls:
         # Distinguish "no evidence supplied by this adapter/caller" from
         # "the archive contains no call records" - never conflate the two.

@@ -159,3 +159,22 @@ manifest 哈希与当前一致——即该声明不可能由已提交代码产�
 - **论文措辞**：E 类统一改称 budget-matched policy utility（不再用
   "deployable"），并在文中注明预算门语义。
 - 复审原始意见存档：`review-stage/codex_recheck_20260915/recheck_last_message.txt`。
+
+## 11. 第三轮复审修订（recheck2 5.5/10 -> recheck3 6.8/10 的三项修复 + 残项）
+
+- **CV 折方向更正（recheck2 阻断 1）**：见 §10 更正记录；折模型在其余
+  4 折上训练（fold_of != f），特征含 dev-accuracy 向量，方向由
+  `test_cv_direction_matches_reference_implementation` 对照显式参考实现钉死。
+- **E 预算验证严格化（recheck2 阻断 2 + recheck3 残项）**：逐记录证据必须
+  覆盖全部 (member, task) 格且每值为有限非负数值 ≤ BUDGET_CALLS；
+  aggregate_only、部分记录、超预算、NaN/inf/负值/非数值一律
+  INSUFFICIENT，basis 字符串区分 malformed / calls_status /
+  per_record_incomplete / over_budget；测试覆盖全部边界（含 NaN 显式用例）。
+- **条件恒等整体 canonical 化（recheck2 阻断 3）**：比较整个 condition
+  对象的 typed JSON，`{}` 与 `{"timeout": null}` 是不同条件；mismatch
+  字段单列。
+- **C-comp 缺失门（recheck1 阻断 4，本轮复审确认）**：保持不变。
+- 目录名勘误：REPRODUCE.md 中 calibration/blinded 目录标注已修正
+  （d3a32145=blinded，e721360b=calibration）。
+- recheck2/recheck3 意见存档：`review-stage/codex_recheck_20260915/
+  recheck2_last_message.txt`、`recheck3_last_message.txt`。
