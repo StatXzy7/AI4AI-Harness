@@ -45,6 +45,7 @@ def audit(name, record):
 
 
 def chat(client, key_name, **params):
+    AUDIT_DIR.mkdir(parents=True, exist_ok=True)
     body = {'model': MODEL, 'max_tokens': 32,
             'messages': [{'role': 'user', 'content': 'Reply with the single word: ok'}]}
     body.update(params)
@@ -78,6 +79,7 @@ def chat(client, key_name, **params):
 
 
 def main():
+    AUDIT_DIR.mkdir(parents=True, exist_ok=True)
     results = {'base': BASE, 'requested_model': MODEL, 'checks': {}}
     for rel in KEY_FILES:
         key = load_key(rel)

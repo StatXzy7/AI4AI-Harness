@@ -1,0 +1,79 @@
+{
+ "base": "https://llmapi.paratera.com/v1",
+ "requested_model": "GLM-5.3-Flash",
+ "checks": {
+  "models_list_.env_tthe": {
+   "status": 200,
+   "n_models": 93,
+   "model_listed": true,
+   "request_id": null
+  },
+  "chat_temp0_.env_tthe": {
+   "status": 200,
+   "elapsed_s": 2.04,
+   "request_id": null,
+   "returned_model": "GLM-5.3-Flash",
+   "response_id": "20260916031543bd490f8e943c41a4",
+   "usage": {
+    "completion_tokens": 32,
+    "prompt_tokens": 19,
+    "total_tokens": 51,
+    "completion_tokens_details": {
+     "reasoning_tokens": 30
+    },
+    "prompt_tokens_details": {
+     "cached_tokens": 0
+    }
+   },
+   "finish_reason": "length",
+   "content_head": "",
+   "key_source": ".env_tthe",
+   "error": null
+  },
+  "chat_seed_.env_tthe": {
+   "status": 200,
+   "elapsed_s": 1.03,
+   "request_id": null,
+   "returned_model": "GLM-5.3-Flash",
+   "response_id": "202609160315449a0a01c52c4646b1",
+   "usage": {
+    "completion_tokens": 32,
+    "prompt_tokens": 19,
+    "total_tokens": 51,
+    "completion_tokens_details": {
+     "reasoning_tokens": 32
+    },
+    "prompt_tokens_details": {
+     "cached_tokens": 0
+    }
+   },
+   "finish_reason": "length",
+   "content_head": "",
+   "key_source": ".env_tthe",
+   "error": null
+  },
+  "chat_maxtok1_.env_tthe": {
+   "status": 200,
+   "elapsed_s": 1.16,
+   "request_id": null,
+   "returned_model": "GLM-5.3-Flash",
+   "response_id": "202609160315458709a81bc6bb4672",
+   "usage": {
+    "completion_tokens": 1,
+    "prompt_tokens": 19,
+    "total_tokens": 20,
+    "completion_tokens_details": {
+     "reasoning_tokens": 1
+    },
+    "prompt_tokens_details": {
+     "cached_tokens": 0
+    }
+   },
+   "finish_reason": "length",
+   "content_head": "",
+   "key_source": ".env_tthe",
+   "error": null
+  }
+ },
+ "smoke_ok": true
+}

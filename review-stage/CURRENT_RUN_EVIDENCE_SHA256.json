@@ -23,5 +23,6 @@
  "experiment/revision/provider_check.py": "913548c607e101bb2a26851057c99b77d319f51319795aefc40cc3885cefab64",
  "review-stage/WP1R_PILOT_SPEC.json": "7ba394d9acf16a5e6178735f39b0aa8cd1bcdf058529574f4eb3e442a9c94743",
  "artifacts/wp1r_20260915/configs/pilot.json": "ae3dcf782e808bc4cfae50b21240895b5e41cca742d14279533a416312df86bd",
- "experiment/revision/test_fresh_collect_math.py": "9097a400500d6bb94178a4a981eba74ee2a4024e3ee999ecf7bb2e4c3626d499"
+ "experiment/revision/test_fresh_collect_math.py": "9097a400500d6bb94178a4a981eba74ee2a4024e3ee999ecf7bb2e4c3626d499",
+ "review-stage/WP1R_BUDGET_GATE_V1_3.md": "a42c2559e3c90ed268893bbc0cf0a4dc30b4782a06bd507b7551a0a24e5edff1"
 }
