@@ -1,0 +1,69 @@
+You are the same independent auditor who performed the two prior reviews stored at
+review-stage/codex_recheck_20260915/recheck_last_message.txt (6.5/10, not ready, four blockers)
+review-stage/codex_recheck_20260915/recheck2_last_message.txt (5.5/10, three blockers) and
+review-stage/codex_recheck_20260915/recheck3_last_message.txt (6.8/10, NaN blocker)
+and review-stage/codex_recheck_20260915/recheck4_last_message.txt (6.6/10, one residual
+code blocker: s5_cost aggregated malformed call values, e.g. strings, and crashed
+with TypeError before the budget gate could abstain). The executor claims all four blockers are now fixed. Verify
+independently from code, tests, and fresh artifacts; do not accept the summary.
+
+The four blockers and the claimed fixes:
+1. E budget gate was too permissive (aggregate_only/partial/over-budget accepted).
+   Claimed fix: strict verification - calls_status must be per_record AND every
+   (member, task) cell must have a recorded value AND all values <= BUDGET_CALLS;
+   otherwise INSUFFICIENT with a basis string (calls_status=..., per_record_incomplete,
+   over_budget_records). Tests: TestS5BudgetGate covers aggregate_only, partial
+   records, over-budget (value 3), empty archive, construction exception, full
+   per-record (SUPPORTED).
+0b. s5_cost crashed on malformed call values (recheck4 blocker). Claimed fix:
+   median_calls aggregates only finite non-negative numeric values; str/inf/-inf/
+   negative/None/bool/list records route to malformed basis -> INSUFFICIENT;
+   test_malformed_call_values_never_crash covers 7 malformed value types.
+0. E budget gate accepted NaN call values. Claimed fix: verification now requires
+   finite, non-negative numeric values within budget for every (member, task) cell;
+   NaN/inf/negative/non-numeric/None -> INSUFFICIENT with basis malformed_call_records;
+   over-budget is reported before incomplete; test_nan_call_records_do_not_verify
+   covers the NaN case explicitly (41 tests total).
+2. CV fold direction was inverted (trained on the held-out fold). Claimed fix:
+   fold models now train on fold_of != f and average eval predictions; features now
+   include the plan 3.D dev-accuracy vector (constant columns); stratified fold
+   assignment via pattern-sorted global round-robin (balanced for one-hot patterns
+   and unique rows). Direction pinned by test_cv_direction_matches_reference_implementation,
+   which compares against an explicit reference implementation of the correct
+   5-fold procedure (atol 1e-8). All frozen expectations re-run and unchanged
+   (40/40 tests; calibration 12/12; blinded 14x6 all OK).
+3. Condition identity missed {} vs {"timeout": null}. Claimed fix: canonical typed
+   comparison of the WHOLE condition object (json.dumps of the dict), with mismatch
+   fields reported; tests cover 60 vs '60', explicit null, and both-keys-absent.
+4. C-comp imputed missing repeat averages with 0. Claimed fix: if any (member, task)
+   cell has no valid repeat, C-comp abstains (INSUFFICIENT, H_stable=None, cells
+   listed); test_s3_comp_abstains_on_unidentified_expectation.
+Also: E wording changed to budget-matched policy utility in sec_diagnostics.tex,
+sec_appendix.tex, sec_crossdomain.tex (verify main text still fits 9 pages via
+main.aux endofmain).
+
+Fresh artifacts to check:
+- experiment/diagnostics/core.py (_fit_member_probs fold direction + dev-acc
+  features + pattern-sorted round-robin assignment; s5_cost strict budget gate;
+  whole-object condition canonicalization; C-comp unidentified gate)
+- experiment/diagnostics/test_diagnostics.py (42 tests, incl.
+  test_cv_direction_matches_reference_implementation, E-gate boundary tests incl.
+  NaN, null-condition tests)
+- LATEST control runs by timestamp (post-NaN-fix): check the newest
+  calibration and blinded dirs under artifacts/diagnostics/20260915/ by mtime
+  (zero mismatches, hash-bound challenges)
+- artifacts/diagnostics/20260915/20260915_diagnose_math_245a88fd/ (B/D/E states
+  unchanged, 14 flips reproduced)
+- review-stage/DIAGNOSTIC_PLAN_V2_20260915.md sections 10-11 (incl. the recheck4 fix) (amendments +
+  correction records)
+- git commits 864f3db, 04532b3, 89ce3ce, 8342355, f0ef31b
+
+Re-check also that nothing regressed: permutation invariance tests, dominance vs
+complementarity controls C9/C10, challenge CH1/CH2 spec-faithful outcomes, and
+that the E gate does not silently relabel REFUTED results as SUPPORTED.
+
+Output: ARIS score x/10 and verdict in {ready, almost, not ready}, per-area scores
+(measurement correctness, diagnostic validity, research-contribution completeness,
+manuscript-expression completeness), and any remaining blocking issues with file
+locations. Do not presume acceptance, do not give a flattering score. Note anything
+you could not run as not_executed.

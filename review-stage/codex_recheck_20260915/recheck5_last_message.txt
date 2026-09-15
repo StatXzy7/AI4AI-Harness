@@ -1,0 +1,55 @@
+## Verdict
+
+**ARIS: 6.8/10 — not ready**
+
+The four reported code blockers are fixed and independently reproducible. The project still has one protocol-conformance blocker and insufficient real-data evidence for a ready research verdict.
+
+### Per-area scores
+
+| Area | Score |
+|---|---:|
+| Measurement correctness | 8/10 |
+| Diagnostic validity | 7/10 |
+| Research-contribution completeness | 4/10 |
+| Manuscript-expression completeness | 8/10 |
+
+## Verified
+
+- `python -m unittest experiment.diagnostics.test_diagnostics -v`: **42/42 passed**.
+- E gate rejects aggregate-only, partial, over-budget, NaN, infinite, negative, nonnumeric, `None`, bool, and list values without crashing.
+- CV direction, dev-accuracy features, typed condition identity, C-comp missingness, permutation invariance, C9/C10, and CH1/CH2 regression tests pass.
+- Latest timestamped control runs:
+  - blinded: `artifacts/diagnostics/20260915/20260915_controls_3e879330`
+  - calibration: `artifacts/diagnostics/20260915/20260915_controls_dc218f5b`
+  - zero mismatches; blinded challenge hashes match current code.
+- MATH `245a88fd`: A/B unchanged, C/D/E insufficient, **14 judge-v2 flips** preserved.
+- BIRD: A refuted by archive integrity/replay limits; all 18 B cells supported; C/D/E insufficient.
+- Existing manuscript build: `endofmain` page 9, PDF 22 pages, no undefined-reference or overfull warnings in the existing log.
+- All requested commits are ancestors of `HEAD`.
+
+## Remaining blocking issues
+
+### 1. Frozen abstention threshold is inconsistent
+
+The frozen plan specifies `ε=0.05` at [DIAGNOSTIC_PLAN_20260915.md:27](/E:/projects/AI4AI-Harness/review-stage/DIAGNOSTIC_PLAN_20260915.md:27), while the implementation uses `ABSTAIN_EPS = 0.15` at [core.py:26](/E:/projects/AI4AI-Harness/experiment/diagnostics/core.py:26).
+
+The V2 amendment records the calibration change but does not formally amend this frozen threshold in sections 10–11. This changes outcomes: locally changing the threshold to `0.05` makes blinded control C2’s E state `INSUFFICIENT_EVIDENCE` instead of the recorded `SUPPORTED`.
+
+Resolve by either formally freezing 0.15 and regenerating the specification record, or restoring 0.05 and regenerating affected controls/artifacts.
+
+### 2. Research evidence remains incomplete
+
+- MATH has no independent same-condition repeats; C remains insufficient.
+- MATH D/E remain insufficient.
+- BIRD has no usable dev/eval split; D/E remain insufficient.
+- No held-out selector-utility validation or bridge experiment isolates verification from strategy-space restriction.
+
+These are substantive evidence gaps, not repaired by passing synthetic controls.
+
+## Non-blocking issues
+
+- [REPRODUCE.md:18](/E:/projects/AI4AI-Harness/REPRODUCE.md:18) still says “29 tests”; the current suite has 42.
+- Fresh CLI regeneration was **not executed this turn**; newest existing artifacts were inspected.
+- `pytest` was attempted but **not executed successfully** because the environment has no usable temporary directory.
+- PDF rebuild was **not executed**; only the existing PDF/log were checked.
+

@@ -15,7 +15,7 @@ A 类 judge-replay 执行状态语义、BIRD 逐记录调用读取、挑战规�
 - `review-stage/DIAGNOSTIC_PLAN_20260915.md`（FROZEN v1.3，历史快照，不覆盖）
 - `review-stage/DIAGNOSTIC_PLAN_V2_20260915.md`（本轮修订层，**当前有效**）
 
-## 2. 单元测试（29 项，约 16 秒；含 S3 不变量 / S1 执行状态 / 挑战执行）
+## 2. 单元测试（42 项，约 43 秒；含 S3 不变量 / S1 执行状态 / E 预算门边界 / CV 方向性参考实现 / 挑战执行）
 ```bash
 python -m unittest experiment.diagnostics.test_diagnostics -v
 ```

@@ -182,3 +182,20 @@ manifest 哈希与当前一致——即该声明不可能由已提交代码产�
   （test_malformed_call_values_never_crash）。
 - recheck2/3/4 意见存档：`review-stage/codex_recheck_20260915/
   recheck{2,3,4}_last_message.txt`。
+
+## 12. 弃权阈值 ε 的正式修订（recheck5 阻断 1 的解决）
+
+v1.3 §3.D 冻结 ε=0.05；实现自校准阶段起使用 ε=0.15（core.py ABSTAIN_EPS，
+校准历史记录于该注释）。本节将该变更正式化为 v2 合同的一部分：
+
+- **生效值**：ε=0.15（top-2 打分差 < 0.15 时弃权选 bare）。
+- **时间线**：变更发生在 calibration 阶段（instance #1）之内、blinded 集
+  （instance #2 + 哈希预提交挑战）运行**之前**；盲测集未参与该调整，
+  调整合法使用了校准/盲测分离设计。
+- **理由**：ε=0.05 下策略在小特征集（stratum one-hot + dev-acc）上弃权率
+  过高，使 D/E 的正控制（C4、CH1）失去区分力（弃权不是错误，但正控制
+  无法与全弃权基线区分，控制包即失去校准能力）。
+- **敏感性披露**：ε 对结果敏感——ε=0.05 时盲测控制 C2 的 E 状态为
+  INSUFFICIENT（而非 ε=0.15 下的 SUPPORTED）。该敏感性在此正式记录；
+  论文附录的 policy 描述字符串始终绑定实际 ε 值。
+- recheck5 意见存档：`review-stage/codex_recheck_20260915/recheck5_last_message.txt`。
