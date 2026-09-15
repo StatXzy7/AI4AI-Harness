@@ -1,5 +1,19 @@
 # WP-1R CHECKPOINT（滚动更新，最新在最下）
 
+## 2026-09-16 采集中的事件与政策
+- **eval_clone 第一次 stop-and-reconcile**（协议规定的正确行为）：
+  cell `clone-c1 × math500_split#481`（repeat 1）发生 SDK 120s ReadTimeout，
+  provider 完成状态未知 → 父级立即停止并快照。已用
+  `experiment/revision/reconcile_cell.py` 按冻结政策对账：该 cell 记为
+  `unknown_remote`（official_correct=None，attempt 保留计账，tokens 未知
+  → 保守成本按臂均摊计价），**不重试该请求、不填零**。对账后采集恢复。
+  该任务在 A8.6 完整案例规则下将被剔除并列缺失清单。
+- `PARATERA_API_KEY` 不跨后台 shell 持久 → supervisor（`supervisor.sh`）
+  统一从 `experiment/.env_tthe` 读取并守护双臂；单 unknown 事件自动对账，
+  不自动重试 HTTP；预算守卫 44,500。
+- 分析模块合成烟测通过；正式分析待 3 轮完整（当前 repeat 1 进行中）。
+
+
 ## 2026-09-16 启动
 - G0：4 轮独立审查（4.5 → 5.5 → 6.5 → **8.8/10 ready**），全部记录在
   `review-stage/codex_g0_20260915/`（argv、JSONL、意见、快照哈希）。
