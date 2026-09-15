@@ -6,7 +6,7 @@
 - Base: local `main` at `9ffc70d` (`chore: update experiment run records and docs for 2026-09-12 sync`).
 - Remote observed: `origin/main` points to the same branch tip at inspection time.
 - The working tree already contained user changes in the original English and Chinese discussion sources, generated PDFs/logs, and live or partial acquisition artifacts. The revision is isolated and does not reset, clean, or overwrite them.
-- Parallel-domain revision: `paper/latex/main_revision_20260915.tex`; insight-focused revision: `paper/latex/main_revision_20260915_insight.tex`.
+- Canonical English manuscript: `paper/latex/main.tex` (promoted from the 2026-09-15 insight revision). Chinese author copy: `paper/latex_zh/main.tex` (synced through 2026-09-12, behind the current English source).
 
 ## Evidence and policy sources
 
@@ -58,4 +58,4 @@ The isolated English source is intended to compile with a nine-page main text an
 
 The latest isolated draft makes the reviewer-facing insight explicit: population utility is a stable task--harness interaction problem, not a diversity statistic. It adds residual-error coverage as a falsifiable selection principle and labels it as a design hypothesis because the current archive does not compare residual-coverage selection with top-accuracy, random, or diversity selection on independent held-out tasks. MATH-500 remains parallel main-text evidence, not pooled with BIRD and not treated as a positive selector result.
 
-Validation: `main_revision_20260915_insight.pdf` has 19 total pages, with the discussion/conclusion ending on page 9 before the AI-use statement; abstract count is 193 words; final LaTeX log has zero undefined references/citations, zero overfull boxes, and only underfull layout warnings.
+Validation: `paper/latex/main.pdf` (promoted from the 2026-09-15 insight build) has 19 total pages, with the discussion/conclusion ending on page 9 before the AI-use statement; abstract count is 193 words; final LaTeX log has zero undefined references/citations, zero overfull boxes, and only underfull layout warnings.

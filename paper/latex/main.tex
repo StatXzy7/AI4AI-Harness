@@ -1,3 +1,4 @@
+% Canonical ICLR 2027 manuscript (promoted from 2026-09-15 insight revision).
 \documentclass{article}
 \usepackage{iclr2027_conference,times}
 \usepackage{hyperref}
@@ -10,7 +11,7 @@
 
 % \iclrfinalcopy  % submission mode: keep OFF until acceptance
 
-\title{From One-Run Diversity to Stable Complementarity in AI-Generated Harness Populations}
+\title{From Diversity to Task--Harness Interaction in AI-Generated Populations}
 
 \author{Anonymous}
 
@@ -25,24 +26,24 @@
 
 \begin{abstract}
 Automatically generated LLM harnesses can differ in source code, executed
-mechanisms, and correctness outcomes. These differences need not imply
-reproducible additional capability. We examine the distinction on BIRD
-text-to-SQL. A discovery population had 36 of 91 harness pairs identical on
-all evaluated outcomes despite distinct source code; trace inspection found
-absent mechanisms, untriggered branches, and broken multi-turn paths.
-A subsequent factorial study crossed strategy forcing and an admission gate
-over six builders and three seeds, using 1{,}169 questions and the official
-BIRD scorer. Free generation already yielded 8.6\,pp observed oracle
-headroom. Post-review reanalysis of the archived experiment estimates the
-combined intervention at $\RevisionPrimaryDelta$\,pp (95\% CI
-$\RevisionPrimaryCI$), with no clear improvement. The implemented gate
-also excludes two allowed prompt-level strategy types, so this contrast
-cannot isolate verification alone. Repeated executions show outcome
-instability, which a single-run oracle can exploit without stable mechanism
-complementarity. We distinguish observed headroom from stable task--harness
-advantages and identify the controls needed to connect either to usable
-selection gains. The current evidence establishes these measurement limits;
-it does not yet identify stable complementarity beyond repeated sampling.
+mechanisms, and correctness outcomes without providing reproducible additional
+capability. We study this distinction on BIRD text-to-SQL. A discovery
+population had 36 of 91 harness pairs identical on all evaluated outcomes
+despite distinct source code; trace inspection found absent, untriggered, and
+broken mechanisms. A subsequent factorial study crossed strategy forcing and
+an admission gate over six builders and three seeds, using 1{,}169 questions
+and the official BIRD scorer. Free generation yielded 8.6\,pp observed oracle
+headroom. Post-review reanalysis estimates the combined intervention at
+$\RevisionPrimaryDelta$\,pp (95\% CI $\RevisionPrimaryCI$), with no clear
+improvement. A one-seed MATH-500 probe provides parallel cross-domain evidence:
+10.6\% outcome disagreement and 4.75\,pp headroom, while bare remains best.
+The gate excludes two allowed prompt-level strategy types, so the BIRD contrast
+cannot isolate verification. Repeats show that one-run oracles can exploit
+execution instability. We therefore frame population utility as stable,
+predictable task--harness interaction, with residual-error coverage as a
+corresponding selection principle. The present data motivate but do not test
+that principle as a positive intervention, and establish why observed headroom
+is insufficient evidence of deployable population value.
 \end{abstract}
 
 \section{Introduction}\label{sec:introduction}

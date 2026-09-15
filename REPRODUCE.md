@@ -41,7 +41,7 @@ python -m experiment.diagnostics.cli inventory       # 全量 ARCHIVE_INVENTORY.
 
 ## 7. 论文
 ```bash
-cd paper/latex && latexmk -pdf -interaction=nonstopmode main_revision_20260915_insight.tex
+cd paper/latex && latexmk -pdf -interaction=nonstopmode main.tex
 ```
 本轮改动：`sec_crossdomain.tex`（K_eff→同口径唯一向量数、union-all-fail 命名、0.68–0.915、判分 v2 零翻转引用）、`sec_appendix.tex`（新增 app:diagnostics 附录）。
 

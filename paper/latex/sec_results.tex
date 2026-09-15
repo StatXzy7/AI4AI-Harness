@@ -71,11 +71,37 @@ Headroom is oracle minus best-fixed accuracy, not realized routing gain.}
 \label{tab:decomp}
 \end{table}
 
-For the full primary set, the D$-$A oracle change is
-$\RevisionOracleDelta$\,pp and the best-fixed change is
-$\RevisionBestDelta$\,pp. The best-fixed decrease offsets part of the
-oracle decrease; it does not explain away that decrease. The same-core
-four-arm decomposition is reported separately in Table~\ref{tab:decomp}.
+For the full primary set, D$-$A changes oracle accuracy by
+$\RevisionOracleDelta$\,pp and best-fixed accuracy by
+$\RevisionBestDelta$\,pp; the same-core decomposition is in
+Table~\ref{tab:decomp}.
+
+\subsection{Parallel domain evidence for the measurement boundary}
+Table~\ref{tab:domain-main} places the two domains side by side for the
+same diagnostic question, without pooling them. MATH-500 reproduces the
+boundary: one-run disagreement and 4.75\,pp headroom coexist with bare as
+the best fixed member (93.75\%). It is exploratory and has no clone,
+repeat, repaired-gate, or selector control.
+
+\begin{table}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+Domain / analysis & $n_H$ & $n_{eval}$ & Disagree. & Oracle & Best-fixed & $H$ (pp) \\
+\midrule
+BIRD, A / D & 18 cells & 1,169 & --- & 76.14 / 75.70\% & 67.58 / 67.30\% & 8.56 / 8.40 \\
+BIRD, D$-$A & 18 paired & 1,169 & --- & --- & --- & $-0.16$ \\
+MATH-500, free & $\RevisionMathHarnesses$ & $\RevisionMathTasks$ & $\RevisionMathDisagreement$\% & $\RevisionMathOracle$\% & $\RevisionMathBest$\% (bare) & $\RevisionMathHeadroom$ \\
+\bottomrule
+\end{tabular}
+\caption{Parallel domain evidence for the same measurement question. BIRD
+is the archived factorial analysis; MATH-500 is a one-seed exploratory
+free-arm probe. Designs are not pooled. Headroom is a one-run diagnostic,
+not selector accuracy or stable complementarity.}
+\label{tab:domain-main}
+\end{table}
 
 \subsection{Execution variability and the stable-complementarity question}
 The archived R3 audit reports that 14.5\% of tasks changed bare correctness
@@ -115,20 +141,13 @@ The current data lack a balanced, cost-matched clone comparison, so stable
 added capability remains unestimated.
 
 \subsection{Routing and exploratory selection}\label{sec:boundary}
-A Phase-I leave-one-harness-out predictor failed to beat the best fixed
-harness in the DeepSeek population ($-3.4$\,pp); the Qwen estimate was
-$+0.9$\,pp with CI $[-5.2,+6.9]$. Database-stratified task-held-out
-controls reduced mean repair AUROC to 0.512, consistent with task
-memorization rather than reliable value prediction. These findings apply
-to the tested predictors and splits.
-
-\label{sec:rich}
-The canonical W1 reanalysis remains descriptive. At $k=8$, with bare
-retained, diversity selection versus top-accuracy selection changes
-headroom by $\RevisionWoneHeadroom$\,pp: oracle changes by
-$\RevisionWoneOracle$\,pp and best-fixed by $\RevisionWoneBest$\,pp.
-A fixed member chosen only on development data changes by
-$\RevisionWoneFixed$\,pp, with ties resolved consistently within each
-selected subset. These are different estimands, not a demonstrated
-routing gain. Appendix~\ref{app:rich} reports absolute values and the
-limitations of this post-hoc, single-execution comparison.
+The Phase-I leave-one-harness-out predictor did not beat the best fixed
+harness in the tested DeepSeek population ($-3.4$\,pp); the Qwen estimate
+was $+0.9$\,pp (CI $[-5.2,+6.9]$), and task-held-out repair AUROC was
+0.512. These predictor and split-specific results do not establish value
+prediction. The canonical W1 analysis is likewise descriptive: at $k=8$,
+diversity versus top-accuracy selection changes oracle by
+$\RevisionWoneOracle$\,pp, best-fixed by $\RevisionWoneBest$\,pp, and
+headroom by $\RevisionWoneHeadroom$\,pp; the development-selected fixed
+member changes by $\RevisionWoneFixed$\,pp. None is a validated routing
+gain (Appendix~\ref{app:rich}).

@@ -64,6 +64,16 @@ within a harness. Classical algorithm selection \citep{rice1976} and
 portfolio solvers such as SATzilla \citep{xu2008satzilla,kotthoff2016}
 select enumerated algorithms from instance features.
 
+The decision boundary here is the classical one between quantitative and
+qualitative (crossover) interaction: a change in effect size alone need not
+change the preferred action \citep{gailsimon1985}. Ensemble selection also
+optimizes a validation objective over a library of models, which is a
+different information set from selecting one member before execution
+\citep{caruana2004}. Likewise, self-consistency gains come from running
+multiple sampled trajectories and aggregating them, so their cost and
+post-sampling information differ from pre-execution single-member routing
+\citep{selfconsistency2022}.
+
 Our candidates are complete automatically generated harnesses. We measure
 the population outcome structure a selector would inherit
 (\S\ref{sec:boundary}), rather than build a selector. We diagnose execution

@@ -67,6 +67,10 @@ Build artifact SHA-256: `a654ddcea7aa3a3cdc2c38e539dabfa7e851a4ad738e7c435ae6d98
 Source SHA-256: `b382c032ece5bc39ae9c805c2de17fadc2650d9432729e5fdb9ee5f4b57aa164`.
 
 
+## Canonical source after cleanup
+
+The 2026-09-15 insight manuscript is now the only English source: `paper/latex/main.tex` and `paper/latex/main.pdf`. Dated `main_revision_*` / `main_rewrite*` copies, `paper/draft/`, `paper/build/`, and page-render directories were removed.
+
 ## 2026-09-15 insight revision
 
 The reviewer-facing narrative was sharpened without inventing a positive result. The manuscript now states the central insight as a measurement principle: population utility requires stable, task-conditional task--harness interaction after execution noise is separated. It also states residual-error coverage as a falsifiable selection principle. The text explicitly says that the current BIRD and MATH-500 evidence motivates this principle but does not test it as an intervention.
