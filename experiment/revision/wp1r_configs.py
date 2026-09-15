@@ -38,13 +38,28 @@ MAX_PROVIDER_ATTEMPTS = 45000
 
 
 def call_stats():
+    """Frozen repeat-0 logical-call statistics per member id.
+
+    Generated members come from run_math500.jsonl; bare from
+    run_bare_math500.jsonl; clone slots inherit the bare statistics because
+    they execute the identical frozen bare source.
+    """
+    stats = {}
     recs = [json.loads(line)
             for line in (ROOT / 'artifacts/gsm8k_audit/run_math500.jsonl')
             .read_text(encoding='utf-8').splitlines()]
     calls = collections.defaultdict(list)
     for r in recs:
         calls[r['harness_id']].append(r['n_llm_calls'])
-    return {h: statistics.mean(v) for h, v in calls.items()}
+    stats.update({h: statistics.mean(v) for h, v in calls.items()})
+    bare = [json.loads(line)
+            for line in (ROOT / 'artifacts/gsm8k_audit/run_bare_math500.jsonl')
+            .read_text(encoding='utf-8').splitlines()]
+    bare_mean = statistics.mean(r['n_llm_calls'] for r in bare)
+    stats['bare'] = bare_mean
+    for i in range(1, 10):
+        stats[f'clone-c{i}'] = bare_mean
+    return stats
 
 
 def panel_members():
@@ -65,7 +80,6 @@ def clone_members():
 
 def base_config(acquisition_id, section, members, panel_draw_path, repeats,
                 concurrency, output):
-    stats = call_stats()
     return {
         'acquisition_id': acquisition_id,
         'protocol_path': str(PROTOCOL.relative_to(ROOT)),
@@ -76,7 +90,7 @@ def base_config(acquisition_id, section, members, panel_draw_path, repeats,
         'panel_draw_path': str(panel_draw_path.relative_to(ROOT)),
         'repeats': repeats,
         'harnesses': members,
-        'call_stats': stats,
+        'call_stats': call_stats(),
         'solver': dict(SOLVER),
         'resource_budget': None,
         'api_key_env': 'PARATERA_API_KEY',
@@ -84,6 +98,7 @@ def base_config(acquisition_id, section, members, panel_draw_path, repeats,
         'drain_seconds': 120,
         'concurrency': concurrency,
         'max_provider_attempts': MAX_PROVIDER_ATTEMPTS,
+        'global_budget_path': 'artifacts/wp1r_20260915/global_budget.json',
         'dataset_root': 'external/data/bird/dev_20240627',
         'output': output,
     }

@@ -91,6 +91,12 @@ class RunStore:
         self.event('task_start', task=key, identity=identity)
         return key, True
 
+    def result_of(self, key):
+        """Durable result of a previously finished cell, or None."""
+        with self.mutex:
+            row = self.db.execute('SELECT result FROM tasks WHERE key=?', (key,)).fetchone()
+            return json.loads(row[0]) if row and row[0] is not None else None
+
     def finish(self, key, result):
         with self.mutex, self.db:
             if self.db.execute("SELECT 1 FROM events WHERE json_extract(value,'$.kind')='run_invalid' LIMIT 1").fetchone():
@@ -101,7 +107,8 @@ class RunStore:
             ends = [e for e in events if e['kind'] == 'http_end']
             logical = {e['id'] for e in events if e['kind'] == 'logical_start'}
             closed = {e['logical'] for e in events if e['kind'] in ('logical_end', 'logical_error')}
-            if (any(e['kind'] in ('http_unknown', 'resource_budget_rejected') for e in events)
+            if (any(e['kind'] in ('http_unknown', 'resource_budget_rejected',
+                                  'global_budget_exhausted') for e in events)
                     or starts != {e['attempt'] for e in ends} or len(starts) != len(ends)
                     or logical != closed):
                 raise RuntimeError('Task has unknown, budget-rejected, or unfinished requests; do not mark it complete')

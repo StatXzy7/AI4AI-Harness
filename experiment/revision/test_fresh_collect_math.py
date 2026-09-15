@@ -21,6 +21,7 @@ from experiment.revision.fresh_collect_math import (GlobalBudget, collect,
                                                     math_tasks, prepare,
                                                     worker)
 from experiment.revision.isolated_collect import read_ledger
+from experiment.revision.fresh_collect import ROOT
 
 BARE_SOURCE = 'experiment/gsm8k/agents/bare.py'
 
@@ -107,6 +108,7 @@ def fixture(harness_ids=('bare',), repeats=(1,), concurrency=1, answer='#### 42'
             'worker_wall_seconds': 120, 'drain_seconds': 20,
             'concurrency': concurrency,
             'max_provider_attempts': max_attempts,
+            'global_budget_path': str(folder / 'shared_budget.json'),
             'dataset_root': str(folder / 'bird'),
             'output': str(folder / 'acq'),
         }
@@ -251,6 +253,46 @@ class TestCollect(unittest.TestCase):
             self.assertEqual(len(ca), 50)
             self.assertEqual(len(cb), 50)
             self.assertEqual(ca & cb, set())
+
+    def test_shared_budget_spans_two_arms(self):
+        """Two sequential collections with one shared budget file draw from a
+        single allowance: the second arm sees the first arm's spending."""
+        with fixture(harness_ids=('bare',), repeats=(1,), max_attempts=120) as (folder, config, calls):
+            a = collect(dict(config, output=config['output'] + '_a'))
+            with self.assertRaises(RuntimeError) as caught:
+                collect(dict(config, output=config['output'] + '_b',
+                             acquisition_id='math-fresh-test-loopback-b'))
+            self.assertIn('ceiling', str(caught.exception))
+            self.assertEqual(GlobalBudget(Path(config['global_budget_path']), 120).spent(), 120)
+            self.assertEqual(len(cells := [t for t in a['tasks'] if t['result'] is not None]), 100)
+
+    def test_resume_counts_error_cells_against_failure_policy(self):
+        """A fully-failed completed run must not seal on resume, and its error
+        results persist for reconciliation."""
+        with fixture(harness_ids=('bare',), repeats=(1,), fail_status=500) as (folder, config, calls):
+            with self.assertRaises(RuntimeError) as caught:
+                collect(config)
+            self.assertIn('failure rate', str(caught.exception))
+            # Resume: same completed cells return as failures again -> still refused.
+            with self.assertRaises(RuntimeError) as caught2:
+                collect(config)
+            self.assertIn('failure rate', str(caught2.exception))
+            snapshot = json.loads((folder / 'acq' / 'snapshot.json').read_text(encoding='utf-8'))
+            done = [t for t in snapshot['tasks'] if t['result'] is not None]
+            self.assertEqual(len(done), 100)
+
+    def test_sample_aware_budget_rejects_five_sample_member(self):
+        """A member whose frozen source requests n=5 gets a sample-aware
+        per-cell budget; a stale flat budget (samples=1/call cap) must reject
+        its logical call before any HTTP request."""
+        source = ROOT / 'experiment/gsm8k/agents/gsm_minimax_s0_g3.py'
+        from experiment.revision.fresh_collect_math import max_samples_per_call
+        self.assertEqual(max_samples_per_call(source), 5)
+        from experiment.revision.fresh_collect_math import per_cell_budget
+        members = [{'id': 'gsm_minimax_s0_g3', 'source': 'experiment/gsm8k/agents/gsm_minimax_s0_g3.py'}]
+        budgets = per_cell_budget({'call_stats': {'gsm_minimax_s0_g3': 1.0}}, members)
+        # cap = ceil(1.0*1.5)+2 = 4 logical calls; each may request 5 samples.
+        self.assertEqual(budgets['gsm_minimax_s0_g3']['max_requested_samples'], 20)
 
     def test_real_panel_draw_matches_frozen_file(self):
         draw = json.loads(Path('review-stage/WP1R_PANEL_DRAW.json').read_text(encoding='utf-8'))

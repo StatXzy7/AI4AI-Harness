@@ -57,16 +57,24 @@ def chat(client, key_name, **params):
         payload = response.json()
     except Exception:
         payload = None
-    return {'status': response.status_code, 'elapsed_s': round(elapsed, 2),
-            'request_id': response.headers.get('x-request-id'),
-            'returned_model': (payload or {}).get('model'),
-            'response_id': (payload or {}).get('id'),
-            'usage': (payload or {}).get('usage'),
-            'finish_reason': (((payload or {}).get('choices') or [{}])[0].get('finish_reason')),
-            'content_head': ((((payload or {}).get('choices') or [{}])[0].get('message') or {})
-                             .get('content', '') or '')[:60],
-            'key_source': key_name,
-            'error': None if response.status_code == 200 else response.text[:200]}
+    record = {'status': response.status_code, 'elapsed_s': round(elapsed, 2),
+              'request_id': response.headers.get('x-request-id'),
+              'returned_model': (payload or {}).get('model'),
+              'response_id': (payload or {}).get('id'),
+              'usage': (payload or {}).get('usage'),
+              'finish_reason': (((payload or {}).get('choices') or [{}])[0].get('finish_reason')),
+              'content_head': ((((payload or {}).get('choices') or [{}])[0].get('message') or {})
+                               .get('content', '') or '')[:60],
+              'key_source': key_name,
+              'error': None if response.status_code == 200 else response.text[:200]}
+    # Durable secret-free request ledger: every attempt with full bodies and
+    # response envelope (authorization headers never written).
+    with open(AUDIT_DIR / 'provider_ledger.jsonl', 'a', encoding='utf-8') as fh:
+        fh.write(json.dumps({'ts': time.time(), 'request_body': body,
+                             'response_status': record['status'],
+                             'response': payload if record['status'] == 200
+                             else record['error']}, ensure_ascii=False) + '\n')
+    return record
 
 
 def main():

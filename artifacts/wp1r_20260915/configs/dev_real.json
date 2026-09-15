@@ -1,0 +1,127 @@
+{
+ "acquisition_id": "wp1r-dev-real-v1",
+ "protocol_path": "review-stage\\REAL_EVIDENCE_PROTOCOL_V1.md",
+ "cache_mode": "off",
+ "section": "dev",
+ "split_path": "artifacts\\gsm8k_audit\\math500_split.json",
+ "schedule_salt": "wp1r-dev-real-v1-schedule",
+ "panel_draw_path": "review-stage\\WP1R_PANEL_DRAW.json",
+ "repeats": [
+  1,
+  2,
+  3
+ ],
+ "harnesses": [
+  {
+   "id": "bare",
+   "source": "experiment/gsm8k/agents/bare.py",
+   "basis": "fixed-baseline"
+  },
+  {
+   "id": "gsm_deepseek_s0_g3",
+   "source": "experiment/gsm8k/agents/gsm_deepseek_s0_g3.py",
+   "basis": "stratum:deepseek"
+  },
+  {
+   "id": "gsm_ernie_s0_g3",
+   "source": "experiment/gsm8k/agents/gsm_ernie_s0_g3.py",
+   "basis": "stratum:ernie"
+  },
+  {
+   "id": "gsm_glm_s0_g6",
+   "source": "experiment/gsm8k/agents/gsm_glm_s0_g6.py",
+   "basis": "stratum:glm"
+  },
+  {
+   "id": "gsm_kimi_s0_g3",
+   "source": "experiment/gsm8k/agents/gsm_kimi_s0_g3.py",
+   "basis": "stratum:kimi"
+  },
+  {
+   "id": "gsm_kimi_s0_g4",
+   "source": "experiment/gsm8k/agents/gsm_kimi_s0_g4.py",
+   "basis": "atlarge"
+  },
+  {
+   "id": "gsm_minimax_s0_g0",
+   "source": "experiment/gsm8k/agents/gsm_minimax_s0_g0.py",
+   "basis": "stratum:minimax"
+  },
+  {
+   "id": "gsm_minimax_s0_g3",
+   "source": "experiment/gsm8k/agents/gsm_minimax_s0_g3.py",
+   "basis": "atlarge"
+  },
+  {
+   "id": "gsm_qwen_s0_g5",
+   "source": "experiment/gsm8k/agents/gsm_qwen_s0_g5.py",
+   "basis": "stratum:qwen"
+  }
+ ],
+ "call_stats": {
+  "gsm_deepseek_s0_g0": 2.9925,
+  "gsm_deepseek_s0_g1": 4.02,
+  "gsm_deepseek_s0_g2": 2.12,
+  "gsm_deepseek_s0_g3": 2.99,
+  "gsm_deepseek_s0_g4": 1.1225,
+  "gsm_deepseek_s0_g5": 5.9725,
+  "gsm_deepseek_s0_g6": 0.9875,
+  "gsm_deepseek_s0_g7": 1.99,
+  "gsm_ernie_s0_g0": 2.0125,
+  "gsm_ernie_s0_g1": 4.9875,
+  "gsm_ernie_s0_g2": 6.47,
+  "gsm_ernie_s0_g3": 1.985,
+  "gsm_ernie_s0_g4": 4.93,
+  "gsm_ernie_s0_g5": 4.9525,
+  "gsm_ernie_s0_g6": 2.975,
+  "gsm_ernie_s0_g7": 4.955,
+  "gsm_glm_s0_g5": 5.98,
+  "gsm_glm_s0_g6": 3.0225,
+  "gsm_kimi_s0_g0": 4.9925,
+  "gsm_kimi_s0_g1": 5.0225,
+  "gsm_kimi_s0_g2": 4.985,
+  "gsm_kimi_s0_g3": 0.9875,
+  "gsm_kimi_s0_g4": 2.9725,
+  "gsm_kimi_s0_g5": 4.9875,
+  "gsm_kimi_s0_g6": 4.975,
+  "gsm_minimax_s0_g0": 2.16,
+  "gsm_minimax_s0_g2": 3.985,
+  "gsm_minimax_s0_g3": 0.9975,
+  "gsm_minimax_s0_g4": 1,
+  "gsm_minimax_s0_g5": 1.125,
+  "gsm_minimax_s0_g6": 0.995,
+  "gsm_minimax_s0_g7": 1,
+  "gsm_qwen_s0_g0": 3.0025,
+  "gsm_qwen_s0_g1": 2.05,
+  "gsm_qwen_s0_g5": 2.0475,
+  "bare": 0.9925,
+  "clone-c1": 0.9925,
+  "clone-c2": 0.9925,
+  "clone-c3": 0.9925,
+  "clone-c4": 0.9925,
+  "clone-c5": 0.9925,
+  "clone-c6": 0.9925,
+  "clone-c7": 0.9925,
+  "clone-c8": 0.9925,
+  "clone-c9": 0.9925
+ },
+ "solver": {
+  "base_url": "https://llmapi.paratera.com/v1",
+  "model": "GLM-5.3-Flash",
+  "thinking_style": "none",
+  "temperature_override": null,
+  "max_tokens": 32000,
+  "timeout_seconds": 300,
+  "status_retries": 2,
+  "retry_delay_seconds": 5
+ },
+ "resource_budget": null,
+ "api_key_env": "PARATERA_API_KEY",
+ "worker_wall_seconds": 1800,
+ "drain_seconds": 120,
+ "concurrency": 2,
+ "max_provider_attempts": 45000,
+ "global_budget_path": "artifacts/wp1r_20260915/global_budget.json",
+ "dataset_root": "external/data/bird/dev_20240627",
+ "output": "artifacts/wp1r_20260915/dev_real"
+}

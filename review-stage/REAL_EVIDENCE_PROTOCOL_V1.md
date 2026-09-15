@@ -255,3 +255,60 @@ bare.py 源码哈希，分别独立发起执行。共享源码哈希在 manifest
   `is_correct` 精确数值相等实现不符，以代码为准并已在 REPRODUCE.md 更正。
 - 判定语义披露：存档口径 `official_correct` 为归一化字符串精确比较
   （非数值容差判分）；新旧数据统一用同一提交版函数，哈希绑定。
+
+### A8. v1.2（2026-09-15，G0 第二轮 5.5/10 后的预采集修订，逐条对应 PARTIAL 项）
+
+**A8.1 共享全局账本**：`global_budget_path` 为配置必填项，三个采集臂
+（eval_real / eval_clone / dev_real）与 pilot 共享同一 state 文件
+`artifacts/wp1r_20260915/global_budget.json`（上限 45,000 attempts，
+先触及即停；pilot 消耗计入同一账本）。
+
+**A8.2 样本感知预算**：每成员 per-cell 预算按其冻结源码中最大 `n=` 采样数
+（`max_samples_per_call`，上限 5）扩展 `max_requested_samples` 与
+`max_output_tokens`；kimi_s0_g3 与 minimax_s0_g3 使用 n=5（自检确认）。
+attempt 投影按 samples（每 sample 一次 HTTP 请求）计。
+
+**A8.3 恢复后失败计数**：已完成的 error 结果 cell（official_correct=None）
+在恢复运行中继续计入滑动失败窗口与整体失败率——失败不会因重启而洗白；
+整体失败率 >0.15 的采集永远无法封存（`run_verified` 不可达）。
+
+**A8.4 预算耗尽不可逃逸**：`global_budget_exhausted` 事件使
+RunStore.finish 永久拒绝该 cell（与 http_unknown 同级）；成员源码内的
+try/except 无法吞掉预算拒绝——worker finish 失败 → 父级以
+provider_attempt_ceiling_reached 停止。
+
+**A8.5 temp_override 禁令（强制）**：worker 检测到 `bridge._tls.
+temp_override` 非空即记 run_invalid 并拒绝执行（源码扫描确认无成员使用）。
+
+**A8.6 统计规格操作化（E2 主判定完整冻结）**：
+- 发现轮（repeat 1）映射：对每任务 t，s(t) = argmax_m correct(m,t,1)，
+  tie-break = 成员 ID 字典序升序。
+- 任务条件优势：adv(t) = mean_{r∈{2,3}} correct(s(t),t,r) −
+  mean_{r∈{2,3}} correct(bare,t,r)；A_real = mean_t adv(t)。
+- clone-null 观测：同一程序作用于 9 个同代码槽位（发现轮在槽位间选择、
+  基线 = 字典序最小槽位 clone-c1）；A_clone = mean_t adv_c(t)；
+  D = A_real − A_clone。
+- 置换 null：在 clone 槽位内，对每任务的 9 个槽位身份标签做**跨全部
+  重复轮的联合置换**（保持任务内跨轮结果向量绑定），重跑发现/验证程序
+  得 A_perm^(b)，b=1..10,000，种子 20260915。独立逐轮洗牌被禁止
+  （破坏槽位内相关性）。
+- 检验：p = (1 + #{A_perm^(b) ≥ A_real − δ}) / 10001，单侧 α=0.05；
+  bootstrap：任务级重采样（B=10,000，种子同）得 D 的 95% CI。
+  **SUPPORTED ⟺ p < 0.05 且 D 的 95% CI 下界 > 0 且 A_real > δ**；
+  （A5 的"CI 下界 > δ"按此口径替换为"D 的 CI 下界 > 0"，差异在此显式
+  记录，不追溯修改 A5 原文。）否则 INSUFFICIENT / 不支持。
+- 缺失规则：任务进入主分析当且仅当该任务 × 该臂全部 9 成员 × 全部 3 轮
+  均有结果；被排除任务列清单；若任一臂排除任务 >10%，主判定降为
+  INSUFFICIENT（覆盖不足）。敏感性：任务内可用轮均值插补（某成员全轮
+  缺失的任务仍剔除），与主分析并列报告。
+- 多重性不变（A5 Holm 族）。
+
+**A8.7 证据索引绑定**：`CURRENT_RUN_EVIDENCE_SHA256.json` 增补
+WP1R_PANEL_DRAW.json、WP1R_CLONE_SLOTS.json、三个冻结采集 config、
+`wp1r_configs.py`、`fresh_collect_math.py`、`fresh_runtime.py` 的 SHA256；
+正式采集启动前快照该索引并随采集 manifest 交叉引用。
+
+**A8.8 pilot 账本**：provider 冒烟与 pilot 全部请求写入持久 JSONL 请求
+账本（`provider_audit/provider_ledger.jsonl`，无认证头）；pilot 通过
+fresh_collect_math 同一采集器执行（3 任务 × bare × 1 轮，独立输出目录，
+共享全局账本），p95 成本投影据此计算并冻结于 v1.3 修订（若启动正式采集）。

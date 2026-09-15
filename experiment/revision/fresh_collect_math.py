@@ -167,18 +167,34 @@ def math_tasks(split_path: Path, section: str):
     return tasks
 
 
+def max_samples_per_call(source: Path) -> int:
+    """Largest n=... sample count requested by a member's frozen source.
+
+    Scans literal `n=<int>` arguments and `n_samples = <int>` style bindings;
+    anything dynamic is bounded by the protocol ceiling of 5.
+    """
+    import re
+    text = source.read_text(encoding='utf-8', errors='replace').replace('\r\n', '\n')
+    ns = [int(m) for m in re.findall(r'\bn\s*=\s*(\d+)', text)]
+    bindings = dict(re.findall(r'(\w*(?:samples?|n_samples|votes?|k)\w*)\s*=\s*(\d+)', text))
+    ns.extend(int(v) for v in bindings.values())
+    return min(max(ns, default=1), 5)
+
+
 def per_cell_budget(config, harnesses):
-    """Worst-case per-cell reservation from frozen repeat-0 call statistics."""
+    """Worst-case per-cell reservation from frozen repeat-0 call statistics
+    and the member's frozen maximum sample count per logical call."""
     stats = config['call_stats']
     budgets = {}
     for h in harnesses:
         hid = h['id']
         if hid not in stats:
             raise ValueError(f'No frozen call statistics for member {hid}')
+        max_n = max_samples_per_call(ROOT / h['source'])
         cap = int(math.ceil(stats[hid] * 1.5)) + 2
         budgets[hid] = {'max_logical_calls': cap,
-                        'max_requested_samples': cap,
-                        'max_output_tokens': cap * 32000,
+                        'max_requested_samples': cap * max_n,
+                        'max_output_tokens': cap * max_n * 32000,
                         'max_request_bytes': 4_000_000}
     return budgets
 
@@ -208,6 +224,8 @@ def prepare(config):
         raise ValueError('Worker wall must exceed its drain interval')
     if config.get('cache_mode') != 'off' or not config['acquisition_id']:
         raise ValueError('Explicit acquisition identity and cache_mode=off required')
+    if not config.get('global_budget_path'):
+        raise ValueError('A shared acquisition-wide global_budget_path is required')
     if config['section'] not in ('dev', 'eval'):
         raise ValueError("section must be 'dev' or 'eval'")
     if not os.environ.get(config['api_key_env']):
@@ -251,7 +269,8 @@ def prepare(config):
         'failure_policy': {'window': 200, 'stop_rate': 0.15,
                            'unknown_requests': 'stop-and-reconcile'},
         'global_budget': {'max_provider_attempts': config['max_provider_attempts'],
-                          'state_file': 'global_budget.json'},
+                          'state_file': str(Path(config['global_budget_path'])
+                                            .resolve())},
         'cache_mode': 'off',
         'solver': asdict(settings),
         'resource_budget': asdict(resource_budget) if resource_budget else None,
@@ -289,6 +308,8 @@ def worker(request, gate):
     api_key = os.environ.get(manifest['api_key_env'])
     if not api_key:
         raise ValueError('Provider key is absent')
+    if not request.get('global_budget_path'):
+        raise ValueError('Worker requires the shared global budget path')
     for key in list(os.environ):
         if key.startswith(('SOLVER_', 'SQL_SOLVER_', 'BIRD_', 'ASE_', 'TTHE_CONFIG')):
             del os.environ[key]
@@ -322,7 +343,12 @@ def worker(request, gate):
 
         def frozen(prompt, system='', temperature=0., n=1, seq=0):
             override = getattr(bridge._tls, 'temp_override', None)
-            return solver(prompt, system, override if override is not None else temperature, n, seq)
+            if override is not None:
+                # Protocol v1.2 A8: sampling temperature is defined by each
+                # member's frozen source; thread-local overrides are forbidden.
+                store.event('run_invalid', task=task_key, reason='temp_override_used')
+                raise RuntimeError('bridge.temp_override is forbidden under protocol v1.2')
+            return solver(prompt, system, temperature, n, seq)
 
         bridge.solver_llm = frozen
         base_threads = set(threading.enumerate())
@@ -447,13 +473,17 @@ def _run_cell(store, manifest, config, cell, task, harness):
     requests, budget exhaustion, or infrastructure stop conditions."""
     key, needed = store.begin(cell)
     if not needed:
+        # A resumed error cell keeps counting as a failure for the stop policy.
+        old = store.result_of(key)
+        if old is not None and old.get('official_correct') is None:
+            return False
         return True
     folder = Path(config['output']).resolve() / 'workers' / key
     folder.mkdir(parents=True, exist_ok=False)
     request = {'manifest': manifest, 'cell': cell, 'task': task, 'harness': harness,
                'folder': str(folder),
                'dataset_root': str(Path(config['dataset_root']).resolve()),
-               'global_budget_path': str(Path(config['output']).resolve() / 'global_budget.json')}
+               'global_budget_path': str(Path(config['global_budget_path']).resolve())}
     request_path = folder / 'request.json'
     request_path.write_text(json.dumps(request, ensure_ascii=False), encoding='utf-8')
     process = run_math_worker(request_path, folder, manifest['worker_wall_seconds'])
@@ -505,7 +535,9 @@ def _run_cell(store, manifest, config, cell, task, harness):
 def collect(config):
     manifest, tasks = prepare(config)
     output = Path(config['output']).resolve()
-    global_budget = GlobalBudget(output / 'global_budget.json',
+    # One acquisition-wide attempt pool shared by every arm (real/clone/dev)
+    # and every shard, per protocol v1.2 A2.
+    global_budget = GlobalBudget(Path(config['global_budget_path']),
                                  manifest['global_budget']['max_provider_attempts'])
     by_task = {t['id']: t for t in tasks}
     by_harness = {h['id']: h for h in manifest['harnesses']}
