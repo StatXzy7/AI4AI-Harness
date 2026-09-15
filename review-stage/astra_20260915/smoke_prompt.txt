@@ -1,0 +1,5 @@
+You are an independent reviewer being smoke-tested. Do exactly this and nothing else:
+1. Read the file experiment/revision/README.md in the current working directory.
+2. Report as verifiable file facts: (a) the number of lines in the file, (b) the exact text of its first heading, (c) one sentence on what section 1 of the file says.
+3. State which model identity your platform reports, if visible; if not visible, say NOT_VISIBLE.
+Do not modify anything. Do not run benchmark or model API calls.

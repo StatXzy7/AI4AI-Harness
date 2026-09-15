@@ -1,0 +1,9 @@
+{
+  "status": "BLOCKED_BEFORE_LAUNCH",
+  "reason": "PARATERA_API_KEY is absent from process, user, and machine environment scopes",
+  "provider_requests_sent": 0,
+  "config": "artifacts/revision_20260912/a_provider_pilot_20/config.json",
+  "preflight": "artifacts/revision_20260912/a_provider_pilot_20/preflight.json",
+  "checked_at": "2026-09-12",
+  "action": "no retry, no placeholder credential launch, preserve offline preflight"
+}

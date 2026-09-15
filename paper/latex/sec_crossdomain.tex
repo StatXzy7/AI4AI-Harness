@@ -27,14 +27,19 @@ reported as-is). This is a replication probe, not a factorial: no
 strategy forcing, no conformance gate.
 
 \paragraph{Results (35 harnesses, 400 eval tasks).} Mean pairwise outcome
-disagreement 10.6\% (max 33.0\%), $K_{\mathrm{eff}}$ 33/35 (0.94),
-outcome-identical pairs 0.7\% --- no trace of Phase-I-style collapse. Union
-repair 76.0\% of bare errors, union harm 0.8\%, oracle headroom over bare
-4.75\,pp. Yet the best fixed member is \emph{bare itself} (0.9375; generated
-harnesses 0.68--0.87): observed oracle coverage exceeds bare while every
+disagreement 10.6\% (max 33.0\%), unique outcome vectors 33 of 35 including
+bare (32 excluding bare), outcome-identical pairs 0.7\% --- no trace of
+Phase-I-style collapse. Union repair 76.0\% of bare errors; the union of all
+generated candidates fails on 0.8\% of bare-correct tasks (a
+\emph{union-all-fail} rate, not an any-candidate or router harm). Observed
+oracle coverage exceeds bare by 4.75\,pp, and the best fixed member is
+\emph{bare itself} (0.9375; generated harnesses 0.6825--0.915): every
 generated member is worse individually. Repeated-execution and same-code
 clone controls were not collected, so this does not establish stable
-complementarity or deployable utility.
+complementarity, pre-execution selectability, or deployable utility. A
+versioned endpoint-sensitive rescoring of all 14{,}400 archived verdicts
+under a judge that distinguishes interval endpoints changes none of them
+(\ref{app:diagnostics}).
 
 \paragraph{Two failure-side observations.} First, the clean-protocol
 diversity result replicates in a second domain with a different output
@@ -43,7 +48,7 @@ space. Second, a quarantined pilot round (disclosed in
 when the same six builders were (mistakenly) given a GSM8K-style task
 description whose numeric answer format did not match MATH-500, the
 generated population remained behaviorally diverse (16.2\% disagreement,
-$K_{\mathrm{eff}}$ 19/19) while its union repair collapsed to 18\% --- and
+19 unique outcome vectors) while its union repair collapsed to 18\% --- and
 code-level inspection of the catastrophic members reproduced the Phase-I
 trace taxonomy verbatim (a generate-then-verify harness whose verifier
 rejected nearly every answer and whose fallback returned the stale loop

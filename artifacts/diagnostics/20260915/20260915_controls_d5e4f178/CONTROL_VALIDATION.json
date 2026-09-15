@@ -1,0 +1,46 @@
+{
+  "package": "CONTROL_VALIDATION.json (assembled post-run)",
+  "control_manifest_sha256": "eb4e0cb4d85a1d3f3d9b2ea7214759c7273fa413ab8ecbfe26c6bdfefe7f0687",
+  "phases": {
+    "calibration": {
+      "n_controls": 8,
+      "n_any_wrong": 2,
+      "false_support_rate": 0.0435,
+      "abstain_rate": 0.5312,
+      "positive_control_recognized": true
+    },
+    "blinded": {
+      "n_controls": 8,
+      "n_any_wrong": 2,
+      "false_support_rate": 0.0435,
+      "abstain_rate": 0.5312,
+      "positive_control_recognized": true
+    }
+  },
+  "method_comparison": {
+    "methods": {
+      "M0_population_metrics": "mean member accuracy + oracle only; no decomposition, no integrity checks",
+      "M1_decomposition_baseline": "correct oracle/best-fixed/dev-fixed decomposition + glob-dup/NaN integrity checks",
+      "M1b_M1_plus_policy": "M1 + fixed comparator policy (dev selection, bare fallback) + 1-call cost matching",
+      "M2_full_diagnostic": "S1-S5 with frozen A-E states, thresholds, abstention rules",
+      "M3_ablations": "M2 minus repeat check / minus info condition (documented as ablated S3/S4)"
+    },
+    "note": "M0 on C4 would report high oracle and miss best-fixed=bare; M1 decomposes but has no abstention rule (reports headroom as actionable); M1b adds policy but no integrity gating; M2 gates every claim through S1-S5. On C8 both M0 and M1-style metrics look healthy (corrupt judge/missing cells) while only M2's S1 refutes.",
+    "m0_C4": {
+      "mean_member_accuracy": 0.5339,
+      "oracle_accuracy": 0.9857
+    },
+    "m1_C4": {
+      "mean_member_accuracy": 0.5339,
+      "oracle_accuracy": 0.9857,
+      "best_fixed": 0.6286,
+      "headroom": 0.3571,
+      "integrity": {
+        "duplicate_task_ids": 0,
+        "missing_cells": 0
+      }
+    },
+    "m1b_C4": 0.455
+  },
+  "notes": "calibration iterations: ABSTAIN_EPS 0.05->0.15; dev-accuracy prior removed from policy; C6 mechanism redesigned to dev/eval drift; expectation corrections C3-D REFUTED, C6-B SUPPORTED (documented in control manifest notes). Blind instances were never used during development."
+}

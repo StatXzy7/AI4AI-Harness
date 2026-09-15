@@ -1,0 +1,165 @@
+\begin{thebibliography}{24}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Caruana et~al.(2004)Caruana, Niculescu-Mizil, Crew, and
+  Ksikes]{caruana2004}
+Rich Caruana, Alexandru Niculescu-Mizil, Geoff Crew, and Alex Ksikes.
+\newblock Ensemble selection from libraries of models.
+\newblock In \emph{Proceedings of the 21st International Conference on Machine
+  Learning}, 2004.
+
+\bibitem[Chen et~al.(2026)Chen, Wang, Liu, Wang, Zheng, and
+  Wang]{harnessfix2026}
+Mengzhuo Chen, Junjie Wang, Zhe Liu, Yawen Wang, Haiming Zheng, and Qing Wang.
+\newblock From failed trajectories to reliable {LLM} agents: Diagnosing and
+  repairing harness flaws.
+\newblock \emph{arXiv preprint arXiv:2606.06324}, 2026.
+
+\bibitem[Cho(2026)]{nonmonotone2026}
+Yong-eun Cho.
+\newblock It's not the capability: Harness sensitivity is non-monotone across
+  {LLM} agent tiers.
+\newblock \emph{arXiv preprint arXiv:2605.26731}, 2026.
+
+\bibitem[Fan \& Huang(2026)Fan and Huang]{helix2026}
+Tianyu Fan and Chao Huang.
+\newblock {HELIX}: Model-harness co-evolution for recursive self-improvement.
+\newblock \emph{arXiv preprint arXiv:2608.13951}, 2026.
+
+\bibitem[Gail \& Simon(1985)Gail and Simon]{gailsimon1985}
+Mitchell~H. Gail and Richard Simon.
+\newblock Testing for qualitative interactions between treatment effects and
+  patient subsets.
+\newblock \emph{Biometrics}, 41\penalty0 (2):\penalty0 361--372, 1985.
+\newblock \doi{10.2307/2530862}.
+
+\bibitem[Gupta et~al.(2026)Gupta, Lei, Lu, Anumanchipalli, and
+  Choshen]{nouniversal2026}
+Akshat Gupta, Jermaine Lei, Alexander Lu, Gopala Anumanchipalli, and Leshem
+  Choshen.
+\newblock Automated discovery has no universally superior harness.
+\newblock \emph{arXiv preprint arXiv:2607.18235}, 2026.
+
+\bibitem[Kim(2026)]{cfrouting2026}
+Minho Kim.
+\newblock When should {LLMs} search? counterfactual supervision for search
+  routing.
+\newblock \emph{arXiv preprint arXiv:2607.05752}, 2026.
+
+\bibitem[Kotthoff(2014)]{kotthoff2016}
+Lars Kotthoff.
+\newblock Algorithm selection for combinatorial search problems: A survey.
+\newblock \emph{AI Magazine}, 35\penalty0 (2):\penalty0 48--60, 2014.
+
+\bibitem[Li et~al.(2023)Li, Hui, Qu, Yang, Li, Li, Wang, Qin, Geng, Huo,
+  et~al.]{bird2021}
+Jinyang Li, Binyuan Hui, Ge~Qu, Jiaxi Yang, Binhua Li, Bowen Li, Bailin Wang,
+  Bowen Qin, Ruiying Geng, Nan Huo, et~al.
+\newblock Can {LLM} already serve as a database interface? a {BIRD}'s eye view.
+\newblock In \emph{Advances in Neural Information Processing Systems (NeurIPS)
+  Datasets and Benchmarks Track}, 2023.
+
+\bibitem[Lightman et~al.(2023)Lightman, Kosaraju, Burda, Edwards, Baker, Lee,
+  Leike, Schulman, Sutskever, and Cobbe]{math500}
+Hunter Lightman, Vineet Kosaraju, Yura Burda, Harri Edwards, Bowen Baker, Teddy
+  Lee, Jan Leike, John Schulman, Ilya Sutskever, and Karl Cobbe.
+\newblock Lightman et al. let's verify step by step appendix: Math-500 subset.
+\newblock \emph{arXiv preprint arXiv:2305.20050}, 2023.
+
+\bibitem[Lin et~al.(2026)Lin, Liu, Pan, Lin, Dou, Xi, Huang, and Yan]{ahe2026}
+Jiahang Lin, Shichun Liu, Chengjun Pan, Lizhi Lin, Shihan Dou, Zhiheng Xi,
+  Xuanjing Huang, and Hang Yan.
+\newblock Agentic harness engineering: Observability-driven automatic evolution
+  of coding-agent harnesses.
+\newblock \emph{arXiv preprint arXiv:2604.25850}, 2026.
+
+\bibitem[Liu et~al.(2026)Liu, Zhou, Zong, Tian, Song, and
+  Zhang]{agenticrouting2026}
+Xinchen Liu, Hang Zhou, Yingjie Zong, Yuchuan Tian, Liuyang Song, and Shuo
+  Zhang.
+\newblock Agentic routing: The harness-native data flywheel.
+\newblock \emph{arXiv preprint arXiv:2607.11399}, 2026.
+
+\bibitem[Luo et~al.(2026)Luo, Xue, Wang, Hu, and Deng]{gatedqd2026}
+Xiaotian Luo, Dizhan Xue, Fengxingyu Wang, Chuanrui Hu, and Yafeng Deng.
+\newblock {HarnessBank}: Semantic gene-bank search with gated verification for
+  agent-harness self-evolution.
+\newblock \emph{arXiv preprint arXiv:2607.13683}, 2026.
+
+\bibitem[Miyai et~al.(2026)Miyai, Aizawa, and Yamasaki]{coevolve2026}
+Atsuyuki Miyai, Kiyoharu Aizawa, and Toshihiko Yamasaki.
+\newblock Task-{CoEvolve}: Efficient harness optimization via adaptive
+  validation task selection.
+\newblock \emph{arXiv preprint arXiv:2608.20169}, 2026.
+
+\bibitem[Moll et~al.(2026)Moll, Corbeil, Pan, Hadamitzky, Rueckert, and
+  Adams]{grasp2026}
+Johannes Moll, Jean-Philippe Corbeil, Jiazhen Pan, Martin Hadamitzky, Daniel
+  Rueckert, and Lisa Adams.
+\newblock {GRASP}: Gated regression-aware skill proposer for self-improving
+  {LLM} agents.
+\newblock \emph{arXiv preprint arXiv:2605.29668}, 2026.
+
+\bibitem[Nie et~al.(2026)Nie, Zhang, Song, Cai, Yu, Tian, Han, Guo,
+  et~al.]{tthe2026}
+Jun Nie, Yonggang Zhang, Jun Song, Qianshu Cai, Dahai Yu, Xinmei Tian, Bo~Han,
+  Yike Guo, et~al.
+\newblock {TTHE}: Test-time harness evolution.
+\newblock \emph{arXiv preprint arXiv:2607.08124}, 2026.
+
+\bibitem[Rice(1976)]{rice1976}
+John~R. Rice.
+\newblock \emph{The Algorithm Selection Problem}.
+\newblock Elsevier, 1976.
+
+\bibitem[Wang et~al.(2026)Wang, Shi, Li, Li, Yu, and Yang]{handbook2026}
+Ruhan Wang, Yucheng Shi, Zongxia Li, Zhongzhi Li, Yue Yu, and Junyao Yang.
+\newblock Harness handbook: Making evolving agent harnesses readable,
+  navigable, and editable.
+\newblock \emph{arXiv preprint arXiv:2607.13285}, 2026.
+
+\bibitem[Wang et~al.(2022)Wang, Wei, Schuurmans, Le, Chi, Narang, Chowdhery,
+  and Zhou]{selfconsistency2022}
+Xuezhi Wang, Jason Wei, Dale Schuurmans, Quoc~V. Le, Ed~H. Chi, Sharan Narang,
+  Aakanksha Chowdhery, and Denny Zhou.
+\newblock Self-consistency improves chain of thought reasoning in language
+  models.
+\newblock \emph{arXiv preprint arXiv:2203.11171}, 2022.
+\newblock \doi{10.48550/arXiv.2203.11171}.
+
+\bibitem[Xu et~al.(2026)Xu, Zhang, Chen, Li, Liang, and Yang]{harnesslens2026}
+Jinghan Xu, Yikai Zhang, Aili Chen, Weiyuan Li, Jiaqing Liang, and Deqing Yang.
+\newblock Verify smarter, evolve further: Efficient harness evolution through
+  behavior-aware verification.
+\newblock \emph{arXiv preprint arXiv:2608.27311}, 2026.
+
+\bibitem[Xu et~al.(2008)Xu, Hutter, Hoos, and Leyton-Brown]{xu2008satzilla}
+Lin Xu, Frank Hutter, Holger~H. Hoos, and Kevin Leyton-Brown.
+\newblock {SATzilla}: Portfolio-based algorithm selection for {SAT}.
+\newblock \emph{Journal of Artificial Intelligence Research}, 32:\penalty0
+  565--606, 2008.
+
+\bibitem[Zhang et~al.(2026{\natexlab{a}})Zhang, Lu, Xie, Zhu, Wang, and
+  Xie]{jitagent2026}
+Guibin Zhang, Leo Lu, Fangzhou Xie, Kang Zhu, Junhao Wang, and Zhifei Xie.
+\newblock {JIT-Agent}: Scaling harness intelligence via just-in-time harness
+  evolution.
+\newblock \emph{arXiv preprint arXiv:2608.25593}, 2026{\natexlab{a}}.
+
+\bibitem[Zhang et~al.(2026{\natexlab{b}})Zhang, Zhang, Li, Zhang, Chen, and
+  Zhang]{selfharness2026}
+Hangfan Zhang, Shao Zhang, Kangcong Li, Chen Zhang, Yang Chen, and Yiqun Zhang.
+\newblock Self-harness: Harnesses that improve themselves.
+\newblock \emph{arXiv preprint arXiv:2606.09498}, 2026{\natexlab{b}}.
+
+\bibitem[Zhou et~al.(2026)Zhou, Tan, Zhang, Fan, Lin, and Kang]{sts2026}
+Heng Zhou, Zelin Tan, Zhemeng Zhang, Yutao Fan, Yibing Lin, and Li~Kang.
+\newblock Select-then-solve: Paradigm routing as inference-time optimization
+  for {LLM} agents.
+\newblock \emph{arXiv preprint arXiv:2604.06753}, 2026.
+
+\end{thebibliography}

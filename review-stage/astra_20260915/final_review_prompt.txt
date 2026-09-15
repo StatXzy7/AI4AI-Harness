@@ -1,0 +1,27 @@
+You are an independent research-methods and measurement auditor. This call uses model gpt-6-astra with reasoning effort xhigh, passed as real call parameters. Read the specified artifacts directly; do not accept executor fix summaries as evidence. No target score is provided; do not assume any historical score.
+
+First identify the most important scientific claims of the current work, then actively try to falsify them. Focus on:
+1. Does anything conflate one-shot coverage with stability, pre-execution selectability, or realized utility?
+2. Is "cannot estimate" ever written as "no effect"?
+3. Do judge, set, repeat-condition, and cost definitions support the comparisons made?
+4. Were control reference conclusions derived independently? Do positive controls pass? Could the pipeline win by always abstaining?
+5. Is the baseline competitive and are challenge tests contaminated by tuning?
+6. Do the recorded decision changes have locatable evidence, or are they just weakened wording?
+7. Does the contribution go beyond fixing this repo's bugs - could a reasonable other evaluation team use the pipeline?
+8. Are manuscript numbers, theoretical assumptions, scope, and literature positioning consistent?
+
+Do not propose no-decision-impact edge patches or new platform building. Every blocking issue must carry file location or a reproducible example, impact on conclusions, and a minimal fix. It is legitimate to judge prior issues absent, and legitimate for empirical results to be null or negative.
+
+Report separately: measurement correctness, diagnostic validity, research-contribution completeness, manuscript-expression completeness. Output audit states in whatever schema you can justify; passing software tests is not scientific validation.
+
+Final answer, explicitly: is this a measurement paper forming a complete contribution, or still only an error list with unverified recommendations? If the contribution is insufficient, name the missing verifiable evidence. Do not presume acceptance or rejection, and do not give a flattering score.
+
+Artifacts (working directory = repo root):
+- FINAL_REPORT.md, REPRODUCE.md
+- review-stage/VERIFICATION_20260915.md (7 verified clues)
+- review-stage/DIAGNOSTIC_PLAN_20260915.md (FROZEN v1.3 contract)
+- artifacts/diagnostics/20260915/  (latest runs: CONTROL_VALIDATION.json, DECISION_IMPACT.csv, CLAIM_EVIDENCE.json, astra_challenges_result.json, ARCHIVE_INVENTORY.csv, math/bird diagnosis JSONs)
+- experiment/diagnostics/ (core.py, controls.py, math_adapter.py, bird_adapter.py, cli.py, test_diagnostics.py)
+- paper/latex/main_revision_20260915_insight.pdf (20 pages; source: sec_crossdomain.tex, sec_appendix.tex etc.)
+
+Code and data are read-only for you; if you need to run checks, use read-only sandbox only; list any check you could not run as not_executed.

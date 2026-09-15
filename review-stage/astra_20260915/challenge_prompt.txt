@@ -1,0 +1,8 @@
+You are the independent auditor for a diagnostics validation. You previously reviewed the frozen plan (review-stage/DIAGNOSTIC_PLAN_20260915.md, FROZEN v1.3). Per plan section 5, you now submit EXACTLY 2 challenge controls for the blinded set. This message is sent BEFORE any blinded results exist; your specifications will be hash-committed as your precommitment.
+
+Design 2 synthetic population controls that stress the diagnostic in ways the existing 8 control classes (C1-C8, described in experiment/diagnostics/controls.py - you may read it) do NOT cover. Read also experiment/diagnostics/core.py to know what the diagnostic computes (S1-S5, states SUPPORTED/REFUTED_WITHIN_SCOPE/INSUFFICIENT_EVIDENCE, abstain-to-bare policy with EPS=0.15, lambda=1 harm, 1-call budget).
+
+Output STRICT JSON only (no markdown), schema:
+{"challenges":[{"id":"CH1","description":"...","generating_rule":"precise, implementable generative recipe for a Population: number of members, member roles (index 0 = bare), task count, dev/eval split size, per-member per-task correct probabilities as functions of task index/stratum, any flips or dependencies, feature/stratum metadata contents","expected":{"B":"...","C":"INSUFFICIENT_EVIDENCE","D":"...","E":"..."},"rationale":"what failure mode this catches"},{"id":"CH2",...}]}
+
+Constraints: single-shot synthetic (C=INSUFFICIENT_EVIDENCE always); members indexed 0..n-1 with index 0 = bare reference; Y[i,j] in {0,1}; pre-execution metadata only via a stratum label per task; the diagnostic has no access to anything else. Choose expected states per the frozen plan decision rules. Do not read any results files (none exist yet).

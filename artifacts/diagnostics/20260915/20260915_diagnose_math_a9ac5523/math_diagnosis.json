@@ -1,0 +1,114 @@
+{
+  "manifest_sha256": "c0c9917459ba83e8cf1a230069c2fb74e90a227eef80ebd76d6006ac020ddc64",
+  "K_stats": {
+    "K_raw": 35,
+    "K_unique_source": 35,
+    "unique_outcome_vectors_incl_bare": 33,
+    "unique_outcome_vectors_excl_bare": 32,
+    "vectors_per_gen_incl_bare": 0.9429,
+    "vectors_per_gen_excl_bare": 0.9143
+  },
+  "report": {
+    "A_measurement_sufficiency": {
+      "state": "SUPPORTED",
+      "checks": {
+        "manifest_member_match": true,
+        "manifest_task_match": true,
+        "judge_replay_consistent": true,
+        "no_duplicate_keys": true,
+        "no_source_hash_conflict": true,
+        "missing_cells_le_1pct": true
+      },
+      "blocked": [],
+      "missing_cells": 0,
+      "missing_frac": 0.0,
+      "duplicate_keys": 0,
+      "source_hash_conflicts": [],
+      "judge_replay_mismatches": 0,
+      "minimal_missing_evidence": []
+    },
+    "B_single_shot_coverage": {
+      "state": "SUPPORTED",
+      "oracle_accuracy": 0.9844,
+      "best_fixed_member": "bare",
+      "best_fixed_accuracy": 0.9313,
+      "dev_fixed_member": null,
+      "dev_fixed_accuracy": null,
+      "bare_accuracy": 0.9313,
+      "headroom": 0.0531,
+      "headroom_ci95": [
+        0.0312,
+        0.075
+      ],
+      "residual_coverage_vs_bare": 0.0531,
+      "info_boundaries": "oracle uses per-task outcomes of all members; best-fixed uses outcome-averages over the same eval tasks; dev-fixed uses dev data only; headroom is not a realizable gain (plan 2)"
+    },
+    "C_stability": {
+      "state": "INSUFFICIENT_EVIDENCE",
+      "reason": "R=1 matched condition groups < 3",
+      "minimal_missing_evidence": [
+        "collect >= 3 same-condition repeats (all c fields equal) over >= 30 shared tasks"
+      ]
+    },
+    "D_pre_execution_selectability": {
+      "state": "INSUFFICIENT_EVIDENCE",
+      "policy": "frozen multinomial LR on task stratum one-hot + dev-accuracy prior; abstain->bare when top-2 gap < 0.15",
+      "eval_tasks": 320,
+      "abstain_rate": 1.0,
+      "pi_Z_accuracy": 0.9313,
+      "dev_fixed_member": "bare",
+      "dev_fixed_accuracy": 0.9313,
+      "pi_Z_minus_devfixed_ci95": [
+        0.0,
+        0.0
+      ],
+      "leakage_boundary": "training used dev tasks only; eval tasks never entered fitting"
+    },
+    "E_policy_utility": {
+      "state": "INSUFFICIENT_EVIDENCE",
+      "policy": "pi_Z single member",
+      "budget_calls_per_task": 1,
+      "lambda_harm": 1.0,
+      "comparator": "dev-fixed (same budget)",
+      "U": 0.0,
+      "U_ci95": [
+        0.0,
+        0.0
+      ],
+      "cost_evidence": {
+        "median_calls": 3.0
+      },
+      "note": "real dollar/token costs are not recoverable from these archives; SUPPORT is limited to the matched 1-call budget, not billable deployment"
+    },
+    "state_vocabulary": [
+      "SUPPORTED",
+      "REFUTED_WITHIN_SCOPE",
+      "INSUFFICIENT_EVIDENCE",
+      "NOT_APPLICABLE"
+    ],
+    "states_are_project_definitions": true
+  },
+  "judge_v2_rescore": {
+    "judge_v2": "endpoint/bracket-sensitive (math_adapter.judge_v2)",
+    "n_rows": 14400,
+    "n_flips": 14,
+    "flips_false_accept": 0,
+    "flips_false_reject": 14,
+    "per_harness_flip_counts": {
+      "gsm_deepseek_s0_g1": 1,
+      "gsm_deepseek_s0_g3": 1,
+      "gsm_deepseek_s0_g4": 1,
+      "gsm_deepseek_s0_g5": 1,
+      "gsm_glm_s0_g6": 1,
+      "gsm_kimi_s0_g0": 1,
+      "gsm_minimax_s0_g2": 1,
+      "gsm_minimax_s0_g3": 1,
+      "gsm_minimax_s0_g4": 1,
+      "gsm_minimax_s0_g5": 1,
+      "gsm_minimax_s0_g6": 1,
+      "gsm_qwen_s0_g0": 1,
+      "gsm_qwen_s0_g1": 1,
+      "gsm_qwen_s0_g5": 1
+    }
+  }
+}

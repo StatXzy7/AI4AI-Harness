@@ -1,0 +1,10 @@
+You are an independent research-methods and measurement auditor. This call uses model gpt-6-astra with reasoning effort xhigh, passed as real call parameters. Read artifacts directly; no target score.
+
+SCOPE: revision re-check (round 3 of 3, final) of the method-and-validation plan. v1.1 was scored 6/10 with 11/12 prior issues addressed plus 2 new blockers: (a) D's estimand said best-fixed but the decision rule compared dev-fixed; (b) control cardinalities/denominators not auditable (vague >=14, mismatched 6/8 abstention bound), plus issue 6 partially addressed (P, b, lambda not frozen).
+
+Read:
+- review-stage/DIAGNOSTIC_PLAN_20260915.md (v1.2; section 10 documents both revision rounds)
+
+Check ONLY: (a) issue 6 now resolved (P frozen, b frozen, lambda frozen, oracle-routing repositioned)? (b) new blocker (a) resolved (D estimand and decision rule now consistent)? (c) new blocker (b) resolved (control inventory exact: 8 classes x 2 instances = 16, blinded = 8 + >=2 challenges, explicit denominators)? (d) any NEW blocking problem introduced by v1.2 edits?
+
+Final verdict for freezing: ready / almost / not ready. One short paragraph of justification; if not ready, list the minimal remaining fixes. List any check you could not run as not_executed.

@@ -1,0 +1,4 @@
+- Lines: **204**
+- First heading: `# Offline replay and runtime recovery`
+- Section 1 says it documents offline replay and verification of archived results without model APIs, while clarifying this does not establish scientific validity or reproduce the full API runtime.
+- Model identity: **NOT_VISIBLE**

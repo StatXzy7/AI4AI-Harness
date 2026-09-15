@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex main"] 1789139402.14536 "main.aux" "main.bbl" "main" 1789139404.47936 0
+["bibtex main"] 1789224861.91107 "main.aux" "main.bbl" "main" 1789224864.95082 0
   "./iclr2027_conference.bst" 1788547076 26973 af983813ca1a1414954dbceae7baa2a1 ""
   "./references.bib" 1789014779 5984 77cbb733f0bf4118340903c07a6346b9 ""
-  "main.aux" 1789139403 22033 50d51cae4fb7df6c692145651c22c534 "pdflatex"
+  "main.aux" 1789224863 22033 10507c2e26fbf339920278cd4c09f861 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1789139402.61855 "main.tex" "main.pdf" "main" 1789139404.4799 0
+["pdflatex"] 1789224862.47056 "main.tex" "main.pdf" "main" 1789224864.95189 0
   "d:/texlive/2026/texmf-dist/fonts/enc/dvips/base/8r.enc" 1777429481 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "d:/texlive/2026/texmf-dist/fonts/map/fontname/texfonts.map" 1777429669 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "d:/texlive/2026/texmf-dist/fonts/tfm/adobe/courier/pcrb7t.tfm" 1777429344 960 4ab65358b8406f30ef5496c8c096d22b ""
@@ -134,9 +134,9 @@
   "figures/fig_phenomenon.pdf" 1789111230 20822 3ad3f43ed8df96cd4a4553a6291a4cfc ""
   "figures/fig_results_revision.pdf" 1789110977 20167 250a99ed6723426df95d892d7dc3cb7a ""
   "iclr2027_conference.sty" 1788547075 9025 1b4bb9c2e12c712c56f4eb1232b88dd6 ""
-  "main.aux" 1789139403 22033 50d51cae4fb7df6c692145651c22c534 "pdflatex"
-  "main.bbl" 1789139402 6396 0a1d43fcb43fbb3492a93c0d8845c8fc "bibtex main"
-  "main.out" 1789139403 6864 ed5ebd203d873ca43d252ecf17fceade "pdflatex"
+  "main.aux" 1789224863 22033 10507c2e26fbf339920278cd4c09f861 "pdflatex"
+  "main.bbl" 1789224862 6396 0a1d43fcb43fbb3492a93c0d8845c8fc "bibtex main"
+  "main.out" 1789224863 6864 ed5ebd203d873ca43d252ecf17fceade "pdflatex"
   "main.tex" 1789138413 5069 3786352b9231f371cf32428c63b29dfd ""
   "natbib.sty" 1788547078 45154 40088ce024445d7ee2bca59e704cdd01 ""
   "revision_cost_table.tex" 1789110977 281 345aa423abdd2b639c1e3a471b47f3d9 ""
@@ -149,7 +149,7 @@
   "sec_appendix.tex" 1789110977 30730 cca0ec9152a6f9632ef4e73ab559afba ""
   "sec_conclusion.tex" 1789110977 480 bc94afa0831e3254aa19a32cad36a74b ""
   "sec_crossdomain.tex" 1789110977 3441 1bcc446fe6e96ee6b7211b2030fc77f5 ""
-  "sec_discussion.tex" 1789110977 1736 caeed6dfe333e930eb75bc5d92cf3b37 ""
+  "sec_discussion.tex" 1789224839 2714 52981e8b4e431cf7f1b725cb870ed7a4 ""
   "sec_intro.tex" 1789110977 3351 b3bf421bda68835605cd795f018860fc ""
   "sec_phase1.tex" 1789110977 7827 4197191dbeca2e1476f8dc6ab356dc4a ""
   "sec_phase2.tex" 1789110977 8526 9d87b22696b2e953a4370feedab7c287 ""

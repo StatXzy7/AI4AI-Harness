@@ -1,0 +1,9 @@
+Reading additional input from stdin...
+2026-09-14T23:32:15.440874Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in C:\Users\Administrator\.codex\memories\MEMORY.md:
+## User preferences
+
+- When paper audits or reviewer remediation are requested, the user asked for an 鈥滅嫭绔嬪鏍歌€呪€?and 鈥滃畬鎴愬绋夸汉鐨勬彁鍒嗗缓璁€?-> independently reconcile code, manifest, artifacts, and paper claims; give an adversarial verdict rather than mere prose polishing. [Task 1][Task 7]
+2026-09-14T23:32:41.708362Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in C:\Users\Administrator\.codex\memories\MEMORY.md:
+## User preferences
+
+- When evidence is incomplete, the user required historical results, failed pools, `unknown`, and missingness be retained rather than silently retried or overwritten -> create independent versioned outputs/pools and preserve the audit trail. [Task 5][Task 7]

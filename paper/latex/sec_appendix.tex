@@ -508,3 +508,60 @@ therefore requires separately fixed semantic rules and an indeterminate policy,
 rather than silently treating vote as vote3 or choosing a compatible profile
 after observing its result. This source-level scope gap does not estimate
 false-rejection rates for generated candidates.
+
+\section{Diagnostics Pipeline and Validation (This Revision)}\label{app:diagnostics}
+
+\paragraph{Five question classes.} For a population of harnesses and a bare
+reference, the diagnostics pipeline evaluates five classes of claims on an
+explicit execution matrix $Y[h,x,r,c]$ (member, task, repeat, execution
+condition): \textbf{(A)} measurement sufficiency (manifest consistency,
+judge replay, identity uniqueness); \textbf{(B)} single-shot coverage
+(oracle minus best-fixed, with dev-fixed reported separately); \textbf{(C)}
+stable conditional advantage (requires $\ge 3$ matched same-condition
+repeats over $\ge 30$ shared tasks); \textbf{(D)} pre-execution
+selectability (a frozen one-call selection policy versus dev-fixed);
+\textbf{(E)} deployable net utility under a frozen 1-call budget with
+$\lambda{=}1$ harm weighting. Each class returns
+SUPPORTED, REFUTED\_WITHIN\_SCOPE, INSUFFICIENT\_EVIDENCE, or
+NOT\_APPLICABLE with scope and minimal missing evidence; classes are never
+collapsed into a single score.
+
+\paragraph{Validation on known-truth controls.} A frozen package of 8
+control classes $\times$ 2 independent instances (16 controls) with
+mechanism-derived expected states was split into calibration and blinded
+halves; thresholds and the pipeline were frozen before the blinded run, and
+the independent auditor pre-committed two additional challenge controls by
+hash. Calibration matched on all 40 state cells; the blinded set (8
+instances + 2 challenges, judged on all five classes) matched on all but
+one cell: the auditor's CH2 challenge expected the
+frozen policy to outperform dev-fixed, but with binary stratum features the
+policy provably coincides with dev-fixed, so that cell is recorded as a
+failed challenge rather than explained away. The false-support rate is 0 in
+both phases, the positive control is recognized, and the abstention cap
+holds. Concretely, the pipeline refutes ``identical outputs under
+different code,'' abstains on unidentifiable complementarity, recognizes
+stratum-visible complementarity, and catches corruption (conflicting
+verdicts, missing members) that leaves outcome-level metrics healthy.
+
+\paragraph{Application to the archives.} Applied to the MATH-500 archive
+(36 members $\times$ 400 tasks) and the 18-cell BIRD Phase-II archive. On
+BIRD, the integrity class (A) is REFUTED\_WITHIN\_SCOPE for every cell: the
+frozen input manifests contain overlapping collection files whose rows
+duplicate on the canonical key (resolved by the archived first-write-wins
+policy, with recorded verdict-conflict counts), so the coverage numbers
+below are computed on that deduplicated view, not on a conflict-free
+archive. Subject to that scope, all cells show single-shot coverage (B SUPPORTED); stability, selectability, and
+deployability are INSUFFICIENT\_EVIDENCE by the frozen rules because the
+archives contain no matched repeats and no cost fields; on MATH the frozen
+selection policy, trained on the held-out 80 tasks, ties with dev-fixed
+(bare) on every eval task, so selectability and deployability are
+INSUFFICIENT\_EVIDENCE rather than refuted. Three published numbers were corrected
+(membership-basis of the outcome-vector count; the generated-harness
+accuracy range 0.6825--0.915, previously printed as 0.68--0.87; the
+headroom decomposition with best-fixed = bare stated explicitly), two
+overloaded metric names were disambiguated (union-all-fail vs
+any-candidate-fail), and one preserved-judgment control confirms a reported
+pair (union repair 76.0\% / union-all-fail 0.8\%) under the explicit
+definition. A versioned endpoint-sensitive judge rescored all 14{,}400
+MATH verdicts and changed none; the underlying bracket-merging defect is
+demonstrated on synthetic inputs but did not fire in this archive.

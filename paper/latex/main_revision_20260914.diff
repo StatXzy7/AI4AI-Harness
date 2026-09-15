@@ -1,0 +1,27 @@
+diff --git a/paper/latex/main.tex b/paper/latex/main_revision_20260914.tex
+index e28b5c7..35c7997 100644
+--- a/paper/latex/main.tex
++++ b/paper/latex/main_revision_20260914.tex
+@@ -1,3 +1,4 @@
++% Isolated 2026-09-14 writing revision; derived from current main.tex.
+ \documentclass{article}
+ \usepackage{iclr2027_conference,times}
+ \usepackage{hyperref}
+@@ -10,7 +11,7 @@
+ 
+ % \iclrfinalcopy  % submission mode: keep OFF until acceptance
+ 
+-\title{From One-Run Diversity to Stable Complementarity in AI-Generated Harness Populations}
++\title{Auditing AI-Generated Harness Populations: Separating One-Run Diversity from Stable Complementarity}
+ 
+ \author{Anonymous}
+ 
+@@ -61,7 +62,7 @@ it does not yet identify stable complementarity beyond repeated sampling.
+ \input{sec_results}
+ 
+ \section{Discussion and Conclusion}\label{sec:discussion}
+-\input{sec_discussion}
++\input{sec_discussion_revision_20260914}
+ 
+ \input{sec_conclusion}
+ 

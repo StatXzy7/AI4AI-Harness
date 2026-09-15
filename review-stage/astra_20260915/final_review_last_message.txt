@@ -1,0 +1,144 @@
+# 独立测量审计结论
+
+**总体状态：NOT READY；约 3/10。**
+
+当前材料还不是完成的测量论文，而是一个包含有价值诊断设计、但关键实现和验证链仍未闭合的错误清单与修复建议集合。软件可复现性较好，科学测量有效性尚未成立。
+
+## 1. 测量正确性：BLOCKED
+
+### 关键阻断 1：MATH 的 D/E 评估没有真正使用开发集
+
+在 [`cli.py:53-66`](E:/projects/AI4AI-Harness/experiment/diagnostics/cli.py:53) 中，先从 `pop` 删除开发任务构造 `pop_eval`，再调用：
+
+```python
+s4_selectability(pop_eval)
+s5_cost(pop_eval, s4)
+```
+
+但 `pop_eval.dev_task_ids` 仍保存被删除的开发任务 ID。因此 `s4_selectability` 内部得到空的 `dev_idx`，策略没有用开发集训练，最终所有任务因 top-2 分数差为零而弃权。
+
+这与报告中“all selection scores tie -> abstain-to-bare”的科学解释不同：这是数据传递错误造成的机械弃权。
+
+**影响：** MATH 的 D/E=INSUFFICIENT 不能作为真实的不可选择性或不可部署性证据。  
+**最小修复：** 用包含开发集和评估集的完整 `Population` 训练/选择，再只在评估任务上计算 D/E；重新生成并审计结果。
+
+### 关键阻断 2：S3 实现不是冻结协议中的 pairwise stability estimand
+
+[`core.py:212-225`](E:/projects/AI4AI-Harness/experiment/diagnostics/core.py:212) 选择一个全局 `best_idx`，然后计算：
+
+```python
+accs[:, best_idx].mean() - np.nanmean(accs, axis=1).max()
+```
+
+这不是成员对之间的条件正确率差，也不是“符号跨重复一致”的 pairwise 检验。
+
+可复现实例：3 次重复、40 个任务，`bare=0`、成员 `a=1`、成员 `b=0`。成员 `a` 相对 `b` 的稳定差异为 +1，但代码得到每次重复的均值 `[0,1,0]`，差值为 `1 - 1 = 0`，从而判定为非支持。
+
+**影响：** 即使未来加入重复数据，C 也可能错误拒绝真实稳定优势，或测量了错误对象。  
+**最小修复：** 对预先指定的成员对计算同条件、同任务的配对差及任务层 bootstrap；不得用当前全局最佳成员替代 pairwise estimand。
+
+### 关键阻断 3：缺失值被排除出分母
+
+[`core.py:119-124`](E:/projects/AI4AI-Harness/experiment/diagnostics/core.py:119) 和 [`core.py:140-141`](E:/projects/AI4AI-Harness/experiment/diagnostics/core.py:140) 使用 `np.nanmean`。冻结协议要求 unknown/missing 保留在分母，不得通过忽略缺失值提高准确率。
+
+例如 3×120 矩阵中只有一个 NaN，S1 的缺失率仍低于 1% 而通过，但 B 的准确率会按有效单元重新计算。
+
+**影响：** 测量定义与实现不一致；低比例缺失可能产生乐观偏差。  
+**最小修复：** 明确逐任务、逐成员分母规则；unknown 继续保留并传播，不能静默由 `nanmean` 删除。
+
+### 关键阻断 4：BIRD 的 A/S1 没有执行冻结完整性检查
+
+[`cli.py:101-106`](E:/projects/AI4AI-Harness/experiment/diagnostics/cli.py:101) 对 BIRD 只检查是否存在 NaN，并直接把 A 设为 `SUPPORTED`。没有调用 manifest 成员/任务匹配、judge replay、重复键、源码哈希冲突等 S1 检查。
+
+**影响：** “BIRD A=SUPPORTED”没有被当前诊断流程验证。  
+**最小修复：** 让 BIRD adapter 提供与 MATH 相同的 manifest、重放计数和身份冲突信息，并统一调用 `s1_integrity`。
+
+## 2. 诊断有效性：BLOCKED
+
+### 关键阻断 5：控制验证遗漏了 A，不能支持“16/16 全通过”
+
+[`cli.py:174-179`](E:/projects/AI4AI-Harness/experiment/diagnostics/cli.py:174) 的控制 verdict 只比较 B、C、D、E，完全不比较 A。C8 的两个完整性控制因此没有在控制运行中验证 S1。
+
+然而 [`FINAL_REPORT.md:9`](E:/projects/AI4AI-Harness/FINAL_REPORT.md:9) 和论文 [`sec_appendix.tex:529-535`](E:/projects/AI4AI-Harness/paper/latex/sec_appendix.tex:529) 声称 16/16 控制匹配，并声称 C8 由 S1 捕获。
+
+**影响：** 完整性诊断的核心正面结论未经这组控制验证。  
+**最小修复：** 控制运行必须纳入 A，向 C8 明确传入 judge replay 和缺失/冲突计数，并重新保存逐控制 A–E 矩阵。
+
+### 关键阻断 6：挑战控制没有进入冻结指标
+
+冻结计划要求 blinded 集为 8 个实例加 2 个 Astra challenge，且挑战进入全部指标。实际每个 `control_validation_blinded.json` 都是：
+
+```json
+"n_controls": 8
+```
+
+挑战只在单独的 `astra_challenges_result.json` 中出现，没有进入 `false_support_rate`、弃权率或定位率。
+
+此外 CH2 的 D 预期与实现不一致：结果明确记录为 `REFUTED_WITHIN_SCOPE`，而原预期为 `SUPPORTED`。这说明挑战暴露了设计退化，但不能同时被报告为完整通过。
+
+**影响：** “冻结条件下的盲测通过”尚未成立；D 的正面挑战验证尤其缺失。  
+**最小修复：** 按冻结 manifest 合并 10 个 blinded 控制，重新计算所有分母和通过条件；对 CH2 保留原始预期、实际结果和失败结论，不能只报告“设计分歧”。
+
+### 关键阻断 7：控制指标分母不符合计划
+
+计划定义的错误支持率和弃权上限以冻结控制状态为单位。代码 [`cli.py:182-191`](E:/projects/AI4AI-Harness/experiment/diagnostics/cli.py:182) 却按 B–E 的状态格子计算，并且没有真正计算或检查 `3/N_clear` 上限。
+
+**影响：** 当前“假支持率 0、弃权率在冻结上限内”不能由代码证明。  
+**最小修复：** 从冻结预期状态清单派生计划规定的分母，显式输出阈值比较结果。
+
+### 是否可能靠“总是弃权”获胜？
+
+正控制 C4 在 D/E 上通过，说明设计意图上排除了完全弃权策略。但实际验证遗漏 A、遗漏挑战，而且 MATH D/E 的弃权由开发集传递错误机械产生。因此不能据此断言当前管线已排除“总是弃权”或已证明真实任务上的选择能力。
+
+## 3. 研究贡献完整性：INSUFFICIENT
+
+当前贡献仍主要是：
+
+- 重新定义并拆分单次 oracle coverage、稳定性、执行前选择性和效用；
+- 发现历史指标口径错误；
+- 提供离线诊断代码和合成控制。
+
+这些是有用的测量框架，但尚未证明它是可迁移、可独立复用的测量方法：
+
+1. M0–M3 是内部构造的比较基线，不是与成熟 algorithm-selection、portfolio 或 evaluator-audit 方法的竞争性比较。
+2. 真实档案没有 matched repeats、可靠执行前特征或成本字段，因此 C/D/E 没有实证验证。
+3. insight theory 已被明确记录为未进入定量证据链；它目前只能算讨论材料。
+4. `DECISION_IMPACT.csv` 的历史影响大多是回顾性重建，没有独立的历史决策记录。
+5. 没有第二个独立团队使用该管线完成同样审计的结果。
+
+因此贡献超出“修复本仓库错误”的可验证证据仍不足。
+
+## 4. 论文表达完整性：BLOCKED
+
+论文总体上正确避免把单次 coverage 写成稳定或部署收益，也明确把 C/D/E 的缺失写成 `INSUFFICIENT_EVIDENCE`。但以下表述目前超过证据：
+
+- [`sec_appendix.tex:529-535`](E:/projects/AI4AI-Harness/paper/latex/sec_appendix.tex:529) 的“16 controls matched”忽略了 A 未被控制运行比较。
+- [`FINAL_REPORT.md:8-10`](E:/projects/AI4AI-Harness/FINAL_REPORT.md:8) 把诊断流程、控制验证和全量决策影响都标为“达成”，与上述代码事实不符。
+- 论文把 MATH D/E 的弃权解释为数据没有可识别信号，但当前实现首先没有正确训练策略。
+- CH2 的 challenge divergence 被记录了，但没有降低整体“validation supported”的结论强度。
+
+MATH 的数字修正、union 指标改名、端点重评分零翻转等局部工作有证据支持；这些不能替代 D/E 和 S1/S3 验证。
+
+## 5. 未执行检查
+
+本环境中 `python` 没有产生可用测试输出，`py` 启动器也不存在，因此我没有把测试通过当作证据。以下检查未执行：
+
+- `python -m unittest experiment.diagnostics.test_diagnostics -v`
+- 论文重新编译及 PDF 页数、引用、错误和渲染检查
+- 修复后的完整 controls/challenge 重跑
+
+## 最终判断
+
+**这还不是一篇形成完整贡献的测量论文。当前仍是一个有价值但未闭合的错误清单与未验证建议集合。**
+
+至少还缺少以下可核验证据：
+
+1. 修正 MATH D/E 数据流后的独立评估结果；
+2. 真正 pairwise 的 S3 重复实验；
+3. 纳入 A 和两项挑战的完整控制矩阵及正确分母；
+4. BIRD 的真实 S1 manifest/replay/identity 验证；
+5. 缺失值按冻结分母传播后的重算；
+6. 一个独立于本仓库修复的外部基线或独立团队复现，证明该管线可被其他评价团队使用。
+
+在这些证据出现前，最稳妥的结论是：**单次覆盖测量和若干历史数字修正已部分建立；稳定互补性、执行前选择性、实际效用以及完整诊断方法的有效性仍未被验证。**
+

@@ -1,0 +1,16 @@
+{
+  "ledger_json": "PASS",
+  "claim_count": 9,
+  "claim_ids_unique": true,
+  "abstract_words": 180,
+  "pdf_pages": 19,
+  "main_text_pages": 9,
+  "undefined_refs": false,
+  "overfull_boxes": false,
+  "key_values_present": true,
+  "provider_paragraph_once": true,
+  "pytest": "141 passed, 45 subtests passed",
+  "canonical_verifier": "STALE (bound to original dirty main.tex snapshot)",
+  "pdf_sha256": "a654ddcea7aa3a3cdc2c38e539dabfa7e851a4ad738e7c435ae6d9899036f7df",
+  "source_sha256": "b382c032ece5bc39ae9c805c2de17fadc2650d9432729e5fdb9ee5f4b57aa164"
+}

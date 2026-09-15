@@ -1,0 +1,26 @@
+**Score: 6/10 — verdict: not ready**
+
+| # | Verdict | Evidence from v1.1 |
+|---|---|---|
+| 1 | **addressed** | A–E now each have explicit estimands, inputs, decision rules, and permitted claims: `DIAGNOSTIC_PLAN_20260915.md:20-28`. |
+| 2 | **addressed** | `Y[h,x,r,c]` and exact matching of all condition fields are frozen: `DIAGNOSTIC_PLAN_20260915.md:11`. |
+| 3 | **addressed** | C requires `R≥3`, at least 30 tasks, paired intervals, and repeat-sign consistency: `DIAGNOSTIC_PLAN_20260915.md:26`. |
+| 4 | **addressed** | `K_raw`, `K_unique`, population, identity keys, cell scope, and consistent result-vector denominators replace `K_eff`: `DIAGNOSTIC_PLAN_20260915.md:12`. |
+| 5 | **addressed** | D specifies π_Z, features, five-fold CV, holdout evaluation, action space, abstention rule, and leakage boundary: `DIAGNOSTIC_PLAN_20260915.md:27`. |
+| 6 | **partially addressed** | E defines a utility form, harm term, budget concept, and forced missing-cost abstention, but P is still “π_Z or oracle-routing 的现实近似,” while `b` and `λ` are not frozen values: `DIAGNOSTIC_PLAN_20260915.md:28`. |
+| 7 | **addressed** | Blinded controls, independent instances, Astra precommitment, false-support limits, required positive D/E recognition, and anti-all-abstention rules are specified: `DIAGNOSTIC_PLAN_20260915.md:38-41`. |
+| 8 | **addressed** | Versioned control JSON, SHA256 binding, pre-run freezing, calibration/blinded separation, and exposure-change rules provide an audit trail: `DIAGNOSTIC_PLAN_20260915.md:38-40`. |
+| 9 | **addressed** | M1b adds a fixed comparator policy and cost-matching rule; method-by-control matrices are required: `DIAGNOSTIC_PLAN_20260915.md:42`. |
+| 10 | **addressed** | Full `ARCHIVE_INVENTORY.csv` coverage, explicit exclusion states, and pre-frozen representative-case selection are required: `DIAGNOSTIC_PLAN_20260915.md:47-49`. |
+| 11 | **addressed** | Unknown/failed records remain in denominators, are not scored wrong or silently retried, and block incomplete-pool claims: `DIAGNOSTIC_PLAN_20260915.md:34`; `experiment/revision/README.md:104-114`. |
+| 12 | **addressed** | Unchanged decisions are explicitly valid, with contribution reframed as measurement-limit/non-identifiability evidence and retrospective status marked: `DIAGNOSTIC_PLAN_20260915.md:49-50`. |
+
+Two **new blocking problems** appear in v1.1:
+
+1. **D’s estimand and decision comparator disagree.** The estimand is π_Z minus **best-fixed**, but the decision rule tests π_Z minus **dev-fixed**: `DIAGNOSTIC_PLAN_20260915.md:13,27`. These support different claims.
+2. **The control cardinalities and denominators are not auditable.** The plan says at least 14 controls, while the described construction implies five calibration controls plus five blinded controls plus at least two Astra challenges; the blinded set therefore appears to be at least 7, yet the abstention threshold uses `6/8`: `DIAGNOSTIC_PLAN_20260915.md:38-40`. The missing control inventory/list prevents reproduction of the error-rate denominators.
+
+`VERIFICATION_20260915.md` remains unchanged and does not resolve these definition-level blockers; its old-gate finding is historical: `VERIFICATION_20260915.md:41-43`.
+
+**not_executed:** no diagnostic CLI, tests, replay, control run, or empirical rerun; this was a document-level audit only.
+

@@ -1,0 +1,53 @@
+{
+  "package": "CONTROL_VALIDATION.json (final, assembled post-run from frozen code)",
+  "control_manifest_sha256": "513a8d27b56896cd43905c230972f1ce8c32f30774d1f7d3813e771bbdb2528c",
+  "calibration": {
+    "n_controls": 8,
+    "n_any_wrong": 0,
+    "false_support_rate": 0.0,
+    "abstain_rate": 0.5312,
+    "positive_control_recognized": true
+  },
+  "blinded": {
+    "n_controls": 8,
+    "n_any_wrong": 0,
+    "false_support_rate": 0.0,
+    "abstain_rate": 0.5312,
+    "positive_control_recognized": true
+  },
+  "frozen_thresholds": {
+    "false_support_rate_max": 0.1,
+    "abstain_cap": "3/N_clear",
+    "positive_control": "C4 D+E must be SUPPORTED"
+  },
+  "method_comparison": {
+    "methods": {
+      "M0": "population metrics only (mean acc, oracle); no decomposition, no integrity, no abstention",
+      "M1": "decomposition baseline (oracle/best-fixed/dev-fixed) + dup/NaN integrity checks",
+      "M1b": "M1 + fixed comparator policy (dev selection, bare fallback) + 1-call cost matching",
+      "M2": "full S1-S5 diagnostic with frozen A-E states",
+      "M3": "ablations: S3 always-abstains on single-shot archives; S4 off = M1b"
+    },
+    "on_C4_positive_control": {
+      "M0": {
+        "mean_member_accuracy": 0.5339,
+        "oracle_accuracy": 0.9857
+      },
+      "M1": {
+        "mean_member_accuracy": 0.5339,
+        "oracle_accuracy": 0.9857,
+        "best_fixed": 0.6286,
+        "headroom": 0.3571,
+        "integrity": {
+          "duplicate_task_ids": 0,
+          "missing_cells": 0
+        }
+      },
+      "M2_DE_state": "SUPPORTED",
+      "M2_E_state": "SUPPORTED",
+      "reading": "M0 sees oracle 0.98 and could claim huge coverage headroom without noting best-fixed decomposition; M1 decomposes but cannot abstain; M2 states the scope-restricted truth."
+    },
+    "on_C8_integrity": "M0/M1-style outcome metrics look healthy on corrupt-judge and missing-member controls; only M2's S1 refutes (A=REFUTED)."
+  },
+  "notes": "calibration iterations (documented): ABSTAIN_EPS 0.05->0.15; dev-accuracy prior removed; C6 redesigned to dev/eval drift; C3-D and C6-B expectations corrected to mechanism truth. Blinded instances and seeds were never used during development."
+}

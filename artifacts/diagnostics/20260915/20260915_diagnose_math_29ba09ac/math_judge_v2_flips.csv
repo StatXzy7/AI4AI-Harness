@@ -1,0 +1,861 @@
+harness_id,task_id,v1,v2,final_answer
+gsm_deepseek_s0_g0,math500_split#218,1,0,"(-1,6)"
+gsm_deepseek_s0_g0,math500_split#312,1,0,"$(5,\infty)$"
+gsm_deepseek_s0_g0,math500_split#314,1,0,"(2,4)"
+gsm_deepseek_s0_g0,math500_split#356,1,0,"$(-\sqrt{3},\sqrt{3})$"
+gsm_deepseek_s0_g1,math500_split#218,1,0,"(-1,6)"
+gsm_deepseek_s0_g1,math500_split#314,1,0,"(2,4)"
+gsm_deepseek_s0_g2,math500_split#218,1,0,"(-1,6)"
+gsm_deepseek_s0_g2,math500_split#356,1,0,"$(-\sqrt{3}, \sqrt{3})$"
+gsm_deepseek_s0_g3,math500_split#218,1,0,"(-1,6)"
+gsm_deepseek_s0_g3,math500_split#314,1,0,"(2,4)"
+gsm_deepseek_s0_g4,math500_split#218,1,0,"(-1,6)"
+gsm_deepseek_s0_g4,math500_split#314,1,0,"(2,4)"
+gsm_deepseek_s0_g5,math500_split#218,1,0,"(-1,6)"
+gsm_deepseek_s0_g5,math500_split#314,1,0,"(2,4)"
+gsm_ernie_s0_g0,math500_split#184,1,0,"$$\boxed{(2, \infty)}$$"
+gsm_ernie_s0_g0,math500_split#206,1,0,"$\left(\frac{3}{2}, -13\right)$"
+gsm_ernie_s0_g0,math500_split#312,1,0,"$(5, \infty)$"
+gsm_ernie_s0_g1,math500_split#184,1,0,"$(2,\infty)$"
+gsm_ernie_s0_g1,math500_split#356,1,0,"$(-\sqrt{3}, \sqrt{3})$"
+gsm_ernie_s0_g2,math500_split#184,1,0,"$(2,\infty)$"
+gsm_ernie_s0_g2,math500_split#206,1,0,"$\left(\frac{3}{2}, -13\right)$"
+gsm_ernie_s0_g2,math500_split#356,1,0,"$(-\sqrt{3}, \sqrt{3})$"
+gsm_ernie_s0_g2,math500_split#364,1,0,"$(1, -16, -4, 43)$"
+gsm_ernie_s0_g3,math500_split#184,1,0,"$(2,\infty)$"
+gsm_ernie_s0_g3,math500_split#206,1,0,"$\left(\frac{3}{2}, -13\right)$"
+gsm_ernie_s0_g3,math500_split#312,1,0,"$(5, \infty)$"
+gsm_ernie_s0_g3,math500_split#356,1,0,"$(-\sqrt{3}, \sqrt{3})$"
+gsm_ernie_s0_g4,math500_split#133,1,0,"## Setting Up the Problem
+
+**Key fact:** The angles of any quadrilateral sum to $360°$.
+
+Let me denote the four angles. Two of them are right angles:
+$$90° + 90° = 180°$$
+
+## Finding the Remaining Angles
+
+The other two angles must therefore sum to:
+$$360° - 180° = 180°$$
+
+Let the **smallest angle** be $x$. Since the **largest angle** is twice the smallest, it equals $2x$.
+
+These two angles must add up to $180°$:
+$$x + 2x = 180°$$
+$$3x = 180°$$
+$$x = 60°$$
+
+## Solution
+
+- Smallest angle: $60°$  
+- Largest angle: $2x = 2(60°) = \boxed{120°}$
+
+**Check:** The angles are $60°, 90°, 90°, 120°$, which sum to $360°$ ✓, and the largest ($120°$) is indeed twice the smallest ($60°$) ✓."
+gsm_ernie_s0_g4,math500_split#144,1,0,"# Finding the Point at $t = 2$
+
+## Setting Up
+
+The curve is parameterized by:
+$$x = t^3 + 7$$
+$$y = -3t^2 - 6t - 5$$
+
+I need to substitute $t = 2$ into both equations.
+
+## Computing the $x$-coordinate
+
+$$x = (2)^3 + 7 = 8 + 7 = 15$$
+
+## Computing the $y$-coordinate
+
+$$y = -3(2)^2 - 6(2) - 5$$
+$$y = -3(4) - 12 - 5$$
+$$y = -12 - 12 - 5 = -29$$
+
+## Conclusion
+
+The curve passes through the point:
+$$(x, y) = \boxed{(15, -29)}$$"
+gsm_ernie_s0_g4,math500_split#181,1,0,"# Simplifying $\sqrt{\sqrt[3]{\sqrt{\frac{1}{729}}}}$
+
+## Step 1: Simplify the innermost square root
+
+Since $729 = 27^2 = 3^6$, we get:
+$$\sqrt{\frac{1}{729}} = \frac{1}{27}$$
+
+## Step 2: Take the cube root
+
+Now compute the cube root of the result:
+$$\sqrt[3]{\frac{1}{27}} = \frac{1}{3}$$
+
+## Step 3: Take the outer square root
+
+$$\sqrt{\frac{1}{3}} = \frac{1}{\sqrt{3}}$$
+
+## Step 4: Rationalize the denominator
+
+Multiply the numerator and denominator by $\sqrt{3}$:
+$$\frac{1}{\sqrt{3}} \cdot \frac{\sqrt{3}}{\sqrt{3}} = \frac{\sqrt{3}}{3}$$
+
+## Verification
+
+Working with exponents: $\dfrac{1}{729} = 3^{-6}$, so the expression equals
+$$\left(\left(\left(3^{-6}\right)^{1/2}\right)^{1/3}\right)^{1/2} = 3^{-6 \cdot \frac{1}{2}\cdot\frac{1}{3}\cdot\frac{1}{2}} = 3^{-1/2} = \frac{1}{\sqrt{3}} = \frac{\sqrt{3}}{3} ✓$$
+
+Check: $\left(\dfrac{\sqrt{3}}{3}\right)^2 = \dfrac{3}{9} = \dfrac{1}{3}$ ✓
+
+## Answer
+
+$$\boxed{\dfrac{\sqrt{3}}{3}}$$"
+gsm_ernie_s0_g4,math500_split#206,1,0,"## Setting Up the Equations
+
+From the parameterization:
+- $x = 8 + 2t$
+- $y = -1 + 3t$
+
+## Solving for $t$ in Terms of $x$
+
+From the first equation:
+$$t = \frac{x - 8}{2}$$
+
+## Substituting into the Equation for $y$
+
+$$y = -1 + 3\left(\frac{x - 8}{2}\right)$$
+
+$$y = -1 + \frac{3x - 24}{2}$$
+
+$$y = \frac{-2 + 3x - 24}{2}$$
+
+$$y = \frac{3}{2}x - 13$$
+
+## Answer
+
+Comparing with $y = mx + b$, we get $m = \frac{3}{2}$ and $b = -13$:
+
+$$(m, b) = \boxed{\left(\frac{3}{2}, -13\right)}$$
+
+**Check:** At $t = 0$, the point is $(8, -1)$, and $\frac{3}{2}(8) - 13 = 12 - 13 = -1$ ✓"
+gsm_ernie_s0_g4,math500_split#218,1,0,"# Finding the Midpoint
+
+## The Midpoint Formula
+
+The midpoint of a line segment with endpoints $(x_1, y_1)$ and $(x_2, y_2)$ is found by averaging the coordinates:
+
+$$M = \left(\frac{x_1 + x_2}{2}, \frac{y_1 + y_2}{2}\right)$$
+
+## Applying the Formula
+
+**Given endpoints:** $(-5, 5)$ and $(3, 7)$
+
+**Step 1: Find the x-coordinate of the midpoint**
+
+$$x = \frac{-5 + 3}{2} = \frac{-2}{2} = -1$$
+
+**Step 2: Find the y-coordinate of the midpoint**
+
+$$y = \frac{5 + 7}{2} = \frac{12}{2} = 6$$
+
+## Answer
+
+$$M = \boxed{(-1, 6)}$$
+
+**Check:** The point $(-1, 6)$ is equidistant from both endpoints — it sits exactly halfway between $(-5, 5)$ and $(3, 7)$. ✓"
+gsm_ernie_s0_g4,math500_split#227,1,0,"# Solving: Shape Described by $z = c$ in Cylindrical Coordinates
+
+## Understanding Cylindrical Coordinates
+
+In cylindrical coordinates, a point is described by $(r, \theta, z)$ where:
+- $r$ = distance from the $z$-axis (radius)
+- $\theta$ = angle around the $z$-axis  
+- $z$ = height (identical to the $z$-coordinate in Cartesian coordinates)
+
+## Analyzing the Equation
+
+The equation $z = c$ states that the **height is fixed** at the value $c$.
+
+- The variable $r$ is **unconstrained**: the point can be any distance from the $z$-axis.
+- The variable $\theta$ is **unconstrained**: the point can be at any angle.
+- Only $z$ is held constant.
+
+## Identifying the Shape
+
+Since $z$ in cylindrical coordinates equals $z$ in Cartesian coordinates, the equation $z = c$ becomes:
+$$z = c \quad \text{with } x, y \text{ free}$$
+
+This describes all points at the same height $c$ — a **flat horizontal surface** parallel to the $xy$-plane.
+
+**Verification:** The distance between any two points in this surface can vary, and extending the surface in any horizontal direction goes on forever — this is characteristic of a plane (not a circle, which would require fixed $r$; not a cylinder, which would require fixed $r$ with $z$ free).
+
+## Answer
+
+The shape is a **plane**.
+
+$$\boxed{\text{(C)}}$$"
+gsm_ernie_s0_g4,math500_split#308,1,0,"line properties in each face:
+- $PQ \parallel AB$ with $PQ = \tfrac{1}{2}AB = 1$; similarly $SR = 1$.
+- $PS \parallel CD$ with $PS = \tfrac12 CD = 1$; similarly $QR = 1$.
+
+So $PQRS$ is a rhombus with side 1. Its diagonals $PR$ and $QS$ join midpoints of **opposite** edges; in a regular tetrahedron these segments are equal and perpendicular (each is a symmetry axis). A rhombus with equal diagonals is a **square**, so $PQRS$ is a unit square with area $1$.
+
+*(Check with coordinates: $A=(1,1,1), B=(1,-1,-1), C=(-1,1,-1), D=(-1,-1,1)$ — side $2\sqrt2$ — gives $P=(0,1,0), Q=(0,0,-1), R=(0,-1,0), S=(0,0,1)$: a square.)*
+
+## Parts of Each Piece
+
+By symmetry (a $180^\circ$ rotation about the axis through the midpoints of $AB$ and $CD$ swaps the two pieces), each piece contains **two trapezoids and two triangles** cut from the original faces, plus the square.
+
+**Piece containing $AB$:**
+- Trapezoid $ABPQ$ on face $ABC$ (near edge $AB$)
+- Trapezoid $ABSR$ on face $ABD$ (near edge $AB$)  
+- Triangle $APR$ on face $ACD$ (near vertex $A$)
+- Triangle $BQS$ on face $BCD$ (near vertex $B$)
+- The square $PQRS$
+
+## Computing the Areas
+
+Each face of the tetrahedron is equilateral with side 2, area $\sqrt{3}$.
+
+**Trapezoid:** Cutting off the corner triangle (side 1, area $\tfrac{\sqrt3}{4}$):
+$$[\text{trapezoid } ABPQ] = \sqrt{3} - \frac{\sqrt{3}}{4} = \frac{3\sqrt{3}}{4}$$
+
+**Triangle:** $APR$ has $AP = AR = PR = 1$ — equilateral with side 1:
+$$[\triangle APR] = \frac{\sqrt{3}}{4}$$
+
+*(Verification: $PR$ is a side of the square, which has length 1. ✓)*
+
+## Total Surface Area
+
+$$\underbrace{1}_{\text{square}} + 2\cdot\underbrace{\frac{3\sqrt{3}}{4}}_{\text{trapezoids}} + 2\cdot\underbrace{\frac{\sqrt{3}}{4}}_{\text{triangles}} = 1 + \frac{3\sqrt{3}}{2} + \frac{\sqrt{3}}{2} = \boxed{1 + 2\sqrt{3}}$$
+
+**Sanity check:** The two pieces together contribute $2 + 4\sqrt{3} = 2(1+2\sqrt{3})$, which equals the original surface area $4\sqrt{3}$ plus the two copies of the cut face ($2\cdot 1$). ✓"
+gsm_ernie_s0_g4,math500_split#312,1,0,"# Solving $\frac{1}{x - 5} > 0$
+
+## Setting Up the Analysis
+
+A fraction is **positive** when the numerator and denominator have the **same sign**.
+
+The numerator here is $1$, which is always **positive**.
+
+## Requiring the Denominator to Be Positive
+
+Since the numerator is positive, the fraction is positive exactly when the denominator is positive:
+
+$$x - 5 > 0$$
+
+Solving for $x$:
+
+$$x > 5$$
+
+Note that $x = 5$ is **excluded** because the expression would be undefined there.
+
+## Checking the Solution
+
+- If $x = 6$: $\dfrac{1}{6-5} = 1 > 0$ ✓
+- If $x = 4$: $\dfrac{1}{4-5} = -1 < 0$ ✗
+
+## Answer
+
+$$(5, \infty)$$"
+gsm_ernie_s0_g4,math500_split#314,1,0,"# Step 1: Reflect (0, 0) over the vertical line x = 1
+
+When reflecting a point over a vertical line $x = a$, the x-coordinate changes while the y-coordinate stays the same. The formula is:
+$$(x, y) \rightarrow (2a - x, y)$$
+
+Applying this with $a = 1$:
+$$x' = 2(1) - 0 = 2, \quad y' = 0$$
+
+So the image of $(0,0)$ is $(2, 0)$.
+
+**Check:** The point $(0,0)$ is 1 unit to the left of the line $x = 1$, so its reflection should be 1 unit to the right, at $x = 2$. ✓
+
+# Step 2: Reflect (2, 0) over the horizontal line y = 2
+
+When reflecting a point over a horizontal line $y = b$, the x-coordinate stays the same while the y-coordinate changes. The formula is:
+$$(x, y) \rightarrow (x, 2b - y)$$
+
+Applying this with $b = 2$:
+$$x' = 2, \quad y' = 2(2) - 0 = 4$$
+
+So the image of $(2, 0)$ is $(2, 4)$.
+
+**Check:** The point $(2,0)$ is 2 units below the line $y = 2$, so its reflection should be 2 units above, at $y = 4$. ✓
+
+# Answer
+
+$$\boxed{(2, 4)}$$"
+gsm_ernie_s0_g4,math500_split#356,1,0,"# Solving $-4 < x^4 + 4x^2 < 21$
+
+## Setting Up
+
+This is a compound inequality, so I need both conditions to hold:
+- **Left inequality:** $x^4 + 4x^2 > -4$
+- **Right inequality:** $x^4 + 4x^2 < 21$
+
+## The Left Inequality
+
+Notice that $x^4 + 4x^2 = x^2(x^2 + 4)$. Since $x^2 \geq 0$ and $x^2 + 4 > 0$ for all real $x$, the expression is always **nonnegative**:
+$$x^4 + 4x^2 \geq 0 > -4$$
+
+So the left inequality is satisfied automatically for all real $x$. ✓
+
+## The Right Inequality
+
+I need to solve $x^4 + 4x^2 < 21$. Let $u = x^2$, where $u \geq 0$:
+$$u^2 + 4u - 21 < 0$$
+
+Factoring:
+$$u^2 + 4u - 21 = (u+7)(u-3)$$
+
+So:
+$$(u+7)(u-3) < 0$$
+
+This parabola opens upward, so the inequality holds between the roots:
+$$-7 < u < 3$$
+
+## Converting Back to $x$
+
+Since $u = x^2 \geq 0$, the condition $u > -7$ is automatic, leaving:
+$$x^2 < 3$$
+
+This gives:
+$$-\sqrt{3} < x < \sqrt{3}$$
+
+## Verification
+
+- At $x = \sqrt{3}$: $x^4 + 4x^2 = 9 + 12 = 21$ ✗ (fails strict inequality, so endpoints excluded)
+- At $x = 0$: $0 > -4$ and $0 < 21$ ✓
+
+## Answer
+
+$$\boxed{(-\sqrt{3}, \sqrt{3})}$$"
+gsm_ernie_s0_g4,math500_split#364,1,0,"## Setting Up the Reflection
+
+When a point $(x, y)$ is reflected through the point $(4, 1)$, the image point $(x', y')$ satisfies:
+$$(x', y') = (2 \cdot 4 - x, \; 2 \cdot 1 - y) = (8 - x, \; 2 - y)$$
+
+## Finding the Image Equation
+
+Solving for the original point in terms of the image point:
+$$x = 8 - x', \qquad y = 2 - y'$$
+
+Since the original point lies on the circle $x^2 + y^2 = 25$, I substitute:
+$$(8 - x')^2 + (2 - y')^2 = 25$$
+
+Expanding:
+$$x'^2 - 16x' + 64 + y'^2 - 4y' + 4 = 25$$
+
+$$x'^2 + y'^2 - 16x' - 4y' + 43 = 0$$
+
+## Verification
+
+The image circle has center $(8, 2)$ (the reflection of the origin through $(4,1)$) and radius $5$ (reflection preserves distances). Checking:
+$$(x - 8)^2 + (y - 2)^2 = 25 \implies x^2 + y^2 - 16x - 4y + 64 + 4 - 25 = 0 \checkmark$$
+
+## Answer
+
+Comparing with $x^2 + ay^2 + bx + cy + d = 0$:
+
+$$(a, b, c, d) = \boxed{(1, -16, -4, 43)}$$"
+gsm_ernie_s0_g4,math500_split#373,1,0,"## Setting Up the Problem
+
+I need to compute $\dfrac{-3+4i}{1+2i}$ correctly.
+
+## Step 1: Multiply by the Conjugate
+
+To simplify, I multiply the numerator and denominator by the conjugate of the denominator, $1-2i$:
+
+$$\frac{-3+4i}{1+2i} \cdot \frac{1-2i}{1-2i}$$
+
+## Step 2: Simplify the Denominator
+
+$$(1+2i)(1-2i) = 1 - (2i)^2 = 1 - (-4) = 5$$
+
+## Step 3: Expand the Numerator
+
+$$(-3+4i)(1-2i) = -3 + 6i + 4i - 8i^2$$
+
+Since $i^2 = -1$, the term $-8i^2 = +8$:
+
+$$= -3 + 6i + 4i + 8 = 5 + 10i$$
+
+## Step 4: Combine
+
+$$\frac{-3+4i}{1+2i} = \frac{5+10i}{5} = 1 + 2i$$
+
+## Verification
+
+Check: $(1+2i)(1+2i) = 1 + 4i + 4i^2 = 1 + 4i - 4 = -3 + 4i$ ✓
+
+William should have obtained $\boxed{1+2i}$."
+gsm_ernie_s0_g4,math500_split#376,1,0,"Let \(P\) lie on the line \(y=-x+6\), so write
+
+\[
+P=(x,-x+6).
+\]
+
+We need \(PA=PO\), so set the squared distances equal.
+
+\[
+PO^2=x^2+(-x+6)^2
+\]
+
+\[
+PA^2=(x-10)^2+(-x+6+10)^2=(x-10)^2+(-x+16)^2
+\]
+
+Now set them equal:
+
+\[
+x^2+(-x+6)^2=(x-10)^2+(-x+16)^2
+\]
+
+Expand:
+
+\[
+x^2+x^2-12x+36=x^2-20x+100+x^2-32x+256
+\]
+
+\[
+2x^2-12x+36=2x^2-52x+356
+\]
+
+Subtract \(2x^2\) from both sides:
+
+\[
+-12x+36=-52x+356
+\]
+
+\[
+40x=320
+\]
+
+\[
+x=8
+\]
+
+Then
+
+\[
+y=-8+6=-2
+\]
+
+So the point is
+
+\[
+\boxed{(8,-2)}
+\]"
+gsm_ernie_s0_g5,math500_split#356,1,0,"$(-\sqrt{3}, \sqrt{3})$"
+gsm_ernie_s0_g6,math500_split#184,1,0,"$$\boxed{(2, \infty)}$$"
+gsm_ernie_s0_g6,math500_split#356,1,0,"$(-\sqrt{3}, \sqrt{3})$"
+gsm_ernie_s0_g7,math500_split#206,1,0,"$\left(\frac{3}{2}, -13\right)$"
+gsm_ernie_s0_g7,math500_split#218,1,0,"(-1,6)"
+gsm_ernie_s0_g7,math500_split#356,1,0,"$(-\sqrt{3}, \sqrt{3})$"
+gsm_glm_s0_g6,math500_split#218,1,0,"(-1,6)"
+gsm_glm_s0_g6,math500_split#314,1,0,"(2,4)"
+gsm_kimi_s0_g0,math500_split#314,1,0,"(2,4)"
+gsm_kimi_s0_g0,math500_split#356,1,0,"$(-\sqrt{3}, \sqrt{3})$"
+gsm_kimi_s0_g1,math500_split#206,1,0,"$\left(\frac{3}{2}, -13\right)$"
+gsm_kimi_s0_g1,math500_split#314,1,0,"$(2, 4)$"
+gsm_kimi_s0_g1,math500_split#356,1,0,"$(-\sqrt{3}, \sqrt{3})$"
+gsm_kimi_s0_g1,math500_split#364,1,0,"$(1, -16, -4, 43)$"
+gsm_kimi_s0_g2,math500_split#184,1,0,"$(2,\infty)$"
+gsm_kimi_s0_g2,math500_split#206,1,0,"$\left(\frac{3}{2}, -13\right)$"
+gsm_kimi_s0_g2,math500_split#218,1,0,"$(-1,6)$"
+gsm_kimi_s0_g2,math500_split#312,1,0,"$(5, \infty)$"
+gsm_kimi_s0_g2,math500_split#314,1,0,"$(2, 4)$"
+gsm_kimi_s0_g2,math500_split#356,1,0,"$(-\sqrt{3}, \sqrt{3})$"
+gsm_kimi_s0_g2,math500_split#364,1,0,"$(1, -16, -4, 43)$"
+gsm_kimi_s0_g2,math500_split#376,1,0,"$(8,-2)$"
+gsm_kimi_s0_g3,math500_split#206,1,0,"$\left(\frac{3}{2}, -13\right)$"
+gsm_kimi_s0_g3,math500_split#356,1,0,"$(-\sqrt{3}, \sqrt{3})$"
+gsm_kimi_s0_g4,math500_split#184,1,0,"$(2, \infty)$"
+gsm_kimi_s0_g4,math500_split#206,1,0,"$\left(\frac{3}{2}, -13\right)$"
+gsm_kimi_s0_g4,math500_split#218,1,0,"$(-1, 6)$"
+gsm_kimi_s0_g4,math500_split#312,1,0,"$(5, \infty)$"
+gsm_kimi_s0_g4,math500_split#314,1,0,"$(2, 4)$"
+gsm_kimi_s0_g4,math500_split#356,1,0,"$(-\sqrt{3}, \sqrt{3})$"
+gsm_kimi_s0_g4,math500_split#364,1,0,"$(1, -16, -4, 43)$"
+gsm_kimi_s0_g4,math500_split#376,1,0,"$(8, -2)$"
+gsm_kimi_s0_g6,math500_split#184,1,0,"$(2,\infty)$"
+gsm_kimi_s0_g6,math500_split#218,1,0,"(-1,6)"
+gsm_kimi_s0_g6,math500_split#314,1,0,"(2,4)"
+gsm_kimi_s0_g6,math500_split#356,1,0,"$(-\sqrt{3},\sqrt{3})$"
+gsm_kimi_s0_g6,math500_split#364,1,0,"$(1,-16,-4,43)$"
+gsm_minimax_s0_g3,math500_split#218,1,0,"(-1,6)"
+gsm_minimax_s0_g3,math500_split#314,1,0,"(2,4)"
+gsm_minimax_s0_g4,math500_split#314,1,0,"(2,4)"
+gsm_minimax_s0_g5,math500_split#218,1,0,"(-1,6)"
+gsm_minimax_s0_g5,math500_split#356,1,0,"$(-\sqrt{3}, \sqrt{3})$"
+gsm_minimax_s0_g6,math500_split#218,1,0,"(-1,6)"
+gsm_minimax_s0_g6,math500_split#314,1,0,"(2,4)"
+gsm_qwen_s0_g0,math500_split#218,1,0,"(-1,6)"
+gsm_qwen_s0_g0,math500_split#314,1,0,"(2,4)"
+gsm_qwen_s0_g1,math500_split#218,1,0,"(-1,6)"
+gsm_qwen_s0_g1,math500_split#314,1,0,"(2,4)"
+gsm_qwen_s0_g5,math500_split#218,1,0,"(-1,6)"
+gsm_qwen_s0_g5,math500_split#314,1,0,"(2,4)"
+bare,math500_split#144,1,0,"To find the point on the curve at $t = 2$, I substitute $t = 2$ into both parametric equations.
+
+**Finding x:**
+$$x = t^3 + 7 = (2)^3 + 7 = 8 + 7 = 15$$
+
+**Finding y:**
+$$y = -3t^2 - 6t - 5 = -3(2)^2 - 6(2) - 5 = -12 - 12 - 5 = -29$$
+
+So the point the curve passes through at $t = 2$ is $(15, -29)$.
+
+#### (15, -29)"
+bare,math500_split#184,1,0,"## Setting Up
+
+Let me substitute to simplify. Define
+$$x = \frac{c}{a}, \qquad z = \frac{b}{c},$$
+both positive. Then
+$$\frac{a}{b+c} = \frac{a}{c(z+1)} = \frac{1}{x(z+1)}.$$
+
+So the expression becomes
+$$E = x + z + \frac{1}{x(z+1)}, \qquad x, z > 0.$$
+
+## Lower Bound
+
+**Step 1: Minimize over $x$ for fixed $z$.** By AM–GM,
+$$x + \frac{1}{x(z+1)} \ge 2\sqrt{\frac{1}{z+1}} = \frac{2}{\sqrt{z+1}},$$
+with equality when $x = \dfrac{1}{\sqrt{z+1}}$ (a valid positive choice). Hence
+$$E \ge z + \frac{2}{\sqrt{z+1}}.$$
+
+**Step 2: Minimize over $z$.** Let $t = \sqrt{z+1} > 1$. Then
+$$z + \frac{2}{\sqrt{z+1}} - 2 = t^2 - 1 + \frac{2}{t} - 2 = \frac{t^3 - 3t + 2}{t} = \frac{(t-1)^2(t+2)}{t} > 0$$
+for all $t > 1$. Therefore
+$$E > 2 \quad \text{for all positive } a, b, c.$$
+
+## Attaining Values Near 2 and All Larger Values
+
+**Approaching 2:** Take $a = c = 1$ and $b \to 0^+$. Then
+$$E \to 1 + 1 + 0 = 2,$$
+so values of $E$ can be made arbitrarily close to $2$ (but $2$ itself is never attained, since $b > 0$).
+
+**Reaching all values in $(2, \infty)$:** For $x = \dfrac{1}{\sqrt{z+1}}$, the value
+$$g(z) = z + \frac{2}{\sqrt{z+1}}$$
+is continuous with $\lim_{z \to 0^+} g(z) = 2$ and $g(z) \to \infty$ as $z \to \infty$. By the Intermediate Value Theorem, every value greater than $2$ is attained. (The expression is also clearly unbounded above, e.g. letting $a \to 0^+$ with $b = c$.)
+
+## Conclusion
+
+Since $E > 2$ always, $2$ is not attained but is the infimum, and every value above $2$ occurs, the set of possible values is
+$$\boxed{(2, \infty)}.$$
+
+#### $(2, \infty)$"
+bare,math500_split#206,1,0,"## Setting Up
+
+From the parameterization:
+- $x = 8 + 2t$
+- $y = -1 + 3t$
+
+## Eliminating the Parameter
+
+Solve the first equation for $t$:
+$$t = \frac{x - 8}{2}$$
+
+Substitute into the equation for $y$:
+$$y = -1 + 3 \cdot \frac{x - 8}{2} = -1 + \frac{3x - 24}{2} = -1 + \frac{3}{2}x - 12$$
+
+$$y = \frac{3}{2}x - 13$$
+
+## Verification
+
+Check the point at $t = 0$: the parameterization gives $(8, -1)$, and the line equation gives $y = \frac{3}{2}(8) - 13 = 12 - 13 = -1$. ✓
+
+Check the point at $t = 1$: the parameterization gives $(10, 2)$, and the line equation gives $y = \frac{3}{2}(10) - 13 = 15 - 13 = 2$. ✓
+
+So $m = \frac{3}{2}$ and $b = -13$.
+
+#### $\left( \frac{3}{2}, -13 \right)$"
+bare,math500_split#218,1,0,"To find the midpoint of a line segment between two points $(x_1, y_1)$ and $(x_2, y_2)$, I use the midpoint formula:
+
+$$\left(\frac{x_1 + x_2}{2}, \frac{y_1 + y_2}{2}\right)$$
+
+**Step 1:** Identify the coordinates.
+- $(x_1, y_1) = (-5, 5)$
+- $(x_2, y_2) = (3, 7)$
+
+**Step 2:** Compute the average of the x-coordinates.
+$$\frac{-5 + 3}{2} = \frac{-2}{2} = -1$$
+
+**Step 3:** Compute the average of the y-coordinates.
+$$\frac{5 + 7}{2} = \frac{12}{2} = 6$$
+
+**Step 4:** Combine into an ordered pair.
+$$(-1, 6)$$
+
+#### (-1, 6)"
+bare,math500_split#255,1,0,"## Solution
+
+Starting with the polar equation:
+$$r^2 \cos 2\theta = 4$$
+
+**Step 1: Expand using the double angle identity.**
+
+$$\cos 2\theta = \cos^2\theta - \sin^2\theta$$
+
+So the equation becomes:
+$$r^2(\cos^2\theta - \sin^2\theta) = 4$$
+
+**Step 2: Distribute $r^2$.**
+
+$$r^2 \cos^2\theta - r^2 \sin^2\theta = 4$$
+
+**Step 3: Convert to Cartesian coordinates.**
+
+Recall that $x = r\cos\theta$ and $y = r\sin\theta$, which gives:
+- $r^2\cos^2\theta = x^2$
+- $r^2\sin^2\theta = y^2$
+
+Substituting:
+$$x^2 - y^2 = 4$$
+
+**Step 4: Identify the curve.**
+
+This can be written as:
+$$\frac{x^2}{4} - \frac{y^2}{4} = 1$$
+
+This is the standard form of a **hyperbola**.
+
+The answer is **(E)**.
+
+#### E"
+bare,math500_split#296,1,0,"## Setting Up
+
+Each equation has the form $3 \cdot a^x = 7$ where $a$ is the ""growth base."" Solving:
+
+$$x = \frac{\ln(7/3)}{\ln a}$$
+
+Since $\ln(7/3) > 0$ is fixed, $x$ is a **decreasing** function of the base $a$ (for $a > 1$). So the largest solution comes from the equation with the **smallest** base $a > 1$.
+
+## Comparing the Bases
+
+With $0 < r < 3$:
+
+| Choice | Base $a$ |
+|--------|----------|
+| (A) | $1 + r$ |
+| (B) | $1 + \dfrac{r}{10}$ |
+| (C) | $1 + 2r$ |
+| (D) | $1 + \sqrt{r}$ |
+| (E) | $1 + \dfrac{1}{r}$ |
+
+Compare the additions to 1:
+
+- **(B) vs (A):** $\dfrac{r}{10} < r$ ✓ (so B's base is smaller)
+- **(B) vs (C):** $\dfrac{r}{10} < 2r$ ✓
+- **(B) vs (D):** $\dfrac{r}{10} < \sqrt{r}$ since $r < 100$ ✓ (true for all $r < 3$)
+- **(B) vs (E):** For $r < 3$, we have $\dfrac{1}{r} > \dfrac{1}{3}$, so (E)'s base exceeds $1 + \dfrac{1}{3} = \dfrac{4}{3} > 1.3 \geq 1 + \dfrac{r}{10}$. So B's base is smaller. ✓
+
+Thus choice **(B)** has the smallest base, hence the largest exponent $x$ needed to reach 7.
+
+**Sanity check with $r = 1$:** 
+- (A) $x = \log_2(7/3) \approx 1.22$ 
+- (B) $x = \log_{1.1}(7/3) \approx 10.6$ ✓ largest
+- (C) $x = \log_3(7/3) \approx 0.77$ 
+- (D) $x = \log_2(7/3) \approx 1.22$ 
+- (E) $x = \log_2(7/3) \approx 1.22$
+
+#### B"
+bare,math500_split#312,1,0,"## Solution
+
+To solve $\frac{1}{x-5} > 0$, I need to determine when the fraction is positive.
+
+The numerator is $1$, which is always positive. For a fraction to be positive, the denominator must have the same sign as the numerator, so I need:
+$$x - 5 > 0$$
+
+This gives:
+$$x > 5$$
+
+**Check:**
+- If $x = 6$: $\frac{1}{6-5} = 1 > 0$ ✓
+- If $x = 4$: $\frac{1}{4-5} = -1 < 0$ ✗
+- At $x = 5$: the expression is undefined ✗
+
+Therefore, the solution is all $x$ strictly greater than $5$.
+
+$$\boxed{(5, \infty)}$$
+
+#### (5, \infty)"
+bare,math500_split#314,1,0,"## Solution
+
+**Step 1: Reflect $(0,0)$ over the line $x = 1$.**
+
+Reflecting a point over a vertical line $x = a$ keeps the $y$-coordinate and maps the $x$-coordinate to $2a - x$.
+
+$$x' = 2(1) - 0 = 2, \qquad y' = 0$$
+
+So the image is $(2, 0)$.
+
+**Step 2: Reflect $(2,0)$ over the line $y = 2$.**
+
+Reflecting a point over a horizontal line $y = b$ keeps the $x$-coordinate and maps the $y$-coordinate to $2b - y$.
+
+$$x'' = 2, \qquad y'' = 2(2) - 0 = 4$$
+
+So the final point is $(2, 4)$.
+
+**Check:** The point $(0,0)$ is 2 units left of $x=1$, so its reflection is 2 units right: $(2,0)$. ✓ Then $(2,0)$ is 2 units below $y=2$, so its reflection is 2 units above: $(2,4)$. ✓
+
+#### (2, 4)"
+bare,math500_split#364,1,0,"## Setting Up the Reflection
+
+When a point $(x, y)$ is reflected through the point $(4, 1)$, the image point $(x', y')$ satisfies: $(4,1)$ is the **midpoint** of $(x,y)$ and $(x',y')$. So:
+$$\frac{x + x'}{2} = 4, \qquad \frac{y + y'}{2} = 1$$
+
+This gives the reflection map:
+$$x' = 8 - x, \qquad y' = 2 - y$$
+
+## Finding the Image Equation
+
+Solving for the original coordinates in terms of the image coordinates:
+$$x = 8 - x', \qquad y = 2 - y'$$
+
+Since $(x, y)$ lies on the circle $x^2 + y^2 = 25$, substitute:
+$$(8 - x')^2 + (2 - y')^2 = 25$$
+
+Expanding:
+$$64 - 16x' + x'^2 + 4 - 4y' + y'^2 = 25$$
+
+$$x'^2 + y'^2 - 16x' - 4y' + 68 - 25 = 0$$
+
+$$x'^2 + y'^2 - 16x' - 4y' + 43 = 0$$
+
+## Matching the Form
+
+Comparing with $x^2 + ay^2 + bx + cy + d = 0$:
+- $a = 1$
+- $b = -16$  
+- $c = -4$
+- $d = 43$
+
+**Check:** The new circle has center $(8, 2)$ (the reflection of $(0,0)$ through $(4,1)$) and radius $5$, so $x^2 + y^2 - 16x - 4y + 64 + 4 - 25 = 0$, i.e., $x^2 + y^2 - 16x - 4y + 43 = 0$. ✓
+
+#### $(1, -16, -4, 43)$"
+bare,math500_split#373,1,0,"## Setting Up the Problem
+
+I need to compute $\dfrac{-3+4i}{1+2i}$ by multiplying the numerator and denominator by the conjugate of the denominator, which is $1-2i$.
+
+## Computing the Denominator
+
+$$(1+2i)(1-2i) = 1 - (2i)^2 = 1 + 4 = 5$$
+
+## Computing the Numerator
+
+$$(-3+4i)(1-2i) = -3 + 6i + 4i - 8i^2$$
+
+Since $i^2 = -1$, this becomes:
+
+$$-3 + 10i + 8 = 5 + 10i$$
+
+## Combining
+
+$$\frac{-3+4i}{1+2i} = \frac{5+10i}{5} = 1 + 2i$$
+
+**Verification:** $(1+2i)(1+2i) = 1 + 4i + 4i^2 = 1 + 4i - 4 = -3 + 4i$ ✓
+
+#### $1+2i$"
+bare,math500_split#376,1,0,"## Setting Up
+
+Let $P = (x, y)$ lie on the line $y = -x + 6$, so $P = (x, -x+6)$.
+
+**Condition:** $PA = PO$, so $PA^2 = PO^2$.
+
+## Computing the Distances
+
+**Distance to $O(0,0)$:**
+$$PO^2 = (x-0)^2 + (-x+6-0)^2 = x^2 + (x-6)^2$$
+
+**Distance to $A(10,-10)$:**
+$$PA^2 = (x-10)^2 + (-x+6+10)^2 = (x-10)^2 + (16-x)^2$$
+
+## Solving the Equation
+
+Set them equal:
+$$x^2 + (x-6)^2 = (x-10)^2 + (x-16)^2$$
+
+Expand both sides:
+$$x^2 + x^2 - 12x + 36 = x^2 - 20x + 100 + x^2 - 32x + 256$$
+
+$$2x^2 - 12x + 36 = 2x^2 - 52x + 356$$
+
+Cancel $2x^2$:
+$$-12x + 36 = -52x + 356$$
+
+$$40x = 320$$
+
+$$x = 8$$
+
+Then $y = -8 + 6 = -2$.
+
+## Verification
+
+With $P(8,-2)$:
+- $PO^2 = 8^2 + (-2)^2 = 64 + 4 = 68$
+- $PA^2 = (8-10)^2 + (-2+10)^2 = 4 + 64 = 68$ ✓
+
+#### (8, -2)"
+bare,math500_split#394,1,0,"## Setting Up the Problem
+
+Expand the expression for $z$:
+$$z = (2x - y)^2 - 2y^2 - 3y = 4x^2 - 4xy + y^2 - 2y^2 - 3y$$
+$$z = 4x^2 - 4xy - y^2 - 3y$$
+
+## Step 1: Brahmagupta's Optimal Play
+
+For a fixed $x$, Brahmagupta views $z$ as a function of $y$:
+$$z(y) = -y^2 - (4x+3)y + 4x^2$$
+
+This is a **downward-opening** parabola in $y$, so it has a maximum at its vertex:
+$$y = -\frac{-(4x+3)}{2(-1)} = -\frac{4x+3}{2} = -2x - \frac{3}{2}$$
+
+The maximum value is found using the vertex formula $4ac - b^2$ over $4a$... directly:
+$$z_{\max} = 4x^2 + \frac{(4x+3)^2}{4} = 4x^2 + 4x^2 + 6x + \frac{9}{4} = 8x^2 + 6x + \frac{9}{4}$$
+
+## Step 2: Archimedes' Optimal Play
+
+Archimedes must choose $x$ to **minimize** Brahmagupta's best response:
+$$f(x) = 8x^2 + 6x + \frac{9}{4}$$
+
+This is an upward-opening parabola in $x$, minimized at its vertex:
+$$x = -\frac{6}{2(8)} = -\frac{6}{16} = -\frac{3}{8}$$
+
+**Verification:** At $x = -\tfrac{3}{8}$, Brahmagupta plays $y = -2\left(-\tfrac{3}{8}\right) - \tfrac{3}{2} = \tfrac{3}{4} - \tfrac{3}{2} = -\tfrac{3}{4}$, giving
+$$z = 8\cdot\frac{9}{64} + 6\left(-\frac{3}{8}\right) + \frac{9}{4} = \frac{9}{8} - \frac{9}{4} + \frac{9}{4} = \frac{9}{8}$$
+which is indeed the value Archimedes can guarantee.
+
+#### $-\dfrac{3}{8}$"
+bare,math500_split#439,1,0,"## Setting Up the Division
+
+I need to divide $x^9 + 1$ by $x - 1$ using polynomial long division.
+
+**Step 1:** Divide the leading term: $\frac{x^9}{x} = x^8$.
+
+Multiply: $x^8(x - 1) = x^9 - x^8$.
+
+Subtract: $(x^9 + 1) - (x^9 - x^8) = x^8 + 1$.
+
+**Step 2:** Divide: $\frac{x^8}{x} = x^7$.
+
+Multiply: $x^7(x-1) = x^8 - x^7$.
+
+Subtract: $(x^8 + 1) - (x^8 - x^7) = x^7 + 1$.
+
+**Continuing this pattern:** Each step produces the next lower power, since the remainder after each subtraction brings down the leading power $x^k + 1$, and dividing gives $x^{k-1}$. This yields successive quotient terms:
+
+$$x^8,\ x^7,\ x^6,\ x^5,\ x^4,\ x^3,\ x^2,\ x,\ 1$$
+
+**Final subtraction:** After the last step, multiplying $1 \cdot (x-1) = x - 1$ and subtracting from $x + 1$ gives:
+
+$$(x + 1) - (x - 1) = 2$$
+
+So the division gives:
+$$x^9 + 1 = (x-1)\left(x^8 + x^7 + x^6 + x^5 + x^4 + x^3 + x^2 + x + 1\right) + 2$$
+
+## Verification
+
+Since $x^9 - 1 = (x-1)(x^8 + x^7 + \cdots + x + 1)$, adding 2 to both sides:
+$$x^9 + 1 = (x-1)(x^8 + x^7 + \cdots + x + 1) + 2 \checkmark$$
+
+The quotient is $x^8 + x^7 + x^6 + x^5 + x^4 + x^3 + x^2 + x + 1$.
+
+#### $x^8 + x^7 + x^6 + x^5 + x^4 + x^3 + x^2 + x + 1$"

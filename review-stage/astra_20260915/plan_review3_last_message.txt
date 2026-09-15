@@ -1,0 +1,10 @@
+**Verdict: not ready.** Issue 6 is resolved: `P = π_Z`, `b ≤ 1` logical call/task, `λ = 1`, and oracle-routing is only a post-execution reference ([§3.E](<E:/projects/AI4AI-Harness/review-stage/DIAGNOSTIC_PLAN_20260915.md:28>)). Blocker (a) is resolved: D consistently uses `π_Z − dev-fixed`; best-fixed is descriptive only ([§3.D](<E:/projects/AI4AI-Harness/review-stage/DIAGNOSTIC_PLAN_20260915.md:27>)). Blocker (b) is only partially resolved: `8 × 2 = 16` and blinded `8 + ≥2` challenges are stated, but the rules hard-code denominators `1/10` and “blinded set 10” although the challenge count is variable and the false-support denominator should be the exact count of expected non-SUPPORTED controls ([§5](<E:/projects/AI4AI-Harness/review-stage/DIAGNOSTIC_PLAN_20260915.md:38-39>)). No other new blocking problem was found.
+
+Minimal fixes:
+
+- Freeze the exact challenge count, or define `N_blinded = 8 + N_challenges`.
+- Define exact denominators from the frozen expected-state manifest: `N_nonSUPPORTED` for false-support rate and `N_clear` for abstention rate/bound.
+- Replace hard-coded “10” references and state whether challenge controls enter every metric.
+
+`not_executed`: runtime control generation, hash verification, blinded validation, and empirical D/E replay.
+

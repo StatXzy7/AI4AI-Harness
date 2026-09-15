@@ -1,0 +1,20 @@
+## Item results
+
+- **(a) Resolved.** The blinded manifest includes CH1/CH2 and explicit A expectations (`control_manifest_blinded.json:24-25,285-316`). Validation has 10 rows, all judged on A–E, with `N_nonSUPPORTED=26`, `N_clear=31`, and one recorded error (`control_validation_blinded.json:3-13,217-264`). The challenge artifact records the A derivation from no-corruption constraints (`astra_challenges_result.json:70,139-141`).
+
+- **(b) Not resolved.** The BIRD artifact clearly records the integrity failure: duplicate/conflicting collection records (`bird_diagnosis.json:4-14`) and A=`REFUTED_WITHIN_SCOPE` (`:16-20`). The first-write-wins policy is documented retrospectively in `PHASE2_PROTOCOL.md:323-327`. However, the application narrative in `paper/latex/sec_appendix.tex:546-550` reports B/C/D/E only and does not disclose the BIRD A failure or overlapping-file duplicate canonical keys. Its nearby disclosure concerns cache/artifact issues (`:64-73`), which is insufficient.
+
+- **(c) Partially resolved.** `_acc` and the S4 bootstrap preserve the full denominator (`experiment/diagnostics/core.py:109-118,345-353`). However, comparison references still use `np.nanmean` in `_m0_metrics`/`_m1_metrics` (`experiment/diagnostics/cli.py:158-172`), so missing cells remain dropped there.
+
+## Overall judgment
+
+No, not fully in the current checkout. The control validation, explicit CH2-D exception, corrected historical numbers, and S4 denominator fix support an honestly bounded measurement contribution, but the undisclosed BIRD A integrity failure and incomplete denominator preservation prevent a clean final endorsement. The named external-baseline, independent-replication, and historical-decision limitations should remain explicit open limitations.
+
+## not_executed
+
+- Literal `artifacts/diagnostics/20260915/latest/...` paths: directory absent; timestamped runs were inspected instead.
+- `pytest`: interpreter exited `-1073741790` before producing test results.
+- Fresh cold-start Astra invocation.
+- Provider/API rerun, external-baseline experiment, independent replication, and verification against independent historical decision records.
+- Full LaTeX rebuild in this check.
+

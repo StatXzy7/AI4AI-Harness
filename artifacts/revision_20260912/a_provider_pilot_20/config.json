@@ -1,0 +1,37 @@
+{
+  "acquisition_id": "A-provider-instrument-pilot-20260912-v1",
+  "cache_mode": "off",
+  "solver": {
+    "base_url": "https://llmapi.paratera.com/v1",
+    "model": "GLM-5.3-Flash",
+    "thinking_style": "none",
+    "reasoning_effort": "high",
+    "temperature_override": 0.0,
+    "max_tokens": 4096,
+    "timeout_seconds": 120,
+    "status_retries": 0,
+    "retry_delay_seconds": 0
+  },
+  "resource_budget": {
+    "max_logical_calls": 8,
+    "max_requested_samples": 8,
+    "max_output_tokens": 32768,
+    "max_request_bytes": 1000000
+  },
+  "api_key_env": "PARATERA_API_KEY",
+  "dataset_root": "E:\\projects\\AI4AI-Harness\\external\\data\\bird\\dev_20240627",
+  "split_path": "E:\\projects\\AI4AI-Harness\\experiment\\phase2\\split_A_pilot_20.json",
+  "protocol_path": "E:\\projects\\AI4AI-Harness\\review-stage\\A_PROVIDER_PILOT_20260912.md",
+  "repeats": [0, 1, 2, 3],
+  "harnesses": [
+    {"id": "bare", "source": "external/TTHE/text_to_sql/agents/bare.py"},
+    {"id": "real_deepseek", "source": "external/TTHE/text_to_sql/agents/p2_A_deepseek_s0_g0.py"},
+    {"id": "clone_deepseek", "source": "external/TTHE/text_to_sql/agents/p2_A_deepseek_s0_g0.py"},
+    {"id": "real_qwen", "source": "external/TTHE/text_to_sql/agents/p2_A_qwen_s0_g0.py"},
+    {"id": "clone_qwen", "source": "external/TTHE/text_to_sql/agents/p2_A_qwen_s0_g0.py"}
+  ],
+  "worker_wall_seconds": 300,
+  "drain_seconds": 130,
+  "output": "E:\\projects\\AI4AI-Harness\\artifacts\\revision_20260912\\a_provider_pilot_20",
+  "schedule_salt": "A-provider-instrument-pilot-20260912-v1"
+}

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.4.29)  11 SEP 2026 23:10
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.4.29)  12 SEP 2026 22:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -962,21 +962,18 @@ File: ../figures/fig_results_revision.pdf Graphic file (type pdf)
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [10])
-(./sec_conclusion.tex) (./main.bbl
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [11]
-[12]
+(./sec_conclusion.tex) (./main.bbl [11] [12]
 Underfull \hbox (badness 1028) in paragraph at lines 95--99
 []\TU/lmr/m/n/10.53937 Jun Nie, Yonggang Zhang, Jun Song, Qianshu Cai, Dahai Yu
 , Xinmei Tian,
  []
 
-) (./sec_appendix.tex [13] [14] (../latex/revision_sensitivity_table.tex)
-(../latex/revision_cost_table.tex)
-Underfull \vbox (badness 10000) has occurred while \output is active []
+) (./sec_appendix.tex [13]
+Underfull \vbox (badness 1087) has occurred while \output is active []
 
- [15]
+ [14]
+(../latex/revision_sensitivity_table.tex) (../latex/revision_cost_table.tex)
+[15]
 Underfull \hbox (badness 1635) in paragraph at lines 35--36
 []\TU/lmr/m/n/10.53937 pair \TU/SimSun(0)/m/sc/10.53937 级 \TU/lmr/m/n/10.53937 
 SQL \TU/SimSun(0)/m/sc/10.53937 不 相 似 度 仅 在 判 定 一 致、|  且 两 份 \TU/lmr/m/n/10.539
@@ -985,7 +982,7 @@ MS/cmsy/m/n/10.53937 ^^@
  []
 
 
-Underfull \vbox (badness 1009) has occurred while \output is active []
+Underfull \vbox (badness 1024) has occurred while \output is active []
 
  [16]
 (../latex/revision_selection_table.tex)
@@ -1007,7 +1004,10 @@ Kimi-K3\TU/lmr/m/n/9.03374 , \TU/lmtt/m/n/9.03374 MiniMax-M3\TU/lmr/m/n/9.03374
  ,
  []
 
-[17]
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [17]
 Underfull \hbox (badness 10000) in paragraph at lines 72--73
 []\TU/lmtt/m/n/9.03374 Calculate the percentage of the cards availabe in Chines
 e
@@ -1031,13 +1031,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 80--81
 T1 INNER
  []
 
-
+[18]
 Underfull \hbox (badness 10000) in paragraph at lines 84--85
 []\TU/lmtt/m/n/9.03374 SELECT SUM(CASE WHEN language = 'Chinese Simplified' THE
 N 1 ELSE 0
  []
 
-[18]
+
 Underfull \hbox (badness 10000) in paragraph at lines 91--92
 []\TU/lmtt/m/n/9.03374 with "only a single read-only SELECT is allowed". The pr
 evious
@@ -1046,7 +1046,15 @@ evious
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[19] [20]) (./sec_crossdomain.tex [21]) [22] (./main.aux)
+[19]
+Underfull \vbox (badness 1394) has occurred while \output is active []
+
+ [20])
+(./sec_crossdomain.tex
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [21])
+[22] (./main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2022/07/14>
@@ -1065,6 +1073,6 @@ Here is how much of TeX's memory you used:
  45250 multiletter control sequences out of 15000+600000
  638085 words of font info for 113 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 93i,12n,111p,620b,486s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 93i,12n,111p,620b,484s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.xdv (22 pages, 450388 bytes).
+Output written on main.xdv (22 pages, 452548 bytes).

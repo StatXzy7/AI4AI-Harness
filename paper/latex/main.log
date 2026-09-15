@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.29)  11 SEP 2026 23:10
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.29)  12 SEP 2026 22:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -458,14 +458,10 @@ Package pdftex.def Info: figures/fig_results_revision.pdf  used on input line 3
 (./revision_decomposition_table.tex)
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [8 <./figures/fig_results_revision.pdf>]) (./sec_discussion.tex) (./sec_conclu
-sion.tex)
-[9] (./main.bbl [10]) (./sec_appendix.tex [11] [12]
+ [8 <./figures/fig_results_revision.pdf>]) (./sec_discussion.tex [9])
+(./sec_conclusion.tex) (./main.bbl [10]) (./sec_appendix.tex [11] [12]
 (./revision_sensitivity_table.tex) (./revision_cost_table.tex) [13]
-(./revision_selection_table.tex)
-Underfull \vbox (badness 2368) has occurred while \output is active []
-
- [14]
+(./revision_selection_table.tex) [14]
 Underfull \hbox (badness 10000) in paragraph at lines 282--283
 []|\OT1/pcr/m/n/9 GLM-5.3-Flash\OT1/ptm/m/n/9 , \OT1/pcr/m/n/9 Qwen3.8-Flash\OT
 1/ptm/m/n/9 ,
@@ -483,12 +479,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 284--286
 /n/9 , \OT1/pcr/m/n/9 MiniMax-M3\OT1/ptm/m/n/9 ,
  []
 
-
+[15]
 Underfull \hbox (badness 10000) in paragraph at lines 306--307
 []\OT1/pcr/m/n/9 Calculate the percentage of the cards availabe in Chinese
  []
 
-[15]
+
 Underfull \hbox (badness 10000) in paragraph at lines 310--312
 []\OT1/pcr/m/n/9 'Chinese Simplified' is the language; percentage =
  []
@@ -536,7 +532,11 @@ Underfull \hbox (badness 1259) in paragraph at lines 475--484
 w.[] \OT1/ptm/m/n/10 Gate-v4 com-bined the source-
  []
 
-) (./sec_crossdomain.tex [18]) [19] (./main.aux)
+) (./sec_crossdomain.tex
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [18])
+[19] (./main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-03-20>
@@ -551,7 +551,7 @@ Here is how much of TeX's memory you used:
  40278 multiletter control sequences out of 15000+600000
  654422 words of font info for 94 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,90p,684b,570s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,12n,90p,684b,562s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><d:/tex
 live/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><d:/texlive/2026
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><d:/texlive/2026/texmf-dis
@@ -569,7 +569,7 @@ fb><d:/texlive/2026/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb><d:/texlive/
 2026/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb><d:/texlive/2026/texmf-dist
 /fonts/type1/urw/times/utmb8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/t
 imes/utmr8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (19 pages, 365002 bytes).
+Output written on main.pdf (19 pages, 365368 bytes).
 PDF statistics:
  691 PDF objects out of 1000 (max. 8388607)
  430 compressed objects within 5 object streams

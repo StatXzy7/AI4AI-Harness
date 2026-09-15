@@ -1,0 +1,103 @@
+最重要的科学主张是：**该诊断流程能够把一次性 residual coverage/headroom 与稳定互补性、执行前可选择性及实际策略效用区分开，并由正负控制和历史存档验证这种区分是有效的。**
+
+我尝试反驳它：构造一个每次执行随机波动、单次 oracle gap 很高但没有稳定优势的群体；再构造一个代码指纹能预测开发任务、却无法泛化到新任务的群体；最后构造一个可识别优势存在、但调用成本抵消全部收益的群体。当前计划能描述这些陷阱，却没有完整的估计量、判定规则和策略执行协议来保证它们会被正确区分。因此结论是：
+
+**总体：4/10，not ready for freezing。**
+
+**测量正确性：5/10**
+
+优点是明确写出 `Y[h,x,r]`、oracle、best-fixed、dev-fixed、bare、headroom，并明确禁止把 headroom 当作实际收益；也保留 `INSUFFICIENT_EVIDENCE` 和成本缺失。这与 `README.md:35-37,60,80-90` 的既有边界一致。
+
+阻塞问题：
+
+1. **A–E 没有被定义为科学命题。**  
+   [DIAGNOSTIC_PLAN_20260915.md:7,60-62](E:/projects/AI4AI-Harness/review-stage/DIAGNOSTIC_PLAN_20260915.md:7) 只说“五类命题”，§8 却把 A–E 映射成“缺陷修复、入口可执行、正控制、决策影响、论文一致性”。这不是五个可估计的研究问题，因此无法判断某个结果究竟支持哪一类主张。  
+   **影响：** 可能把软件完成度当作测量证据。  
+   **最小修复：** 在冻结稿中为 A–E 各写出 estimand、输入、判定状态、最小证据和允许的结论句式。
+
+2. **`Y[h,x,r]` 与执行条件 `c` 不一致。**  
+   [DIAGNOSTIC_PLAN_20260915.md:11-20](E:/projects/AI4AI-Harness/review-stage/DIAGNOSTIC_PLAN_20260915.md:11) 定义了模型、缓存、超时和重复次数，但 `Y` 没有 `c`。  
+   **影响：** 不同模型、缓存或 judge 条件可能被错误合并为“重复”，稳定性估计失去含义。  
+   **最小修复：** 定义 `Y[h,x,r,c]`，并明确哪些字段必须完全匹配才算重复。
+
+3. **稳定互补性的最小证据没有规定。**  
+   S3 说没有匹配重复就弃权，这是正确方向，但没有规定重复数量、独立性、任务/数据库抽样层级、稳定性统计量或阈值。  
+   **影响：** 有重复时仍可能用不充分的两次观测支持“稳定”；没有重复时虽然会弃权，却无法复现 C/D/E 的具体判定。  
+   **最小修复：** 冻结最小重复数、匹配键、抽样层级、稳定互补性估计量及其区间；明确跨时间或提供方漂移只能标记为不可交换。
+
+4. **K、K_eff 和总体定义不完整。**  
+   [DIAGNOSTIC_PLAN_20260915.md:11,16,24](E:/projects/AI4AI-Harness/review-stage/DIAGNOSTIC_PLAN_20260915.md:11) 把群体写成“35 个生成成员 + bare 或 phase2 群体”，但没有定义 clone 去重、重复源码、缺失成员、每个 phase2 cell 的 K，或 pooled 与 cell-level 的总体。已有核验显示 MATH 的 K_eff 分子含 bare、分母不含 bare：`VERIFICATION_20260915.md:14-17`。  
+   **影响：** 分母、headroom 和跨群体比较不具可比性。  
+   **最小修复：** 固定 `K_raw`、`K_unique`、是否纳入 bare、成员身份键和每个 cell 的 population size；所有结果同时报告原始和有效 K。
+
+**诊断有效性：3/10**
+
+5. **执行前可选择性 D 没有可执行的 policy 定义。**  
+   [DIAGNOSTIC_PLAN_20260915.md:18-20,27-30](E:/projects/AI4AI-Harness/review-stage/DIAGNOSTIC_PLAN_20260915.md:18) 列出 `Z`，但没有规定用什么训练数据拟合选择器、如何防止任务记忆、选择动作是什么、何时允许 abstain，或如何在新任务上评估。`dev accuracy` 和代码指纹可能包含与评估任务或 builder 强相关的信息。  
+   **影响：** 一个只记住开发任务的 predictor 可能被误判为“可选择”；也无法区分无效信息与未充分证据。  
+   **最小修复：** 冻结 policy、训练/验证/测试切分、任务级 holdout、允许动作和 abstention 规则，并要求报告 policy 相对 bare 与 dev-fixed 的配对结果。
+
+6. **E 类“实际收益”没有定义。**  
+   [DIAGNOSTIC_PLAN_20260915.md:15,38](E:/projects/AI4AI-Harness/review-stage/DIAGNOSTIC_PLAN_20260915.md:15) 说实际收益必须经 D/E 检验，但没有定义部署策略、fallback、调用预算、伤害率、效用函数或成本净收益。仅报告 logical calls 不能产生 realized utility；`README.md:35` 已明确没有 token usage，不能恢复账单。  
+   **影响：** “稳定优势”仍可能被写成“可部署收益”；成本未知时 E 无法支持。  
+   **最小修复：** 至少冻结一个可执行 policy、一个 cost-matched baseline、utility/harm 定义和成本缺失时的强制状态 `INSUFFICIENT_EVIDENCE`。
+
+7. **控制验证虽禁止全拒绝，但仍允许退化通过。**  
+   [DIAGNOSTIC_PLAN_20260915.md:36-44](E:/projects/AI4AI-Harness/review-stage/DIAGNOSTIC_PLAN_20260915.md:36) 要求正控制 `SUPPORTED`，因此“全部 abstain”不能直接通过；但没有规定正控制数量、难度、独立实例数、最小覆盖率或挑战集的固定时间点。一个系统可以支持一个极易的正控制、对其余情况全部弃权。  
+   **影响：** 所谓 power 可能只是 1/1 的小样本结果，不能证明识别能力。  
+   **最小修复：** 分离 calibration 与 blinded test；冻结控制 manifest、真值、阈值和 challenge seed；规定每类最小实例数及正控制的最低覆盖/识别要求。
+
+8. **阈值“冻结”目前不可审计。**  
+   [DIAGNOSTIC_PLAN_20260915.md:44](E:/projects/AI4AI-Harness/review-stage/DIAGNOSTIC_PLAN_20260915.md:44) 没有说明错误支持率的分母、区间、按控制类别还是总体计算，也没有记录阈值冻结的 manifest/hash。Astra 还要提出开发时未用的挑战，容易形成结果曝光后的控制选择。  
+   **影响：** 无法证明阈值先于挑战结果确定。  
+   **最小修复：** 冻结带 hash 的控制包、标签、阈值和版本；挑战只能追加为预先锁定的盲测输入，不能据结果改阈值或重测。
+
+9. **M1 不是完整的竞争性策略基线。**  
+   [DIAGNOSTIC_PLAN_20260915.md:42](E:/projects/AI4AI-Harness/review-stage/DIAGNOSTIC_PLAN_20260915.md:42) 的 M1 对 population decomposition 是合理基线，避免了“H>0 即部署有效”的稻草人；但它没有 pre-execution selector、重复稳定性估计、confidence/majority 或 cost-matched policy。  
+   **影响：** M2 的任何提升都可能只是因为 M1 缺少一个必要模块，而不是诊断方法本身有价值。  
+   **最小修复：** 保留当前 M1，再增加一个固定 comparator/selector policy 和成本匹配规则，所有方法在相同控制与任务上比较。
+
+**研究贡献完整性：3/10**
+
+10. **回顾性分析有良好原则，但输出要求仍可能只留下成功案例。**  
+    [DIAGNOSTIC_PLAN_20260915.md:46-50](E:/projects/AI4AI-Harness/review-stage/DIAGNOSTIC_PLAN_20260915.md:46) 要求纳入、排除和无法判断项，并要求至少一个保持原判断的对照，这是正确的。但交付物只有 `DECISION_IMPACT.csv`，没有强制一个覆盖所有 archive rows 的 inventory；“再选代表案例”仍允许后验挑选。  
+    **影响：** MATH/BIRD 的失败、abstention、unknown、unclosed、never-started 可能不进入最终展示分母。项目既有边界明确要求这些状态保留，见 `README.md:100-114`。  
+    **最小修复：** 强制输出全量 `ARCHIVE_INVENTORY.csv`，每条记录都有 included/excluded/unknown/failed/abstained/unclosed/never-started 状态和理由；代表案例按预冻结规则选择，不能替代全量表。
+
+11. **BIRD 决策影响没有规定历史缺失状态的传播规则。**  
+    计划提到无法判断和截断答案，但没有明确 provider unknown、执行失败、缺少重复、缺失 judge 输入如何进入 A–E 状态。  
+    **影响：** 失败记录可能被错误计为 wrong 或从分母删除。  
+    **最小修复：** 直接继承 `README.md:104,110-114` 的规则：unknown 保留、不得重试填分母、不得当作错误、不得用部分池宣称完整结果。
+
+12. **“诊断改变判断”不等于方法产生科学贡献。**  
+    计划没有规定决策改变的预先分类阈值，也没有规定 M2 相对 M1 的最小可解释增益。若所有案例都保持原判断，计划仍可交付，但论文贡献应明确是“测量限制与不可识别性”，而不是有效诊断工具。  
+    **最小修复：** 预先声明零改变也是合法结果，并把贡献判定绑定到可复现的误判纠正、弃权校准或明确的不可识别性证据。
+
+**稿件表达完整性：5/10**
+
+交付物方向合理：`CONTROL_VALIDATION.json`、`DECISION_IMPACT.csv`、`CLAIM_EVIDENCE.json`、`REPRODUCE.md`，且 [DIAGNOSTIC_PLAN_20260915.md:32](E:/projects/AI4AI-Harness/review-stage/DIAGNOSTIC_PLAN_20260915.md:32) 明确禁止伪造“可信度分数”。这是应保留的设计。
+
+但仍缺少：
+
+- A–E 到主文句子、表格、图和附录的逐项映射；
+- 每个结论允许使用的状态词和禁用的外推词；
+- 中英文稿件同步检查（若两版都属于交付范围）；
+- 诊断依赖、scorer hash、输入 manifest 和输出 schema 的绑定；
+- 独立审核者、审核材料和审核结果的可复现记录。
+
+因此“主文/图表/声明与产物一致”目前只是承诺，尚不是可验收合同。
+
+**未执行检查**
+
+- `experiment/diagnostics/` 当前不存在，`cli.py`、adapter、core、controls 和测试均未落地。
+- 诊断 CLI smoke test：`not_executed`；尝试 `python -m experiment.diagnostics.cli --help` 时本地 Python 进程异常退出（`-1073741790`）。
+- README 中的 replay、bootstrap、测试套件、LaTeX 构建：`not_executed`，本次范围是文档和方法审核。
+- 控制集生成/验证、MATH v2 全量重评分、BIRD archive adapter：`not_executed`。
+- 任何模型 API、provider 采集和新实验：`not_executed`，且不应由本次冻结前审核隐式启动。
+
+**冻结判断**
+
+当前计划已经修复了最危险的语言混淆：它不再把单次 oracle gap 直接称为稳定优势，也不把 headroom 直接称为部署收益；它还正确要求正控制必须 `SUPPORTED`、保留 unknown、避免总分化。
+
+但 A–E estimand、重复稳定性、执行前 policy、成本净效用、控制冻结协议、K/总体口径和全量 archive 分母仍未形成可执行合同。冻结前至少应补齐这些最小定义；否则后续即使代码通过、控制输出完整，也不能证明核心测量主张成立。
+

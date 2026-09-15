@@ -1,0 +1,22 @@
+{
+  "purpose": "minimal read-only reviewer smoke test",
+  "date_utc": "2026-09-15T00:00:00Z (local run 2026-09-15)",
+  "requested_model": "gpt-6-astra",
+  "requested_effort": "xhigh",
+  "call_channel": "codex exec CLI (codex-cli 0.154.0), flags: --json -m gpt-6-astra -c model_reasoning_effort=\"xhigh\" -s read-only --skip-git-repo-check",
+  "mcp_status": "codex MCP server configured in project .mcp.json but NOT mounted in this ZCode session (no mcp__codex__ tools available); CLI exec bridge used instead",
+  "cli_upgrade_note": "initial attempt on codex-cli 0.146.0 returned HTTP 400: 'gpt-6-astra' model requires a newer version of Codex; request rejected before model execution. Upgraded CLI to 0.154.0. Note: npm package 'codex' is an unrelated stale package (v0.2.3); correct package is @openai/codex. Reinstalled @openai/codex@0.154.0.",
+  "exit_status": 0,
+  "thread_id": "01a0a1ad-3232-78b0-b8b5-500476374e18",
+  "verification_facts": {
+    "target_file": "experiment/revision/README.md",
+    "reviewer_reported_lines": 204,
+    "ground_truth_lines": 204,
+    "reviewer_reported_first_heading": "# Offline replay and runtime recovery",
+    "ground_truth_first_heading": "# Offline replay and runtime recovery",
+    "match": true
+  },
+  "actual_model_returned": "not_exposed (server does not report served model identity in events; request param gpt-6-astra is server-recognized as proven by the earlier version-gate error)",
+  "actual_effort_returned": "not_exposed (not present in JSONL events; passed as real CLI config param model_reasoning_effort=\"xhigh\")",
+  "artifacts": ["smoke_events.jsonl", "smoke_last_message.txt", "smoke_stderr.txt"]
+}

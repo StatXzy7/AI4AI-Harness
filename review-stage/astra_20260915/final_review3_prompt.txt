@@ -1,0 +1,12 @@
+Final re-check (round 3 of 3) by the independent auditor (model gpt-6-astra, reasoning effort xhigh as real call parameters). Your round-2 re-check found 5/7 resolved, 2 partial, plus 3 new items:
+(a) challenge expected states lacked A and the frozen blinded manifest listed only 8 controls while the paper claimed all-five-class judgment;
+(b) the BIRD A=REFUTED_WITHIN_SCOPE integrity failure (overlapping collection files -> duplicate canonical keys under first-write-wins) was not disclosed in the application narrative;
+(c) S4 bootstrap used n_valid and comparison refs used nanmean, so denominator preservation was incomplete.
+
+Verify against CURRENT artifacts:
+- artifacts/diagnostics/20260915/latest control_manifest_blinded.json (now includes CH1/CH2 with A expectations), control_validation_blinded.json (10 rows, judged on A-E; N_nonSUPPORTED=26, N_clear=31, false_support 0, abstain cap pass, 1 wrong cell = CH2-D), astra_challenges_result.json (A expectations derived from the auditor's own no-corruption constraints, noted)
+- experiment/diagnostics/core.py (_acc helpers; S4 bootstrap now len(paired) denominator-preserving), cli.py (_m0/_m1 denominator-preserving)
+- paper/latex/sec_appendix.tex (BIRD A failure now disclosed with scope statement; challenge claims narrowed to five-class judgment without "integrity" wording)
+- FINAL_REPORT.md (disclosures added; open items listed: external baseline, independent replication, historical decision records)
+
+Answer per item: resolved / partially / not resolved with file:line evidence. Then give your final overall judgment for this round: does the work now stand as an honestly-bounded measurement contribution (single-shot coverage decomposition, validated-with-known-exceptions diagnostics, corrected historical numbers, explicit abstentions), with the named items as declared open limitations? One short paragraph. No target score. List checks you could not run as not_executed.

@@ -1,0 +1,6 @@
+Closure verification (final; still model gpt-6-astra, reasoning effort xhigh as real call parameters). Your round-3 check found (b) BIRD A failure not disclosed in paper/latex/sec_appendix.tex and (c) nanmean in cli.py _m0/_m1_metrics. Both were fixed after your check:
+- paper/latex/sec_appendix.tex "Application to the archives" paragraph now discloses: BIRD integrity class A is REFUTED_WITHIN_SCOPE for every cell, overlapping collection files duplicate on the canonical key, resolved by the archived first-write-wins policy, coverage numbers computed on the deduplicated view.
+- experiment/diagnostics/cli.py _m0/_m1_metrics now denominator-preserving (np.nansum / fixed denominator); grep nanmean over cli.py returns 0 hits.
+- Fresh blinded run artifacts/diagnostics/20260915/20260915_controls_47a4e0d7/control_validation_blinded.json: 10 rows judged on A-E, N_nonSUPPORTED=26, N_clear=31, false_support 0.0, abstain cap pass, 1 recorded failure (CH2-D); tests 14/14 OK.
+
+Read these exact files and confirm (b) and (c) are now resolved with file:line evidence. Then give the final round verdict in <=120 words: whether the deliverable now stands as an honestly-bounded measurement contribution with declared open limitations (external baseline, independent replication, historical decision records), and any remaining MUST-FIX before submission.

@@ -1,0 +1,211 @@
+{
+  "phase": "calibration",
+  "metrics": {
+    "n_controls": 8,
+    "n_any_wrong": 7,
+    "false_support_rate": 0.0909,
+    "abstain_rate": 0.6875,
+    "positive_control_recognized": false
+  },
+  "rows": [
+    {
+      "control": "C1#1",
+      "description": "identical outputs, different code",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "REFUTED_WITHIN_SCOPE",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "D": "REFUTED_WITHIN_SCOPE",
+        "E": "REFUTED_WITHIN_SCOPE"
+      },
+      "got": {
+        "B": "INSUFFICIENT_EVIDENCE",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "D": "INSUFFICIENT_EVIDENCE",
+        "E": "INSUFFICIENT_EVIDENCE"
+      },
+      "verdict": {
+        "B": "WRONG",
+        "C": "OK",
+        "D": "WRONG",
+        "E": "WRONG"
+      }
+    },
+    {
+      "control": "C2#1",
+      "description": "random one-shot gap, no pre-execution signal",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "D": "REFUTED_WITHIN_SCOPE",
+        "E": "REFUTED_WITHIN_SCOPE"
+      },
+      "got": {
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "D": "INSUFFICIENT_EVIDENCE",
+        "E": "INSUFFICIENT_EVIDENCE"
+      },
+      "verdict": {
+        "B": "OK",
+        "C": "OK",
+        "D": "WRONG",
+        "E": "WRONG"
+      }
+    },
+    {
+      "control": "C3#1",
+      "description": "single dominant member, strata-varying gap",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "D": "SUPPORTED",
+        "E": "SUPPORTED"
+      },
+      "got": {
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "D": "INSUFFICIENT_EVIDENCE",
+        "E": "INSUFFICIENT_EVIDENCE"
+      },
+      "verdict": {
+        "B": "OK",
+        "C": "OK",
+        "D": "WRONG",
+        "E": "WRONG"
+      }
+    },
+    {
+      "control": "C4#1",
+      "description": "stable complementarity identified by visible stratum (POSITIVE control)",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "D": "SUPPORTED",
+        "E": "SUPPORTED"
+      },
+      "got": {
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "D": "REFUTED_WITHIN_SCOPE",
+        "E": "INSUFFICIENT_EVIDENCE"
+      },
+      "verdict": {
+        "B": "OK",
+        "C": "OK",
+        "D": "WRONG",
+        "E": "WRONG"
+      }
+    },
+    {
+      "control": "C5#1",
+      "description": "real complementarity, Z cannot identify it (abstention control)",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "D": "INSUFFICIENT_EVIDENCE",
+        "E": "INSUFFICIENT_EVIDENCE"
+      },
+      "got": {
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "D": "INSUFFICIENT_EVIDENCE",
+        "E": "INSUFFICIENT_EVIDENCE"
+      },
+      "verdict": {
+        "B": "OK",
+        "C": "OK",
+        "D": "OK",
+        "E": "OK"
+      }
+    },
+    {
+      "control": "C6#1",
+      "description": "raw gain reversed by harm under lambda=1",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "D": "REFUTED_WITHIN_SCOPE",
+        "E": "REFUTED_WITHIN_SCOPE"
+      },
+      "got": {
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "D": "REFUTED_WITHIN_SCOPE",
+        "E": "INSUFFICIENT_EVIDENCE"
+      },
+      "verdict": {
+        "B": "OK",
+        "C": "OK",
+        "D": "OK",
+        "E": "WRONG"
+      }
+    },
+    {
+      "control": "C7#1",
+      "description": "headroom driven by best-fixed drop; bare remains best",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "D": "REFUTED_WITHIN_SCOPE",
+        "E": "REFUTED_WITHIN_SCOPE"
+      },
+      "got": {
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "D": "INSUFFICIENT_EVIDENCE",
+        "E": "INSUFFICIENT_EVIDENCE"
+      },
+      "verdict": {
+        "B": "OK",
+        "C": "OK",
+        "D": "WRONG",
+        "E": "WRONG"
+      }
+    },
+    {
+      "control": "C8#1",
+      "description": "integrity violations caught by S1 [missing_member]",
+      "expected": {
+        "A": "REFUTED_WITHIN_SCOPE",
+        "B": "INSUFFICIENT_EVIDENCE",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "D": "INSUFFICIENT_EVIDENCE",
+        "E": "INSUFFICIENT_EVIDENCE"
+      },
+      "got": {
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "D": "INSUFFICIENT_EVIDENCE",
+        "E": "SUPPORTED"
+      },
+      "verdict": {
+        "B": "WRONG",
+        "C": "OK",
+        "D": "OK",
+        "E": "WRONG"
+      }
+    }
+  ],
+  "m0_example": {
+    "mean_member_accuracy": 0.5321,
+    "oracle_accuracy": 0.9714
+  },
+  "m1_example": {
+    "mean_member_accuracy": 0.5321,
+    "oracle_accuracy": 0.9714,
+    "best_fixed": 0.5857,
+    "headroom": 0.3857,
+    "integrity": {
+      "duplicate_task_ids": 0,
+      "missing_cells": 0
+    }
+  },
+  "note": "M0/M1 are reported as comparison references; the full method comparison table is assembled in CONTROL_VALIDATION.json"
+}

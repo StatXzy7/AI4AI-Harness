@@ -1,0 +1,83 @@
+{
+  "claims": [
+    {
+      "claim": "The frozen MATH-500 archive contains real, decomposable single-shot coverage headroom (oracle 0.984 vs best-fixed=bare 0.931 on 320 held-out eval tasks; 5.31pp, CI [3.1,7.5]) but no evidence of stable, pre-execution-selectable, or deployable advantage.",
+      "evidence": [
+        "math_diagnosis.json report.B",
+        "math_diagnosis.json report.C/D/E"
+      ],
+      "state": "SUPPORTED for B; INSUFFICIENT for C/D/E",
+      "boundary": "single-shot, MATH-500, no repeats, no cost fields"
+    },
+    {
+      "claim": "The archived MATH judge is reproducible (14400/14400) and a versioned endpoint-sensitive judge v2 changes 0 verdicts on this archive; the latent endpoint-merging defect is real (synthetic counterexamples) but did not fire here.",
+      "evidence": [
+        "math_diagnosis.json judge_v2_rescore",
+        "review-stage/VERIFICATION_20260915.md clue 1"
+      ],
+      "state": "SUPPORTED (A), REFUTED_WITHIN_SCOPE as impact",
+      "boundary": "this archive only"
+    },
+    {
+      "claim": "BIRD phase2: all 18 cells x 4 arms show single-shot coverage (B SUPPORTED, mean headroom 0.079-0.099); stability, selectability and deployability are INSUFFICIENT by frozen rules.",
+      "evidence": [
+        "bird_diagnosis.json arm_summary, C_global, cell_reports"
+      ],
+      "state": "B SUPPORTED; C/D/E INSUFFICIENT",
+      "boundary": "repeat=0/cache=on rows only"
+    },
+    {
+      "claim": "Diagnostic validation: 16/16 frozen controls matched expected states (calibration and blinded, false-support 0, positive control recognized); 2 auditor challenges pre-committed under sha256 54718274...; CH1 fully matched, CH2 matched on E (REFUTED) with a challenge-design divergence on D recorded honestly.",
+      "evidence": [
+        "CONTROL_VALIDATION.json",
+        "astra_challenges_result.json",
+        "review-stage/astra_20260915/challenge_spec.sha256"
+      ],
+      "state": "SUPPORTED",
+      "boundary": "synthetic single-shot scope"
+    },
+    {
+      "claim": "Evaluation-decision changes: 13 recorded cases including 3 numbers corrected (K_eff basis, accuracy range 0.87->0.915, headroom decomposition), definitional renames (union metrics), explicit abstentions (C/D/E), and 1 preserved-judgment control.",
+      "evidence": [
+        "DECISION_IMPACT.csv",
+        "ARCHIVE_INVENTORY.csv"
+      ],
+      "state": "SUPPORTED (retrospective)",
+      "boundary": "retrospective reconstruction; no historical deployment decisions were available"
+    },
+    {
+      "claim": "K_eff as previously published (33/35) mixed membership bases; corrected same-basis values are 33/35 incl bare and 32/35 excl bare.",
+      "evidence": [
+        "experiment/gsm8k/metrics.py:43,70",
+        "VERIFICATION_20260915.md clue 2"
+      ],
+      "state": "REFUTED_WITHIN_SCOPE (old number)",
+      "boundary": "MATH-500 archive"
+    },
+    {
+      "claim": "The paper's 'generated harnesses 0.68-0.87' is stale; the frozen metrics.json supports 0.6825-0.915.",
+      "evidence": [
+        "artifacts/gsm8k_audit/metrics.json",
+        "sec_crossdomain.tex:33-34"
+      ],
+      "state": "REFUTED_WITHIN_SCOPE (old number)",
+      "boundary": "MATH-500 archive"
+    },
+    {
+      "claim": "No token/cost fields exist in any archived rows; no deployable-utility claim is supportable from these archives.",
+      "evidence": [
+        "revision README cost_audit",
+        "bird_diagnosis.json E states"
+      ],
+      "state": "INSUFFICIENT_EVIDENCE (enforced)",
+      "boundary": "all archives"
+    }
+  ],
+  "state_vocabulary": [
+    "SUPPORTED",
+    "REFUTED_WITHIN_SCOPE",
+    "INSUFFICIENT_EVIDENCE",
+    "NOT_APPLICABLE"
+  ],
+  "note": "States are project-defined per DIAGNOSTIC_PLAN_20260915.md FROZEN v1.3 section 3; ARIS audit schemas are reported separately."
+}

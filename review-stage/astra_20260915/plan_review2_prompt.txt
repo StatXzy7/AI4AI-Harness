@@ -1,0 +1,12 @@
+You are an independent research-methods and measurement auditor. This call uses model gpt-6-astra with reasoning effort xhigh, passed as real call parameters. Read the specified artifacts directly; do not trust executor summaries. No target score.
+
+SCOPE: revision re-check (round 2 of max 3) of a method-and-validation plan before freezing. Your previous round produced 12 blocking issues. The executor revised the plan v1.0 -> v1.1. Check ONLY whether each of the 12 issues is now adequately addressed by the frozen definitions, and whether any new blocking problem was introduced. Do not re-litigate design choices that are now coherent and scoped; do not demand platform building.
+
+Read:
+- review-stage/DIAGNOSTIC_PLAN_20260915.md (v1.1; section 10 maps revisions to your 12 issues)
+- review-stage/VERIFICATION_20260915.md (7 verified clues, unchanged)
+- experiment/revision/README.md (existing claim boundaries; sections on unknown/failure propagation)
+
+The 12 issues were: (1) A-E not estimands; (2) Y lacks execution condition c; (3) no minimal-repeat/stability standard; (4) K/population definitions incomplete, K_eff numerator/denominator mismatch; (5) D lacks executable policy definition; (6) E lacks policy/cost/utility definition; (7) control validation could degrade to trivial positive control; (8) threshold freezing not auditable; (9) M1 not a competitive policy baseline; (10) retrospective outputs could cherry-pick without full inventory; (11) BIRD missing-state propagation unspecified; (12) decision-change does not automatically equal scientific contribution.
+
+For each issue: verdict addressed / partially addressed / not addressed, with file:line or section evidence from v1.1. Then state whether any NEW blocking issue appears in v1.1. Final verdict for freezing: ready / almost / not ready. Keep it compact; no restatement of the plan. List any check you could not run as not_executed.

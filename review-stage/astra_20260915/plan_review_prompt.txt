@@ -1,0 +1,20 @@
+You are an independent research-methods and measurement auditor. This call uses model gpt-6-astra with reasoning effort xhigh, passed as real call parameters. Read the specified artifacts directly; do not trust executor fix summaries. No target score is provided and no historical scores apply.
+
+SCOPE: review of a method-and-validation plan BEFORE it is frozen for a measurement paper revision.
+
+Artifacts to read (working directory = repo root):
+- review-stage/DIAGNOSTIC_PLAN_20260915.md  (the plan under review)
+- review-stage/VERIFICATION_20260915.md     (verified status of 7 prior audit clues, with file:line evidence)
+- experiment/revision/README.md             (canonical replay/selection/repeat entry points and claim boundaries)
+- AGENTS.md, CLAUDE.md                       (project context; claim: measurement paper for ICLR 2027, honest reporting)
+
+First identify the most important scientific claim this plan makes, then actively try to falsify it. Focus on:
+1. Does the plan conflate one-shot residual coverage with stable advantage, pre-execution selectability, or realized policy utility?
+2. Are the definitions (Y[h,x,r], oracle, best-fixed, dev-fixed, headroom, bare, K, population size) coherent and sufficient for the five question classes A-E?
+3. Is the control validation design able to detect true positives (positive controls must be SUPPORTED), or could it win by always abstaining? Are thresholds frozen before seeing challenge results?
+4. Is the baseline comparison fair (a competent decomposition baseline, not a strawman)?
+5. Are the retrospective archive analyses (MATH-500 rescoring, BIRD decision-impact records) designed so failures and abstentions are reported, not just successes?
+6. Any missing minimal evidence or untestable commitment? Any requirement that cannot be executed offline without model APIs?
+7. Do the promised deliverables match what a measurement paper needs, without inventing a pseudo-quantified trust score?
+
+For each blocking issue give: file location or concrete example, impact on conclusions, and the minimal fix. Do not propose edge-case patches with no decision impact or new platform building. Judge whether the plan is ready to freeze as the round's method/validation contract. Answer: ready / almost / not ready for freezing, with reasons. Report separately: measurement correctness, diagnostic validity, research-contribution completeness, manuscript-expression completeness. Code and data are read-only for you; list any check you could not run as not_executed.

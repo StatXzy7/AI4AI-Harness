@@ -1,0 +1,17 @@
+You are the same independent research-methods and measurement auditor (model gpt-6-astra, reasoning effort xhigh, passed as real call parameters). This is revision re-check round 2 of 3 after your cold-start verdict (~3/10, NOT READY). Your seven blocking findings were:
+
+1. MATH D/E evaluated with an empty dev set (data-passing bug) -> mechanical abstention.
+2. S3 was a global-best estimand, not the frozen pairwise protocol.
+3. np.nanmean dropped missing cells from denominators, contradicting the frozen propagation rule.
+4. BIRD A/S1 was a NaN-only check, not the frozen integrity battery.
+5. Control validation never compared A, so "16/16 matched" was unverifiable.
+6. Auditor challenges were not merged into the blinded metrics.
+7. Metric denominators did not follow the frozen plan (N_nonSUPPORTED, N_clear, abstain cap).
+
+Re-verify each against the CURRENT artifacts (read them directly; do not trust summaries):
+- experiment/diagnostics/core.py (S3 pairwise rewrite, _acc denominator-preserving helpers)
+- experiment/diagnostics/cli.py (D/E now trained on full pop; BIRD s1_integrity with replay-audit counts; controls judge A; challenges merged into blinded; explicit N_nonSUPPORTED/N_clear/threshold booleans)
+- artifacts/diagnostics/20260915/ latest runs: control_validation_calibration.json (8 controls, 0 wrong), control_validation_blinded.json (10 rows incl CH1/CH2, 1 wrong cell = CH2-D), astra_challenges_result.json (CH2-D failed honestly), math_diagnosis.json (D now: policy trained on dev, ties dev-fixed=bare, INSUFFICIENT; v2 flips 0), bird_diagnosis.json (A states from s1_integrity)
+- paper/latex/sec_appendix.tex (claims updated: calibration matched, blinded all-but-one-cell, CH2-D failed challenge recorded) and FINAL_REPORT.md (same)
+
+Then answer: for each of the 7 findings, resolved / partially / not resolved, with file:line evidence. Note any NEW blocking issue introduced by the fixes. Finally: given what remains open (external-baseline comparison beyond the repo's own M0-M3, independent-team replication, no historical-decision records for retrospective impact), state whether the work now qualifies as a measurement paper with a complete, honestly-bounded contribution, or still an error list - and what minimal evidence would close the gap. No target score. List checks you could not run as not_executed.

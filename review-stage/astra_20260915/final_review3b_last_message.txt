@@ -1,0 +1,8 @@
+Confirmed:
+
+- **(b) Resolved:** BIRD class-A failure, duplicate canonical keys, first-write-wins resolution, and deduplicated coverage scope are disclosed in [sec_appendix.tex:546-553](E:/projects/AI4AI-Harness/paper/latex/sec_appendix.tex:546).
+- **(c) Resolved:** `_m0_metrics` and `_m1_metrics` use fixed denominators with `np.nansum` in [cli.py:158-176](E:/projects/AI4AI-Harness/experiment/diagnostics/cli.py:158); `nanmean` has zero hits.
+- The blinded artifact records false-support 0, abstention-cap pass, and the single CH2-D failure explicitly [JSON:3-13,242-263](E:/projects/AI4AI-Harness/artifacts/diagnostics/20260915/20260915_controls_47a4e0d7/control_validation_blinded.json:3).
+
+**Final verdict: 8/10 — almost, honestly bounded.** It stands as a measurement contribution with declared external-baseline, independent-replication, and historical-record limitations. Remaining MUST-FIX: final source-to-PDF rebuild/hash and submission packaging; retain CH2-D as a failure and avoid any zero-error validation claim.
+

@@ -1,0 +1,49 @@
+{
+  "status": "OFFLINE_PREPARED_NOT_LAUNCHED",
+  "manifest_version": "interleaved-isolated-v1",
+  "acquisition_id": "A-provider-instrument-pilot-20260912-v1",
+  "task_count": 20,
+  "member_count": 5,
+  "repeat_count": 4,
+  "scheduled_cells": 400,
+  "schedule_sha256": "e5334e042fa72e18d57f765cd160de3c883bf9646792588bb92e1725c27f9f1b",
+  "resource_budget": {
+    "max_logical_calls": 8,
+    "max_requested_samples": 8,
+    "max_output_tokens": 32768,
+    "max_request_bytes": 1000000
+  },
+  "tasks_sha256": "5b0093fdf8ca9659536f53c5151d90586a6efe4c89db22bbb79d1a6e66c019ea",
+  "split_sha256": "28824da5a66ba986d59d86b8a7e416775afe43a3489e91f2d9367df71d5d60c8",
+  "protocol_sha256": "572b1fd096030ad927e96537f3e2a4e17b6436df313c5e5cd56e3461d3f6952a",
+  "source_sha256_count": 511,
+  "source_runtime_sha256": "a2f2927864888012410c916e38e479c8d437182df5cc31c29ae63e2314994922",
+  "schedule_head": [
+    {
+      "repeat": 0,
+      "harness": "clone_deepseek",
+      "task": "toxicology#11"
+    },
+    {
+      "repeat": 0,
+      "harness": "clone_qwen",
+      "task": "toxicology#11"
+    },
+    {
+      "repeat": 0,
+      "harness": "real_qwen",
+      "task": "toxicology#11"
+    },
+    {
+      "repeat": 0,
+      "harness": "bare",
+      "task": "toxicology#11"
+    },
+    {
+      "repeat": 0,
+      "harness": "real_deepseek",
+      "task": "toxicology#11"
+    }
+  ],
+  "api_key_used": "placeholder only; no provider request"
+}

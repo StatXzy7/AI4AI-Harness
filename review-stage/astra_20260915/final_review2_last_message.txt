@@ -1,0 +1,40 @@
+## Re-check of the seven findings
+
+| Finding | Status | Evidence |
+|---|---|---|
+| 1. MATH D/E empty dev set | **Resolved** | `cli.py:48-69` constructs the dev split, preserves the full population for D/E, and evaluates held-out tasks. `math_diagnosis.json:53-65` reports 320 eval tasks; D is an honest tie (`0.0, 0.0` CI), not mechanical abstention. |
+| 2. S3 used global-best estimand | **Resolved** | `core.py:197-255` checks matched repeats, loops over every member pair, computes pairwise deltas, and states the pairwise estimand explicitly at `253-255`. |
+| 3. `nanmean` dropped missing cells | **Partially resolved** | `_acc` and `_accs_rows` preserve denominators (`core.py:109-118`). However, S4 bootstrap uses `n_valid` (`core.py:346-353`), excluding missing cells, and comparison references still use `np.nanmean` (`cli.py:161-172`). The frozen missingness rule is therefore not enforced everywhere. |
+| 4. BIRD A/S1 was only a NaN check | **Resolved, with a serious outcome** | `cli.py:104-117` incorporates duplicate and verdict-conflict audit counts into S1. The resulting artifact records audit conflicts (`bird_diagnosis.json:4-14`) and A=`REFUTED_WITHIN_SCOPE` for the cells (`17-20`). |
+| 5. Controls did not compare A | **Resolved for the 16 frozen controls** | `cli.py:181-193` evaluates classes A–E. Calibration rows contain A verdicts, and the blinded artifact reports the corresponding A states (`control_validation_blinded.json:17-35`, `200-213`). |
+| 6. Auditor challenges were not merged | **Partially resolved** | CH1/CH2 are appended by `cli.py:194-205` and appear in the blinded artifact (`control_validation_blinded.json:217-260`). However, challenge expected states contain only B–E, not A, and the frozen manifest still lists only eight blinded controls (`control_manifest_blinded.json:15-24`). |
+| 7. Frozen denominators were not followed | **Resolved for control thresholds** | `cli.py:206-226` explicitly computes `N_nonSUPPORTED`, `N_clear`, false-support rate, and abstention booleans. The blinded artifact reports `N_nonSUPPORTED=26`, `N_clear=29`, false-support rate `0.0`, and passing thresholds (`control_validation_blinded.json:3-13`). |
+
+## New blocking issues
+
+1. **Challenge protocol and paper claims disagree.** The frozen plan requires challenges to enter all metrics and the manifest, but the manifest contains only eight blinded controls. Challenges contribute only B–E cells. Nevertheless, the paper claims they were judged on “all five classes including integrity” (`sec_appendix.tex:529-540`), and `FINAL_REPORT.md:9` repeats the A–E claim. This needs either a manifest/metric rerun including A or a narrowed paper claim.
+
+2. **The BIRD integrity failure is not disclosed in the application narrative.** The current artifact reports large duplicate/conflict counts and A=`REFUTED_WITHIN_SCOPE` for all 72 generated cell reports, while the paper says only that B is supported and C/D/E are insufficient (`sec_appendix.tex:546-553`; `FINAL_REPORT.md:19`). The manuscript should explicitly report the failed A state and bound interpretation of B accordingly.
+
+3. **Denominator preservation remains incomplete for missing cells.** The S4 bootstrap exclusion of `n_valid` and remaining `nanmean` paths must be corrected or explicitly excluded from the frozen estimand.
+
+## Overall judgment
+
+This is no longer merely an error list: it now contains a reproducible diagnostic implementation, direct control evidence, and honest abstentions. It still does **not** qualify as a complete measurement paper contribution because the challenge packaging/integrity disclosure has unresolved protocol defects, and the stated external-baseline comparison, independent-team replication, and historical decision records remain absent.
+
+Minimal closure requires:
+
+- freeze one manifest containing CH1/CH2 with complete A–E expectations, then rerun blinded metrics;
+- disclose or repair the BIRD A failure;
+- make all missing-cell estimators denominator-preserving and rerun validation;
+- add an external common-pool baseline and independent-team replication;
+- provide contemporaneous decision records, or remove retrospective impact claims.
+
+## Not executed
+
+- Python unit tests and CLI reruns: the available interpreter terminated immediately with exit code `-1073741790`.
+- LaTeX rebuild, undefined-reference check, rendered-page inspection, and page-count verification.
+- Independent-team replication.
+- External-baseline comparison.
+- Historical-decision record verification.
+

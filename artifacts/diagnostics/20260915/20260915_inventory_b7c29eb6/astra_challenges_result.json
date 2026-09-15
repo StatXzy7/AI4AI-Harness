@@ -1,0 +1,142 @@
+{
+  "challenge_spec_sha256": "547182749712b2aef4238147793f06a189a2d61182ecff51e0127d1fe694c814",
+  "CH1": {
+    "expected": {
+      "B": "SUPPORTED",
+      "C": "INSUFFICIENT_EVIDENCE",
+      "D": "SUPPORTED",
+      "E": "SUPPORTED",
+      "A": "SUPPORTED"
+    },
+    "got": {
+      "A": "SUPPORTED",
+      "B": "SUPPORTED",
+      "C": "INSUFFICIENT_EVIDENCE",
+      "D": "SUPPORTED",
+      "E": "SUPPORTED"
+    },
+    "match": {
+      "B": true,
+      "C": true,
+      "D": true,
+      "E": true
+    },
+    "detail": {
+      "B": {
+        "state": "SUPPORTED",
+        "oracle_accuracy": 0.9,
+        "best_fixed_member": "mA",
+        "best_fixed_accuracy": 0.515,
+        "dev_fixed_member": "mA",
+        "dev_fixed_accuracy": 0.76,
+        "bare_accuracy": 0.5,
+        "headroom": 0.385,
+        "headroom_ci95": [
+          0.3642,
+          0.4033
+        ],
+        "residual_coverage_vs_bare": 0.4,
+        "info_boundaries": "oracle uses per-task outcomes of all members; best-fixed uses outcome-averages over the same eval tasks; dev-fixed uses dev data only; headroom is not a realizable gain (plan 2)"
+      },
+      "D": {
+        "state": "SUPPORTED",
+        "policy": "frozen multinomial LR on task stratum one-hot + dev-accuracy prior; abstain->bare when top-2 gap < 0.15",
+        "eval_tasks": 600,
+        "abstain_rate": 0.0,
+        "pi_Z_accuracy": 0.9,
+        "dev_fixed_member": "mA",
+        "dev_fixed_accuracy": 0.27,
+        "pi_Z_minus_devfixed_ci95": [
+          0.59,
+          0.67
+        ],
+        "leakage_boundary": "training used dev tasks only; eval tasks never entered fitting"
+      },
+      "E": {
+        "state": "SUPPORTED",
+        "policy": "pi_Z single member",
+        "budget_calls_per_task": 1,
+        "lambda_harm": 1.0,
+        "comparator": "dev-fixed (same budget)",
+        "U": 0.9,
+        "U_ci95": [
+          0.8367,
+          0.965
+        ],
+        "cost_evidence": "calls_missing",
+        "note": "real dollar/token costs are not recoverable from these archives; SUPPORT is limited to the matched 1-call budget, not billable deployment"
+      }
+    },
+    "note_a": "A expectation SUPPORTED derived from the auditor's own challenge constraints (single-shot synthetic, no corruption, no duplicates); recorded so challenges enter all five classes."
+  },
+  "CH2": {
+    "expected": {
+      "B": "SUPPORTED",
+      "C": "INSUFFICIENT_EVIDENCE",
+      "D": "SUPPORTED",
+      "E": "REFUTED_WITHIN_SCOPE",
+      "A": "SUPPORTED"
+    },
+    "got": {
+      "A": "SUPPORTED",
+      "B": "SUPPORTED",
+      "C": "INSUFFICIENT_EVIDENCE",
+      "D": "REFUTED_WITHIN_SCOPE",
+      "E": "REFUTED_WITHIN_SCOPE"
+    },
+    "match": {
+      "B": true,
+      "C": true,
+      "D": false,
+      "E": true
+    },
+    "detail": {
+      "B": {
+        "state": "SUPPORTED",
+        "oracle_accuracy": 1.0,
+        "best_fixed_member": "mA",
+        "best_fixed_accuracy": 0.94,
+        "dev_fixed_member": "mA",
+        "dev_fixed_accuracy": 0.88,
+        "bare_accuracy": 0.29,
+        "headroom": 0.06,
+        "headroom_ci95": [
+          0.0505,
+          0.0695
+        ],
+        "residual_coverage_vs_bare": 0.71,
+        "info_boundaries": "oracle uses per-task outcomes of all members; best-fixed uses outcome-averages over the same eval tasks; dev-fixed uses dev data only; headroom is not a realizable gain (plan 2)"
+      },
+      "D": {
+        "state": "REFUTED_WITHIN_SCOPE",
+        "policy": "frozen multinomial LR on task stratum one-hot + dev-accuracy prior; abstain->bare when top-2 gap < 0.15",
+        "eval_tasks": 1000,
+        "abstain_rate": 0.0,
+        "pi_Z_accuracy": 0.5,
+        "dev_fixed_member": "mA",
+        "dev_fixed_accuracy": 1.0,
+        "pi_Z_minus_devfixed_ci95": [
+          -0.532,
+          -0.47
+        ],
+        "leakage_boundary": "training used dev tasks only; eval tasks never entered fitting"
+      },
+      "E": {
+        "state": "REFUTED_WITHIN_SCOPE",
+        "policy": "pi_Z single member",
+        "budget_calls_per_task": 1,
+        "lambda_harm": 1.0,
+        "comparator": "dev-fixed (same budget)",
+        "U": -1.0,
+        "U_ci95": [
+          -1.064,
+          -0.94
+        ],
+        "cost_evidence": "calls_missing",
+        "note": "real dollar/token costs are not recoverable from these archives; SUPPORT is limited to the matched 1-call budget, not billable deployment"
+      }
+    },
+    "note_a": "A expectation SUPPORTED derived from the auditor's own challenge constraints (single-shot synthetic, no corruption, no duplicates); recorded so challenges enter all five classes."
+  },
+  "note": "CH2-D: auditor expected SUPPORTED (policy prefers mB on stratum B); the frozen policy with binary stratum features learns mA dominates in dev (mA dev acc 1.0) and routes to mA everywhere, so pi_Z == dev-fixed and the estimand degenerates. Recorded as a FAILED challenge cell for D, not a design pass. CH2-E REFUTED as expected (harm caught)."
+}

@@ -1,0 +1,37 @@
+{
+  "checked_at_utc": "2026-09-11T19:44:48.728327+00:00",
+  "status": "INTERRUPTED_WITH_UNCLOSED_HTTP",
+  "process_evidence": "execution session 23301 unavailable; current python/pythonw inventory contains only unrelated hermes gateway",
+  "planned": 72,
+  "started": 14,
+  "completed": 13,
+  "never_started_count": 58,
+  "pending_keys": [
+    "4e6220628761a468e3933f45864f167e8a8388ce85fe6fdfac18d40ecc38ee05"
+  ],
+  "http_unknown_event_count": 0,
+  "pending_http_events": [
+    {
+      "task": "4e6220628761a468e3933f45864f167e8a8388ce85fe6fdfac18d40ecc38ee05",
+      "kind": "task_start",
+      "time_ns": 1789136153559842000
+    },
+    {
+      "task": "4e6220628761a468e3933f45864f167e8a8388ce85fe6fdfac18d40ecc38ee05",
+      "kind": "logical_start",
+      "time_ns": 1789136153562020600
+    },
+    {
+      "task": "4e6220628761a468e3933f45864f167e8a8388ce85fe6fdfac18d40ecc38ee05",
+      "kind": "http_start",
+      "time_ns": 1789136153563996800
+    }
+  ],
+  "provider_completion_and_cost": "unknown for unclosed HTTP; absence of http_unknown event does not prove known completion",
+  "cause": "not established; no evidence here proves ReadTimeout",
+  "ledger_sha256": "ce1faa5e0dc6c31b48e2e9aba50ae4bf660017c2165a32d5de447803506a213a",
+  "pool_exists": false,
+  "marker_exists": false,
+  "source_modified": false,
+  "retry_performed": false
+}
