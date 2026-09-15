@@ -256,7 +256,7 @@ class TestCollect(unittest.TestCase):
         draw = json.loads(Path('review-stage/WP1R_PANEL_DRAW.json').read_text(encoding='utf-8'))
         expected = sorted(['gsm_deepseek_s0_g3', 'gsm_ernie_s0_g3', 'gsm_glm_s0_g6',
                            'gsm_kimi_s0_g3', 'gsm_kimi_s0_g4', 'gsm_minimax_s0_g0',
-                           'gsm_minimax_s0_g3', 'gsm_qwen_s0_g5'])
+                           'gsm_minimax_s0_g3', 'gsm_qwen_s0_g5', 'bare'])
         self.assertEqual(sorted(e[0] if isinstance(e, list) else e for e in draw['panel']), expected)
         self.assertEqual(draw['salt'], 'wp1r-panel-v1-20260915')
 

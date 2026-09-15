@@ -1,0 +1,54 @@
+{
+ "salt": "wp1r-clone-v1-20260915",
+ "panel": [
+  [
+   "clone-c1",
+   "same-code-bare-clone"
+  ],
+  [
+   "clone-c2",
+   "same-code-bare-clone"
+  ],
+  [
+   "clone-c3",
+   "same-code-bare-clone"
+  ],
+  [
+   "clone-c4",
+   "same-code-bare-clone"
+  ],
+  [
+   "clone-c5",
+   "same-code-bare-clone"
+  ],
+  [
+   "clone-c6",
+   "same-code-bare-clone"
+  ],
+  [
+   "clone-c7",
+   "same-code-bare-clone"
+  ],
+  [
+   "clone-c8",
+   "same-code-bare-clone"
+  ],
+  [
+   "clone-c9",
+   "same-code-bare-clone"
+  ]
+ ],
+ "eligible": [
+  "clone-c1",
+  "clone-c2",
+  "clone-c3",
+  "clone-c4",
+  "clone-c5",
+  "clone-c6",
+  "clone-c7",
+  "clone-c8",
+  "clone-c9"
+ ],
+ "source": "experiment/gsm8k/agents/bare.py",
+ "note": "All 9 clone slots execute the identical frozen bare source, independently initiated; identity is slot id, condition is the shared source hash."
+}

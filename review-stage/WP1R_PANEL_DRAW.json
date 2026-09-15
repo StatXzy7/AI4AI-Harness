@@ -2,6 +2,10 @@
  "salt": "wp1r-panel-v1-20260915",
  "panel": [
   [
+   "bare",
+   "fixed-baseline"
+  ],
+  [
    "gsm_deepseek_s0_g3",
    "stratum:deepseek"
   ],
@@ -93,5 +97,6 @@
   "gsm_qwen_s0_g0": 3.0025,
   "gsm_qwen_s0_g1": 2.05,
   "gsm_qwen_s0_g5": 2.0475
- }
+ },
+ "note": "Collection panel = 8 drawn generated members + bare (fixed baseline); draw rule unchanged (salt wp1r-panel-v1-20260915)."
 }
