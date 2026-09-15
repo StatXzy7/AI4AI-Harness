@@ -53,7 +53,7 @@ def _pop_from_rules(Y: np.ndarray, member_ids: list[str], meta: dict,
         condition={"target": "deterministic_rule", "repeat": 0, "no_cache": False,
                    "judge": "challenge_spec"},
         has_bare=True, dev_task_ids=dev_ids, task_meta=meta, calls={},
-        calls_status="not_provided")
+        calls_status="not_provided", budget_by_construction=True)
 
 
 def build_ch1() -> Population:

@@ -128,3 +128,30 @@ manifest 哈希与当前一致——即该声明不可能由已提交代码产�
 - `TestS3Invariants` / `TestS1ExecutionState` / `TestChallengeExecution`
   不变量测试；
 - `challenge_historical_replay.json`（历史重放报告）。
+
+## 10. 第二轮复审修订（2026-09-15，响应 Codex recheck 6.5/10 的四项阻断）
+
+- **E 类预算门（对应 recheck 阻断 1）**：冻结合同"存档若无法验证调用计数
+  则 E 记 INSUFFICIENT_EVIDENCE（强制）"现在由代码强制执行：E 离开
+  INSUFFICIENT 需要预算可核验——逐记录调用证据（calls_status=per_record）
+  或设计例外 `budget_by_construction`（仅限合成控制：1-call 预算是生成
+  机制的一部分，即 plan §3.E 的"按构造成本匹配"的显式化）。预算不可核验
+  时即使 U 区间为正或为负也记 INSUFFICIENT，且输出不得被解读为"无效应"。
+  该例外经本节修订记录在案，预期状态无需改动（C4/CH1 的 E SUPPORTED 从
+  此有显式合同依据）。
+- **D 策略实现与冻结合同一致（对应 recheck 阻断 2）**：π_Z 现按 plan
+  §3.D 的"开发集内 5 折交叉验证"实现——按特征模式（strata）分层的 5 折，
+  每折在其余 4 折上训练、对 eval 预测，eval 概率 = 折模型平均；eval 行
+  永不进入拟合。采用分层折是因为部分控制的 dev 集很小，非分层折会退化
+  为欠拟合弃权。全部冻结预期状态经重跑确认不变（36/36 测试、24 控制、
+  2 挑战全对）。
+- **条件比较类型安全（对应 recheck 阻断 3）**：S3 的执行条件一致性检查
+  改为 canonical typed JSON（`json.dumps(sort_keys=True)`），`60` 与
+  `"60"` 是不同条件；新增回归测试。
+- **C-comp 缺失传播（对应 recheck 阻断 4）**：任何 (member, task) 格在
+  全部重复中无有效观测时，其期望不可识别；此时 C-comp 弃权
+  （INSUFFICIENT，列出未识别格），不再对未知格做 0 填充——0 填充可能
+  制造假占优或假互补。新增回归测试。
+- **论文措辞**：E 类统一改称 budget-matched policy utility（不再用
+  "deployable"），并在文中注明预算门语义。
+- 复审原始意见存档：`review-stage/codex_recheck_20260915/recheck_last_message.txt`。

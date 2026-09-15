@@ -48,6 +48,11 @@ class Population:
     # "aggregate_only" (archive reports totals the adapter did not read row-wise),
     # "absent_in_archive_rows", "not_provided" (caller supplied no evidence either way)
     calls_status: str = "not_provided"
+    # True ONLY for synthetic designs where the 1-call budget is part of the
+    # generating mechanism (cost-matched by construction), never for archives:
+    # this is the frozen plan's design-by-construction exception; archives must
+    # verify call counts to leave INSUFFICIENT_EVIDENCE
+    budget_by_construction: bool = False
     # S1 inputs for synthetic controls (real adapters pass counters separately):
     judge_replay_mismatches: int = 0
     duplicate_keys: int = 0
@@ -318,7 +323,9 @@ def s3_stability(pop_by_condition: dict[str, Population]) -> dict:
     cond_fields = sorted({k for c in conds for k in pop_by_condition[c].condition})
     cond_mismatch = {}
     for f in cond_fields:
-        vals = {str(pop_by_condition[c].condition.get(f)) for c in conds}
+        # canonical typed JSON comparison: 60 and "60" are DIFFERENT conditions
+        vals = {json.dumps(pop_by_condition[c].condition.get(f), sort_keys=True)
+                for c in conds}
         if len(vals) > 1:
             cond_mismatch[f] = sorted(vals)
     if cond_mismatch:
@@ -397,6 +404,37 @@ def s3_stability(pop_by_condition: dict[str, Population]) -> dict:
     # --- Estimand 2: stable complementarity H_stable on repeat-averaged q_h(x)
     with np.errstate(invalid="ignore"):
         Q = _nanmean(Y, axis=0)                     # (members, tasks) q estimates
+    unidentified = np.isnan(Q)                      # cells with NO valid repeat
+    if unidentified.any():
+        # unknown expectation for some (member, task): imputing 0/1 could
+        # manufacture dominance or complementarity, so C-comp must abstain
+        cells = [(base.member_ids[i], base.tasks[j])
+                 for i, j in zip(*np.nonzero(unidentified))]
+        return {
+            "state": rank_state,
+            "R": R, "shared_tasks": T,
+            "condition_fields_verified": cond_fields,
+            "identity_checks": {"condition_mismatch": {}, "identity_conflicts": [],
+                                "identical_repeat_pairs": []},
+            "estimand": {
+                "stable_ranking": "pairwise same-condition accuracy difference (canonical "
+                                  "member-id direction); SUPPORTED iff some pair is stable "
+                                  "in either direction; permutation invariant by construction",
+                "stable_complementarity": "H_stable = E_x max_h q_h(x) - max_h E_x q_h(x); "
+                                          "zero iff one member is expectation-best on all "
+                                          "tasks; ranking differences do not imply this",
+            },
+            "stable_ranking": {"state": rank_state, "pairs": pair_reports},
+            "stable_complementarity": {
+                "state": INSUFFICIENT, "H_stable": None, "H_ci95": None,
+                "reason": "per-task member expectation unidentified for "
+                          f"{len(cells)} (member, task) cells with no valid repeat",
+                "unidentified_cells": cells[:20],
+                "minimal_missing_evidence": ["complete repeats or explicit unknown "
+                                             "handling for every (member, task) cell"]},
+            "note": ("pairing is across same-condition repeats; cross-time/provider batches "
+                     "are non_exchangeable and excluded from this estimate"),
+        }
     q_filled = np.where(np.isnan(Q), 0.0, Q)
     per_task_max = q_filled.max(axis=0)
     best_fixed_idx = int(np.argmax(q_filled.mean(axis=1)))
@@ -452,29 +490,51 @@ def _sigmoid(z):
     return 1.0 / (1.0 + np.exp(-np.clip(z, -30, 30)))
 
 
-def _fit_member_probs(X_dev, Y_dev, X_ev, epochs=2000, lr=0.5):
-    """Frozen policy core: per-member logistic P(Y_h=1 | features), fit on dev.
-
-    Tie-free alternative to argmax labelling; returns predicted per-member
-    correct probabilities on eval rows (n_ev, n_members).
+def _fit_member_probs(X_dev, Y_dev, X_ev, epochs=2000, lr=0.5, n_folds=5):
+    """Frozen policy core: per-member logistic P(Y_h=1 | features), trained by
+    stratified n_folds cross-validation ON THE DEV SPLIT (plan 3.D): folds are
+    balanced over feature patterns (strata), each fold model is fit on the
+    other folds, and the eval prediction is the average over fold models.
+    Eval rows never enter fitting. Folds with no valid labels are skipped.
     """
-    n_m = Y_dev.shape[0]
+    n_m, n_dev = Y_dev.shape[0], Y_dev.shape[1]
     probs = np.zeros((X_ev.shape[0], n_m))
+    fold_rng = np.random.default_rng(20260915)
+    fold_order = fold_rng.permutation(n_dev)
+    groups: dict[tuple, list[int]] = {}
+    for i in range(n_dev):
+        groups.setdefault(tuple(X_dev[i]), []).append(i)
+    fold_of = np.zeros(n_dev, dtype=int)
+    for idxs in groups.values():
+        idxs = np.asarray(idxs)[np.argsort(fold_order[idxs])]
+        for pos, i in enumerate(idxs):
+            fold_of[i] = pos % n_folds
+
+    def _fit_one(X_tr, y_tr):
+        w = np.zeros(X_tr.shape[1])
+        b0 = 0.0
+        for _ in range(epochs):
+            p = _sigmoid(X_tr @ w + b0)
+            g = (X_tr.T @ (p - y_tr)) / max(1, len(y_tr))
+            w -= lr * g
+            b0 -= lr * float(np.mean(p - y_tr))
+        return w, b0
+
     for h in range(n_m):
         y = Y_dev[h]
         if np.all(np.isnan(y)):
             continue
-        w = np.zeros(X_dev.shape[1])
-        b0 = float(np.log(np.clip(np.nanmean(y), 1e-3, 0.999)) *
-                   -np.log(1 - np.clip(np.nanmean(y), 1e-3, 0.999)))
-        b0 = 0.0
         valid = ~np.isnan(y)
-        for _ in range(epochs):
-            p = _sigmoid(X_dev[valid] @ w + b0)
-            g = (X_dev[valid].T @ (p - y[valid])) / max(1, valid.sum())
-            w -= lr * g
-            b0 -= lr * float(np.mean(p - y[valid]))
-        probs[:, h] = _sigmoid(X_ev @ w + b0)
+        fold_preds, fold_count = [], 0
+        for f in range(n_folds):
+            tr = valid & (fold_of == f)
+            if not tr.any():
+                continue
+            w, b0 = _fit_one(X_dev[tr], y[tr])
+            fold_preds.append(_sigmoid(X_ev @ w + b0))
+            fold_count += 1
+        if fold_count:
+            probs[:, h] = np.mean(fold_preds, axis=0)
     return probs
 
 
@@ -514,12 +574,8 @@ def s4_selectability(pop: Population, seed: int = 20260915) -> dict:
     if not ev_idx:
         return {"state": INSUFFICIENT, "reason": "no held-out eval tasks"}
 
-    strata = sorted(_strata(pop))
-    def feats(idxs):
-        return _feature_matrix(pop, idxs)
-
-    # class prior from dev (member-level pre-execution info), applied as bias
-    dev_acc = _accs_rows(pop.Y[:, dev_idx])
+    if not ev_idx:
+        return {"state": INSUFFICIENT, "reason": "no held-out eval tasks"}
 
     choice = _policy_choices(pop, dev_idx, ev_idx)
 
@@ -542,7 +598,8 @@ def s4_selectability(pop: Population, seed: int = 20260915) -> dict:
         state = INSUFFICIENT
     return {
         "state": state,
-        "policy": "frozen multinomial LR on task stratum one-hot + dev-accuracy prior; "
+        "policy": "frozen multinomial LR on task stratum one-hot, 5-fold CV on dev "
+                  "(fold-model average); "
                   f"abstain->bare when top-2 gap < {ABSTAIN_EPS}",
         "eval_tasks": len(ev_idx), "abstain_rate": round(float((choice == 0).mean()), 4),
         "pi_Z_accuracy": round(pi_rate, 4),
@@ -558,14 +615,17 @@ def s4_selectability(pop: Population, seed: int = 20260915) -> dict:
 def s5_cost(pop: Population, s4: dict) -> dict:
     """Plan 3.E: P = pi_Z single-member (1 call/task) vs dev-fixed (1 call/task).
 
-    Cost-matched by construction; oracle-routing (K calls) is a post-execution
-    reference only. Net utility U = acc diff - LAMBDA_HARM * harm diff; harm =
-    wrong while bare right. Missing call counts force INSUFFICIENT for claims
-    beyond the matched-budget design.
+    Budget gate (frozen contract): E may leave INSUFFICIENT_EVIDENCE only when
+    the per-task call budget is verifiable - per-record call evidence in the
+    population, or the design-by-construction exception for synthetic controls
+    (Population.budget_by_construction). Otherwise E is INSUFFICIENT regardless
+    of the utility interval, and this is never rendered as 'no effect'.
     """
     if not pop.has_bare or s4.get("state") in (INSUFFICIENT,) and "dev split" in s4.get("reason", ""):
         return {"state": INSUFFICIENT, "reason": "pi_Z unavailable or no bare reference",
                 "minimal_missing_evidence": ["trainable dev split"]}
+    budget_verified = bool(pop.calls) or pop.calls_status == "per_record" \
+        or pop.budget_by_construction
     if not pop.calls:
         # Distinguish "no evidence supplied by this adapter/caller" from
         # "the archive contains no call records" - never conflate the two.
@@ -596,14 +656,25 @@ def s5_cost(pop: Population, s4: dict) -> dict:
     rng = np.random.default_rng(20260915)
     boots = [np.nansum(rng.choice(paired, len(paired), replace=True)) / len(paired) for _ in range(4000)]
     lo, hi = np.percentile(boots, [2.5, 97.5])
-    state = SUPPORTED if lo > 0 else (REFUTED if hi < 0 else INSUFFICIENT)
+    interval_state = SUPPORTED if lo > 0 else (REFUTED if hi < 0 else INSUFFICIENT)
+    if not budget_verified:
+        state = INSUFFICIENT
+        budget_note = ("utility interval computed, but the per-task call budget "
+                       "could not be verified for this population; the frozen E "
+                       "contract forces INSUFFICIENT_EVIDENCE (an abstention, "
+                       "not a claim of no effect)")
+    else:
+        state = interval_state
+        budget_note = ""
     return {
         "state": state, "policy": "pi_Z single member", "budget_calls_per_task": BUDGET_CALLS,
         "lambda_harm": LAMBDA_HARM, "comparator": "dev-fixed (same budget)",
         "U": round(U, 4), "U_ci95": [round(lo, 4), round(hi, 4)],
+        "budget_verified": budget_verified,
         "cost_evidence": cost_evidence,
         "note": ("real dollar/token costs are not recoverable from these archives; SUPPORT "
-                 "is limited to the matched 1-call budget, not billable deployment"),
+                 "is limited to the matched 1-call budget, not billable deployment"
+                 + ("; " + budget_note if budget_note else "")),
     }
 
 

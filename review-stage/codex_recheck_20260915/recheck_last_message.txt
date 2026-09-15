@@ -1,0 +1,102 @@
+# Independent re-review
+
+## Verdict
+
+**Overall: 6.5/10 — not ready**
+
+The five prior P0s are substantially addressed, and the manuscript now presents the diagnostic in the main text. However, two unresolved contract mismatches remain blocking: E can still report `SUPPORTED` without call-count evidence, and the implemented D policy does not match the frozen five-fold-CV specification. There is also a typed-condition identity loophole.
+
+## Prior P0 status
+
+| Issue | Finding |
+|---|---|
+| P0-1 S3 order dependence / conflation | **Fixed in the tested path.** [`core.py`](E:/projects/AI4AI-Harness/experiment/diagnostics/core.py:265) uses member-ID canonical pairs; ranking and complementarity are separate; C9 distinguishes dominance from complementarity. |
+| P0-2 repeat identity | **Mostly fixed, but not complete.** Condition, source-hash, and identical-matrix gates exist at [`core.py`](E:/projects/AI4AI-Harness/experiment/diagnostics/core.py:317). See blocker below. |
+| P0-3 execution/cost semantics | **Partial.** Explicit judge execution states and BIRD `n_llm_calls` loading exist. E gating remains inconsistent with the frozen plan. |
+| P0-4 challenge chain | **Fixed for the current blinded artifact.** Current CH1/CH2 execution is spec- and code-hash bound; historical replay is separate and labeled. |
+| P0-5 plan/control alignment | **Substantially fixed.** v1.3 remains the frozen layer; v2 documents amendments; 24 controls and 14 blinded entries are present with explicit denominators. |
+
+## New findings
+
+- The 14-flip result is real in [`math_judge_v2_flips.csv`](E:/projects/AI4AI-Harness/artifacts/diagnostics/20260915/20260915_diagnose_math_57a1616d/math_judge_v2_flips.csv), and [`DECISION_IMPACT.csv`](E:/projects/AI4AI-Harness/artifacts/diagnostics/20260915/20260915_diagnose_math_57a1616d/DECISION_IMPACT.csv), C-10, and the paper report it honestly.
+- The stored CH2 `best_fixed=0.94` artifact is inconsistent with the frozen generating rule. The current blinded artifact correctly reports **CH2-D SUPPORTED, CH2-E REFUTED**. The historical file is retained separately and has no code binding.
+
+## Remaining blocking issues
+
+### 1. E can support without verified call records
+
+At [`core.py`](E:/projects/AI4AI-Harness/experiment/diagnostics/core.py:569), missing `calls` produces a `cost_evidence` label, but does not force E to abstain. The function can continue to return `SUPPORTED` at line 599.
+
+Reproducible example: synthetic C4 and CH1 have no per-record calls yet E is `SUPPORTED`; CH1’s historical detail explicitly says `cost_evidence: "calls_missing"`.
+
+**Impact:** This violates the frozen E contract, which requires insufficient evidence when call counts cannot be verified. It weakens every positive E result in synthetic validation.
+
+**Minimal fix:** Require complete per-record call evidence before allowing E `SUPPORTED`; alternatively, explicitly amend the plan to define a design-by-construction exception, then regenerate controls and manuscript wording.
+
+### 2. D implementation does not implement the frozen five-fold-CV policy
+
+The frozen plan specifies five-fold cross-validation for the selection policy. [`core.py`](E:/projects/AI4AI-Harness/experiment/diagnostics/core.py:490)–[`core.py`](E:/projects/AI4AI-Harness/experiment/diagnostics/core.py:524) fits once on the entire development split. No fold-based training occurs; `dev_acc` is computed but unused.
+
+**Impact:** D/E artifacts validate a different estimator from the frozen protocol. The control pass therefore cannot establish conformance to the stated D estimand.
+
+**Minimal fix:** Implement the specified CV procedure and rerun all controls/challenges, or record a formal amendment in v2 and relabel all affected evidence.
+
+### 3. Condition identity comparison is not type-safe
+
+[`core.py`](E:/projects/AI4AI-Harness/experiment/diagnostics/core.py:318)–[`core.py`](E:/projects/AI4AI-Harness/experiment/diagnostics/core.py:323) compares `str(value)`. Thus `{"timeout": 60}` and `{"timeout": "60"}` are treated as identical conditions.
+
+**Impact:** A claimed P0-2 refusal guarantee is not universal.
+
+**Minimal fix:** Compare canonical typed JSON values, preserving type and nested structure, and add an integer/string mismatch test.
+
+### 4. C-comp mishandles missing repeat outcomes
+
+[`core.py`](E:/projects/AI4AI-Harness/experiment/diagnostics/core.py:399) replaces missing repeat averages with zero before calculating `H_stable`. This can create artificial complementarity or artificial dominance when cells are unknown.
+
+**Minimal fix:** Propagate missingness into C-comp bounds or abstain whenever the relevant per-task member expectation is unidentified.
+
+## Manuscript assessment
+
+### Main-text diagnostics section
+
+**Pass.** Section 6 is in the main text and includes:
+
+- the two-action identity;
+- C-rank/C-comp separation;
+- invariant tests and identity gates;
+- control results;
+- 14-flip self-correction;
+- explicit limits on BIRD and MATH conclusions.
+
+The paper does not sell synthetic validation as field validation. It repeatedly states that stable complementarity, selectability, and deployable utility remain unresolved.
+
+### Page limit and build
+
+- `main.aux` places `endofmain` on **page 9**.
+- `main.pdf` has **22 total pages**, with the appendix beginning afterward.
+- `main.log` reports no undefined-reference or citation warnings.
+- Existing PDF inspection passes; I did not rebuild the PDF.
+
+### Expression issue
+
+The appendix still calls E “deployable net utility” in places, although the evidence is only offline, one-call, budget-matched utility with no billable token/dollar accounting. Rename this consistently to **budget-matched policy utility**.
+
+## Scores
+
+| Area | Score | Verdict |
+|---|---:|---|
+| Measurement correctness | **6/10** | not ready |
+| Diagnostic validity | **7/10** | almost |
+| Research-contribution completeness | **6/10** | not ready |
+| Manuscript-expression completeness | **8/10** | almost |
+
+## Missing evidence, in priority order
+
+1. Real same-condition independent repeats with frozen source hashes and clone controls.
+2. A genuine held-out D/E selector evaluation with a documented dev/eval split.
+3. Verified per-record call budgets and, if claimed, billable cost evidence.
+4. An independent validation set beyond mechanism-derived synthetic controls.
+5. A controlled bridge isolating verification from the gate’s strategy-space restriction.
+
+The supplied 29/29 test result and stored validation artifacts were accepted as evidence. My local Python rerun was **not executed successfully** because the interpreter terminated with Windows status `-1073741790`; the PDF was inspected but not rebuilt.
+

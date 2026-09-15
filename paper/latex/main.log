@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.29)  15 SEP 2026 13:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.29)  15 SEP 2026 19:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -422,7 +422,7 @@ LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 5
  (d:/texlive/2026/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 ))
-(./sec_related.tex
+(./sec_related.tex [2]
 LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 6
 2.
  (d:/texlive/2026/texmf-dist/tex/latex/psnfss/omsptm.fd
@@ -430,16 +430,21 @@ File: omsptm.fd
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 62.
+) (./sec_phase1.tex
+Underfull \vbox (badness 2158) has occurred while \output is active []
 
-[2]) (./sec_phase1.tex [3]) (./sec_phase2.tex [4] [5]
-<figures/fig_design_revision.pdf, id=267, 679.33798pt x 389.96892pt>
+ [3])
+[4] (./sec_phase2.tex [5]
+<figures/fig_design_revision.pdf, id=266, 679.33798pt x 389.96892pt>
 File: figures/fig_design_revision.pdf Graphic file (type pdf)
 <use figures/fig_design_revision.pdf>
 Package pdftex.def Info: figures/fig_design_revision.pdf  used on input line 91
 .
 (pdftex.def)             Requested size: 226.56935pt x 130.05873pt.
 ) (./sec_results.tex
-(./revision_primary_table.tex) [6 <./figures/fig_design_revision.pdf>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [6 <./figures/fig_design_revision.pdf>] (./revision_primary_table.tex)
 <figures/fig_results_revision.pdf, id=381, 679.1586pt x 295.16022pt>
 File: figures/fig_results_revision.pdf Graphic file (type pdf)
 <use figures/fig_results_revision.pdf>
@@ -447,19 +452,22 @@ Package pdftex.def Info: figures/fig_results_revision.pdf  used on input line 3
 0.
 (pdftex.def)             Requested size: 337.86465pt x 146.8321pt.
 
-(./revision_factorial_table.tex)
+(./revision_factorial_table.tex) [7 <./figures/fig_results_revision.pdf>])
+(./sec_diagnostics.tex [8]) (./sec_discussion.tex) (./sec_conclusion.tex)
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [7 <./figures/fig_results_revision.pdf>]) (./sec_diagnostics.tex [8])
-(./sec_discussion.tex) (./sec_conclusion.tex) [9] (./main.bbl [10])
-(./sec_appendix.tex [11]
-<figures/fig_phenomenon.pdf, id=490, 440.53085pt x 308.48085pt>
+ [9]
+(./main.bbl [10]) (./sec_appendix.tex [11]
+<figures/fig_phenomenon.pdf, id=489, 440.53085pt x 308.48085pt>
 File: figures/fig_phenomenon.pdf Graphic file (type pdf)
 <use figures/fig_phenomenon.pdf>
 Package pdftex.def Info: figures/fig_phenomenon.pdf  used on input line 79.
 (pdftex.def)             Requested size: 238.49341pt x 167.00551pt.
- [12] [13 <./figures/fig_phenomenon.pdf>]
-(./revision_sensitivity_table.tex) (./revision_cost_table.tex) [14]
+ [12] [13 <./figures/fig_phenomenon.pdf>] (./revision_sensitivity_table.tex) (.
+/revision_cost_table.tex)
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [14]
 (./revision_selection_table.tex) [15]
 Underfull \hbox (badness 10000) in paragraph at lines 342--343
 []|\OT1/pcr/m/n/9 GLM-5.3-Flash\OT1/ptm/m/n/9 , \OT1/pcr/m/n/9 Qwen3.8-Flash\OT
@@ -478,12 +486,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 344--346
 /n/9 , \OT1/pcr/m/n/9 MiniMax-M3\OT1/ptm/m/n/9 ,
  []
 
-[16]
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 366--367
 []\OT1/pcr/m/n/9 Calculate the percentage of the cards availabe in Chinese
  []
 
-
+[16]
 Underfull \hbox (badness 10000) in paragraph at lines 370--372
 []\OT1/pcr/m/n/9 'Chinese Simplified' is the language; percentage =
  []
@@ -531,7 +542,14 @@ Underfull \hbox (badness 1259) in paragraph at lines 535--544
 w.[] \OT1/ptm/m/n/10 Gate-v4 com-bined the source-
  []
 
-(./revision_decomposition_table.tex) [19]) (./sec_crossdomain.tex [20] [21])
+
+Underfull \vbox (badness 1946) has occurred while \output is active []
+
+ [19]
+(./revision_decomposition_table.tex)) (./sec_crossdomain.tex [20]
+Underfull \vbox (badness 2334) has occurred while \output is active []
+
+ [21])
 [22] (./main.aux)
  ***********
 LaTeX2e <2025-11-01>
@@ -547,7 +565,7 @@ Here is how much of TeX's memory you used:
  40309 multiletter control sequences out of 15000+600000
  655500 words of font info for 95 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,90p,684b,580s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,12n,90p,684b,574s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><d:/tex
 live/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><d:/texlive/2026
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb><d:/texlive/2026/texmf-dis
@@ -566,7 +584,7 @@ live/2026/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb><d:/texlive/2026/texmf
 -dist/fonts/type1/urw/helvetic/uhvb8a.pfb><d:/texlive/2026/texmf-dist/fonts/typ
 e1/urw/times/utmb8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/times/utmr8
 a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (22 pages, 393357 bytes).
+Output written on main.pdf (22 pages, 393834 bytes).
 PDF statistics:
  757 PDF objects out of 1000 (max. 8388607)
  491 compressed objects within 5 object streams

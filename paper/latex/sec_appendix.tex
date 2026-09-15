@@ -591,8 +591,11 @@ uniqueness; a check that was not run is reported as not-run and can never
 render the class SUPPORTED); \textbf{(B)} single-shot coverage (oracle minus
 best-fixed, with dev-fixed reported separately); \textbf{(C)} stability, in
 two separated estimands; \textbf{(D)} pre-execution selectability (a frozen
-one-call selection policy versus dev-fixed); \textbf{(E)} deployable net
-utility under a frozen 1-call budget with $\lambda{=}1$ harm weighting. Each
+one-call selection policy versus dev-fixed); \textbf{(E)} budget-matched policy
+utility under a frozen 1-call budget with $\lambda{=}1$ harm weighting
+(offline, one-call; E leaves INSUFFICIENT\_EVIDENCE unless the per-task call
+budget is verified by per-record evidence or is part of the generating
+design). Each
 class returns SUPPORTED, REFUTED\_WITHIN\_SCOPE, INSUFFICIENT\_EVIDENCE, or
 NOT\_APPLICABLE with scope and minimal missing evidence; classes are never
 collapsed into a single score.

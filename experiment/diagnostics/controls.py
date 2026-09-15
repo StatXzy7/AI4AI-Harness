@@ -50,7 +50,8 @@ def _pop(Y, member_ids, tasks, dev_ids, meta=None, condition=None, has_bare=True
         source_hashes=[f"h{i}" for i in range(len(member_ids))],
         tasks=tasks, Y=np.array(Y, dtype=float, copy=True),
         condition=condition or {"c": "synthetic"}, has_bare=has_bare,
-        dev_task_ids=dev_ids, task_meta=meta or {}, calls=calls or {})
+        dev_task_ids=dev_ids, task_meta=meta or {}, calls=calls or {},
+        budget_by_construction=True)
 
 
 def _task_ids(n, prefix="t"):
@@ -218,7 +219,8 @@ def _repeat_pop(Y, member_ids, tasks, condition, repeat_index, seed,
         source_hashes=[f"h{i}" for i in range(len(member_ids))],
         tasks=tasks, Y=Yr, condition=dict(condition), has_bare=True,
         dev_task_ids=dev_ids or [], task_meta={},
-        calls={}, calls_status="not_provided")
+        calls={}, calls_status="not_provided",
+        budget_by_construction=True)
 
 
 _STOCH = -1.0   # sentinel: cell is stochastic Bernoulli(0.5), drawn per repeat
@@ -289,7 +291,8 @@ def gen_C11_condition_mixing(seed):      # one 'repeat' under a different condit
             source_hashes=[f"h{i}" for i in range(3)],
             tasks=tasks, Y=np.array(Y, dtype=float, copy=True),
             condition=cond, has_bare=True, dev_task_ids=tasks[:n_dev],
-            task_meta={}, calls={}, calls_status="not_provided")
+            task_meta={}, calls={}, calls_status="not_provided",
+            budget_by_construction=True)
     return pops
 
 
@@ -311,7 +314,7 @@ def gen_C12_cloned_repeats(seed):        # identical matrices = unverifiable rep
             tasks=tasks, Y=np.array(Y, dtype=float, copy=True),
             condition={"c": "synthetic", "timeout": 60}, has_bare=True,
             dev_task_ids=tasks[:n_dev], task_meta={}, calls={},
-            calls_status="not_provided")
+            calls_status="not_provided", budget_by_construction=True)
     return pops
 
 

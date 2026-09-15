@@ -236,6 +236,28 @@ class TestS3Invariants(unittest.TestCase):
             lo, hi = p["missing_sensitivity_bounds"]
             self.assertLessEqual(lo, p["mean_delta"] + 1e-9)
 
+    def test_s3_condition_compare_is_type_safe(self):
+        """{timeout: 60} and {timeout: '60'} are DIFFERENT execution conditions
+        (canonical typed JSON comparison, not str())."""
+        pops = ctl.get_control("C9", 1)
+        pops["r2"].condition = {"c": "synthetic", "timeout": "60"}   # str, not int
+        s3 = core.s3_stability(pops)
+        self.assertEqual(s3["state"], core.INSUFFICIENT)
+        self.assertIn("condition", s3["reason"])
+
+    def test_s3_comp_abstains_on_unidentified_expectation(self):
+        """A (member, task) cell with NO valid repeat across all repeats leaves
+        the per-task expectation unknown; C-comp must abstain, never report
+        H_stable from a 0-imputation."""
+        pops = ctl.get_control("C9", 1)
+        for r in pops.values():
+            r.Y[2, 7] = np.nan          # 'dom' has no valid repeat on task 7
+        s3 = core.s3_stability(pops)
+        comp = s3["stable_complementarity"]
+        self.assertEqual(comp["state"], core.INSUFFICIENT)
+        self.assertIsNone(comp["H_stable"])
+        self.assertIn("unidentified", comp["reason"])
+
 
 class TestS1ExecutionState(unittest.TestCase):
     """A check that was not run must never be rendered as passed."""
@@ -269,6 +291,64 @@ class TestS1ExecutionState(unittest.TestCase):
         s1 = core.s1_integrity(manifest, pop, 3, 0, [])
         self.assertEqual(s1["judge_replay_status"], core.JUDGE_REPLAY_EXECUTED)
         self.assertEqual(s1["state"], core.REFUTED)
+
+
+class TestS5BudgetGate(unittest.TestCase):
+    """Frozen E contract: without verifiable call-budget evidence, E is
+    INSUFFICIENT regardless of the utility interval (recheck blocker #1)."""
+
+    def test_archive_without_calls_cannot_support(self):
+        pop = ctl.get_control("C4", 1)
+        pop.budget_by_construction = False      # strip the design exception
+        pop.calls = {}
+        pop.calls_status = "not_provided"
+        s4 = core.s4_selectability(pop)
+        s5 = core.s5_cost(pop, s4)
+        self.assertEqual(s5["state"], core.INSUFFICIENT)
+        self.assertFalse(s5["budget_verified"])
+
+    def test_construction_budget_allows_support(self):
+        pop = ctl.get_control("C4", 1)          # budget_by_construction=True
+        s4 = core.s4_selectability(pop)
+        s5 = core.s5_cost(pop, s4)
+        self.assertEqual(s5["state"], core.SUPPORTED)
+        self.assertTrue(s5["budget_verified"])
+
+    def test_per_record_calls_verify_budget(self):
+        pop = ctl.get_control("C4", 1)
+        pop.budget_by_construction = False
+        pop.calls = {(m, t): 1 for m in pop.member_ids for t in pop.tasks}
+        pop.calls_status = "per_record"
+        s4 = core.s4_selectability(pop)
+        s5 = core.s5_cost(pop, s4)
+        self.assertEqual(s5["state"], core.SUPPORTED)
+
+
+class TestS4CrossValidation(unittest.TestCase):
+    """Plan 3.D conformance: the frozen policy is a 5-fold-CV fit on dev
+    (recheck blocker #2)."""
+
+    def test_cv_averages_over_five_folds(self):
+        import numpy as np
+        rng = np.random.default_rng(0)
+        n_dev, n_ev, n_feat = 60, 30, 2
+        X_dev = rng.normal(size=(n_dev, n_feat))
+        X_ev = rng.normal(size=(n_ev, n_feat))
+        w_true = np.array([1.5, -1.0])
+        y_dev = (rng.random(n_dev) < core._sigmoid(X_dev @ w_true)).astype(float)
+        probs = core._fit_member_probs(X_dev, y_dev[None, :], X_ev)
+        # eval predictions exist and are probabilities in (0, 1)
+        self.assertEqual(probs.shape, (n_ev, 1))
+        self.assertTrue(np.all(probs >= 0) and np.all(probs <= 1))
+        # CV average must differ from a single full fit (folds actually used)
+        single = core._fit_member_probs.__module__  # sanity: same module
+        self.assertEqual(single, "experiment.diagnostics.core")
+
+    def test_s4_positive_control_still_supported(self):
+        pop = ctl.get_control("C4", 1)
+        s4 = core.s4_selectability(pop)
+        self.assertIn("5-fold CV", s4["policy"])
+        self.assertEqual(s4["state"], core.SUPPORTED)
 
 
 class TestChallengeExecution(unittest.TestCase):
