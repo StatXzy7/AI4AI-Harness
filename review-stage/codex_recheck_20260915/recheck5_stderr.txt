@@ -1,0 +1,7 @@
+2026-09-15T14:05:18.519471Z ERROR codex_core::tools::router: error=collab spawn failed: no thread with id: 01a0a561-e3b7-7ba2-aaaa-c348d0e70993
+2026-09-15T14:05:40.913215Z ERROR codex_core::tools::router: error=collab spawn failed: no thread with id: 01a0a561-e3b7-7ba2-aaaa-c348d0e70993
+2026-09-15T14:08:16.796990Z ERROR codex_core::tools::router: error=apply_patch verification failed: invalid patch: multiple operations target C:\Users\Administrator\.codex\memories\MEMORY.md
+2026-09-15T14:10:15.012944Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in C:\Users\Administrator\.codex\memories\memory_summary.md:
+### D:\myprojects\AP淇濇鍗婃媺鏍兼湕鏃ュ姩鍔涘鏍煎紡鍙戠幇
+
+#### 2026-09-14

@@ -92,6 +92,11 @@ def main():
                                headers={'Authorization': f'Bearer {os.environ["_KEY"]}'})
                 entries = r.json().get('data', []) if r.status_code == 200 else []
                 ids = [e.get('id') for e in entries]
+                with open(AUDIT_DIR / 'provider_ledger.jsonl', 'a', encoding='utf-8') as fh:
+                    fh.write(json.dumps({'ts': time.time(), 'request': 'GET /models',
+                                         'response_status': r.status_code,
+                                         'response_ids_head': ids[:20]},
+                                        ensure_ascii=False) + '\n')
                 results['checks'][f'models_list_{tag}'] = {
                     'status': r.status_code, 'n_models': len(ids),
                     'model_listed': MODEL in ids,

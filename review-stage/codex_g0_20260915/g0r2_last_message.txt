@@ -1,0 +1,88 @@
+## Verdict
+
+score: 5.5/10 ; verdict: not ready
+
+**The seven blockers are not all resolved: three VERIFIED, four PARTIAL.** G0 remains closed.
+
+Reviewed through commit `bc9954989d80b39767fbde4659b9aa67fbef933a`, including the generated, untracked acquisition configs. Files changed during review; findings below reflect the last inspected versions. I modified nothing and made no provider calls.
+
+## Blocker-by-blocker resolution (1-7: VERIFIED | PARTIAL | NOT FIXED, with file:line evidence)
+
+1. **Temperature — VERIFIED for the current frozen sources/configs.**
+
+   A1 correctly replaces the universal-zero statement with source-defined temperatures ([protocol:187](E:/projects/AI4AI-Harness/review-stage/REAL_EVIDENCE_PROTOCOL_V1.md:187)). DeepSeek requests `0.4`; Kimi requests `0.7` ([DeepSeek:13](E:/projects/AI4AI-Harness/experiment/gsm8k/agents/gsm_deepseek_s0_g3.py:13), [Kimi:20](E:/projects/AI4AI-Harness/experiment/gsm8k/agents/gsm_kimi_s0_g3.py:20)). Generated settings use `temperature_override=None` ([wp1r_configs.py:28](E:/projects/AI4AI-Harness/experiment/revision/wp1r_configs.py:28)). Actual request bodies and transmitted temperatures are recorded ([fresh_runtime.py:193](E:/projects/AI4AI-Harness/experiment/revision/fresh_runtime.py:193), [fresh_runtime.py:306](E:/projects/AI4AI-Harness/experiment/revision/fresh_runtime.py:306)).
+
+   Qualification: the worker **still honors** `bridge._tls.temp_override`; the inspected members do not set it. “Unused” is accurate for this execution path, not an enforced prohibition ([collector:323](E:/projects/AI4AI-Harness/experiment/revision/fresh_collect_math.py:323)).
+
+2. **Global budget — PARTIAL.**
+
+   File-locked reservation and per-HTTP charging exist; successful reservations are not refunded ([collector:104](E:/projects/AI4AI-Harness/experiment/revision/fresh_collect_math.py:104), [collector:136](E:/projects/AI4AI-Harness/experiment/revision/fresh_collect_math.py:136)). Generated configs specify `45000`, and accounting honestly retains `dollar_cost=None`.
+
+   **The counter is not global across the collection.** Both parent and workers derive its location from `config['output']` ([collector:456](E:/projects/AI4AI-Harness/experiment/revision/fresh_collect_math.py:456), [collector:508](E:/projects/AI4AI-Harness/experiment/revision/fresh_collect_math.py:508)). Real, clone and dev configs have separate outputs, each receiving its own 45,000 allowance ([wp1r_configs.py:97](E:/projects/AI4AI-Harness/experiment/revision/wp1r_configs.py:97)). Shards likewise use separate outputs in the test. Sharing one output would conflict with the writer lock and differing manifests ([fresh_runtime.py:41](E:/projects/AI4AI-Harness/experiment/revision/fresh_runtime.py:41)).
+
+   A2 states the pre-formal p95/4000-CNY gate, but no verified price projection or operational monetary ceiling is established ([protocol:194](E:/projects/AI4AI-Harness/review-stage/REAL_EVIDENCE_PROTOCOL_V1.md:194)). Unknown pricing cannot establish compliance with that ceiling.
+
+3. **Clone loading — VERIFIED at the loader level.**
+
+   Members receive raw/LF source hashes, and the worker loads `harness['source']` under `gsm8k.agents._iso_<digest>` ([collector:224](E:/projects/AI4AI-Harness/experiment/revision/fresh_collect_math.py:224), [collector:335](E:/projects/AI4AI-Harness/experiment/revision/fresh_collect_math.py:335)). Clone generation assigns distinct IDs to the shared `bare.py` source ([wp1r_configs.py:60](E:/projects/AI4AI-Harness/experiment/revision/wp1r_configs.py:60)). The bare-plus-clone loopback test exercises this route ([test:208](E:/projects/AI4AI-Harness/experiment/revision/test_fresh_collect_math.py:208)).
+
+   The generated clone config nevertheless fails preparation because its call statistics omit clone IDs; see engineering findings below.
+
+4. **Concurrency/failure handling — PARTIAL.**
+
+   The bounded worker pool, closed-failure results, unresolved-request stops, 200-cell window and overall failure check are implemented ([collector:425](E:/projects/AI4AI-Harness/experiment/revision/fresh_collect_math.py:425), [collector:472](E:/projects/AI4AI-Harness/experiment/revision/fresh_collect_math.py:472), [collector:520](E:/projects/AI4AI-Harness/experiment/revision/fresh_collect_math.py:520)). A4 explicitly permits HTTP concurrency above worker concurrency; it does not implement a four-request HTTP semaphore.
+
+   Two blocking defects remain:
+
+   - **Resume erases failure status from the stopping calculation.** Every already-finished cell returns `True`, including stored error results ([collector:448](E:/projects/AI4AI-Harness/experiment/revision/fresh_collect_math.py:448)). Consequently, restarting a fully completed, 100%-failed run can pass the overall failure check and emit `run_verified`.
+   - **Caught budget exhaustion can escape the stop gate.** Qwen catches solver exceptions ([Qwen:103](E:/projects/AI4AI-Harness/experiment/gsm8k/agents/gsm_qwen_s0_g5.py:103)). `RunStore.finish()` does not reject `global_budget_exhausted`, while the parent checks that event only when worker success is false ([fresh_runtime.py:100](E:/projects/AI4AI-Harness/experiment/revision/fresh_runtime.py:100), [collector:472](E:/projects/AI4AI-Harness/experiment/revision/fresh_collect_math.py:472)). A fallback result can therefore be accepted after denied requests.
+
+5. **Statistics — PARTIAL.**
+
+   A5 contains δ, α, 10,000 permutations, seed, the joint CI/p criterion, discovery/validation roles, complete cases, imputation and the four-item Holm family ([protocol:222](E:/projects/AI4AI-Harness/review-stage/REAL_EVIDENCE_PROTOCOL_V1.md:222)).
+
+   **It still leaves outcome-contingent analytical choices:**
+
+   - “Task-conditional advantage” lacks an operational comparator-selection rule and E2 tie-breaking rule.
+   - Member–clone pairing, δ treatment in the permutation null, and whether selection is recomputed during permutation are unspecified.
+   - “Slot identity permutation” does not distinguish joint relabeling across repeats from independently shuffling validation identities. These produce different nulls; joint relabeling can merely rename the slots.
+   - Bootstrap construction is incomplete, and “available-repeat mean” imputation is undefined when no repeat is available.
+
+   The added numbers do not yet define one reproducible analysis.
+
+6. **Panel binding — PARTIAL.**
+
+   `prepare()` compares configured IDs with the draw and incorporates panel, eligible IDs, salt and file hash ([collector:186](E:/projects/AI4AI-Harness/experiment/revision/fresh_collect_math.py:186), [collector:238](E:/projects/AI4AI-Harness/experiment/revision/fresh_collect_math.py:238)). I independently recomputed the draw: the current nine-member panel is correct.
+
+   **The claimed evidence-index addition is absent.** [CURRENT_RUN_EVIDENCE_SHA256.json:1](E:/projects/AI4AI-Harness/review-stage/CURRENT_RUN_EVIDENCE_SHA256.json:1) contains 13 entries and no `WP1R_PANEL_DRAW.json`. Its existing hashes match, but that does not bind the missing file.
+
+7. **Formal executor — VERIFIED as a protocol designation.**
+
+   A7 explicitly names `fresh_collect_math --config <frozen config>` and prohibits historical `collect.py` as the formal executor ([protocol:249](E:/projects/AI4AI-Harness/review-stage/REAL_EVIDENCE_PROTOCOL_V1.md:249)). The CLI implements that entry point ([collector:565](E:/projects/AI4AI-Harness/experiment/revision/fresh_collect_math.py:565)). Executability remains blocked by the configuration/budget defects.
+
+## engineering_gate / scientific_claims / budget_gate / release readiness
+
+- **engineering_gate: FAIL.** In addition to the above:
+  - All three generated configs omit required statistics: `bare` for real/dev, all nine clone IDs for clone. The generator reads only the 35-generated-member archive; `prepare()` raises on missing IDs ([wp1r_configs.py:40](E:/projects/AI4AI-Harness/experiment/revision/wp1r_configs.py:40), [collector:176](E:/projects/AI4AI-Harness/experiment/revision/fresh_collect_math.py:176)).
+  - Kimi and Minimax each request **five samples**, but their historical means produce `max_requested_samples=4`. These members are deterministically rejected before HTTP ([collector:178](E:/projects/AI4AI-Harness/experiment/revision/fresh_collect_math.py:178), [Kimi:11](E:/projects/AI4AI-Harness/experiment/gsm8k/agents/gsm_kimi_s0_g3.py:11), [Minimax:22](E:/projects/AI4AI-Harness/experiment/gsm8k/agents/gsm_minimax_s0_g3.py:22)). Logical-call projections must account separately for samples and attempts.
+
+- **Test coverage: incomplete; execution status UNKNOWN.** There are 14 MATH test methods. The failure test executes only 100 cells, so it cannot exercise the 200-cell failure-window branch. Shard tests use separate budgets and sequential collection. Representative five-sample members, failure-preserving resume and swallowed budget exhaustion are not covered ([tests:219](E:/projects/AI4AI-Harness/experiment/revision/test_fresh_collect_math.py:219)). The current real-draw assertion includes bare and matches the file.
+
+- **Runtime compatibility: additive change VERIFIED; regression passes unverified.** The commit diff only adds optional `transport_factory` wiring, preserving the default transport ([fresh_runtime.py:220](E:/projects/AI4AI-Harness/experiment/revision/fresh_runtime.py:220)). Both documented Python entry points failed to launch with `0xC0000022`. I cannot certify diagnostics **42/42**, isolated collector **8/8**, or runtime **10/10**. This is an execution limitation, not evidence of test failures.
+
+- **scientific_claims: NOT CLEARED.** A5 remains under-specified; no fresh empirical claim is established.
+- **budget_gate: CLOSED.** Cross-config accounting, sample-aware projections and verified cost feasibility remain unresolved.
+- **release readiness: NOT READY for paid collection.** No edits or release actions were performed.
+
+## Remaining must-do before paid collection
+
+1. Fix shared attempt accounting, sample-aware cell budgets, missing member statistics, durable failure handling and unconditional exhaustion stops. Add targeted offline coverage and obtain current regression results.
+2. Freeze executable statistical rules for every unresolved A5 choice, with synthetic null/positive/missing-data checks.
+3. Freeze reviewed configs and prepared manifests; bind protocol, real/clone specifications, source hashes, shared budget identity and execution topology into the evidence index.
+4. Obtain G0 clearance **before any paid pilot**. Then run a separately bounded, representative pilot through durable request accounting. The new provider-check script sends directly and writes its summary afterward; it does not supply that ledger ([provider_check.py:47](E:/projects/AI4AI-Harness/experiment/revision/provider_check.py:47), [provider_check.py:94](E:/projects/AI4AI-Harness/experiment/revision/provider_check.py:94)).
+5. Before formal collection, verify pricing, calculate the pilot-informed p95 total including samples/retries/dev/clones/pilot, and establish compliance with both **45,000 attempts and 4000 CNY**.
+
+## Allowed next step
+
+**Offline remediation and G0 re-review against one immutable snapshot. Paid smoke tests, pilot and formal collection remain blocked.**
+

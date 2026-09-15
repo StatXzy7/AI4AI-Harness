@@ -294,6 +294,19 @@ class TestCollect(unittest.TestCase):
         # cap = ceil(1.0*1.5)+2 = 4 logical calls; each may request 5 samples.
         self.assertEqual(budgets['gsm_minimax_s0_g3']['max_requested_samples'], 20)
 
+    def test_exhaustion_event_scoped_to_task_blocks_finish(self):
+        """A global_budget_exhausted event carrying the bound task key must
+        make RunStore.finish refuse, so a harness catch cannot seal the cell."""
+        with tempfile.TemporaryDirectory(prefix='exh_test_') as temporary:
+            folder = Path(temporary)
+            from experiment.revision.fresh_runtime import RunStore
+            manifest = {'version': 't', 'cache_mode': 'off', 'solver': {}}
+            with RunStore(folder, manifest) as store:
+                key, needed = store.begin({'cell': 1})
+                store.event('global_budget_exhausted', task=key, reserved=5, max_attempts=5)
+                with self.assertRaises(RuntimeError):
+                    store.finish(key, {'cell': 1, 'official_correct': 1})
+
     def test_real_panel_draw_matches_frozen_file(self):
         draw = json.loads(Path('review-stage/WP1R_PANEL_DRAW.json').read_text(encoding='utf-8'))
         expected = sorted(['gsm_deepseek_s0_g3', 'gsm_ernie_s0_g3', 'gsm_glm_s0_g6',

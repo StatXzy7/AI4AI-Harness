@@ -1,0 +1,23 @@
+You are the same INDEPENDENT READ-ONLY REVIEWER (gate G0, round 2) for AI4AI-Harness at E:\projects\AI4AI-Harness. Round 1 (your prior message, archived at review-stage/codex_g0_20260915/g0_last_message.txt) returned 4.5/10 not ready with 7 blockers. The executor claims all 7 are fixed. VERIFY each fix against the actual files; do not trust the claim. Do NOT modify anything.
+
+FIXES TO VERIFY (one by one)
+1. Temperature: review-stage/REAL_EVIDENCE_PROTOCOL_V1.md amendment A1 now states per-call temperature is defined by each member's frozen source (same code path as repeat-0), not "frozen 0.0". Check experiment/gsm8k/agents sources (e.g. gsm_deepseek_s0_g3.py uses temperature 0.4) and experiment/revision/fresh_collect_math.py worker: bridge temp_override unused; transmitted temperature recorded in AuditedTransport request bodies.
+2. Global budget: experiment/revision/fresh_collect_math.py GlobalBudget (file-locked, cross-process, attempts never refunded) charged per HTTP request via BudgetedTransport; manifest records max_provider_attempts=45000; dollar_cost stays None until price verification; amendment A2 requires pilot-informed p95 cost projection + 4000 CNY gate BEFORE formal collection.
+3. Clone loading: worker loads every member from its manifest source path under unique module name gsm8k.agents._iso_<digest>; member identity (id) separated from condition (source hash); clone slots share bare.py hash explicitly recorded.
+4. Concurrency/failure: parent worker pool concurrency 1..4; closed-request failures recorded as error results and counted in sliding window (200 cells, >0.15 stop); unknown/drain_expired/budget_rejected -> stop-and-reconcile; GlobalBudgetExhausted -> provider_attempt_ceiling_reached stop; overall failure rate >0.15 refuses to seal.
+5. Statistics: amendment A5 freezes H0/H1 vs delta=1.0pp, paired permutation test (10000 permutations, seed 20260915, one-sided alpha 0.05), bootstrap CI lower bound > delta AND permutation p < alpha for SUPPORTED, clone-null construction mirroring discovery/validation, missing-cell complete-case rule + sensitivity, Holm over the 4-item secondary family.
+6. Panel binding: manifest.panel_draw includes panel, eligible, salt, SHA256 of WP1R_PANEL_DRAW.json; prepare() rejects mismatched configs; CURRENT_RUN_EVIDENCE_SHA256.json includes the draw file.
+7. Executor: amendment A7 names `python -m experiment.revision.fresh_collect_math --config <frozen config>` as the only formal MATH collector; experiment/gsm8k/collect.py demoted to historical replay.
+
+ALSO CHECK
+- experiment/revision/test_fresh_collect_math.py (14 offline loopback tests) actually covers these behaviors (budget exhaustion, failure window, shard partitioning, panel binding, real draw file).
+- fresh_runtime.py change is additive (transport_factory default preserves old behavior); experiment.diagnostics.test_diagnostics still 42/42 (you may rerun), experiment.revision.test_isolated_collect and test_fresh_runtime still pass.
+- Remaining gaps: what MUST still happen before paid collection (pilot, price projection, config freeze) and whether the protocol now leaves no outcome-contingent freedom.
+
+OUTPUT CONTRACT (exactly these sections)
+## Verdict
+score: x/10 ; verdict: ready | almost | not ready
+## Blocker-by-blocker resolution (1-7: VERIFIED | PARTIAL | NOT FIXED, with file:line evidence)
+## engineering_gate / scientific_claims / budget_gate / release readiness
+## Remaining must-do before paid collection
+## Allowed next step

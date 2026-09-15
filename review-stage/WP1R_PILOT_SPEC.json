@@ -1,0 +1,14 @@
+{
+ "salt": "wp1r-pilot-v1-20260915",
+ "panel": [
+  [
+   "bare",
+   "pilot-smoke"
+  ]
+ ],
+ "eligible": [
+  "bare"
+ ],
+ "source": "experiment/gsm8k/agents/bare.py",
+ "note": "Pilot smoke: 3 dev tasks x bare x 1 repeat through the formal collector; shares the acquisition global budget ledger."
+}

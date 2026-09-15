@@ -1,0 +1,21 @@
+You are the same INDEPENDENT READ-ONLY REVIEWER (gate G0, round 3) for AI4AI-Harness. Rounds 1-2: 4.5/10 and 5.5/10, both not ready. Round-2 verdict archived at review-stage/codex_g0_20260915/g0r2_last_message.txt. The executor claims all round-2 PARTIAL items are fixed. VERIFY each against files. Do not modify anything. This is the final round before paid collection; only remaining items that genuinely require paid execution (pilot, pricing) may be deferred to the G1 gate.
+
+VERIFY (round-2 findings -> claimed fixes)
+1. Budget not global across arms -> config field global_budget_path now mandatory (prepare raises); all three configs in artifacts/wp1r_20260915/configs/ share artifacts/wp1r_20260915/global_budget.json; pilot must share it too (protocol A8.1). Verify prepare() enforcement in experiment/revision/fresh_collect_math.py.
+2. Sample-aware budgets -> max_samples_per_call() scans frozen sources (kimi_s0_g3, minimax_s0_g3 use n=5); per-cell max_requested_samples = cap * max_n; attempts projection counts samples. Verify per_cell_budget + test_sample_aware_budget_rejects_five_sample_member.
+3. call_stats missing bare/clone -> wp1r_configs.call_stats() now includes bare (from run_bare_math500.jsonl, mean 0.993) and clone-c1..c9 inheriting bare stats; regenerated configs contain them.
+4. Resume erases failure status -> RunStore.result_of() (fresh_runtime.py) + _run_cell returns False for resumed error cells (official_correct None); test_resume_counts_error_cells_against_failure_policy proves a 100%-failed run cannot seal on resume.
+5. Budget exhaustion escape -> RunStore.finish now rejects global_budget_exhausted events (same level as http_unknown); worker finish fails -> parent stops with provider_attempt_ceiling_reached. Harness try/except cannot swallow it.
+6. temp_override honored -> worker frozen() now RAISES (run_invalid + RuntimeError) if bridge._tls.temp_override is set (protocol A8.5; source scan shows no member uses it).
+7. Statistics under-specified -> protocol A8.6 freezes: discovery mapping rule (argmax, member-id lexicographic tie-break), task-conditional advantage formula, clone-null observation with clone-c1 baseline, joint cross-repeat identity permutation within tasks (independent per-repeat shuffling forbidden), p = (1+#{A_perm >= A_real - delta})/10001 one-sided alpha=0.05, task-bootstrap CI of D = A_real - A_clone, SUPPORTED iff p<0.05 AND CI lower > 0 AND A_real > delta, complete-case missing rule with >10% coverage降级, sensitivity imputation, Holm family unchanged.
+8. Evidence index -> CURRENT_RUN_EVIDENCE_SHA256.json now 22 entries incl. draw files, configs, wp1r_configs.py, fresh_collect_math.py, fresh_runtime.py, provider_check.py.
+9. provider_check ledger -> every smoke request now appended to artifacts/wp1r_20260915/provider_audit/provider_ledger.jsonl (full bodies, no auth headers); A8.8 defines pilot as a fresh_collect_math run (3 tasks x bare x 1 repeat) through the same collector + shared budget.
+10. Regression evidence -> artifacts/wp1r_20260915/test_logs/regression_20260915_g0r3.txt records: loopback 17 OK, diagnostics 42 OK, isolated 8 OK, fresh_runtime 10 OK (your round-2 sandbox could not execute Python; use this archived log plus code reading).
+
+OUTPUT CONTRACT (exactly)
+## Verdict
+score: x/10 ; verdict: ready | almost | not ready
+## Item-by-item (1-10: VERIFIED | PARTIAL | NOT FIXED, file:line evidence)
+## Remaining blockers (empty if none)
+## G1 conditions (what the paid-phase gate must verify before formal collection)
+## Allowed next step

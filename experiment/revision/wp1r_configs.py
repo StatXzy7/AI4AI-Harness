@@ -24,6 +24,7 @@ SPLIT = ROOT / 'artifacts/gsm8k_audit/math500_split.json'
 PROTOCOL = ROOT / 'review-stage/REAL_EVIDENCE_PROTOCOL_V1.md'
 PANEL_DRAW = ROOT / 'review-stage/WP1R_PANEL_DRAW.json'
 CLONE_SLOTS = ROOT / 'review-stage/WP1R_CLONE_SLOTS.json'
+PILOT_SPEC = ROOT / 'review-stage/WP1R_PILOT_SPEC.json'
 
 SOLVER = {'base_url': 'https://llmapi.paratera.com/v1',
           'model': 'GLM-5.3-Flash',
@@ -79,8 +80,8 @@ def clone_members():
 
 
 def base_config(acquisition_id, section, members, panel_draw_path, repeats,
-                concurrency, output):
-    return {
+                concurrency, output, task_limit=None):
+    config = {
         'acquisition_id': acquisition_id,
         'protocol_path': str(PROTOCOL.relative_to(ROOT)),
         'cache_mode': 'off',
@@ -102,12 +103,17 @@ def base_config(acquisition_id, section, members, panel_draw_path, repeats,
         'dataset_root': 'external/data/bird/dev_20240627',
         'output': output,
     }
+    if task_limit is not None:
+        config['task_limit'] = task_limit
+    return config
 
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     panel = panel_members()
     clones = clone_members()
+    bare_only = [{'id': 'bare', 'source': 'experiment/gsm8k/agents/bare.py',
+                  'basis': 'pilot-smoke'}]
     configs = {
         'eval_real.json': base_config(
             'wp1r-eval-real-v1', 'eval', panel, PANEL_DRAW, [1, 2, 3], 2,
@@ -118,12 +124,16 @@ def main():
         'dev_real.json': base_config(
             'wp1r-dev-real-v1', 'dev', panel, PANEL_DRAW, [1, 2, 3], 2,
             'artifacts/wp1r_20260915/dev_real'),
+        'pilot.json': base_config(
+            'wp1r-pilot-v1', 'dev', bare_only, PILOT_SPEC, [1], 1,
+            'artifacts/wp1r_20260915/pilot', task_limit=3),
     }
     for name, cfg in configs.items():
         path = OUT / name
         path.write_text(json.dumps(cfg, indent=1, ensure_ascii=False), encoding='utf-8')
         print(f'wrote {path.relative_to(ROOT)}: {len(cfg["harnesses"])} members x '
-              f'{len(cfg["repeats"])} repeats, section={cfg["section"]}')
+              f'{len(cfg["repeats"])} repeats, section={cfg["section"]}'
+              + (f', task_limit={cfg["task_limit"]}' if 'task_limit' in cfg else ''))
 
 
 if __name__ == '__main__':

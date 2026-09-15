@@ -137,7 +137,10 @@ class BudgetedTransport(AuditedTransport):
         try:
             self.global_budget.reserve(1)
         except GlobalBudgetExhausted:
-            self.store.event('global_budget_exhausted',
+            # Scope the event to the bound task so RunStore.finish() sees it
+            # and can never seal a cell after a harness-caught exhaustion.
+            ctx = self.context.get() or {}
+            self.store.event('global_budget_exhausted', task=ctx.get('task'),
                              reserved=self.global_budget.spent(),
                              max_attempts=self.global_budget.max_attempts)
             raise
@@ -151,10 +154,14 @@ class MathFreshSolver(FreshSolver):
         super().__init__(store, settings, api_key, resource_budget, transport_factory=factory)
 
 
-def math_tasks(split_path: Path, section: str):
+def math_tasks(split_path: Path, section: str, task_limit=None):
     split = json.loads(Path(split_path).read_text(encoding='utf-8'))['tasks']
     lo = 0 if section == 'dev' else 100
     hi = 100 if section == 'dev' else 500
+    if task_limit is not None:
+        if type(task_limit) is not int or task_limit < 1 or task_limit > (hi - lo):
+            raise ValueError(f'task_limit must be an int in 1..{hi - lo}')
+        hi = lo + task_limit
     tasks = []
     for i in range(lo, hi):
         ex = split[i]
@@ -250,7 +257,8 @@ def prepare(config):
         harnesses.append(h)
     if not harnesses or len({h['id'] for h in harnesses}) != len(harnesses):
         raise ValueError('Expected distinct harness identities')
-    tasks = math_tasks(Path(config['split_path']), config['section'])
+    tasks = math_tasks(Path(config['split_path']), config['section'],
+                       config.get('task_limit'))
     sources = sorted(set(MATH_SOURCES))
     hashes = {str(path.relative_to(ROOT)): file_hash(path) for path in sources}
     resolved_draw = Path(config['panel_draw_path']).resolve()

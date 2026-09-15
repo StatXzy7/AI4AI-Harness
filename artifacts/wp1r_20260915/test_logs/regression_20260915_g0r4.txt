@@ -1,0 +1,8 @@
+== loopback (r4) ==
+Ran 18 tests in 809.786s
+
+OK
+== diagnostics (r4) ==
+Ran 42 tests in 49.071s
+
+OK

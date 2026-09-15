@@ -1,0 +1,76 @@
+2026-09-15T16:46:23.274474Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in C:\Users\Administrator\.codex\memories\MEMORY.md:
+## Task 3: G3A Strang-splitting resonance and fixed-step AP diagnostic
+
+### rollout_summary_files
+
+- rollout_summaries/2026-09-15T02-54-13-Z451-g3a_strang_splitting_resonance_ap_diagnostic.md (cwd=D:\myprojects\EnergyCert_RSI_research_pack, rollout_path=C:\Users\Administrator\.codex\sessions\2026\09\15\rollout-2026-09-15T10-54-13-01a0a2fc-872c-71f0-83fd-d586e419127f.jsonl, updated_at=2026-09-15T04:09:26+00:00, thread_id=01a0a2fc-872c-71f0-83fd-d586e419127f, success)
+
+### keywords
+
+- G3A, Strang splitting, resonance, AP failure, diffusion limit, implicit Euler, fixed rational splitting, G3A_DIAGNOSTICS_PASSED
+
+## Task 4: Freeze literature-faithful Peng鈥揕i IMEX1 AP partition
+
+### rollout_summary_files
+
+- rollout_summaries/2026-09-15T04-20-56-Cbxd-g3b_3_literature_faithful_imex_partition_freeze.md (cwd=D:\myprojects\EnergyCert_RSI_research_pack, rollout_path=C:\Users\Administrator\.codex\sessions\2026\09\15\rollout-2026-09-15T12-20-56-01a0a34b-ea64-7663-b8ea-7831f8e91fa7.jsonl, updated_at=2026-09-15T05:15:54+00:00, thread_id=01a0a34b-ea64-7663-b8ea-7831f8e91fa7, success)
+
+### keywords
+
+- G3B-3, Peng-Li, IMEX1, Fourier-Galerkin, AP_CLASS_A_PASS, AP_CLASS_B_PASS, Y_FROZEN, G3B_LITERATURE_PARTITION_FREEZE
+
+## User preferences
+
+2026-09-15T16:46:47.635669Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in C:\Users\Administrator\.codex\memories\MEMORY.md:
+- G2A uses velocities `(-3,-1,1,3)` and independent complex/unitary-real references; physical velocity second moment is 5. G2B enumerated 96 `(a, eta)` candidates with 192 attempts: 152 `PASS_EXACT`, 40 auxiliary-condition `REFUTED`, 0 `UNKNOWN`; best restricted-template value `eta=1/2`, sufficient `lambda0=1/10`. This is a bounded pilot, not RSI efficacy or a new theorem. [Task 2]
+
+## User preferences
+2026-09-15T16:47:32.839708Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in C:\Users\Administrator\.codex\memories\MEMORY.md:
+## Task 3: G3A Strang-splitting resonance and fixed-step AP diagnostic
+
+### rollout_summary_files
+
+- rollout_summaries/2026-09-15T02-54-13-Z451-g3a_strang_splitting_resonance_ap_diagnostic.md (cwd=D:\myprojects\EnergyCert_RSI_research_pack, rollout_path=C:\Users\Administrator\.codex\sessions\2026\09\15\rollout-2026-09-15T10-54-13-01a0a2fc-872c-71f0-83fd-d586e419127f.jsonl, updated_at=2026-09-15T04:09:26+00:00, thread_id=01a0a2fc-872c-71f0-83fd-d586e419127f, success)
+
+### keywords
+
+- G3A, Strang splitting, resonance, AP failure, diffusion limit, implicit Euler, fixed rational splitting, G3A_DIAGNOSTICS_PASSED
+
+## Task 4: Freeze literature-faithful Peng鈥揕i IMEX1 AP partition
+
+### rollout_summary_files
+
+- rollout_summaries/2026-09-15T04-20-56-Cbxd-g3b_3_literature_faithful_imex_partition_freeze.md (cwd=D:\myprojects\EnergyCert_RSI_research_pack, rollout_path=C:\Users\Administrator\.codex\sessions\2026\09\15\rollout-2026-09-15T12-20-56-01a0a34b-ea64-7663-b8ea-7831f8e91fa7.jsonl, updated_at=2026-09-15T05:15:54+00:00, thread_id=01a0a34b-ea64-7663-b8ea-7831f8e91fa7, success)
+
+### keywords
+
+- G3B-3, Peng-Li, IMEX1, Fourier-Galerkin, AP_CLASS_A_PASS, AP_CLASS_B_PASS, Y_FROZEN, G3B_LITERATURE_PARTITION_FREEZE
+
+## User preferences
+
+- Preserve the user's phase boundary: no GPU, model/API, RSI promotion, G3B search, dependency installation, or remote push until a genuine need and authorization are demonstrated. Negative structural results should change the method/search direction, not trigger larger blind searches. [Task 3][Task 4]
+- For AP claims, do not silently weaken the target to well-prepared data: Class A uses uniformly bounded `rho,g=O(1)`; Class B is diagnostic only; Class C `g=O(1/epsilon)` is unclaimed. Reconstruct actual stage equations rather than inferring a complete method from an ARS tableau name. [Task 4]
+
+## Reusable knowledge
+
+- G3A frozen model is `V=diag(-3,-1,1,3)`, `Pi=e e*`, `C=I-Pi`; Strang `S=D_s U_phi D_s` is energy non-increasing by the exact identity, but at `phi=m*pi` has `S e=(-1)^m e` (for example `k=1, dt=1/2, epsilon=dt/pi`), proving genuine non-decay and no unique fixed-step epsilon鈥? macro limit. The diffusion baseline remains `(1+5*k^2*dt)^-1`; fixed rational pure splitting is pruned by choosing `phi=2*pi*L`. [Task 3]
+- Peng鈥揕i IMEX1 elimination uses `R,T,U,L` and yields `AP_CLASS_A_PASS` analytically for the exact Fourier symbol; only the temporal ordering was specialized, so published DG stability/mesh theorems do not transfer. `Y_FROZEN` defines the propagator/AP gate, not a decay certificate or novelty claim. [Task 4]
+
+## Failures and how to do differently
+
+- An initial splitting-family implementation used an invalid elementwise collision expression; use matrix products with `D=Pi+exp(-d_j*r)C`, `U=diag(exp(-i*c_j*phi*v_j))`. Never promote energy non-increase to strict decay, AP failure to instability, or a certificate failure to system instability. [Task 3]
+- Do not call ARS(2,2,2) a complete method without explicit/implicit stage terms, and do not claim second-order accuracy or transfer DG certificates for the frozen Peng鈥揕i IMEX1 Fourier matrix. [Task 4]
+
+2026-09-15T16:49:00.769291Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in C:\Users\Administrator\.codex\memories\MEMORY.md:
+## Task 4: Freeze literature-faithful Peng閳ユ彆i IMEX1 AP partition
+
+### rollout_summary_files
+
+- rollout_summaries/2026-09-15T04-20-56-Cbxd-g3b_3_literature_faithful_imex_partition_freeze.md (cwd=D:\myprojects\EnergyCert_RSI_research_pack, rollout_path=C:\Users\Administrator\.codex\sessions\2026\09\15\rollout-2026-09-15T12-20-56-01a0a34b-ea64-7663-b8ea-7831f8e91fa7.jsonl, updated_at=2026-09-15T05:15:54+00:00, thread_id=01a0a34b-ea64-7663-b8ea-7831f8e91fa7, success)
+
+### keywords
+
+- G3B-3, Peng-Li, IMEX1, Fourier-Galerkin, AP_CLASS_A_PASS, AP_CLASS_B_PASS, Y_FROZEN, G3B_LITERATURE_PARTITION_FREEZE
+
+2026-09-15T16:51:30.001253Z ERROR codex_core::tools::router: error=apply_patch verification failed: Failed to find expected lines in C:\Users\Administrator\.codex\memories\MEMORY.md:
+# Task Group: AP-Discovery-Lab Phase 2A/2B CPU SLDG and BGK research

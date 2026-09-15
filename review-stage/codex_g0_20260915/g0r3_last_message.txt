@@ -1,0 +1,43 @@
+## Verdict
+
+score: 6.5/10 ; verdict: not ready
+
+## Item-by-item (1-10: VERIFIED | PARTIAL | NOT FIXED, file:line evidence)
+
+1. **PARTIAL** — `prepare()` requires `global_budget_path` ([fresh_collect_math.py:217-228](E:/projects/AI4AI-Harness/experiment/revision/fresh_collect_math.py:227)); all three frozen configs point to the same path ([eval_real.json:124](E:/projects/AI4AI-Harness/artifacts/wp1r_20260915/configs/eval_real.json:124), [eval_clone.json:124](E:/projects/AI4AI-Harness/artifacts/wp1r_20260915/configs/eval_clone.json:124), [dev_real.json:124](E:/projects/AI4AI-Harness/artifacts/wp1r_20260915/configs/dev_real.json:124)). However, `wp1r_configs.py` emits only those three configs ([wp1r_configs.py:107-124](E:/projects/AI4AI-Harness/experiment/revision/wp1r_configs.py:107)); no pilot config sharing the ledger exists.
+
+2. **VERIFIED** — Source scanning and sample-scaled budgets are implemented ([fresh_collect_math.py:170-199](E:/projects/AI4AI-Harness/experiment/revision/fresh_collect_math.py:170)); each sample executes an HTTP path and global attempts are reserved per request ([fresh_runtime.py:319-339](E:/projects/AI4AI-Harness/experiment/revision/fresh_runtime.py:319)). The targeted five-sample test passes in the archived regression ([test_fresh_collect_math.py:284-295](E:/projects/AI4AI-Harness/experiment/revision/test_fresh_collect_math.py:284)).
+
+3. **VERIFIED** — `call_stats()` loads bare statistics and assigns them to `clone-c1..c9` ([wp1r_configs.py:40-62](E:/projects/AI4AI-Harness/experiment/revision/wp1r_configs.py:40)); regenerated configs contain `bare=0.9925` and clone entries ([eval_real.json:97-106](E:/projects/AI4AI-Harness/artifacts/wp1r_20260915/configs/eval_real.json:97)).
+
+4. **VERIFIED** — Resumed cells inspect durable results and return failure when `official_correct` is `None` ([fresh_collect_math.py:470-480](E:/projects/AI4AI-Harness/experiment/revision/fresh_collect_math.py:470)); the regression test covers the 100%-failed resume case ([test_fresh_collect_math.py:269-282](E:/projects/AI4AI-Harness/experiment/revision/test_fresh_collect_math.py:269)).
+
+5. **NOT FIXED** — `RunStore.finish()` filters events by the task key before checking `global_budget_exhausted` ([fresh_runtime.py:100-114](E:/projects/AI4AI-Harness/experiment/revision/fresh_runtime.py:100)), but `BudgetedTransport` records that event without a `task` field ([fresh_collect_math.py:136-143](E:/projects/AI4AI-Harness/experiment/revision/fresh_collect_math.py:136)). A harness broad catch can swallow the exception ([gsm_qwen_s0_g5.py:103-107](E:/projects/AI4AI-Harness/experiment/gsm8k/agents/gsm_qwen_s0_g5.py:103)), allowing `finish()` to miss the exhaustion event. The parent-side check only handles unsuccessful child results ([fresh_collect_math.py:502-507](E:/projects/AI4AI-Harness/experiment/revision/fresh_collect_math.py:502)).
+
+6. **VERIFIED** — `temp_override` causes `run_invalid` and raises immediately ([fresh_collect_math.py:344-351](E:/projects/AI4AI-Harness/experiment/revision/fresh_collect_math.py:344)); no frozen member source uses it.
+
+7. **VERIFIED** — A8.6 now fixes discovery tie-breaking, task-conditional advantage, clone-c1 baseline, joint cross-repeat permutation, p-value, bootstrap CI, missingness, sensitivity, and Holm handling ([REAL_EVIDENCE_PROTOCOL_V1.md:283-304](E:/projects/AI4AI-Harness/review-stage/REAL_EVIDENCE_PROTOCOL_V1.md:283)).
+
+8. **VERIFIED** — The evidence index has 22 entries, including draw files, all three configs, `wp1r_configs.py`, both runtime files, and `provider_check.py` ([CURRENT_RUN_EVIDENCE_SHA256.json:15-23](E:/projects/AI4AI-Harness/review-stage/CURRENT_RUN_EVIDENCE_SHA256.json:15)).
+
+9. **PARTIAL** — `chat()` appends request and response bodies to `provider_ledger.jsonl` without authorization headers ([provider_check.py:47-76](E:/projects/AI4AI-Harness/experiment/revision/provider_check.py:47)). But the `/models` smoke request bypasses that writer ([provider_check.py:89-100](E:/projects/AI4AI-Harness/experiment/revision/provider_check.py:89)), and no fresh-collector pilot path writes the required JSONL ledger. A8.8 therefore remains only partially implemented ([REAL_EVIDENCE_PROTOCOL_V1.md:311-314](E:/projects/AI4AI-Harness/review-stage/REAL_EVIDENCE_PROTOCOL_V1.md:311)).
+
+10. **VERIFIED** — The archived regression records loopback 17/17, diagnostics 42/42, isolated 8/8, and fresh-runtime 10/10 as passing ([regression_20260915_g0r3.txt:1-16](E:/projects/AI4AI-Harness/artifacts/wp1r_20260915/test_logs/regression_20260915_g0r3.txt:1)).
+
+## Remaining blockers
+
+- Fix the unscoped `global_budget_exhausted` event so `RunStore.finish()` cannot seal a cell after a caught exhaustion.
+- Add and freeze a pilot config using the same global budget state file.
+- Make the complete provider smoke/pilot request set write to the required durable JSONL ledger.
+
+## G1 conditions
+
+- After G0 clearance, execute the prescribed fresh-collector pilot: 3 tasks × bare × 1 repeat, using the shared global budget and complete request ledger.
+- Verify provider pricing, usage completeness, and p95 total-cost projection ≤4000 CNY.
+- Verify the combined pilot plus formal-arm attempt budget, including retries and multi-sample requests, stays ≤45,000.
+- Preserve immutable configs, manifests, hashes, ledger, and unresolved-request/failure evidence before formal collection.
+
+## Allowed next step
+
+Offline remediation of items 1, 5, and 9, focused regression tests, evidence-index regeneration, and another G0 review. Paid pilot execution and pricing verification belong at G1 after those fixes.
+
