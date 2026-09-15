@@ -380,6 +380,21 @@ class TestS5BudgetGate(unittest.TestCase):
         self.assertEqual(s5["state"], core.INSUFFICIENT)
         self.assertIn("malformed", s5["budget_basis"])
 
+    def test_malformed_call_values_never_crash(self):
+        """String/mixed/inf/negative/None call values must yield a clean
+        INSUFFICIENT with malformed basis, never a crash (recheck4 blocker)."""
+        for bad in ("bad", float("inf"), float("-inf"), -1, None, True, [2]):
+            pop = ctl.get_control("C4", 1)
+            pop.budget_by_construction = False
+            calls = {(m, t): 1 for m in pop.member_ids for t in pop.tasks}
+            calls[(pop.member_ids[1], pop.tasks[0])] = bad
+            pop.calls = calls
+            pop.calls_status = "per_record"
+            s4 = core.s4_selectability(pop)
+            s5 = core.s5_cost(pop, s4)          # must not raise
+            self.assertEqual(s5["state"], core.INSUFFICIENT, f"bad={bad!r}")
+            self.assertIn("malformed", s5["budget_basis"], f"bad={bad!r}")
+
 
 class TestS4CrossValidation(unittest.TestCase):
     """Plan 3.D conformance: the frozen policy is a 5-fold-CV fit on dev

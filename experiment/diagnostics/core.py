@@ -678,7 +678,13 @@ def s5_cost(pop: Population, s4: dict) -> dict:
                          "note": "absence of a populated calls dict is NOT evidence "
                                  "that the archive lacks call records"}
     else:
-        per_call = [v for v in pop.calls.values() if v is not None]
+        # aggregate only VALID counts: malformed values (str, NaN, inf,
+        # negative, bool, None) are excluded here and already force the
+        # budget gate to INSUFFICIENT above - they must never crash this
+        # summary statistic (recheck4 blocker)
+        per_call = [v for v in pop.calls.values()
+                    if isinstance(v, (int, float)) and not isinstance(v, bool)
+                    and np.isfinite(v) and v >= 0]
         cost_evidence = {"status": pop.calls_status if pop.calls_status != "not_provided"
                          else "per_record",
                          "median_calls": float(np.median(per_call)) if per_call else None}

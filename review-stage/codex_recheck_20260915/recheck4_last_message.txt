@@ -1,0 +1,58 @@
+## Verdict
+
+**ARIS score: 6.6/10 — not ready**
+
+The four claimed fixes are largely present and the main regression suite passes. I found one remaining code-level blocker in the E gate, plus unresolved evidence limitations that prevent a ready research verdict.
+
+| Area | Score |
+|---|---:|
+| Measurement correctness | 6.5/10 |
+| Diagnostic validity | 7.5/10 |
+| Research-contribution completeness | 4.5/10 |
+| Manuscript-expression completeness | 8/10 |
+
+## Verified
+
+- `unittest`: **41/41 passed** using `D:\anaconda3\envs\cv\python.exe`.
+- CV direction, dev-accuracy features, typed whole-condition comparison, C-comp missingness abstention, permutation invariance, C9/C10, and CH1/CH2 tests pass.
+- Latest calibration/blinded artifacts:
+  - `20260915_controls_a4ea7567`
+  - `20260915_controls_497c0007`
+  - both report zero mismatches and bind the current `core.py`/`challenges.py` hashes.
+- CH1 remains E `SUPPORTED`; CH2 remains E `REFUTED_WITHIN_SCOPE`.
+- MATH artifact `245a88fd` preserves A–E states and all **14** judge-v2 flips.
+- `main.aux` places `endofmain` on page 9; existing PDF/log show 22 pages and no undefined-reference warnings.
+- E wording is consistently “budget-matched policy utility” in the requested sections.
+
+## Remaining blocking issue
+
+### 1. Non-numeric call records still crash the E gate
+
+In [core.py](/E:/projects/AI4AI-Harness/experiment/diagnostics/core.py:681), `s5_cost()` computes:
+
+```python
+per_call = [v for v in pop.calls.values() if v is not None]
+np.median(per_call)
+```
+
+This happens after malformed values have already been detected. A complete `per_record` archive containing `"bad"` call values raises:
+
+```text
+TypeError: the resolved dtypes are not compatible with add.reduce
+```
+
+It therefore fails the promised behavior “non-numeric → `INSUFFICIENT` with `malformed_call_records`.” The test suite covers NaN but has no string/object malformed-record case. The fix must avoid aggregating malformed values and add regression coverage for strings, mixed types, `inf`, negative values, and `None`.
+
+## Research blockers that remain
+
+- Real BIRD and MATH data still do not establish same-condition independent repeats; C remains `INSUFFICIENT_EVIDENCE`.
+- BIRD has no usable dev/eval split for selector training; D/E remain insufficient.
+- MATH has one condition group; D/E remain insufficient and its budget records are over-budget.
+- No independent held-out selector-utility validation or controlled bridge separating verification effects from gate strategy restriction is shown.
+
+## Checks not executed
+
+- `pytest -q`: could not start because the environment had no writable temporary directory.
+- Ruff: could not create its cache file.
+- PDF rebuild: not executed; only existing build artifacts were inspected.
+

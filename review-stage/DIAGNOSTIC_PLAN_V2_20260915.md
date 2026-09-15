@@ -176,5 +176,9 @@ manifest 哈希与当前一致——即该声明不可能由已提交代码产�
 - **C-comp 缺失门（recheck1 阻断 4，本轮复审确认）**：保持不变。
 - 目录名勘误：REPRODUCE.md 中 calibration/blinded 目录标注已修正
   （d3a32145=blinded，e721360b=calibration）。
-- recheck2/recheck3 意见存档：`review-stage/codex_recheck_20260915/
-  recheck2_last_message.txt`、`recheck3_last_message.txt`。
+- **E 门聚合健壮性（recheck4 残项）**：median_calls 只聚合有效值（有限
+  非负数值），字符串/mixed/inf/负值/None/bool 等畸形记录不再使 s5 崩溃，
+  一律走 malformed 门 -> INSUFFICIENT；测试覆盖全部畸形类型
+  （test_malformed_call_values_never_crash）。
+- recheck2/3/4 意见存档：`review-stage/codex_recheck_20260915/
+  recheck{2,3,4}_last_message.txt`。
