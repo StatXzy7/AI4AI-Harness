@@ -312,3 +312,19 @@ WP1R_PANEL_DRAW.json、WP1R_CLONE_SLOTS.json、三个冻结采集 config、
 账本（`provider_audit/provider_ledger.jsonl`，无认证头）；pilot 通过
 fresh_collect_math 同一采集器执行（3 任务 × bare × 1 轮，独立输出目录，
 共享全局账本），p95 成本投影据此计算并冻结于 v1.3 修订（若启动正式采集）。
+
+### A9. v1.3（2026-09-16，采集运行中的前瞻预算修订）
+
+- **触发**：实测每 cell 平均 provider attempts ≈ 2.9（n=5 采样成员每逻辑
+  调用发 5 次请求），全部三臂投影 ≈ 50,200 attempts > 原冻结的 45,000。
+- **修订**：provider attempt 上限 45,000 → **60,000**（对齐本轮任务授权
+  MAX_PROVIDER_ATTEMPTS=60000；这是授权上限的采用，不是扩权）。
+- **前瞻性**：修订时刻 reserved=8,803（19.6%），远未触及旧上限；
+  不存在"用满旧预算后再改"的情形。
+- **成本口径更新**：60,000 × p95 2,004 tokens = 120.2M tokens；
+  断点价 = 4000/120.2 ≈ **33.3 CNY/1M tokens**（保守假设不变；
+  flash 档模型实际价格远低于此）。token 账本与保守上界继续随 CHECKPOINT 报告。
+- **不改变任何科学条件**：采样参数、成员、任务、轮次、judge、调度均不变；
+  仅预算基础设施参数。 GlobalBudget 状态文件的 max_attempts 同步为 60,000
+  （修订后第一次 reserve 前），并在此记录。
+- 审查路径：本修订将作为 G2 封存审查的显式检查项。

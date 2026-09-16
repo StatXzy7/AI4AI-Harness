@@ -120,7 +120,7 @@
  "worker_wall_seconds": 1800,
  "drain_seconds": 120,
  "concurrency": 2,
- "max_provider_attempts": 45000,
+ "max_provider_attempts": 60000,
  "global_budget_path": "artifacts/wp1r_20260915/global_budget.json",
  "dataset_root": "external/data/bird/dev_20240627",
  "output": "artifacts/wp1r_20260915/dev_real"
