@@ -34,3 +34,20 @@
 - 监控命令：
   `python -c "import sqlite3;c=sqlite3.connect('artifacts/wp1r_20260915/eval_real/ledger.sqlite');print(c.execute(\"SELECT COUNT(*),SUM(json_extract(result,'$.official_correct')) FROM tasks WHERE result IS NOT NULL\").fetchone())"`
   `cat artifacts/wp1r_20260915/global_budget.json`
+
+## 2026-09-16 A9-resume：延续迁移（重要事件）
+- **根因**：RunStore manifest 绑定启动时的协议文件哈希与采集器源码哈希；
+  A9 预算修订 + GlobalBudget 修复使 byte-identical 重启不可能，双臂停摆 ~2h。
+- **处置（审计路径）**：`migrate_ledger.py` 创建延续账本
+  `eval_real_cont` / `eval_clone_cont`（新 manifest 绑定 A9 后协议与当前
+  源码哈希、60,000 上限），把旧账本全部已完成 cell（1590 + 4167）的结果
+  与全部事件逐条复制并重映射 cell 键，附 `ledger_migration` 事件（含源
+  账本 SHA256 绑定）。旧账本原样保留为冻结证据。
+- **config 恢复说明**：eval_real/eval_clone 旧 config 的
+  max_provider_attempts 恢复为 45000（manifest 创建身份）；实际执行上限
+  由共享状态文件（60,000）决定（GlobalBudget 现允许 state ≥ manifest）。
+  延续臂与 dev_real 使用 60,000。
+- **对账政策扩展**：reconcile_cell 三分规则——(1) 无 logical_start 事件
+  → 清除行（NEVER_STARTED，无请求发出、无预算消耗）；(2) 请求全闭合但
+  worker 死亡 → failed_known（attempts 计账）；(3) http_unknown →
+  unknown_remote（原有）。

@@ -1,0 +1,56 @@
+2026-09-15T21:41:15Z eval_clone not running at 1071/10800 cells; reconcile+relaunch
+e485384017d8: reconciled as unknown_remote (1 row)
+2026-09-15T22:01:17Z eval_clone not running at 1165/10800 cells; reconcile+relaunch
+0b9c2fe8aa10: reconciled as unknown_remote (1 row)
+2026-09-15T22:11:18Z eval_clone not running at 1172/10800 cells; reconcile+relaunch
+03e8c4cdcf44: reconciled as unknown_remote (1 row)
+2026-09-15T23:41:27Z eval_real not running at 1217/10800 cells; reconcile+relaunch
+81d4e00fad0b: reconciled as unknown_remote (1 row)
+2026-09-15T23:51:28Z eval_real not running at 1219/10800 cells; reconcile+relaunch
+d4ee14ce88ba: reconciled as unknown_remote (1 row)
+2026-09-16T00:21:31Z eval_real not running at 1252/10800 cells; reconcile+relaunch
+4bbb2b209b34: reconciled as unknown_remote (1 row)
+112530378ced: reconciled as unknown_remote (1 row)
+2026-09-16T00:51:34Z eval_real not running at 1256/10800 cells; reconcile+relaunch
+3a1ce9a2ec66: reconciled as unknown_remote (1 row)
+2026-09-16T01:01:36Z eval_real not running at 1259/10800 cells; reconcile+relaunch
+719d107bfb0d: reconciled as unknown_remote (1 row)
+2026-09-16T01:41:40Z eval_clone not running at 3095/10800 cells; reconcile+relaunch
+c8e45691eee9: reconciled as unknown_remote (1 row)
+2026-09-16T01:51:41Z eval_clone not running at 3156/10800 cells; reconcile+relaunch
+c4bc5f236552: reconciled as unknown_remote (1 row)
+2026-09-16T02:21:44Z eval_real not running at 1435/10800 cells; reconcile+relaunch
+0e2ded6340a5: reconciled as unknown_remote (1 row)
+2026-09-16T03:31:50Z eval_real not running at 1590/10800 cells; reconcile+relaunch
+f46bf0d6c524: no unknown request; leave for normal retry path
+2026-09-16T03:31:50Z eval_clone not running at 4166/10800 cells; reconcile+relaunch
+d4e7bfb8e1b0: reconciled as unknown_remote (1 row)
+9ae041496d5a: no unknown request; leave for normal retry path
+2026-09-16T03:41:52Z eval_real not running at 1590/10800 cells; reconcile+relaunch
+f46bf0d6c524: no unknown request; leave for normal retry path
+2026-09-16T03:41:52Z eval_clone not running at 4167/10800 cells; reconcile+relaunch
+9ae041496d5a: no unknown request; leave for normal retry path
+2026-09-16T03:51:53Z eval_real not running at 1590/10800 cells; reconcile+relaunch
+f46bf0d6c524: no unknown request; leave for normal retry path
+2026-09-16T03:51:53Z eval_clone not running at 4167/10800 cells; reconcile+relaunch
+9ae041496d5a: no unknown request; leave for normal retry path
+2026-09-16T04:01:54Z eval_real not running at 1590/10800 cells; reconcile+relaunch
+f46bf0d6c524: no unknown request; leave for normal retry path
+2026-09-16T04:01:54Z eval_clone not running at 4167/10800 cells; reconcile+relaunch
+9ae041496d5a: no unknown request; leave for normal retry path
+2026-09-16T04:11:55Z eval_real not running at 1590/10800 cells; reconcile+relaunch
+f46bf0d6c524: no unknown request; leave for normal retry path
+2026-09-16T04:11:55Z eval_clone not running at 4167/10800 cells; reconcile+relaunch
+9ae041496d5a: no unknown request; leave for normal retry path
+2026-09-16T04:21:56Z eval_real not running at 1590/10800 cells; reconcile+relaunch
+f46bf0d6c524: no unknown request; leave for normal retry path
+2026-09-16T04:21:56Z eval_clone not running at 4167/10800 cells; reconcile+relaunch
+9ae041496d5a: no unknown request; leave for normal retry path
+2026-09-16T04:31:57Z eval_real not running at 1590/10800 cells; reconcile+relaunch
+2026-09-16T04:31:57Z eval_clone not running at 4167/10800 cells; reconcile+relaunch
+2026-09-16T04:41:58Z eval_real not running at 1590/10800 cells; reconcile+relaunch
+2026-09-16T04:41:58Z eval_clone not running at 4167/10800 cells; reconcile+relaunch
+2026-09-16T04:51:59Z eval_real not running at 1590/10800 cells; reconcile+relaunch
+2026-09-16T04:51:59Z eval_clone not running at 4167/10800 cells; reconcile+relaunch
+2026-09-16T05:02:01Z eval_real not running at 1590/10800 cells; reconcile+relaunch
+2026-09-16T05:02:01Z eval_clone not running at 4167/10800 cells; reconcile+relaunch

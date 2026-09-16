@@ -90,8 +90,11 @@ class GlobalBudget:
             self._write({'max_attempts': self.max_attempts, 'reserved': 0})
         else:
             state = self._read()
-            if state.get('max_attempts') != self.max_attempts:
-                raise ValueError('Global budget ceiling differs from existing state')
+            if state.get('max_attempts') < self.max_attempts:
+                # A raised shared ceiling (protocol A9) dominates the manifest
+                # value; a manifest above the shared ceiling is a real conflict.
+                raise ValueError('Manifest attempt ceiling exceeds the shared state ceiling')
+        self.effective_max = max(int(self._read()['max_attempts']), self.max_attempts)
 
     def _read(self):
         return json.loads(self.path.read_text(encoding='utf-8'))
@@ -106,13 +109,12 @@ class GlobalBudget:
             msvcrt.locking(lock.fileno(), msvcrt.LK_LOCK, 1)
             try:
                 state = self._read()
-                if state['max_attempts'] != self.max_attempts:
-                    raise ValueError('Global budget ceiling changed under the reservation')
+                ceiling = max(int(state['max_attempts']), self.max_attempts)
                 reserved = state['reserved'] + n
-                if reserved > self.max_attempts:
+                if reserved > ceiling:
                     raise GlobalBudgetExhausted(
                         f'provider-attempt ceiling reached: {state["reserved"]}'
-                        f'+{n} > {self.max_attempts}')
+                        f'+{n} > {ceiling}')
                 self._write({**state, 'reserved': reserved})
                 return reserved
             finally:

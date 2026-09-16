@@ -42,8 +42,38 @@ def reconcile(arm: str):
                          and 'identity' in e), None)
         unknowns = [e for e in events if e['kind'] == 'http_unknown']
         attempts = [e for e in events if e['kind'] == 'http_start']
+        logicals = [e for e in events if e['kind'] == 'logical_start']
+        if not logicals and not unknowns:
+            # No provider request was ever sent: the cell is effectively
+            # NEVER_STARTED. Clearing the row loses no evidence (all events
+            # remain in the ledger); the retry path recreates it.
+            conn.execute('DELETE FROM tasks WHERE key=? AND result IS NULL', (key,))
+            print(f'{key[:12]}: cleared (never started; no request sent)')
+            continue
         if not unknowns:
-            print(f'{key[:12]}: no unknown request; leave for normal retry path')
+            print(f'{key[:12]}: closed requests only; marking failed result')
+            result = {
+                **(identity or {}),
+                'error': ['worker_died_after_closed_requests'],
+                'outcome': 'failed_known',
+                'official_correct': None,
+                'final_answer': None,
+                'reconciled': True,
+                'reconciled_at': time.time(),
+                'provider_attempts': len(attempts),
+                'accounting': {'logical_calls': len(logicals),
+                               'requested_samples': 0,
+                               'http_attempts': len(attempts),
+                               'responses_missing_usage': 0,
+                               'known_total_tokens': 0,
+                               'total_tokens': None,
+                               'reserved_output_tokens': 0,
+                               'reserved_request_bytes': 0,
+                               'dollar_cost': None},
+            }
+            changed = conn.execute('UPDATE tasks SET result=? WHERE key=? AND result IS NULL',
+                                   (json.dumps(result, ensure_ascii=False), key)).rowcount
+            print(f'{key[:12]}: reconciled as failed_known ({changed} row)')
             continue
         result = {
             **(identity or {}),
@@ -74,7 +104,7 @@ def reconcile(arm: str):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--arm', required=True, choices=['eval_real', 'eval_clone', 'dev_real'])
+    ap.add_argument('--arm', required=True, choices=['eval_real', 'eval_clone', 'dev_real', 'eval_real_cont', 'eval_clone_cont', 'dev_real_cont'])
     args = ap.parse_args()
     reconcile(args.arm)
 
