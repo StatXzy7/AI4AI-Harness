@@ -31,6 +31,21 @@ WP1R = ROOT / 'artifacts/wp1r_20260915'
 
 def reconcile(arm: str):
     ledger = WP1R / arm / 'ledger.sqlite'
+    # Refuse to reconcile while a collector holds the writer lock: marking a
+    # NULL row behind a live parent's back turns its store.finish into
+    # 'Task is not pending' and kills the run (observed 2026-09-17).
+    lock_path = ledger.parent / 'writer.lock'
+    if lock_path.exists():
+        import msvcrt
+        with open(lock_path, 'a+b') as lock:
+            try:
+                msvcrt.locking(lock.fileno(), msvcrt.LK_NBLCK, 1)
+            except OSError:
+                raise RuntimeError(
+                    'A collector holds the writer lock; reconcile is refused '
+                    'while an acquisition is live')
+            else:
+                msvcrt.locking(lock.fileno(), msvcrt.LK_UNLCK, 1)
     conn = sqlite3.connect(ledger)
     conn.execute('PRAGMA busy_timeout=10000')
     rows = conn.execute('SELECT key FROM tasks WHERE result IS NULL').fetchall()
