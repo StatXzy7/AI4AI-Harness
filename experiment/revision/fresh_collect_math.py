@@ -538,18 +538,7 @@ def _run_cell(store, manifest, config, cell, task, harness):
                   answer_preserved=True, worker_result=child_result)
         raise RuntimeError('Response usage unknown; preserve answer and pending cell, '
                            'do not retry automatically')
-    try:
-        store.finish(key, {**child_result, 'worker_pid': process['pid']})
-    except RuntimeError as exc:
-        if 'Task is not pending' in str(exc):
-            # The cell was reconciled externally while its worker was still
-            # running (protocol-sanctioned offline reconcile). Record the
-            # outcome honestly instead of killing the whole acquisition.
-            old = store.result_of(key)
-            store.event('external_reconcile_observed', task=key,
-                        outcome=(old or {}).get('outcome'))
-            return False if old is not None and old.get('official_correct') is None else True
-        raise
+    store.finish(key, {**child_result, 'worker_pid': process['pid']})
     return True
 
 
