@@ -1,0 +1,135 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 622, in <module>
+    main()
+    ~~~~^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 618, in main
+    collect(json.loads(Path(args.config).read_text(encoding='utf-8')))
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 590, in collect
+    raise RuntimeError(f'Acquisition stopped: {stop["reason"]}')
+RuntimeError: Acquisition stopped: RuntimeError: Worker has unknown or unresolved provider requests; reconcile the request ledger before any new acquisition
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 622, in <module>
+    main()
+    ~~~~^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 618, in main
+    collect(json.loads(Path(args.config).read_text(encoding='utf-8')))
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 590, in collect
+    raise RuntimeError(f'Acquisition stopped: {stop["reason"]}')
+RuntimeError: Acquisition stopped: RuntimeError: Worker has unknown or unresolved provider requests; reconcile the request ledger before any new acquisition
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 622, in <module>
+    main()
+    ~~~~^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 618, in main
+    collect(json.loads(Path(args.config).read_text(encoding='utf-8')))
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 590, in collect
+    raise RuntimeError(f'Acquisition stopped: {stop["reason"]}')
+RuntimeError: Acquisition stopped: RuntimeError: Worker has unknown or unresolved provider requests; reconcile the request ledger before any new acquisition
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 622, in <module>
+    main()
+    ~~~~^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 618, in main
+    collect(json.loads(Path(args.config).read_text(encoding='utf-8')))
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 590, in collect
+    raise RuntimeError(f'Acquisition stopped: {stop["reason"]}')
+RuntimeError: Acquisition stopped: RuntimeError: Worker has unknown or unresolved provider requests; reconcile the request ledger before any new acquisition
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 622, in <module>
+    main()
+    ~~~~^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 618, in main
+    collect(json.loads(Path(args.config).read_text(encoding='utf-8')))
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 590, in collect
+    raise RuntimeError(f'Acquisition stopped: {stop["reason"]}')
+RuntimeError: Acquisition stopped: RuntimeError: Worker has unknown or unresolved provider requests; reconcile the request ledger before any new acquisition
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 622, in <module>
+    main()
+    ~~~~^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 618, in main
+    collect(json.loads(Path(args.config).read_text(encoding='utf-8')))
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 590, in collect
+    raise RuntimeError(f'Acquisition stopped: {stop["reason"]}')
+RuntimeError: Acquisition stopped: RuntimeError: Worker has unknown or unresolved provider requests; reconcile the request ledger before any new acquisition
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 622, in <module>
+    main()
+    ~~~~^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 618, in main
+    collect(json.loads(Path(args.config).read_text(encoding='utf-8')))
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 590, in collect
+    raise RuntimeError(f'Acquisition stopped: {stop["reason"]}')
+RuntimeError: Acquisition stopped: RuntimeError: Worker has unknown or unresolved provider requests; reconcile the request ledger before any new acquisition
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 622, in <module>
+    main()
+    ~~~~^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 618, in main
+    collect(json.loads(Path(args.config).read_text(encoding='utf-8')))
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 590, in collect
+    raise RuntimeError(f'Acquisition stopped: {stop["reason"]}')
+RuntimeError: Acquisition stopped: RuntimeError: Worker has unknown or unresolved provider requests; reconcile the request ledger before any new acquisition
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 622, in <module>
+    main()
+    ~~~~^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 618, in main
+    collect(json.loads(Path(args.config).read_text(encoding='utf-8')))
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 590, in collect
+    raise RuntimeError(f'Acquisition stopped: {stop["reason"]}')
+RuntimeError: Acquisition stopped: RuntimeError: Worker has unknown or unresolved provider requests; reconcile the request ledger before any new acquisition
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 622, in <module>
+    main()
+    ~~~~^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 618, in main
+    collect(json.loads(Path(args.config).read_text(encoding='utf-8')))
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 590, in collect
+    raise RuntimeError(f'Acquisition stopped: {stop["reason"]}')
+RuntimeError: Acquisition stopped: RuntimeError: Task is not pending
+n\fresh_runtime.py", line 47, in __enter__
+    raise RuntimeError('Acquisition already has a writer') from None
+RuntimeError: Acquisition already has a writer
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 622, in <module>
+    main()
+    ~~~~^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 618, in main
+    collect(json.loads(Path(args.config).read_text(encoding='utf-8')))
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 590, in collect
+    raise RuntimeError(f'Acquisition stopped: {stop["reason"]}')
+RuntimeError: Acquisition stopped: FileExistsError: [WinError 183] 当文件已存在时，无法创建该文件。: 'E:\\projects\\AI4AI-Harness\\artifacts\\wp1r_20260915\\eval_clone_cont\\workers\\3b104d8dc53d1a1822c15f586a837745226c72978c0b188a35df5960ecd5c869'
