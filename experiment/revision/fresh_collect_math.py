@@ -239,8 +239,8 @@ def prepare(config):
         raise ValueError("section must be 'dev' or 'eval'")
     if not os.environ.get(config['api_key_env']):
         raise ValueError('Provider key is absent')
-    if not 1 <= config.get('concurrency', 1) <= 8:
-        raise ValueError('Concurrency must be within the authorized 1..8 range')
+    if not 1 <= config.get('concurrency', 1) <= 4:
+        raise ValueError('Concurrency must be within the authorized 1..4 range')
     if (config.get('failure_window_size', 200), config.get('failure_stop_rate', 0.15)) not in ((200, 0.15), (None, None)):
         raise ValueError('Failure stop policy is frozen: window 200, rate 0.15')
     repeats = config['repeats']
