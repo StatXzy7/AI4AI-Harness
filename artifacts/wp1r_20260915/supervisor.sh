@@ -6,8 +6,9 @@ cd /e/projects/AI4AI-Harness || exit 1
 KEY=$(grep '^PARATERA_API_KEY=' experiment/.env_tthe | cut -d= -f2)
 export PARATERA_API_KEY="$KEY"
 EXPECTED_real=10800
+EXPECTED_cont_real=10800
 EXPECTED_clone=10800
-for i in $(seq 1 200); do   # up to ~200 cycles of 10 minutes
+for i in $(seq 1 2000); do   # up to ~2000 cycles of 10 minutes (~14 days)
   ts=$(date -u +%FT%TZ)
   # budget guard
   reserved=$(python -c "import json;print(json.load(open('artifacts/wp1r_20260915/global_budget.json'))['reserved'])" 2>/dev/null)
@@ -15,9 +16,9 @@ for i in $(seq 1 200); do   # up to ~200 cycles of 10 minutes
     echo "$ts budget guard: reserved=$reserved, not relaunching" >> artifacts/wp1r_20260915/supervisor.log
     break
   fi
-  for arm in eval_real eval_clone; do
+  for arm in eval_real_cont2 eval_clone_cont; do
     # expected cells for this arm
-    if [ "$arm" = eval_real ]; then EXP=$EXPECTED_real; else EXP=$EXPECTED_clone; fi
+    if [[ "$arm" == eval_real* ]]; then EXP=$EXPECTED_real; else EXP=$EXPECTED_clone; fi
     # is the parent process running?
     running=$(powershell -NoProfile -Command "(Get-CimInstance Win32_Process -Filter \"Name='python.exe'\" | Where-Object { \$_.CommandLine -like '*configs/$arm.json*' } | Measure-Object).Count" 2>/dev/null)
     done_cells=$(python - "$arm" "$EXP" <<'PYEOF'
