@@ -50,3 +50,5 @@ artifacts/wp1r_20260915/*.log
 artifacts/tmp*/
 transcripts/
 artifacts/review_20260919/transcripts/
+artifacts/wp1r_20260915/*/snapshot.json
+artifacts/revision_20260911/**/ledger.sqlite
