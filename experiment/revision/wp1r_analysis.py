@@ -34,7 +34,7 @@ sys.path.insert(0, str(ROOT))
 from experiment.diagnostics.core import Population, s3_stability  # noqa: E402
 
 WP1R = ROOT / 'artifacts/wp1r_20260915'
-BREAK_EVEN_PRICE_PER_M = 44.3   # frozen budget-gate v1.3 (CNY per 1M tokens)
+BREAK_EVEN_PRICE_PER_M = 33.3   # frozen budget-gate v1.3 A9 (CNY per 1M tokens; 60000-attempt ceiling)
 SEED = 20260915
 N_PERM = 10000
 N_BOOT = 10000
@@ -314,7 +314,7 @@ def a86_test(real_Y, real_members, clone_Y, clone_members, n_tasks_total):
     p = (1 + int(np.sum(null >= A_real - DELTA))) / (N_PERM + 1)
     # task-level bootstrap of D on the intersection
     boots = np.empty(N_BOOT)
-    brng = np.random.default_rng(SEED + 1)
+    brng = np.random.default_rng(SEED)  # protocol A8.6: frozen seed for all resampling
     n_t = len(common)
     for b in range(N_BOOT):
         idx = brng.integers(0, n_t, n_t)
@@ -463,7 +463,7 @@ def main():
                 p2c = {c: i for i, c in enumerate(cols_c)}
                 ar2 = np.array([adv2[p2r[c]] for c in common2])
                 ac2 = np.array([adv_c[p2c[c]] for c in common2])
-                brng = np.random.default_rng(SEED + 1)
+                brng = np.random.default_rng(SEED)  # protocol A8.6: frozen seed for all resampling
                 boots = np.empty(N_BOOT)
                 for b in range(N_BOOT):
                     idx = brng.integers(0, len(common2), len(common2))

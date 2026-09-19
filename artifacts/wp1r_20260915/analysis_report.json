@@ -1320,7 +1320,7 @@
    "migration_copies_excluded": 8307,
    "ledger_row_attempts_upper_bound": 56330,
    "known_total_tokens": 54168781,
-   "conservative_cost_ceiling_cny": 2399.68
+   "conservative_cost_ceiling_cny": 1803.82
   },
   "eval_clone": {
    "cells": 14967,
@@ -1329,7 +1329,7 @@
    "migration_copies_excluded": 4167,
    "ledger_row_attempts_upper_bound": 14971,
    "known_total_tokens": 14509102,
-   "conservative_cost_ceiling_cny": 642.75
+   "conservative_cost_ceiling_cny": 483.15
   },
   "dev_real": {
    "cells": 6048,
@@ -1338,7 +1338,7 @@
    "migration_copies_excluded": 3345,
    "ledger_row_attempts_upper_bound": 17677,
    "known_total_tokens": 11086192,
-   "conservative_cost_ceiling_cny": 491.12
+   "conservative_cost_ceiling_cny": 369.17
   },
   "pilot": {
    "cells": 3,
@@ -1347,13 +1347,13 @@
    "migration_copies_excluded": 0,
    "ledger_row_attempts_upper_bound": 3,
    "known_total_tokens": 2405,
-   "conservative_cost_ceiling_cny": 0.11
+   "conservative_cost_ceiling_cny": 0.08
   },
   "_total": {
    "logical_calls": 38458,
    "http_attempts": 50817,
    "known_total_tokens": 79766480,
-   "conservative_cost_ceiling_cny": 3533.66
+   "conservative_cost_ceiling_cny": 2656.22
   }
  }
 }
