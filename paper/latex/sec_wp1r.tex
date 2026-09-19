@@ -9,23 +9,27 @@ The archived studies lack matched repeats and a same-code control, so they
 cannot separate stable complementarity from one-run sampling luck. A fresh
 pre-registered collection (frozen 2026-09-15; Appendix~\ref{app:wp1r})
 executes a frozen eight-harness panel plus \bare{} on the 400 MATH-500
-eval tasks for three independent repeats, and at equal budget nine
-same-code \bare{} clone slots on the same tasks --- the repeated-sampling
-baseline of \S\ref{related:diversity}.
+eval tasks for three independent repeats, plus nine equal-budget
+same-code \bare{} clone slots --- the repeated-sampling baseline of
+\S\ref{related:diversity}.
 
-C-rank is \textsc{\WpCrankState}; C-comp is \textsc{\WpCcompState}. The
-frozen A8.6 procedure selects the best member on repeat 1 and scores its
-held-out advantage over \bare{} on repeats 2--3: $\WpAReal$\,pp (real)
+C-rank is \textsc{\WpCrankState}; C-comp is \textsc{\WpCcompState}.
+The frozen A8.6 procedure selects the best member on repeat 1 and scores
+its held-out advantage over \bare{} on repeats 2--3: $\WpAReal$\,pp (real)
 versus $\WpAClone$\,pp (clones), paired $D=\WpADiff$\,pp on
 \WpANtasksPaired{} shared complete tasks (95\% CI $\WpADiffCI$;
-$p=\WpAPerm$). The frozen coverage gate makes the verdict
-\textsc{\WpAState}; both sensitivity branches agree ($D=\WpImputedD$ and
-$\WpConflictD$\,pp). The frozen pre-execution selector $\pi_Z$ attains
-\WpPiZAcc\% versus \WpDevFixedAcc\% dev-fixed ($\WpPiZDiff$\,pp, CI
-$\WpPiZDiffCI$; Table~\ref{tab:wp1r-policy}). The acquisition consumed
-\WpLogicalCalls{} logical calls (\WpCostCny{} CNY ceiling) and is
-hash-sealed. The verdict is \textsc{\WpAState}: with the coverage gate
-enforced, the panel shows no advantage over equal-budget same-code
-sampling, and the two sensitivity branches agree.
-% Selector numbers regenerate after dev_real seals; the policy table and
-% selector sentence update automatically via wp1r_render.py.
+$p=\WpAPerm$); both sensitivity branches agree ($D=\WpImputedD$ and
+$\WpConflictD$\,pp). The frozen coverage gate makes the verdict
+\textsc{\WpAState}: no advantage over equal-budget same-code sampling.
+The acquisition consumed \WpLogicalCalls{} logical calls (\WpCostCny{}
+CNY ceiling) and is hash-sealed.
+
+\paragraph{Selector utility (E3).} The frozen pre-execution policy
+$\pi_Z$ abstains to \bare{} on every eval task (no member clears the
+frozen 0.15 confidence margin) and so ties both dev-fixed and \bare{} at
+\WpBareAcc\%; it realizes no selection gain (paired
+$\WpPiZDiff$\,pp, CI $\WpPiZDiffCI$), while a pre-fixed random member is
+materially worse ($-10.12$\,pp; Table~\ref{tab:wp1r-policy}). Class D
+therefore yields no evidence of usable pre-execution selectability on
+this panel, and the $b{=}3$ budgeted utility $U_b$ (Class E) is likewise
+zero for all frozen policies.

@@ -54,16 +54,14 @@ package pairs eight mechanism-derived classes (16 controls) with four
 repeat-based classes (8 controls) exercising global dominance (C-rank
 SUPPORTED, C-comp REFUTED), equal-mean crossover skill (C-rank
 INSUFFICIENT, C-comp SUPPORTED), and condition-mixing/cloned-repeat
-traps. Each class has two frozen instances: instance one runs in
-calibration, instance two (12 controls) plus two auditor challenges in
-the blinded phase, whose $14\times 6$ state cells all match expectation:
-zero false supports, positive control recognized, abstention cap holds.
-Expected states derive from the generating mechanisms and are hash-frozen
-before the blinded run; invariant tests assert permutation invariance and
-dominance$\neq$complementarity directly. One recorded challenge ``failure'' from an earlier
-unbound executor is resolved by spec-faithful re-execution; the stored
-file's own numbers are unreachable under the spec it cites and are retained
-only as provenance.
+traps. Blinded instance two (12 controls) plus two auditor challenges
+yield $14\times 6$ state cells matching hash-frozen expectations: zero
+false supports, positive control recognized, abstention cap holds;
+invariant tests assert permutation invariance and
+dominance$\neq$complementarity directly. One recorded challenge
+``failure'' from an earlier unbound executor is resolved by spec-faithful
+re-execution; the stored file's numbers are unreachable under the spec it
+cites and remain provenance only.
 
 \textbf{The diagnostic audits its own history.} Hash-bound re-execution
 corrected one of our own earlier verification claims --- an

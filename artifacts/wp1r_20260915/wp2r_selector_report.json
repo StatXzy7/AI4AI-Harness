@@ -1,0 +1,156 @@
+{
+ "summary": {
+  "dev_fixed_member": "bare",
+  "random_member": "gsm_kimi_s0_g3",
+  "abstain_rate_pi_Z": 0.0,
+  "epsilon": 0.15,
+  "n_folds": 5,
+  "seed": 20260915,
+  "label": "retrospective tasks + prospective execution; no unseen-task claim"
+ },
+ "accuracy": {
+  "bare": {
+   "accuracy": 0.9496,
+   "paired_vs_dev_fixed": {
+    "mean": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "repair_rate": 0.0,
+    "harm_rate": 0.0
+   }
+  },
+  "dev_fixed": {
+   "accuracy": 0.9496
+  },
+  "random_fixed": {
+   "accuracy": 0.8514,
+   "paired_vs_dev_fixed": {
+    "mean": -0.1012,
+    "ci95": [
+     -0.1327,
+     -0.0722
+    ],
+    "repair_rate": 0.0327,
+    "harm_rate": 0.1637
+   }
+  },
+  "M1b": {
+   "accuracy": 0.9496,
+   "paired_vs_dev_fixed": {
+    "mean": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "repair_rate": 0.0,
+    "harm_rate": 0.0
+   }
+  },
+  "pi_Z": {
+   "accuracy": 0.9496,
+   "paired_vs_dev_fixed": {
+    "mean": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "repair_rate": 0.0,
+    "harm_rate": 0.0
+   }
+  },
+  "E_b": {
+   "budget_cap_calls": 3,
+   "lambda": 1,
+   "note": "E_1 not applicable: panel members make >1 call; choices exceeding the cap on a task fall back to bare; a policy with no call evidence for a member-task pair is treated as non-compliant there, never as zero-call",
+   "member_max_calls_per_task": {
+    "bare": 1,
+    "gsm_deepseek_s0_g3": 4,
+    "gsm_ernie_s0_g3": 2,
+    "gsm_glm_s0_g6": 6,
+    "gsm_kimi_s0_g3": 1,
+    "gsm_kimi_s0_g4": 4,
+    "gsm_minimax_s0_g0": 3,
+    "gsm_minimax_s0_g3": 1,
+    "gsm_qwen_s0_g5": 3
+   },
+   "compliant_members": [
+    "bare",
+    "gsm_ernie_s0_g3",
+    "gsm_kimi_s0_g3",
+    "gsm_minimax_s0_g0",
+    "gsm_minimax_s0_g3",
+    "gsm_qwen_s0_g5"
+   ],
+   "policies": {
+    "bare": {
+     "accuracy": 0.9496,
+     "budget_violations_replaced": 0,
+     "paired_vs_dev_fixed": 0.0,
+     "U_b_lambda1_net_vs_bare": 0.0,
+     "repair_rate": 0.0,
+     "harm_rate": 0.0
+    },
+    "dev_fixed": {
+     "accuracy": 0.9496,
+     "budget_violations_replaced": 0,
+     "paired_vs_dev_fixed": 0.0,
+     "U_b_lambda1_net_vs_bare": 0.0,
+     "repair_rate": 0.0,
+     "harm_rate": 0.0
+    },
+    "random_fixed": {
+     "accuracy": 0.8514,
+     "budget_violations_replaced": 0,
+     "paired_vs_dev_fixed": -0.1012,
+     "U_b_lambda1_net_vs_bare": -0.1004,
+     "repair_rate": 0.0327,
+     "harm_rate": 0.1637
+    },
+    "M1b": {
+     "accuracy": 0.9496,
+     "budget_violations_replaced": 0,
+     "paired_vs_dev_fixed": 0.0,
+     "U_b_lambda1_net_vs_bare": 0.0,
+     "repair_rate": 0.0,
+     "harm_rate": 0.0
+    },
+    "pi_Z": {
+     "accuracy": 0.9496,
+     "budget_violations_replaced": 0,
+     "paired_vs_dev_fixed": 0.0,
+     "U_b_lambda1_net_vs_bare": 0.0,
+     "repair_rate": 0.0,
+     "harm_rate": 0.0
+    }
+   }
+  }
+ },
+ "per_repeat_secondary": {
+  "repeat1": {
+   "bare": 0.945,
+   "dev_fixed": 0.945,
+   "random_fixed": 0.8582,
+   "M1b": 0.945,
+   "pi_Z": 0.945
+  },
+  "repeat2": {
+   "bare": 0.9472,
+   "dev_fixed": 0.9472,
+   "random_fixed": 0.845,
+   "M1b": 0.9472,
+   "pi_Z": 0.9472
+  },
+  "repeat3": {
+   "bare": 0.9573,
+   "dev_fixed": 0.9573,
+   "random_fixed": 0.8586,
+   "M1b": 0.9573,
+   "pi_Z": 0.9573
+  }
+ },
+ "pi_Z_eval_member_counts": {
+  "bare": 400
+ }
+}

@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[2]
 WP1R = ROOT / 'artifacts/wp1r_20260915'
 EXPECTED = {'eval_real': 10800, 'eval_clone': 10800, 'dev_real': 2700,
            'eval_real_cont': 10800, 'eval_clone_cont': 10800,
-           'eval_real_cont2': 10800}
+           'eval_real_cont2': 10800, 'dev_real_cont2': 2700}
 
 
 def sha(p: Path) -> str:

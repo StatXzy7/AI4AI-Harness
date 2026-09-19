@@ -1,0 +1,240 @@
+{
+ "arm": "dev_real_cont2",
+ "sealed_at": "2026-09-19T12:36:22Z",
+ "manifest": {
+  "acquisition_id": "wp1r-dev-real-v1-cont2",
+  "api_key_env": "PARATERA_API_KEY",
+  "cache_mode": "off",
+  "concurrency": 6,
+  "drain_seconds": 120,
+  "failure_policy": {
+   "stop_rate": 0.15,
+   "unknown_requests": "stop-and-reconcile",
+   "window": 200
+  },
+  "global_budget": {
+   "max_provider_attempts": 60000,
+   "state_file": "E:\\projects\\AI4AI-Harness\\artifacts\\wp1r_20260915\\global_budget.json"
+  },
+  "harnesses": [
+   {
+    "basis": "fixed-baseline",
+    "id": "bare",
+    "source": "experiment/gsm8k/agents/bare.py",
+    "source_sha256_lf": "42e7c8b4f24ea22dd8903c4c8a5a96962cc89964f279af767bb21a4f47c75a6a",
+    "source_sha256_raw": "42e7c8b4f24ea22dd8903c4c8a5a96962cc89964f279af767bb21a4f47c75a6a"
+   },
+   {
+    "basis": "stratum:deepseek",
+    "id": "gsm_deepseek_s0_g3",
+    "source": "experiment/gsm8k/agents/gsm_deepseek_s0_g3.py",
+    "source_sha256_lf": "f0861ddc4f2fcdc04f6c813e6acb0704dc1a6a2e169920108e994db30070c3ca",
+    "source_sha256_raw": "4a9fcc184791c1f6a498addc2fae79c7881f47f9eecfdfafabb25576f7d43342"
+   },
+   {
+    "basis": "stratum:ernie",
+    "id": "gsm_ernie_s0_g3",
+    "source": "experiment/gsm8k/agents/gsm_ernie_s0_g3.py",
+    "source_sha256_lf": "eb4e5a297b0cc3b1d84336af3b793dc6e859b822179d91a34a8910d014dc5dbd",
+    "source_sha256_raw": "d08bbc1adf935a9bddfd5e4161b67b54d27a5f8eb342e1b9829dd753e7324b94"
+   },
+   {
+    "basis": "stratum:glm",
+    "id": "gsm_glm_s0_g6",
+    "source": "experiment/gsm8k/agents/gsm_glm_s0_g6.py",
+    "source_sha256_lf": "a1010ea4da4b61e118d511a650b314a818384beacbe64b1f880479f7bca3d9d4",
+    "source_sha256_raw": "8db7f2ea051042f4d04bb27df8ae78346143e77ada90560cf013c3983f96042f"
+   },
+   {
+    "basis": "stratum:kimi",
+    "id": "gsm_kimi_s0_g3",
+    "source": "experiment/gsm8k/agents/gsm_kimi_s0_g3.py",
+    "source_sha256_lf": "1db47dd6ed5bba3310b7faa7eb1524c618b7edb1d3442f8f380e9b60c5823b6a",
+    "source_sha256_raw": "a28d251f2630941431517683db73b111ad2f10eb37f19e193d93e7cd3681dd81"
+   },
+   {
+    "basis": "atlarge",
+    "id": "gsm_kimi_s0_g4",
+    "source": "experiment/gsm8k/agents/gsm_kimi_s0_g4.py",
+    "source_sha256_lf": "1e2c1070d603c72213b66d17e37634594fd9149bb05eac7bd79913c994dd956a",
+    "source_sha256_raw": "5b89d4fbdb138bb3fac7ad5613bc230ad1ced633c5a310bd0d30d09478a54ed5"
+   },
+   {
+    "basis": "stratum:minimax",
+    "id": "gsm_minimax_s0_g0",
+    "source": "experiment/gsm8k/agents/gsm_minimax_s0_g0.py",
+    "source_sha256_lf": "62696a8bcfb74648aae7fdfa4b093ed1fd4d9a5e31a6a126f6f701bdb4e09bde",
+    "source_sha256_raw": "56ec6a1e44adbe2f12331c45d61d300a32dcfd174b5bf3e902b4cbc3364935fd"
+   },
+   {
+    "basis": "atlarge",
+    "id": "gsm_minimax_s0_g3",
+    "source": "experiment/gsm8k/agents/gsm_minimax_s0_g3.py",
+    "source_sha256_lf": "266dca631bf22843c45de050ac77b393d154f5f9a52bdbec4804c11a7c28f16f",
+    "source_sha256_raw": "d7035d7b5009476e44cc0a87cd50136d51ab3a6276a2b43438894741725b9fff"
+   },
+   {
+    "basis": "stratum:qwen",
+    "id": "gsm_qwen_s0_g5",
+    "source": "experiment/gsm8k/agents/gsm_qwen_s0_g5.py",
+    "source_sha256_lf": "794e7407487698e0be8722b3421a538319b7d7f32ba3fe5febf5ae4122468ef9",
+    "source_sha256_raw": "b35b1bf0f9603b7af312827d55b66c8c9f62af4bd0ac04cd4f7a2a37c468adaa"
+   }
+  ],
+  "judge": "gsm8k-collect-is-correct-v1 (LF-normalized source hash bound)",
+  "missing_usage_policy": "stop-before-next-cell-preserve-pending-v1",
+  "panel_draw": {
+   "eligible": [
+    "gsm_deepseek_s0_g0",
+    "gsm_deepseek_s0_g2",
+    "gsm_deepseek_s0_g3",
+    "gsm_deepseek_s0_g4",
+    "gsm_deepseek_s0_g6",
+    "gsm_deepseek_s0_g7",
+    "gsm_ernie_s0_g0",
+    "gsm_ernie_s0_g3",
+    "gsm_ernie_s0_g6",
+    "gsm_glm_s0_g6",
+    "gsm_kimi_s0_g3",
+    "gsm_kimi_s0_g4",
+    "gsm_minimax_s0_g0",
+    "gsm_minimax_s0_g3",
+    "gsm_minimax_s0_g4",
+    "gsm_minimax_s0_g5",
+    "gsm_minimax_s0_g6",
+    "gsm_minimax_s0_g7",
+    "gsm_qwen_s0_g0",
+    "gsm_qwen_s0_g1",
+    "gsm_qwen_s0_g5"
+   ],
+   "panel": [
+    "bare",
+    "gsm_deepseek_s0_g3",
+    "gsm_ernie_s0_g3",
+    "gsm_glm_s0_g6",
+    "gsm_kimi_s0_g3",
+    "gsm_kimi_s0_g4",
+    "gsm_minimax_s0_g0",
+    "gsm_minimax_s0_g3",
+    "gsm_qwen_s0_g5"
+   ],
+   "panel_draw_path": "WP1R_PANEL_DRAW.json",
+   "panel_draw_sha256": "6c387741ab8fd90c6127c805335b31238c2c1023c6d9a5e43f9ef5c4532c7a02",
+   "schedule_salt": "wp1r-panel-v1-20260915"
+  },
+  "per_cell_budget": {
+   "bare": {
+    "max_logical_calls": 4,
+    "max_output_tokens": 128000,
+    "max_request_bytes": 4000000,
+    "max_requested_samples": 4
+   },
+   "gsm_deepseek_s0_g3": {
+    "max_logical_calls": 7,
+    "max_output_tokens": 224000,
+    "max_request_bytes": 4000000,
+    "max_requested_samples": 7
+   },
+   "gsm_ernie_s0_g3": {
+    "max_logical_calls": 5,
+    "max_output_tokens": 160000,
+    "max_request_bytes": 4000000,
+    "max_requested_samples": 5
+   },
+   "gsm_glm_s0_g6": {
+    "max_logical_calls": 7,
+    "max_output_tokens": 224000,
+    "max_request_bytes": 4000000,
+    "max_requested_samples": 7
+   },
+   "gsm_kimi_s0_g3": {
+    "max_logical_calls": 4,
+    "max_output_tokens": 640000,
+    "max_request_bytes": 4000000,
+    "max_requested_samples": 20
+   },
+   "gsm_kimi_s0_g4": {
+    "max_logical_calls": 7,
+    "max_output_tokens": 224000,
+    "max_request_bytes": 4000000,
+    "max_requested_samples": 7
+   },
+   "gsm_minimax_s0_g0": {
+    "max_logical_calls": 6,
+    "max_output_tokens": 192000,
+    "max_request_bytes": 4000000,
+    "max_requested_samples": 6
+   },
+   "gsm_minimax_s0_g3": {
+    "max_logical_calls": 4,
+    "max_output_tokens": 640000,
+    "max_request_bytes": 4000000,
+    "max_requested_samples": 20
+   },
+   "gsm_qwen_s0_g5": {
+    "max_logical_calls": 6,
+    "max_output_tokens": 192000,
+    "max_request_bytes": 4000000,
+    "max_requested_samples": 6
+   }
+  },
+  "protocol": "REAL_EVIDENCE_PROTOCOL_V1 + v1.1 amendment",
+  "protocol_sha256": "f5e9ddeab6b828955660ee00391cf45217e5590f002636778b6e511d0c46f262",
+  "python": "3.13.9 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 19:09:58) [MSC v.1929 64 bit (AMD64)]",
+  "repeats": [
+   1,
+   2,
+   3
+  ],
+  "resource_budget": null,
+  "schedule_salt": "wp1r-dev-real-v1-schedule",
+  "schedule_sha256": "4bb84c4cdecef1ae199ed6924dbc25c2198a1f2e9184c7cc09dd53fd3b35e745",
+  "section": "dev",
+  "shard": {
+   "count": 1,
+   "index": 0
+  },
+  "solver": {
+   "base_url": "https://llmapi.paratera.com/v1",
+   "max_tokens": 32000,
+   "model": "GLM-5.3-Flash",
+   "reasoning_effort": "high",
+   "retry_delay_seconds": 5,
+   "status_retries": 2,
+   "temperature_override": null,
+   "thinking_style": "none",
+   "timeout_seconds": 300
+  },
+  "source_sha256": {
+   "artifacts\\gsm8k_audit\\math500_split.json": "908d4c3db4e1dbc964d317f116ce4fcab41e06ea7760958d78072ccddb441a62",
+   "experiment\\gsm8k\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "experiment\\gsm8k\\agents\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "experiment\\gsm8k\\agents\\bare.py": "42e7c8b4f24ea22dd8903c4c8a5a96962cc89964f279af767bb21a4f47c75a6a",
+   "experiment\\gsm8k\\collect.py": "4356e51a8deb5e55936fa8ac0ff27b9923a6d33819a20032400df48e1f1fc4ae",
+   "experiment\\gsm8k\\harness_base.py": "0491b1420a6ae6be19a88feeeef8a36b888e67c0f21672f7782398980336d197",
+   "experiment\\revision\\fresh_collect_math.py": "670555b2ab7fd994d1cf6c43b4cfbf392cfa81264b6fd11d99a2bb2ae7c47562",
+   "experiment\\revision\\fresh_runtime.py": "17d7a93f71bc77181b34091332ca3a64dbef6a6a1798006833de950e9949c60f",
+   "experiment\\revision\\interleaved_collect.py": "e6d09e39a220deac4172ae70a254866a5051ff013dc4e0e6386efe7270fe2034",
+   "experiment\\revision\\isolated_collect.py": "52843e867b51b96ff8a457f1dcddbe34b543133f1dbd5f9419abb41fab002e54",
+   "experiment\\revision\\windows_job.py": "e183f98d042c66b60f599eab28316a62d1d01ae8aa722a053609b3896463524d",
+   "external\\TTHE\\text_to_sql\\bridge.py": "bf611b02a28f6f42e9cce6c711052ac048f21652613510fbae65cbf5f56624fc",
+   "review-stage\\WP1R_PANEL_DRAW.json": "6c387741ab8fd90c6127c805335b31238c2c1023c6d9a5e43f9ef5c4532c7a02"
+  },
+  "split_sha256": "908d4c3db4e1dbc964d317f116ce4fcab41e06ea7760958d78072ccddb441a62",
+  "task_order": "repeat-task-member-sha256-v1",
+  "tasks_sha256": "48edcfab4ab007d6b3189e9c1b89d048fc047df3016fb1ba148c45b04e171bb5",
+  "temperature_semantics": "per-call temperature is defined by each member's frozen source (same code path as repeat-0); bridge temp_override unused",
+  "version": "math-fresh-acquisition-v1",
+  "worker_wall_seconds": 1800
+ },
+ "cells": {
+  "total": 2700,
+  "with_result": 2700,
+  "expected": 2700,
+  "run_invalid": 0,
+  "unknown_remote": 25,
+  "failed": 27,
+  "official_correct": 1927
+ },
+ "ledger_sha256": "a9b656a7b49d73fd34ae6b257adcdaef6f05f4282b46237f088932e081a6f6e1"
+}
