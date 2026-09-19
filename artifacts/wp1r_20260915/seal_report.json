@@ -1,0 +1,135 @@
+{
+ "eval_real": {
+  "arm": "eval_real",
+  "ledgers": [
+   "eval_real",
+   "eval_real_cont",
+   "eval_real_cont2"
+  ],
+  "sealed_at": "2026-09-19T07:48:52Z",
+  "unique_cells": 10800,
+  "expected": 10800,
+  "unknown_remote": 135,
+  "run_invalid_events": 0,
+  "dedup": {
+   "ledgers": [
+    "eval_real",
+    "eval_real_cont",
+    "eval_real_cont2"
+   ],
+   "rows_read": 19318,
+   "unique_keys": 10800,
+   "identical_copies": 8418,
+   "unknown_carried": 75,
+   "completed_beats_unknown": 11,
+   "unknown_then_completed": 9,
+   "both_completed_differ": [
+    {
+     "key": [
+      "gsm_kimi_s0_g4",
+      "math500_split#125",
+      2
+     ],
+     "retained": 0,
+     "discarded": 1,
+     "retained_from": "earlier ledger"
+    },
+    {
+     "key": [
+      "gsm_ernie_s0_g3",
+      "math500_split#279",
+      2
+     ],
+     "retained": 0,
+     "discarded": 1,
+     "retained_from": "earlier ledger"
+    },
+    {
+     "key": [
+      "gsm_ernie_s0_g3",
+      "math500_split#444",
+      2
+     ],
+     "retained": 0,
+     "discarded": 1,
+     "retained_from": "earlier ledger"
+    },
+    {
+     "key": [
+      "gsm_ernie_s0_g3",
+      "math500_split#352",
+      2
+     ],
+     "retained": 1,
+     "discarded": 0,
+     "retained_from": "earlier ledger"
+    },
+    {
+     "key": [
+      "gsm_ernie_s0_g3",
+      "math500_split#351",
+      2
+     ],
+     "retained": 1,
+     "discarded": 0,
+     "retained_from": "earlier ledger"
+    }
+   ],
+   "terminal_states": {
+    "completed": 19088,
+    "failed": 230
+   }
+  },
+  "source_drift": [],
+  "collector_sha256_versions": [
+   "3870f5e221b5a0e65d5342a2b3a08e7be242813c69878c677da03a92c4755335",
+   "6ef29db91b01af18ea2f32ba798f0ceb17fc77a21acb66c85c576ad52c9ca7c7",
+   "efb5d42ea8dbe3a48ff4c4cc6eb4cf8732452edcdb1a37444be0f64104d799ec"
+  ],
+  "ledger_sha256": {
+   "eval_real": "11de1b2ef82ac63e382042bb0f50179b01eeea7b6772a97a5992bf2692da4bfd",
+   "eval_real_cont": "90da99cbef921c82d69931ec3f7b1be4c4a223f7fc68bd64c84e2afe5a663c79",
+   "eval_real_cont2": "51d55abeefa8ce338b4f97e8db458af02bdb017029c549869411a3ceebb35250"
+  },
+  "state": "SEALED"
+ },
+ "eval_clone": {
+  "arm": "eval_clone",
+  "ledgers": [
+   "eval_clone",
+   "eval_clone_cont"
+  ],
+  "sealed_at": "2026-09-19T07:48:53Z",
+  "unique_cells": 10800,
+  "expected": 10800,
+  "unknown_remote": 34,
+  "run_invalid_events": 0,
+  "dedup": {
+   "ledgers": [
+    "eval_clone",
+    "eval_clone_cont"
+   ],
+   "rows_read": 14967,
+   "unique_keys": 10800,
+   "identical_copies": 4160,
+   "unknown_carried": 7,
+   "completed_beats_unknown": 0,
+   "unknown_then_completed": 0,
+   "both_completed_differ": [],
+   "terminal_states": {
+    "completed": 14926,
+    "failed": 41
+   }
+  },
+  "source_drift": [],
+  "collector_sha256_versions": [
+   "3870f5e221b5a0e65d5342a2b3a08e7be242813c69878c677da03a92c4755335",
+   "6ef29db91b01af18ea2f32ba798f0ceb17fc77a21acb66c85c576ad52c9ca7c7"
+  ],
+  "ledger_sha256": {
+   "eval_clone": "f234c275df8817a2a0c33702397e13c1f09bfdaf09778b74c717161de6d16c87",
+   "eval_clone_cont": "35592201d16cc4be282875559b8b268338a83decfe78cae6fde9be9b8fc59b33"
+  },
+  "state": "SEALED"
+ }
+}
