@@ -79,7 +79,7 @@ def ledger_manifest(ledger: Path):
 ARM_LEDGERS = {
     'eval_real': ['eval_real', 'eval_real_cont', 'eval_real_cont2'],
     'eval_clone': ['eval_clone', 'eval_clone_cont'],
-    'dev_real': ['dev_real', 'dev_real_cont'],
+    'dev_real': ['dev_real', 'dev_real_cont', 'dev_real_cont2'],
 }
 
 

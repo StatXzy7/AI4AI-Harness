@@ -121,7 +121,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--arm', required=True,
                     choices=['eval_real', 'eval_clone', 'dev_real', 'eval_real_cont',
-                             'eval_clone_cont', 'dev_real_cont', 'eval_real_cont2'])
+                             'eval_clone_cont', 'dev_real_cont', 'eval_real_cont2',
+                             'dev_real_cont2'])
     args = ap.parse_args()
     reconcile(args.arm)
 
