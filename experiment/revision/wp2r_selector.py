@@ -16,8 +16,12 @@ Frozen spec (REAL_EVIDENCE_PROTOCOL_V1.md section 12 + v2 plan 3.D):
     logical-call accounting; E_1 is NOT applicable (members make >1 call);
     E_b reported with b=3 calls/task as a separately named estimand.
 
-Primary outcome: repeat-mean correctness over repeats 1-3 per member/task
-(finite-R caveat carried); secondary: each repeat separately.
+Primary outcome: available-repeat mean correctness over repeats 1-3 per
+member/task -- np.nanmean over completed repeats; a member-task cell with
+NO completed repeat stays NaN and the task drops from that member's
+training evidence (A8.6 complete-case rule; final-ledger unknown_remote /
+failed counts are reconciled against these NaN cells in the repository
+checkpoint). Finite-R caveat carried. Secondary: each repeat separately.
 """
 from __future__ import annotations
 
