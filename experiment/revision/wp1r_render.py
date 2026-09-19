@@ -152,6 +152,10 @@ def main():
             macro('WpRandomCI',
                   f"[{pp(acc['random_fixed']['paired_vs_dev_fixed']['ci95'][0])}, "
                   f"{pp(acc['random_fixed']['paired_vs_dev_fixed']['ci95'][1])}]"),
+            macro('WpEbZero', 'yes' if all(
+                acc[k].get('paired_vs_dev_fixed', {}).get('mean', 0) == 0
+                and acc[k].get('paired_vs_dev_fixed', {}).get('harm_rate', 0) == 0
+                for k in ('pi_Z', 'bare', 'dev_fixed', 'M1b')) else 'no'),
         ]
         (TEX / 'wp1r_policy_table.tex').write_text(
             policy_table(sel), encoding='utf-8')
@@ -162,6 +166,7 @@ def main():
         lines.append(macro('WpPiZDiffCI', r'\text{---}'))
         lines.append(macro('WpRandomDiff', r'\text{---}'))
         lines.append(macro('WpRandomCI', r'\text{---}'))
+        lines.append(macro('WpEbZero', r'\text{---}'))
 
     (TEX / 'wp1r_numbers.tex').write_text('\n'.join(lines) + '\n',
                                          encoding='utf-8')

@@ -111,7 +111,7 @@ python -m experiment.revision.reconcile_cell --arm eval_real_cont2
 
 ### 封存与分析（离线，无 API）
 ```bash
-python -m experiment.revision.wp1r_seal --arms eval_real_cont2,eval_clone_cont,dev_real_cont2
+python -m experiment.revision.wp1r_seal --merged --arms eval_real_cont2,eval_clone_cont,dev_real_cont2
 python -m experiment.revision.wp1r_analysis          # E1/E2 + A8.6 + E4
 python -m experiment.revision.wp2r_selector          # E3（需 dev + eval 臂）
 python -m experiment.revision.wp1r_render            # 生成论文宏与策略表
