@@ -1,0 +1,16 @@
+## Verdict
+
+score: 10/10 ; verdict: ready
+
+## Item-by-item (1-2: VERIFIED | PARTIAL | NOT FIXED)
+
+1. **VERIFIED** — Canonical base-arm command is documented; all three merged seals are `SEALED` with claimed counts, zero invalid events, empty drift, and collector hashes. Their SHA-256 values match `RELEASE_HASH_MANIFEST.json`.
+
+2. **VERIFIED** — Exactly 30 WP-1R runtime paths were removed from the index. No ledgers, workers, locks, snapshots, or logs remain tracked under WP-1R; nested ignore rules are present.
+
+## Remaining blockers (empty if none)
+
+## Allowed next step
+
+Proceed to G4 closure; no provider execution is required.
+

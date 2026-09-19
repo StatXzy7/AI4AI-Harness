@@ -1,0 +1,13 @@
+You are the same INDEPENDENT READ-ONLY REVIEWER (gates G2/G3, round 3, final) for AI4AI-Harness. Round 2 was 6.7/10 not ready with 3 documentation blockers (round-2 message archived at review-stage/codex_g23_20260919/g23r2_last_message.txt). Verify ONLY the three fixes; do not re-open settled items. Do not modify files.
+
+CLAIMED FIXES
+1. Stale literals removed: review-stage/WP1R_CHECKPOINT.md no longer contains "42,294", "67.3M", "¥2,982", or the verdict literal "NOT SUPPORTED"; the current canonical accounting (attempts 50,817 / tokens 79.8M / ¥2,656 at 33.3 CNY/1M) and verdict INSUFFICIENT stand.
+2. Missingness reconciliation: the checkpoint now contains a table reconciling final-ledger unknown_remote/failed counts (real 128/146, clone 26/34, dev 25/27) against merged-matrix NaN cells (real 18/51/63=132, clone 6/11/14=31, dev 7/10/9=26), with the frozen merge precedence rule (completed beats unknown; earliest completed wins; conflicting double-executions retained-first + sensitivity list) and the E3 available-repeat aggregation rule (also fixed in wp2r_selector.py header and disclosed in sec_app_wp1r.tex).
+3. Dated amendment disclosures: sec_app_wp1r.tex now names v1.1 and v1.2 as preceding any confirmatory outcome, v1.3 (attempt ceiling 45,000->60,000) and the concurrency amendment (2->6) as mid-collection/condition-relevant history, plus the three collector versions (concurrency 2/2/6) and per-arm bound collector hashes.
+
+OUTPUT CONTRACT (exactly)
+## Verdict
+score: x/10 ; verdict: ready | almost | not ready
+## Item-by-item (1-3: VERIFIED | PARTIAL | NOT FIXED)
+## Remaining blockers (empty if none)
+## Allowed next step

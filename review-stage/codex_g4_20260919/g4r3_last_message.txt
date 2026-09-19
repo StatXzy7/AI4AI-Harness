@@ -1,0 +1,21 @@
+## Verdict
+
+score: 7.0/10 ; verdict: not ready
+
+## Item-by-item (1-3: VERIFIED | PARTIAL | NOT FIXED)
+
+1. **VERIFIED** — `\WpEbZero` is renderer-derived and currently `yes`; the WP-1R sentence uses the macro. Numeric policy-table values are renderer-generated.
+
+2. **PARTIAL** — The command includes `--merged`, but its continuation-arm names are not keys accepted by `seal_merged()`; it will fail before producing merged seals.
+
+3. **PARTIAL** — Manifest/build checks pass, but 59 WP-1R runtime paths remain tracked, including ledgers, workers, locks, and logs. Nested parent logs are also not ignored.
+
+## Remaining blockers
+
+- Fix seal-arm mapping and regenerate merged seals.
+- Remove runtime files from the Git index and extend log ignore coverage, then refresh the release snapshot.
+
+## Allowed next step
+
+Perform those package-only cleanup and offline seal/build/hash checks; no provider execution.
+

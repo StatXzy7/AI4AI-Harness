@@ -1,0 +1,26 @@
+## Verdict
+
+score: 6.7/10 ; verdict: not ready
+
+## Item-by-item (1-5: VERIFIED | PARTIAL | NOT FIXED)
+
+1. **VERIFIED** — Both permutation and bootstrap paths use `default_rng(SEED)`; regenerated values match the report and macros: D=0.15pp, p=.998, CI [-0.88,+1.17], verdict `INSUFFICIENT`.
+
+2. **PARTIAL** — The current canonical section is corrected, but the checkpoint still contains `42,294 / 67.3M / ¥2,982` at lines 66–67 and the literal `"NOT SUPPORTED"` at line 99.
+
+3. **PARTIAL** — `np.nanmean` implements available-repeat aggregation, but the header does not state that rule explicitly. The merged matrices contain 132/31/26 NaN cells, versus continuation-seal unknown counts 128/26/25; this reconciliation is not numerically documented.
+
+4. **PARTIAL** — Collector versions, concurrency, hashes, acquisition-id rationale, and 33.3 CNY pricing are disclosed. However, `sec_app_wp1r.tex` names only v1.0 and v1.1; dated v1.2/v1.3 amendments are absent.
+
+5. **VERIFIED** — Macros match the analysis, claims are bounded, `sec_wp1r` has one section label, the main text ends on page 9, and the build has no undefined-reference diagnostics.
+
+## Remaining blockers
+
+- Remove or separately archive the stale checkpoint literals and old verdict wording.
+- Add an exact final-ledger → merged-matrix missingness reconciliation, including failed cells and the available-repeat rule.
+- Add dated v1.2/v1.3 amendment disclosures and align the appendix/seal provenance statements.
+
+## Allowed next step
+
+Perform only these offline documentation and consistency corrections, regenerate the PDF, and rerun the read-only audit. Do not launch new provider executions.
+

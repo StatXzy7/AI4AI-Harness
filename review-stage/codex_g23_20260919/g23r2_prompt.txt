@@ -1,0 +1,15 @@
+You are the same INDEPENDENT READ-ONLY REVIEWER (gates G2/G3, round 2) for AI4AI-Harness. Round 1 was 5.8/10 not ready with 5 blockers (archived at review-stage/codex_g23_20260919/g23_last_message.txt). The executor claims all 5 are fixed offline. VERIFY ONLY the fixes and their consistency; do not re-litigate items you marked non-blocking. Do not modify files.
+
+CLAIMED FIXES
+1. Bootstrap seed: experiment/revision/wp1r_analysis.py now uses default_rng(SEED) (=20260915) for BOTH permutation and task bootstrap (lines ~317, ~466); analysis JSON regenerated (artifacts/wp1r_20260915/analysis_report.json), macros re-rendered (wp1r_numbers.tex), PDF rebuilt. D=0.15pp, p=.998, CI [-0.88,+1.17] unchanged in value; verdict INSUFFICIENT (coverage gate).
+2. Checkpoint corrected: review-stage/WP1R_CHECKPOINT.md no longer contains the stale accounting (42294/67.3M/¥2982) or "NOT SUPPORTED"; canonical numbers are attempts 50,817 / tokens 79.8M / ¥2,656 (price basis 33.3 CNY/1M per protocol v1.3 A9); claim 4 wording is now bounded ("clone null proves plug-in headroom can be positive; real stable complementarity remains unidentified").
+3. Missingness reconciliation disclosed (checkpoint G2/G3 section): final-ledger unknown_remote counts (real 128 / clone 26 / dev 25) vs merged-analysis NaN cells (completed beats unknown at merge); E3 aggregation rule (available-repeat mean) fixed in wp2r_selector.py header.
+4. Appendix disclosures: paper/latex/sec_app_wp1r.tex now records amendments v1.1-v1.3 (dated), the mid-collection concurrency amendment 2->6, the three collector versions (concurrency 2/2/6), per-arm bound collector hashes in seals, and the acquisition_id exclusion rationale; break-even price corrected to 33.3.
+5. Paper consistency: wp1r_numbers.tex regenerated from corrected analysis; sec_wp1r.tex deduplicated; main text still ends on page 9 (aux endofmain page 9); build has no undefined references.
+
+OUTPUT CONTRACT (exactly)
+## Verdict
+score: x/10 ; verdict: ready | almost | not ready
+## Item-by-item (1-5: VERIFIED | PARTIAL | NOT FIXED)
+## Remaining blockers (empty if none)
+## Allowed next step

@@ -1,0 +1,20 @@
+## Verdict
+
+score: 8.7/10 ; verdict: almost
+
+## Item-by-item (1-3: VERIFIED | PARTIAL | NOT FIXED)
+
+1. **VERIFIED** — Stale literals are absent; canonical accounting and `INSUFFICIENT` remain.
+
+2. **PARTIAL** — Checkpoint reconciliation, merge precedence, conflicts, and appendix aggregation disclosure are present. The selector header still says only “repeat-mean”; it does not state the available-repeat/NaN rule.
+
+3. **VERIFIED** — Amendment chronology, concurrency history, collector versions, and seal-bound hashes are disclosed.
+
+## Remaining blockers (empty if none)
+
+- Add the available-repeat aggregation rule explicitly to `experiment/revision/wp2r_selector.py`’s module header.
+
+## Allowed next step
+
+Make this offline documentation edit, rebuild and audit the PDF, with no provider executions.
+

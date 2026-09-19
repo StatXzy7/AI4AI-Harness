@@ -1,0 +1,34 @@
+## Verdict
+
+score: 6.0/10 ; verdict: not ready
+
+## release_gate
+
+1. **PASS** — `main.pdf` has 25 pages; `main.aux` places `endofmain` on page 9 and records 25 total pages. No undefined references/citations. Build completed successfully. One appendix overfull box remains.
+
+2. **FAIL** — Generated result values match the reports: A-real/clone/D = 0.14/0.13/0.15 pp, \(p=.9980\), selector/bare/dev-fixed = 94.96%, random = 85.14%. Claim bounds and amendment/concurrency/hash disclosures are present. However, the macro-only rule is violated by hard-coded `-10.12` in `sec_wp1r.tex:32` and `10,800`/`zero conflicts` in `sec_app_wp1r.tex:51-52`.
+
+3. **FAIL** — Anonymous authoring and AI-use disclosure pass (`main.tex:16,96-130`), but no acknowledgments placeholder appears in the manuscript.
+
+4. **FAIL** — `REPRODUCE.md` documents the older diagnostics only; it has no WP-1R/WP-2R analysis, selector, rendering, seal-verification, or final-analysis commands. `CLAIM_LEDGER.json` contains C-10 but no scoped WP-1R/WP-2R update; C-09 is stale/unqualified against the new incomplete clone-controlled collection.
+
+5. **FAIL** — `.gitignore` has the intended runtime patterns, but bulky runtime files remain tracked: 59 WP-1R paths, including SQLite ledgers, worker files, locks, and logs; repo-wide counts include 20 SQLite files, 23 locks, and 113 logs. No root `LICENSE`, `README`, or packaging manifest exists. Secret scans found no committed key material, and provider logs were marker-free.
+
+6. **FAIL** — The paper artifact is close, but the release package is not frozen: `supervisor.log` is modified, review logs are untracked, and no final source-to-PDF hash manifest is present.
+
+## Blockers
+
+- Macroize all WP-1R/WP-2R result literals.
+- Update `REPRODUCE.md` and scope/update `CLAIM_LEDGER.json` for the fresh collection.
+- Remove tracked runtime ledgers/logs from the release snapshot; retain compact reports and sealed JSONs.
+- Add the required acknowledgment placeholder and complete the final clean rebuild/hash freeze.
+
+## Non-blocking issues
+
+- `build_final.log` reports a 25.2 pt overfull box in the appendix protocol paragraph plus several underfull boxes.
+- Current PDF metadata has blank title/author fields, which is appropriate for anonymity.
+
+## Allowed next step
+
+Perform a documentation/package-only cleanup, then rebuild the PDF from the final source and record the source, artifact, and PDF hashes. No new provider execution is required.
+

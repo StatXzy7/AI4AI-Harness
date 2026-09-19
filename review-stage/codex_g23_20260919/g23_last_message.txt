@@ -1,0 +1,60 @@
+## Verdict
+score: 5.8/10 ; verdict: not ready
+
+## engineering_gate (sealing, merge, provenance)
+
+Cell sealing passes: all three merged seals have exact unique/expected counts and zero `run_invalid` events (`SEALED_eval_real.json:9-12,82-93`; clone `:8-11,29-38`; dev `:9-12,52-63`). Final continuation seals also record the claimed unknown/failed counts (`eval_real_cont2/SEALED.json:230-239`; clone `:218-227`; dev `:230-239`). The deterministic merge records copies, conflicts, and precedence in `analysis_report.json:2-69`.
+
+The strict provenance seal is qualified. `wp1r_seal.py` explicitly exempts `fresh_collect_math.py` from drift and permits multiple collector hashes (`:99-125`); real has three collector versions. The merge also permits concurrency and amendment differences (`wp1r_analysis.py:166-177`), while `eval_real_cont2` runs at concurrency 6 (`eval_real_cont2/SEALED.json:5-17`) against the original protocol’s 1–4 range (`REAL_EVIDENCE_PROTOCOL_V1.md:212-214`).
+
+The removal of `acquisition_id` is conceptually defensible as continuation run identity (`wp1r_analysis.py:194-208`), but the resulting condition excludes concurrency and amendment identity. Git also shows the condition change after results were available (`711ac21`, 2026-09-19) and the concurrency amendment during collection (`96497d5`). There is no direct evidence of outcome-triggered data redesign, but this requires explicit provenance disclosure.
+
+## scientific_claims (each numbered claim: VERIFIED | PARTIAL | NOT SUPPORTED, with file:line evidence)
+
+1. **PARTIAL** — The arms are genuinely marked `SEALED`, complete at the cell-key level, and have zero invalid events. Ledger and source hashes are recorded (`SEALED_eval_real.json:82-93`; `wp1r_seal.py:126-143`). However, the collector itself is exempted from the cross-ledger drift failure and has multiple versions (`wp1r_seal.py:99-125`).
+
+2. **PARTIAL** — E1 stable ranking is supported, with bare positive against several generated members (`analysis_report.json:71-110`). Real C-comp is correctly `INSUFFICIENT_EVIDENCE` because six member-task expectations are unidentified (`:632-665`). `acquisition_id` removal is not itself an identity-gate evasion, but omission of varying concurrency/amendment fields weakens the matched-condition claim (`wp1r_analysis.py:166-177,194-218`; `core.py:301-365`).
+
+3. **PARTIAL** — The A8.6 statistic uses discovery repeat 1, validation repeats 2–3, 10,000 joint permutations, and task bootstrap (`wp1r_analysis.py:282-343`). The reported values are correct: \(A_\text{real}=0.14\)pp, \(A_\text{clone}=0.13\)pp, \(D=0.15\)pp, \(p=.998\), CI \([-0.88,+1.17]\)pp (`analysis_report.json:1276-1295`). The coverage gate correctly yields `INSUFFICIENT`, not `NOT SUPPORTED`. However, bootstrap uses `SEED+1` (`wp1r_analysis.py:315-321`) while the frozen protocol requires the same seed 20260915 (`REAL_EVIDENCE_PROTOCOL_V1.md:291-299`). The current paper says `INSUFFICIENT` (`wp1r_numbers.tex:3-13`), but the stale checkpoint says `NOT SUPPORTED` (`WP1R_CHECKPOINT.md:75-78`).
+
+4. **NOT SUPPORTED** — Clone \(H_\text{stable}=2.67\)pp with CI [1.71,3.75]pp is real (`analysis_report.json:1264-1272`), but it only demonstrates that finite-repeat plug-in maxima can be positive. It does not establish that most real headroom is selection bias. The protocol explicitly forbids treating plug-in headroom as stable complementarity (`REAL_EVIDENCE_PROTOCOL_V1.md:66-75,154-161`), and real \(H_\text{stable}\) is unidentified (`analysis_report.json:632-665`). The checkpoint’s “direct evidence” and “mostly” wording is overclaiming (`WP1R_CHECKPOINT.md:79-84`).
+
+5. **VERIFIED** — The selector uses task-level five-fold CV, train-fold member accuracy features, and no eval correctness labels (`wp2r_selector.py:1-20,57-100`). Same-task repeats are collapsed before fold assignment (`:119-129`). The report shows dev-fixed/bare at 94.96%, \(\pi_Z\) abstaining on all 400 eval tasks, and random at −10.12pp (`wp2r_selector_report.json:3-9,24-37,153-155`). The report correctly makes no unseen-task claim.
+
+6. **PARTIAL** — The hard budget gate passes: `global_budget.json` has max 60,000 and reserved 50,913; current canonical accounting is 50,817 attempts, 79.8M known tokens, and ¥3,533.66 (`analysis_report.json:1352-1356`). The requested 42,294 / 67.3M / ¥2,982 figures are stale (`WP1R_CHECKPOINT.md:65-67`). There is also a price-basis mismatch: the analysis uses ¥44.3/M (`wp1r_analysis.py:37-42`), while protocol v1.3 records ¥33.3/M (`REAL_EVIDENCE_PROTOCOL_V1.md:316-329`).
+
+7. **PARTIAL** — The current generated paper is numerically consistent with the current analysis (`wp1r_numbers.tex:3-41`), contains the bounded no-gain/no-unseen wording (`sec_wp1r.tex:17-35`; `main.tex:44-50`), and the main text ends on page 9 (`main.aux:92`). The PDF builds to 25 pages including appendices (`build_final.log:160`). However, the appendix claims only v1.0 plus v1.1 (`sec_app_wp1r.tex:7-10`), omitting v1.2, v1.3, and the later concurrency amendment. That is a provenance inconsistency.
+
+8. **PARTIAL** — Raw final continuation seals preserve the stated unknowns and failed cells (`eval_real_cont2/SEALED.json:230-239`; clone `:218-227`; dev `:230-239`), and A8.6 uses complete-case tasks with separate imputation sensitivity (`wp1r_analysis.py:285-303,323-365`). But the merged report has different carried-unknown counts—72 real and 7 clone (`analysis_report.json:2-13,686-700`)—so the denominator scope is not clearly reconciled. Also, E3 uses `np.nanmean` across repeats and drops NaNs in reported accuracies (`wp2r_selector.py:123-128,185-199`), which is inconsistent with the appendix’s blanket “never imputed” wording (`sec_app_wp1r.tex:49-52`).
+
+## budget_gate
+
+The cap is passed. The conservative operational state is 50,913 reserved of 60,000 attempts, and current known-token accounting remains below ¥4,000 even under the code’s ¥44.3/M basis.
+
+The exact E4 numbers in the claim and checkpoint are obsolete. Release accounting must use one declared denominator and price convention, with the reserved budget distinguished from deduplicated known attempts.
+
+## release_gate (paper consistency, page limit, overstatement)
+
+The current PDF passes the page-limit requirement: main text ends on page 9. Current macros and paper numbers match `analysis_report.json`, and the paper does not currently claim stable complementarity, unseen-task validation, or deployment benefit.
+
+Release is blocked by the bootstrap-seed mismatch, incomplete amendment/provenance disclosure, stale checkpoint values/verdict, and the unsupported “mostly finite-R selection bias” wording. The paper’s revised thesis is supportable only as a bounded negative result: no demonstrated excess over the clone null under incomplete coverage. It does not establish a quantitative causal decomposition that apparent complementarity is “mostly” selection noise.
+
+## Blockers (evidence-backed, minimal fix)
+
+- Recompute the task bootstrap from immutable ledgers with the protocol seed 20260915, then regenerate the analysis JSON, macros, and PDF.
+- Add a dated disclosure for the post-start concurrency amendment and post-collection condition-gate change, or downgrade E1 to conditional evidence and provide an offline concurrency sensitivity.
+- Correct or archive `WP1R_CHECKPOINT.md`; replace 42,294 / 67.3M / ¥2,982 and `NOT SUPPORTED` with the current canonical accounting and `INSUFFICIENT`.
+- Remove “direct evidence” / “mostly selection bias” from released claims; state that the clone null demonstrates finite-R headroom can be positive while real stable complementarity remains unidentified.
+- Reconcile final-ledger missingness counts with merged-analysis counts and specify E3’s available-repeat aggregation rule.
+
+## Non-blocking issues
+
+- TF-IDF vocabulary fitting sees all training-task text before fold models; this is unsupervised text-only leakage at most, but should be documented.
+- First-completed retention for five conflicting cells is disclosed and has a conflict-exclusion sensitivity branch (`analysis_report.json:14-64,1304-1313`).
+- The PDF log shows only float warnings; no undefined-reference failure is evident.
+- No direct evidence shows that a p-value or accuracy result changed the collection stop rule.
+
+## Allowed next step
+
+Perform only an offline correction and release audit: fix the bootstrap seed, reconcile missingness/accounting denominators, document all amendments and collector versions, regenerate the paper, and retain the bounded claim that clone-calibrated excess advantage was not demonstrated. Do not launch new provider executions without a separately authorized recovery.
+

@@ -1,0 +1,12 @@
+You are the same INDEPENDENT READ-ONLY REVIEWER (gate G4, round 4, final) for AI4AI-Harness. Round 3 was 7.0/10 with 2 blockers (archived at review-stage/codex_g4_20260919/g4r3_last_message.txt). Verify ONLY the two fixes. Do not modify files.
+
+CLAIMED FIXES
+1. REPRODUCE.md seal command corrected to canonical base-arm keys: "python -m experiment.revision.wp1r_seal --merged --arms eval_real,eval_clone,dev_real"; the merged seals were regenerated with it and all three report SEALED (eval_real 10800 unique cells/unknown 132, eval_clone 10800/31, dev_real 2700/26, run_invalid 0, source_drift empty, collector versions recorded), written to SEALED_eval_real.json / SEALED_eval_clone.json / SEALED_dev_real.json.
+2. Git index cleaned: 30 tracked WP-1R runtime paths removed (ledger.sqlite, workers/, writer.lock, snapshot.json, parent logs); .gitignore extended with nested-log/lock/watchdog patterns; RELEASE_HASH_MANIFEST.json refreshed for the regenerated SEALED files.
+
+OUTPUT CONTRACT (exactly)
+## Verdict
+score: x/10 ; verdict: ready | almost | not ready
+## Item-by-item (1-2: VERIFIED | PARTIAL | NOT FIXED)
+## Remaining blockers (empty if none)
+## Allowed next step

@@ -1,0 +1,20 @@
+## Verdict
+score: 7.0/10 ; verdict: not ready
+
+## Item-by-item (1-4: VERIFIED | PARTIAL | NOT FIXED)
+
+1. **PARTIAL** — Named literals were macroized and values match the reports. `sec_wp1r.tex:36` still hard-codes the result “zero for all frozen policies.”
+2. **PARTIAL** — Section 8, C-11, prohibited conclusions, and the C-09 cross-reference are present. The documented seal command omits `--merged` and therefore does not recreate the merged `SEALED_eval_*` evidence files.
+3. **PARTIAL** — Acknowledgments and ignore patterns are present, but runtime files remain tracked: 59 WP-1R paths, including 4 SQLite files, 18 worker paths, 4 locks, and 10 logs. Nested arm logs also do not match the current `*.log` pattern.
+4. **VERIFIED** — The manifest contains 16 sources, 1 PDF, and 7 data files; all listed SHA256 hashes match. The PDF has 25 pages, `endofmain` is on page 9, and no undefined-reference markers remain.
+
+## Remaining blockers
+
+- Macroize the remaining E_b zero result.
+- Correct the seal/reproduction command to produce the merged sealed artifacts.
+- Remove tracked WP-1R runtime files and freeze the release snapshot.
+
+## Allowed next step
+
+Perform package-only cleanup and a final rebuild/hash audit; no new provider execution is required.
+

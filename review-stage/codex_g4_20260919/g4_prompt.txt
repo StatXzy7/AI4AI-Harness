@@ -1,0 +1,17 @@
+You are an INDEPENDENT READ-ONLY REVIEWER performing the FINAL cold-start release audit (gate G4) for AI4AI-Harness at E:\projects\AI4AI-Harness, an ICLR 2027 submission. Prior gates: G0 protocol 8.8/10 ready (4 rounds, review-stage/codex_g0_20260915/); G2/G3 evidence+claims 8.7/10 almost after 3 rounds (review-stage/codex_g23_20260919/), final blocker (selector header rule) since fixed. This is the paper/release audit: judge the SUBMISSION PACKAGE a cold reader receives. Do not modify files.
+
+AUDIT SCOPE
+1. paper/latex/main.pdf: build integrity (25 pages incl. appendices; main text ends page 9 per aux endofmain), no undefined references, visual/format sanity of the PDF sources.
+2. Claim consistency: paper/latex/sec_wp1r.tex, sec_app_wp1r.tex, wp1r_numbers.tex, wp1r_policy_table.tex vs artifacts/wp1r_20260915/analysis_report.json and wp2r_selector_report.json. Every WP-1R/2R number must come from the generated macros; no overstatement (bounded INSUFFICIENT claims, no "stable complementarity found", retrospective-task/prospective-execution labels, disclosure of amendments v1.1-v1.3 + concurrency 2/2/6 + collector hashes).
+3. Anonymous-submission hygiene: no author identifying info in main.tex/preamble; acknowledgments placeholder; AI-use statement present and consistent.
+4. CLAIM_LEDGER.json + REPRODUCE.md consistency with the new results (REPRODUCE should describe the WP-1R evidence commands; CLAIM_LEDGER may carry the C-10 correction; check no contradiction).
+5. Repository release hygiene: .gitignore excludes bulky runtime ledgers (evidence = compact analysis JSON + SEALED_*.json hash-bound); no secrets committed (grep for PARATERA key material patterns, provider logs must be secret-free); LICENSE/packaging sanity.
+6. Any last blockers for submission packaging (final source->PDF rebuild + hashes is the authors' step; you judge readiness).
+
+OUTPUT CONTRACT (exactly)
+## Verdict
+score: x/10 ; verdict: ready | almost | not ready
+## release_gate (numbered checks 1-6: PASS | FAIL with evidence)
+## Blockers
+## Non-blocking issues
+## Allowed next step
