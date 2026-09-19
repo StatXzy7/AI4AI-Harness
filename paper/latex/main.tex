@@ -19,40 +19,36 @@
 \newcommand{\react}{\texttt{react}}
 \newcommand{\pp}{\,pp}
 \input{revision_numbers}
+\input{wp1r_numbers}
 
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \begin{document}
 \maketitle
 
 \begin{abstract}
-Automatically generated LLM harnesses can differ in source code, executed
-mechanisms, and correctness outcomes without providing reproducible additional
-capability. We study this distinction on BIRD text-to-SQL. A discovery
-population had 36 of 91 harness pairs identical on all evaluated outcomes
-despite distinct source code; trace inspection found absent, untriggered, and
-broken mechanisms. A subsequent factorial study crossed strategy forcing and
-an admission gate over six builders and three seeds, using 1{,}169 questions
-and the official BIRD scorer. Free generation yielded 8.6\,pp observed oracle
-headroom. Post-review reanalysis estimates the combined intervention at
-$\RevisionPrimaryDelta$\,pp (95\% CI $\RevisionPrimaryCI$), with no clear
-improvement. A one-seed MATH-500 probe provides parallel cross-domain evidence:
-10.6\% outcome disagreement and 4.75\,pp headroom, while bare remains best.
-The gate excludes two allowed prompt-level strategy types, so the BIRD contrast
-cannot isolate verification. Repeats show that one-run oracles can exploit
-execution instability. We therefore frame population utility as stable,
-predictable task--harness interaction, and separate a stable ranking
-difference from stable complementarity: by a two-action identity, a member
-that dominates everywhere gives the former with zero of the latter. These
-boundaries are packaged as an offline diagnostic over five claim classes,
-whose implementation is checked against invariants (ordering invariance,
-dominance $\neq$ complementarity, refusal of condition-mixed or cloned
-repeats) and validated on mechanism-derived controls with hash-bound
-challenge re-execution; applying it also corrects one of our own earlier
-verification claims. The present data motivate but do not test
-residual-error coverage as a positive intervention, and establish why
-observed headroom
-is insufficient evidence of deployable population value; the diagnostic's
-utility class is budget-matched and offline, never billable deployment.
+Automatically generated LLM harnesses offer a rich design space, but their
+source-code, execution, and outcome diversity must be measured separately.
+On BIRD text-to-SQL, trace inspection distinguishes absent, untriggered,
+and broken mechanisms, and free generation yields 8.6\,pp of observed
+oracle headroom across 1{,}169 questions; a one-seed MATH-500 probe
+shows 10.6\% outcome disagreement and 4.75\,pp headroom. We formalize
+one-run oracle gains, stable ranking, stable complementarity,
+pre-execution selectability, and budgeted utility as five separately
+reported claim classes, checked by ordering-invariance,
+dominance-versus-complementarity, cloned-repeat, and condition-mixing
+controls with hash-bound challenge re-execution; the procedure also
+corrects one of our earlier verification claims. On the archived
+factorial study the combined screening intervention estimates
+$\RevisionPrimaryDelta$\,pp (95\% CI $\RevisionPrimaryCI$), supporting
+the measurement contribution rather than intervention superiority. A
+fresh pre-registered MATH-500 collection supplies the decisive
+equal-budget control: an eight-harness panel and nine same-code clone
+slots, each run for three independent repeats. The panel shows stable
+member ranking, but stable complementarity is not established and its
+discovery-selected advantage is indistinguishable from same-code
+repeated execution. The framework turns apparent diversity into
+auditable evidence and identifies the controls required before any
+deployment claim.
 \end{abstract}
 
 \section{Introduction}\label{sec:introduction}
@@ -79,6 +75,26 @@ utility class is budget-matched and offline, never billable deployment.
 \input{sec_conclusion}
 
 \label{endofmain}
+
+% Optional ICLR statement; placed after the main-text marker and before the
+% bibliography so it does not consume the nine-page main-text allowance.
+\subsection*{Ethics Statement}
+All experiments use public BIRD and MATH-500 benchmark data and generated
+program artifacts; no human participants, private records, or personally
+identifying information are collected.  Model calls are reported as part of
+the experimental provenance, and the paper does not release credentials or
+provider responses that would expose private data.  The main ethical risk is
+overstating what one-run oracle gains imply for deployed routing; we therefore
+report the unresolved selection and cost claims explicitly as
+\textsc{Insufficient Evidence}.
+
+\subsection*{Reproducibility Statement}
+The supplementary source includes the frozen diagnostic implementation,
+control manifests, and hash-bound result records.  `REPRODUCE.md` gives the
+exact offline commands for unit tests, calibration, blinded controls, archive
+diagnoses, and the LaTeX build.  The reported provider-dependent archives are
+retained with their provenance and hashes; no claim requires access to a live
+model API to rerun the diagnostic itself.
 
 % ---- ICLR 2027 mandatory AI use statement (does not count toward page limit) ----
 \subsection*{AI use statement}
@@ -122,6 +138,7 @@ final responsibility for their accuracy rests with the authors.
 
 \appendix
 \input{sec_appendix}
+\input{sec_app_wp1r}
 \input{sec_crossdomain}
 
 \end{document}

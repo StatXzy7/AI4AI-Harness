@@ -37,3 +37,16 @@ artifacts/revision_20260910/replay_env/
 artifacts/revision_20260910/runtime_env/
 artifacts/revision_20260910/fresh_replay/
 artifacts/revision_20260910/sensitivity_smoke.json
+
+# WP-1R large runtime ledgers/worker dirs: evidence package is the compact
+# analysis JSON + SEALED_*.json (ledger SHA256-bound), per REPRODUCE convention.
+artifacts/wp1r_20260915/*/ledger.sqlite
+artifacts/wp1r_20260915/*/ledger.sqlite-wal
+artifacts/wp1r_20260915/*/ledger.sqlite-shm
+artifacts/wp1r_20260915/*/workers/
+artifacts/wp1r_20260915/*/writer.lock
+artifacts/wp1r_20260915/global_budget.lock
+artifacts/wp1r_20260915/*.log
+artifacts/tmp*/
+transcripts/
+artifacts/review_20260919/transcripts/

@@ -1,0 +1,39 @@
+{
+ "arm": "eval_clone",
+ "ledgers": [
+  "eval_clone",
+  "eval_clone_cont"
+ ],
+ "sealed_at": "2026-09-19T10:01:44Z",
+ "unique_cells": 10800,
+ "expected": 10800,
+ "unknown_remote": 31,
+ "run_invalid_events": 0,
+ "dedup": {
+  "ledgers": [
+   "eval_clone",
+   "eval_clone_cont"
+  ],
+  "rows_read": 14967,
+  "unique_keys": 10800,
+  "identical_copies": 4160,
+  "unknown_carried": 7,
+  "completed_beats_unknown": 0,
+  "unknown_then_completed": 0,
+  "both_completed_differ": [],
+  "terminal_states": {
+   "completed": 14929,
+   "failed": 38
+  }
+ },
+ "source_drift": [],
+ "collector_sha256_versions": [
+  "3870f5e221b5a0e65d5342a2b3a08e7be242813c69878c677da03a92c4755335",
+  "6ef29db91b01af18ea2f32ba798f0ceb17fc77a21acb66c85c576ad52c9ca7c7"
+ ],
+ "ledger_sha256": {
+  "eval_clone": "f234c275df8817a2a0c33702397e13c1f09bfdaf09778b74c717161de6d16c87",
+  "eval_clone_cont": "9bec159dd48cf238de666cc5556ddac48ced864fbdcd557bb10b19fdfdf73783"
+ },
+ "state": "SEALED"
+}

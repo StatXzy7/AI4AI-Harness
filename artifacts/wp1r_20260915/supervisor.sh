@@ -12,7 +12,7 @@ for i in $(seq 1 2000); do   # up to ~2000 cycles of 10 minutes (~14 days)
   ts=$(date -u +%FT%TZ)
   # budget guard
   reserved=$(python -c "import json;print(json.load(open('artifacts/wp1r_20260915/global_budget.json'))['reserved'])" 2>/dev/null)
-  if [ -n "$reserved" ] && [ "$reserved" -ge 44500 ]; then
+  if [ -n "$reserved" ] && [ "$reserved" -ge 58000 ]; then
     echo "$ts budget guard: reserved=$reserved, not relaunching" >> artifacts/wp1r_20260915/supervisor.log
     break
   fi

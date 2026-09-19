@@ -1,0 +1,87 @@
+% Appendix: WP-1R/WP-2R fresh real-evidence collection (protocol, execution
+% record, merge disclosure, accounting). Input after sec_appendix.tex.
+
+\section{WP-1R/WP-2R Fresh Collection: Protocol and Execution Record}
+\label{app:wp1r}
+
+\paragraph{Frozen protocol.} The acquisition protocol
+(\texttt{review-stage/REAL\_EVIDENCE\_PROTOCOL\_V1.md}, v1.0 frozen
+2026-09-15 plus the v1.1 budget amendment, both committed before any
+confirmatory outcome) fixes: the estimands E1--E4 of
+\S\ref{sec:wp1r}; the panel draw (eligibility by frozen repeat-0 mean
+logical calls ${\leq}3.05$ --- a budget-feasibility filter disclosed as
+biasing the panel toward low-call mechanisms, not a uniform sample of the
+35 generated members; then a salted-hash draw, one stratum seat per builder
+plus two at-large seats, salt \texttt{wp1r-panel-v1-20260915}, recorded in
+\texttt{WP1R\_PANEL\_DRAW.json}); $R{=}3$ fresh repeats per arm; the
+nine-slot same-code clone arm (\texttt{clone-c1..c9}, byte-identical
+\bare{} source) as the exchangeable null; the A8.6 discovery/validation
+procedure (discovery repeat 1, validation repeats 2--3, $\delta{=}1.0$\,pp,
+10{,}000 permutations, 10{,}000 task bootstrap draws, seed 20260915); the
+paired difference and its CI use only the task intersection complete in
+both arms; a coverage gate degrades the main verdict to INSUFFICIENT when
+either arm excludes more than 10\% of tasks, with two frozen sensitivity
+branches (within-task repeat-mean imputation, and exclusion of
+doubly-executed conflict cells); and
+the acceptance rule that any of SUPPORTED / REFUTED / INSUFFICIENT
+terminates the study without re-running or re-sampling. The 400 eval and
+100 dev tasks are the frozen MATH-500 split (SHA256 recorded); eval tasks
+were analyzed before in the one-run mini-audit, so results are labeled
+retrospective-task/prospective-execution, not unseen-task validation.
+
+\paragraph{Execution record and continuation merge.} Collection ran
+2026-09-15 through 2026-09-19 under a 60{,}000-attempt global budget with
+per-cell atomic reservation. Two provider-timeout stops (2026-09-17,
+2026-09-18) split the real arm across three continuation ledgers and the
+clone arm across two; each continuation re-binds the identical frozen
+solver condition (verified field-by-field at merge). The merge rule is
+deterministic: a completed observation beats an \texttt{unknown\_remote}
+marker; among completed records of the same cell the earliest ledger wins.
+Across the real arm's
+\WpRowsRead{} rows it collapsed \WpMigrationCopies{} migration
+copies, preferred a completed record over an unknown-remote marker
+\WpCompletedBeatsUnknown{} times, completed an earlier unknown marker
+\WpUnknownThenCompleted{} times, and found \WpDoubleExec{} cells with two
+completed but disagreeing executions (first-completed retained; a frozen
+sensitivity branch excludes them instead). The clone arm's
+\WpCloneRowsRead{} rows collapsed to 10{,}800 unique cells
+(\WpCloneMigrationCopies{} copies, zero conflicts).
+\WpUnknownCarried{} cells remain
+\texttt{unknown\_remote} across all ledgers and stay NaN in the outcome
+matrices --- never imputed --- so classes requiring those cells abstain by
+the frozen rules. The merged arms are hash-sealed
+(\texttt{SEALED\_eval\_real.json}, \texttt{SEALED\_eval\_clone.json},
+\texttt{SEALED\_dev\_real.json}); the analysis code and its unit tests are
+in \texttt{experiment/revision/wp1r\_analysis.py}.
+
+\paragraph{Accounting (E4).} Per-request accounting layers
+experiment-run $>$ harness-execution $>$ logical-call $>$ provider-attempt;
+migration copies are excluded from the totals (distinct re-executions count
+individually). Totals: \WpLogicalCalls{} logical calls, \WpHttpAttempts{}
+provider attempts, \WpTotalTokens{} known tokens, conservative cost ceiling
+\WpCostCny{} CNY at the frozen break-even price of 44.3 CNY per 1M tokens
+(pricing not independently verifiable; reported as token counts times the
+frozen price, never as billed amounts).
+
+\paragraph{Selector spec (E3).} $\pi_Z$ is multinomial logistic regression
+over TF-IDF question features (max 300) and per-member dev accuracies
+computed within training folds only; 5-fold task-level CV on the 100 dev
+tasks with same-task repeats never split across folds; fold-model
+averaging; ties broken by member id; abstain to \bare{} when the top-2
+probability gap is below 0.15. Comparators: \bare{}, dev-fixed, pre-fixed
+random member (seeded), M1b (dev-fixed with bare fallback on missing
+cells). $E_1$ (budget by construction) is not applicable because panel
+members make more than one call; $E_b$ with $b{=}3$ calls per task is
+reported as a separately named estimand. Leakage controls: no answer,
+correctness, eval-derived difficulty, post-execution trace, or judge
+feature is used.
+
+\begin{table}[h]
+\centering\small
+\input{wp1r_policy_table}
+\caption{\textbf{WP-2R frozen comparator set on the 400 MATH-500 eval
+tasks} (repeat-mean correctness over three fresh repeats; retrospective
+tasks, prospective execution --- no unseen-task claim). Paired differences
+are per-task against dev-fixed with task-level bootstrap CIs.}
+\label{tab:wp1r-policy}
+\end{table}

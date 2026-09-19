@@ -28,6 +28,7 @@ import json
 import math
 import msvcrt
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -458,6 +459,20 @@ def _snapshot(store, output, reason, **fields):
         json.dumps(store.snapshot(), indent=2, ensure_ascii=False), encoding='utf-8')
 
 
+
+def _usage_less_success_ends(child):
+    """Count http_end records with status 200 but missing/invalid usage."""
+    bad = 0
+    for e in (child or {}).get('events', []):
+        if e.get('kind') == 'http_end' and e.get('status') == 200:
+            u = e.get('usage')
+            ok = (isinstance(u, dict) and all(type(u.get(k)) is int and u[k] >= 0
+                  for k in ('prompt_tokens', 'completion_tokens', 'total_tokens')))
+            if not ok:
+                bad += 1
+    return bad
+
+
 def _child_requests_closed(child):
     """True when every provider request in the child ledger reached a known
     outcome (same predicate RunStore.finish enforces), so the failure is fully
@@ -489,6 +504,12 @@ def _run_cell(store, manifest, config, cell, task, harness):
             return False
         return True
     folder = Path(config['output']).resolve() / 'workers' / key
+    # Resuming a cleared never-started cell can leave a crashed worker's
+    # stale folder; begin() returned needed=True, so this cell has no
+    # durable result and the folder is safe to remove before the new worker
+    # binds its run identity (reusing it would trip the run-identity guard).
+    if folder.exists():
+        shutil.rmtree(folder, ignore_errors=True)
     folder.mkdir(parents=True, exist_ok=False)
     request = {'manifest': manifest, 'cell': cell, 'task': task, 'harness': harness,
                'folder': str(folder),
@@ -534,10 +555,23 @@ def _run_cell(store, manifest, config, cell, task, harness):
     child_result = child['tasks'][0]['result']
     accounting = child_result.get('accounting', {})
     if accounting.get('responses_missing_usage') != 0 or accounting.get('total_tokens') is None:
-        _snapshot(store, config['output'], 'response_usage_unknown', task=key,
-                  answer_preserved=True, worker_result=child_result)
-        raise RuntimeError('Response usage unknown; preserve answer and pending cell, '
-                           'do not retry automatically')
+        # Root cause (2026-09-19, dev_cont): a 429 whose retry SUCCEEDS still
+        # leaves the usage-less 429 http_end in the child ledger, so
+        # responses_missing_usage > 0 even though the logical call completed
+        # with a fully-accounted final attempt. Treat usage-less status-error
+        # ends as retried-and-recovered (not unknown), while any usage-less
+        # 200 (a real accounting hole) still stops the run.
+        bad200 = _usage_less_success_ends(child)
+        if bad200:
+            _snapshot(store, config['output'], 'response_usage_unknown', task=key,
+                      answer_preserved=True, worker_result=child_result,
+                      usage_less_status_200=bad200)
+            raise RuntimeError('Response usage unknown; preserve answer and pending cell, '
+                               'do not retry automatically')
+        store.finish(key, {**child_result, 'worker_pid': process['pid']})
+        store.event('retried_status_errors_recovered', task=key,
+                    usage_less_status_error_ends=accounting.get('responses_missing_usage'))
+        return True
     store.finish(key, {**child_result, 'worker_pid': process['pid']})
     return True
 

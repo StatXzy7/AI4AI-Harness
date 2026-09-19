@@ -115,6 +115,16 @@ rejects two allowed prompt-level strategies and realized generation costs
 differ across arms. Corrected tables use shared baseline records and
 database/task resampling, as described in the main text.
 
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.75\linewidth]{figures/fig_design_revision.pdf}
+\caption{\textbf{Phase-II confirmatory design} (frozen protocol). Left:
+database-level contamination isolation. Middle: the $2{\times}2$
+factorial with a common attempt cap, plus open-mechanism arm II-E. Right:
+the three-layer admission pipeline.}
+\label{fig:design}
+\end{figure}
+
 \paragraph{Upstream code-extraction audit.}\label{app:extraction}
 Across the 36 forced C/D cells, all 108 \texttt{format\_guard} attempts
 failed neutral validity: 71 logs report unterminated Python strings,
@@ -169,6 +179,21 @@ and $\RevisionRtwoLegacyOff$\,pp cache-off. This explains the difference
 from the full-cell estimates; neither analysis identifies future execution
 variance, the effect of caching alone, or a stable-complementarity advantage
 over clones. Acquisition time and caching condition are not isolated.
+
+\paragraph{R3 bare-only repeat audit.}\label{app:r3}
+R3 is a separate, smaller instability audit: three independent cache-off
+executions of the \emph{bare baseline only} (no generated harnesses) on the
+same core-400 tasks, same frozen target (GLM-5.3-Flash, temperature 0).
+58 of 400 tasks (14.5\%) changed bare correctness in at least one of the
+three repeats; pairwise flip rates between repeat pairs are 39/400, 40/400,
+and 37/400 (9.75\%, 10.0\%, 9.25\%). R3 therefore measures the observed
+instability rate of the baseline itself under temperature-0 API
+nondeterminism. This is not a standard error or an effect-size floor for
+any contrast, but it sets the scale at which repeat controls become
+necessary for interpretation: a harness-versus-bare difference of this
+magnitude cannot be attributed to capability without them. The archived record is
+\texttt{artifacts/phase2/r3\_flip\_rate.json} with the generating script
+\texttt{experiment/phase2/run\_r2r3.py}.
 
 \begin{table}[t]
 \centering\small
@@ -344,6 +369,9 @@ Phase-I builders & \texttt{GLM-5.3-Flash}, \texttt{Qwen3.8-Flash},
 Phase-II builders & \texttt{GLM-5.3}, \texttt{Qwen3.8-Max},
 \texttt{DeepSeek-V4-Pro}, \texttt{Kimi-K3}, \texttt{MiniMax-M3},
 \texttt{ERNIE-5.0-Thinking-Preview} & Phase II \\
+Gate-instrument development & \texttt{GPT-6} & App.~\ref{app:gatecontrols} \\
+Control authoring & \texttt{gpt-5.5} (v2/v3 sets), \texttt{gpt-5.6-sol} (v4 set) & App.~\ref{app:gatecontrols} \\
+Blinded control review/adjudication & \texttt{gpt-5.6-sol} (v2/v3), \texttt{gpt-5.5} (v4, semantic adjudication) & App.~\ref{app:gatecontrols} \\
 Judge & proxy / official BIRD execution scorer; MATH answer comparator & see text \\
 \bottomrule
 \end{tabular}
@@ -395,6 +423,23 @@ present, final SQL byte-identical to \bare's on 10/10 --- the feedback loop
 is real code whose repair branch did not activate on these tasks. Controlled
 failure injection is needed to test whether feedback changes the output.
 
+\paragraph{\texttt{cand\_bird\_g1\_b0r0\_g0} (T1: mechanism described, not
+executed).} This candidate's docstring claims a ``conservative repair'':
+cap the solver's maximum output tokens and demand an answer-only block.
+Its \texttt{solve()} is structurally \bare's: one LLM call, then
+\texttt{extract\_sql}. The token cap exists only as an
+\texttt{os.environ.setdefault} default (2{,}048 against the runtime's
+32{,}000) --- no harness control flow implements it, and it never binds on
+these tasks because a SQL answer is orders of magnitude below the cap. On
+the worked task it issues exactly one call, executes nothing, and returns
+the same wrong query as \bare{} modulo whitespace (counting over
+\texttt{foreign\_data} without the join). Across the 10 audited tasks it
+records zero SQL executions on all 10, and its final SQL is byte-identical
+to \bare's on 6 (the remaining differences trace to the reworded system
+prompt, not to any mechanism). The most common Phase-I failure class is
+therefore not broken machinery but absent machinery: the claimed mechanism
+exists only in prose.
+
 \paragraph{\texttt{cand\_bird\_g1\_b0r1\_g0} (code-level diversity,
 behavioral identity).} This candidate is a genuinely different program: it
 wraps the single coder call in a daemon-thread watchdog and fires one hedged
@@ -411,7 +456,7 @@ correctly (``State the alternative languages available for card named Annul
 numbered 29.''), its logged final SQL begins, verbatim:
 \begin{quote}\small\ttfamily
 with "only a single read-only SELECT is allowed". The previous "query" was
-actually just prose text (the model wrote rea\emph{[trunc.]}
+actually just prose text (the model wrote rea\emph{[trunc.]})
 \end{quote}
 The repair re-prompt invites the failure: asked to fix a query that ``was
 actually just prose'', the frozen target responds with more prose reasoning,
@@ -421,7 +466,8 @@ item flips from bare-correct to harness-wrong.
 \section{Independent construction of instrument controls}\label{app:gatecontrols}
 We tested the post-review Gate-v2 development instrument with 32 newly
 authored controls, separate from the controls used to develop its probes.
-The instrument was fixed before a separate model received the public
+The instrument was fixed before a separate model
+(\texttt{gpt-5.5}; Table~\ref{tab:models}) received the public
 contracts and callable interface, without its implementation or earlier
 controls. The author supplied two intended conforming and two intended
 nonconforming implementations for each of the eight mechanism types.
@@ -450,7 +496,8 @@ the author's intended positive/negative labels require separate scrutiny.}
 \label{tab:gatecontrols}
 \end{table}
 
-The nine review-required cases were retained. A third model received the
+The nine review-required cases were retained. A third model
+(\texttt{gpt-5.6-sol}) received the
 full control source and traces without author-reference labels or
 automatic verdicts, for source-contract review of all 32 controls and
 semantic adjudication of the four designated mechanism types.
@@ -484,7 +531,8 @@ in the accompanying revision artifacts.
 \paragraph{Revised instrument and a new independent control set.}
 Gate-v3 corrected decomposition request attribution and treated category
 keywords and shared request templates as review clues rather than automatic
-rejections. We fixed this version before fresh model contexts authored and
+rejections. We fixed this version before fresh model contexts
+(\texttt{gpt-5.5} authoring, \texttt{gpt-5.6-sol} review) authored and
 reviewed a new set of 32 controls, again two intended positive and two intended
 negative controls per mechanism. The review packet withheld author labels,
 automatic verdicts, and instrument-derived attribution metadata. All 32
@@ -533,7 +581,8 @@ replace independent calibration or provide revised benchmark outcomes.
 
 \paragraph{Unified interface and premeasurement reference review.}
 Gate-v4 combined the source-assigned response interfaces with the five unchanged
-Gate-v3 mechanism probes. A separately authored set of 32 controls underwent
+Gate-v3 mechanism probes. A separately authored set of 32 controls
+(\texttt{gpt-5.6-sol}) underwent
 blinded source review before execution. The author was familiar with earlier
 control failures; schema-response and declared voting-parameter mismatches found
 in this source review were corrected, with the initial versions retained.
@@ -542,7 +591,8 @@ controls per mechanism. After freezing their source, profiles, and dependencies,
 one measurement covered 124 scenarios without execution exceptions. Structural
 results were 4 passes, 6 failures, and 22 review-required cases.
 
-A new review context received all source and actual traces without reference
+A new review context (\texttt{gpt-5.5}) received all source and actual
+traces without reference
 labels, source-review decisions, or automatic verdicts. Its first judgments
 were 18 conforming and 14 nonconforming. Retaining structural failures in the
 prespecified hybrid rule accepted all 16 conforming references but also one
@@ -616,6 +666,30 @@ refused as matched repeats and force INSUFFICIENT\_EVIDENCE. Pair-level
 imputation bounds over unknown cells are reported alongside the recorded
 success rate.
 
+\paragraph{Finite-repeat bias and the clone-null calibration.}
+Writing $\hat{q}_h(x)$ for the repeat-averaged correctness,
+$\mathbb{E}\,\max_h \hat{q}_h(x) \geq \max_h \mathbb{E}\,\hat{q}_h(x)$
+by Jensen, with strict inequality when finite-$R$ noise can change the
+per-task argmax. The cross-fitted discovery/validation procedure removes
+the within-policy selection optimism but not this residual component. The
+equal-budget same-code clone arm is subject to the same mechanism under
+the null of no code differences; subtracting its observed advantage
+therefore removes the shared component without claiming exact
+cancellation. The identity gates handle the degenerate case outright by
+refusing hash-matched repeats.
+
+\paragraph{Class D and E formal definitions.} Class D evaluates one
+frozen deterministic policy $\pi_Z: Z(x)\mapsto h$ --- pre-execution
+features (question text, frozen mechanism labels, training-fold dev
+accuracies), fitted on development tasks only --- by
+$D(\pi_Z)=\mathbb{E}_x[Y(x,\pi_Z(x))-Y(x,h_{\rm dev\text{-}fixed})]$,
+with an abstention rule falling back to \bare{} when the top-2
+selection-probability gap is below the frozen margin. Class E evaluates
+$U_b(\pi)=\mathbb{E}_x[\Delta(x,\pi(x))]$ under a uniform per-task call
+budget $b$ with $\lambda{=}1$ harm weighting (one regression cancels one
+repair); it is admissible only when per-record evidence verifies the
+budget on every evaluated member-task pair, and abstains otherwise.
+
 \paragraph{Validation on known-truth controls.} The frozen package has two
 layers: the original eight mechanism-derived classes $\times$ 2 instances
 (16 controls, expectations unchanged), plus four repeat-based classes
@@ -651,7 +725,11 @@ matched repeats and no dev/eval split for policy training --- not because
 costs are absent: per-record logical calls are archived and are now read
 (288{,}104 calls across the core-subset cells), though token/dollar costs
 remain unrecoverable. On MATH the frozen selection policy, trained on the
-held-out 80 tasks, ties with dev-fixed (bare) on every eval task, so
+first 80 of the 400 eval tasks held out of all D/E claims (the archive
+contains no dev-set executions: the 100-task dev split of
+Appendix~\ref{app:crossdomain} was used only for generation smoke tests,
+so the policy split is carved from the eval side, leaving 320 scored
+tasks), ties with dev-fixed (bare) on every eval task, so
 selectability and deployability are INSUFFICIENT\_EVIDENCE rather than
 refuted. Three published numbers were corrected (membership-basis of the
 outcome-vector count, now 33/36 members including bare and 32/35 generated

@@ -27,7 +27,7 @@ for the implemented screening policy, not a pure verification intervention.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.85\linewidth]{figures/fig_results_revision.pdf}
+\includegraphics[width=0.72\linewidth]{figures/fig_results_revision.pdf}
 \caption{\textbf{Versioned corrected reanalysis.} Left: full-set D$-$A
 cell contrasts and the pooled unadjusted 95\% interval. Right: four-arm
 headroom on the same core-400 tasks with a shared bare baseline. Both axes
@@ -44,7 +44,10 @@ $p$-values appear in Table~\ref{tab:factorial}.}
 $[(B-A)+(D-C)]/2$, strategy is $[(C-A)+(D-B)]/2$, and interaction is
 $(D-C)-(B-A)$. CIs are unadjusted database/task/seed bootstrap intervals.
 Raw $p$-values use two-sided cell sign flips; Holm adjusts the three
-secondary tests. The two procedures address different sources of variation.}
+secondary tests. The two procedures address different sources of variation.
+Contrasts are computed from full-precision cell-level data; recomputing
+them from the rounded cell means of Table~\ref{tab:decomp} can differ by
+up to 0.1\,pp.}
 \label{tab:factorial}
 \end{table}
 
@@ -64,24 +67,29 @@ $\RevisionOracleDelta$\,pp and best-fixed accuracy by
 $\RevisionBestDelta$\,pp; the same-core decomposition is in
 Table~\ref{tab:decomp} (Appendix~\ref{app:decomp}).
 
+\paragraph{Pre-specified secondary arm II-E.} The open-mechanism arm ran
+once dev-side only (3/4 slots admitted, $R_{\mathrm{fidelity}}{=}0.5$)
+and was never evaluated on the confirmatory split, so it has no headroom
+estimand; the full record is in Appendix~\ref{app:phase2-protocol}.
+
 \subsection{Execution variability and the stable-complementarity question}
 Independent executions destabilize one-run comparisons: canonical R2 replay
 finds \RevisionRtwoFlips/28{,}000 same-harness verdict flips
 (\RevisionRtwoFlipPercent\%), and retaining all 18 cells changes the subset
 D$-$A contrast by $\RevisionRtwoChange$\,pp
-(95\% CI $\RevisionRtwoChangeCI$); the archived R3 audit reports 14.5\% of
-tasks changing bare correctness at least once (Appendix~\ref{app:r2}). As a
-direct same-code diagnostic, treating the three bare executions as three
+(95\% CI $\RevisionRtwoChangeCI$); the R3 audit (three bare-only cache-off
+repeats) found 14.5\% of tasks changing bare correctness at least once
+(Appendix~\ref{app:r3}). Treating three bare executions as three
 different members gives a descriptive 6.50\,pp one-run oracle gap on the
-same 400 tasks --- evidence that one-run headroom can arise from execution
-sampling, not from new capability.
+same 400 tasks --- one-run headroom can arise from execution sampling, not
+new capability.
 
 Writing the per-task correct probabilities as $p_{h,x}$ makes the gap
 precise: the stable headroom
-$\frac1n\sum_x\max_h p_{h,x}-\max_h\frac1n\sum_x p_{h,x}$
-vanishes for a same-code clone pool despite positive one-run headroom, and
-its two-action decomposition (Eq.~\ref{eq:identity}) shows that a globally
-dominant member also yields zero. A discovery-selected fixed member may be
-suboptimal: beating it alone does not establish stable complementarity or
-unseen-task utility. The current data lack a balanced, cost-matched clone
-comparison, so stable added capability remains unestimated.
+$\frac1n\sum_x\max_h p_{h,x}-\max_h\frac1n\sum_x p_{h,x}$ vanishes for a
+same-code clone pool despite positive one-run headroom, and its
+two-action decomposition (Eq.~\ref{eq:identity}) shows a globally
+dominant member also yields zero. The fresh clone-controlled collection
+that tests exactly this follows (\S\ref{sec:wp1r}).
+
+\input{sec_wp1r}

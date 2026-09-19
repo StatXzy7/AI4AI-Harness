@@ -1,34 +1,27 @@
-\textbf{The central insight.} Population utility is an interaction
-problem, not a diversity statistic: a useful member must retain a stable,
-task-conditional relative advantage after execution noise is separated. A
-one-run oracle asks whether some member happened to be correct; a router
-must identify the advantageous member beforehand. Code diversity, mechanism
-fidelity, and one-run disagreement are therefore insufficient proxies.
+\textbf{The central insight.} Population utility is a stable
+task--harness interaction after execution noise is separated, not a
+diversity statistic: a one-run oracle asks who happened to be correct; a
+router must pick the advantageous member beforehand.
 
-\textbf{What the evidence establishes.} Source diversity, executed
-mechanisms, and one-run correctness differences are distinct measurements.
-The Phase-I pattern did not recur in the revised Phase-II setting; multiple
-protocol changes prevent identifying the cause. The corrected analysis of
-the original gate shows no clear headroom improvement. Because that gate
-also excludes allowed prompt strategies, it does not identify the effect
-of verification alone. The diagnostic of \S\ref{sec:diagnostics} separates
-what these results do and do not license: a stable ranking difference is
-not complementarity (Eq.~\ref{eq:identity}), abstention is not refutation,
-and each state carries scope and minimal missing evidence.
+\textbf{What the evidence establishes.} Source, mechanism, and one-run
+outcome diversity are distinct measurements. The Phase-I pattern did not
+recur in Phase II, though protocol changes prevent attribution; the
+corrected gate reanalysis shows no clear headroom improvement and does
+not identify verification alone; the diagnostic of
+\S\ref{sec:diagnostics} separates what the numbers license --- a stable
+ranking difference is not complementarity, abstention is not refutation.
 
 \textbf{What remains unidentified.} Same-code reruns can disagree and
-create oracle gains; flip rates measure instability, not the standard error
-of a treatment contrast. A matched-cost clone control, independent repeat
-validation, and calibration across mechanism types
+create oracle gains; flip rates measure instability, not the standard
+error of a treatment contrast. Independent repeat validation against an
+equal-budget clone population and cross-mechanism calibration
 (Appendix~\ref{app:gatecontrols}) are needed before attributing headroom
-to stable additional capability.
+to stable additional capability; the fresh MATH-500 collection
+(\S\ref{sec:wp1r}) supplies the first such test on one panel.
 
-
-
-\textbf{Limitations.} The main comparison uses one text-to-SQL target and
-six fixed builders, with three generation seeds per builder. The reanalysis
-is post-review and does not add independent executions; W1/W3 remain
-descriptive, and the one-seed MATH-500 probe supplies no clone, repeat,
-repaired-gate, or stable-complementarity test
-(Appendix~\ref{app:crossdomain}). Residual-error coverage therefore remains
-a stated design hypothesis, not a tested win.
+\textbf{Limitations.} One text-to-SQL target, six fixed builders, three
+generation seeds; the reanalysis adds no independent executions and W1/W3
+remain descriptive; the MATH-500 one-run probe has no repaired-gate
+control, with clone/repeat/selector controls from the separate fresh
+collection. Residual-error coverage remains a stated design hypothesis,
+not a tested win.

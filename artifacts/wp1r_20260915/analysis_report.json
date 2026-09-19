@@ -8,8 +8,8 @@
   "rows_read": 19318,
   "unique_keys": 10800,
   "identical_copies": 8418,
-  "unknown_carried": 75,
-  "completed_beats_unknown": 11,
+  "unknown_carried": 72,
+  "completed_beats_unknown": 14,
   "unknown_then_completed": 9,
   "both_completed_differ": [
    {
@@ -64,8 +64,8 @@
    }
   ],
   "terminal_states": {
-   "completed": 19088,
-   "failed": 230
+   "completed": 19091,
+   "failed": 227
   }
  },
  "E1_C-rank_E2_C-comp": {
@@ -136,10 +136,10 @@
      "h1": "bare",
      "h2": "gsm_kimi_s0_g3",
      "state": "SUPPORTED",
-     "mean_delta": 0.1142,
+     "mean_delta": 0.1133,
      "ci95": [
-      0.0842,
-      0.145
+      0.0833,
+      0.1442
      ],
      "missing_sensitivity_bounds": [
       0.0971,
@@ -151,10 +151,10 @@
      "h1": "bare",
      "h2": "gsm_kimi_s0_g4",
      "state": "SUPPORTED",
-     "mean_delta": 0.095,
+     "mean_delta": 0.0942,
      "ci95": [
-      0.0658,
-      0.125
+      0.065,
+      0.1233
      ],
      "missing_sensitivity_bounds": [
       0.0712,
@@ -241,10 +241,10 @@
      "h1": "gsm_deepseek_s0_g3",
      "h2": "gsm_kimi_s0_g3",
      "state": "REFUTED_WITHIN_SCOPE",
-     "mean_delta": -0.1425,
+     "mean_delta": -0.1433,
      "ci95": [
-      -0.1808,
-      -0.105
+      -0.1817,
+      -0.1058
      ],
      "missing_sensitivity_bounds": [
       -0.1583,
@@ -256,10 +256,10 @@
      "h1": "gsm_deepseek_s0_g3",
      "h2": "gsm_kimi_s0_g4",
      "state": "REFUTED_WITHIN_SCOPE",
-     "mean_delta": -0.1617,
+     "mean_delta": -0.1625,
      "ci95": [
       -0.2059,
-      -0.1183
+      -0.1192
      ],
      "missing_sensitivity_bounds": [
       -0.1842,
@@ -331,10 +331,10 @@
      "h1": "gsm_ernie_s0_g3",
      "h2": "gsm_kimi_s0_g3",
      "state": "REFUTED_WITHIN_SCOPE",
-     "mean_delta": -0.07,
+     "mean_delta": -0.0708,
      "ci95": [
-      -0.0967,
-      -0.0458
+      -0.0975,
+      -0.0467
      ],
      "missing_sensitivity_bounds": [
       -0.0854,
@@ -346,10 +346,10 @@
      "h1": "gsm_ernie_s0_g3",
      "h2": "gsm_kimi_s0_g4",
      "state": "REFUTED_WITHIN_SCOPE",
-     "mean_delta": -0.0892,
+     "mean_delta": -0.09,
      "ci95": [
-      -0.1242,
-      -0.055
+      -0.125,
+      -0.0558
      ],
      "missing_sensitivity_bounds": [
       -0.1113,
@@ -406,10 +406,10 @@
      "h1": "gsm_glm_s0_g6",
      "h2": "gsm_kimi_s0_g3",
      "state": "REFUTED_WITHIN_SCOPE",
-     "mean_delta": -0.1392,
+     "mean_delta": -0.14,
      "ci95": [
       -0.1767,
-      -0.1017
+      -0.1025
      ],
      "missing_sensitivity_bounds": [
       -0.1567,
@@ -421,10 +421,10 @@
      "h1": "gsm_glm_s0_g6",
      "h2": "gsm_kimi_s0_g4",
      "state": "REFUTED_WITHIN_SCOPE",
-     "mean_delta": -0.1583,
+     "mean_delta": -0.1592,
      "ci95": [
-      -0.2008,
-      -0.1175
+      -0.2017,
+      -0.1183
      ],
      "missing_sensitivity_bounds": [
       -0.1825,
@@ -496,10 +496,10 @@
      "h1": "gsm_kimi_s0_g3",
      "h2": "gsm_minimax_s0_g0",
      "state": "SUPPORTED",
-     "mean_delta": 0.1408,
+     "mean_delta": 0.1417,
      "ci95": [
-      0.105,
-      0.1767
+      0.1058,
+      0.1775
      ],
      "missing_sensitivity_bounds": [
       0.15,
@@ -511,10 +511,10 @@
      "h1": "gsm_kimi_s0_g3",
      "h2": "gsm_minimax_s0_g3",
      "state": "SUPPORTED",
-     "mean_delta": 0.14,
+     "mean_delta": 0.1408,
      "ci95": [
-      0.1033,
-      0.1775
+      0.1042,
+      0.1783
      ],
      "missing_sensitivity_bounds": [
       0.1467,
@@ -526,10 +526,10 @@
      "h1": "gsm_kimi_s0_g3",
      "h2": "gsm_qwen_s0_g5",
      "state": "SUPPORTED",
-     "mean_delta": 0.14,
+     "mean_delta": 0.1408,
      "ci95": [
-      0.1042,
-      0.1767
+      0.105,
+      0.1775
      ],
      "missing_sensitivity_bounds": [
       0.1508,
@@ -541,10 +541,10 @@
      "h1": "gsm_kimi_s0_g4",
      "h2": "gsm_minimax_s0_g0",
      "state": "SUPPORTED",
-     "mean_delta": 0.16,
+     "mean_delta": 0.1608,
      "ci95": [
-      0.12,
-      0.2017
+      0.1208,
+      0.2025
      ],
      "missing_sensitivity_bounds": [
       0.1808,
@@ -556,10 +556,10 @@
      "h1": "gsm_kimi_s0_g4",
      "h2": "gsm_minimax_s0_g3",
      "state": "SUPPORTED",
-     "mean_delta": 0.1592,
+     "mean_delta": 0.16,
      "ci95": [
-      0.1175,
-      0.2008
+      0.1183,
+      0.2025
      ],
      "missing_sensitivity_bounds": [
       0.1775,
@@ -571,10 +571,10 @@
      "h1": "gsm_kimi_s0_g4",
      "h2": "gsm_qwen_s0_g5",
      "state": "SUPPORTED",
-     "mean_delta": 0.1592,
+     "mean_delta": 0.16,
      "ci95": [
-      0.1191,
-      0.2033
+      0.12,
+      0.2042
      ],
      "missing_sensitivity_bounds": [
       0.1817,
@@ -696,8 +696,8 @@
   "unknown_then_completed": 0,
   "both_completed_differ": [],
   "terminal_states": {
-   "completed": 14926,
-   "failed": 41
+   "completed": 14929,
+   "failed": 38
   }
  },
  "clone_arm_s3": {
@@ -723,10 +723,10 @@
      "h1": "clone-c1",
      "h2": "clone-c2",
      "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0017,
+     "mean_delta": -0.0008,
      "ci95": [
-      -0.0133,
-      0.0108
+      -0.0125,
+      0.0117
      ],
      "missing_sensitivity_bounds": [
       0.0017,
@@ -738,10 +738,10 @@
      "h1": "clone-c1",
      "h2": "clone-c3",
      "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.0017,
+     "mean_delta": 0.0025,
      "ci95": [
-      -0.0108,
-      0.0142
+      -0.01,
+      0.015
      ],
      "missing_sensitivity_bounds": [
       0.005,
@@ -753,10 +753,10 @@
      "h1": "clone-c1",
      "h2": "clone-c4",
      "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0067,
+     "mean_delta": -0.0058,
      "ci95": [
-      -0.0183,
-      0.0042
+      -0.0175,
+      0.005
      ],
      "missing_sensitivity_bounds": [
       -0.0025,
@@ -768,10 +768,10 @@
      "h1": "clone-c1",
      "h2": "clone-c5",
      "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0025,
+     "mean_delta": -0.0033,
      "ci95": [
-      -0.0142,
-      0.01
+      -0.015,
+      0.0083
      ],
      "missing_sensitivity_bounds": [
       -0.0017,
@@ -783,9 +783,9 @@
      "h1": "clone-c1",
      "h2": "clone-c6",
      "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.0033,
+     "mean_delta": 0.0042,
      "ci95": [
-      -0.0092,
+      -0.0083,
       0.0167
      ],
      "missing_sensitivity_bounds": [
@@ -798,10 +798,10 @@
      "h1": "clone-c1",
      "h2": "clone-c7",
      "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.0042,
+     "mean_delta": 0.005,
      "ci95": [
-      -0.0075,
-      0.0158
+      -0.0058,
+      0.0167
      ],
      "missing_sensitivity_bounds": [
       0.0067,
@@ -813,10 +813,10 @@
      "h1": "clone-c1",
      "h2": "clone-c8",
      "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0042,
+     "mean_delta": -0.0033,
      "ci95": [
-      -0.015,
-      0.0058
+      -0.0142,
+      0.0067
      ],
      "missing_sensitivity_bounds": [
       -0.0004,
@@ -828,10 +828,10 @@
      "h1": "clone-c1",
      "h2": "clone-c9",
      "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0033,
+     "mean_delta": -0.0025,
      "ci95": [
-      -0.0142,
-      0.0075
+      -0.0125,
+      0.0083
      ],
      "missing_sensitivity_bounds": [
       -0.0017,
@@ -873,10 +873,10 @@
      "h1": "clone-c2",
      "h2": "clone-c5",
      "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0008,
+     "mean_delta": -0.0025,
      "ci95": [
-      -0.0142,
-      0.0108
+      -0.015,
+      0.0092
      ],
      "missing_sensitivity_bounds": [
       -0.0033,
@@ -963,10 +963,10 @@
      "h1": "clone-c3",
      "h2": "clone-c5",
      "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0042,
+     "mean_delta": -0.0058,
      "ci95": [
-      -0.0167,
-      0.0083
+      -0.0183,
+      0.0058
      ],
      "missing_sensitivity_bounds": [
       -0.0067,
@@ -1038,10 +1038,10 @@
      "h1": "clone-c4",
      "h2": "clone-c5",
      "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.0042,
+     "mean_delta": 0.0025,
      "ci95": [
-      -0.0083,
-      0.0175
+      -0.01,
+      0.015
      ],
      "missing_sensitivity_bounds": [
       0.0008,
@@ -1113,10 +1113,10 @@
      "h1": "clone-c5",
      "h2": "clone-c6",
      "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.0058,
+     "mean_delta": 0.0075,
      "ci95": [
-      -0.0067,
-      0.0175
+      -0.005,
+      0.0192
      ],
      "missing_sensitivity_bounds": [
       0.0075,
@@ -1128,10 +1128,10 @@
      "h1": "clone-c5",
      "h2": "clone-c7",
      "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.0067,
+     "mean_delta": 0.0083,
      "ci95": [
-      -0.0058,
-      0.0192
+      -0.0042,
+      0.0208
      ],
      "missing_sensitivity_bounds": [
       0.0083,
@@ -1143,10 +1143,10 @@
      "h1": "clone-c5",
      "h2": "clone-c8",
      "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0017,
+     "mean_delta": -0.0,
      "ci95": [
-      -0.0133,
-      0.0108
+      -0.0117,
+      0.0125
      ],
      "missing_sensitivity_bounds": [
       0.0013,
@@ -1158,10 +1158,10 @@
      "h1": "clone-c5",
      "h2": "clone-c9",
      "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0008,
+     "mean_delta": 0.0008,
      "ci95": [
-      -0.0133,
-      0.0117
+      -0.0108,
+      0.0133
      ],
      "missing_sensitivity_bounds": [
       0.0,
@@ -1275,24 +1275,24 @@
  },
  "E2_A86_clone_null": {
   "estimand": "A8.6 task-conditional advantage (discovery r1, validation r2-3)",
-  "A_real": 0.0014326647564469914,
-  "A_clone_obs": 0.0013157894736842105,
-  "D": 0.0014792899408284023,
+  "A_real": 0.0014285714285714286,
+  "A_clone_obs": 0.0013054830287206266,
+  "D": 0.0014619883040935672,
   "delta": 0.01,
   "p_perm": 0.998000199980002,
   "D_ci95": [
-   -0.008875739644970414,
-   0.01183431952662722
+   -0.008771929824561403,
+   0.011695906432748537
   ],
-  "n_tasks_real": 349,
-  "n_tasks_clone": 380,
-  "n_tasks_paired": 338,
-  "excluded_frac_real": 0.1275,
-  "excluded_frac_clone": 0.05,
+  "n_tasks_real": 350,
+  "n_tasks_clone": 383,
+  "n_tasks_paired": 342,
+  "excluded_frac_real": 0.125,
+  "excluded_frac_clone": 0.0425,
   "coverage_gate": "<= 0.1",
   "state": "INSUFFICIENT",
   "caveat": "finite-R selection bias controlled only by the frozen clone-null procedure; conclusions restricted to this panel, condition, and task set",
-  "reason": "coverage gate: excluded task fraction exceeds 0.1 (real 0.127, clone 0.050)",
+  "reason": "coverage gate: excluded task fraction exceeds 0.1 (real 0.125, clone 0.042)",
   "sensitivity_imputed": {
    "A_real": 0.0025252525252525255,
    "A_clone_obs": 0.0,
@@ -1302,22 +1302,22 @@
   }
  },
  "E2_sensitivity_double_executed_conflicts": {
-  "A_real": 0.001445086705202312,
-  "D": 0.0014925373134328358,
+  "A_real": 0.001440922190201729,
+  "D": 0.0014749262536873156,
   "D_ci95": [
-   -0.008955223880597015,
-   0.011940298507462687
+   -0.008849557522123894,
+   0.011799410029498525
   ],
   "p_perm_primary_reused": 0.998000199980002,
-  "n_tasks_paired": 335,
+  "n_tasks_paired": 339,
   "n_cells_excluded": 5
  },
  "E4_accounting": {
   "eval_real": {
    "cells": 19318,
-   "logical_calls": 22186,
-   "http_attempts": 32084,
-   "migration_copies_excluded": 8310,
+   "logical_calls": 22192,
+   "http_attempts": 32097,
+   "migration_copies_excluded": 8307,
    "ledger_row_attempts_upper_bound": 56330,
    "known_total_tokens": 54168781,
    "conservative_cost_ceiling_cny": 2399.68
@@ -1332,13 +1332,13 @@
    "conservative_cost_ceiling_cny": 642.75
   },
   "dev_real": {
-   "cells": 3287,
-   "logical_calls": 3342,
-   "http_attempts": 4828,
+   "cells": 3335,
+   "logical_calls": 3437,
+   "http_attempts": 4966,
    "migration_copies_excluded": 1632,
-   "ledger_row_attempts_upper_bound": 9593,
-   "known_total_tokens": 7099222,
-   "conservative_cost_ceiling_cny": 314.5
+   "ledger_row_attempts_upper_bound": 9731,
+   "known_total_tokens": 7206769,
+   "conservative_cost_ceiling_cny": 319.26
   },
   "pilot": {
    "cells": 3,
@@ -1350,10 +1350,10 @@
    "conservative_cost_ceiling_cny": 0.11
   },
   "_total": {
-   "logical_calls": 36331,
-   "http_attempts": 47719,
-   "known_total_tokens": 75779510,
-   "conservative_cost_ceiling_cny": 3357.03
+   "logical_calls": 36432,
+   "http_attempts": 47870,
+   "known_total_tokens": 75887057,
+   "conservative_cost_ceiling_cny": 3361.8
   }
  }
 }

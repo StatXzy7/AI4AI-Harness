@@ -7,7 +7,8 @@ execution randomness rather than a repeatable advantage.
 
 We study this problem on BIRD text-to-SQL \citep{bird2021}. In a Phase-I
 discovery population, 21 of 66 generated-candidate pairs had identical
-correctness vectors. Including the shipped \react{} harness and \bare{}
+correctness vectors. Including the \react{} harness
+\citep{yao2023react}, shipped with TTHE \citep{tthe2026}, and the \bare{}
 baseline gives 36 identical pairs out of 91. Pairwise code similarity had
 no observed rank association with outcome disagreement ($\rho=-0.01$).
 Trace inspection found three distinct situations: claimed mechanisms absent
@@ -56,11 +57,14 @@ and invariant-tested, hash-bound validation
 rules or corrects traceable errors, including one of our own earlier
 verification claims.
 \end{enumerate}
-The decisive remaining question is whether a real harness population
+The decisive question is whether a real harness population
 outperforms an equal-budget population of independent executions of the
-same code, with advantages that survive independent repeats. The current
-study has not completed that control. We therefore treat stable
-complementarity as an estimand to be tested, not a discovered property.
+same code, with advantages that survive independent repeats. A fresh
+pre-registered MATH-500 collection supplies exactly this control
+(\S\ref{sec:wp1r}): it finds stable member ranking but no stable
+complementarity beyond same-code repeated execution. Stable
+complementarity therefore remains an estimand to be tested on other
+panels and domains, not a discovered property of this one.
 
 This boundary suggests a sharper object for population construction:
 useful routing depends on stable task--harness interaction after execution

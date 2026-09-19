@@ -12,7 +12,12 @@ repairs harnesses from trace-grounded diagnoses; AHE \citep{ahe2026}
 verifies each proposed edit against self-declared behavioral predictions;
 gated semantic quality-diversity search \citep{gatedqd2026} evolves
 populations over LLM-assigned pathology descriptors; Harness Handbook
-\citep{handbook2026} attacks behavior localization and outer-loop search.
+\citep{handbook2026} attacks behavior localization and outer-loop search;
+HarnessForge \citep{harnessforge2026} jointly evolves the external harness
+and the internal policy as a pair. Evolving entire execution structures
+raises two costs that motivate our diagnostic: per-candidate compute and
+brittle admission validation. We prune redundant variations and reject
+illusory one-run oracle gains \emph{offline}, before any deployment claim.
 
 Our work is complementary but distinct in unit of analysis and question.
 Table~\ref{tab:nearest} contrasts the two nearest systems. HarnessLens uses
@@ -76,15 +81,22 @@ post-sampling information differ from pre-execution single-member routing
 
 Our candidates are complete automatically generated harnesses. We measure
 the population outcome structure a selector would inherit
-(\S\ref{sec:boundary}), rather than build a selector. We diagnose execution
+(\S\ref{sec:boundary}), rather than build a selector. \citet{llmverifier2026}
+formalize post-execution verification as the generation--selection
+bottleneck; they score completed trajectories, whereas our Class-D
+estimand (\S\ref{sec:diagnostics}) selects a harness before execution, a
+different information set. We diagnose execution
 paths and compare generation policies through a factorial whose treatment
 includes structural screening; the present study does not establish stable
 selectable value.
 
 \subsection{Behavioral diversity in LLM populations}\label{related:diversity}
 Diversity of LLM outputs has mostly been studied at the sample level
-(self-consistency, diverse decoding) or the agent-policy level. The
-observation that syntactically distinct programs can exhibit identical
-behavior echoes coverage gaps documented in program synthesis and
-mutation-testing practice; our contribution is to instantiate and quantify
-it for AI-generated harness populations, with a mechanism-level taxonomy.
+(self-consistency, diverse decoding) or the agent-policy level. Repeated
+sampling from a fixed generator already yields diverse outcomes
+\citep[pass@$k$;][]{chen2021codex}; our clone control is the
+execution-level analogue --- an equal-budget set of independent
+executions of one fixed program. Syntactically distinct programs
+exhibiting identical behavior is adjacent to classical program-equivalence
+\citep{budd1982} and equivalent-mutant \citep{papadakis2019} results; we
+instantiate the question for AI-generated harness populations.

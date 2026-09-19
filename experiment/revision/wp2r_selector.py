@@ -32,7 +32,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from experiment.revision.wp1r_analysis import (matrices, ledger_manifest,
-                                               load_cells)
+                                               load_cells, ARM_LEDGERS)
 from experiment.diagnostics.core import ABSTAIN_EPS  # frozen 0.15
 
 WP1R = ROOT / 'artifacts/wp1r_20260915'
@@ -67,9 +67,6 @@ def fit_pi_z(dev_matrix, members, train_tasks, held_tasks):
     valid_cols = [train_tasks.index(t) for t in valid]
     Y_tr = dev_matrix[:, valid_cols]                 # (n_members, n_valid)
     X_tr_text, X_he_text = question_features(valid, held_tasks)
-    dev_accs = Y_tr.mean(axis=1)
-    X_tr = np.hstack([X_tr_text, np.tile(dev_accs, (X_tr_text.shape[0], 1))])
-    X_he = np.hstack([X_he_text, np.tile(dev_accs, (X_he_text.shape[0], 1))])
     y = np.argmax(Y_tr, axis=0)   # best member per task; member ids sorted
     # ascending, so argmax is the lexicographic tie-break
     models = []
@@ -80,8 +77,15 @@ def fit_pi_z(dev_matrix, members, train_tasks, held_tasks):
         tr = np.setdiff1d(np.arange(len(valid)), hold)
         if len(np.unique(y[tr])) < 2:
             continue
+        # dev-accuracy features are computed WITHIN the training fold only;
+        # using all dev labels here would leak held-out-fold outcomes
+        dev_accs = Y_tr[:, tr].mean(axis=1)
+        X_tr = np.hstack(
+            [X_tr_text[tr], np.tile(dev_accs, (len(tr), 1))])
+        X_he = np.hstack(
+            [X_he_text, np.tile(dev_accs, (X_he_text.shape[0], 1))])
         m = LogisticRegression(max_iter=1000, C=1.0)
-        m.fit(X_tr[tr], y[tr])
+        m.fit(X_tr, y[tr])
         # fold models may miss classes; map back to full member index space
         fold_probs = np.zeros((len(held_tasks), len(members)))
         fold_probs[:, m.classes_.astype(int)] = m.predict_proba(X_he)
@@ -100,12 +104,25 @@ def compare_policies(Y, members, dev_matrix, dev_tasks, eval_tasks):
     raise NotImplementedError('use compare_policies_eval')
 
 
+def load_eval_call_counts():
+    """Worst-case (max over repeats) logical calls per (member, eval task)
+    from the merged eval ledgers -- the per-record budget evidence for E_b."""
+    from experiment.revision.wp1r_analysis import merge_cells
+    cell_map, _ = merge_cells(ARM_LEDGERS['eval_real'])
+    calls = {}
+    for (h, t, r), c in cell_map.items():
+        n = c.get('accounting', {}).get('logical_calls', 0)
+        calls[(h, t)] = max(calls.get((h, t), 0), n)
+    return calls
+
+
 def load_dev_and_eval():
     """Repeat-mean matrices for the panel on dev (from dev_real) and eval."""
-    members, tasks, repeats, m_by_rep, manifest, _ = matrices('dev_real')
+    members, tasks, repeats, m_by_rep, manifest, _, _ = matrices(
+        ARM_LEDGERS['dev_real'])
     dev_stack = np.stack([m_by_rep[r] for r in repeats])
     dev_mean = np.nanmean(dev_stack, axis=0)
-    em, et, er, e_by_rep, eman, _ = matrices('eval_real')
+    em, et, er, e_by_rep, eman, _, _ = matrices(ARM_LEDGERS['eval_real'])
     assert em == members, 'panel mismatch between dev and eval arms'
     eval_stack = np.stack([e_by_rep[r] for r in er])
     eval_mean = np.nanmean(eval_stack, axis=0)
@@ -181,10 +198,49 @@ def compare_policies_eval(members, dev_tasks, dev_mean, eval_tasks, eval_mean,
             'ci95': [round(float(lo), 4), round(float(hi), 4)],
             'repair_rate': round(float(np.mean(paired[ok] > 0)), 4),
             'harm_rate': round(float(np.mean(paired[ok] < 0)), 4)}
-    # E_b: uniform cap b=3 logical calls/task (separate estimand, not E_1)
-    results['E_b'] = {'budget_cap_calls': E_B,
-                      'note': 'E_1 not applicable: panel members make >1 call; '
-                              'actual calls reported per member from the ledger'}
+    # E_b: uniform cap b=3 logical calls/task (separate estimand, not E_1).
+    # Per-record evidence: a policy choice exceeding b calls on a task is
+    # inadmissible there and falls back to bare; utility is the resulting
+    # repeat-mean accuracy with lambda=1 repair/harm accounting vs dev-fixed.
+    calls = load_eval_call_counts()
+    member_call_max = {m: max((calls.get((m, t), 0) for t in eval_tasks),
+                             default=0)
+                       for m in members}
+    compliant = sorted(m for m in members if member_call_max[m] <= E_B)
+    # Class-E scalar: lambda=1 net harm-weighted utility against bare,
+    # sum_x(Y(x,pi(x))-Y(x,bare)); a regression cancels one repair.
+    ref_bare = eval_policy(all_idx['bare'], eval_mean)
+    eb = {'budget_cap_calls': E_B, 'lambda': 1,
+          'note': 'E_1 not applicable: panel members make >1 call; '
+                  'choices exceeding the cap on a task fall back to bare; '
+                  'a policy with no call evidence for a member-task pair '
+                  'is treated as non-compliant there, never as zero-call',
+          'member_max_calls_per_task': member_call_max,
+          'compliant_members': compliant,
+          'policies': {}}
+    for name, idxs in all_idx.items():
+        adj = idxs.copy()
+        # map row index -> member id -> call count on that task; missing
+        # evidence (key absent) is conservative non-compliance, not zero
+        viol = np.array([
+            (calls.get((members[int(idxs[j])], t)) is None or
+             calls[(members[int(idxs[j])], t)] > E_B)
+            for j, t in enumerate(eval_tasks)])
+        n_viol = int(viol.sum())
+        adj[viol] = bare_idx
+        vals = eval_policy(adj, eval_mean)
+        ref_vals = eval_policy(all_idx['dev_fixed'], eval_mean)
+        paired = vals - ref_vals
+        ok = ~np.isnan(paired)
+        net_vs_bare = np.nansum(vals - ref_bare)
+        eb['policies'][name] = {
+            'accuracy': round(float(np.nanmean(vals)), 4),
+            'budget_violations_replaced': n_viol,
+            'paired_vs_dev_fixed': round(float(np.nanmean(paired)), 4),
+            'U_b_lambda1_net_vs_bare': round(float(net_vs_bare) / len(vals), 4),
+            'repair_rate': round(float(np.mean(paired[ok] > 0)), 4),
+            'harm_rate': round(float(np.mean(paired[ok] < 0)), 4)}
+    results['E_b'] = eb
     # per-repeat secondary
     per_repeat = {}
     for rep in range(eval_stack.shape[0]):

@@ -21,10 +21,11 @@ set, all computable from the outcome matrix any evaluation already produces:
 \textbf{(i) pairwise outcome disagreement} --- over all harness pairs, the
 fraction of tasks where correctness differs; \textbf{(ii) union repair
 rate} --- the fraction of bare errors some population member repairs;
-\textbf{(iii) bare-inclusive oracle headroom}
+\textbf{(iii) bare-inclusive oracle headroom} --- over held-out tasks
+$x_1,\dots,x_n$,
 \[
-H(P) \;=\; \mathrm{Acc}\big(x \mapsto \max_{H \in P \cup \{H_0\}} Y(x,H)\big)
-\;-\; \max_{H \in P \cup \{H_0\}} \mathrm{Acc}(H).
+H(P) \;=\; \frac{1}{n}\sum_{i=1}^{n} \max_{H \in P \cup \{H_0\}} Y(x_i, H)
+\;-\; \max_{H \in P \cup \{H_0\}} \frac{1}{n}\sum_{i=1}^{n} Y(x_i, H).
 \]
 Positive observed headroom records item-dependent successes in that execution
 matrix; independent repeats are needed to establish a stable routing signal.

@@ -14,16 +14,23 @@ eight slots each, an $R{=}3$ raw-attempt cap per slot, neutral validity gate
 (mechanism-blind: parse, import, interface, non-empty answer on two dev
 questions). Frozen target GLM-5.3-Flash (same as the SQL study), temperature
 0. MATH-500 \citep{math500}: 500 tasks frozen before generation (100 dev /
-400 eval, seed 20260908). Judge: numeric equality where both sides parse as
+400 eval, seed 20260908). The 100 dev tasks are used only for
+generation-side smoke tests and are never executed in the evaluation
+archive; the selection-policy experiments of
+Appendix~\ref{app:diagnostics} therefore carve their training split (80
+tasks) from the eval side, leaving 320 scored tasks for D/E claims. Judge: numeric equality where both sides parse as
 numbers (including $a/b$, \verb|\frac{a}{b}|, decimals), else normalized
 LaTeX string equality (units, base subscripts, $^\circ$ stripped;
 \verb|\text{X}| content preserved; pmatrix $\to$ tuple). Judge
 self-consistency: 400/400 gold answers judge correct against themselves.
-bare accuracy 0.938 under the matched answer-format instruction. Yield:
+bare accuracy 0.9375 under the matched answer-format instruction. Yield:
 35/48 slots admitted ($R_{\mathrm{artifact}}$ 0.10--1.00; the two
 reasoning-heavy builders, GLM-5.3 and Qwen3.8-Max, exhausted the 32k-token
 generation budget on reasoning before emitting code in most slots ---
-reported as-is). This is a replication probe, not a factorial: no
+reported as-is). This constraint effectively removes two of the six
+builders from the evaluated pool, so the free-arm population
+under-represents reasoning-heavy builder styles; we do not adjust the
+budget post hoc, and the limitation is part of the reported protocol. This is a replication probe, not a factorial: no
 strategy forcing, no conformance gate.
 
 \paragraph{Results (35 harnesses, 400 eval tasks).} Mean pairwise outcome
@@ -35,15 +42,17 @@ generated candidates fails on 0.8\% of bare-correct tasks (a
 \emph{union-all-fail} rate, not an any-candidate or router harm). Observed
 oracle coverage exceeds bare by 4.75\,pp, and the best fixed member is
 \emph{bare itself} (0.9375; generated harnesses 0.6825--0.915): every
-generated member is worse individually. Repeated-execution and same-code
-clone controls were not collected, so this does not establish stable
-complementarity, pre-execution selectability, or budget-matched policy
-utility. A
+generated member is worse individually. The one-run mini-audit originally
+did not collect repeated-execution or same-code clone controls; that gap is
+closed on this same MATH-500 task set by the fresh pre-registered WP-1R
+collection (\S\ref{sec:wp1r}), which executes an eight-member panel and nine
+same-code clone slots for three independent repeats and therefore does
+evaluate the stability estimands cross-domain. A
 hash-bound re-execution of the versioned endpoint-sensitive rescore of all
 14{,}400 archived verdicts changes 14 of them (0.097\%): all are v1 false
 rejects of interval-endpoint answers on a single task, so per-member
 accuracies rise by at most one task and no qualitative conclusion moves
-(\ref{app:diagnostics}). An earlier stored artifact reporting zero flips is
+(Appendix~\ref{app:diagnostics}). An earlier stored artifact reporting zero flips is
 not reproducible from the committed code and is retained only as provenance.
 
 \paragraph{Two failure-side observations.} First, the clean-protocol
@@ -70,8 +79,9 @@ boundary of collapse.
 Table~\ref{tab:domain-main} places the two domains side by side for the
 same diagnostic question, without pooling them. MATH-500 reproduces the
 boundary: one-run disagreement and 4.75\,pp headroom coexist with bare as
-the best fixed member (93.75\%). It is exploratory and has no clone,
-repeat, repaired-gate, or selector control.
+the best fixed member (93.75\%). The one-run probe itself has no
+repaired-gate control; clone, repeat, and selector controls come from the
+separate fresh WP-1R collection (\S\ref{sec:wp1r}).
 
 \begin{table}[t]
 \centering
