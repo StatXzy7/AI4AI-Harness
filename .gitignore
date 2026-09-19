@@ -52,3 +52,14 @@ transcripts/
 artifacts/review_20260919/transcripts/
 artifacts/wp1r_20260915/*/snapshot.json
 artifacts/revision_20260911/**/ledger.sqlite
+
+# WP-1R bulky runtime ledgers/worker dirs/logs (evidence = analysis JSON +
+# SEALED_*.json hash-bound, per REPRODUCE convention); extend to all arms
+artifacts/wp1r_20260915/*/ledger.sqlite
+artifacts/wp1r_20260915/*/ledger.sqlite-wal
+artifacts/wp1r_20260915/*/ledger.sqlite-shm
+artifacts/wp1r_20260915/*/writer.lock
+artifacts/wp1r_20260915/*/workers/
+artifacts/wp1r_20260915/*/snapshot.json
+artifacts/wp1r_20260915/*.log
+artifacts/revision_20260911/**/writer.lock

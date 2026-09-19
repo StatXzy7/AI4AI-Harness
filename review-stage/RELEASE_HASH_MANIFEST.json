@@ -1,0 +1,33 @@
+{
+ "built_at": "2026-09-19",
+ "sources": {
+  "paper/latex/main.tex": "73da15e43d1a24af86381be919e53b0dd33a7ba833135f61f89d473954d3ee13",
+  "paper/latex/sec_intro.tex": "2d432165d09fbeda3ce86858820424e196cb4de319e91965a5d10d7254281aba",
+  "paper/latex/sec_related.tex": "2858e0675f1eafcf36e1c39fd8bd7e1be84c9273f33dcd6f4afa4f08f3b00474",
+  "paper/latex/sec_phase1.tex": "f503fccb522f2783e94cd5027007ed7c9ae436403296176533e7119fc6cd43dd",
+  "paper/latex/sec_phase2.tex": "a77841786f143f42a7d19c55d7dc09d4b421f9090942cc200b24a9dadf61ee32",
+  "paper/latex/sec_results.tex": "71a16c81dbaa75910011383791049306c4610f88943dc3627f3705eca676fdb5",
+  "paper/latex/sec_diagnostics.tex": "c59b23faf9534b8a588cf53ddda4a8bfe4cd713331c7178f9938aef6516023ac",
+  "paper/latex/sec_discussion.tex": "f90d23c7869eef0c4ef948c23cf2064b0f3937424419937f27524d8b673df9f2",
+  "paper/latex/sec_conclusion.tex": "db552a11d053731b7dcc400b6c90db534ed1eb8d68cbbcf8b371384bf46197f6",
+  "paper/latex/sec_wp1r.tex": "7c41ee646dd52675c18866af6d8fa3c9aecd892d65775199b73776f2aa46dc0a",
+  "paper/latex/sec_appendix.tex": "3c05173b021b81a278c0a3884abe535000b75c95f406117b5e41fedb803772e5",
+  "paper/latex/sec_app_wp1r.tex": "7fdd741d4e4c45de66bc7f35a45facf166e8cc9427cc750e846d12e9f3f0dbba",
+  "paper/latex/sec_crossdomain.tex": "543499f8244fa2f6325bfe64e35e4cb2842a260cd11f7d090e5dc85562d4d85e",
+  "paper/latex/wp1r_numbers.tex": "cbc3f1c779ee51674ca876b1ccba9fd4bfda41ee03839cb000e97289801f571b",
+  "paper/latex/wp1r_policy_table.tex": "bcb5a761b77ded26c5505b81b55db3e0cf439ec255653399cd340a2b869ce8d0",
+  "paper/latex/revision_numbers.tex": "5315de9773f76e144c0bc8a2d351fae8fd59b61f01d8863cb2f2daede55d9eb1"
+ },
+ "pdf": {
+  "paper/latex/main.pdf": "bbf78dded22ee6207bf42fc8e4cf8fb8454262e3e1405b50be8157e66f0dac2b"
+ },
+ "data": {
+  "artifacts/wp1r_20260915/analysis_report.json": "b1522415b56bc1cea1536093d833cd66d30b9db3c5f22612a752234833273060",
+  "artifacts/wp1r_20260915/wp2r_selector_report.json": "da46da0d085bb88c139f47f3146e17dbddeb6b8541f622949a60ebfa4c0c6864",
+  "artifacts/wp1r_20260915/SEALED_eval_real.json": "3e22e5e372eaa888a11a167058d5121d8fdb89f3b7f7a4be9fbf094bb5b7bec6",
+  "artifacts/wp1r_20260915/SEALED_eval_clone.json": "8dcc4ad1a116d11eaab25c89a4e8a3b5ebc6284be22222c738012961a5a6d385",
+  "artifacts/wp1r_20260915/SEALED_dev_real.json": "9a37c99732d764a6515c1d61a49b8130a57e3a7df50c1303a6b65f6c20785024",
+  "CLAIM_LEDGER.json": "f967405845b6cd220aaf9fc5c08669f979289c0d9ee9bcfa0c7a799c54688935",
+  "REPRODUCE.md": "5abb4c2ab546983c91969df5ea0cefff8df7a39843d1aef679610dbaacdf6ae6"
+ }
+}

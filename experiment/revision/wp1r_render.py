@@ -118,10 +118,14 @@ def main():
     if dedup_c:
         lines += [macro('WpCloneRowsRead', f"{dedup_c['rows_read']:,}"),
                   macro('WpCloneMigrationCopies',
-                        f"{dedup_c['identical_copies']:,}")]
+                        f"{dedup_c['identical_copies']:,}"),
+                  macro('WpCloneUnique', f"{dedup_c['unique_keys']:,}"),
+                  macro('WpCloneConflicts', len(dedup_c['both_completed_differ']))]
     else:
         lines += [macro('WpCloneRowsRead', r'\text{---}'),
-                  macro('WpCloneMigrationCopies', r'\text{---}')]
+                  macro('WpCloneMigrationCopies', r'\text{---}'),
+                  macro('WpCloneUnique', r'\text{---}'),
+                  macro('WpCloneConflicts', r'\text{---}')]
 
     e4 = report['E4_accounting']['_total']
     lines += [
@@ -144,6 +148,10 @@ def main():
             macro('WpPiZDiffCI',
                   f"[{pp(acc['pi_Z']['paired_vs_dev_fixed']['ci95'][0])}, "
                   f"{pp(acc['pi_Z']['paired_vs_dev_fixed']['ci95'][1])}]"),
+            macro('WpRandomDiff', pp(acc['random_fixed']['paired_vs_dev_fixed']['mean'])),
+            macro('WpRandomCI',
+                  f"[{pp(acc['random_fixed']['paired_vs_dev_fixed']['ci95'][0])}, "
+                  f"{pp(acc['random_fixed']['paired_vs_dev_fixed']['ci95'][1])}]"),
         ]
         (TEX / 'wp1r_policy_table.tex').write_text(
             policy_table(sel), encoding='utf-8')
@@ -152,6 +160,8 @@ def main():
                      'WpDevFixedAcc', 'WpBareAcc', 'WpPiZDiff'):
             lines.append(macro(name, r'\text{---}'))
         lines.append(macro('WpPiZDiffCI', r'\text{---}'))
+        lines.append(macro('WpRandomDiff', r'\text{---}'))
+        lines.append(macro('WpRandomCI', r'\text{---}'))
 
     (TEX / 'wp1r_numbers.tex').write_text('\n'.join(lines) + '\n',
                                          encoding='utf-8')

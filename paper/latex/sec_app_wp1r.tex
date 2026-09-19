@@ -48,8 +48,8 @@ copies, preferred a completed record over an unknown-remote marker
 \WpUnknownThenCompleted{} times, and found \WpDoubleExec{} cells with two
 completed but disagreeing executions (first-completed retained; a frozen
 sensitivity branch excludes them instead). The clone arm's
-\WpCloneRowsRead{} rows collapsed to 10{,}800 unique cells
-(\WpCloneMigrationCopies{} copies, zero conflicts).
+\WpCloneRowsRead{} rows collapsed to \WpCloneUnique{} unique cells
+(\WpCloneMigrationCopies{} copies, \WpCloneConflicts{} conflicts).
 \WpUnknownCarried{} cells remain
 \texttt{unknown\_remote} across all ledgers and stay NaN in the outcome
 matrices --- never imputed --- so classes requiring those cells abstain by

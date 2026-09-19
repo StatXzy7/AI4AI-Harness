@@ -88,3 +88,43 @@ cd paper/latex && pdflatex main && bibtex main && pdflatex main && pdflatex main
 - 若运行结果与上文"预期要点"不符，视为阻断项，不要调整阈值后继续。
 - 历史运行目录（含 v1 控制验证与旧 DECISION_IMPACT）一律保留为冻结历史，
   不覆盖、不删除。
+
+## 8. WP-1R/WP-2R 真实证据轮（2026-09-15 至 2026-09-19）
+
+预冻结协议：`review-stage/REAL_EVIDENCE_PROTOCOL_V1.md`（v1.0-v1.3 修订
+全部带时间戳，附录 `sec_app_wp1r.tex` 披露完整修订史）。采集、封存与
+分析全程经 Codex（gpt-6-astra/xhigh）独立审查：G0 四轮（终轮 8.8/10
+ready）、G2/G3 三轮（终轮 8.7/10 almost）、G4 见 `review-stage/
+codex_g4_20260919/`。
+
+### 采集（需 PARATERA_API_KEY 环境变量，来自 experiment/.env_tthe）
+```bash
+# 冻结配置生成（无秘密）
+python -m experiment.revision.wp1r_configs
+# 各臂采集（cache off、audited transport、GlobalBudget 60000 attempts）
+python -m experiment.revision.fresh_collect_math --config artifacts/wp1r_20260915/configs/eval_real_cont2.json
+python -m experiment.revision.fresh_collect_math --config artifacts/wp1r_20260915/configs/eval_clone_cont.json
+python -m experiment.revision.fresh_collect_math --config artifacts/wp1r_20260915/configs/dev_real_cont2.json
+# 中断恢复：先对账再重启（unknown_remote 不自动重试）
+python -m experiment.revision.reconcile_cell --arm eval_real_cont2
+```
+
+### 封存与分析（离线，无 API）
+```bash
+python -m experiment.revision.wp1r_seal --arms eval_real_cont2,eval_clone_cont,dev_real_cont2
+python -m experiment.revision.wp1r_analysis          # E1/E2 + A8.6 + E4
+python -m experiment.revision.wp2r_selector          # E3（需 dev + eval 臂）
+python -m experiment.revision.wp1r_render            # 生成论文宏与策略表
+```
+
+### 结果要点（如实）
+- E1 C-rank: **SUPPORTED**（bare 稳定优于多数生成成员）；
+  C-comp: INSUFFICIENT（6 个三轮全缺失 cell，清单在 analysis_report）。
+- A8.6 主判定: **INSUFFICIENT**（覆盖率门：真实臂排除 12.5% > 10%）；
+  数值上 A_real=0.14pp vs A_clone=0.13pp，D=0.15pp ≪ δ=1pp，p=0.998。
+- clone 臂 plug-in H_stable=2.67pp：有限重复下 plug-in max 可显著为正，
+  不能作为稳定互补性证据（真实 H_stable 不可识别）。
+- E3: π_Z 全任务弃权，与 dev-fixed=bare 打平 94.96%；随机成员 -10.12pp。
+- E4: 50,817 attempts / 79.8M tokens / 保守成本上界 ¥2,656 < 4000。
+- 论文数字全部由 `wp1r_render.py` 生成的宏（wp1r_numbers.tex）注入，
+  禁止手改。
