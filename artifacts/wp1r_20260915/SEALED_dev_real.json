@@ -1,0 +1,64 @@
+{
+ "arm": "dev_real",
+ "ledgers": [
+  "dev_real",
+  "dev_real_cont",
+  "dev_real_cont2"
+ ],
+ "sealed_at": "2026-09-19T12:18:11Z",
+ "unique_cells": 2700,
+ "expected": 2700,
+ "unknown_remote": 26,
+ "run_invalid_events": 0,
+ "dedup": {
+  "ledgers": [
+   "dev_real",
+   "dev_real_cont",
+   "dev_real_cont2"
+  ],
+  "rows_read": 6048,
+  "unique_keys": 2700,
+  "identical_copies": 3311,
+  "unknown_carried": 33,
+  "completed_beats_unknown": 2,
+  "unknown_then_completed": 0,
+  "both_completed_differ": [
+   {
+    "key": [
+     "bare",
+     "math500_split#43",
+     2
+    ],
+    "retained": 0,
+    "discarded": 1,
+    "retained_from": "earlier ledger"
+   },
+   {
+    "key": [
+     "bare",
+     "math500_split#43",
+     2
+    ],
+    "retained": 0,
+    "discarded": 1,
+    "retained_from": "earlier ledger"
+   }
+  ],
+  "terminal_states": {
+   "completed": 5987,
+   "failed": 61
+  }
+ },
+ "source_drift": [],
+ "collector_sha256_versions": [
+  "670555b2ab7fd994d1cf6c43b4cfbf392cfa81264b6fd11d99a2bb2ae7c47562",
+  "dbf772ef0841d7e3bba7ad08a78f70677d548277f66048f78281d334ed92b57e",
+  "efb5d42ea8dbe3a48ff4c4cc6eb4cf8732452edcdb1a37444be0f64104d799ec"
+ ],
+ "ledger_sha256": {
+  "dev_real": "ba791f3a187ca51715634769fbde12b6d692d5ac5d8729cfa1f6b88588061b11",
+  "dev_real_cont": "62dd15733a26babfde90cd4382cab023a82179c59a719a6aed87f3c8fbbebfdc",
+  "dev_real_cont2": "a9b656a7b49d73fd34ae6b257adcdaef6f05f4282b46237f088932e081a6f6e1"
+ },
+ "state": "SEALED"
+}

@@ -4,12 +4,15 @@
 set -e
 cd /e/projects/AI4AI-Harness
 
-echo "=== 1. Reconcile any residual unknown cells ==="
+echo "=== 1. Reconcile any residual unknown cells (parent must be dead) ==="
+python -m experiment.revision.reconcile_cell --arm dev_real_cont2 || true
 python -m experiment.revision.reconcile_cell --arm dev_real_cont || true
 
 echo "=== 1b. Recover answers preserved on usage-unknown cells ==="
+python -m experiment.revision.restore_usage_unknown dev_real_cont2 || true
 python -m experiment.revision.restore_usage_unknown dev_real_cont || true
 python -m experiment.revision.restore_usage_unknown eval_real_cont2 || true
+python -m experiment.revision.restore_usage_unknown eval_real_cont || true
 python -m experiment.revision.restore_usage_unknown eval_clone_cont || true
 
 echo "=== 2. Seal merged arms ==="

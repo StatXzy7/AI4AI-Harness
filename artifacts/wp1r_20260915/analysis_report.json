@@ -1332,13 +1332,13 @@
    "conservative_cost_ceiling_cny": 642.75
   },
   "dev_real": {
-   "cells": 3335,
-   "logical_calls": 3437,
-   "http_attempts": 4966,
-   "migration_copies_excluded": 1632,
-   "ledger_row_attempts_upper_bound": 9731,
-   "known_total_tokens": 7206769,
-   "conservative_cost_ceiling_cny": 319.26
+   "cells": 6048,
+   "logical_calls": 5463,
+   "http_attempts": 7913,
+   "migration_copies_excluded": 3345,
+   "ledger_row_attempts_upper_bound": 17677,
+   "known_total_tokens": 11086192,
+   "conservative_cost_ceiling_cny": 491.12
   },
   "pilot": {
    "cells": 3,
@@ -1350,10 +1350,10 @@
    "conservative_cost_ceiling_cny": 0.11
   },
   "_total": {
-   "logical_calls": 36432,
-   "http_attempts": 47870,
-   "known_total_tokens": 75887057,
-   "conservative_cost_ceiling_cny": 3361.8
+   "logical_calls": 38458,
+   "http_attempts": 50817,
+   "known_total_tokens": 79766480,
+   "conservative_cost_ceiling_cny": 3533.66
   }
  }
 }

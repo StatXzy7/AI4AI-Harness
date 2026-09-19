@@ -1,0 +1,30 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 622, in <module>
+    main()
+    ~~~~^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 618, in main
+    collect(json.loads(Path(args.config).read_text(encoding='utf-8')))
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 546, in collect
+    manifest, tasks = prepare(config)
+                      ~~~~~~~^^^^^^^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 243, in prepare
+    raise ValueError('Concurrency must be within the authorized 1..4 range')
+ValueError: Concurrency must be within the authorized 1..4 range
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 622, in <module>
+    main()
+    ~~~~^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 618, in main
+    collect(json.loads(Path(args.config).read_text(encoding='utf-8')))
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 583, in collect
+    with RunStore(output, manifest) as store:
+         ~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_runtime.py", line 60, in __enter__
+    raise ValueError('Run identity changed; use a separate acquisition output')
+ValueError: Run identity changed; use a separate acquisition output

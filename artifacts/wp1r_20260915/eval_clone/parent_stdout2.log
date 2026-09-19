@@ -1,0 +1,29 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 620, in <module>
+    main()
+    ~~~~^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 616, in main
+    collect(json.loads(Path(args.config).read_text(encoding='utf-8')))
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 544, in collect
+    manifest, tasks = prepare(config)
+                      ~~~~~~~^^^^^^^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 239, in prepare
+    raise ValueError('Provider key is absent')
+ValueError: Provider key is absent
+EXIT=1
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 620, in <module>
+    main()
+    ~~~~^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 616, in main
+    collect(json.loads(Path(args.config).read_text(encoding='utf-8')))
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\projects\AI4AI-Harness\experiment\revision\fresh_collect_math.py", line 588, in collect
+    raise RuntimeError(f'Acquisition stopped: {stop["reason"]}')
+RuntimeError: Acquisition stopped: RuntimeError: Worker has unknown or unresolved provider requests; reconcile the request ledger before any new acquisition
+EXIT=1
