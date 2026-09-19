@@ -51,3 +51,38 @@
   → 清除行（NEVER_STARTED，无请求发出、无预算消耗）；(2) 请求全闭合但
   worker 死亡 → failed_known（attempts 计账）；(3) http_unknown →
   unknown_remote（原有）。
+
+## 2026-09-19 WP-1R 采集完成 + 封存 + 正式分析结果
+
+### 采集与封存
+- eval_real_cont2: **10800/10800 SEALED**（SUCCEEDED 主导；unknown_remote 128、
+  failed 146 = 2.5% 缺失，走 A8.6 完整案例规则）；eval_clone_cont:
+  **10800/10800 SEALED**（unknown 26、failed 34 = 0.6%）。run_invalid=0。
+- 每臂以其 manifest 绑定的采集器字节做封存校验（cont2 绑 49c25a6 版、
+  clone_cont 绑 63a1347 版）；漂移披露：fresh_collect_math.py 在采集后
+  有分析期修订（工作树版本已恢复，git 历史保留绑定字节）。
+
+### 预算终账（E4）
+- 总计 logical calls 32,592 / http attempts 42,294 / 已知 tokens 67.3M；
+  **保守成本上界 ¥2,982 < 4000 CNY**（断点价 33.3/1M 口径）。
+
+### 正式分析结果（如实）
+1. **E1 C-rank: SUPPORTED** —— 面板内存在稳定的成员排序差；方向：bare
+   显著优于多数生成成员（如 bare − deepseek_g3 = 25.7pp、bare − ernie_g3 =
+   18.4pp，CI 均不含 0）。
+2. **C-comp（v2 机器）：INSUFFICIENT** —— 6 个 (member,task) cell 三轮全部
+   缺失，H_stable 不可识别；缺失清单已列。
+3. **A8.6 主判定（clone-null 对照）：NOT SUPPORTED（阴性）** ——
+   A_real = 0.14pp、A_clone_obs = 0.13pp、D = 0.15pp ≪ δ = 1pp；
+   置换 p = 0.998；D 的 95% CI = [-0.89, +1.18]pp。
+   **发现轮选择的"任务条件优势"与同代码噪声不可区分。**
+4. **clone 臂的 plug-in headroom = 2.67pp（H_stable，CI [1.7, 3.8]）**
+   ——9 个同代码 bare 槽位仅凭有限重复取 max 就产生 2.7pp 的"表观互补"，
+   为 C-06 的诊断提供了直接实证：plug-in oracle-headroom 主要是选择偏差。
+5. 结论：真实面板的 headroom 基本可由同代码重复噪声解释；与论文的
+   "apparent complementarity" 主线一致——不是正收益，而是对既有主张的
+   诚实量化。
+
+### 未竟
+- WP-2R dev 采集（dev_real，~5.4k calls）与 E3 selector 分析：预算与
+  attempts 仍够（46,310/60,000），待本轮审阅后决定是否继续。
