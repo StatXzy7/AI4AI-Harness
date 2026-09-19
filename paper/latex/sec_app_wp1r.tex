@@ -6,8 +6,12 @@
 
 \paragraph{Frozen protocol.} The acquisition protocol
 (\texttt{review-stage/REAL\_EVIDENCE\_PROTOCOL\_V1.md}, v1.0 frozen
-2026-09-15 plus the v1.1 budget amendment, both committed before any
-confirmatory outcome) fixes: the estimands E1--E4 of
+2026-09-15, with dated amendments: v1.1 (statistical and budget fixes)
+and v1.2 (operational test specification) preceded any confirmatory
+outcome; v1.3 (attempt ceiling 45{,}000$\to$60{,}000, matching the task
+authorization) and the concurrency amendment (2$\to$6) were made
+mid-collection for throughput and are disclosed as condition-relevant
+history) fixes: the estimands E1--E4 of
 \S\ref{sec:wp1r}; the panel draw (eligibility by frozen repeat-0 mean
 logical calls ${\leq}3.05$ --- a budget-feasibility filter disclosed as
 biasing the panel toward low-call mechanisms, not a uniform sample of the
@@ -51,15 +55,19 @@ sensitivity branch excludes them instead). The clone arm's
 matrices --- never imputed --- so classes requiring those cells abstain by
 the frozen rules. The merged arms are hash-sealed
 (\texttt{SEALED\_eval\_real.json}, \texttt{SEALED\_eval\_clone.json},
-\texttt{SEALED\_dev\_real.json}); the analysis code and its unit tests are
-in \texttt{experiment/revision/wp1r\_analysis.py}.
+\texttt{SEALED\_dev\_real.json}). Three collector source versions served
+the real arm across continuations (concurrency 2/2/6); each seal records
+the arm's bound collector hash, and the identity gates exclude run-identity
+fields (acquisition id) while this appendix discloses the concurrency and
+amendment history. The analysis code and its unit tests are in
+\texttt{experiment/revision/wp1r\_analysis.py}.
 
 \paragraph{Accounting (E4).} Per-request accounting layers
 experiment-run $>$ harness-execution $>$ logical-call $>$ provider-attempt;
 migration copies are excluded from the totals (distinct re-executions count
 individually). Totals: \WpLogicalCalls{} logical calls, \WpHttpAttempts{}
 provider attempts, \WpTotalTokens{} known tokens, conservative cost ceiling
-\WpCostCny{} CNY at the frozen break-even price of 44.3 CNY per 1M tokens
+\WpCostCny{} CNY at the frozen break-even price of 33.3 CNY per 1M tokens
 (pricing not independently verifiable; reported as token counts times the
 frozen price, never as billed amounts).
 
@@ -68,7 +76,11 @@ over TF-IDF question features (max 300) and per-member dev accuracies
 computed within training folds only; 5-fold task-level CV on the 100 dev
 tasks with same-task repeats never split across folds; fold-model
 averaging; ties broken by member id; abstain to \bare{} when the top-2
-probability gap is below 0.15. Comparators: \bare{}, dev-fixed, pre-fixed
+probability gap is below 0.15. Repeat aggregation uses the
+available-repeat mean per member--task (same-task repeats stay in one
+fold); the final-ledger unknown/failed counts are reconciled against the
+merged-matrix NaN cells in the repository checkpoint. Comparators:
+\bare{}, dev-fixed, pre-fixed
 random member (seeded), M1b (dev-fixed with bare fallback on missing
 cells). $E_1$ (budget by construction) is not applicable because panel
 members make more than one call; $E_b$ with $b{=}3$ calls per task is
