@@ -10,16 +10,16 @@
   "paper/latex/sec_diagnostics.tex": "c59b23faf9534b8a588cf53ddda4a8bfe4cd713331c7178f9938aef6516023ac",
   "paper/latex/sec_discussion.tex": "f90d23c7869eef0c4ef948c23cf2064b0f3937424419937f27524d8b673df9f2",
   "paper/latex/sec_conclusion.tex": "db552a11d053731b7dcc400b6c90db534ed1eb8d68cbbcf8b371384bf46197f6",
-  "paper/latex/sec_wp1r.tex": "7c41ee646dd52675c18866af6d8fa3c9aecd892d65775199b73776f2aa46dc0a",
+  "paper/latex/sec_wp1r.tex": "6e30ce2b55e2fa0815a25126772f6e428221242eb0e7c75e9e2b794f87fd6373",
   "paper/latex/sec_appendix.tex": "3c05173b021b81a278c0a3884abe535000b75c95f406117b5e41fedb803772e5",
   "paper/latex/sec_app_wp1r.tex": "7fdd741d4e4c45de66bc7f35a45facf166e8cc9427cc750e846d12e9f3f0dbba",
   "paper/latex/sec_crossdomain.tex": "543499f8244fa2f6325bfe64e35e4cb2842a260cd11f7d090e5dc85562d4d85e",
-  "paper/latex/wp1r_numbers.tex": "cbc3f1c779ee51674ca876b1ccba9fd4bfda41ee03839cb000e97289801f571b",
+  "paper/latex/wp1r_numbers.tex": "acc328274469773e28b35c98495f15cc892c53a7ea65ea8e9dc81d9740c35b5a",
   "paper/latex/wp1r_policy_table.tex": "bcb5a761b77ded26c5505b81b55db3e0cf439ec255653399cd340a2b869ce8d0",
   "paper/latex/revision_numbers.tex": "5315de9773f76e144c0bc8a2d351fae8fd59b61f01d8863cb2f2daede55d9eb1"
  },
  "pdf": {
-  "paper/latex/main.pdf": "bbf78dded22ee6207bf42fc8e4cf8fb8454262e3e1405b50be8157e66f0dac2b"
+  "paper/latex/main.pdf": "d5fcfa946b9e3ecea054ec23fbe02097383772f7e107a22ca76c8db863994c49"
  },
  "data": {
   "artifacts/wp1r_20260915/analysis_report.json": "b1522415b56bc1cea1536093d833cd66d30b9db3c5f22612a752234833273060",
@@ -28,6 +28,6 @@
   "artifacts/wp1r_20260915/SEALED_eval_clone.json": "8dcc4ad1a116d11eaab25c89a4e8a3b5ebc6284be22222c738012961a5a6d385",
   "artifacts/wp1r_20260915/SEALED_dev_real.json": "9a37c99732d764a6515c1d61a49b8130a57e3a7df50c1303a6b65f6c20785024",
   "CLAIM_LEDGER.json": "f967405845b6cd220aaf9fc5c08669f979289c0d9ee9bcfa0c7a799c54688935",
-  "REPRODUCE.md": "5abb4c2ab546983c91969df5ea0cefff8df7a39843d1aef679610dbaacdf6ae6"
+  "REPRODUCE.md": "4a4ebbbd4225f9d23e557d09e5e551ca37052cc74a73568fa880f83459d44a36"
  }
 }
