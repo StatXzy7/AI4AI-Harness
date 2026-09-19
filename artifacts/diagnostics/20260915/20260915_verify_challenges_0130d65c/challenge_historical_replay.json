@@ -1,0 +1,9 @@
+{
+  "result_path": "artifacts\\diagnostics\\20260915\\20260915_inventory_b7c29eb6\\astra_challenges_result.json",
+  "stored_spec_sha256": "547182749712b2aef4238147793f06a189a2d61182ecff51e0127d1fe694c814",
+  "current_spec_sha256": "547182749712b2aef4238147793f06a189a2d61182ecff51e0127d1fe694c814",
+  "spec_hash_matches": true,
+  "code_binding_of_stored_result": null,
+  "status": "HISTORICAL_REPLAY",
+  "note": "verification of what the stored run concluded at its time; NOT evidence that the current diagnostics code passes the challenges - see controls --phase blinded"
+}

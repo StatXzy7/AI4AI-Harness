@@ -1,0 +1,478 @@
+{
+  "package": "diagnostics control package v2 (v1 frozen 16 + C9-C12 repeat-based classes per the 2026-09-15 external review)",
+  "n_classes": 12,
+  "n_controls": 24,
+  "calibration": [
+    "C1#1",
+    "C2#1",
+    "C3#1",
+    "C4#1",
+    "C5#1",
+    "C6#1",
+    "C7#1",
+    "C8#1",
+    "C9#1",
+    "C10#1",
+    "C11#1",
+    "C12#1"
+  ],
+  "blinded": [
+    "C1#2",
+    "C2#2",
+    "C3#2",
+    "C4#2",
+    "C5#2",
+    "C6#2",
+    "C7#2",
+    "C8#2",
+    "C9#2",
+    "C10#2",
+    "C11#2",
+    "C12#2",
+    "CH1",
+    "CH2"
+  ],
+  "controls": [
+    {
+      "cid": "C1",
+      "cls": "identical outputs, different code",
+      "instance": 1,
+      "instance_phase": "calibration",
+      "description": "identical outputs, different code",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "REFUTED_WITHIN_SCOPE",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "C_comp": "INSUFFICIENT_EVIDENCE",
+        "D": "INSUFFICIENT_EVIDENCE",
+        "E": "INSUFFICIENT_EVIDENCE"
+      },
+      "n_members": 4,
+      "n_tasks": 180,
+      "n_repeats": 1
+    },
+    {
+      "cid": "C1",
+      "cls": "identical outputs, different code",
+      "instance": 2,
+      "instance_phase": "blinded",
+      "description": "identical outputs, different code",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "REFUTED_WITHIN_SCOPE",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "C_comp": "INSUFFICIENT_EVIDENCE",
+        "D": "INSUFFICIENT_EVIDENCE",
+        "E": "INSUFFICIENT_EVIDENCE"
+      },
+      "n_members": 4,
+      "n_tasks": 180,
+      "n_repeats": 1
+    },
+    {
+      "cid": "C2",
+      "cls": "random one-shot gap, no pre-execution signal",
+      "instance": 1,
+      "instance_phase": "calibration",
+      "description": "random one-shot gap, no pre-execution signal",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "C_comp": "INSUFFICIENT_EVIDENCE",
+        "D": "INSUFFICIENT_EVIDENCE",
+        "E": "SUPPORTED"
+      },
+      "n_members": 5,
+      "n_tasks": 210,
+      "n_repeats": 1
+    },
+    {
+      "cid": "C2",
+      "cls": "random one-shot gap, no pre-execution signal",
+      "instance": 2,
+      "instance_phase": "blinded",
+      "description": "random one-shot gap, no pre-execution signal",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "C_comp": "INSUFFICIENT_EVIDENCE",
+        "D": "INSUFFICIENT_EVIDENCE",
+        "E": "SUPPORTED"
+      },
+      "n_members": 5,
+      "n_tasks": 210,
+      "n_repeats": 1
+    },
+    {
+      "cid": "C3",
+      "cls": "single dominant member, strata-varying gap",
+      "instance": 1,
+      "instance_phase": "calibration",
+      "description": "single dominant member, strata-varying gap",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "C_comp": "INSUFFICIENT_EVIDENCE",
+        "D": "REFUTED_WITHIN_SCOPE",
+        "E": "INSUFFICIENT_EVIDENCE"
+      },
+      "n_members": 4,
+      "n_tasks": 220,
+      "n_repeats": 1
+    },
+    {
+      "cid": "C3",
+      "cls": "single dominant member, strata-varying gap",
+      "instance": 2,
+      "instance_phase": "blinded",
+      "description": "single dominant member, strata-varying gap",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "C_comp": "INSUFFICIENT_EVIDENCE",
+        "D": "REFUTED_WITHIN_SCOPE",
+        "E": "INSUFFICIENT_EVIDENCE"
+      },
+      "n_members": 4,
+      "n_tasks": 220,
+      "n_repeats": 1
+    },
+    {
+      "cid": "C4",
+      "cls": "stable complementarity identified by visible stratum (POSITIVE control)",
+      "instance": 1,
+      "instance_phase": "calibration",
+      "description": "stable complementarity identified by visible stratum (POSITIVE control)",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "C_comp": "INSUFFICIENT_EVIDENCE",
+        "D": "SUPPORTED",
+        "E": "SUPPORTED"
+      },
+      "n_members": 4,
+      "n_tasks": 280,
+      "n_repeats": 1
+    },
+    {
+      "cid": "C4",
+      "cls": "stable complementarity identified by visible stratum (POSITIVE control)",
+      "instance": 2,
+      "instance_phase": "blinded",
+      "description": "stable complementarity identified by visible stratum (POSITIVE control)",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "C_comp": "INSUFFICIENT_EVIDENCE",
+        "D": "SUPPORTED",
+        "E": "SUPPORTED"
+      },
+      "n_members": 4,
+      "n_tasks": 280,
+      "n_repeats": 1
+    },
+    {
+      "cid": "C5",
+      "cls": "real complementarity, Z cannot identify it (abstention control)",
+      "instance": 1,
+      "instance_phase": "calibration",
+      "description": "real complementarity, Z cannot identify it (abstention control)",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "C_comp": "INSUFFICIENT_EVIDENCE",
+        "D": "REFUTED_WITHIN_SCOPE",
+        "E": "INSUFFICIENT_EVIDENCE"
+      },
+      "n_members": 4,
+      "n_tasks": 280,
+      "n_repeats": 1
+    },
+    {
+      "cid": "C5",
+      "cls": "real complementarity, Z cannot identify it (abstention control)",
+      "instance": 2,
+      "instance_phase": "blinded",
+      "description": "real complementarity, Z cannot identify it (abstention control)",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "C_comp": "INSUFFICIENT_EVIDENCE",
+        "D": "REFUTED_WITHIN_SCOPE",
+        "E": "INSUFFICIENT_EVIDENCE"
+      },
+      "n_members": 4,
+      "n_tasks": 280,
+      "n_repeats": 1
+    },
+    {
+      "cid": "C6",
+      "cls": "dev/eval drift flips Z signal; no coverage, net utility negative",
+      "instance": 1,
+      "instance_phase": "calibration",
+      "description": "dev/eval drift flips Z signal; no coverage, net utility negative",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "C_comp": "INSUFFICIENT_EVIDENCE",
+        "D": "REFUTED_WITHIN_SCOPE",
+        "E": "REFUTED_WITHIN_SCOPE"
+      },
+      "n_members": 3,
+      "n_tasks": 600,
+      "n_repeats": 1
+    },
+    {
+      "cid": "C6",
+      "cls": "dev/eval drift flips Z signal; no coverage, net utility negative",
+      "instance": 2,
+      "instance_phase": "blinded",
+      "description": "dev/eval drift flips Z signal; no coverage, net utility negative",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "C_comp": "INSUFFICIENT_EVIDENCE",
+        "D": "REFUTED_WITHIN_SCOPE",
+        "E": "REFUTED_WITHIN_SCOPE"
+      },
+      "n_members": 3,
+      "n_tasks": 600,
+      "n_repeats": 1
+    },
+    {
+      "cid": "C7",
+      "cls": "headroom driven by best-fixed drop; bare remains best",
+      "instance": 1,
+      "instance_phase": "calibration",
+      "description": "headroom driven by best-fixed drop; bare remains best",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "C_comp": "INSUFFICIENT_EVIDENCE",
+        "D": "INSUFFICIENT_EVIDENCE",
+        "E": "INSUFFICIENT_EVIDENCE"
+      },
+      "n_members": 4,
+      "n_tasks": 220,
+      "n_repeats": 1
+    },
+    {
+      "cid": "C7",
+      "cls": "headroom driven by best-fixed drop; bare remains best",
+      "instance": 2,
+      "instance_phase": "blinded",
+      "description": "headroom driven by best-fixed drop; bare remains best",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "C_comp": "INSUFFICIENT_EVIDENCE",
+        "D": "INSUFFICIENT_EVIDENCE",
+        "E": "INSUFFICIENT_EVIDENCE"
+      },
+      "n_members": 4,
+      "n_tasks": 220,
+      "n_repeats": 1
+    },
+    {
+      "cid": "C8",
+      "cls": "integrity violations caught by S1",
+      "instance": 1,
+      "instance_phase": "calibration",
+      "description": "integrity violations caught by S1 [missing_member]",
+      "expected": {
+        "A": "REFUTED_WITHIN_SCOPE",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "C_comp": "INSUFFICIENT_EVIDENCE",
+        "D": "INSUFFICIENT_EVIDENCE",
+        "E": "INSUFFICIENT_EVIDENCE"
+      },
+      "n_members": 3,
+      "n_tasks": 120,
+      "n_repeats": 1
+    },
+    {
+      "cid": "C8",
+      "cls": "integrity violations caught by S1",
+      "instance": 2,
+      "instance_phase": "blinded",
+      "description": "integrity violations caught by S1 [corrupt_judge]",
+      "expected": {
+        "A": "REFUTED_WITHIN_SCOPE",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "C_comp": "INSUFFICIENT_EVIDENCE",
+        "D": "INSUFFICIENT_EVIDENCE",
+        "E": "INSUFFICIENT_EVIDENCE"
+      },
+      "n_members": 3,
+      "n_tasks": 120,
+      "n_repeats": 1
+    },
+    {
+      "cid": "C9",
+      "cls": "global dominance with repeats: stable ranking SUPPORTED, complementarity REFUTED (H_stable = 0)",
+      "instance": 1,
+      "instance_phase": "calibration",
+      "description": "global dominance with repeats: stable ranking SUPPORTED, complementarity REFUTED (H_stable = 0)",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "REFUTED_WITHIN_SCOPE",
+        "C": "SUPPORTED",
+        "C_comp": "REFUTED_WITHIN_SCOPE",
+        "D": "INSUFFICIENT_EVIDENCE",
+        "E": "INSUFFICIENT_EVIDENCE"
+      },
+      "n_members": 3,
+      "n_tasks": 60,
+      "n_repeats": 3
+    },
+    {
+      "cid": "C9",
+      "cls": "global dominance with repeats: stable ranking SUPPORTED, complementarity REFUTED (H_stable = 0)",
+      "instance": 2,
+      "instance_phase": "blinded",
+      "description": "global dominance with repeats: stable ranking SUPPORTED, complementarity REFUTED (H_stable = 0)",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "REFUTED_WITHIN_SCOPE",
+        "C": "SUPPORTED",
+        "C_comp": "REFUTED_WITHIN_SCOPE",
+        "D": "INSUFFICIENT_EVIDENCE",
+        "E": "INSUFFICIENT_EVIDENCE"
+      },
+      "n_members": 3,
+      "n_tasks": 60,
+      "n_repeats": 3
+    },
+    {
+      "cid": "C10",
+      "cls": "crossover interaction with repeats: equal means (ranking INSUFFICIENT) but real complementarity SUPPORTED",
+      "instance": 1,
+      "instance_phase": "calibration",
+      "description": "crossover interaction with repeats: equal means (ranking INSUFFICIENT) but real complementarity SUPPORTED",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "C_comp": "SUPPORTED",
+        "D": "SUPPORTED",
+        "E": "SUPPORTED"
+      },
+      "n_members": 3,
+      "n_tasks": 60,
+      "n_repeats": 3
+    },
+    {
+      "cid": "C10",
+      "cls": "crossover interaction with repeats: equal means (ranking INSUFFICIENT) but real complementarity SUPPORTED",
+      "instance": 2,
+      "instance_phase": "blinded",
+      "description": "crossover interaction with repeats: equal means (ranking INSUFFICIENT) but real complementarity SUPPORTED",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "C_comp": "SUPPORTED",
+        "D": "SUPPORTED",
+        "E": "SUPPORTED"
+      },
+      "n_members": 3,
+      "n_tasks": 60,
+      "n_repeats": 3
+    },
+    {
+      "cid": "C11",
+      "cls": "condition-mixing trap: one 'repeat' under a different timeout",
+      "instance": 1,
+      "instance_phase": "calibration",
+      "description": "condition-mixing trap: one 'repeat' under a different timeout",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "C_comp": "INSUFFICIENT_EVIDENCE",
+        "D": "INSUFFICIENT_EVIDENCE",
+        "E": "INSUFFICIENT_EVIDENCE"
+      },
+      "n_members": 3,
+      "n_tasks": 60,
+      "n_repeats": 3
+    },
+    {
+      "cid": "C11",
+      "cls": "condition-mixing trap: one 'repeat' under a different timeout",
+      "instance": 2,
+      "instance_phase": "blinded",
+      "description": "condition-mixing trap: one 'repeat' under a different timeout",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "C_comp": "INSUFFICIENT_EVIDENCE",
+        "D": "INSUFFICIENT_EVIDENCE",
+        "E": "INSUFFICIENT_EVIDENCE"
+      },
+      "n_members": 3,
+      "n_tasks": 60,
+      "n_repeats": 3
+    },
+    {
+      "cid": "C12",
+      "cls": "cloned-repeats trap: identical matrices, independence unverifiable",
+      "instance": 1,
+      "instance_phase": "calibration",
+      "description": "cloned-repeats trap: identical matrices, independence unverifiable",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "C_comp": "INSUFFICIENT_EVIDENCE",
+        "D": "INSUFFICIENT_EVIDENCE",
+        "E": "INSUFFICIENT_EVIDENCE"
+      },
+      "n_members": 3,
+      "n_tasks": 60,
+      "n_repeats": 3
+    },
+    {
+      "cid": "C12",
+      "cls": "cloned-repeats trap: identical matrices, independence unverifiable",
+      "instance": 2,
+      "instance_phase": "blinded",
+      "description": "cloned-repeats trap: identical matrices, independence unverifiable",
+      "expected": {
+        "A": "SUPPORTED",
+        "B": "SUPPORTED",
+        "C": "INSUFFICIENT_EVIDENCE",
+        "C_comp": "INSUFFICIENT_EVIDENCE",
+        "D": "INSUFFICIENT_EVIDENCE",
+        "E": "INSUFFICIENT_EVIDENCE"
+      },
+      "n_members": 3,
+      "n_tasks": 60,
+      "n_repeats": 3
+    }
+  ],
+  "notes": "expected states derive from the analytic generating mechanisms; C2/C6/C7 D/E expectations assume the frozen 1-call policy; auditor challenges are re-executed from the frozen spec in the blinded phase with spec+code hash binding. v1 classes keep their frozen expectations unchanged.",
+  "manifest_sha256": "c0e44abc5c5358f7589edf1dbb6b8872a61c5c7c31529976484b71233bd89fd3",
+  "challenges_executed": {
+    "spec_sha256": "547182749712b2aef4238147793f06a189a2d61182ecff51e0127d1fe694c814",
+    "code_sha256": {
+      "experiment.diagnostics.core": "96c46bfc4187f49d7410edb70988b955d49d51bd58621e6ef5c8ae4e16935908",
+      "experiment.diagnostics.challenges": "7d7aeb838fac0d59a4383cb56baf5af55b79e05fec37f133eefa2e822cbd78de"
+    }
+  }
+}
