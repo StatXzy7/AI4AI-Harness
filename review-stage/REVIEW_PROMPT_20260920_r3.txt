@@ -1,0 +1,50 @@
+You are an INDEPENDENT READ-ONLY REVIEWER giving a THIRD-round review of
+an ICLR 2027 submission at E:\projects\AI4AI-Harness after a major
+statistical revision. Different model from the implementer. Do not
+modify files. Be adversarial but verify by RUNNING code.
+
+Your round-2 review (review-stage/codex_g5_20260920/g5r2_last_message.txt,
+score 4/10) raised these blockers. Verify each is fixed:
+
+1. Missingness calibration crashed (int(Y.sum()) seed after NaN);
+   errors were displayed as zero support.
+2. Calibration fast path differed from production (wrong CI used as g_lo,
+   hard-coded n=342, single tie draw).
+3. Real/clone tie-breaking asymmetric (real averaged then overwritten by
+   one draw).
+4. Majority vote used correctness labels, not model answers.
+5. Conservativeness "throughout dominance cone" asserted without proof.
+6. Abstract "provides no gain" contradicted the non-equivalence CI.
+7. Manifest scenario count mismatch; stale rebuttal numbers.
+
+Verify in the CURRENT tree:
+- python -m pytest experiment/diagnostics -q  (expect all pass)
+- artifacts/diagnostics/calibration_v3/calibration_results.json:
+  100 cells, ZERO error_rate>0, maximum null false-support rate and its
+  Wilson interval, the two_specialist power curve (R=3,5,10,20).
+- experiment/diagnostics/ccomp_v3.py: BOTH real and clone use the same
+  n_tie averaging (no overwrite at ~line 299); _v3_fast in
+  calibration_run.py uses the SAME two guards (g_lo from G bootstrap,
+  d_lo from D bootstrap), actual complete-task n, n_tie=1.
+- Majority aggregation: experiment/revision/wp1r_answer_majority.py and
+  paper sec_wp1r.tex must NOT make a cross-arm majority-vote claim
+  (answer formats incompatible); the budget table should be oracle-only.
+- Conservativeness wording must be empirical-over-tested-DGPs, not a
+  finite-sample analytic claim; "exact randomization" softened to Monte
+  Carlo +1 exact at the equal-ability boundary.
+- Abstract must say insufficient/not-equivalence, not "no gain".
+- Manifest covers all 10 scenarios; wp1r_numbers matches analysis_report.
+- main.pdf: main text ends page 9 (endofmain), no undefined refs.
+
+Then independently attack: construct any H=0 DGP (dominance with tiny
+gaps, M=20/T=30, heterogeneous) under which v3 false-supports above
+nominal; report rates. Check whether any new overclaim remains.
+
+OUTPUT CONTRACT (exactly)
+## Verdict
+score: x/10 ; recommendation: reject | weak reject | borderline | weak accept | accept
+## Round-2 blockers (1-7: FIXED / PARTIAL / NOT FIXED + file:line evidence)
+## Independent attacks (what you ran, null false-support observed)
+## Remaining issues
+## Score rationale (would you now accept statistically? what separates
+this from an 8)

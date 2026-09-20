@@ -28,27 +28,32 @@
 \begin{abstract}
 Automatically generated LLM harnesses offer a rich design space, but their
 source-code, execution, and outcome diversity must be measured separately.
-On BIRD text-to-SQL, trace inspection distinguishes absent, untriggered,
-and broken mechanisms, and free generation yields 8.6\,pp of observed
-oracle headroom across 1{,}169 questions; a one-seed MATH-500 probe
-shows 10.6\% outcome disagreement and 4.75\,pp headroom. We formalize
-one-run oracle gains, stable ranking, stable complementarity,
-pre-execution selectability, and budgeted utility as five separately
-reported claim classes, checked by ordering-invariance,
-dominance-versus-complementarity, cloned-repeat, and condition-mixing
-controls with hash-bound challenge re-execution; the procedure also
-corrects one of our earlier verification claims. On the archived
-factorial study the combined screening intervention estimates
-$\RevisionPrimaryDelta$\,pp (95\% CI $\RevisionPrimaryCI$), supporting
-the measurement contribution rather than intervention superiority. A
-fresh pre-registered MATH-500 collection supplies the decisive
-equal-budget control: an eight-harness panel and nine same-code clone
-slots, each run for three independent repeats. The panel shows stable
-member ranking, but stable complementarity is not established and its
-discovery-selected advantage is indistinguishable from same-code
-repeated execution. The framework turns apparent diversity into
-auditable evidence and identifies the controls required before any
-deployment claim.
+We define five separately reported claim classes --- measurement
+sufficiency, single-shot coverage, \emph{stable ranking},
+\emph{stable complementarity}, pre-execution selectability, and
+budget-matched utility --- and give the two stability claims
+size-controlled tests. The complementarity test freezes a per-task member
+mapping on discovery repeats, scores it on held-out repeats against the
+best \emph{fixed} member (global dominance can then never look like
+complementarity), and calibrates against a same-code clone arm with a
+Monte Carlo randomization test. Known-truth simulations establish its
+false-support rate and power across member, task, and repeat counts:
+the prior repeat-averaged estimator false-supports on pure execution
+noise in every null regime we test, whereas the calibrated test keeps the
+false-support rate at its nominal level and detects interaction only when
+repeats suffice for a reliable mapping. Applied to a fresh pre-registered
+MATH-500 collection (eight generated harnesses and nine byte-identical
+\bare{} clone slots, three independent repeats each), the panel shows a
+stable member ranking, yet the clone-calibrated selection gain is
+$\WpVthreeD$\,pp (95\% CI $\WpVthreeDCI$; randomization $p=\WpVthreeP$):
+the evidence neither establishes a gain beyond independent executions of
+one fixed program at the declared $1$\,pp margin nor equivalence, and a
+frozen coverage gate keeps the verdict at \textsc{Insufficient
+Evidence}. On BIRD text-to-SQL, trace inspection and a versioned
+factorial reanalysis ($\RevisionPrimaryDelta$\,pp, 95\% CI
+$\RevisionPrimaryCI$) document what single-run numbers cannot establish.
+The framework turns apparent diversity into auditable evidence and, by
+construction, does not manufacture the complementarity it searches for.
 \end{abstract}
 
 \section{Introduction}\label{sec:introduction}
@@ -66,7 +71,7 @@ deployment claim.
 \section{Phase II: Results}\label{sec:results}
 \input{sec_results}
 
-\section{From Observed Headroom to a Validated Diagnostic}\label{sec:diagnostics}
+\section{A Calibrated Diagnostic for Apparent Complementarity}\label{sec:diagnostics}
 \input{sec_diagnostics}
 
 \section{Discussion and Conclusion}\label{sec:discussion}

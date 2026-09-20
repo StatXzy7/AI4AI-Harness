@@ -124,6 +124,12 @@ class TestControls(unittest.TestCase):
         pkg = ctl.build_package()
         for c in pkg["controls"]:
             pop = ctl.get_control(c["cid"], c["instance"])
+            # repeat controls that require clone calibration (C10) get the
+            # registered same-code clone arm, as the CLI runner does
+            if c["cid"] in getattr(ctl, "CLONE_CLASSES", {}) and isinstance(pop, dict):
+                clone = ctl.CLONE_CLASSES[c["cid"]](
+                    ctl.stable_seed(c["cid"], c["instance"]) + 777)
+                pop = {**pop, "__clone__": clone}
             got = _run_diagnostic(pop)
             for k in ("B", "C", "C_comp", "D", "E"):
                 self.assertEqual(got[k], c["expected"][k],
@@ -199,16 +205,27 @@ class TestS3Invariants(unittest.TestCase):
         s3 = core.s3_stability(self._review_case(["bare", "a", "b"]))
         self.assertEqual(s3["state"], core.SUPPORTED)
         self.assertEqual(s3["stable_complementarity"]["state"], core.REFUTED)
-        self.assertEqual(s3["stable_complementarity"]["H_stable"], 0.0)
+        self.assertEqual(
+            s3["stable_complementarity"]["descriptive_plugin"]["H_hat"], 0.0)
 
     def test_s3_crossover_complementarity_detected(self):
         """Equal mean accuracy with opposite per-stratum skill: no stable mean
-        difference (ranking INSUFFICIENT) but real complementarity SUPPORTED."""
+        difference (ranking INSUFFICIENT) but real complementarity SUPPORTED.
+        The v3 decision needs the same-code clone arm; without it the block
+        abstains and only reports the descriptive plug-in."""
         pops = ctl.get_control("C10", 1)
-        s3 = core.s3_stability(pops)
+        s3_no_clone = core.s3_stability(pops)
+        self.assertEqual(s3_no_clone["state"], core.INSUFFICIENT)
+        self.assertEqual(s3_no_clone["stable_complementarity"]["state"],
+                         core.INSUFFICIENT)
+        clones = ctl.CLONE_CLASSES["C10"](
+            ctl.stable_seed("C10", 1) + 777)
+        s3 = core.s3_stability(pops, clones, clone_n_perm=800)
         self.assertEqual(s3["state"], core.INSUFFICIENT)
-        self.assertEqual(s3["stable_complementarity"]["state"], core.SUPPORTED)
-        self.assertGreater(s3["stable_complementarity"]["H_stable"], 0)
+        self.assertEqual(s3["stable_complementarity"]["state"],
+                         core.SUPPORTED)
+        self.assertGreater(
+            s3["stable_complementarity"]["descriptive_plugin"]["H_hat"], 0)
 
     def test_s3_refuses_condition_mixed_repeats(self):
         s3 = core.s3_stability(ctl.get_control("C11", 1))
@@ -267,8 +284,10 @@ class TestS3Invariants(unittest.TestCase):
         s3 = core.s3_stability(pops)
         comp = s3["stable_complementarity"]
         self.assertEqual(comp["state"], core.INSUFFICIENT)
-        self.assertIsNone(comp["H_stable"])
-        self.assertIn("unidentified", comp["reason"])
+        self.assertGreaterEqual(
+            comp["descriptive_plugin"]["n_unidentified_cells"], 1)
+        self.assertTrue(any("dom" in c[0] and c[1].endswith("t7")
+                            for c in comp["unidentified_cells"]))
 
 
 class TestS1ExecutionState(unittest.TestCase):

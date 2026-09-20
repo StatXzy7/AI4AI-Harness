@@ -1,0 +1,86 @@
+## Verdict
+score: 4/10 ; recommendation: reject
+
+## Issue-by-issue verification (W1 W2 W3 W4 other; VERIFIED/PARTIAL/FAIL + evidence)
+
+- **W1 — PARTIAL.** The old plug-in is now descriptive-only, and the focused suite passes under the existing `cv` environment: `13 passed`. The base `python` command crashes before pytest with exit `0xC0000022`. The new implementation compares cross-fitted selection against a discovery-frozen fixed member and requires a clone arm. However:
+
+  - The claimed ten-draw tie average is computed and then overwritten by a single draw for the real arm, while the clone remains averaged: [ccomp_v3.py:290](E:/projects/AI4AI-Harness/experiment/diagnostics/ccomp_v3.py:290), [ccomp_v3.py:299](E:/projects/AI4AI-Harness/experiment/diagnostics/ccomp_v3.py:299), [ccomp_v3.py:312](E:/projects/AI4AI-Harness/experiment/diagnostics/ccomp_v3.py:312).
+  - Thus the reported real-data statistic is not the label-symmetric statistic described in the appendix.
+  - “Exact” applies only at the exchangeable equal-ability boundary. The manuscript’s argument that a nonpositive population mean automatically makes the equal-ability randomization reference conservative throughout the dominance cone is not a valid finite-sample stochastic-dominance proof.
+  - The rebuttal’s sealed values (`G_real=0.29pp`, `p=.73`) do not match the current artifact (`G_real=0.00pp`, `p=.7742`).
+
+- **W2 — VERIFIED for the specific failure.** The primary statistic is no longer against `bare`, and the `0.5/0.9` regression tests abstain. The old A8.6 result is explicitly labeled secondary/descriptive. The current artifact also correctly identifies its `p=.9980` as belonging to that legacy statistic.
+
+- **W3 — PARTIAL.** Equal slots, common execution count, and realized spend are now separated. The artifacts support approximately 21,796 real evaluation calls versus 10,800 clone calls and 53.16M versus 14.51M tokens; the appendix’s 22,192/54.17M figures appear to include additional accounting not clearly reconciled with `budget_curves.json`. More importantly, the common-budget “majority vote” conclusion is invalid: `_majority_acc` votes on ground-truth correctness bits, not model answers ([wp1r_budget.py:53](E:/projects/AI4AI-Harness/experiment/revision/wp1r_budget.py:53)). Correctness labels are unavailable to a deployed aggregator, and binary correctness-majority is not generally equal to majority-answer accuracy. Therefore the claimed deployable 6.1–27.3pp same-code advantage is unsupported.
+
+- **W4 — PARTIAL.** The body appropriately restricts the real-data conclusion to this panel and returns `INSUFFICIENT_EVIDENCE`, with the failed 12.5% coverage gate disclosed. But the abstract says the panel “provides no frozen-selection gain” within the 1pp margin, despite the CI being `[-1.72, 1.67]pp`, which does not establish equivalence at 1pp.
+
+- **Other — PARTIAL.**
+  - C-rank now uses a shared-bootstrap max-T interval across 36 pairs and correctly defines the population conclusion as “at least one pair differs.”
+  - Jensen language has been narrowed appropriately.
+  - Identical matrices now require independent-execution provenance rather than automatic rejection.
+  - The calibration provenance is internally weak: the manifest reports nine scenarios although the JSON contains ten, and the additional `two_specialist` results were appended after the main run.
+  - The current primary v3 p-value is `.7742`, not the rebuttal’s `.7309`.
+
+## Statistical audit (any remaining false-support path, with a concrete counterexample you constructed or ran if you can)
+
+The complete-data simulations provide some empirical reassurance but do not establish the advertised size guarantee. Across the supplied complete-data null grid, the maximum observed v3 false-support rate is 4.67% (`equal_const`, `M=9,T=100,R=3`; Wilson interval 2.28–9.32%).
+
+I independently ran an additional dominance-cone stress test with one member weakly dominating every task, `M=20,T=30,R=3`, heterogeneous subdominant gaps, 300 datasets per gap. False support occurred in:
+
+- 2/300 at zero boundary gap;
+- 1/300 at gap .002;
+- 5/300 at gap .01;
+- 5/300 at gap .03.
+
+These rates are not evidence of inflation by themselves, but they concretely refute the prose claim that dominance “can never” false-support. A level-.05 procedure can false-support under \(H=0\); the defensible claim is controlled probability, not impossibility.
+
+The calibration suite has a more serious defect: **every v3 missingness cell has `error_rate=1.0`**, `abstain_rate=0`, and no estimate. The seed calculation calls `int(Y.sum())` after NaNs are introduced. Those errors are then displayed as zero support. Therefore the paper’s statements that MCAR/MNAR calibration passed and missingness did not affect FPR are false.
+
+The calibration fast path also differs from production:
+
+- it applies a bootstrap interval to \(D\) but uses it as `g_lo`;
+- it checks only `g_obs > 0`, not the production \(G_{\rm real}\) lower-bound rule;
+- it hard-codes `n=342`;
+- it uses one tie draw, while the manuscript claims ten for real data.
+
+Consequently Table 5 does not calibrate the actual production decision rule.
+
+## Paper audit (overclaims, page limit, consistency)
+
+- Page limit: **verified**. `main.pdf` has 27 pages, and `endofmain` is on page 9 in `main.aux`.
+- W1/W2/W3 are addressed in the main text, not only the appendix.
+- The methodology section is readable and mostly self-contained, but its formal claims exceed the implementation and proof.
+- The calibration table numerically matches the JSON for displayed cells, but it omits the 100%-error missingness results and thereby gives a materially misleading account of the suite.
+- The appendix says alternative power increases with \(R\), yet the cyclic alternatives do not: their reported power often decreases to zero. Only the specially added, very large \(H=17.5\)pp two-specialist DGP reaches 100% at \(R\ge10\).
+- The abstract’s “no gain” language contradicts both the failed coverage gate and the non-equivalence CI.
+- The common-budget majority-vote interpretation is statistically and operationally invalid.
+- `wp1r_numbers.tex` matches the current analysis JSON, but the rebuttal contains stale v3 numbers.
+
+## Blockers (must fix before acceptance)
+
+- Repair the missingness calibration crash and rerun the full grid; errors must not be counted or narrated as zero false support.
+- Make the calibration path identical to the production v3 rule, including tie handling, both confidence guards, coverage logic, paired-task alignment, and reported sample size.
+- Fix the real/clone tie-breaking asymmetry and regenerate the real-data analysis.
+- Replace the correctness-bit “majority vote” analysis with aggregation of actual normalized answers, or remove all deployability and majority-accuracy claims.
+- Withdraw or prove the assertion of finite-sample conservativeness across the entire dominance cone. Empirical checks alone justify only a bounded tested-DGP claim.
+- Change the abstract from “provides no gain” to an unresolved/insufficient-evidence statement.
+- Regenerate a coherent calibration manifest covering every scenario and final artifact.
+- Reconcile the rebuttal, manuscript, and current artifact values.
+
+## Non-blocking issues
+
+- Report the default Python crash and the exact environment used for verification.
+- Clarify that budgets are \(b=3,6,\ldots,27\), not every integer from 3 through 27.
+- Report calibration error counts prominently alongside support/refutation/abstention.
+- Replace “exact randomization null” with “Monte Carlo randomization test exact under the stated exchangeability null, up to Monte Carlo sampling,” unless all permutations are enumerated.
+- Explain precisely which ledgers produce the differing real-arm call/token totals.
+
+## Score rationale (what moved the score from 3/10, and what would move it to 8)
+
+The score rises from 3 to 4 because the authors correctly diagnosed both original counterexamples, removed the plug-in and vs-bare statistics from scientific decision-making, introduced best-fixed cross-fitting, added clone-required abstention, corrected C-rank multiplicity, separated budget concepts, and kept the real-data conclusion formally insufficient.
+
+It does not reach 5 because the central “validated size-controlled diagnostic” claim is not currently supported: the missingness calibration entirely crashes, calibration and production implement different rules, the advertised tie averaging is not used symmetrically, and the common-budget deployability result votes on unavailable correctness labels. An 8 would require one audited implementation shared by production and simulation, successful calibration including missingness and broader dominance stress tests, a defensible finite-sample claim boundary, answer-level budget aggregation, regenerated provenance, and manuscript language exactly matching those results.
+
+

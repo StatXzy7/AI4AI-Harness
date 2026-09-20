@@ -1,0 +1,124 @@
+{
+ "generated_utc": "2026-09-20T21:07:57+00:00",
+ "command": "python -m experiment.diagnostics.calibration_run --n-reps 300",
+ "python": "3.13.9",
+ "platform": "Windows-11-10.0.26200-SP0",
+ "git_head": "9a42c8daa3d263072c9a9fe11e0ee9df3140f1d8",
+ "git_status_dirty": true,
+ "code_sha256": {
+  "experiment/diagnostics/calibration_sim.py": "a7945e625e69143a5ae92bc5ac0b7f2413398ea4487bc791d31b2936e8b49718",
+  "experiment/diagnostics/calibration_stats.py": "3e09fc771d9fae983950baf9b7c069f8225859b6690ca309ae193d9cd968a5b5",
+  "experiment/diagnostics/calibration_run.py": "c48aa3c9adface74fe0847949cf5acea8e6c61e491e1487836bdf9c742106c58",
+  "experiment/diagnostics/ccomp_v3.py": "a1c2c8f43701cc66a738ac2b609fd9229ef25e8052d376364268d71d7ea871dd",
+  "experiment/diagnostics/core.py": "7780df484b14a13aa194b14316968a094d965c080b0d3e9f9e81a88a88927166"
+ },
+ "results_sha256": "534f0d6342b012b1bfdc5c5e98db084bb3b4b07e8f57e6e1ab59512d0e846d54",
+ "n_results": 100,
+ "grid": {
+  "elapsed_s": 4056.4,
+  "cells": [
+   [
+    9,
+    400,
+    3,
+    "complete",
+    0.0,
+    "mcar",
+    300
+   ],
+   [
+    9,
+    400,
+    5,
+    "complete",
+    0.0,
+    "mcar",
+    150
+   ],
+   [
+    9,
+    400,
+    10,
+    "complete",
+    0.0,
+    "mcar",
+    150
+   ],
+   [
+    9,
+    400,
+    20,
+    "complete",
+    0.0,
+    "mcar",
+    150
+   ],
+   [
+    3,
+    400,
+    3,
+    "complete",
+    0.0,
+    "mcar",
+    150
+   ],
+   [
+    20,
+    400,
+    3,
+    "complete",
+    0.0,
+    "mcar",
+    150
+   ],
+   [
+    9,
+    100,
+    3,
+    "complete",
+    0.0,
+    "mcar",
+    150
+   ],
+   [
+    9,
+    1000,
+    3,
+    "complete",
+    0.0,
+    "mcar",
+    150
+   ],
+   [
+    9,
+    400,
+    3,
+    "mcar5",
+    0.05,
+    "mcar",
+    150
+   ],
+   [
+    9,
+    400,
+    3,
+    "mnar_hard3",
+    0.03,
+    "mnar_hard",
+    150
+   ]
+  ],
+  "scenarios": [
+   "equal_const",
+   "equal_hetero",
+   "dominance_clean",
+   "dominance_reviewer",
+   "dominance_hetero",
+   "cross_mid",
+   "cross_strong",
+   "cross_vstrong",
+   "two_specialist",
+   "cross_weak"
+  ]
+ }
+}

@@ -53,36 +53,24 @@ similarity here. (Pairs overlap; $\rho$ is descriptive, not inferential.)
 
 \subsection{Trace taxonomy: why code diversity fails to become behavioral
 diversity}\label{sec:taxonomy}
-Auditing execution traces (the sequence of LLM calls and artifact executions
-per task) decomposes ``different code'' into three failure classes:
-\begin{itemize}
-\tightlist
-\item \textbf{T1 --- mechanism described, not executed (6/12 candidates).}
-The harness issues exactly one LLM call and never executes an artifact ---
-the identical execution path as \bare{}. Docstrings claim retrieval,
-self-checking, or token caps; none exists in the control flow.
-\item \textbf{T2 --- mechanism present but untriggered (\react, 10/10 audited
-tasks).} The first SQL executes successfully, so error repair is not
-triggered and the final SQL equals \bare's. This does not show that repair
-feedback lacks a causal path when a failure occurs.
-\item \textbf{T3 --- broken multi-turn path (1/12).} The one candidate
-implementing genuine multi-turn repair returns prose as final SQL,
-converting bare-correct items into harness-wrong.
-\end{itemize}
-The taxonomy is actionable: T1 demands an execution-path acceptance gate,
-T2 demands controlled faults to test trigger and feedback use, T3 demands
-executable-output validation --- all generation-protocol requirements.
+Auditing execution traces decomposes ``different code'' into three
+failure classes: \textbf{T1 --- mechanism described, not executed
+(6/12 candidates)}: one call, no artifact execution (the same path as
+\bare{}; docstrings claim retrieval or self-checking that does not
+exist); \textbf{T2 --- mechanism present but untriggered (\react,
+10/10 tasks)}: the first SQL succeeds, so error repair never fires and
+the final SQL equals \bare's (this does not show the repair path lacks
+causal force under failure); \textbf{T3 --- broken multi-turn path
+(1/12)}: prose returned as final SQL, turning bare-correct items into
+harness-wrong. T1 demands an execution-path acceptance gate, T2
+controlled faults, T3 executable-output validation.
 
 \subsection{Human positive control: the headroom exists}\label{sec:positive}
-To probe whether distinct hand-written mechanisms can produce additional
-observed coverage, we wrote four harnesses by hand with forcibly
-distinct execution paths (\texttt{hpc\_repair}: execute-and-repair;
-\texttt{hpc\_vote3}: 3-vote on execution results; \texttt{hpc\_schema}:
-schema-linking; \texttt{hpc\_hint}: hint-first reordering). Same frozen
-target, tasks, and judge as the collapsed population: oracle headroom
-\textbf{6.67\,pp} on 60 tasks and \textbf{7.28\,pp} {[}3.3, 10.0{]} on the
-151-item set, with repair/schema/hint each producing repairs the others
-miss. One disclosed caveat: the control was designed \emph{after}
-inspecting day-1 traces, so its headroom is descriptive, not blind. The
-bare baseline itself flipped 3 of 60 items between the two day-1 runs
-(API nondeterminism at temperature 0).
+Four hand-written harnesses with forcibly distinct execution paths
+(execute-and-repair; 3-vote; schema-linking; hint-first reordering), same
+frozen target and judge, give oracle headroom \textbf{6.67\,pp} on 60
+tasks and \textbf{7.28\,pp} {[}3.3, 10.0{]} on the 151-item set, with
+each mechanism repairing tasks the others miss. The control was designed
+after inspecting day-1 traces, so its headroom is descriptive, not
+blind; \bare{} itself flipped 3 of 60 items between two temperature-0
+day-1 runs.

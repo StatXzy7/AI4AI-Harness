@@ -326,6 +326,29 @@ REPEAT_CLASSES = {
 }
 
 
+def gen_clone_c9_c10(seed):
+    """Same-code clone arm for the stochastic repeat controls C9/C10.
+
+    Every slot is one stochastic Bernoulli(0.5) program with byte-identical
+    source; independent executions differ. This is the same-code
+    exchangeability null required by the clone-calibrated C-comp decision.
+    Task set and condition match C9/C10 (60 tasks, timeout 60)."""
+    n = 60
+    tasks = _task_ids(n)
+    Y = np.full((3, n), _STOCH)        # 3 same-code slots, all stochastic
+    return {f"r{r}": _repeat_pop(Y, ["clone-s1", "clone-s2", "clone-s3"],
+                                 tasks,
+                                 {"c": "synthetic", "timeout": 60}, r, seed,
+                                 dev_ids=[])
+            for r in range(3)}
+
+
+CLONE_CLASSES = {
+    "C9": gen_clone_c9_c10,
+    "C10": gen_clone_c9_c10,
+}
+
+
 # ---- frozen package ---------------------------------------------------------
 
 # Expected states, frozen from the generating mechanisms (NOT from running the

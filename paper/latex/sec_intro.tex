@@ -7,64 +7,61 @@ execution randomness rather than a repeatable advantage.
 
 We study this problem on BIRD text-to-SQL \citep{bird2021}. In a Phase-I
 discovery population, 21 of 66 generated-candidate pairs had identical
-correctness vectors. Including the \react{} harness
-\citep{yao2023react}, shipped with TTHE \citep{tthe2026}, and the \bare{}
-baseline gives 36 identical pairs out of 91. Pairwise code similarity had
-no observed rank association with outcome disagreement ($\rho=-0.01$).
-Trace inspection found three distinct situations: claimed mechanisms absent
-from control flow, mechanisms present but untriggered on the inspected
-tasks, and broken multi-turn implementations. These observations motivate
-an audit of the measurement process; they do not establish that generated
-harnesses generally collapse.
+correctness vectors (36 of 91 including \react{} and \bare{}), and
+pairwise code similarity had no rank association with outcome
+disagreement ($\rho=-0.01$). Trace inspection found three situations:
+claimed mechanisms absent from control flow, mechanisms present but
+untriggered, and broken multi-turn implementations. These observations
+motivate an audit of the measurement process; they do not establish that
+generated harnesses generally collapse.
 
 A subsequent pre-specified factorial study crossed strategy forcing and
 conformance gating over six builders and three seeds. Its primary
 evaluation used 1{,}169 questions from nine databases outside protocol
 development, with one disclosed 18-item smoke-test exception. Under this
-revised setting, free ungated generation already produced 8.6\,pp observed
-oracle headroom. The Phase-I pattern therefore did not recur, but changes
+revised setting, free ungated generation already produced 8.6\,pp
+observed oracle headroom; the Phase-I pattern did not recur, but changes
 in generation, judge, data, and execution prevent attribution to any one
-protocol component without a controlled bridge.
+protocol component without a controlled bridge. The gate also changes
+the admissible strategy space: two allowed single-call prompt
+transformations cannot pass its mechanism check. We preserve that
+experiment and report a versioned post-review reanalysis; the primary
+contrast remains $\RevisionPrimaryDelta$\,pp (95\% CI
+$\RevisionPrimaryCI$), which neither demonstrates improvement nor
+establishes equivalence.
 
-The original gate also changes the admissible strategy space: two allowed
-single-call prompt transformations cannot pass its mechanism check.
-Consequently, the intervention combines mechanism screening with
-verification. We preserve that experiment and report a versioned
-post-review reanalysis rather than treating it as a repaired-gate trial.
-The primary contrast remains $\RevisionPrimaryDelta$\,pp (95\% CI
-$\RevisionPrimaryCI$). This unresolved estimate neither demonstrates
-improvement nor establishes equivalence.
-
-Our contribution at this stage is an empirical account of three measurement
-boundaries, plus a validated diagnostic that operationalizes them:
+Our contribution at this stage is a measurement method with
+calibrated statistical guarantees, plus two empirical case studies:
 \begin{enumerate}
 \tightlist
-\item \textbf{Code, trace, and outcome diversity differ.} Discovery examples
-show why an inactive branch and a missing mechanism require different tests.
+\item \textbf{Code, trace, and outcome diversity differ.} Discovery
+examples show why an inactive branch and a missing mechanism require
+different tests.
 \item \textbf{Admission and inference define the comparison.} A factorial
 study and an explicit correction of its data and statistical chain show
 which intervention was actually evaluated and what its estimate supports.
-\item \textbf{Observed oracle value is not stable or usable value.} Repeat
-instability and exploratory selection results motivate separate reporting
-of oracle accuracy, best-fixed accuracy, repeated-run advantages, and
-realized selector performance.
-\item \textbf{A validated diagnostic separates the claim classes.} An
-offline procedure evaluates measurement sufficiency, single-shot coverage,
-stable ranking, stable complementarity, pre-execution selectability, and
-budgeted utility as separate claims with explicit states, identity gates,
-and invariant-tested, hash-bound validation
-(\S\ref{sec:diagnostics}); on our archives it either abstains by frozen
-rules or corrects traceable errors, including one of our own earlier
-verification claims.
+\item \textbf{Observed oracle value is not stable or usable value.}
+Repeat instability motivates separate reporting of oracle accuracy,
+best-fixed accuracy, repeated-run advantages, and realized selector
+performance.
+\item \textbf{A size-calibrated diagnostic separates the claim classes.}
+The complementarity decision cross-fits a frozen selector against the
+best \emph{fixed} member and calibrates against a same-code clone
+randomization null; simulations show the prior plug-in false-supports
+on pure noise while the calibrated rule stays nominal and reports power
+honestly by repeat count (\S\ref{sec:diagnostics}).
 \end{enumerate}
-The decisive question is whether a real harness population
-outperforms an equal-budget population of independent executions of the
-same code, with advantages that survive independent repeats. A fresh
+The decisive question is whether distinct generated programs deliver a
+frozen-selection gain over spending the same executions on one fixed
+program, with advantages that survive independent repeats. A fresh
 pre-registered MATH-500 collection supplies exactly this control
-(\S\ref{sec:wp1r}): it finds stable member ranking but no stable
-complementarity beyond same-code repeated execution. Stable
-complementarity therefore remains an estimand to be tested on other
-panels and domains, not a discovered property of this one.
+(\S\ref{sec:wp1r}). On this panel the gain is within the declared
+$1$\,pp margin but, owing to coverage gaps, formally
+\textsc{Insufficient Evidence} rather than a strong negative: the
+clone-calibrated difference is $\WpVthreeD$\,pp (CI $\WpVthreeDCI$). Stable
+complementarity therefore remains an estimand to be tested with more
+repeats on other panels and domains, not a discovered property of this
+one.
 
 This boundary suggests a sharper object for population construction:
 useful routing depends on stable task--harness interaction after execution

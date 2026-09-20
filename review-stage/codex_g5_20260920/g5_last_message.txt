@@ -1,0 +1,89 @@
+## Verdict
+
+score: 3/10 ; recommendation: reject
+
+## Issue-by-issue verification (W1 W2 W3 W4 other; VERIFIED/PARTIAL/FAIL + evidence)
+
+- **W1 — PARTIAL.** The intended redesign is present in `experiment/diagnostics/ccomp_v3.py`: the scientific quantity is cross-fitted gain versus the best fixed member, not versus bare; clone calibration, paired bootstrap, coverage gating, and label-symmetric jitter are documented. The W1 regression test also encodes the \(q=.9,M=9,T=400,R=3\) example.
+
+  However, I could not execute the required test: `python -m pytest experiment/diagnostics/test_ccomp_v3.py -q` terminates with Python exit code `-1073741790` before producing test output. More importantly, the clone path contains a concrete implementation defect:
+
+  ```python
+  g_c_acc += gck / N_TIE
+  ```
+
+  `N_TIE` is not defined in `ccomp_v3.py`; the function parameter is `n_tie`. Any normal clone-arm execution should therefore raise `NameError` once reached. The sealed JSON artifact cannot substitute for executable verification.
+
+  The design also remains vulnerable to finite-sample selection effects in principle: the “exact” randomization distribution uses independently permuted labels per repeat/task, while the observed statistic uses cross-repeat identity and an independently generated tie-breaking scheme. The claimed conservativeness under the entire dominance-null family is asserted, not established by a theorem or an adequately reproduced simulation.
+
+- **W2 — VERIFIED in intent, PARTIAL in evidence.** The code and tests explicitly compare against the best fixed member and include the bare \(0.5\)/other-members \(0.9\) dominance regression test. The paper correctly relabels A8.6 as secondary/descriptive rather than a complementarity test. This addresses the original estimand error.
+
+  Verification remains partial because the required tests do not run, and the calibration artifact does not contain the claimed full reviewer-counterexample grid.
+
+- **W3 — VERIFIED.** The rebuttal and `budget_curves.json` explicitly separate equal-slot collection, common per-task execution budgets, and realized spend. The artifact reports approximately 22,192 versus 10,800 logical calls and 54.17M versus 14.51M tokens, and the common-budget table uses per-task execution counts.
+
+  A remaining concern is interpretive: the “common-budget” comparison uses a dev-ranked panel and a same-code clone, with oracle and majority aggregation. This is a useful descriptive budget analysis, but it is not a matched-cost end-to-end policy comparison unless the selection/routing policy and aggregation rule are frozen independently of the evaluation outcomes.
+
+- **W4 — PARTIAL.** The prose does state that real-data conclusions are restricted to this panel/task/condition/missingness scope and that \(R=3\) has limited power. The paper avoids claiming general validity for all harnesses.
+
+  But the paper’s headline calibration claims are not supported by the checked artifact. The rebuttal claims 300 core datasets per cell, 150 sweep datasets, \(T=400\), and a full \(M,T,R\) grid. The present artifact metadata says:
+
+  - `n_reps_per_cell: 60`
+  - only one executed cell is visible in `calibration_run.py`: `(M=9,T=200,R=3,...)`
+  - the JSON results shown are \(T=200\), not the claimed \(T=400\) acquisition design.
+
+  Thus the advertised calibration table is not reproducible from the delivered artifact.
+
+- **Other — FAIL/PARTIAL.**
+
+  - **C-rank multiplicity:** The JSON claims a shared max-T interval over all 36 pairs and correctly says “at least one pair”; this is an improvement and appears internally coherent.
+  - **\(p=.9980\):** The manuscript distinguishes the legacy in-arm statistic from the v3 primary statistic; this is correctly bounded.
+  - **Identical-matrix gate:** The revised provenance rule is reasonable, but I did not find an independently executable provenance demonstration in the requested review path.
+  - **Jensen claim:** The text is narrowed to the per-task selection term and no longer presented as a universal sign theorem; this appears addressed.
+  - **Executable reproducibility:** The undefined `N_TIE` symbol is a blocker for the primary clone-calibrated analysis. This alone prevents acceptance of the claimed scientific state.
+
+## Statistical audit (any remaining false-support path, with a concrete counterexample you constructed or ran if you can)
+
+The original false-support mechanism is conceptually removed from the primary estimand, but the replacement is not yet demonstrated to be operationally valid.
+
+The most concrete failure is execution-level: clone-arm calls to `ccomp_v3()` reach `N_TIE`, which is undefined. Therefore the primary statistic cannot be independently regenerated from the repository as delivered.
+
+The calibration evidence is also materially insufficient. The artifact reports only 60 repetitions and \(T=200\) for the visible results, while the manuscript reports \(B=300\), \(T=400\), and a full \(M\in\{3,9,20\},T\in\{100,400,1000\},R\in\{3,5,10\}\) grid. For example, the artifact’s reviewer-dominance cell shows v3 abstention rate 1.0, but this is not evidence for the claimed full-grid FPR bound.
+
+A further statistical concern is the unsupported statement that the two-arm randomization test is conservative throughout the dominance-null family. Under dominance, the real-arm cross-fitted gain is generally negative, while the clone-arm gain has its own finite-sample selection distribution. Subtracting the latter and using a symmetric label-permutation null is not automatically conservative for every heterogeneous dominance configuration, especially with incomplete cells, task intersection changes, and random tie-breaking. This requires either a formal proof with clearly stated exchangeability conditions or the promised complete known-truth simulation; neither is presently verifiable.
+
+The coverage gate also changes the estimand by complete-task filtering. The real artifact has 350 complete tasks and excludes 12.5%, exceeding the 10% gate, so the scientific state is correctly forced to `INSUFFICIENT_EVIDENCE`. Any positive \(G\), extremal bound, or descriptive plug-in value from those 350 tasks must not be presented as evidence for the full 400-task population.
+
+## Paper audit (overclaims, page limit, consistency)
+
+- `main.aux` contains `\newlabel{endofmain}{{7}{9}{Discussion and Conclusion}{section.7}{}}`; the main text ends on page 9 as required.
+- The new diagnostic section is substantially self-contained and puts W1/W2/W3 concepts in the main text rather than only the appendix.
+- The paper appropriately describes the legacy plug-in as descriptive and repeatedly uses `INSUFFICIENT_EVIDENCE`.
+- The real-data artifact reports `INSUFFICIENT_EVIDENCE` for clone-calibrated complementarity and a 12.5% exclusion fraction, consistent with the stated gate.
+- The major inconsistency is calibration provenance: the paper/table says \(T=400\), \(B=300\) (150 sweeps), and full-grid results, while the checked artifact and runner expose a 60-repetition \(T=200\) run. This is not a cosmetic discrepancy; it invalidates the stated calibration evidence until regenerated and hash-bound.
+- Some appendix language still uses “validated” in local contexts. It is generally qualified, but every occurrence should be checked to ensure it refers to code/hash validation rather than scientific validation.
+- The budget table is useful but should explicitly state that it is an offline replay/aggregation analysis and not a cost-matched re-collection or causal comparison of deployed policies.
+
+## Blockers (must fix before acceptance)
+
+1. Fix the undefined `N_TIE` reference and rerun the complete diagnostic test suite successfully under the documented interpreter/environment.
+2. Regenerate the calibration artifact at the parameters claimed in the paper, or revise the paper to exactly match the actually executed 60-repetition \(T=200\) subset. Include hashes, command lines, and a machine-checkable manifest.
+3. Provide independently reproducible FPR/power/coverage results for the full claimed grid, including the \(q=.9,M=9,T=400,R=3\) and \(0.5/0.9\) dominance cases.
+4. Justify the dominance-null conservativeness of the two-arm randomization procedure, or weaken the claim to the empirically tested DGP family.
+5. Ensure the primary clone-calibrated real-data result can be regenerated from the repository without hand-edited artifacts and with the same task IDs, missingness handling, tie-breaking, and seed.
+
+## Non-blocking issues
+
+- Report Monte Carlo confidence intervals for FPR/power rather than only point percentages, especially with 60 or 150 repetitions.
+- Clarify whether the paired bootstrap and randomization test operate on exactly the same task intersection under all missingness patterns.
+- Separate “oracle aggregation” from deployable aggregation more prominently in the common-budget table.
+- Add a direct test that permuting member order leaves the complete clone-calibrated output invariant, including the reported p-value and state, not merely the gain expectation.
+- State explicitly that `H_plugin_descriptive` may be `null` when any cell is missing, while the cross-fitted \(G\) is computed on complete tasks.
+
+## Score rationale (what moved the score from 3/10, and what would move it to 8)
+
+The revision materially improves the conceptual response to W1 and W2: it changes the estimand, introduces a clone arm, abstains without clone calibration, labels the legacy statistic as descriptive, and corrects the global-dominance interpretation. W3 is also answered clearly, and the page-limit and main-text placement requirements appear satisfied.
+
+The score remains 3 because the central evidence is not executable or reproducible as delivered: the primary clone path contains an undefined variable, the mandated tests crash in the current environment, and the calibration artifact does not match the full-grid experiment claimed in the paper. These are foundational statistical/reproducibility failures, not presentation issues.
+
+An 8/10 would require a clean rerun of all tests, a corrected and hash-bound full calibration grid matching the manuscript, independently verifiable size/power evidence for the dominance and equal-ability nulls, and either a proof or carefully bounded empirical claim for the randomization test’s conservativeness.

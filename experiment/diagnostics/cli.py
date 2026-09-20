@@ -160,19 +160,29 @@ def diagnose_bird(out: Path) -> dict:
 
 def _run_diagnostic(pop) -> dict:
     """Run S1-S5 on a Population, or on {repeat_key: Population} for
-    repeat-based controls (S3 then evaluates the matched-repeat estimands)."""
+    repeat-based controls (S3 then evaluates the matched-repeat estimands).
+
+    Repeat controls with a registered same-code clone arm (C9, C10) pass the
+    clone populations to S3 so the calibrated C-comp decision can fire."""
     if isinstance(pop, dict):
-        base = pop[sorted(pop)[0]]
-        repeats = pop
+        clone_from_pop = pop.get("__clone__")
+        repeats_in = {k: v for k, v in pop.items() if k != "__clone__"}
+        base = repeats_in[sorted(repeats_in)[0]]
+        repeats = repeats_in
     else:
+        clone_from_pop = None
         base = pop
         repeats = None
     manifest_mock = {"member_ids": base.member_ids, "task_ids": base.tasks}
     s1 = core.s1_integrity(manifest_mock, base, base.judge_replay_mismatches,
                            base.duplicate_keys, [])
     s2 = core.s2_decomposition(base)
-    s3 = (core.s3_stability(repeats) if repeats is not None
-          else _s3_for_pop(base))
+    clone_pops = clone_from_pop
+    n_perm = 800 if base.condition.get("c") == "synthetic" else 4000
+    s3 = (core.s3_stability({k: v for k, v in repeats.items()
+                             if k != "__clone__"}, clone_pops,
+                            clone_n_perm=n_perm)
+          if repeats is not None else _s3_for_pop(base))
     s4 = core.s4_selectability(base)
     s5 = core.s5_cost(base, s4)
     return {"A": s1["state"], "B": s2["state"], "C": s3["state"],
@@ -234,6 +244,11 @@ def run_controls(phase: str, out: Path) -> dict:
         if c["instance_phase"] != phase:
             continue
         pop = ctl.get_control(c["cid"], c["instance"])
+        if c["cid"] in getattr(ctl, "CLONE_CLASSES", {}):
+            clone = ctl.CLONE_CLASSES[c["cid"]](
+                ctl.stable_seed(c["cid"], c["instance"]) + 777)
+            if isinstance(pop, dict):
+                pop = {**pop, "__clone__": clone}
         got = _run_diagnostic(pop)
         exp = c["expected"]
         verdict = {k: "OK" if got[k] == exp[k] else "WRONG" for k in classes}
