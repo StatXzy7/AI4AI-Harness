@@ -1,10 +1,15 @@
-# 中文稿同步状态：2026-09-21
+# 中文稿同步状态：2026-09-21（r2）
 
-> 本次已同步至英文投稿源 `paper/latex/main.tex` 的 2026-09-20 定稿稿（新标题《Diagnosing Apparent Complementarity in AI-Generated Harness Populations》）。阅读入口：[中文 PDF](main.pdf)、[英文 PDF](../latex/main.pdf)。这是作者参考译本，不用于投稿或英文页数验收。
+> 本次跟进英文 main 上合并的 v3 size-calibrated C-comp 修订（提交 `5c4d2a7`，含 `e5f95c5`）。阅读入口：[中文 PDF](main.pdf)、[英文 PDF](../latex/main.pdf)。这是作者参考译本，不用于投稿或英文页数验收。
 
-编译结果：全文 32 页，正文结束于第 11 页（英文全稿 25 页、正文 9 页）。`xelatex` 三遍 + `bibtex` 零错误、零未解析引用、零缺字；仅有已知的宋体 small-caps 字形回退（与旧版一致）与 1 个 overfull box。中文 TeX 文件均为 UTF-8。
+编译结果：全文 32 页，正文结束于第 11 页（英文全稿 25 页、正文 9 页）。`xelatex` 三遍零错误、零未解析引用、零缺字；仅有已知的宋体 small-caps 字形回退与 1 个 overfull box。
 
-## 本次同步的主要内容（相对 2026-09-12 旧中文稿）
+## 2026-09-21 r2 跟进内容
+- 数值宏：`\WpVthreeBounds` 更新为 $[-0.33,0.33]$（共用 `../latex/wp1r_numbers.tex`，自动生效，已在正文 §5.4 页面确认）。
+- WP-1R 附录补译新增说明：点估计 $G$ 为完整案例统计量；被排除题未知结果按全 0／全 1 填充给出紧致情景极值 `missing_extremal_G_bounds`（每次重算完整交叉拟合）。
+- 逐文件核对英文 `9a42c8d..5c4d2a7` 差异：intro/results/discussion/conclusion/related/phase1/phase2/wp1r/diagnostics/appendix 的其余 v3 文本在上一轮（同日早些时候）已按新稿译入，无遗漏。
+
+## 2026-09-21 首次同步（相对 2026-09-12 旧中文稿）
 
 - 标题、摘要全部重写：五类命题（测量充分性、单次覆盖、稳定排序、稳定互补性、执行前可选择性、预算匹配效用）。
 - 新增正文第 6 节「表观互补性的校准诊断」（`sec_diagnostics.tex`），含 $H_{\rm stable}$ 恒等式、交叉拟合冻结选择增益 $G$、真实减克隆差 $D$、已知真值校准表（表 5，共用英文 `calibration_table.tex`）。
