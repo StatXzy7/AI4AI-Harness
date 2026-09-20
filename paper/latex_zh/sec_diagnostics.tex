@@ -1,0 +1,22 @@
+上述边界结果是关于单次运行数字无法确立什么的陈述。我们把一个离线诊断打包在执行矩阵 $Y[h,x,r,c]$（成员、任务、重复、条件）上，每类命题返回四种状态之一——SUPPORTED、REFUTED\_WITHIN\_SCOPE、INSUFFICIENT\_EVIDENCE、NOT\_APPLICABLE——并附范围与最小缺失证据，绝不合并为一个分数：\textbf{（A）}测量充分性；\textbf{（B）}单次覆盖；\textbf{（C）}两种估计目标下的稳定性；\textbf{（D）}执行前可选择性（冻结 $\pi_Z$ 对照开发固定）；\textbf{（E）}预算匹配的政策效用（$\lambda{=}1$，以已验证的调用证据为门控）。
+
+\textbf{两项稳定性命题。}\emph{C-rank} 追问是否存在某对成员在同时区间（所有规范对上取 max-T，族系 95\%）下、以符号一致的重复相区别；对的方向由成员身份而非列表位置固定。\emph{C-comp} 追问是否存在稳定的任务—harness 交互。令 $\Delta(x)=p_1(x)-p_0(x)$、$(u)_+=\max(u,0)$，
+\begin{equation}
+H_{\rm stable}=\mathbb{E}\,\Delta(x)_+-(\mathbb{E}\Delta(x))_+
+=\tfrac12\bigl(\mathbb{E}|\Delta(x)|-|\mathbb{E}\Delta(x)|\bigr),
+\label{eq:identity}
+\end{equation}
+因此一个\emph{处处}更好的成员给出 $H_{\rm stable}{=}0$ 的稳定排序差异：全局支配否证互补性。交互要求优势在任务间\emph{交叉}，而任何执行前选择差距都以 $H_{\rm stable}$ 为上界。同一性门控要求条件字段相等、来源哈希恒定，并在矩阵重合时要求有区别的独立执行来源。
+
+\textbf{为何 plug-in 无法判定，以及校准检验。}把 $R$ 次重复平均代入 $H_{\rm stable}$ 会对含噪的逐题估计取最大值；重采样题目无法消除该选择噪声（表~\ref{tab:calibration}：在 $M{=}9,T{=}400,R{=}3$ 下，plug-in 在每个零假设上的错误支持率都约为 1，包括 $q\equiv0.9$ 以及密封克隆臂的 $\WpVthreeClonePlugin$\,pp）。我们交叉拟合一个\emph{冻结选择增益}：折 $v$ 在其余重复上同时冻结逐题映射 $h_v(x)=\arg\max_h\bar q_h(x)$ 与最佳固定成员 $\bar h_v=\arg\max_h\mathbb E_x\bar q_h(x)$，然后在留出重复上对 $g_v(x)=Y_{h_v(x),x,v}-Y_{\bar h_v,x,v}$ 评分，$G=\mathbb E_{x,v}g_v(x)$。\label{sec:calibration-test}
+在支配下冻结映射就是最佳固定成员（$G\le0$），且 $0\le G\le H_{\rm stable}$。判定统计量为相同题目上的 $D=G_{\rm real}-G_{\rm clone}$，配双臂 Monte Carlo 随机化检验（$+1$；两臂中按题目和重复独立置换标签）与配对题目 bootstrap。该参考在等能力处是精确的；在支配锥其余部分上的有限样本错误支持由下面的网格经验验证，而非解析断言。没有克隆臂时 $G$ 仅为描述性，不发出 SUPPORTED；一个 $\le10\%$ 不完整题目覆盖门控与极值未知单元界补全了规则。
+
+\textbf{已知真值验证。}\label{sec:calibration}
+我们从指定的 $M\times T$ 概率矩阵模拟二元张量：iid 等能力（常数及异质难度）、全局支配（包括旧的对照 \bare{} 统计量在其下虚假拒绝的 $0.5/0.9$ 配置）与交叉备择，覆盖 $M\in\{3,9,20\}$、$T\in\{100,400,1000\}$、$R\in\{3,5,10,20\}$ 以及 MCAR 与难度相关缺失。表~\ref{tab:calibration}：v3 在每个零假设上保持名义水平，而 plug-in 几乎总是错误支持；干净的双专家交叉（$H{=}17.5$\,pp）在 $R{=}3/5$ 时功效为 $0/1\%$，在 $R{=}10,20$ 时为 $100\%$，而 $1$--$4$\,pp 的现实循环交互仍未解决——这是三次重复下诚实的弃答。12 个人工控制与两个审核者挑战与其哈希冻结状态一致，并配有置换不变性及支配$\ne$互补性的不变量测试，旧规则仅作为描述性 plug-in 保留。一次哈希绑定重执行还修正了一项含 14 次翻转的验证主张（附录~\ref{app:diagnostics}）；在存档上 C/D/E 按构造弃答。
+
+\begin{table}[h]
+\centering\small
+\input{../latex/calibration_table}
+\caption{\textbf{$M{=}9,T{=}400$ 下的已知真值校准。}零假设：错误支持 \%（名义 5\%）；备择：功效；完整网格见附录~\ref{app:diagnostics}。}
+\label{tab:calibration}
+\end{table}

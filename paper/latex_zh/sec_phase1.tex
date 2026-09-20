@@ -1,34 +1,23 @@
-Phase I 是发现研究，用于描述现象、建立分类、观察题目层面的提升空间并提出后续设计。其结果均非验证性证据：151 道评估题中有 24 道与协议开发测量重叠；人工控制是在检查开发轨迹后设计的；评分器是保守代理（附录~\ref{app:phase1-provenance}）。
+Phase I 是一项发现研究：其作用是确立现象、分类与题目侧提升空间的存在，并为验证性设计提供动机。其任何结果都不是验证性的：151 个评估项中有 24 个与协议开发测量重叠，人工控制是在检查开发轨迹后设计的，其评分器是一个保守代理（附录~\ref{app:phase1-provenance}）。我们在明确这些限制的前提下报告它。
 \subsection{Harness、结果与三项指标}\label{sec:metrics}
-\textbf{Harness} $H$ 包裹冻结的目标模型 $M$：接收自然语言任务 $x$，调用一次或多次 $M$，可选地执行中间产物（如 SQL），返回程序化评分的最终答案。以 $H_0$ 为单次调用的 bare 基线，$Y\in\{0,1\}$ 表示正确性，定义\textbf{边际价值}
-$\Delta(x,H,M)=Y(x,H,M)-Y(x,H_0,M)\in\{-1,0,+1\}$，其中 $+1$ 为修复，$-1$ 为 harness 引入的损害。
+\textbf{Harness} $H$ 包裹一个冻结的目标模型 $M$：它接收自然语言任务 $x$，对 $M$ 发起一次或多次调用，可选地执行中间产物（如 SQL），并返回以程序化方式评分的最终答案。以 $H_0$ 为单次调用的 bare 基线、$Y\in\{0,1\}$ 为正确性，\textbf{harness 边际价值}为
+$\Delta(x,H,M) = Y(x,H,M) - Y(x,H_0,M) \in \{-1,0,+1\}$
+（$+1$ 为修复，$-1$ 为 harness 引入的损害）。
 
-我们建议生成和路由流程在留出集报告三项前提指标，它们均可由评估结果矩阵计算：\textbf{（i）成对结果分歧}，即各 harness 对在多少比例题目上正确性不同；\textbf{（ii）联合修复率}，即 bare 错题中有多少被至少一个种群成员修复；\textbf{（iii）包含 bare 的 oracle 提升空间}
+我们建议 harness 生成与 harness 路由流程在留出集上报告三项前提指标，它们都可从任何评估本就产生的结果矩阵计算：\textbf{（i）成对结果分歧}——在所有 harness 对上，正确性不同的题目比例；\textbf{（ii）联合修复率}——bare 错题中被某个种群成员修复的比例；\textbf{（iii）包含 bare 的 oracle 提升空间}——在留出题目 $x_1,\dots,x_n$ 上，
 \[
-H(P)=\mathrm{Acc}\big(x\mapsto\max_{H\in P\cup\{H_0\}}Y(x,H)\big)
--\max_{H\in P\cup\{H_0\}}\mathrm{Acc}(H).
+H(P) \;=\; \frac{1}{n}\sum_{i=1}^{n} \max_{H \in P \cup \{H_0\}} Y(x_i, H)
+\;-\; \max_{H \in P \cup \{H_0\}} \frac{1}{n}\sum_{i=1}^{n} Y(x_i, H).
 \]
-正的观测提升空间记录了该次执行矩阵中依题目而异的成功；稳定路由信号还需要独立重复验证。只有分歧而没有修复，不增加超出 bare 的观测覆盖；有修复而没有提升空间，则没有超过最佳固定成员的观测 oracle 优势。
+正的观测提升空间记录的是该执行矩阵中依题目而异的成功；要确立稳定的路由信号需要独立重复。有分歧而无修复，不增加超出 bare 的观测覆盖；有修复而无提升空间，不增加超出最佳固定成员的观测 oracle 优势。
+
 \subsection{坍缩的量化}\label{sec:collapse}
-任务为 BIRD 文本转 SQL（SQLite，执行准确率评分），Phase I 的目标固定为 \textbf{GLM-5.3-Flash}，温度为 0。首日种群为 14 个 harness（\bare、\react{} 及 12 个演化候选）乘 60 道题，平均成对结果分歧为 \textbf{3.3\%}，\textbf{91 对中有 36 对在全部题目上相同}。仅计 12 个生成候选时，共 66 对，原代码差异检查的归一化字符指标下平均代码相似度为 0.143；结果分歧为 3.8\%，21 对完全相同。每个候选均通过了代码差异检查（“文件均不同，差异非平凡”）。bare 错题的联合修复率为 7.7\%，oracle 提升空间为 3.3 个百分点；\react{} 与 \bare{} 在全部题目上结果一致。
+领域为 BIRD 文本转 SQL（SQLite；执行准确率评分），整个 Phase I 目标冻结为 \textbf{GLM-5.3-Flash}（温度 0）。在首日种群——14 个 harness（\bare、\react{} 与 12 个演化候选）$\times$ 60 道题——上，平均成对结果分歧为 \textbf{3.3\%}，且 \textbf{91 对中有 36 对在每道题上都相同}；仅看 12 个生成候选（66 个候选对；原代码差异检查的归一化字符指标下平均成对代码相似度 0.143），分歧为 3.8\%，21 对完全相同。每个候选都通过了代码差异检查（“所有文件互不相同，差异非平凡”）。对 bare 错题的联合修复率为 7.7\%，oracle 提升空间为 3.3\,pp；\react{} 与 \bare{} 在零道题上有差异。
 
-图~\ref{fig:phenomenon} 量化了这一关系。91 对的 token 序列代码相似度均值为 0.190（不同于上述仅候选的字符指标 0.143），与结果分歧的 Spearman $\rho=-0.010$。该种群中未观测到代码相似性与行为相似性的秩关联。各对共享 harness，并非独立样本；此处 $\rho$ 仅作描述，不作推断检验。
-\begin{figure}[t]\centering
-\includegraphics[width=0.60\linewidth]{../figures/fig_phenomenon.pdf}
-\caption{\textbf{语法多样性与行为坍缩}（Phase I，发现研究）。首日 14 个 harness、60 道题，91 对含 bare 和 react。每点为一对：横轴是 token 序列代码相似度，纵轴是正确性不同的题目比例；$\rho=-0.01$，36/91 对在全部 60 题上相同。原始点见代码材料中的 \texttt{fig1\_phenomenon\_data.json}。}\label{fig:phenomenon}
-\end{figure}
-\subsection{轨迹分类：代码多样性为何未转化为行为多样性}\label{sec:taxonomy}
-逐题审核 LLM 调用与产物执行序列，可区分三类失败：
-\begin{itemize}\tightlist
-\item \textbf{T1：描述了机制，却未执行（6/12 个候选）。}恰好一次 LLM 调用，未执行任何产物，路径与 \bare{} 相同。文档字符串宣称检索、自检或 token 上限，控制流程中却没有对应实现。
-\item \textbf{T2：机制存在，但未触发（\react，所审 10/10 题）。}第一条 SQL 成功执行，错误修复未触发，最终 SQL 与 bare 相同。这不能说明发生失败时修复反馈缺少因果路径。
-\item \textbf{T3：多轮路径失效（1/12）。}实际实现多轮修复的候选返回自然语言说明作为最终 SQL，将 bare 答对的题变为错误。
-\end{itemize}
-T1 需要执行路径准入检查，T2 需要受控故障来检验触发和反馈使用，T3 需要可执行输出验证；这些均涉及生成协议。
-\subsection{人工正控制：观测提升空间}\label{sec:positive}
-为检查不同人工机制能否增加观测覆盖，我们编写四种执行路径明确不同的 harness：\texttt{hpc\_repair} 执行后修复，\texttt{hpc\_vote3} 对三份执行结果投票，\texttt{hpc\_schema} 做模式关联，\texttt{hpc\_hint} 将提示前置。目标、任务、评分器与坍缩种群相同；60 题上的 oracle 提升空间为 \textbf{6.67} 个百分点，151 题上为 \textbf{7.28} {[}3.3,10.0{]}；repair、schema、hint 各有其他成员未覆盖的修复。但控制是在检查首日轨迹后设计的，其提升空间是描述结果，不是稳定互补性的盲估计。两次首日运行中，bare 自身也在 60 题中翻转了 3 题，显示温度为 0 时仍有 API 非确定性。
-\subsection{Phase-I 协议探查及局限}\label{sec:phase1probes}
-我们还探查了策略强制的自由形式协议（指定机制，通过导入／冒烟检查准入）及编译式 Harness IR。策略强制下，三个构建器中有两个种群的点估计超过预先指定的阈值：Qwen3.8-Flash 为 5.96、DeepSeek-V4-Flash-Vision-Exp 为 7.95 个百分点；旧协议组为 4.64，未达到阈值。记录工具下的各策略接纳数量随构建器不同：GLM-5.3-Flash 为 3/8、Qwen3.8-Flash 为 7/8、DeepSeek-V4-Flash-Vision-Exp 为 8/8。
+图~\ref{fig:phenomenon}（附录~\ref{app:phase1-provenance}）把核心关系定量化：在全部 91 对上，该图 token 序列指标下的源代码相似度与结果分歧的 Spearman $\rho = -0.010$——代码相似度在此与行为相似度\emph{没有观测到秩关联}。（各对相互重叠；$\rho$ 是描述性的，不是推断性的。）
 
-这些观察促成 Phase II，但不是验证性结果：设计是两个嵌套对比，无法分开协议和构建器主效应；早期运行缺少逐尝试日志，无法审核预算相等；准入仅检查导入／冒烟，并非 \S\ref{sec:phase2} 的反事实一致性门控。完整条件见附录~\ref{app:phase1-provenance}。
-\paragraph{生成空结果失败（M0）。}以 Qwen3.8-Flash 和 DeepSeek-V4-Flash-Vision-Exp 重新运行原优化循环，得到 40 个与 \bare{} 源码逐字节相同的候选。代码相同本身不意味着随机执行结果必然相同。这次运行没有形成不同代码的种群，属于更基础的生成失败；上述坍缩主张仅基于源代码确实不同的首日种群。
+\subsection{轨迹分类：代码多样性为何未能成为行为多样性}\label{sec:taxonomy}
+审核执行轨迹把“不同代码”分解为三类失败：\textbf{T1——机制被描述但未执行（6/12 个候选）}：一次调用，不执行任何产物（与 \bare{} 路径相同；文档字符串宣称的检索或自检并不存在）；\textbf{T2——机制存在但未触发（\react，10/10 道题）}：第一条 SQL 即成功，因此错误修复从不触发，最终 SQL 与 \bare{} 相同（这并不表明修复路径在失败时缺乏因果作用）；\textbf{T3——多轮路径失效（1/12）}：自然语言散文被当作最终 SQL 返回，把 bare 答对的题变成 harness 答错。T1 需要执行路径准入门控，T2 需要受控故障，T3 需要可执行输出验证。
+
+\subsection{人工正控制：提升空间确实存在}\label{sec:positive}
+四个手写 harness 具有强制区分的执行路径（执行后修复；三票投票；模式链接；提示前置重排），使用相同的冻结目标与评分器，在 60 道题上给出 \textbf{6.67\,pp} 的 oracle 提升空间，在 151 题集合上为 \textbf{7.28\,pp} {[}3.3, 10.0{]}，且每个机制都修复了其他机制漏掉的题。该控制是在检查首日轨迹后设计的，因此其提升空间是描述性的，不是盲测的；\bare{} 自身在两次温度 0 的首日运行之间翻转了 60 题中的 3 题。

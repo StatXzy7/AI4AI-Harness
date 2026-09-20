@@ -1,37 +1,34 @@
 \subsection{原门控实验的修正重分析}\label{sec:results-primary}
-以下是存档结果的审后重分析，并非修复门控的新实验。原分析文件保留。所有修订表格使用同一 canonical 输入顺序下的全精度结果；四组分析在相同 400 题上共用同一份 bare 记录。区间在各组和单元之间共享数据库、库内题目抽样，并在六个固定构建器内部重采样生成种子。
-\begin{table}[t]\centering\small
+以下表格报告的是存档结果的审后重分析，而非用修复后的门控做的新实验。原分析文件仍可获取。所有修订表格使用同一 canonical 输入顺序下的全精度结果；四组分析在相同 400 题上复用相同的 bare 记录。修订区间在全部组与单元间使用共享的数据库与库内题目抽取，并在六个固定构建器内部重采样生成种子。
+\begin{table}[t]
+\centering\small
 \input{../latex/revision_primary_table}
-\caption{\textbf{原干预的修正主分析。}1,169 题上 18 个构建器—种子单元的均值。oracle 与最佳固定比较均包含 bare。CI 纳入题目与生成种子变化，以六个固定构建器及存档执行为条件；符号翻转参考检验以观测题目为条件，并假设单元对比对称。图表内英文标签与数值直接共用英文产物。}\label{tab:primary}
+\caption{\textbf{原干预的修正主分析。}1{,}169 道题上 18 个构建器—种子单元的均值。oracle 与最佳固定比较器均包含 bare。CI 纳入题目与生成种子变异，以六个固定构建器及存档执行记录为条件。符号翻转参考检验以观察到的题目为条件，并假设单元对比对称。}
+\label{tab:primary}
 \end{table}
-配对估计为 $\RevisionPrimaryDelta$ 个百分点，未校正 95\% CI 为 $\RevisionPrimaryCI$，单侧符号翻转 $p=\RevisionPrimaryP$。未发现明确改善，区间也不能确立等效性。完整集的单元对比范围为 $\RevisionPrimaryRange$ 个百分点。这是实际筛选政策的估计；该政策排除了部分允许策略，并非纯验证干预。
-\begin{figure}[t]\centering
-\includegraphics[width=0.85\linewidth]{../figures/fig_results_revision.pdf}
-\caption{\textbf{版本化修正重分析。}左：完整集 D$-$A 单元对比与合并的未校正 95\% 区间。右：相同 core-400、共同 bare 基线下的四组提升空间。两轴均为百分点；不标显著性星号，原始及校正 $p$ 值见表~\ref{tab:factorial}。}\label{fig:results}
+
+配对估计为 $\RevisionPrimaryDelta$\,pp，未校正 95\% CI 为 $\RevisionPrimaryCI$，单侧符号翻转 $p=\RevisionPrimaryP$：没有明确改善，区间也未确立等效性。单元对比范围为 $\RevisionPrimaryRange$\,pp。这些是实际实施的筛选政策的估计，不是纯验证干预。
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.72\linewidth]{figures/fig_results_revision.pdf}
+\caption{\textbf{版本化修正重分析。}左：完整集 D$-$A 单元对比与合并的未校正 95\% 区间。右：相同 core-400 题上以共享 bare 为基线的四组提升空间。两轴均为百分点。不使用显著性星号；原始与校正后 $p$ 值见表~\ref{tab:factorial}。}
+\label{fig:results}
 \end{figure}
+
 \subsection{析因效应与绝对表现}\label{sec:results-factorial}
-\begin{table}[t]\centering\small
+\begin{table}[t]
+\centering\small
 \input{../latex/revision_factorial_table}
-\caption{\textbf{修正的 core-400 析因重分析。}门控为 $[(B-A)+(D-C)]/2$，策略为 $[(C-A)+(D-B)]/2$，交互为 $(D-C)-(B-A)$。CI 来自未校正的数据库／题目／种子 bootstrap；原始 $p$ 值来自双侧单元符号翻转，三项次要检验经 Holm 校正。两类程序处理不同的变异来源。}\label{tab:factorial}
+\caption{\textbf{修正的 core-400 析因重分析。}门控为 $[(B-A)+(D-C)]/2$，策略为 $[(C-A)+(D-B)]/2$，交互为 $(D-C)-(B-A)$。CI 为未校正的数据库／题目／种子 bootstrap 区间。原始 $p$ 值使用双侧单元符号翻转；Holm 对三项次要检验校正。两类程序处理不同的变异来源。对比由全精度单元级数据计算；从表~\ref{tab:decomp} 的舍入单元均值重算可能相差至多 0.1\,pp。}
+\label{tab:factorial}
 \end{table}
-门控估计为 $\RevisionGateDelta$ 个百分点，Holm 校正后 $p=\RevisionGateHolm$，未达到 0.05 阈值。它无法区分有益验证与门控对提示变换的结构性排除。修正的固定 $K$ 门控敏感性为 $\RevisionKmatchedDelta$ 个百分点（95\% CI $\RevisionKmatchedCI$）：每个 A/B、C/D 单元的两侧均匹配至较小候选数，精确平均全部候选子集并始终保留 bare（附录~\ref{app:r2}）。子采样后的变化不能识别种群规模中介的因果比例；加入较强固定成员还可能降低 oracle 提升空间。
-\begin{table}[t]\centering\footnotesize
-\input{../latex/revision_decomposition_table}
-\caption{\textbf{共同核心集的提升空间分解。}各组使用相同 400 题与 bare 结果。$K_{\rm cand}$ 不含 bare，$K_{\rm total}=K_{\rm cand}+1$；数量和准确率均为单元均值。提升空间为 oracle 减最佳固定准确率，并非实际路由收益。}\label{tab:decomp}
-\end{table}
-完整主分析集上，D$-$A 的 oracle 变化为 $\RevisionOracleDelta$ 个百分点，最佳固定变化为 $\RevisionBestDelta$。最佳固定成员的下降抵消了部分 oracle 下降，并没有解释掉后者。四组共同核心集的分解另见表~\ref{tab:decomp}。
-\subsection{执行波动与稳定互补性问题}
-存档 R3 审核报告：三次关闭缓存重复中，14.5\% 的题目至少发生过一次 bare 正确性变化。canonical R2 重放得到同一 harness 的判定翻转 \RevisionRtwoFlips/28,000（\RevisionRtwoFlipPercent\%）。保留全部 18 个单元（含两个 A 子集仅有单成员的单元）后，子集 D$-$A 从 $\RevisionRtwoCached$ 变为 $\RevisionRtwoOff$ 个百分点，变化 $\RevisionRtwoChange$（95\% CI $\RevisionRtwoChangeCI$）。R2 未采集匹配的 bare 重复，因此其子集提升空间不包含 bare，与主估计目标不同。旧 16 单元比较见附录~\ref{app:r2}。这些是不稳定性测量，既非标准误，也非平均处理效应的可检测下限；它们不能证明所有对比均不变，也不能识别 harness 间分歧有多少来自噪声。
 
-作为直接的同代码诊断，若把三次 bare 执行错误地当作三个不同的种群成员，在相同 400 题上得到 72.25\% 的单次 oracle 准确率、65.75\% 的最佳固定执行准确率，表观差距为 6.50 个百分点。这只是人为的重复采样比较：三次执行的源码哈希相同，因此它说明单次运行提升空间可以来自执行采样，不能作为稳定互补性的证据。
+门控估计为 $\RevisionGateDelta$\,pp；其 Holm 校正后 $p=\RevisionGateHolm$ 未达到 0.05，因此无法把有益验证与门控对提示变换的结构性排除区分开。固定 $K$ 敏感性为 $\RevisionKmatchedDelta$\,pp（CI $\RevisionKmatchedCI$）；提升空间对种群规模不单调（附录~\ref{app:r2}）。D$-$A 使 oracle 准确率变化 $\RevisionOracleDelta$\,pp、最佳固定变化 $\RevisionBestDelta$\,pp（表~\ref{tab:decomp}，附录~\ref{app:decomp}）。
 
-令 $p_{h,x}$ 为 harness $h$ 在独立执行中答对任务 $x$ 的概率。对包含 bare 的种群，定义
-\[
-H_{\rm stable}=\frac1n\sum_x\max_h p_{h,x}-\max_h\frac1n\sum_x p_{h,x}.
-\]
-纯同代码克隆池各成员的 $p_{h,x}$ 相同，因此稳定提升空间为零，单次观测提升空间却可以为正。加入不同的 bare 后，可能保留基线与 harness 的互补。独立重复估计已拟合策略相对指定比较器的价值；发现阶段选定的固定成员可能并非最优，仅超过它不能确立稳定互补或未见任务上的效用。当前数据缺少平衡、成本匹配的克隆对照，稳定新增能力仍未得到估计。
-\subsection{路由与探索性选择}\label{sec:boundary}
-Phase-I 留一 harness 预测器未超过 DeepSeek 种群中的最佳固定成员（$-3.4$ 个百分点）；Qwen 估计为 $+0.9$，CI $[-5.2,+6.9]$。按数据库分层的任务留出控制将平均修复 AUROC 降至 0.512，更符合任务记忆而非可靠价值预测。这些发现仅适用于所测预测器与划分。
+\paragraph{预先指定的次要组 II-E。}开放机制组仅在开发侧运行过一次，从未在验证性划分上评估，因此它没有提升空间估计目标（附录~\ref{app:phase2-protocol}）。
 
-\label{sec:rich}
-canonical W1 重分析仍为描述性。在 $k=8$ 且保留 bare 时，多样性选择相对最高开发准确率选择的提升空间变化为 $\RevisionWoneHeadroom$ 个百分点，其中 oracle 变化 $\RevisionWoneOracle$、最佳固定变化 $\RevisionWoneBest$。仅在开发数据上选定的单个固定成员变化为 $\RevisionWoneFixed$ 个百分点，各已选子集采用一致的并列规则。这些是不同的估计目标，并非已证明的路由收益。绝对数值及这一事后单次执行比较的局限见附录~\ref{app:rich}。
+\subsection{执行变异性与稳定互补性问题}
+独立执行使单次运行比较失稳：canonical R2 重放发现 \RevisionRtwoFlips/28{,}000 次同 harness 判定翻转（\RevisionRtwoFlipPercent\%），R3 审核发现 14.5\% 的题目至少发生一次 \bare{} 正确性变化（附录~\ref{app:r3}）；把三次 bare 执行当作三个“成员”会给出描述性的 6.50\,pp 单次 oracle 差距——单次提升空间可以来自执行采样，而非新能力。稳定提升空间对同代码克隆池以及在全局支配下均消失（式~\ref{eq:identity}）；其有限重复 plug-in 未经校准（\S\ref{sec:diagnostics}），因此下面是使用规模控制程序的、新的克隆控制采集（\S\ref{sec:wp1r}）。
+
+\input{sec_wp1r}

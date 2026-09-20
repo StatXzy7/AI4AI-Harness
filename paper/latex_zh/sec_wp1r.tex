@@ -1,0 +1,20 @@
+% WP-1R/WP-2R 新真实证据小节（中文译本）。数值来自共享的 wp1r_numbers.tex。
+
+\subsection{MATH-500 上新的克隆控制证据}\label{sec:wp1r}
+
+存档缺少匹配重复与同代码控制，因此无法把稳定互补性与单次运行的采样运气分开。一项预注册采集（2026-09-15 冻结；附录~\ref{app:wp1r}）在 400 道 MATH-500 任务上对一个冻结的八 harness 面板加 \bare{} 执行三次重复，并对九个\emph{等槽位}、逐字节相同的 \bare{} 克隆槽执行相同重复；我们把“等预算”保留给下文共同执行预算比较。
+
+\paragraph{估计目标与结果。}
+我们把三个量分开：(i) 描述性的重复平均 plug-in $\widehat H$（此处为 $\WpVthreePlugin$\,pp，在克隆臂上也为正的 $\WpVthreeClonePlugin$\,pp——已知真值模拟显示它在纯噪声下错误支持）；(ii) 交叉拟合的、对照最佳\emph{固定}成员（绝不对照 \bare{}）的冻结选择增益 $G$（$G_{\rm real}=\WpVthreeG$\,pp，CI $\WpVthreeGCI$；$G_{\rm clone}=\WpVthreeGclone$\,pp，因此有限 $(R,T)$ 选择噪声与面板增益同阶）；(iii) 在 \WpVthreeNPaired{} 个配对完整题目上校准的真实减克隆差 $D=\WpVthreeD$\,pp（CI $\WpVthreeDCI$，随机化 $p=\WpVthreeP$）。C-rank 在多重性校正区间下为 \textsc{\WpCrankState}。覆盖门控未通过（真实臂 12.5\% 的题目被排除，高于冻结的 10\%），因此 C-comp 为 \textsc{\WpVthreeState}：这不是不存在性的证明，区间上端也未在 $1$\,pp 上确立等效；未知单元极值把 $G$ 界定在 $\WpVthreeBounds$\,pp。
+
+\paragraph{共同执行预算。}
+槽位不决定花费。表~\ref{tab:budget-curves} 在密封重复上离线比较开发排序的面板组合与 $b=3,6,\ldots,27$ 时 27 次同代码执行中的 $b$ 次：执行后 oracle 覆盖在每个预算上均持平（$-0.25$ 到 $+0.37$\,pp）。我们不报告跨臂多数投票准确率：两臂发出互不兼容的答案格式（盒装数字 vs 自由形式散文），因此不存在对各格式公平的模态答案键；臂内重放保留在产物中。面板使用了克隆臂 $3.7\times$ 的 token，因此不作已实现成本匹配主张（附录~\ref{app:wp1r}）。
+
+\begin{table}[t]
+\centering\small
+\input{../latex/revision_budget_table}
+\caption{\textbf{共同逐任务执行预算，对密封 MATH-500 重复的离线重放。}开发排序面板组合与 27 次同代码 \bare{} 执行中的 $b$ 次的执行后 oracle 覆盖（最佳官方判定结果，是需要事后验证器的上界）（1{,}000 个带种子子集；95\% 范围在 $0.3$\,pp 内）。不报告跨臂多数投票准确率，因为两臂使用互不兼容的答案格式（附录~\ref{app:wp1r}）。}
+\label{tab:budget-curves}
+\end{table}
+
+\paragraph{选择器效用（E3）。}冻结政策 $\pi_Z$ 在每道评估题上都弃答至 \bare{}，并在 \WpBareAcc\% 上与开发固定持平（配对 $\WpPiZDiff$\,pp，CI $\WpPiZDiffCI$）；一个预先固定的随机成员明显更差（$\WpRandomDiff$\,pp，CI $\WpRandomCI$；表~\ref{tab:wp1r-policy}）。D 类没有给出可用的可选择性，且对每个冻结政策，$b{=}3$ 效用 $U_b$ 均为\WpEbZero{}增益。
