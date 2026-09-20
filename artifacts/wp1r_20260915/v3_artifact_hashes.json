@@ -1,0 +1,11 @@
+{
+ "artifacts/wp1r_20260915/analysis_report.json": "0f57e4a622798e4a32f80a38fd850f5d793f0c959e1eba1f893746b724f001a6",
+ "artifacts/wp1r_20260915/budget_curves.json": "9f99c71815e845bad54e20f946b7c82a20db0d0b4cb2df93911c8f4e1a1cc3f8",
+ "artifacts/wp1r_20260915/answer_majority_curves.json": "6dfeabc674aa485df1877aac6e0d715553736455487643f57082c97a77599163",
+ "artifacts/diagnostics/calibration_v3/calibration_results.json": "534f0d6342b012b1bfdc5c5e98db084bb3b4b07e8f57e6e1ab59512d0e846d54",
+ "artifacts/diagnostics/calibration_v3/calibration_manifest.json": "50195a2999f15dc8d3328672e470b5e698b8b6e1e895f473328ffea69df5dcb6",
+ "paper/latex/wp1r_numbers.tex": "108fb77ab967bbad4a60543c9682b42970ca698f2a14c2ac2f3faef1b3f10754",
+ "paper/latex/revision_budget_table.tex": "454ba4354c0da12ef9e3e5a2ec91ddb43864a9fd0c19d9128752aaa162e3e7ac",
+ "paper/latex/calibration_table.tex": "15812f420bfdafb02b62b928fe6962877d92710b4eb86aa08b8f19c2fd8ac636",
+ "paper/latex/main.pdf": "ac241050f34a6514e0a527e9a2a31c278f9d85e06d4df324505457103397f521"
+}

@@ -68,604 +68,6 @@
    "failed": 227
   }
  },
- "E1_C-rank_E2_C-comp": {
-  "state": "SUPPORTED",
-  "R": 3,
-  "shared_tasks": 400,
-  "condition_canonical_form": [
-   "{\"base_url\": \"https://llmapi.paratera.com/v1\", \"cache_mode\": \"off\", \"judge\": \"gsm8k-collect-is-correct-v1 (LF-normalized source hash bound)\", \"max_tokens\": 32000, \"model\": \"GLM-5.3-Flash\", \"protocol\": \"REAL_EVIDENCE_PROTOCOL_V1 + v1.1 amendment\", \"section\": \"eval\", \"temperature_semantics\": \"per-call temperature is defined by each member's frozen source (same code path as repeat-0); bridge temp_override unused\"}"
-  ],
-  "identity_checks": {
-   "condition_mismatch": {},
-   "identity_conflicts": [],
-   "identical_repeat_pairs": []
-  },
-  "estimand": {
-   "stable_ranking": "pairwise same-condition accuracy difference (canonical member-id direction); SUPPORTED iff some pair is stable in either direction; permutation invariant by construction",
-   "stable_complementarity": "H_stable = E_x max_h q_h(x) - max_h E_x q_h(x); zero iff one member is expectation-best on all tasks; ranking differences do not imply this"
-  },
-  "stable_ranking": {
-   "state": "SUPPORTED",
-   "pairs": [
-    {
-     "h1": "bare",
-     "h2": "gsm_deepseek_s0_g3",
-     "state": "SUPPORTED",
-     "mean_delta": 0.2567,
-     "ci95": [
-      0.2125,
-      0.3
-     ],
-     "missing_sensitivity_bounds": [
-      0.2554,
-      0.2554
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "bare",
-     "h2": "gsm_ernie_s0_g3",
-     "state": "SUPPORTED",
-     "mean_delta": 0.1842,
-     "ci95": [
-      0.15,
-      0.2192
-     ],
-     "missing_sensitivity_bounds": [
-      0.18,
-      0.1825
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "bare",
-     "h2": "gsm_glm_s0_g6",
-     "state": "SUPPORTED",
-     "mean_delta": 0.2533,
-     "ci95": [
-      0.2083,
-      0.2983
-     ],
-     "missing_sensitivity_bounds": [
-      0.2538,
-      0.2538
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "bare",
-     "h2": "gsm_kimi_s0_g3",
-     "state": "SUPPORTED",
-     "mean_delta": 0.1133,
-     "ci95": [
-      0.0833,
-      0.1442
-     ],
-     "missing_sensitivity_bounds": [
-      0.0971,
-      0.1046
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "bare",
-     "h2": "gsm_kimi_s0_g4",
-     "state": "SUPPORTED",
-     "mean_delta": 0.0942,
-     "ci95": [
-      0.065,
-      0.1233
-     ],
-     "missing_sensitivity_bounds": [
-      0.0712,
-      0.0737
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "bare",
-     "h2": "gsm_minimax_s0_g0",
-     "state": "SUPPORTED",
-     "mean_delta": 0.255,
-     "ci95": [
-      0.21,
-      0.2983
-     ],
-     "missing_sensitivity_bounds": [
-      0.2546,
-      0.2571
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "bare",
-     "h2": "gsm_minimax_s0_g3",
-     "state": "SUPPORTED",
-     "mean_delta": 0.2542,
-     "ci95": [
-      0.2125,
-      0.2992
-     ],
-     "missing_sensitivity_bounds": [
-      0.2513,
-      0.2513
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "bare",
-     "h2": "gsm_qwen_s0_g5",
-     "state": "SUPPORTED",
-     "mean_delta": 0.2542,
-     "ci95": [
-      0.2092,
-      0.3
-     ],
-     "missing_sensitivity_bounds": [
-      0.2554,
-      0.2554
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_deepseek_s0_g3",
-     "h2": "gsm_ernie_s0_g3",
-     "state": "REFUTED_WITHIN_SCOPE",
-     "mean_delta": -0.0725,
-     "ci95": [
-      -0.0967,
-      -0.0492
-     ],
-     "missing_sensitivity_bounds": [
-      -0.0754,
-      -0.0729
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_deepseek_s0_g3",
-     "h2": "gsm_glm_s0_g6",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0033,
-     "ci95": [
-      -0.0083,
-      0.0008
-     ],
-     "missing_sensitivity_bounds": [
-      -0.0017,
-      -0.0017
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_deepseek_s0_g3",
-     "h2": "gsm_kimi_s0_g3",
-     "state": "REFUTED_WITHIN_SCOPE",
-     "mean_delta": -0.1433,
-     "ci95": [
-      -0.1817,
-      -0.1058
-     ],
-     "missing_sensitivity_bounds": [
-      -0.1583,
-      -0.1508
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_deepseek_s0_g3",
-     "h2": "gsm_kimi_s0_g4",
-     "state": "REFUTED_WITHIN_SCOPE",
-     "mean_delta": -0.1625,
-     "ci95": [
-      -0.2059,
-      -0.1192
-     ],
-     "missing_sensitivity_bounds": [
-      -0.1842,
-      -0.1817
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_deepseek_s0_g3",
-     "h2": "gsm_minimax_s0_g0",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0017,
-     "ci95": [
-      -0.0142,
-      0.0108
-     ],
-     "missing_sensitivity_bounds": [
-      -0.0008,
-      0.0017
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_deepseek_s0_g3",
-     "h2": "gsm_minimax_s0_g3",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0025,
-     "ci95": [
-      -0.0092,
-      0.0042
-     ],
-     "missing_sensitivity_bounds": [
-      -0.0042,
-      -0.0042
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_deepseek_s0_g3",
-     "h2": "gsm_qwen_s0_g5",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0025,
-     "ci95": [
-      -0.01,
-      0.0058
-     ],
-     "missing_sensitivity_bounds": [
-      -0.0,
-      -0.0
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_ernie_s0_g3",
-     "h2": "gsm_glm_s0_g6",
-     "state": "SUPPORTED",
-     "mean_delta": 0.0692,
-     "ci95": [
-      0.045,
-      0.0933
-     ],
-     "missing_sensitivity_bounds": [
-      0.0712,
-      0.0737
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_ernie_s0_g3",
-     "h2": "gsm_kimi_s0_g3",
-     "state": "REFUTED_WITHIN_SCOPE",
-     "mean_delta": -0.0708,
-     "ci95": [
-      -0.0975,
-      -0.0467
-     ],
-     "missing_sensitivity_bounds": [
-      -0.0854,
-      -0.0754
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_ernie_s0_g3",
-     "h2": "gsm_kimi_s0_g4",
-     "state": "REFUTED_WITHIN_SCOPE",
-     "mean_delta": -0.09,
-     "ci95": [
-      -0.125,
-      -0.0558
-     ],
-     "missing_sensitivity_bounds": [
-      -0.1113,
-      -0.1062
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_ernie_s0_g3",
-     "h2": "gsm_minimax_s0_g0",
-     "state": "SUPPORTED",
-     "mean_delta": 0.0708,
-     "ci95": [
-      0.0483,
-      0.0933
-     ],
-     "missing_sensitivity_bounds": [
-      0.0721,
-      0.0771
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_ernie_s0_g3",
-     "h2": "gsm_minimax_s0_g3",
-     "state": "SUPPORTED",
-     "mean_delta": 0.07,
-     "ci95": [
-      0.0467,
-      0.0934
-     ],
-     "missing_sensitivity_bounds": [
-      0.0688,
-      0.0713
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_ernie_s0_g3",
-     "h2": "gsm_qwen_s0_g5",
-     "state": "SUPPORTED",
-     "mean_delta": 0.07,
-     "ci95": [
-      0.0483,
-      0.0933
-     ],
-     "missing_sensitivity_bounds": [
-      0.0729,
-      0.0754
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_glm_s0_g6",
-     "h2": "gsm_kimi_s0_g3",
-     "state": "REFUTED_WITHIN_SCOPE",
-     "mean_delta": -0.14,
-     "ci95": [
-      -0.1767,
-      -0.1025
-     ],
-     "missing_sensitivity_bounds": [
-      -0.1567,
-      -0.1492
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_glm_s0_g6",
-     "h2": "gsm_kimi_s0_g4",
-     "state": "REFUTED_WITHIN_SCOPE",
-     "mean_delta": -0.1592,
-     "ci95": [
-      -0.2017,
-      -0.1183
-     ],
-     "missing_sensitivity_bounds": [
-      -0.1825,
-      -0.18
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_glm_s0_g6",
-     "h2": "gsm_minimax_s0_g0",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.0017,
-     "ci95": [
-      -0.01,
-      0.0142
-     ],
-     "missing_sensitivity_bounds": [
-      0.0008,
-      0.0033
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_glm_s0_g6",
-     "h2": "gsm_minimax_s0_g3",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.0008,
-     "ci95": [
-      -0.0067,
-      0.0075
-     ],
-     "missing_sensitivity_bounds": [
-      -0.0025,
-      -0.0025
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_glm_s0_g6",
-     "h2": "gsm_qwen_s0_g5",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.0008,
-     "ci95": [
-      -0.0058,
-      0.0083
-     ],
-     "missing_sensitivity_bounds": [
-      0.0017,
-      0.0017
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_kimi_s0_g3",
-     "h2": "gsm_kimi_s0_g4",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0192,
-     "ci95": [
-      -0.0458,
-      0.0042
-     ],
-     "missing_sensitivity_bounds": [
-      -0.0333,
-      -0.0233
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_kimi_s0_g3",
-     "h2": "gsm_minimax_s0_g0",
-     "state": "SUPPORTED",
-     "mean_delta": 0.1417,
-     "ci95": [
-      0.1058,
-      0.1775
-     ],
-     "missing_sensitivity_bounds": [
-      0.15,
-      0.16
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_kimi_s0_g3",
-     "h2": "gsm_minimax_s0_g3",
-     "state": "SUPPORTED",
-     "mean_delta": 0.1408,
-     "ci95": [
-      0.1042,
-      0.1783
-     ],
-     "missing_sensitivity_bounds": [
-      0.1467,
-      0.1542
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_kimi_s0_g3",
-     "h2": "gsm_qwen_s0_g5",
-     "state": "SUPPORTED",
-     "mean_delta": 0.1408,
-     "ci95": [
-      0.105,
-      0.1775
-     ],
-     "missing_sensitivity_bounds": [
-      0.1508,
-      0.1583
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_kimi_s0_g4",
-     "h2": "gsm_minimax_s0_g0",
-     "state": "SUPPORTED",
-     "mean_delta": 0.1608,
-     "ci95": [
-      0.1208,
-      0.2025
-     ],
-     "missing_sensitivity_bounds": [
-      0.1808,
-      0.1858
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_kimi_s0_g4",
-     "h2": "gsm_minimax_s0_g3",
-     "state": "SUPPORTED",
-     "mean_delta": 0.16,
-     "ci95": [
-      0.1183,
-      0.2025
-     ],
-     "missing_sensitivity_bounds": [
-      0.1775,
-      0.18
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_kimi_s0_g4",
-     "h2": "gsm_qwen_s0_g5",
-     "state": "SUPPORTED",
-     "mean_delta": 0.16,
-     "ci95": [
-      0.12,
-      0.2042
-     ],
-     "missing_sensitivity_bounds": [
-      0.1817,
-      0.1842
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_minimax_s0_g0",
-     "h2": "gsm_minimax_s0_g3",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0008,
-     "ci95": [
-      -0.0133,
-      0.0092
-     ],
-     "missing_sensitivity_bounds": [
-      -0.0058,
-      -0.0033
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_minimax_s0_g0",
-     "h2": "gsm_qwen_s0_g5",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0008,
-     "ci95": [
-      -0.0125,
-      0.01
-     ],
-     "missing_sensitivity_bounds": [
-      -0.0017,
-      0.0008
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "gsm_minimax_s0_g3",
-     "h2": "gsm_qwen_s0_g5",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.0,
-     "ci95": [
-      -0.0075,
-      0.0092
-     ],
-     "missing_sensitivity_bounds": [
-      0.0042,
-      0.0042
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    }
-   ]
-  },
-  "stable_complementarity": {
-   "state": "INSUFFICIENT_EVIDENCE",
-   "H_stable": null,
-   "H_ci95": null,
-   "reason": "per-task member expectation unidentified for 6 (member, task) cells with no valid repeat",
-   "unidentified_cells": [
-    [
-     "gsm_ernie_s0_g3",
-     "math500_split#400"
-    ],
-    [
-     "gsm_kimi_s0_g3",
-     "math500_split#110"
-    ],
-    [
-     "gsm_kimi_s0_g3",
-     "math500_split#284"
-    ],
-    [
-     "gsm_kimi_s0_g3",
-     "math500_split#400"
-    ],
-    [
-     "gsm_kimi_s0_g4",
-     "math500_split#400"
-    ],
-    [
-     "gsm_minimax_s0_g0",
-     "math500_split#154"
-    ]
-   ],
-   "minimal_missing_evidence": [
-    "complete repeats or explicit unknown handling for every (member, task) cell"
-   ]
-  },
-  "note": "pairing is across same-condition repeats; cross-time/provider batches are non_exchangeable and excluded from this estimate"
- },
  "panel": [
   "bare",
   "gsm_deepseek_s0_g3",
@@ -700,8 +102,13 @@
    "failed": 38
   }
  },
- "clone_arm_s3": {
-  "state": "INSUFFICIENT_EVIDENCE",
+ "clone_arm_descriptive_s3": {
+  "note": "DESCRIPTIVE PROVENANCE: this repeats the v2 plug-in on the same-code clone arm; its stable_complementarity block must not be read as evidence (the clone arm has, by construction, H_stable = 0)",
+  "plugin_H_hat": 0.0267,
+  "v2_legacy_false_positive_pp": 2.67
+ },
+ "E1_C-rank_E2_C-comp": {
+  "state": "SUPPORTED",
   "R": 3,
   "shared_tasks": 400,
   "condition_canonical_form": [
@@ -712,157 +119,288 @@
    "identity_conflicts": [],
    "identical_repeat_pairs": []
   },
+  "stable_ranking_note": "population state means AT LEAST ONE canonical member pair shows a multiplicity-adjusted stable difference (max-T family-wise 95%); it is not a claim that the whole ranking is stable",
   "estimand": {
-   "stable_ranking": "pairwise same-condition accuracy difference (canonical member-id direction); SUPPORTED iff some pair is stable in either direction; permutation invariant by construction",
-   "stable_complementarity": "H_stable = E_x max_h q_h(x) - max_h E_x q_h(x); zero iff one member is expectation-best on all tasks; ranking differences do not imply this"
+   "stable_ranking": "pairwise same-condition accuracy difference (canonical member-id direction); SUPPORTED iff some pair is stable in either direction after max-T multiplicity adjustment; permutation invariant by construction",
+   "stable_complementarity": "H_stable = E_x max_h q_h(x) - max_h E_x q_h(x); zero iff one member is expectation-best on all tasks; ranking differences do not imply this. Scientific state requires clone-calibrated ccomp_v3."
   },
   "stable_ranking": {
-   "state": "INSUFFICIENT_EVIDENCE",
+   "state": "SUPPORTED",
    "pairs": [
     {
-     "h1": "clone-c1",
-     "h2": "clone-c2",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0008,
-     "ci95": [
-      -0.0125,
-      0.0117
+     "h1": "bare",
+     "h2": "gsm_deepseek_s0_g3",
+     "state": "SUPPORTED",
+     "mean_delta": 0.2567,
+     "ci95_marginal": [
+      0.2125,
+      0.3
      ],
+     "ci95_maxT_simultaneous": [
+      0.1894,
+      0.3239
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
      "missing_sensitivity_bounds": [
-      0.0017,
+      0.2554,
+      0.2554
+     ],
+     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
+    },
+    {
+     "h1": "bare",
+     "h2": "gsm_ernie_s0_g3",
+     "state": "SUPPORTED",
+     "mean_delta": 0.1842,
+     "ci95_marginal": [
+      0.1467,
+      0.2217
+     ],
+     "ci95_maxT_simultaneous": [
+      0.1265,
+      0.2418
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
+     "missing_sensitivity_bounds": [
+      0.18,
+      0.1825
+     ],
+     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
+    },
+    {
+     "h1": "bare",
+     "h2": "gsm_glm_s0_g6",
+     "state": "SUPPORTED",
+     "mean_delta": 0.2533,
+     "ci95_marginal": [
+      0.2092,
+      0.2967
+     ],
+     "ci95_maxT_simultaneous": [
+      0.1859,
+      0.3208
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
+     "missing_sensitivity_bounds": [
+      0.2538,
+      0.2538
+     ],
+     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
+    },
+    {
+     "h1": "bare",
+     "h2": "gsm_kimi_s0_g3",
+     "state": "SUPPORTED",
+     "mean_delta": 0.1133,
+     "ci95_marginal": [
+      0.0833,
+      0.1434
+     ],
+     "ci95_maxT_simultaneous": [
+      0.0672,
+      0.1595
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
+     "missing_sensitivity_bounds": [
+      0.0971,
+      0.1046
+     ],
+     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
+    },
+    {
+     "h1": "bare",
+     "h2": "gsm_kimi_s0_g4",
+     "state": "SUPPORTED",
+     "mean_delta": 0.0942,
+     "ci95_marginal": [
+      0.065,
+      0.1225
+     ],
+     "ci95_maxT_simultaneous": [
+      0.0502,
+      0.1382
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
+     "missing_sensitivity_bounds": [
+      0.0712,
+      0.0737
+     ],
+     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
+    },
+    {
+     "h1": "bare",
+     "h2": "gsm_minimax_s0_g0",
+     "state": "SUPPORTED",
+     "mean_delta": 0.255,
+     "ci95_marginal": [
+      0.21,
+      0.2975
+     ],
+     "ci95_maxT_simultaneous": [
+      0.1874,
+      0.3226
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
+     "missing_sensitivity_bounds": [
+      0.2546,
+      0.2571
+     ],
+     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
+    },
+    {
+     "h1": "bare",
+     "h2": "gsm_minimax_s0_g3",
+     "state": "SUPPORTED",
+     "mean_delta": 0.2542,
+     "ci95_marginal": [
+      0.2092,
+      0.2983
+     ],
+     "ci95_maxT_simultaneous": [
+      0.1859,
+      0.3224
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
+     "missing_sensitivity_bounds": [
+      0.2513,
+      0.2513
+     ],
+     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
+    },
+    {
+     "h1": "bare",
+     "h2": "gsm_qwen_s0_g5",
+     "state": "SUPPORTED",
+     "mean_delta": 0.2542,
+     "ci95_marginal": [
+      0.2092,
+      0.2975
+     ],
+     "ci95_maxT_simultaneous": [
+      0.1862,
+      0.3221
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
+     "missing_sensitivity_bounds": [
+      0.2554,
+      0.2554
+     ],
+     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
+    },
+    {
+     "h1": "gsm_deepseek_s0_g3",
+     "h2": "gsm_ernie_s0_g3",
+     "state": "REFUTED_WITHIN_SCOPE",
+     "mean_delta": -0.0725,
+     "ci95_marginal": [
+      -0.0958,
+      -0.05
+     ],
+     "ci95_maxT_simultaneous": [
+      -0.1073,
+      -0.0377
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
+     "missing_sensitivity_bounds": [
+      -0.0754,
+      -0.0729
+     ],
+     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
+    },
+    {
+     "h1": "gsm_deepseek_s0_g3",
+     "h2": "gsm_glm_s0_g6",
+     "state": "INSUFFICIENT_EVIDENCE",
+     "mean_delta": -0.0033,
+     "ci95_marginal": [
+      -0.0083,
+      0.0017
+     ],
+     "ci95_maxT_simultaneous": [
+      -0.0104,
+      0.0038
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
+     "missing_sensitivity_bounds": [
+      -0.0017,
+      -0.0017
+     ],
+     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
+    },
+    {
+     "h1": "gsm_deepseek_s0_g3",
+     "h2": "gsm_kimi_s0_g3",
+     "state": "REFUTED_WITHIN_SCOPE",
+     "mean_delta": -0.1433,
+     "ci95_marginal": [
+      -0.1817,
+      -0.1058
+     ],
+     "ci95_maxT_simultaneous": [
+      -0.2006,
+      -0.0861
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
+     "missing_sensitivity_bounds": [
+      -0.1583,
+      -0.1508
+     ],
+     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
+    },
+    {
+     "h1": "gsm_deepseek_s0_g3",
+     "h2": "gsm_kimi_s0_g4",
+     "state": "REFUTED_WITHIN_SCOPE",
+     "mean_delta": -0.1625,
+     "ci95_marginal": [
+      -0.2058,
+      -0.12
+     ],
+     "ci95_maxT_simultaneous": [
+      -0.2272,
+      -0.0978
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
+     "missing_sensitivity_bounds": [
+      -0.1842,
+      -0.1817
+     ],
+     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
+    },
+    {
+     "h1": "gsm_deepseek_s0_g3",
+     "h2": "gsm_minimax_s0_g0",
+     "state": "INSUFFICIENT_EVIDENCE",
+     "mean_delta": -0.0017,
+     "ci95_marginal": [
+      -0.0133,
+      0.01
+     ],
+     "ci95_maxT_simultaneous": [
+      -0.0197,
+      0.0164
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
+     "missing_sensitivity_bounds": [
+      -0.0008,
       0.0017
      ],
      "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
     },
     {
-     "h1": "clone-c1",
-     "h2": "clone-c3",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.0025,
-     "ci95": [
-      -0.01,
-      0.015
-     ],
-     "missing_sensitivity_bounds": [
-      0.005,
-      0.005
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "clone-c1",
-     "h2": "clone-c4",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0058,
-     "ci95": [
-      -0.0175,
-      0.005
-     ],
-     "missing_sensitivity_bounds": [
-      -0.0025,
-      -0.0025
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "clone-c1",
-     "h2": "clone-c5",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0033,
-     "ci95": [
-      -0.015,
-      0.0083
-     ],
-     "missing_sensitivity_bounds": [
-      -0.0017,
-      -0.0017
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "clone-c1",
-     "h2": "clone-c6",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.0042,
-     "ci95": [
-      -0.0083,
-      0.0167
-     ],
-     "missing_sensitivity_bounds": [
-      0.0058,
-      0.0058
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "clone-c1",
-     "h2": "clone-c7",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.005,
-     "ci95": [
-      -0.0058,
-      0.0167
-     ],
-     "missing_sensitivity_bounds": [
-      0.0067,
-      0.0067
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "clone-c1",
-     "h2": "clone-c8",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0033,
-     "ci95": [
-      -0.0142,
-      0.0067
-     ],
-     "missing_sensitivity_bounds": [
-      -0.0004,
-      -0.0004
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "clone-c1",
-     "h2": "clone-c9",
+     "h1": "gsm_deepseek_s0_g3",
+     "h2": "gsm_minimax_s0_g3",
      "state": "INSUFFICIENT_EVIDENCE",
      "mean_delta": -0.0025,
-     "ci95": [
-      -0.0125,
-      0.0083
+     "ci95_marginal": [
+      -0.01,
+      0.0042
      ],
-     "missing_sensitivity_bounds": [
-      -0.0017,
-      -0.0017
+     "ci95_maxT_simultaneous": [
+      -0.0129,
+      0.0079
      ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "clone-c2",
-     "h2": "clone-c3",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.0033,
-     "ci95": [
-      -0.0083,
-      0.0142
-     ],
-     "missing_sensitivity_bounds": [
-      0.0033,
-      0.0033
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "clone-c2",
-     "h2": "clone-c4",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.005,
-     "ci95": [
-      -0.0167,
-      0.0067
-     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
      "missing_sensitivity_bounds": [
       -0.0042,
       -0.0042
@@ -870,134 +408,239 @@
      "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
     },
     {
-     "h1": "clone-c2",
-     "h2": "clone-c5",
+     "h1": "gsm_deepseek_s0_g3",
+     "h2": "gsm_qwen_s0_g5",
      "state": "INSUFFICIENT_EVIDENCE",
      "mean_delta": -0.0025,
-     "ci95": [
-      -0.015,
-      0.0092
-     ],
-     "missing_sensitivity_bounds": [
-      -0.0033,
-      -0.0033
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "clone-c2",
-     "h2": "clone-c6",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.005,
-     "ci95": [
-      -0.0083,
-      0.0183
-     ],
-     "missing_sensitivity_bounds": [
-      0.0042,
-      0.0042
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "clone-c2",
-     "h2": "clone-c7",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.0058,
-     "ci95": [
-      -0.005,
-      0.0167
-     ],
-     "missing_sensitivity_bounds": [
-      0.005,
-      0.005
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "clone-c2",
-     "h2": "clone-c8",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0025,
-     "ci95": [
-      -0.015,
-      0.01
-     ],
-     "missing_sensitivity_bounds": [
-      -0.0021,
-      -0.0021
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "clone-c2",
-     "h2": "clone-c9",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0017,
-     "ci95": [
-      -0.015,
-      0.01
-     ],
-     "missing_sensitivity_bounds": [
-      -0.0033,
-      -0.0033
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "clone-c3",
-     "h2": "clone-c4",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0083,
-     "ci95": [
-      -0.0208,
-      0.0033
-     ],
-     "missing_sensitivity_bounds": [
-      -0.0075,
-      -0.0075
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "clone-c3",
-     "h2": "clone-c5",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0058,
-     "ci95": [
-      -0.0183,
+     "ci95_marginal": [
+      -0.01,
       0.0058
      ],
+     "ci95_maxT_simultaneous": [
+      -0.0148,
+      0.0098
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
      "missing_sensitivity_bounds": [
-      -0.0067,
-      -0.0067
+      -0.0,
+      -0.0
      ],
      "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
     },
     {
-     "h1": "clone-c3",
-     "h2": "clone-c6",
+     "h1": "gsm_ernie_s0_g3",
+     "h2": "gsm_glm_s0_g6",
+     "state": "SUPPORTED",
+     "mean_delta": 0.0692,
+     "ci95_marginal": [
+      0.0467,
+      0.0933
+     ],
+     "ci95_maxT_simultaneous": [
+      0.0339,
+      0.1044
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
+     "missing_sensitivity_bounds": [
+      0.0712,
+      0.0737
+     ],
+     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
+    },
+    {
+     "h1": "gsm_ernie_s0_g3",
+     "h2": "gsm_kimi_s0_g3",
+     "state": "REFUTED_WITHIN_SCOPE",
+     "mean_delta": -0.0708,
+     "ci95_marginal": [
+      -0.0983,
+      -0.045
+     ],
+     "ci95_maxT_simultaneous": [
+      -0.1116,
+      -0.0301
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
+     "missing_sensitivity_bounds": [
+      -0.0854,
+      -0.0754
+     ],
+     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
+    },
+    {
+     "h1": "gsm_ernie_s0_g3",
+     "h2": "gsm_kimi_s0_g4",
+     "state": "REFUTED_WITHIN_SCOPE",
+     "mean_delta": -0.09,
+     "ci95_marginal": [
+      -0.1258,
+      -0.0558
+     ],
+     "ci95_maxT_simultaneous": [
+      -0.1437,
+      -0.0363
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
+     "missing_sensitivity_bounds": [
+      -0.1113,
+      -0.1062
+     ],
+     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
+    },
+    {
+     "h1": "gsm_ernie_s0_g3",
+     "h2": "gsm_minimax_s0_g0",
+     "state": "SUPPORTED",
+     "mean_delta": 0.0708,
+     "ci95_marginal": [
+      0.05,
+      0.0925
+     ],
+     "ci95_maxT_simultaneous": [
+      0.0377,
+      0.104
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
+     "missing_sensitivity_bounds": [
+      0.0721,
+      0.0771
+     ],
+     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
+    },
+    {
+     "h1": "gsm_ernie_s0_g3",
+     "h2": "gsm_minimax_s0_g3",
+     "state": "SUPPORTED",
+     "mean_delta": 0.07,
+     "ci95_marginal": [
+      0.0483,
+      0.0942
+     ],
+     "ci95_maxT_simultaneous": [
+      0.0354,
+      0.1046
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
+     "missing_sensitivity_bounds": [
+      0.0688,
+      0.0713
+     ],
+     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
+    },
+    {
+     "h1": "gsm_ernie_s0_g3",
+     "h2": "gsm_qwen_s0_g5",
+     "state": "SUPPORTED",
+     "mean_delta": 0.07,
+     "ci95_marginal": [
+      0.0483,
+      0.0942
+     ],
+     "ci95_maxT_simultaneous": [
+      0.0352,
+      0.1048
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
+     "missing_sensitivity_bounds": [
+      0.0729,
+      0.0754
+     ],
+     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
+    },
+    {
+     "h1": "gsm_glm_s0_g6",
+     "h2": "gsm_kimi_s0_g3",
+     "state": "REFUTED_WITHIN_SCOPE",
+     "mean_delta": -0.14,
+     "ci95_marginal": [
+      -0.1792,
+      -0.1017
+     ],
+     "ci95_maxT_simultaneous": [
+      -0.1971,
+      -0.0829
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
+     "missing_sensitivity_bounds": [
+      -0.1567,
+      -0.1492
+     ],
+     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
+    },
+    {
+     "h1": "gsm_glm_s0_g6",
+     "h2": "gsm_kimi_s0_g4",
+     "state": "REFUTED_WITHIN_SCOPE",
+     "mean_delta": -0.1592,
+     "ci95_marginal": [
+      -0.2025,
+      -0.1167
+     ],
+     "ci95_maxT_simultaneous": [
+      -0.224,
+      -0.0943
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
+     "missing_sensitivity_bounds": [
+      -0.1825,
+      -0.18
+     ],
+     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
+    },
+    {
+     "h1": "gsm_glm_s0_g6",
+     "h2": "gsm_minimax_s0_g0",
      "state": "INSUFFICIENT_EVIDENCE",
      "mean_delta": 0.0017,
-     "ci95": [
-      -0.0133,
-      0.015
+     "ci95_marginal": [
+      -0.01,
+      0.0133
      ],
+     "ci95_maxT_simultaneous": [
+      -0.0164,
+      0.0197
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
      "missing_sensitivity_bounds": [
       0.0008,
-      0.0008
+      0.0033
      ],
      "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
     },
     {
-     "h1": "clone-c3",
-     "h2": "clone-c7",
+     "h1": "gsm_glm_s0_g6",
+     "h2": "gsm_minimax_s0_g3",
      "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.0025,
-     "ci95": [
-      -0.0108,
-      0.0158
+     "mean_delta": 0.0008,
+     "ci95_marginal": [
+      -0.0067,
+      0.0075
      ],
+     "ci95_maxT_simultaneous": [
+      -0.0096,
+      0.0113
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
+     "missing_sensitivity_bounds": [
+      -0.0025,
+      -0.0025
+     ],
+     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
+    },
+    {
+     "h1": "gsm_glm_s0_g6",
+     "h2": "gsm_qwen_s0_g5",
+     "state": "INSUFFICIENT_EVIDENCE",
+     "mean_delta": 0.0008,
+     "ci95_marginal": [
+      -0.0058,
+      0.0083
+     ],
+     "ci95_maxT_simultaneous": [
+      -0.01,
+      0.0117
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
      "missing_sensitivity_bounds": [
       0.0017,
       0.0017
@@ -1005,275 +648,313 @@
      "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
     },
     {
-     "h1": "clone-c3",
-     "h2": "clone-c8",
+     "h1": "gsm_kimi_s0_g3",
+     "h2": "gsm_kimi_s0_g4",
      "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0058,
-     "ci95": [
-      -0.0175,
+     "mean_delta": -0.0192,
+     "ci95_marginal": [
+      -0.0433,
       0.005
      ],
+     "ci95_maxT_simultaneous": [
+      -0.0571,
+      0.0188
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
      "missing_sensitivity_bounds": [
-      -0.0054,
-      -0.0054
+      -0.0333,
+      -0.0233
      ],
      "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
     },
     {
-     "h1": "clone-c3",
-     "h2": "clone-c9",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.005,
-     "ci95": [
-      -0.0192,
-      0.0075
+     "h1": "gsm_kimi_s0_g3",
+     "h2": "gsm_minimax_s0_g0",
+     "state": "SUPPORTED",
+     "mean_delta": 0.1417,
+     "ci95_marginal": [
+      0.1042,
+      0.1784
      ],
+     "ci95_maxT_simultaneous": [
+      0.0862,
+      0.1971
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
      "missing_sensitivity_bounds": [
-      -0.0067,
-      -0.0067
+      0.15,
+      0.16
      ],
      "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
     },
     {
-     "h1": "clone-c4",
-     "h2": "clone-c5",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.0025,
-     "ci95": [
-      -0.01,
-      0.015
+     "h1": "gsm_kimi_s0_g3",
+     "h2": "gsm_minimax_s0_g3",
+     "state": "SUPPORTED",
+     "mean_delta": 0.1408,
+     "ci95_marginal": [
+      0.1033,
+      0.18
      ],
+     "ci95_maxT_simultaneous": [
+      0.0833,
+      0.1984
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
      "missing_sensitivity_bounds": [
-      0.0008,
-      0.0008
+      0.1467,
+      0.1542
      ],
      "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
     },
     {
-     "h1": "clone-c4",
-     "h2": "clone-c6",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.01,
-     "ci95": [
-      -0.0033,
-      0.0233
+     "h1": "gsm_kimi_s0_g3",
+     "h2": "gsm_qwen_s0_g5",
+     "state": "SUPPORTED",
+     "mean_delta": 0.1408,
+     "ci95_marginal": [
+      0.1025,
+      0.1792
      ],
+     "ci95_maxT_simultaneous": [
+      0.0835,
+      0.1981
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
      "missing_sensitivity_bounds": [
-      0.0083,
-      0.0083
+      0.1508,
+      0.1583
      ],
      "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
     },
     {
-     "h1": "clone-c4",
-     "h2": "clone-c7",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.0108,
-     "ci95": [
-      -0.0025,
-      0.0242
+     "h1": "gsm_kimi_s0_g4",
+     "h2": "gsm_minimax_s0_g0",
+     "state": "SUPPORTED",
+     "mean_delta": 0.1608,
+     "ci95_marginal": [
+      0.1183,
+      0.2034
      ],
+     "ci95_maxT_simultaneous": [
+      0.0963,
+      0.2254
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
      "missing_sensitivity_bounds": [
-      0.0092,
-      0.0092
+      0.1808,
+      0.1858
      ],
      "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
     },
     {
-     "h1": "clone-c4",
-     "h2": "clone-c8",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.0025,
-     "ci95": [
-      -0.0075,
-      0.0133
+     "h1": "gsm_kimi_s0_g4",
+     "h2": "gsm_minimax_s0_g3",
+     "state": "SUPPORTED",
+     "mean_delta": 0.16,
+     "ci95_marginal": [
+      0.1175,
+      0.2034
      ],
+     "ci95_maxT_simultaneous": [
+      0.095,
+      0.225
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
      "missing_sensitivity_bounds": [
-      0.0021,
-      0.0021
+      0.1775,
+      0.18
      ],
      "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
     },
     {
-     "h1": "clone-c4",
-     "h2": "clone-c9",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.0033,
-     "ci95": [
-      -0.0092,
-      0.015
+     "h1": "gsm_kimi_s0_g4",
+     "h2": "gsm_qwen_s0_g5",
+     "state": "SUPPORTED",
+     "mean_delta": 0.16,
+     "ci95_marginal": [
+      0.1175,
+      0.2017
      ],
+     "ci95_maxT_simultaneous": [
+      0.0951,
+      0.2249
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
      "missing_sensitivity_bounds": [
-      0.0008,
-      0.0008
+      0.1817,
+      0.1842
      ],
      "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
     },
     {
-     "h1": "clone-c5",
-     "h2": "clone-c6",
+     "h1": "gsm_minimax_s0_g0",
+     "h2": "gsm_minimax_s0_g3",
      "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.0075,
-     "ci95": [
-      -0.005,
-      0.0192
-     ],
-     "missing_sensitivity_bounds": [
-      0.0075,
-      0.0075
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "clone-c5",
-     "h2": "clone-c7",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.0083,
-     "ci95": [
-      -0.0042,
-      0.0208
-     ],
-     "missing_sensitivity_bounds": [
-      0.0083,
-      0.0083
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "clone-c5",
-     "h2": "clone-c8",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0,
-     "ci95": [
-      -0.0117,
-      0.0125
-     ],
-     "missing_sensitivity_bounds": [
-      0.0013,
-      0.0013
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "clone-c5",
-     "h2": "clone-c9",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.0008,
-     "ci95": [
-      -0.0108,
-      0.0133
-     ],
-     "missing_sensitivity_bounds": [
-      0.0,
-      0.0
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "clone-c6",
-     "h2": "clone-c7",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.0008,
-     "ci95": [
+     "mean_delta": -0.0008,
+     "ci95_marginal": [
       -0.0125,
-      0.0142
+      0.01
      ],
+     "ci95_maxT_simultaneous": [
+      -0.0178,
+      0.0162
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
      "missing_sensitivity_bounds": [
-      0.0008,
+      -0.0058,
+      -0.0033
+     ],
+     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
+    },
+    {
+     "h1": "gsm_minimax_s0_g0",
+     "h2": "gsm_qwen_s0_g5",
+     "state": "INSUFFICIENT_EVIDENCE",
+     "mean_delta": -0.0008,
+     "ci95_marginal": [
+      -0.0133,
+      0.0108
+     ],
+     "ci95_maxT_simultaneous": [
+      -0.0187,
+      0.0171
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
+     "missing_sensitivity_bounds": [
+      -0.0017,
       0.0008
      ],
      "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
     },
     {
-     "h1": "clone-c6",
-     "h2": "clone-c8",
+     "h1": "gsm_minimax_s0_g3",
+     "h2": "gsm_qwen_s0_g5",
      "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0075,
-     "ci95": [
-      -0.02,
-      0.0058
-     ],
-     "missing_sensitivity_bounds": [
-      -0.0063,
-      -0.0063
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "clone-c6",
-     "h2": "clone-c9",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0067,
-     "ci95": [
-      -0.02,
-      0.0058
-     ],
-     "missing_sensitivity_bounds": [
+     "mean_delta": 0.0,
+     "ci95_marginal": [
       -0.0075,
-      -0.0075
+      0.0083
      ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "clone-c7",
-     "h2": "clone-c8",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0083,
-     "ci95": [
-      -0.0217,
+     "ci95_maxT_simultaneous": [
+      -0.0127,
+      0.0127
+     ],
+     "multiplicity": "max-T simultaneous 95% interval over all 36 canonical pairs (shared task bootstrap draws)",
+     "missing_sensitivity_bounds": [
+      0.0042,
       0.0042
-     ],
-     "missing_sensitivity_bounds": [
-      -0.0071,
-      -0.0071
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "clone-c7",
-     "h2": "clone-c9",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": -0.0075,
-     "ci95": [
-      -0.0183,
-      0.0042
-     ],
-     "missing_sensitivity_bounds": [
-      -0.0083,
-      -0.0083
-     ],
-     "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
-    },
-    {
-     "h1": "clone-c8",
-     "h2": "clone-c9",
-     "state": "INSUFFICIENT_EVIDENCE",
-     "mean_delta": 0.0008,
-     "ci95": [
-      -0.0108,
-      0.0125
-     ],
-     "missing_sensitivity_bounds": [
-      -0.0012,
-      -0.0012
      ],
      "direction_note": "h1/h2 fixed by member id order; independent of input member ordering"
     }
    ]
   },
   "stable_complementarity": {
-   "state": "SUPPORTED",
-   "H_stable": 0.0267,
-   "H_ci95": [
-    0.0171,
-    0.0375
+   "state": "INSUFFICIENT_EVIDENCE",
+   "descriptive_plugin": {
+    "H_hat": 0.0254,
+    "H_bootstrap_range": [
+     0.0092,
+     0.0446
+    ],
+    "expectation_best_member": "bare",
+    "n_unidentified_cells": 6,
+    "warning": "DESCRIPTIVE ONLY: upward biased by finite-R per-task argmax selection noise; unknown cells counted as 0 here; never a scientific state by itself (2026-09-19 review)"
+   },
+   "unidentified_cells": [
+    [
+     "gsm_ernie_s0_g3",
+     "math500_split#400"
+    ],
+    [
+     "gsm_kimi_s0_g3",
+     "math500_split#110"
+    ],
+    [
+     "gsm_kimi_s0_g3",
+     "math500_split#284"
+    ],
+    [
+     "gsm_kimi_s0_g3",
+     "math500_split#400"
+    ],
+    [
+     "gsm_kimi_s0_g4",
+     "math500_split#400"
+    ],
+    [
+     "gsm_minimax_s0_g0",
+     "math500_split#154"
+    ]
    ],
-   "expectation_best_member": "clone-c4",
-   "caveat": "q_h(x) estimated from R repeats; E[max] of noisy estimates is biased upward, so SUPPORTED near zero should be treated with the CI and repeat count in mind"
+   "clone_calibrated": {
+    "state": "INSUFFICIENT_EVIDENCE",
+    "estimand": "PRIMARY: D = G_real - G_clone where G is the cross-fitted frozen per-task selector gain vs the best FIXED member. G <= H_stable, G=0 under dominance; the same-code clone subtraction removes the finite-(R,T) selection-noise component. G without a clone arm is reported descriptively only.",
+    "G": 0.00171,
+    "G_ci95": [
+     -0.00819,
+     0.01314
+    ],
+    "p_D_clone_randomization": 0.77422,
+    "p_D_equivalence": 0.27057,
+    "null_D": {
+     "null_D_mean": -4e-05,
+     "null_D_sd": 0.01456
+    },
+    "paired_difference": {
+     "D_real_minus_clone": -0.00097,
+     "D_ci95": [
+      -0.0155,
+      0.01462
+     ],
+     "n_paired_tasks": 342,
+     "G_clone": 0.00548
+    },
+    "H_plugin_descriptive": null,
+    "descriptive_warning": "H_plugin is the repeat-average plug-in; it is upward biased by finite-R selection noise and is reported for transparency only",
+    "n_complete_tasks": 350,
+    "excluded_frac": 0.125,
+    "coverage_gate": "excluded <= 0.1",
+    "coverage_ok": false,
+    "missing_extremal_G_bounds": [
+     -0.00333,
+     0.00333
+    ],
+    "unidentified_cells": 6,
+    "folds": [
+     {
+      "held_out_repeat": 0,
+      "best_fixed": 0,
+      "n_distinct_selection": 9,
+      "best_fixed_tie_majority": [
+       0,
+       0,
+       0
+      ]
+     },
+     {
+      "held_out_repeat": 1,
+      "best_fixed": 0,
+      "n_distinct_selection": 9
+     },
+     {
+      "held_out_repeat": 2,
+      "best_fixed": 0,
+      "n_distinct_selection": 9
+     }
+    ],
+    "delta": 0.01,
+    "alpha": 0.05,
+    "n_perm": 10000,
+    "n_boot": 2000,
+    "seed": 20260915,
+    "reason": "coverage gate: 0.125 of real-arm tasks excluded (> 0.1); G reported on 350 complete tasks as a labeled secondary quantity"
+   },
+   "reason": "coverage gate: 0.125 of real-arm tasks excluded (> 0.1); G reported on 350 complete tasks as a labeled secondary quantity"
   },
   "note": "pairing is across same-condition repeats; cross-time/provider batches are non_exchangeable and excluded from this estimate"
  },
- "E2_A86_clone_null": {
+ "E2_legacy_vs_bare_A86": {
   "estimand": "A8.6 task-conditional advantage (discovery r1, validation r2-3)",
   "A_real": 0.0014285714285714286,
   "A_clone_obs": 0.0013054830287206266,
@@ -1299,7 +980,8 @@
    "D": 0.0025252525252525255,
    "n_tasks_paired": 396,
    "rule": "within-task available-repeat mean imputation; tasks with a member missing all repeats still excluded"
-  }
+  },
+  "estimand_status": "SECONDARY / DESCRIPTIVE: post-discovery advantage over bare; rejects under pure global dominance and is therefore NOT a test of stable complementarity. The calibrated estimand is the cross-fitted G vs the best FIXED member with the same-code clone null, in E1_C-rank_E2_C-comp.stable_complementarity.clone_calibrated"
  },
  "E2_sensitivity_double_executed_conflicts": {
   "A_real": 0.001440922190201729,

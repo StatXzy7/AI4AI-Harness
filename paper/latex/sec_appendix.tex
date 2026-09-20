@@ -651,32 +651,135 @@ NOT\_APPLICABLE with scope and minimal missing evidence; classes are never
 collapsed into a single score.
 
 \paragraph{Two stability estimands.} \emph{C-rank}: pairwise same-condition
-accuracy differences with task-level bootstrap CIs and sign-consistency
-across repeats; the pair direction is fixed by member identity, so
-population conclusions are invariant to member ordering (the pre-revision
-implementation could reverse a population conclusion by permuting the member
-list; an invariant test now pins this). \emph{C-comp}: stable
-complementarity, $H_{\rm stable}=\mathbb{E}\max_h q_h(x)-\max_h\mathbb{E}
-q_h(x)$ with $q_h$ the repeat-averaged per-task correctness; it satisfies
-Eq.~\eqref{eq:identity} and is zero exactly when one member is
-expectation-best on every task, so a stable ranking difference can never
-substitute for it. Repeats with differing execution-condition fields,
-differing member source hashes, or byte-identical outcome matrices are
-refused as matched repeats and force INSUFFICIENT\_EVIDENCE. Pair-level
-imputation bounds over unknown cells are reported alongside the recorded
-success rate.
+accuracy differences with a SHARED task-resample bootstrap and max-T
+simultaneous 95\% intervals over all $M(M-1)/2$ canonical member pairs
+(family-wise error control; the pre-v3 per-pair intervals did not adjust
+for 36 simultaneous comparisons), plus sign consistency across repeats;
+the pair direction is fixed by member identity, so population conclusions
+are invariant to member ordering. The population state means
+\emph{at least one} pair differs after multiplicity adjustment, not that
+the complete ranking is stable. \emph{C-comp}: stable
+complementarity $H_{\rm stable}=\mathbb{E}\max_h q_h(x)-\max_h\mathbb{E}
+q_h(x)$ satisfies Eq.~\eqref{eq:identity} and is zero exactly when one
+member is expectation-best on every task. Repeats with differing
+execution-condition fields or differing member source hashes are refused
+as matched repeats and force INSUFFICIENT\_EVIDENCE; byte-identical
+outcome matrices are refused unless both repeats carry distinct,
+explicitly independent execution provenance (legitimate
+near-deterministic programs can reproduce identical matrices, so
+identity equality triggers provenance verification rather than an
+automatic rejection). Pair-level imputation bounds over unknown cells
+are reported alongside the recorded success rate.
+
+\paragraph{The v3 C-comp decision (post 2026-09-19 review).}
+The repeat-averaged plug-in of $H_{\rm stable}$ is retained as a
+\emph{descriptive} field only; it never determines a scientific state.
+Two known-truth counterexamples from the review are encoded as
+regression tests: all $q=0.9$ with $M{=}9,T{=}400,R{=}3$ gives a plug-in
+$\widehat H=8.83$\,pp with a bootstrap interval excluding zero, and the
+sealed same-code clone arm prints $2.67$\,pp --- both with true
+$H_{\rm stable}=0$. The calibrated statistic is the cross-fitted
+frozen-selection gain $G$ described in \S\ref{sec:calibration-test}; the
+decision uses the real-minus-clone difference $D$.
+
+\emph{Why the rule has size across the whole null family.} Let
+$\theta^*=G$ be the population gain under the frozen selection protocol
+$S$. On every task the selected member's probability is at most
+$\max_h q_h(x)$, so $\theta^*\le H_{\rm stable}$. The null $H_{\rm
+stable}=0$ is the global-dominance cone: some $h_0$ satisfies
+$q_{h_0}(x)\ge q_h(x)$ for all $h$ and almost every $x$. Under dominance
+the frozen mapping can only route to the dominant member or, when a
+weaker member ties the noisy discovery score, misroute \emph{away} from
+it; the scored held-out expectation is therefore
+$E[q_{g_S(x)}(x)]\le E[q_{h_0}(x)]=\max_h\mu_h$, hence
+$\theta^*\le0$ throughout the cone, not just at equal ability. The
+two-arm randomization reference is exact at the equal-ability boundary
+(permuted labels are exchangeable and the recomputed statistic is a draw
+from the same conditional distribution), and because the population
+parameter on the real arm is $\le0$ over the rest of the cone while the
+clone arm stays centered at zero, the one-sided rejection event
+$D>0$ against the equal-ability envelope cannot gain probability under
+dominance: the reference is conservative there. These are structural
+statements about the population parameter; finite-sample validity at the
+nominal level is then checked empirically on every null DGP in the
+calibration grid (below), including heterogeneous difficulty,
+heterogeneous dominance, the $0.5/0.9$ configuration, missingness, and
+sticky within-task latent states matched between arms.
+
+\emph{Tie-breaking.} Member-label tie-breaking in the frozen argmax is
+iid $U(0,10^{-9})$ jitter averaged over ten frozen tie realizations on
+the real-data report (each calibration dataset uses one draw: under the
+null the tie bias has mean zero); a deterministic lexicographic rule is
+not label-invariant and is rejected by simulation. Label-symmetry is
+asserted directly by a permutation-invariance regression test: the
+10-draw tie-averaged $G$, $D$, and state agree up to Monte Carlo
+tolerance when the member order is permuted identically in both arms.
+
+\paragraph{Randomization mechanics.} Labels are permuted independently
+within every task AND every repeat (a single joint permutation across
+repeats preserves a genuine crossover mapping and does not null the
+statistic: verified in development), recomputing both $G$'s, their
+difference, and the two selections on every draw; the $+1$ Monte Carlo
+correction gives an exact discrete level. A paired task bootstrap
+supplies the sampling interval; a $\le10\%$ incomplete-task coverage
+gate, extremal unknown-cell bounds, and a positive $G_{\rm real}$ sign
+guard complete the rule, and without a clone arm no SUPPORTED state is
+emitted.
+
+\paragraph{Known-truth simulation calibration.}
+Binary tensors are drawn from specified $M\times T$ probability matrices
+(\texttt{experiment/diagnostics/calibration\_sim.py}): iid equal ability
+at constant $q$ and with shared task difficulty; global dominance with a
+clean dominant fixed member, the reviewer's $0.5/0.9$ configuration, and
+heterogeneous dominance; and crossover alternatives of increasing
+strength over two latent task types, plus difficulty-related partial
+crossover. The grid spans $M\in\{3,9,20\}$, $T\in\{100,400,1000\}$,
+$R\in\{3,5,10\}$, complete data, 5\% MCAR, and 3\% hardness-related
+missingness; the paper table focuses on the $(9,400,\cdot)$ acquisition
+design with 300 Monte Carlo datasets per cell (150 in sweeps). Every
+cell reports the support, refutation, abstention and error rates of four
+procedures (plug-in; one-split frozen gain; repeat-cross-fitted gain;
+clone-calibrated v3 decision), interval coverage against the true
+parameter, and mean estimates. Results (artifacts under
+\texttt{artifacts/diagnostics/calibration\_v3/}): the plug-in
+false-supports at rate $\approx1$ on every null at all grid points; v3
+holds the null support rate at or below the nominal level across nulls
+and missingness regimes, and its power on alternatives increases with
+$R$ (small/moderate interactions remain unresolved at $R{=}3$, which is
+reported as an abstention property rather than hidden). The earlier
+eight mechanism-derived classes and the four repeat-based classes
+(C9--C12, with C9/C10 now paired with registered same-code clone arms)
+continue to match their hash-frozen expected states; invariant tests
+additionally assert permutation invariance,
+dominance$\neq$complementarity, identity refusal, and the two review
+counterexamples directly.
 
 \paragraph{Finite-repeat bias and the clone-null calibration.}
-Writing $\hat{q}_h(x)$ for the repeat-averaged correctness,
-$\mathbb{E}\,\max_h \hat{q}_h(x) \geq \max_h \mathbb{E}\,\hat{q}_h(x)$
-by Jensen, with strict inequality when finite-$R$ noise can change the
-per-task argmax. The cross-fitted discovery/validation procedure removes
-the within-policy selection optimism but not this residual component. The
-equal-budget same-code clone arm is subject to the same mechanism under
-the null of no code differences; subtracting its observed advantage
-therefore removes the shared component without claiming exact
-cancellation. The identity gates handle the degenerate case outright by
-refusing hash-matched repeats.
+Writing $\hat{q}_h(x)$ for a repeat-averaged estimate,
+$\mathbb{E}\max_h \hat{q}_h(x) \geq \max_h \mathbb{E}\hat{q}_h(x)$
+by Jensen for each task, with strict inequality when finite-$R$ noise can
+change the per-task argmax. The plug-in \emph{headroom} is a difference of
+two such maxima; Jensen bounds each term separately and therefore does NOT
+establish that the difference is upward biased in general --- in a
+two-member, two-task crossing example the plug-in can be downward biased
+(true $H{=}0.40$, expected plug-in over three repeats $\approx0.34$). What
+is established is stronger and narrower: under same-code exchangeability
+the true $H_{\rm stable}$ is zero while the plug-in is positive with
+probability approaching one (selection noise on the per-task argmax;
+$\widehat H{=}8.83$\,pp in the $q{=}0.9$, $M{=}9$, $T{=}400$, $R{=}3$
+known-truth simulation, and $2.54$\,pp descriptive on the sealed clone
+arm). The calibrated procedure therefore never decides from the plug-in:
+a discovery/validation cross-fit freezes the per-task member mapping on
+discovery repeats and scores it on held-out repeats against the best
+\emph{fixed} member (so a globally dominant member is always the frozen
+pick), and the real-minus-clone difference removes the residual
+finite-$(R,T)$ selection-noise component with a two-arm Monte Carlo
+randomization reference ($+1$ correction; exact at the equal-ability
+boundary, empirically checked across the dominance grid rather than
+asserted analytically throughout the cone; Appendix~\ref{app:diagnostics}).
+The identity gates handle the
+degenerate case outright by requiring provenance-verified independent
+executions; identical matrices without distinct provenance are refused.
 
 \paragraph{Class D and E formal definitions.} Class D evaluates one
 frozen deterministic policy $\pi_Z: Z(x)\mapsto h$ --- pre-execution
@@ -690,25 +793,34 @@ budget $b$ with $\lambda{=}1$ harm weighting (one regression cancels one
 repair); it is admissible only when per-record evidence verifies the
 budget on every evaluated member-task pair, and abstains otherwise.
 
-\paragraph{Validation on known-truth controls.} The frozen package has two
-layers: the original eight mechanism-derived classes $\times$ 2 instances
-(16 controls, expectations unchanged), plus four repeat-based classes
-$\times$ 2 instances exercising the stability paths single-shot controls
-cannot reach --- global dominance (C-rank SUPPORTED, C-comp REFUTED),
-equal-mean crossover skill (C-rank INSUFFICIENT, C-comp SUPPORTED, and the
-visible stratum makes D/E SUPPORTED), a condition-mixing trap, and a
-cloned-repeats trap (both must abstain). Expected states are frozen in the
-hashed manifest before any blinded run and derive from the generating
-mechanisms. Invariant tests additionally assert permutation invariance,
-dominance$\neq$complementarity, and identity-refusal directly. Calibration
-matched on all state cells; the blinded set (12 controls + 2 auditor
-challenges re-executed from the pre-committed, hash-bound spec under the
-current code) matched on all $14\times 6$ cells: zero false supports, the
-positive control recognized, and the abstention cap holds. The earlier
+\paragraph{Validation on hand-built known-truth controls.} The frozen
+package has two layers: the original eight mechanism-derived classes
+$\times$ 2 instances (16 controls, expectations unchanged), plus four
+repeat-based classes $\times$ 2 instances exercising the stability paths
+single-shot controls cannot reach --- global dominance (C-rank
+SUPPORTED, C-comp REFUTED), equal-mean crossover skill (C-rank
+INSUFFICIENT, C-comp SUPPORTED under clone calibration, and the visible
+stratum makes D/E SUPPORTED), a condition-mixing trap, and a
+cloned-repeats trap (both must abstain); C9/C10 carry registered
+same-code clone arms as required by the v3 decision. Expected states
+are frozen in the hashed manifest before any blinded run and derive
+from the generating mechanisms. Invariant tests additionally assert
+permutation invariance, dominance$\neq$complementarity, identity
+refusal, the two 2026-09-19 review counterexamples (iid noise and
+$0.5/0.9$ dominance must not support; crossover must support with
+adequate repeats), and that the decision never supports without a clone
+arm. Calibration matched on all state cells; the blinded set (12
+controls + 2 auditor challenges re-executed from the pre-committed,
+hash-bound spec under the current code) matched on all $14\times 6$
+cells: zero false supports, the positive control recognized, and the
+abstention cap holds. These discrete controls complement, but do not
+replace, the Monte Carlo false-support/power calibration of
+\S\ref{sec:calibration}, which is what establishes the v3 test's
+statistical size. The earlier
 stored challenge result whose CH2 numbers contradict its own spec
 (best-fixed 0.94 is unreachable under the generating rule, which forces
-0.79) is retained as provenance only; spec-faithful re-execution matches the
-auditor's pre-committed expectations on every cell.
+0.79) is retained as provenance only; spec-faithful re-execution matches
+the auditor's pre-committed expectations on every cell.
 
 \paragraph{Application to the archives.} Applied to the MATH-500 archive
 (36 members $\times$ 400 tasks) and the 18-cell BIRD Phase-II archive. On

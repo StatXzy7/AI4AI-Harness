@@ -434,26 +434,50 @@ def main():
         matrices(ARM_LEDGERS['eval_real'])
     report['dedup_eval_real'] = dedup_real
     pops = build_populations(members, tasks, m_by_rep, manifest)
-    report['E1_C-rank_E2_C-comp'] = s3_stability(pops)
     report['panel'] = members
     report['n_tasks'] = len(tasks)
     report['repeats'] = repeats
-    # A8.6 (requires eval_clone and all three repeats)
-    if (WP1R / 'eval_clone' / 'ledger.sqlite').exists():
+    if not (WP1R / 'eval_clone' / 'ledger.sqlite').exists():
+        report['E1_C-rank_E2_C-comp'] = s3_stability(pops)
+    else:
         cm, ct, cr, c_by_rep, cman, _, dedup_clone = \
             matrices(ARM_LEDGERS['eval_clone'])
         report['dedup_eval_clone'] = dedup_clone
         c_pops = build_populations(cm, ct, c_by_rep, cman)
-        report['clone_arm_s3'] = s3_stability(c_pops)
+        # Standalone clone-arm S3: kept ONLY to document that the old plug-in
+        # false-positives on same-code slots (2.67pp SUPPORTED under v2); it is
+        # descriptive provenance, never a scientific claim.
+        clone_s3 = s3_stability(c_pops)
+        report['clone_arm_descriptive_s3'] = {
+            'note': 'DESCRIPTIVE PROVENANCE: this repeats the v2 plug-in on '
+                    'the same-code clone arm; its stable_complementarity '
+                    'block must not be read as evidence (the clone arm has, by '
+                    'construction, H_stable = 0)',
+            'plugin_H_hat': clone_s3['stable_complementarity']
+                .get('descriptive_plugin', {}).get('H_hat'),
+            'v2_legacy_false_positive_pp': 2.67}
+        # E1/E2 with the clone arm attached: the C-comp SCIENTIFIC state is the
+        # clone-calibrated cross-fitted frozen-selection gain (v3, post
+        # 2026-09-19 review); the repeat-average plug-in is descriptive only.
+        report['E1_C-rank_E2_C-comp'] = s3_stability(
+            pops, c_pops, clone_n_perm=N_PERM)
         if {1, 2, 3} <= set(repeats) and {1, 2, 3} <= set(cr):
             primary = a86_test(m_by_rep, members, c_by_rep, cm,
                                n_tasks_total=len(tasks))
-            report['E2_A86_clone_null'] = primary
-            # frozen sensitivity: cells with two completed but disagreeing
-            # executions excluded instead of first-completed (clone arm has
-            # zero such cells, so the permutation null is identical)
-            m2, t2, r2, mb2, _, _, _ = matrices(ARM_LEDGERS['eval_real'],
-                                                 'nan')
+            # Legacy A8.6 vs-bare statistic: retained verbatim as a LABELED
+            # secondary quantity; it rejects under pure global dominance and
+            # is therefore NOT a test of stable complementarity (review W2).
+            primary['estimand_status'] = (
+                'SECONDARY / DESCRIPTIVE: post-discovery advantage over bare; '
+                'rejects under pure global dominance and is therefore NOT a '
+                'test of stable complementarity. The calibrated estimand is '
+                'the cross-fitted G vs the best FIXED member with the same-'
+                'code clone null, in E1_C-rank_E2_C-comp.'
+                'stable_complementarity.clone_calibrated')
+            report['E2_legacy_vs_bare_A86'] = primary
+            # frozen sensitivity: doubly-executed conflict cells excluded
+            # instead of first-completed (clone arm has zero such cells)
+            m2, t2, r2, mb2, _, _, _ = matrices(ARM_LEDGERS['eval_real'], 'nan')
             if {1, 2, 3} <= set(r2) and dedup_real['both_completed_differ']:
                 A2, adv2, cols2 = a86_statistic(mb2, members, 'bare', 1, (2, 3))
                 _, adv_c, cols_c = a86_statistic(c_by_rep, cm, 'clone-c1',
@@ -463,7 +487,7 @@ def main():
                 p2c = {c: i for i, c in enumerate(cols_c)}
                 ar2 = np.array([adv2[p2r[c]] for c in common2])
                 ac2 = np.array([adv_c[p2c[c]] for c in common2])
-                brng = np.random.default_rng(SEED)  # protocol A8.6: frozen seed for all resampling
+                brng = np.random.default_rng(SEED)
                 boots = np.empty(N_BOOT)
                 for b in range(N_BOOT):
                     idx = brng.integers(0, len(common2), len(common2))
@@ -478,15 +502,15 @@ def main():
                     'n_cells_excluded':
                         len(dedup_real['both_completed_differ'])}
         else:
-            report['E2_A86_clone_null'] = {
+            report['E2_legacy_vs_bare_A86'] = {
                 'state': 'INSUFFICIENT',
                 'reason': f'repeats present: real={repeats}, clone={cr}; '
                           'A8.6 requires repeats 1,2,3 in both arms'}
     report['E4_accounting'] = accounting(['eval_real', 'eval_clone', 'dev_real', 'pilot'])
     out = WP1R / 'analysis_report.json'
     out.write_text(json.dumps(report, indent=1, ensure_ascii=False), encoding='utf-8')
-    print(json.dumps({k: report[k].get('state', 'n/a') if isinstance(report[k], dict)
-                      else report[k] for k in report}, ensure_ascii=False))
+    print(json.dumps({k: (report[k].get('state', 'n/a') if isinstance(report[k], dict)
+                          else report[k]) for k in report}, ensure_ascii=False))
     print(f'wrote {out}')
 
 

@@ -1,24 +1,34 @@
-# REPRODUCE — 诊断流程与验证（v2 修订，2026-09-15 第二轮）
+# REPRODUCE — 诊断流程与验证（v3 修订，2026-09-20 第三轮）
 
-实测平台：Windows 10 (win32)、Git Bash、Python 3.13.9（Anaconda）、numpy 2.3.5。不声称跨平台实测。
-无需任何模型 API、无需 GPU；全部命令在仓库根目录执行，输出写入 `artifacts/diagnostics/<date>/<run_id>/`（每次新 run_id，不覆盖冻结历史）。
+实测平台：Windows 10 (win32)、Git Bash、Python 3.13.9（Anaconda）、numpy 2.3.5。
+无需任何模型 API、无需 GPU；全部命令在仓库根目录执行，输出写入
+`artifacts/diagnostics/<date>/<run_id>/`（每次新 run_id，不覆盖冻结历史）。
 
-## 0. 本轮 v2 修订（响应外部复审）
-
-方法/验证合同的修订层见 `review-stage/DIAGNOSTIC_PLAN_V2_20260915.md`；
-v1.3 冻结原文保持原样。主要变化：C 类拆分为 C-rank / C-comp 两个 estimand
-（恒等式 + 排列不变性）、重复身份三重门（条件字段 / 源码哈希 / 克隆矩阵）、
-A 类 judge-replay 执行状态语义、BIRD 逐记录调用读取、挑战规范忠实重执行
-（哈希绑定）、控制包 v2（+C9–C12）。
+## 0. v3 修订（响应 2026-09-19 外部复审，3/10）
+核心变化：C-comp 科学判定不再使用重复均值 plug-in（已知在纯噪声下假阳性：
+审稿反例 q=0.9/M=9/T=400/R=3 得 8.83pp SUPPORT；封存 clone 臂自身得 2.67pp）。
+- 新判定 `experiment/diagnostics/ccomp_v3.py`：cross-fitted 冻结选择收益 G
+  （发现轮冻结逐任务映射与最佳固定成员，留出轮评分，比较对象永不是 bare），
+  决策统计量 D=G_real−G_clone；精确两臂随机化零（逐任务逐重复独立置换）+
+  配对任务 bootstrap；覆盖率门 ≤10%、极值未知 cell 界、占优符号守卫；
+  无 clone 臂永不 SUPPORTED。旧 plug-in 仅作 descriptive_plugin 保留。
+- C-rank 改为共享 bootstrap 的 max-T 同步区间（全部 canonical 对的族错误率）。
+- 相同矩阵门改为溯源验证（合法近确定性程序可产生相同矩阵）。
+- 新增已知真值蒙特卡洛校准套件（FPR/功效/弃权率/覆盖率网格）。
+- WP-1R 新增共同执行预算离线比较（`experiment/revision/wp1r_budget.py`）。
+回应全文：`review-stage/REBUTTAL_20260920.md`。
 
 ## 1. 冻结的方法/验证计划
-- `review-stage/DIAGNOSTIC_PLAN_20260915.md`（FROZEN v1.3，历史快照，不覆盖）
-- `review-stage/DIAGNOSTIC_PLAN_V2_20260915.md`（本轮修订层，**当前有效**）
+- `review-stage/DIAGNOSTIC_PLAN_20260915.md`（FROZEN v1.3，历史快照）
+- `review-stage/DIAGNOSTIC_PLAN_V2_20260915.md`（v2 修订层）
+- v3 统计规格以 `experiment/diagnostics/ccomp_v3.py` 模块文档串为准。
 
-## 2. 单元测试（42 项，约 43 秒；含 S3 不变量 / S1 执行状态 / E 预算门边界 / CV 方向性参考实现 / 挑战执行）
+## 2. 单元测试（66 项；含审稿人两个反例的回归测试）
 ```bash
-python -m unittest experiment.diagnostics.test_diagnostics -v
+python -m pytest experiment/diagnostics -q
 ```
+关键新增 `test_ccomp_v3.py`：W1 等能力零、W2 0.5/0.9 占优零均不得 SUPPORT；
+交叉备择 R=20 必须 SUPPORT；无 clone 臂永不 SUPPORT；覆盖率/极值界门。
 
 ## 3. 控制验证（calibration 12 控制；blinded 12 控制 + 2 规范重执行挑战）
 ```bash
@@ -88,6 +98,29 @@ cd paper/latex && pdflatex main && bibtex main && pdflatex main && pdflatex main
 - 若运行结果与上文"预期要点"不符，视为阻断项，不要调整阈值后继续。
 - 历史运行目录（含 v1 控制验证与旧 DECISION_IMPACT）一律保留为冻结历史，
   不覆盖、不删除。
+
+## 7b. 已知真值统计校准（v3 新增，离线）
+```bash
+python -m experiment.diagnostics.calibration_run --smoke     # 快速冒烟
+python -m experiment.diagnostics.calibration_run --n-reps 300  # 冻结论文网格
+python -m experiment.diagnostics.calibration_render          # 生成正文表
+```
+产物：`artifacts/diagnostics/calibration_v3/calibration_results.{json,csv}`
+与 `paper/latex/calibration_table.tex`。网格：两类零假设（等能力 iid /
+全局占优，含审稿 0.5/0.9 反例）× 交叉备择 × M∈{3,9,20} × T∈{100,400,1000}
+× R∈{3,5,10,20} × 完整/MCAR5%/MNAR3%，报告 plug-in、冻结增益、crossfit 增益、
+v3 clone 校准判定各自的假阳性率（含 Wilson 95% 区间）、功效、弃权率、覆盖率。
+论文核心格 300 数据集，扫描格 150，多进程并行（约 10 分钟）。
+
+## 7c. 共同执行预算与答案聚合（v3 新增，离线）
+```bash
+python -m experiment.revision.wp1r_budget            # budget_curves.json（oracle）
+python -m experiment.revision.wp1r_budget_render     # 正文预算表（仅 oracle 列）
+python -m experiment.revision.wp1r_answer_majority   # 臂内答案多数投票敏感性
+```
+注：跨臂 majority-vote 准确率不进入论文——两臂答案格式不兼容
+（生成 harness 输出 boxed 数字，bare 为自由文本），无公平的统一 modal key；
+`answer_majority_curves.json` 仅作臂内敏感性存档。
 
 ## 8. WP-1R/WP-2R 真实证据轮（2026-09-15 至 2026-09-19）
 

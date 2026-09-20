@@ -1,0 +1,271 @@
+{
+ "estimand": "common per-task execution budget b (model executions); panel vs same-code clone, oracle and majority aggregation",
+ "portfolio_rule": "dev-ranked members, three eval repeats each, bare retained (dev-best fixed member)",
+ "seed": 20260915,
+ "n_subsample": 1000,
+ "realized_spend": {
+  "eval_real": {
+   "tasks": 400,
+   "calls_per_task_mean": 54.49,
+   "calls_per_task_median": 54.0,
+   "calls_per_task_minmax": [
+    41,
+    64
+   ],
+   "tokens_per_task_mean": 132907.0,
+   "tokens_per_task_median": 75310.0,
+   "tokens_total": 53162874
+  },
+  "eval_clone": {
+   "tasks": 400,
+   "calls_per_task_mean": 27.0,
+   "calls_per_task_median": 27.0,
+   "calls_per_task_minmax": [
+    27,
+    27
+   ],
+   "tokens_per_task_mean": 36273.0,
+   "tokens_per_task_median": 17562.5,
+   "tokens_total": 14509102
+  },
+  "dev_real": {
+   "tasks": 100,
+   "calls_per_task_mean": 54.58,
+   "calls_per_task_median": 54.0,
+   "calls_per_task_minmax": [
+    43,
+    65
+   ],
+   "tokens_per_task_mean": 110441.0,
+   "tokens_per_task_median": 68648.0,
+   "tokens_total": 11044145
+  }
+ },
+ "budget_rows": [
+  {
+   "budget_executions_per_task": 3,
+   "n_panel_members": 1,
+   "panel_members": [
+    "bare"
+   ],
+   "panel_oracle": 0.98,
+   "panel_majority": 0.9625,
+   "clone_oracle_mean": 0.9763,
+   "clone_oracle_ci95": [
+    0.97,
+    0.9825
+   ],
+   "clone_majority_mean": 0.9596,
+   "clone_majority_ci95": [
+    0.95,
+    0.9675
+   ],
+   "oracle_gap_panel_minus_clone_pp": 0.37,
+   "majority_gap_panel_minus_clone_pp": 0.29
+  },
+  {
+   "budget_executions_per_task": 6,
+   "n_panel_members": 2,
+   "panel_members": [
+    "bare",
+    "gsm_kimi_s0_g4"
+   ],
+   "panel_oracle": 0.9825,
+   "panel_majority": 0.895,
+   "clone_oracle_mean": 0.9808,
+   "clone_oracle_ci95": [
+    0.9775,
+    0.985
+   ],
+   "clone_majority_mean": 0.9582,
+   "clone_majority_ci95": [
+    0.95,
+    0.9651
+   ],
+   "oracle_gap_panel_minus_clone_pp": 0.17,
+   "majority_gap_panel_minus_clone_pp": -6.32
+  },
+  {
+   "budget_executions_per_task": 9,
+   "n_panel_members": 3,
+   "panel_members": [
+    "bare",
+    "gsm_kimi_s0_g4",
+    "gsm_kimi_s0_g3"
+   ],
+   "panel_oracle": 0.9825,
+   "panel_majority": 0.905,
+   "clone_oracle_mean": 0.9822,
+   "clone_oracle_ci95": [
+    0.98,
+    0.985
+   ],
+   "clone_majority_mean": 0.9661,
+   "clone_majority_ci95": [
+    0.96,
+    0.9725
+   ],
+   "oracle_gap_panel_minus_clone_pp": 0.03,
+   "majority_gap_panel_minus_clone_pp": -6.11
+  },
+  {
+   "budget_executions_per_task": 12,
+   "n_panel_members": 4,
+   "panel_members": [
+    "bare",
+    "gsm_kimi_s0_g4",
+    "gsm_kimi_s0_g3",
+    "gsm_ernie_s0_g3"
+   ],
+   "panel_oracle": 0.9825,
+   "panel_majority": 0.87,
+   "clone_oracle_mean": 0.9833,
+   "clone_oracle_ci95": [
+    0.98,
+    0.985
+   ],
+   "clone_majority_mean": 0.965,
+   "clone_majority_ci95": [
+    0.9575,
+    0.97
+   ],
+   "oracle_gap_panel_minus_clone_pp": -0.08,
+   "majority_gap_panel_minus_clone_pp": -9.5
+  },
+  {
+   "budget_executions_per_task": 15,
+   "n_panel_members": 5,
+   "panel_members": [
+    "bare",
+    "gsm_kimi_s0_g4",
+    "gsm_kimi_s0_g3",
+    "gsm_ernie_s0_g3",
+    "gsm_glm_s0_g6"
+   ],
+   "panel_oracle": 0.9825,
+   "panel_majority": 0.855,
+   "clone_oracle_mean": 0.9836,
+   "clone_oracle_ci95": [
+    0.98,
+    0.985
+   ],
+   "clone_majority_mean": 0.9681,
+   "clone_majority_ci95": [
+    0.9625,
+    0.9725
+   ],
+   "oracle_gap_panel_minus_clone_pp": -0.11,
+   "majority_gap_panel_minus_clone_pp": -11.31
+  },
+  {
+   "budget_executions_per_task": 18,
+   "n_panel_members": 6,
+   "panel_members": [
+    "bare",
+    "gsm_kimi_s0_g4",
+    "gsm_kimi_s0_g3",
+    "gsm_ernie_s0_g3",
+    "gsm_glm_s0_g6",
+    "gsm_deepseek_s0_g3"
+   ],
+   "panel_oracle": 0.9825,
+   "panel_majority": 0.7875,
+   "clone_oracle_mean": 0.9841,
+   "clone_oracle_ci95": [
+    0.9825,
+    0.985
+   ],
+   "clone_majority_mean": 0.9679,
+   "clone_majority_ci95": [
+    0.9625,
+    0.9725
+   ],
+   "oracle_gap_panel_minus_clone_pp": -0.16,
+   "majority_gap_panel_minus_clone_pp": -18.04
+  },
+  {
+   "budget_executions_per_task": 21,
+   "n_panel_members": 7,
+   "panel_members": [
+    "bare",
+    "gsm_kimi_s0_g4",
+    "gsm_kimi_s0_g3",
+    "gsm_ernie_s0_g3",
+    "gsm_glm_s0_g6",
+    "gsm_deepseek_s0_g3",
+    "gsm_qwen_s0_g5"
+   ],
+   "panel_oracle": 0.9825,
+   "panel_majority": 0.76,
+   "clone_oracle_mean": 0.9844,
+   "clone_oracle_ci95": [
+    0.9825,
+    0.985
+   ],
+   "clone_majority_mean": 0.9695,
+   "clone_majority_ci95": [
+    0.965,
+    0.9725
+   ],
+   "oracle_gap_panel_minus_clone_pp": -0.19,
+   "majority_gap_panel_minus_clone_pp": -20.95
+  },
+  {
+   "budget_executions_per_task": 24,
+   "n_panel_members": 8,
+   "panel_members": [
+    "bare",
+    "gsm_kimi_s0_g4",
+    "gsm_kimi_s0_g3",
+    "gsm_ernie_s0_g3",
+    "gsm_glm_s0_g6",
+    "gsm_deepseek_s0_g3",
+    "gsm_qwen_s0_g5",
+    "gsm_minimax_s0_g3"
+   ],
+   "panel_oracle": 0.9825,
+   "panel_majority": 0.6975,
+   "clone_oracle_mean": 0.9847,
+   "clone_oracle_ci95": [
+    0.9825,
+    0.985
+   ],
+   "clone_majority_mean": 0.9699,
+   "clone_majority_ci95": [
+    0.9674,
+    0.9725
+   ],
+   "oracle_gap_panel_minus_clone_pp": -0.22,
+   "majority_gap_panel_minus_clone_pp": -27.24
+  },
+  {
+   "budget_executions_per_task": 27,
+   "n_panel_members": 9,
+   "panel_members": [
+    "bare",
+    "gsm_kimi_s0_g4",
+    "gsm_kimi_s0_g3",
+    "gsm_ernie_s0_g3",
+    "gsm_glm_s0_g6",
+    "gsm_deepseek_s0_g3",
+    "gsm_qwen_s0_g5",
+    "gsm_minimax_s0_g3",
+    "gsm_minimax_s0_g0"
+   ],
+   "panel_oracle": 0.9825,
+   "panel_majority": 0.7,
+   "clone_oracle_mean": 0.985,
+   "clone_oracle_ci95": [
+    0.985,
+    0.985
+   ],
+   "clone_majority_mean": 0.9725,
+   "clone_majority_ci95": [
+    0.9725,
+    0.9725
+   ],
+   "oracle_gap_panel_minus_clone_pp": -0.25,
+   "majority_gap_panel_minus_clone_pp": -27.25
+  }
+ ]
+}

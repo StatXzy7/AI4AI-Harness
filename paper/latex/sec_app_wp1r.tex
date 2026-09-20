@@ -11,27 +11,52 @@ and v1.2 (operational test specification) preceded any confirmatory
 outcome; v1.3 (attempt ceiling 45{,}000$\to$60{,}000, matching the task
 authorization) and the concurrency amendment (2$\to$6) were made
 mid-collection for throughput and are disclosed as condition-relevant
-history) fixes: the estimands E1--E4 of
-\S\ref{sec:wp1r}; the panel draw (eligibility by frozen repeat-0 mean
+history) fixes: the panel draw (eligibility by frozen repeat-0 mean
 logical calls ${\leq}3.05$ --- a budget-feasibility filter disclosed as
 biasing the panel toward low-call mechanisms, not a uniform sample of the
 35 generated members; then a salted-hash draw, one stratum seat per builder
 plus two at-large seats, salt \texttt{wp1r-panel-v1-20260915}, recorded in
 \texttt{WP1R\_PANEL\_DRAW.json}); $R{=}3$ fresh repeats per arm; the
 nine-slot same-code clone arm (\texttt{clone-c1..c9}, byte-identical
-\bare{} source) as the exchangeable null; the A8.6 discovery/validation
-procedure (discovery repeat 1, validation repeats 2--3, $\delta{=}1.0$\,pp,
-10{,}000 permutations, 10{,}000 task bootstrap draws, seed 20260915); the
-paired difference and its CI use only the task intersection complete in
-both arms; a coverage gate degrades the main verdict to INSUFFICIENT when
-either arm excludes more than 10\% of tasks, with two frozen sensitivity
-branches (within-task repeat-mean imputation, and exclusion of
-doubly-executed conflict cells); and
-the acceptance rule that any of SUPPORTED / REFUTED / INSUFFICIENT
-terminates the study without re-running or re-sampling. The 400 eval and
-100 dev tasks are the frozen MATH-500 split (SHA256 recorded); eval tasks
-were analyzed before in the one-run mini-audit, so results are labeled
-retrospective-task/prospective-execution, not unseen-task validation.
+\bare{} source) as the exchangeable equal-ability reference; the 400 eval
+and 100 dev tasks of the frozen MATH-500 split (SHA256 recorded); eval
+tasks were analyzed before in the one-run mini-audit, so results are
+labeled retrospective-task/prospective-execution, not unseen-task
+validation.
+
+\paragraph{Statistical procedure (v3, post 2026-09-19 review).}
+The primary complementarity statistic is the cross-fitted
+frozen-selection gain $G$ of \S\ref{sec:calibration-test}: in each of
+three folds, two repeats freeze the per-task member mapping and the best
+\emph{fixed} member, the third repeat scores the frozen mapping against
+that fixed member; $G$ is the per-task mean averaged over folds.
+Tie-breaking is label-symmetric: because $R{=}2$ discovery scores lie
+on $\{0,\tfrac12,1\}$ and ties dominate at high accuracy, a deterministic
+lexicographic rule would bias the selection toward the first listed
+member, so iid $U(0,10^{-9})$ jitter is drawn per (fold, task) and
+averaged over ten frozen tie realizations; a simulation over
+dominant-member positions verifies the statistic is order-independent.
+The decision statistic is the real-minus-clone difference
+$D=G_{\rm real}-G_{\rm clone}$ on the task intersection complete in both
+arms. Its reference distribution uses 4{,}000 two-arm randomizations:
+within every task and repeat, member labels are permuted independently
+in each arm and $D$ is recomputed (a single permutation joint across
+repeats was rejected in development because it preserves a genuine
+crossover mapping and does not null it). A paired task bootstrap
+(2{,}000 draws, seed 20260915) gives the 95\% interval. The frozen rule
+emits SUPPORTED only when the coverage gate passes ($\le10\%$ incomplete
+tasks in either arm; $\ge30$ paired tasks), the randomization $p<0.05$,
+the bootstrap lower bound is positive, $D>1.0$\,pp, and $G_{\rm real}$'s
+own lower bound is positive; REFUTED requires the $D$ upper bound within
+the margin and a small equivalence $p$; otherwise INSUFFICIENT. The
+acceptance rule that any of these states terminates the study without
+re-running remains. The earlier v2 procedure --- a discovery-repeat
+argmax scored against \bare{} on repeats 2--3 (A8.6) --- is retained as
+a labeled secondary statistic, not a complementarity test (under pure
+global dominance with \bare{} at 0.5 and the other members at 0.9 its
+expectation is $\approx0.5(1-0.1^8)\cdot0.4\approx0.20$). Two frozen
+sensitivity branches accompany it (within-task available-repeat mean
+imputation; exclusion of doubly-executed conflict cells).
 
 \paragraph{Execution record and continuation merge.} Collection ran
 2026-09-15 through 2026-09-19 under a 60{,}000-attempt global budget with
@@ -52,24 +77,46 @@ sensitivity branch excludes them instead). The clone arm's
 (\WpCloneMigrationCopies{} copies, \WpCloneConflicts{} conflicts).
 \WpUnknownCarried{} cells remain
 \texttt{unknown\_remote} across all ledgers and stay NaN in the outcome
-matrices --- never imputed --- so classes requiring those cells abstain by
-the frozen rules. The merged arms are hash-sealed
-(\texttt{SEALED\_eval\_real.json}, \texttt{SEALED\_eval\_clone.json},
-\texttt{SEALED\_dev\_real.json}). Three collector source versions served
-the real arm across continuations (concurrency 2/2/6); each seal records
-the arm's bound collector hash, and the identity gates exclude run-identity
-fields (acquisition id) while this appendix discloses the concurrency and
-amendment history. The analysis code and its unit tests are in
+matrices --- never imputed --- so the v3 coverage gate excludes their
+tasks (point $G$ is a complete-case statistic, exact on the included
+tasks), and a scenario range for $G$ under all-0 and all-1 filling of
+the excluded tasks' unknown outcomes (the tight fill-extremes, each
+recomputing the full cross-fit including selection changes) is reported
+as \texttt{missing\_extremal\_G\_bounds}. The merged arms
+are hash-sealed (\texttt{SEALED\_eval\_real.json},
+\texttt{SEALED\_eval\_clone.json}, \texttt{SEALED\_dev\_real.json}).
+Three collector source versions served the real arm across continuations
+(concurrency 2/2/6); each seal records the arm's bound collector hash,
+and the identity gates exclude run-identity fields (acquisition id)
+while this appendix discloses the concurrency and amendment history.
+The analysis code, calibration simulation, and their unit tests are in
+\texttt{experiment/diagnostics/ccomp\_v3.py},
+\texttt{experiment/diagnostics/calibration\_sim.py}, and
 \texttt{experiment/revision/wp1r\_analysis.py}.
 
-\paragraph{Accounting (E4).} Per-request accounting layers
-experiment-run $>$ harness-execution $>$ logical-call $>$ provider-attempt;
-migration copies are excluded from the totals (distinct re-executions count
-individually). Totals: \WpLogicalCalls{} logical calls, \WpHttpAttempts{}
-provider attempts, \WpTotalTokens{} known tokens, conservative cost ceiling
-\WpCostCny{} CNY at the frozen break-even price of 33.3 CNY per 1M tokens
-(pricing not independently verifiable; reported as token counts times the
-frozen price, never as billed amounts).
+\paragraph{Budget semantics and realized accounting (E4).}
+Three distinct comparisons are reported and never conflated.
+(i) \emph{Equal-slot collection}: both arms execute nine members/slots
+for three repeats; this is the randomization design and does not imply
+matched spend. (ii) \emph{Common per-task execution budget}
+(Table~\ref{tab:budget-curves}, \S\ref{sec:wp1r}): offline comparison at
+$b=3,\dots,27$ executions per task between the dev-ranked panel
+portfolio and $b$ of the 27 same-code executions, under oracle and
+majority aggregation. (iii) \emph{Realized spend}: per-request
+accounting layers experiment-run $>$ harness-execution $>$ logical-call
+$>$ provider-attempt; migration copies are excluded. The real arm made
+22{,}192 logical calls (32{,}097 provider attempts; 54.17\,M known
+tokens; 54.5 calls per eval task) versus the clone arm's 10{,}800
+logical calls (10{,}804 attempts; 14.51\,M tokens; exactly 27 per task)
+--- a $2.05\times$ call and $3.73\times$ token ratio driven by the
+multi-call panel members; the conservative ceiling at the frozen
+break-even price is 1{,}803.82 vs 483.15 CNY (pricing not independently
+verifiable; reported as token counts times the frozen 33.3 CNY per 1M
+tokens, never as billed amounts). Totals across all arms:
+\WpLogicalCalls{} logical calls, \WpHttpAttempts{} attempts,
+\WpTotalTokens{} known tokens, \WpCostCny{} CNY ceiling. We therefore
+make no realized-cost-matched claim; the common-budget table is the
+cost-controlled comparison.
 
 \paragraph{Selector spec (E3).} $\pi_Z$ is multinomial logistic regression
 over TF-IDF question features (max 300) and per-member dev accuracies
@@ -78,15 +125,12 @@ tasks with same-task repeats never split across folds; fold-model
 averaging; ties broken by member id; abstain to \bare{} when the top-2
 probability gap is below 0.15. Repeat aggregation uses the
 available-repeat mean per member--task (same-task repeats stay in one
-fold); the final-ledger unknown/failed counts are reconciled against the
-merged-matrix NaN cells in the repository checkpoint. Comparators:
-\bare{}, dev-fixed, pre-fixed
-random member (seeded), M1b (dev-fixed with bare fallback on missing
-cells). $E_1$ (budget by construction) is not applicable because panel
-members make more than one call; $E_b$ with $b{=}3$ calls per task is
-reported as a separately named estimand. Leakage controls: no answer,
-correctness, eval-derived difficulty, post-execution trace, or judge
-feature is used.
+fold). Comparators: \bare{}, dev-fixed, pre-fixed random member (seeded),
+M1b (dev-fixed with bare fallback on missing cells). $E_1$ (budget by
+construction) is not applicable because panel members make more than one
+call; $E_b$ with $b{=}3$ calls per task is reported as a separately named
+estimand. Leakage controls: no answer, correctness, eval-derived
+difficulty, post-execution trace, or judge feature is used.
 
 \begin{table}[h]
 \centering\small

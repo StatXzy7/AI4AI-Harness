@@ -56,6 +56,11 @@ class Population:
     # S1 inputs for synthetic controls (real adapters pass counters separately):
     judge_replay_mismatches: int = 0
     duplicate_keys: int = 0
+    # Optional execution provenance for identity gate 3: when two repeats
+    # have byte-identical outcome matrices, independence is accepted ONLY if
+    # both carry independent, distinct execution identifiers. Absent provenance,
+    # identical matrices force an abstention as before (never auto-passed).
+    repeat_provenance: dict = field(default_factory=dict)
 
     @property
     def n_gen(self) -> int:
@@ -283,7 +288,9 @@ def _canonical_pairs(member_ids: list[str]) -> list[tuple[int, int, str, str]]:
     return pairs
 
 
-def s3_stability(pop_by_condition: dict[str, Population]) -> dict:
+def s3_stability(pop_by_condition: dict[str, Population],
+                 clone_by_condition: dict[str, Population] | None = None,
+                 clone_n_perm: int = 4000) -> dict:
     """Plan 3.C (v2): matched same-condition repeats, two separated estimands.
 
     Estimand 1 (stable ranking): for a member pair, the same-condition accuracy
@@ -350,36 +357,78 @@ def s3_stability(pop_by_condition: dict[str, Population]) -> dict:
             "member source identity differs across repeats (changed code "
             "masquerading as same-condition repeats)",
             "re-collect repeats under frozen member source code")
-    # --- identity gate 3: duplicated matrices are not independent executions
+    # --- identity gate 3: duplicated matrices require independent provenance.
+    # Byte-identical outcome matrices alone are never sufficient evidence of
+    # independent executions, but near-deterministic members can legitimately
+    # reproduce identical correctness: equality therefore triggers PROVENANCE
+    # VERIFICATION rather than an automatic rejection of the data. Identical
+    # matrices pass only when both repeats carry distinct, explicitly
+    # independent execution identifiers; otherwise S3 abstains.
     identical_pairs = []
     for a in range(len(conds)):
         for b in range(a + 1, len(conds)):
-            Ya, Yb = pop_by_condition[conds[a]].Y, pop_by_condition[conds[b]].Y
-            if Ya.shape == Yb.shape and np.array_equal(Ya, Yb, equal_nan=True):
-                identical_pairs.append([conds[a], conds[b]])
+            Pa, Pb = pop_by_condition[conds[a]], pop_by_condition[conds[b]]
+            if Pa.Y.shape == Pb.Y.shape and np.array_equal(Pa.Y, Pb.Y,
+                                                           equal_nan=True):
+                prov_a = Pa.repeat_provenance.get(conds[a])
+                prov_b = Pb.repeat_provenance.get(conds[b])
+                independent = bool(
+                    prov_a and prov_b
+                    and prov_a.get("independent_execution") is True
+                    and prov_b.get("independent_execution") is True
+                    and prov_a.get("execution_id")
+                    != prov_b.get("execution_id"))
+                if not independent:
+                    identical_pairs.append([conds[a], conds[b]])
     if identical_pairs:
         return abstain(
-            "repeats contain exactly identical outcome matrices; independence "
-            "of executions cannot be verified",
-            "re-run repeats as separate executions (or bind provenance showing "
-            "independence)")
+            "repeats contain exactly identical outcome matrices and "
+            "independent-execution provenance is absent or not distinct; "
+            "independence of executions cannot be verified",
+            "bind distinct request/execution identifiers "
+            "(repeat_provenance.independent_execution) or re-run repeats "
+            "as separate executions")
     Y = np.stack([pop_by_condition[c].Y for c in conds])       # (R, members, tasks)
     R, M, T = Y.shape
     if T < MIN_REPEAT_TASKS:
         return abstain(f"T={T} shared tasks < {MIN_REPEAT_TASKS}",
                        f">= {MIN_REPEAT_TASKS} shared tasks per repeat")
     rng = np.random.default_rng(20260915)
+    n_boot_rank = 2000
+    # Shared task-resample index across ALL pairs: the max-T adjustment needs
+    # the joint (over pairs) distribution from the same bootstrap draw, not
+    # independent per-pair draws.
+    boot_idx = rng.choice(T, size=(n_boot_rank, T), replace=True)
+    pairs = _canonical_pairs(base.member_ids)
+    # observed per-repeat deltas and bootstrap mean-delta matrix per pair
+    obs_deltas = []
+    boot_means = []
+    for i, j, _, _ in pairs:
+        deltas = np.array([_acc(Y[r, i]) - _acc(Y[r, j]) for r in range(R)])
+        # per-draw per-repeat paired differences on shared task resamples,
+        # averaged over the R repeats -> (n_boot,)
+        diffs = ((np.nansum(Y[:, i, :][:, boot_idx], axis=2)
+                  - np.nansum(Y[:, j, :][:, boot_idx], axis=2)) / T)
+        bi = diffs.mean(axis=0)
+        obs_deltas.append(deltas)
+        boot_means.append(bi)
+    boot_means = np.array(boot_means)                  # (n_pairs, n_boot)
+    se = boot_means.std(axis=1, ddof=1)
+    se = np.where(se < 1e-12, 1e-12, se)
+    t_mat = (boot_means - boot_means.mean(axis=1, keepdims=True)) / se[:, None]
+    max_t = np.max(np.abs(t_mat), axis=0)              # joint over pairs/draw
+    crit = float(np.percentile(max_t, 95))             # max-T 95% critical value
+
     pair_reports = []
     stable_diff_exists = False
     decisive_nonconsistent = False
-    for i, j, id1, id2 in _canonical_pairs(base.member_ids):
-        deltas = [_acc(Y[r, i]) - _acc(Y[r, j]) for r in range(R)]
-        boots = []
-        for _ in range(2000):
-            idx = rng.choice(T, T, replace=True)
-            boots.append(np.nansum(Y[:, i, idx], axis=1) / T
-                         - np.nansum(Y[:, j, idx], axis=1) / T)
-        lo_all, hi_all = np.percentile(np.mean(boots, axis=1), [2.5, 97.5])
+    for k, (i, j, id1, id2) in enumerate(pairs):
+        deltas = obs_deltas[k]
+        mean_d = float(deltas.mean())
+        # marginal (unadjusted) interval for continuity
+        lo_m, hi_m = np.percentile(boot_means[k], [2.5, 97.5])
+        # simultaneous max-T interval (family-wise 95% over all pairs)
+        lo_all, hi_all = mean_d - crit * se[k], mean_d + crit * se[k]
         signs = {int(np.sign(d)) for d in deltas}
         if lo_all > 0 and signs == {1}:
             st = SUPPORTED
@@ -395,8 +444,13 @@ def s3_stability(pop_by_condition: dict[str, Population]) -> dict:
                                          _nanmean(Y[:, j, :], 0))
         pair_reports.append({
             "h1": id1, "h2": id2, "state": st,
-            "mean_delta": round(float(np.mean(deltas)), 4),
-            "ci95": [round(float(lo_all), 4), round(float(hi_all), 4)],
+            "mean_delta": round(mean_d, 4),
+            "ci95_marginal": [round(float(lo_m), 4), round(float(hi_m), 4)],
+            "ci95_maxT_simultaneous": [round(float(lo_all), 4),
+                                       round(float(hi_all), 4)],
+            "multiplicity": "max-T simultaneous 95% interval over all "
+                            f"{len(pairs)} canonical pairs (shared task "
+                            "bootstrap draws)",
             "missing_sensitivity_bounds": [round(mlo, 4), round(mhi, 4)],
             "direction_note": "h1/h2 fixed by member id order; independent of "
                               "input member ordering"})
@@ -406,79 +460,112 @@ def s3_stability(pop_by_condition: dict[str, Population]) -> dict:
         rank_state = REFUTED
     else:
         rank_state = INSUFFICIENT
+    rank_state_note = ("population state means AT LEAST ONE canonical member "
+                       "pair shows a multiplicity-adjusted stable difference "
+                       "(max-T family-wise 95%); it is not a claim that the "
+                       "whole ranking is stable")
 
-    # --- Estimand 2: stable complementarity H_stable on repeat-averaged q_h(x)
+    # --- Estimand 2: stable complementarity
+    # The repeat-averaged plug-in H_hat is retained as a DESCRIPTIVE quantity
+    # ONLY: maximizing noisy per-task estimates is upward biased by finite-R
+    # selection noise, and a task bootstrap of the post-selection statistic
+    # cannot remove that bias (2026-09-19 external review, counterexample:
+    # all q=0.9, M=9, T=400, R=3 -> H_hat=8.83pp SUPPORTED under the old rule).
+    # A scientific SUPPORTED state requires the clone-calibrated cross-fitted
+    # test (ccomp_v3); without it S3 can REFUTE only in the degenerate
+    # structural case H_hat = 0 exactly on every bootstrap draw (a member
+    # deterministically best on every observed task), otherwise it abstains.
     with np.errstate(invalid="ignore"):
         Q = _nanmean(Y, axis=0)                     # (members, tasks) q estimates
     unidentified = np.isnan(Q)                      # cells with NO valid repeat
-    if unidentified.any():
-        # unknown expectation for some (member, task): imputing 0/1 could
-        # manufacture dominance or complementarity, so C-comp must abstain
-        cells = [(base.member_ids[i], base.tasks[j])
-                 for i, j in zip(*np.nonzero(unidentified))]
-        return {
-            "state": rank_state,
-            "R": R, "shared_tasks": T,
-            "condition_canonical_form": sorted(cond_canonical),
-            "identity_checks": {"condition_mismatch": {}, "identity_conflicts": [],
-                                "identical_repeat_pairs": []},
-            "estimand": {
-                "stable_ranking": "pairwise same-condition accuracy difference (canonical "
-                                  "member-id direction); SUPPORTED iff some pair is stable "
-                                  "in either direction; permutation invariant by construction",
-                "stable_complementarity": "H_stable = E_x max_h q_h(x) - max_h E_x q_h(x); "
-                                          "zero iff one member is expectation-best on all "
-                                          "tasks; ranking differences do not imply this",
-            },
-            "stable_ranking": {"state": rank_state, "pairs": pair_reports},
-            "stable_complementarity": {
-                "state": INSUFFICIENT, "H_stable": None, "H_ci95": None,
-                "reason": "per-task member expectation unidentified for "
-                          f"{len(cells)} (member, task) cells with no valid repeat",
-                "unidentified_cells": cells[:20],
-                "minimal_missing_evidence": ["complete repeats or explicit unknown "
-                                             "handling for every (member, task) cell"]},
-            "note": ("pairing is across same-condition repeats; cross-time/provider batches "
-                     "are non_exchangeable and excluded from this estimate"),
-        }
+    unidentified_cells = [(base.member_ids[i], base.tasks[j])
+                          for i, j in zip(*np.nonzero(unidentified))]
+    # descriptive plug-in on observed cells (unknown cells count as 0 here;
+    # this is display-only and never decides state)
     q_filled = np.where(np.isnan(Q), 0.0, Q)
     per_task_max = q_filled.max(axis=0)
     best_fixed_idx = int(np.argmax(q_filled.mean(axis=1)))
-    h_stable = float(per_task_max.mean() - q_filled[best_fixed_idx].mean())
+    h_plugin = float(per_task_max.mean() - q_filled[best_fixed_idx].mean())
     boots_h = []
     rng_h = np.random.default_rng(20260915)
     for _ in range(2000):
         idx = rng_h.choice(T, T, replace=True)
         boots_h.append(per_task_max[idx].mean() - q_filled[best_fixed_idx, idx].mean())
-    lo_h, hi_h = np.percentile(boots_h, [2.5, 97.5])
-    if lo_h > 0:
-        comp_state = SUPPORTED
-    elif hi_h <= 1e-12:
-        comp_state = REFUTED      # consistent with a single expectation-best member
+    lo_h, hi_h = float(np.min(boots_h)), float(np.max(boots_h))
+    exact_zero = bool(not unidentified.any() and hi_h <= 1e-12)
+
+    calibrated = None
+    if not exact_zero and clone_by_condition is not None:
+        # The calibrated test runs on complete-case tasks with its own
+        # coverage gate; partially observed data therefore yields an explicit
+        # INSUFFICIENT there rather than being dropped silently.
+        try:
+            from experiment.diagnostics.ccomp_v3 import ccomp_v3
+            conds_c = sorted(clone_by_condition)
+            Yc = np.stack([clone_by_condition[c].Y for c in conds_c])
+            calibrated = ccomp_v3(
+                Y, Yc, member_ids=base.member_ids, task_ids=base.tasks,
+                n_perm=clone_n_perm, n_boot=2000)
+        except Exception as exc:   # calibration failure is an abstention, never a support
+            calibrated = {"state": INSUFFICIENT,
+                          "reason": f"clone calibration failed: {exc!r}"}
+
+    if exact_zero:
+        comp_state = REFUTED         # structural zero is the strongest possible
+        comp_reason = ("descriptive plug-in H_hat is exactly 0 on every "
+                       "bootstrap draw: a member is best on every observed "
+                       "task; clone calibration cannot resurrect interaction")
+    elif calibrated is not None:
+        comp_state = calibrated["state"]
+        comp_reason = calibrated.get("reason", "")
+        # Fully-unidentified (member, task) cells are not removable by the
+        # complete-case coverage gate alone: even one such cell means an
+        # expectation is unobserved, and SUPPORTED under informative
+        # missingness would require extremal bounds that agree. Conservatively
+        # downgrade to INSUFFICIENT (the bound analysis is reported alongside).
+        if unidentified.any() and comp_state == SUPPORTED:
+            comp_state = INSUFFICIENT
+            comp_reason = (f"{len(unidentified_cells)} (member, task) cells "
+                           "have no valid repeat; extremal bounds were not "
+                           "both positive, so support is downgraded to "
+                           "abstention under potential informative missingness")
     else:
         comp_state = INSUFFICIENT
+        comp_reason = ("plug-in H_hat is a biased descriptive quantity under "
+                       "finite R; a SUPPORTED state requires the clone-"
+                       "calibrated cross-fitted test (no clone arm supplied)")
     return {
         "state": rank_state,
         "R": R, "shared_tasks": T,
         "condition_canonical_form": sorted(cond_canonical),
         "identity_checks": {"condition_mismatch": {}, "identity_conflicts": [],
                             "identical_repeat_pairs": []},
+        "stable_ranking_note": rank_state_note,
         "estimand": {
             "stable_ranking": "pairwise same-condition accuracy difference (canonical "
                               "member-id direction); SUPPORTED iff some pair is stable "
-                              "in either direction; permutation invariant by construction",
+                              "in either direction after max-T multiplicity adjustment; "
+                              "permutation invariant by construction",
             "stable_complementarity": "H_stable = E_x max_h q_h(x) - max_h E_x q_h(x); "
                                       "zero iff one member is expectation-best on all "
-                                      "tasks; ranking differences do not imply this",
+                                      "tasks; ranking differences do not imply this. "
+                                      "Scientific state requires clone-calibrated ccomp_v3.",
         },
         "stable_ranking": {"state": rank_state, "pairs": pair_reports},
         "stable_complementarity": {
-            "state": comp_state, "H_stable": round(h_stable, 4),
-            "H_ci95": [round(float(lo_h), 4), round(float(hi_h), 4)],
-            "expectation_best_member": base.member_ids[best_fixed_idx],
-            "caveat": "q_h(x) estimated from R repeats; E[max] of noisy estimates is "
-                      "biased upward, so SUPPORTED near zero should be treated with "
-                      "the CI and repeat count in mind"},
+            "state": comp_state,
+            "descriptive_plugin": {
+                "H_hat": round(h_plugin, 4),
+                "H_bootstrap_range": [round(lo_h, 4), round(hi_h, 4)],
+                "expectation_best_member": base.member_ids[best_fixed_idx],
+                "n_unidentified_cells": int(unidentified.sum()),
+                "warning": "DESCRIPTIVE ONLY: upward biased by finite-R "
+                           "per-task argmax selection noise; unknown cells "
+                           "counted as 0 here; never a scientific state by "
+                           "itself (2026-09-19 review)"},
+            "unidentified_cells": unidentified_cells[:20],
+            "clone_calibrated": calibrated,
+            "reason": comp_reason},
         "note": ("pairing is across same-condition repeats; cross-time/provider batches "
                  "are non_exchangeable and excluded from this estimate"),
     }

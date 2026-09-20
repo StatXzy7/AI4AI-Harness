@@ -1,0 +1,128 @@
+equal_const        M= 9 T= 400 R=3 complete   n=300 H=0.000 plugin=1.00 frozen=0.00 crossfit=0.00 v3=0.00
+equal_const        M= 9 T= 400 R=5 complete   n=150 H=0.000 plugin=1.00 frozen=0.01 crossfit=0.00 v3=0.00
+equal_const        M= 9 T= 400 R=10 complete   n=150 H=0.000 plugin=1.00 frozen=0.00 crossfit=0.00 v3=0.00
+equal_const        M= 9 T= 400 R=20 complete   n=150 H=0.000 plugin=1.00 frozen=0.00 crossfit=0.00 v3=0.01
+equal_const        M= 3 T= 400 R=3 complete   n=150 H=0.000 plugin=1.00 frozen=0.00 crossfit=0.00 v3=0.00
+equal_const        M=20 T= 400 R=3 complete   n=150 H=0.000 plugin=1.00 frozen=0.00 crossfit=0.00 v3=0.01
+equal_const        M= 9 T= 100 R=3 complete   n=150 H=0.000 plugin=1.00 frozen=0.01 crossfit=0.01 v3=0.02
+equal_const        M= 9 T=1000 R=3 complete   n=150 H=0.000 plugin=1.00 frozen=0.00 crossfit=0.00 v3=0.01
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+equal_const        M= 9 T= 400 R=3 mcar5      n=150 H=0.000 plugin=0.61 frozen=0.01 crossfit=0.01 v3=0.00
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+equal_const        M= 9 T= 400 R=3 mnar_hard3 n=150 H=0.000 plugin=0.00 frozen=0.00 crossfit=0.00 v3=0.00
+equal_hetero       M= 9 T= 400 R=3 complete   n=300 H=0.000 plugin=1.00 frozen=0.01 crossfit=0.01 v3=0.00
+equal_hetero       M= 9 T= 400 R=5 complete   n=150 H=0.000 plugin=1.00 frozen=0.01 crossfit=0.00 v3=0.00
+equal_hetero       M= 9 T= 400 R=10 complete   n=150 H=0.000 plugin=1.00 frozen=0.00 crossfit=0.00 v3=0.01
+equal_hetero       M= 9 T= 400 R=20 complete   n=150 H=0.000 plugin=1.00 frozen=0.00 crossfit=0.00 v3=0.01
+equal_hetero       M= 3 T= 400 R=3 complete   n=150 H=0.000 plugin=1.00 frozen=0.00 crossfit=0.00 v3=0.01
+equal_hetero       M=20 T= 400 R=3 complete   n=150 H=0.000 plugin=1.00 frozen=0.01 crossfit=0.00 v3=0.01
+equal_hetero       M= 9 T= 100 R=3 complete   n=150 H=0.000 plugin=1.00 frozen=0.01 crossfit=0.01 v3=0.02
+equal_hetero       M= 9 T=1000 R=3 complete   n=150 H=0.000 plugin=1.00 frozen=0.01 crossfit=0.00 v3=0.01
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+equal_hetero       M= 9 T= 400 R=3 mcar5      n=150 H=0.000 plugin=0.66 frozen=0.01 crossfit=0.01 v3=0.00
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+equal_hetero       M= 9 T= 400 R=3 mnar_hard3 n=150 H=0.000 plugin=0.05 frozen=0.01 crossfit=0.01 v3=0.00
+dominance_clean    M= 9 T= 400 R=3 complete   n=300 H=0.000 plugin=1.00 frozen=0.00 crossfit=0.00 v3=0.00
+dominance_clean    M= 9 T= 400 R=5 complete   n=150 H=0.000 plugin=1.00 frozen=0.00 crossfit=0.00 v3=0.00
+dominance_clean    M= 9 T= 400 R=10 complete   n=150 H=0.000 plugin=1.00 frozen=0.00 crossfit=0.00 v3=0.00
+dominance_clean    M= 9 T= 400 R=20 complete   n=150 H=0.000 plugin=1.00 frozen=0.00 crossfit=0.00 v3=0.00
+dominance_clean    M= 3 T= 400 R=3 complete   n=150 H=0.000 plugin=1.00 frozen=0.00 crossfit=0.00 v3=0.00
+dominance_clean    M=20 T= 400 R=3 complete   n=150 H=0.000 plugin=1.00 frozen=0.00 crossfit=0.00 v3=0.00
+dominance_clean    M= 9 T= 100 R=3 complete   n=150 H=0.000 plugin=1.00 frozen=0.08 crossfit=0.05 v3=0.00
+dominance_clean    M= 9 T=1000 R=3 complete   n=150 H=0.000 plugin=1.00 frozen=0.00 crossfit=0.00 v3=0.00
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+dominance_clean    M= 9 T= 400 R=3 mcar5      n=150 H=0.000 plugin=0.67 frozen=0.05 crossfit=0.03 v3=0.00
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+E:\projects\AI4AI-Harness\experiment\diagnostics\calibration_stats.py:70: RuntimeWarning: Mean of empty slice
+  Q = np.nanmean(Y, axis=0)
+dominance_clean    M= 9 T= 400 R=3 mnar_hard3 n=150 H=0.000 plugin=0.06 frozen=0.02 crossfit=0.06 v3=0.00
+dominance_reviewer M= 9 T= 400 R=3 complete   n=300 H=0.000 plugin=1.00 frozen=0.00 crossfit=0.00 v3=0.00
+dominance_reviewer M= 9 T= 400 R=5 complete   n=150 H=0.000 plugin=1.00 frozen=0.00 crossfit=0.00 v3=0.00

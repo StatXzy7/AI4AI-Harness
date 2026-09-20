@@ -1,0 +1,69 @@
+You are an INDEPENDENT READ-ONLY REVIEWER performing a fresh full review
+of an ICLR 2027 submission after major revision, at
+E:\projects\AI4AI-Harness. Do not modify files. You are a different model
+from the implementation agent (this is the project's mandated cross-model
+review); judge the work as a skeptical ICLR reviewer plus statistics
+referee.
+
+THE PRIOR REVIEW YOU MUST CHECK WAS ADDRESSED
+An external review dated 2026-09-19 scored the paper 3/10 with five issues
+(W1-W5). The full review and the authors' point-by-point response are in:
+  review-stage/REBUTTAL_20260920.md
+Read it first, then verify the claims in code and paper independently.
+
+W1 (fatal): the C-comp plug-in false-positives on sampling noise
+  (q=0.9, M=9, T=400, R=3 -> 8.83pp SUPPORTED; clone arm itself 2.67pp).
+W2 (fatal): A8.6 compares post-discovery selection vs BARE, so global
+  dominance (bare .5, others .9) rejects with ~20pp although H=0.
+W3: "equal budget" conflated equal slots/repeats with matched spend
+  (22,192 vs 10,800 calls; 54.17M vs 14.51M tokens).
+W4: new experiment only INSUFFICIENT; scope must not over-generalize.
+Other: C-rank multiplicity over 36 pairs; p=.9980 provenance; identical-
+matrix gate; Jensen overclaim.
+
+WHAT TO VERIFY (read the actual files; do not trust the rebuttal)
+1. experiment/diagnostics/ccomp_v3.py is a size-controlled test:
+   - estimand G = cross-fitted frozen per-task selection vs best FIXED
+     member (never bare); decision D = G_real - G_clone with two-arm
+     randomization null + paired bootstrap; no support without clone arm.
+   - independently reproduce the W1 and W2 counterexamples: run
+     `python -m pytest experiment/diagnostics/test_ccomp_v3.py -q`,
+     and reason about whether the FPR claims can hold. Attack the design:
+     label-symmetric tie breaking (search tie_rng), dominance null
+     coverage, randomization validity (per-repeat independent
+     permutations), coverage gate, missing-cell behavior.
+   - flag any way it still false-supports under H=0.
+2. Known-truth simulation suite experiment/diagnostics/calibration_*.py:
+   are the DGPs actually null/alternative as labeled? FPR/power/abstention
+   honestly reported? Check the artifact
+   artifacts/diagnostics/calibration_v3/calibration_results.{json,csv}
+   once present (a full grid run may still be in progress; if so, say so
+   and judge the code + any partial results).
+3. Real-data integration: experiment/revision/wp1r_analysis.py,
+   wp1r_render.py, wp1r_budget.py, and
+   artifacts/wp1r_20260915/{analysis_report.json,budget_curves.json};
+   confirm paper/latex/wp1r_numbers.tex values match and nothing is
+   hand-edited. Check the common-budget table logic.
+4. Paper: paper/latex/main.pdf and paper/latex/*.tex. Main text must end
+   on page 9 (label endofmain in main.aux). Check:
+   - no remaining "validated/equal-budget stable complementarity"
+     overclaim anywhere;
+   - the new methodology section (sec_diagnostics) is correct and
+     self-contained; W1/W2/W3 are answered in the main text, not only the
+     appendix;
+   - INSUFFICIENT scope language (W4) and honest R=3 power limitation;
+   - the calibration table is consistent with the simulation artifact.
+5. Any remaining fatal statistical flaw, overstatement, or
+   reproducibility gap that would keep the score <= 5. Be adversarial;
+   do not give credit for effort or prose.
+
+OUTPUT CONTRACT (exactly)
+## Verdict
+score: x/10 ; recommendation: reject | weak reject | borderline | weak accept | accept
+## Issue-by-issue verification (W1 W2 W3 W4 other; VERIFIED/PARTIAL/FAIL + evidence)
+## Statistical audit (any remaining false-support path, with a concrete
+   counterexample you constructed or ran if you can)
+## Paper audit (overclaims, page limit, consistency)
+## Blockers (must fix before acceptance)
+## Non-blocking issues
+## Score rationale (what moved the score from 3/10, and what would move it to 8)

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.29)  19 SEP 2026 22:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.29)  21 SEP 2026 05:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -409,22 +409,24 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 27.
 
 (d:/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) (./sec_intro.tex
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 1
-0.
+)
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 4
+6.
 
 (d:/texlive/2026/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-) [1{d:/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{d:/texlive/2
-026/texmf-dist/fonts/enc/dvips/base/8r.enc}
+) (./sec_intro.tex
+[1{d:/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{d:/texlive/202
+6/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
 ]
 LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 5
-6.
- (d:/texlive/2026/texmf-dist/tex/latex/psnfss/ts1ptm.fd
+2.
+
+(d:/texlive/2026/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-))
-(./sec_related.tex [2]
+)) (./sec_related.tex
+[2]
 LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 6
 7.
  (d:/texlive/2026/texmf-dist/tex/latex/psnfss/omsptm.fd
@@ -432,36 +434,37 @@ File: omsptm.fd
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 67.
-) (./sec_phase1.tex [3]) [4] (./sec_phase2.tex [5]) (./sec_results.tex
-(./revision_primary_table.tex) [6]
-<figures/fig_results_revision.pdf, id=309, 679.1586pt x 295.16022pt>
+) (./sec_phase1.tex
+[3]) (./sec_phase2.tex [4] [5]) (./sec_results.tex
+(./revision_primary_table.tex)
+<figures/fig_results_revision.pdf, id=297, 679.1586pt x 295.16022pt>
 File: figures/fig_results_revision.pdf Graphic file (type pdf)
 <use figures/fig_results_revision.pdf>
 Package pdftex.def Info: figures/fig_results_revision.pdf  used on input line 3
 0.
 (pdftex.def)             Requested size: 286.18967pt x 124.37628pt.
- (./revision_factorial_table.tex)
+ (./revision_factorial_table.tex) [6]
+(./sec_wp1r.tex [7 <./figures/fig_results_revision.pdf>]
+(./revision_budget_table.tex))) (./sec_diagnostics.tex [8]
+(./calibration_table.tex)) (./sec_discussion.tex)
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [7 <./figures/fig_results_revision.pdf>] (./sec_wp1r.tex)) (./sec_diagnostics.
-tex
-[8]) (./sec_discussion.tex) [9] (./main.bbl [10] [11]) (./sec_appendix.tex
-[12]
-<figures/fig_phenomenon.pdf, id=435, 440.53085pt x 308.48085pt>
+ [9]
+(./main.bbl [10] [11]) (./sec_appendix.tex [12]
+<figures/fig_phenomenon.pdf, id=443, 440.53085pt x 308.48085pt>
 File: figures/fig_phenomenon.pdf Graphic file (type pdf)
 <use figures/fig_phenomenon.pdf>
 Package pdftex.def Info: figures/fig_phenomenon.pdf  used on input line 79.
 (pdftex.def)             Requested size: 238.49341pt x 167.00551pt.
  [13 <./figures/fig_phenomenon.pdf>]
-<figures/fig_design_revision.pdf, id=498, 679.33798pt x 389.96892pt>
+<figures/fig_design_revision.pdf, id=506, 679.33798pt x 389.96892pt>
 File: figures/fig_design_revision.pdf Graphic file (type pdf)
 <use figures/fig_design_revision.pdf>
 Package pdftex.def Info: figures/fig_design_revision.pdf  used on input line 12
 0.
 (pdftex.def)             Requested size: 298.11374pt x 171.13461pt.
  [14 <./figures/fig_design_revision.pdf>] (./revision_sensitivity_table.tex) (.
-/revision_cost_table.tex) [15]
-(./revision_selection_table.tex) [16]
+/revision_cost_table.tex) [15] (./revision_selection_table.tex) [16]
 Underfull \hbox (badness 10000) in paragraph at lines 367--368
 []|\OT1/pcr/m/n/9 GLM-5.3-Flash\OT1/ptm/m/n/9 , \OT1/pcr/m/n/9 Qwen3.8-Flash\OT
 1/ptm/m/n/9 ,
@@ -552,29 +555,42 @@ Underfull \hbox (badness 1259) in paragraph at lines 583--593
 w.[] \OT1/ptm/m/n/10 Gate-v4 com-bined the source-
  []
 
-(./revision_decomposition_table.tex) [21]) (./sec_app_wp1r.tex [22]
-Overfull \hbox (25.19359pt too wide) in paragraph at lines 7--35
+(./revision_decomposition_table.tex) [21] [22] [23]) (./sec_app_wp1r.tex
+Overfull \hbox (25.19359pt too wide) in paragraph at lines 7--26
  []\OT1/ptm/b/n/10 Frozen pro-to-col.[] \OT1/ptm/m/n/10 The ac-qui-si-tion pro-
 to-col (\OT1/pcr/m/n/10 review-stage/REAL[]EVIDENCE[]PROTOCOL[]V1.md\OT1/ptm/m/
 n/10 ,
  []
 
-[23] (./wp1r_policy_table.tex)) (./sec_crossdomain.tex [24]) [25] (./main.aux)
+[24]
+Underfull \hbox (badness 6047) in paragraph at lines 61--96
+\OT1/ptm/m/n/10 (\OT1/pcr/m/n/10 SEALED[]eval[]real.json\OT1/ptm/m/n/10 , \OT1/
+pcr/m/n/10 SEALED[]eval[]clone.json\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 SEALED[]de
+v[]real.json\OT1/ptm/m/n/10 ).
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 61--96
+\OT1/pcr/m/n/10 experiment/diagnostics/calibration[]sim.py\OT1/ptm/m/n/10 , and
+
+ []
+
+[25] (./wp1r_policy_table.tex)) (./sec_crossdomain.tex [26]) [27] (./main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-03-20>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 04AF410A4EF077A5183EC9B22E39C46D;9034.
+(rerunfilecheck)             Checksum: 60030E791DDBB2B61F4C16112137BC40;8972.
  ) 
 Here is how much of TeX's memory you used:
- 11693 strings out of 467349
- 176887 string characters out of 5419862
- 613263 words of memory out of 5000000
- 40392 multiletter control sequences out of 15000+600000
+ 11725 strings out of 467349
+ 177482 string characters out of 5419862
+ 617097 words of memory out of 5000000
+ 40410 multiletter control sequences out of 15000+600000
  655500 words of font info for 95 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,90p,652b,600s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,11n,90p,652b,600s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><d:/tex
 live/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><d:/texlive/2026
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb><d:/texlive/2026/texmf-dis
@@ -586,18 +602,20 @@ b><d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><d:/texli
 ve/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><d:/texlive/2026/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><d:/texlive/2026/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmsy10.pfb><d:/texlive/2026/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmsy7.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmsy9.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symb
-ols/msbm10.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb><
-d:/texlive/2026/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb><d:/texlive/2026/
-texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb><d:/texlive/2026/texmf-dist/font
-s/type1/urw/helvetic/uhvb8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/tim
-es/utmb8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><d:/
-texlive/2026/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (25 pages, 422850 bytes).
+public/amsfonts/cm/cmsy5.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmsy6.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/c
+msy7.pfb><d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb><
+d:/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><d:/t
+exlive/2026/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb><d:/texlive/2026/texm
+f-dist/fonts/type1/urw/courier/ucrr8a.pfb><d:/texlive/2026/texmf-dist/fonts/typ
+e1/urw/courier/ucrro8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/helvetic
+/uhvb8a.pfb><d:/texlive/2026/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><d:/te
+xlive/2026/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><d:/texlive/2026/texmf-d
+ist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (27 pages, 457115 bytes).
 PDF statistics:
- 845 PDF objects out of 1000 (max. 8388607)
- 572 compressed objects within 6 object streams
- 159 named destinations out of 1000 (max. 500000)
+ 877 PDF objects out of 1000 (max. 8388607)
+ 596 compressed objects within 6 object streams
+ 167 named destinations out of 1000 (max. 500000)
  296 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -66,3 +66,9 @@ artifacts/revision_20260911/**/writer.lock
 artifacts/wp1r_20260915/*/*.log
 artifacts/wp1r_20260915/*/*.lock
 artifacts/wp1r_20260915/*_watchdog.sh
+
+# scratch verification scripts from review subagents
+/scratch/
+/scratch_adversarial/
+/scratch_verify/
+/main.log

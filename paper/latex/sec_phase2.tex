@@ -31,33 +31,21 @@ These arm names are Phase-II-specific; Phase-I conditions in
 \S\ref{sec:phase1probes} are always referred to with their descriptive
 names.
 
-\paragraph{Implemented treatment.} The original gate maps both
+\paragraph{Implemented treatment; common attempt cap.} The original gate maps both
 \texttt{hint\_guard} and \texttt{format\_guard} to a plain scenario that
 returns \texttt{NO\_MECHANISM\_declared}; admission requires \texttt{PASS}.
 Thus two of eight forced strategy slots cannot pass even if neutrally
-valid. We interpret G as \emph{nontrivial-mechanism screening plus
-conformance verification}. The archived results do not identify pure
-verification, and matching population size cannot restore excluded types.
-Moreover, no \texttt{format\_guard} candidate passed neutral validity in
-either forced arm (18 slots and 54 attempts per arm), before mechanism
-gating. An extraction audit identifies a possible upstream failure:
-embedded SQL fences can truncate otherwise valid Python
-(Appendix~\ref{app:extraction}).
-
-\paragraph{Common attempt cap; unequal realized cost.} Each slot has at
-most $R{=}3$ raw builder attempts (same model, temperature 0.7, 16{,}384
-token cap); generation stops at the first accepted candidate. The original
-protocol's ``exactly three'' wording does not describe execution: logged
-raw attempts total 269/255/273/324 for A/B/C/D against a 432-attempt cap
-per arm (18 cells $\times$ 8 slots $\times$ ${\leq}3$ attempts), and token
-costs are not fully recovered. Ungated arms take the
-first candidate passing neutral validity (parses, imports, returns SQL on
-a development question --- mechanism-blind); gated arms take the first
-additionally passing the conformance suite. Slot failure is final;
-populations are never topped up, so generation reliability is part of the
-treatment and is reported separately from population quality via three
-rates ($R_{\mathrm{artifact}}$, $R_{\mathrm{contract}}$,
-$R_{\mathrm{fidelity}}$; Appendix~\ref{app:phase2-protocol}).
+valid, and no \texttt{format\_guard} candidate passed neutral validity in
+either forced arm (an extraction audit finds embedded SQL fences can
+truncate otherwise valid Python, Appendix~\ref{app:extraction}). We
+interpret G as \emph{nontrivial-mechanism screening plus conformance
+verification}; the archived results do not identify pure verification.
+Each slot has at most $R{=}3$ raw builder attempts (same model,
+temperature 0.7, 16{,}384 token cap), stopping at first acceptance;
+logged raw attempts total 269/255/273/324 for A/B/C/D, and token costs
+are not fully recovered. Slot failure is final (no top-up), so
+generation reliability is part of the treatment and is reported
+separately via three rates (Appendix~\ref{app:phase2-protocol}).
 
 \paragraph{Builders and seeds.} Six builders from independent labs
 (GLM-5.3, Qwen3.8-Max, DeepSeek-V4-Pro, Kimi-K3, MiniMax-M3,
@@ -85,17 +73,13 @@ matrices it never credits an answer the official scorer rejects).
 
 \paragraph{Instruments.} The conformance suite drives each harness against
 scripted scenarios and asserts on the recorded execution trace, never on
-task performance, so gating cannot leak outcome supervision. Every mechanism
-is probed with \emph{paired counterfactual variants} whose correct answer
-differs --- including a variant where the first query \emph{succeeds},
-separating conditional repair from an unconditional second call. The suite
-was calibrated before any Phase-II generation against three hand-written
-positive controls and two known-negative impostor harnesses, plus the
-invariant that the bare baseline must violate every conditional property;
-the calibration is an executable gate re-run before each generation batch.
-Arm II-E additionally enforces non-vacuity by running the contract against
-the bare baseline. Figure~\ref{fig:design} (Appendix~\ref{app:phase2-protocol})
-diagrams the design.
+task performance, so gating cannot leak outcome supervision. Every
+mechanism is probed with \emph{paired counterfactual variants} whose
+correct answers differ --- including a variant where the first query
+\emph{succeeds}, separating conditional repair from an unconditional
+second call. Calibrated against hand-written positive/negative controls
+and re-run before each generation batch (Figure~\ref{fig:design},
+Appendix~\ref{app:phase2-protocol}).
 
 \subsection{Frozen analysis plan}\label{sec:p2plan}
 The \textbf{primary estimand} is the paired difference in bare-inclusive oracle

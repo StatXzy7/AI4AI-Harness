@@ -1,0 +1,50 @@
+{
+ "rows": [
+  {
+   "budget_executions_per_task": 3,
+   "panel_answer_majority": 0.6875,
+   "clone_answer_majority_mean": 0.69
+  },
+  {
+   "budget_executions_per_task": 6,
+   "panel_answer_majority": 0.6875,
+   "clone_answer_majority_mean": 0.69
+  },
+  {
+   "budget_executions_per_task": 9,
+   "panel_answer_majority": 0.6925,
+   "clone_answer_majority_mean": 0.6925
+  },
+  {
+   "budget_executions_per_task": 12,
+   "panel_answer_majority": 0.69,
+   "clone_answer_majority_mean": 0.6925
+  },
+  {
+   "budget_executions_per_task": 15,
+   "panel_answer_majority": 0.6925,
+   "clone_answer_majority_mean": 0.6925
+  },
+  {
+   "budget_executions_per_task": 18,
+   "panel_answer_majority": 0.6925,
+   "clone_answer_majority_mean": 0.6925
+  },
+  {
+   "budget_executions_per_task": 21,
+   "panel_answer_majority": 0.69,
+   "clone_answer_majority_mean": 0.6925
+  },
+  {
+   "budget_executions_per_task": 24,
+   "panel_answer_majority": 0.6925,
+   "clone_answer_majority_mean": 0.6925
+  },
+  {
+   "budget_executions_per_task": 27,
+   "panel_answer_majority": 0.6925,
+   "clone_answer_majority_mean": 0.6925
+  }
+ ],
+ "aggregation": "modal normalized final answer over funded executions, scored by official MATH judge; ties resolved by earliest funded execution; 1000 seeded clone subsets per task"
+}

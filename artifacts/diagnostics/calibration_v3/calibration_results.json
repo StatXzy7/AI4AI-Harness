@@ -1,0 +1,6911 @@
+{
+ "meta": {
+  "elapsed_s": 4056.4,
+  "cells": [
+   [
+    9,
+    400,
+    3,
+    "complete",
+    0.0,
+    "mcar",
+    300
+   ],
+   [
+    9,
+    400,
+    5,
+    "complete",
+    0.0,
+    "mcar",
+    150
+   ],
+   [
+    9,
+    400,
+    10,
+    "complete",
+    0.0,
+    "mcar",
+    150
+   ],
+   [
+    9,
+    400,
+    20,
+    "complete",
+    0.0,
+    "mcar",
+    150
+   ],
+   [
+    3,
+    400,
+    3,
+    "complete",
+    0.0,
+    "mcar",
+    150
+   ],
+   [
+    20,
+    400,
+    3,
+    "complete",
+    0.0,
+    "mcar",
+    150
+   ],
+   [
+    9,
+    100,
+    3,
+    "complete",
+    0.0,
+    "mcar",
+    150
+   ],
+   [
+    9,
+    1000,
+    3,
+    "complete",
+    0.0,
+    "mcar",
+    150
+   ],
+   [
+    9,
+    400,
+    3,
+    "mcar5",
+    0.05,
+    "mcar",
+    150
+   ],
+   [
+    9,
+    400,
+    3,
+    "mnar_hard3",
+    0.03,
+    "mnar_hard",
+    150
+   ]
+  ],
+  "scenarios": [
+   "equal_const",
+   "equal_hetero",
+   "dominance_clean",
+   "dominance_reviewer",
+   "dominance_hetero",
+   "cross_mid",
+   "cross_strong",
+   "cross_vstrong",
+   "two_specialist",
+   "cross_weak"
+  ]
+ },
+ "results": [
+  {
+   "scenario": "equal_const",
+   "family": "equal_ability",
+   "n_reps": 300,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.9874,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.08691,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0033,
+     "support_wilson95": [
+      0.0006,
+      0.0186
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.97,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9667,
+     "mean_est": 0.00092,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.0126
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.99,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9567,
+     "mean_est": 0.00043,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.0126
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9167,
+     "mean_est": -0.00085,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "equal_const",
+   "family": "equal_ability",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.0898,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9533,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9333,
+     "mean_est": 0.00096,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9533,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9267,
+     "mean_est": -0.00056,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.8733,
+     "mean_est": -0.001,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 5,
+   "missing": "complete"
+  },
+  {
+   "scenario": "equal_const",
+   "family": "equal_ability",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.0908,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9667,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9467,
+     "mean_est": -9e-05,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9733,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9067,
+     "mean_est": 0.00027,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.86,
+     "mean_est": 0.00043,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 10,
+   "missing": "complete"
+  },
+  {
+   "scenario": "equal_const",
+   "family": "equal_ability",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.07899,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.96,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9333,
+     "mean_est": -0.00024,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9667,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9333,
+     "mean_est": -2e-05,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9933,
+     "error_rate": 0.0,
+     "ci_coverage": 0.78,
+     "mean_est": 0.00151,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 20,
+   "missing": "complete"
+  },
+  {
+   "scenario": "equal_const",
+   "family": "equal_ability",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.08679,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.98,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9267,
+     "mean_est": 0.00292,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9867,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9333,
+     "mean_est": 0.00105,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.8733,
+     "mean_est": -6e-05,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 3,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "equal_const",
+   "family": "equal_ability",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.08476,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9667,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9667,
+     "mean_est": -0.00213,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9867,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9533,
+     "mean_est": -0.00012,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9933,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9267,
+     "mean_est": 0.00011,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 20,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "equal_const",
+   "family": "equal_ability",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.07409,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0133,
+     "support_wilson95": [
+      0.0037,
+      0.0473
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9133,
+     "error_rate": 0.0,
+     "ci_coverage": 0.94,
+     "mean_est": 0.00337,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0133,
+     "support_wilson95": [
+      0.0037,
+      0.0473
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.94,
+     "error_rate": 0.0,
+     "ci_coverage": 0.8733,
+     "mean_est": 0.00267,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.02,
+     "support_wilson95": [
+      0.0068,
+      0.0571
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.98,
+     "error_rate": 0.0,
+     "ci_coverage": 0.8467,
+     "mean_est": 0.00069,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 100,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "equal_const",
+   "family": "equal_ability",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.09177,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.96,
+     "error_rate": 0.0,
+     "ci_coverage": 0.96,
+     "mean_est": -0.00162,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.94,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9133,
+     "mean_est": -0.00136,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0133,
+     "support_wilson95": [
+      0.0037,
+      0.0473
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9867,
+     "error_rate": 0.0,
+     "ci_coverage": 0.8867,
+     "mean_est": 0.00025,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 1000,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "equal_const",
+   "family": "equal_ability",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 0.6067,
+     "support_wilson95": [
+      0.5268,
+      0.6812
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.3933,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.08663,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9267,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9733,
+     "mean_est": 0.00075,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9533,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9133,
+     "mean_est": 0.00233,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9133,
+     "mean_est": -0.00531,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "mcar5"
+  },
+  {
+   "scenario": "equal_const",
+   "family": "equal_ability",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": null,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": null,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": null,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.8533,
+     "mean_est": 0.00511,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "mnar_hard3"
+  },
+  {
+   "scenario": "equal_hetero",
+   "family": "equal_ability",
+   "n_reps": 300,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.9874,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.20453,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.01,
+     "support_wilson95": [
+      0.0034,
+      0.029
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9767,
+     "error_rate": 0.0,
+     "ci_coverage": 0.95,
+     "mean_est": 0.00092,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0133,
+     "support_wilson95": [
+      0.0052,
+      0.0338
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9667,
+     "error_rate": 0.0,
+     "ci_coverage": 0.94,
+     "mean_est": 0.00052,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.0126
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.8967,
+     "mean_est": 0.00149,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "equal_hetero",
+   "family": "equal_ability",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.18718,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.98,
+     "error_rate": 0.0,
+     "ci_coverage": 0.94,
+     "mean_est": 0.00142,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.98,
+     "error_rate": 0.0,
+     "ci_coverage": 0.94,
+     "mean_est": -9e-05,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9067,
+     "mean_est": 0.00237,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 5,
+   "missing": "complete"
+  },
+  {
+   "scenario": "equal_hetero",
+   "family": "equal_ability",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.15048,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9667,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9333,
+     "mean_est": 0.00042,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9867,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9467,
+     "mean_est": 9e-05,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0133,
+     "support_wilson95": [
+      0.0037,
+      0.0473
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9867,
+     "error_rate": 0.0,
+     "ci_coverage": 0.8733,
+     "mean_est": 0.00109,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 10,
+   "missing": "complete"
+  },
+  {
+   "scenario": "equal_hetero",
+   "family": "equal_ability",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.11361,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9933,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9733,
+     "mean_est": 0.00064,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9733,
+     "error_rate": 0.0,
+     "ci_coverage": 0.96,
+     "mean_est": 0.00024,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9933,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9267,
+     "mean_est": -0.00035,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 20,
+   "missing": "complete"
+  },
+  {
+   "scenario": "equal_hetero",
+   "family": "equal_ability",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.15104,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9533,
+     "error_rate": 0.0,
+     "ci_coverage": 0.94,
+     "mean_est": -0.00151,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.96,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9333,
+     "mean_est": 0.00011,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9933,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9467,
+     "mean_est": -0.00019,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 3,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "equal_hetero",
+   "family": "equal_ability",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.20831,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0133,
+     "support_wilson95": [
+      0.0037,
+      0.0473
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.98,
+     "error_rate": 0.0,
+     "ci_coverage": 0.98,
+     "mean_est": 0.00078,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9933,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9467,
+     "mean_est": 0.00181,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0133,
+     "support_wilson95": [
+      0.0037,
+      0.0473
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9867,
+     "error_rate": 0.0,
+     "ci_coverage": 0.92,
+     "mean_est": -0.00102,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 20,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "equal_hetero",
+   "family": "equal_ability",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.18829,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.96,
+     "error_rate": 0.0,
+     "ci_coverage": 0.96,
+     "mean_est": 0.00207,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9667,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9133,
+     "mean_est": 0.00376,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.02,
+     "support_wilson95": [
+      0.0068,
+      0.0571
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.98,
+     "error_rate": 0.0,
+     "ci_coverage": 0.88,
+     "mean_est": -0.00122,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 100,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "equal_hetero",
+   "family": "equal_ability",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.21013,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9533,
+     "error_rate": 0.0,
+     "ci_coverage": 0.94,
+     "mean_est": -0.00084,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9667,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9133,
+     "mean_est": -0.00013,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9933,
+     "error_rate": 0.0,
+     "ci_coverage": 0.92,
+     "mean_est": 0.0015,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 1000,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "equal_hetero",
+   "family": "equal_ability",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 0.66,
+     "support_wilson95": [
+      0.581,
+      0.731
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.34,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.20642,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0133,
+     "support_wilson95": [
+      0.0037,
+      0.0473
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9667,
+     "error_rate": 0.0,
+     "ci_coverage": 0.96,
+     "mean_est": -0.00058,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.96,
+     "error_rate": 0.0,
+     "ci_coverage": 0.92,
+     "mean_est": 0.00068,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9067,
+     "mean_est": 0.00568,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "mcar5"
+  },
+  {
+   "scenario": "equal_hetero",
+   "family": "equal_ability",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 0.0467,
+     "support_wilson95": [
+      0.0228,
+      0.0932
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9533,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.20875,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9133,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9667,
+     "mean_est": -0.00372,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0133,
+     "support_wilson95": [
+      0.0037,
+      0.0473
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9467,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9067,
+     "mean_est": -0.00172,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.8867,
+     "mean_est": 0.00243,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "mnar_hard3"
+  },
+  {
+   "scenario": "dominance_clean",
+   "family": "dominance",
+   "n_reps": 300,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.9874,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.12854,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.0126
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.41,
+     "error_rate": 0.0,
+     "ci_coverage": 0.49,
+     "mean_est": -0.01644,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.0126
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.1733,
+     "error_rate": 0.0,
+     "ci_coverage": 0.1733,
+     "mean_est": -0.0164,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.0126
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.09569,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "dominance_clean",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.10791,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.18,
+     "error_rate": 0.0,
+     "ci_coverage": 0.1867,
+     "mean_est": -0.01672,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.01657,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0067,
+     "mean_est": -0.08931,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 5,
+   "missing": "complete"
+  },
+  {
+   "scenario": "dominance_clean",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.06936,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0067,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0067,
+     "mean_est": -0.01668,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.0165,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.07861,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 10,
+   "missing": "complete"
+  },
+  {
+   "scenario": "dominance_clean",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.03673,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.01665,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.01656,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.06122,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 20,
+   "missing": "complete"
+  },
+  {
+   "scenario": "dominance_clean",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.08163,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.42,
+     "error_rate": 0.0,
+     "ci_coverage": 0.4733,
+     "mean_est": -0.01527,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.1667,
+     "error_rate": 0.0,
+     "ci_coverage": 0.1667,
+     "mean_est": -0.01507,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0333,
+     "mean_est": -0.06368,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 3,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "dominance_clean",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.13776,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.4267,
+     "error_rate": 0.0,
+     "ci_coverage": 0.4733,
+     "mean_est": -0.01739,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.1333,
+     "error_rate": 0.0,
+     "ci_coverage": 0.1333,
+     "mean_est": -0.01701,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.10329,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 20,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "dominance_clean",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.13082,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.08,
+     "support_wilson95": [
+      0.0464,
+      0.1346
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.7733,
+     "error_rate": 0.0,
+     "ci_coverage": 0.8133,
+     "mean_est": 0.00177,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0533,
+     "support_wilson95": [
+      0.0273,
+      0.1017
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.6933,
+     "error_rate": 0.0,
+     "ci_coverage": 0.64,
+     "mean_est": -0.00347,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.3467,
+     "mean_est": -0.09182,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 100,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "dominance_clean",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.12938,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.12,
+     "error_rate": 0.0,
+     "ci_coverage": 0.14,
+     "mean_est": -0.01642,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0133,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0133,
+     "mean_est": -0.01646,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.09317,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 1000,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "dominance_clean",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 0.6667,
+     "support_wilson95": [
+      0.5879,
+      0.7371
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.3333,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.13143,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0533,
+     "support_wilson95": [
+      0.0273,
+      0.1017
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.66,
+     "error_rate": 0.0,
+     "ci_coverage": 0.76,
+     "mean_est": -0.00913,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0267,
+     "support_wilson95": [
+      0.0104,
+      0.0666
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.6267,
+     "error_rate": 0.0,
+     "ci_coverage": 0.5867,
+     "mean_est": -0.00888,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.7533,
+     "mean_est": -0.08636,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "mcar5"
+  },
+  {
+   "scenario": "dominance_clean",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 0.06,
+     "support_wilson95": [
+      0.0319,
+      0.1101
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.94,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.12977,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.02,
+     "support_wilson95": [
+      0.0068,
+      0.0571
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.56,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9,
+     "mean_est": -0.00622,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.06,
+     "support_wilson95": [
+      0.0319,
+      0.1101
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.6067,
+     "error_rate": 0.0,
+     "ci_coverage": 0.6467,
+     "mean_est": -0.00415,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.56,
+     "mean_est": -0.08785,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "mnar_hard3"
+  },
+  {
+   "scenario": "dominance_reviewer",
+   "family": "dominance",
+   "n_reps": 300,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.9874,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.0697,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.0126
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.21874,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.0126
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.21974,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.0126
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.26749,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "dominance_reviewer",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.03387,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.22035,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.22017,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.17308,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 5,
+   "missing": "complete"
+  },
+  {
+   "scenario": "dominance_reviewer",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.00648,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.22144,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.21989,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0533,
+     "mean_est": -0.05695,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 10,
+   "missing": "complete"
+  },
+  {
+   "scenario": "dominance_reviewer",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 0.1333,
+     "support_wilson95": [
+      0.088,
+      0.197
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.7467,
+     "error_rate": 0.0,
+     "ci_coverage": 0.8667,
+     "mean_est": 0.00035,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.22042,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.22012,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.8467,
+     "mean_est": -0.0055,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 20,
+   "missing": "complete"
+  },
+  {
+   "scenario": "dominance_reviewer",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.02843,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.22182,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.22053,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.13253,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 3,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "dominance_reviewer",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.09297,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.22184,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.22034,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.33421,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 20,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "dominance_reviewer",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.07073,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.2224,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.21793,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0067,
+     "mean_est": -0.26516,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 100,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "dominance_reviewer",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.06857,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.2191,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.2199,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.26564,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 1000,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "dominance_reviewer",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 0.5933,
+     "support_wilson95": [
+      0.5133,
+      0.6687
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.4067,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.07526,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.21627,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.22057,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.28,
+     "mean_est": -0.26188,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "mcar5"
+  },
+  {
+   "scenario": "dominance_reviewer",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": null,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9933,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.32812,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9933,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.27083,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.6067,
+     "mean_est": -0.25765,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "mnar_hard3"
+  },
+  {
+   "scenario": "dominance_hetero",
+   "family": "dominance",
+   "n_reps": 300,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.9874,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.11058,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.0126
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0067,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0067,
+     "mean_est": -0.09907,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.0126
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.09919,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.0126
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.07,
+     "mean_est": -0.07483,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "dominance_hetero",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.0954,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.10059,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.09983,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0267,
+     "mean_est": -0.07521,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 5,
+   "missing": "complete"
+  },
+  {
+   "scenario": "dominance_hetero",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.06764,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.09948,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.09951,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0133,
+     "mean_est": -0.06373,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 10,
+   "missing": "complete"
+  },
+  {
+   "scenario": "dominance_hetero",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.03994,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.10134,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.10056,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0067,
+     "mean_est": -0.04982,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 20,
+   "missing": "complete"
+  },
+  {
+   "scenario": "dominance_hetero",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.07492,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.07842,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.07899,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.2,
+     "mean_est": -0.05353,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 3,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "dominance_hetero",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.11477,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.12702,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.12781,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.16,
+     "mean_est": -0.07032,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 20,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "dominance_hetero",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.10624,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.22,
+     "error_rate": 0.0,
+     "ci_coverage": 0.2333,
+     "mean_est": -0.09117,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.1133,
+     "error_rate": 0.0,
+     "ci_coverage": 0.1133,
+     "mean_est": -0.09168,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.5467,
+     "mean_est": -0.07102,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 100,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "dominance_hetero",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.1107,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.10042,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.10004,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": -0.07333,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 1000,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "dominance_hetero",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 0.6267,
+     "support_wilson95": [
+      0.547,
+      0.7
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.3733,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.11056,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.2933,
+     "error_rate": 0.0,
+     "ci_coverage": 0.3,
+     "mean_est": -0.08286,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.18,
+     "error_rate": 0.0,
+     "ci_coverage": 0.18,
+     "mean_est": -0.08045,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.7733,
+     "mean_est": -0.07259,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "mcar5"
+  },
+  {
+   "scenario": "dominance_hetero",
+   "family": "dominance",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 0.1067,
+     "support_wilson95": [
+      0.0667,
+      0.1662
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.8933,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.11193,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.1333,
+     "error_rate": 0.0,
+     "ci_coverage": 0.1533,
+     "mean_est": -0.09018,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.04,
+     "error_rate": 0.0,
+     "ci_coverage": 0.04,
+     "mean_est": -0.08661,
+     "is_false_positive": true,
+     "label": "FPR"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.7667,
+     "mean_est": -0.05757,
+     "is_false_positive": true,
+     "label": "FPR"
+    }
+   },
+   "H_true_mean": 0.0,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "mnar_hard3"
+  },
+  {
+   "scenario": "cross_mid",
+   "family": "crossover",
+   "n_reps": 300,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.9874,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.11191,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.01,
+     "support_wilson95": [
+      0.0034,
+      0.029
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9733,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00479,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.0126
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9833,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00438,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0133,
+     "support_wilson95": [
+      0.0052,
+      0.0338
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9867,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 1e-05,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.008368914785285042,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_mid",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.11047,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9667,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00243,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.98,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00337,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9933,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.00039,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.008310372481064027,
+   "M": 9,
+   "T": 400,
+   "R": 5,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_mid",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.09617,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.98,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00262,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00293,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.00111,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.008358357636350422,
+   "M": 9,
+   "T": 400,
+   "R": 10,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_mid",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.07565,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00317,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00328,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.00195,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.008308647615718536,
+   "M": 9,
+   "T": 400,
+   "R": 20,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_mid",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.09498,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9733,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00208,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0133,
+     "support_wilson95": [
+      0.0037,
+      0.0473
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9533,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00167,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.02,
+     "support_wilson95": [
+      0.0068,
+      0.0571
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.98,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00397,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.010852193781694313,
+   "M": 3,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_mid",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.10882,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9733,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00238,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9733,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00217,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9933,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.00032,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.007956914331535036,
+   "M": 20,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_mid",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.09927,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0133,
+     "support_wilson95": [
+      0.0037,
+      0.0473
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9267,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.0052,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0133,
+     "support_wilson95": [
+      0.0037,
+      0.0473
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9533,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00506,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.02,
+     "support_wilson95": [
+      0.0068,
+      0.0571
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.98,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00049,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.008258230720588787,
+   "M": 9,
+   "T": 100,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_mid",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.11637,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.98,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00291,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9733,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00286,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.00073,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.008354493056018741,
+   "M": 9,
+   "T": 1000,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_mid",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 0.6467,
+     "support_wilson95": [
+      0.5674,
+      0.7186
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.3533,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.11192,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.02,
+     "support_wilson95": [
+      0.0068,
+      0.0571
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9267,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00206,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.96,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00291,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.01118,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.008328245552175146,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "mcar5"
+  },
+  {
+   "scenario": "cross_mid",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 0.1,
+     "support_wilson95": [
+      0.0615,
+      0.1584
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.11281,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.88,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00474,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.98,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00312,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.00142,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.008361724238502509,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "mnar_hard3"
+  },
+  {
+   "scenario": "cross_strong",
+   "family": "crossover",
+   "n_reps": 300,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.9874,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.1112,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.03,
+     "support_wilson95": [
+      0.0159,
+      0.056
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.95,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00538,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.02,
+     "support_wilson95": [
+      0.0092,
+      0.0429
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9633,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00594,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.01,
+     "support_wilson95": [
+      0.0034,
+      0.029
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.99,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.00176,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.016693780149138582,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_strong",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.10937,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.98,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00641,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9933,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00554,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.00467,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.016749834359133,
+   "M": 9,
+   "T": 400,
+   "R": 5,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_strong",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.09444,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0133,
+     "support_wilson95": [
+      0.0037,
+      0.0473
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9667,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00607,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00576,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9933,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.00261,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.016634654979660067,
+   "M": 9,
+   "T": 400,
+   "R": 10,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_strong",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.07449,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.98,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00557,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00549,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.00439,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.016773808452389818,
+   "M": 9,
+   "T": 400,
+   "R": 20,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_strong",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.09602,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.98,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00167,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9933,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00187,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9933,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00072,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.021968502586104856,
+   "M": 3,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_strong",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.10933,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00699,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9867,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00779,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.02,
+     "support_wilson95": [
+      0.0068,
+      0.0571
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.98,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00049,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.015905108255110417,
+   "M": 20,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_strong",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.09822,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.02,
+     "support_wilson95": [
+      0.0068,
+      0.0571
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.94,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00753,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0133,
+     "support_wilson95": [
+      0.0037,
+      0.0473
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9733,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00547,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9933,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.00358,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.016743907419545487,
+   "M": 9,
+   "T": 100,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_strong",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.11477,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.98,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00399,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9867,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.0046,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.00611,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.016648842253526308,
+   "M": 9,
+   "T": 1000,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_strong",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 0.6133,
+     "support_wilson95": [
+      0.5335,
+      0.6875
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.3867,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.11164,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.96,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00774,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.02,
+     "support_wilson95": [
+      0.0068,
+      0.0571
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9733,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00541,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.0011,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.01665173775737679,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "mcar5"
+  },
+  {
+   "scenario": "cross_strong",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 0.06,
+     "support_wilson95": [
+      0.0319,
+      0.1101
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.94,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.10537,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.02,
+     "support_wilson95": [
+      0.0068,
+      0.0571
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.8667,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00455,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0267,
+     "support_wilson95": [
+      0.0104,
+      0.0666
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9533,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00338,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.00033,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.016740989154371787,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "mnar_hard3"
+  },
+  {
+   "scenario": "cross_vstrong",
+   "family": "crossover",
+   "n_reps": 300,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.9874,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.16052,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0833,
+     "support_wilson95": [
+      0.0571,
+      0.1201
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.88,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00671,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0533,
+     "support_wilson95": [
+      0.0331,
+      0.0849
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9033,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00639,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.0126
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.03616,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.04163067577703398,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_vstrong",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.14624,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0867,
+     "support_wilson95": [
+      0.0513,
+      0.1426
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.8667,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00676,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0533,
+     "support_wilson95": [
+      0.0273,
+      0.1017
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.0058,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.03283,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.041641133570839366,
+   "M": 9,
+   "T": 400,
+   "R": 5,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_vstrong",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.11537,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.12,
+     "support_wilson95": [
+      0.0773,
+      0.1817
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.84,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00608,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.04,
+     "support_wilson95": [
+      0.0185,
+      0.0845
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9267,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00655,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.02521,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.04162005523740903,
+   "M": 9,
+   "T": 400,
+   "R": 10,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_vstrong",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.08423,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.1667,
+     "support_wilson95": [
+      0.1155,
+      0.2345
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.76,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00546,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.02,
+     "support_wilson95": [
+      0.0068,
+      0.0571
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9733,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00611,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.01471,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.041327164600843416,
+   "M": 9,
+   "T": 400,
+   "R": 20,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_vstrong",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.12836,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0467,
+     "support_wilson95": [
+      0.0228,
+      0.0932
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9467,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00791,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.02,
+     "support_wilson95": [
+      0.0068,
+      0.0571
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9733,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.0074,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.00878,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.052504228301177076,
+   "M": 3,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_vstrong",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.16234,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.1133,
+     "support_wilson95": [
+      0.072,
+      0.174
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.8533,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.01139,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.1133,
+     "support_wilson95": [
+      0.072,
+      0.174
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.8467,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.01114,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.03486,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.039299812989686246,
+   "M": 20,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_vstrong",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.15329,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.08,
+     "support_wilson95": [
+      0.0464,
+      0.1346
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.8867,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.02387,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.1,
+     "support_wilson95": [
+      0.0615,
+      0.1584
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.8467,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.01919,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.02669,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.041194250536551236,
+   "M": 9,
+   "T": 100,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_vstrong",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.16126,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.98,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.00103,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9467,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00013,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.03744,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.041682914716893005,
+   "M": 9,
+   "T": 1000,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_vstrong",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 0.6333,
+     "support_wilson95": [
+      0.5538,
+      0.7062
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.3667,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.16293,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0667,
+     "support_wilson95": [
+      0.0366,
+      0.1184
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9133,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.02518,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.12,
+     "support_wilson95": [
+      0.0773,
+      0.1817
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.8733,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.02496,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.02242,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.041536684157681865,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "mcar5"
+  },
+  {
+   "scenario": "cross_vstrong",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 0.02,
+     "support_wilson95": [
+      0.0068,
+      0.0571
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.98,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.15194,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0733,
+     "support_wilson95": [
+      0.0414,
+      0.1265
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.84,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.02036,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.08,
+     "support_wilson95": [
+      0.0464,
+      0.1346
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9067,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.01933,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.01598,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.04171570406434893,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "mnar_hard3"
+  },
+  {
+   "scenario": "two_specialist",
+   "family": "crossover",
+   "n_reps": 300,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.9874,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.1033,
+     "mean_est": 0.21193,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.79,
+     "support_wilson95": [
+      0.7404,
+      0.8323
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.21,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.057,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.8933,
+     "support_wilson95": [
+      0.8533,
+      0.9234
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.1067,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.05783,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.0126
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.07671,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.17499999999999993,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "two_specialist",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.66,
+     "mean_est": 0.19665,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.8933,
+     "support_wilson95": [
+      0.8338,
+      0.9333
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.1067,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.05783,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.98,
+     "support_wilson95": [
+      0.9429,
+      0.9932
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.02,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.05756,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9933,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00594,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.17499999999999996,
+   "M": 9,
+   "T": 400,
+   "R": 5,
+   "missing": "complete"
+  },
+  {
+   "scenario": "two_specialist",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 1.0,
+     "mean_est": 0.17642,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.96,
+     "support_wilson95": [
+      0.9155,
+      0.9815
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.04,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.05694,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.05742,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.11798,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.17499999999999996,
+   "M": 9,
+   "T": 400,
+   "R": 10,
+   "missing": "complete"
+  },
+  {
+   "scenario": "two_specialist",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 1.0,
+     "mean_est": 0.17273,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.9867,
+     "support_wilson95": [
+      0.9527,
+      0.9963
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0133,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.05719,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.05753,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.16883,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.17499999999999996,
+   "M": 9,
+   "T": 400,
+   "R": 20,
+   "missing": "complete"
+  },
+  {
+   "scenario": "two_specialist",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.9267,
+     "mean_est": 0.18948,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.8067,
+     "support_wilson95": [
+      0.7361,
+      0.8619
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.1933,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.0587,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.96,
+     "support_wilson95": [
+      0.9155,
+      0.9815
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.04,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.06002,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.4467,
+     "support_wilson95": [
+      0.3694,
+      0.5266
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.5533,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.04889,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.17499999999999996,
+   "M": 3,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "two_specialist",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0133,
+     "mean_est": 0.21827,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.7467,
+     "support_wilson95": [
+      0.6715,
+      0.8095
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.2533,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.0563,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.88,
+     "support_wilson95": [
+      0.8183,
+      0.9227
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.12,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.05623,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.13074,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.17499999999999996,
+   "M": 20,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "two_specialist",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.8933,
+     "mean_est": 0.20624,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.36,
+     "support_wilson95": [
+      0.2876,
+      0.4394
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.64,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.06043,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.6733,
+     "support_wilson95": [
+      0.5948,
+      0.7432
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.3267,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.05819,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.06671,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.17499999999999996,
+   "M": 9,
+   "T": 100,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "two_specialist",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.21362,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.9933,
+     "support_wilson95": [
+      0.9632,
+      0.9988
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0067,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.05888,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.05812,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.07948,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.17499999999999996,
+   "M": 9,
+   "T": 1000,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "two_specialist",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 0.64,
+     "support_wilson95": [
+      0.5606,
+      0.7124
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.36,
+     "error_rate": 0.0,
+     "ci_coverage": 0.08,
+     "mean_est": 0.21326,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.3133,
+     "support_wilson95": [
+      0.2445,
+      0.3914
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.6867,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.05491,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.6,
+     "support_wilson95": [
+      0.52,
+      0.675
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.4,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.05259,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.08253,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.17499999999999996,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "mcar5"
+  },
+  {
+   "scenario": "two_specialist",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": null,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": null,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": null,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.12023,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.17499999999999996,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "mnar_hard3"
+  },
+  {
+   "scenario": "cross_weak",
+   "family": "crossover",
+   "n_reps": 300,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.9874,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.0996,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.0126
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.7733,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.01905,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.0126
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.5933,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.01852,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0018,
+      0.024
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9933,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.00318,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.015999999999999962,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_weak",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.09782,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.5933,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.01921,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.24,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.01964,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9933,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.00157,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.015999999999999962,
+   "M": 9,
+   "T": 400,
+   "R": 5,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_weak",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.08485,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.2867,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.01894,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0533,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.01879,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0133,
+     "support_wilson95": [
+      0.0037,
+      0.0473
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9867,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.00066,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.015999999999999986,
+   "M": 9,
+   "T": 400,
+   "R": 10,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_weak",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.0668,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0667,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.01897,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.01878,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00146,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.015999999999999966,
+   "M": 9,
+   "T": 400,
+   "R": 20,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_weak",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.08543,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.8333,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.01448,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.6533,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.01515,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.00641,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.015999999999999955,
+   "M": 3,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_weak",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.09678,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.6733,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.02177,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.5067,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.02141,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9933,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.00273,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.01599999999999998,
+   "M": 20,
+   "T": 400,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_weak",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.08884,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.92,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.01893,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.8733,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.01677,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00044,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.015999999999999955,
+   "M": 9,
+   "T": 100,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_weak",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 1.0,
+     "support_wilson95": [
+      0.975,
+      1.0
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.0,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.10357,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.48,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.02024,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.1867,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.02,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0133,
+     "support_wilson95": [
+      0.0037,
+      0.0473
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9867,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.00466,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.016000000000000025,
+   "M": 9,
+   "T": 1000,
+   "R": 3,
+   "missing": "complete"
+  },
+  {
+   "scenario": "cross_weak",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 0.62,
+     "support_wilson95": [
+      0.5402,
+      0.6938
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.38,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.09917,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.92,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.01717,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0067,
+     "support_wilson95": [
+      0.0012,
+      0.0368
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.8867,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.01526,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": 0.00514,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.015999999999999962,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "mcar5"
+  },
+  {
+   "scenario": "cross_weak",
+   "family": "crossover",
+   "n_reps": 150,
+   "statistics": {
+    "plugin_descriptive": {
+     "support_rate": 0.1,
+     "support_wilson95": [
+      0.0615,
+      0.1584
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.9,
+     "error_rate": 0.0,
+     "ci_coverage": 0.0,
+     "mean_est": 0.09722,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "frozen_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.7867,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.01535,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "crossfit_gain": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 0.7733,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.01533,
+     "is_false_positive": false,
+     "label": "power"
+    },
+    "clone_calibrated_v3": {
+     "support_rate": 0.0,
+     "support_wilson95": [
+      0.0,
+      0.025
+     ],
+     "refuted_rate": 0.0,
+     "abstain_rate": 1.0,
+     "error_rate": 0.0,
+     "ci_coverage": null,
+     "mean_est": -0.00238,
+     "is_false_positive": false,
+     "label": "power"
+    }
+   },
+   "H_true_mean": 0.015999999999999955,
+   "M": 9,
+   "T": 400,
+   "R": 3,
+   "missing": "mnar_hard3"
+  }
+ ]
+}

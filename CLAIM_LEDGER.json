@@ -293,6 +293,22 @@
     "Do not treat plug-in headroom as stable complementarity",
     "Do not claim the 2.67pp clone headroom as real capability"
    ]
+  },
+  {
+   "claim_id": "C-12",
+   "candidate_english": "At a common per-task execution budget b in 3..27, oracle coverage of the dev-ranked panel is statistically tied with that of b same-code bare executions (-0.25 to +0.37pp), while majority-vote aggregation favors same-code executions by 6.1-27.3pp; the panel spent 2.05x the logical calls and 3.73x the tokens of the clone arm.",
+   "claim_type": "offline budget-matched descriptive comparison",
+   "stage": "wp1r-budget",
+   "dataset_split": "sealed WP-1R eval repeats",
+   "sample_unit": "task; budgets b=3..27 executions/task",
+   "comparator": "dev-ranked panel portfolio vs b of 27 same-code clone executions",
+   "metric_definition": "oracle max coverage and majority-vote accuracy over 1000 seeded subsets; realized calls/tokens from per-request accounting",
+   "value": "oracle gap -0.25..+0.37pp; majority gap -6.1..-27.3pp; 22192 vs 10800 calls; 54.17M vs 14.51M tokens",
+   "evidence_files": [
+    "artifacts/wp1r_20260915/budget_curves.json",
+    "experiment/revision/wp1r_budget.py"
+   ],
+   "scope_limit": "offline replay on sealed outcomes, not a re-collection or causal comparison of deployed policies; not realized-cost matched"
   }
  ],
  "revision_note": "2026-09-15 (second revision): added C-10 per external review; C-01..C-09 unchanged. See review-stage/DIAGNOSTIC_PLAN_V2_20260915.md. | 2026-09-19: added C-11 (WP-1R/WP-2R clone-controlled fresh evidence); C-09 remains an unresolved estimand and is now partially informed by C-11."
