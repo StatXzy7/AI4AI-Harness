@@ -1,33 +1,33 @@
-\subsection{面向 LLM 的 harness 生成}\label{related:generation}
-一系列工作围绕冻结模型生成任务专用的外围程序。TTHE 通过 LLM 提议者／评判者循环演化文本转 SQL harness \citep{tthe2026}；Self-Harness \citep{selfharness2026} 展示模型可以改进自己的 harness；JIT-Agent \citep{jitagent2026} 训练模型在推理时为每道任务生成一个 harness；Task-CoEvolve \citep{coevolve2026} 联合演化任务与外围程序。2026 年的一组同期工作从验证侧使 harness 演化\emph{具备行为意识}：HarnessLens \citep{harnesslens2026} 在演化过程中以行为级检查分配 rollout 预算；HarnessFix \citep{harnessfix2026} 根据有轨迹依据的诊断修复 harness；AHE \citep{ahe2026} 按每次提议编辑自述的行为预测加以验证；带门控的语义质量—多样性搜索 \citep{gatedqd2026} 按 LLM 指派的病理描述符演化种群；Harness Handbook \citep{handbook2026} 攻行为定位与外层搜索；HarnessForge \citep{harnessforge2026} 将外部 harness 与内部策略作为一对联合演化。演化整个执行结构带来两项成本，正是我们诊断的动因：逐候选算力，以及脆弱的准入验证。我们在任何部署主张之前，\emph{离线地}剪去冗余变体并拒斥虚幻的单次运行 oracle 增益。
+\subsection{面向 LLM 的 harness 生成}
+\label{related:generation}
+一条不断增长的研究线围绕冻结模型生成任务专属的脚手架。TTHE 用 LLM 提议/评判循环演化文本转 SQL harness \citep{tthe2026}；Self-Harness \citep{selfharness2026} 展示模型可以改进自己的 harness；JIT-Agent \citep{jitagent2026} 学会在推理时为每个任务生成 harness；Task-CoEvolve \citep{coevolve2026} 共同演化任务与脚手架。自动智能体程序搜索 \citep{adas2024} 最早把这类生成程序框定为搜索空间。2026 年的一个并行集群从验证侧让 harness 演化具备行为感知：HarnessLens \citep{harnesslens2026} 在演化过程中用行为级检查分配推演预算，HarnessFix \citep{harnessfix2026} 从有轨迹依据的诊断修复 harness，AHE \citep{ahe2026} 对照自声明的行为预测验证每次编辑，门控质量多样性／HarnessBank \citep{gatedqd2026} 在 LLM 标注的病理描述符上演化群体，Harness Handbook \citep{handbook2026} 针对行为定位与外环搜索，HarnessForge \citep{harnessforge2026} 共同演化 harness 与内部策略。
 
-我们的工作互补，但分析单位与问题不同。表~\ref{tab:nearest} 对比两个最接近的系统。HarnessLens 将行为用作演化循环\emph{内部}分配算力的信号；我们追问所得\emph{种群}作为一种结果性质是否行为多样，以及它在生成侧干预下如何变化。HarnessBank \citep{gatedqd2026} 记录搜索空间坍缩，并以带门控的筛选维护语义多样性库；我们的一致性门控完全不做语义评分——它通过反事实轨迹探针机械地验证声明机制确实执行——并且我们的设计通过析因对比比较准入策略。由于实际门控也排除了允许的提示变换，当前实验并未分离验证的因果贡献。
+我们的分析单位与问题互补但不同。表~\ref{tab:nearest} 对比了两个最接近的系统。HarnessLens 把行为当作演化循环\emph{内部}的信号来分配算力；我们追问所得\emph{群体}作为一种结果属性是否行为多样。HarnessBank \citep{gatedqd2026} 记录搜索空间坍缩并按 LLM 给出的语义描述符筛除；我们的准入工具完全不给语义打分，而是驱动反事实轨迹探针，机械地验证一个声称的机制确实执行，并通过析因对比比较准入策略。由于所实现的门控也在结构上排除了两个被允许的提示转换，该处理不能在因果上分离验证本身。
+
 \begin{table}[t]
-\centering
-\footnotesize
-\setlength{\tabcolsep}{3pt}
+\centering\footnotesize\setlength{\tabcolsep}{3pt}
 \begin{tabular}{@{}lccc@{}}
 \toprule
- & \textbf{本研究} & \textbf{HarnessLens} & \textbf{HarnessBank} \\
+ & \textbf{本文} & \textbf{HarnessLens} & \textbf{HarnessBank} \\
 \midrule
-研究单位 & 种群结果矩阵 & 演化循环 & 多样性库 \\
-测量种群坍缩 & 是 & 否 & 仅搜索坍缩 \\
-门控定义 & 反事实轨迹 & 可归因证据 & 语义筛选 \\
-门控校准 & 正／负控制 & --- & --- \\
-门控比较 & 析因，混合筛选 & 门控消融（单因素） & 无 \\
-验证性划分 & 九个隔离数据库 & --- & --- \\
+分析单位 & 群体结果矩阵 & 演化循环 & 多样性库 \\
+是否测量行为坍缩 & 是 & 否 & 仅搜索坍缩 \\
+同代码克隆对照 & 是 & 否 & 否 \\
+准入检查 & 反事实轨迹 & 预算分配 & 语义筛除 \\
+策略比较 & 析因 & 单循环 & 无 \\
+确认性划分 & 9 个隔离 DB & --- & --- \\
 \bottomrule
 \end{tabular}
-\caption{最接近的同期系统。演化系统内部的行为感知验证属于同期独立工作；我们的贡献是种群级结果测量、仪器校准与生成策略对比。当前门控包含结构性筛选；数据库划分存在一项已披露的 18 题冒烟测试例外。}
+\caption{最接近的并行系统。当前门控包含结构性筛除，确认性划分有一个已披露的 $18$ 题冒烟测试例外。}
 \label{tab:nearest}
 \end{table}
 
-\subsection{Harness 的条件效用与路由}\label{related:routing}
-Harness 质量是以实例为条件的：\citet{nouniversal2026} 与 \citet{nonmonotone2026} 记录了不存在跨实例占优的单一 harness。HELIX 评估完整的同源 harness 结果矩阵及超过最佳固定候选的组合互补性，并把路由器列为未来工作 \citep{helix2026}。STS 在六种固定的人工设计外围程序间路由 \citep{sts2026}；GRASP 把技能编辑经门控纳入开发期库 \citep{grasp2026}；\citet{cfrouting2026} 在 \{不搜索、搜索、弃答\} 上学习实例级路由；\citet{agenticrouting2026} 在 harness 内部路由模型。经典算法选择 \citep{rice1976} 与 SATzilla 等组合求解器 \citep{xu2008satzilla,kotthoff2016} 根据实例特征选择被枚举的算法。
+\subsection{条件效用、路由与重复抽样}
+\label{related:routing}
+Harness 质量是依实例条件变化的：\citet{nouniversal2026} 与 \citet{nonmonotone2026} 记录了没有任何单一 harness 在所有实例上占优。HELIX 评估完整的兄弟 harness 结果矩阵以及超过最佳固定候选的群体互补性，但把路由器列为未来工作 \citep{helix2026}。STS 在六个固定的人工设计脚手架上路由 \citep{sts2026}，GRASP 把技能编辑门控进开发期库 \citep{grasp2026}，\citet{cfrouting2026} 学习在｛不搜索、搜索、弃权｝上路由，RouteLLM \citep{routellm2024} 在模型层面路由。底层决策边界是经典的定量与定性（交叉）交互之分：仅效应量改变并不一定改变应选的动作 \citep{gailsimon1985}。算法选择 \citep{rice1976} 与 SATzilla 这类组合求解器 \citep{xu2008satzilla,kotthoff2016} 根据实例特征在枚举的算法间选择，随机重启长期以来捕获的是对单个求解器多做尝试、而非来自组合的收益。集成选择在模型库上优化一个验证目标 \citep{caruana2004}，与执行前选择一个成员是不同的信息集；自一致 \citep{selfconsistency2022} 在事后聚合多条采样轨迹，其成本与信息集同样不同于执行前的单成员路由。
 
-这里的决策边界就是定量交互与定性（交叉）交互之间的经典边界：仅效应大小的变化未必改变首选动作 \citep{gailsimon1985}。集成选择同样是在模型库上优化一个验证目标，其信息集与执行前选择单个成员不同 \citep{caruana2004}。类似地，自洽性增益来自运行多条采样轨迹并聚合，因此其成本与采样后信息不同于执行前单成员路由 \citep{selfconsistency2022}。
+我们的候选是完整的、自动生成的 harness；我们测量一个选择器将继承的群体结果结构，而不是构建选择器。执行后验证器 \citep{llmverifier2026} 给已完成的轨迹打分，而我们的执行前估计目标在 harness 运行之前就做出选择，是不同的信息集；我们通篇把 oracle 覆盖明确标注为执行后、验证器可实现的上界，而非路由效用。
 
-我们的候选是完整的自动生成 harness。我们测量选择器将继承的种群结果结构（\S\ref{sec:boundary}），而非构建选择器。\citet{llmverifier2026} 将执行后验证形式化为生成—选择瓶颈；他们对已完成的轨迹评分，而我们的 D 类估计目标（\S\ref{sec:diagnostics}）在执行前选择 harness，信息集不同。我们诊断执行路径，并通过一项处理包含结构性筛选的析因研究比较生成策略；本研究并未确立稳定的可选择价值。
-
-\subsection{LLM 种群的行为多样性}\label{related:diversity}
-LLM 输出的多样性大多在样本层面（自洽性、多样化解码）或智能体策略层面得到研究。从固定生成器重复采样本身就会产生多样结果 \citep[pass@$k$；][]{chen2021codex}；我们的克隆控制是其执行层面的对应物——同一固定程序的一组同槽位独立执行。语法不同的程序表现出相同行为，与经典的程序等价 \citep{budd1982} 和等价变异体 \citep{papadakis2019} 结果相邻；我们把该问题具体化到 AI 生成的 harness 种群上。
+\subsection{生成群体中的行为多样性}
+\label{related:diversity}
+LLM 输出的多样性主要在样本层（pass@$k$ \citep{chen2021codex}、自一致、多样化解码）或智能体策略层被研究。对固定生成器重复抽样、以及由独立实例化的相同智能体组成多智能体集成 \citep{moreagents2024}，都已表明同代码额外执行能带来性能收益；名义温度 $0$ 的调用在重复间也会变化 \citep{nondeterminism2023}。我们的同代码克隆臂把这一执行层基线变成 harness 群体的显式被测量零假设。语法不同的程序行为相同，与经典的程序等价 \citep{budd1982} 和变异体等价 \citep{papadakis2019} 结果相邻。最接近的是 \citet{metaagents2025}，他们在聚合层面报告自动设计智能体行为多样性偏低；我们在两个方向上扩展该观察：一个轨迹层分类法（声称却未执行、存在却未触发、多轮损坏），确切说明语法差异在何处没有变成被执行的策略；以及反向发现——相同代码在重复执行下产生正的表观互补信号——并针对 harness 群体以匹配重复、同代码对照和显式的槽数/执行数/token 记账加以测量。

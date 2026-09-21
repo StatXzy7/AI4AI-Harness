@@ -1,12 +1,16 @@
 % 中文参考译本：正文、声明与全部附录，非投稿版本。
-% 对应英文投稿源 paper/latex/main.tex（2026-09-20 定稿稿）。
+% 对应英文投稿源 paper/latex/main.tex（2026-09-22 问题驱动重写稿）。
 % 数值宏、结果表、图和参考文献共用英文源；图表内英文标签保留。
 \documentclass{article}
 \usepackage{iclr2027_conference,times}
 \usepackage[UTF8,fontset=windows]{ctex}
 \usepackage{hyperref,url,graphicx,booktabs,array,amsmath,amssymb,xcolor}
-\graphicspath{{../}}
-\title{诊断 AI 生成 Harness 群体中的表观互补性\\（中文参考译本）}
+\graphicspath{{../}{figures/}{../latex/figures/}}
+% Shared tables/macros live in the English source directory.
+\makeatletter
+\def\input@path{{../latex/}{./}{../latex/figures/}}
+\makeatother
+\title{更多次掷骰，还是更多个程序？\\区分生成 Harness 群体中的执行抽样与任务专长\par\bigskip\large（中文参考译本）}
 \author{Anonymous}
 \newcommand{\bare}{\texttt{bare}}
 \newcommand{\react}{\texttt{react}}
@@ -17,27 +21,24 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-自动生成的 LLM harness 提供了丰富的设计空间，但其源代码、执行与结果多样性必须分别测量。我们定义五类分别报告的命题——测量充分性、单次覆盖、\emph{稳定排序}、\emph{稳定互补性}、执行前可选择性，以及预算匹配效用——并为两项稳定性命题给出控制规模的检验。互补性检验在发现阶段重复上冻结逐题成员映射，在留出重复上对照最佳\emph{固定}成员评分（此时全局支配不可能被看成互补性），再用同代码克隆臂与 Monte Carlo 随机化检验进行校准。已知真值模拟在不同成员数、题目数和重复数下确立其错误支持率与功效：旧的重复平均估计量在我们测试的每个零假设情形下都对纯执行噪声给出错误支持，而校准检验把错误支持率保持在名义水平，并且只有在重复数足以支撑可靠映射时才检出交互。应用于一项新的预注册 MATH-500 采集（八个生成 harness 与九个逐字节相同的 \bare{} 克隆槽，各三次独立重复），面板呈现稳定的成员排序，但克隆校准的选择增益为 $\WpVthreeD$\,pp（95\% CI $\WpVthreeDCI$；随机化 $p=\WpVthreeP$）：证据既未确立其在声明的 $1$\,pp 界线上超过同一固定程序的独立执行，也未确立等效；冻结的覆盖门控使判定保持为\textsc{Insufficient Evidence}（证据不足）。在 BIRD 文本转 SQL 上，轨迹检查与版本化析因重分析（$\RevisionPrimaryDelta$\,pp，95\% CI $\RevisionPrimaryCI$）记录了单次运行数字无法确立的内容。该框架把表观多样性转化为可审计的证据，并且按构造不会制造它所要寻找的互补性。
+自动生成的 LLM harness 可能在源代码和观测结果上不同，却并不带来稳定的任务专长。我们研究如何区分依赖程序的专长与重复执行的收益，把源代码、执行与结果多样性作为三个不同的量分别报告。在 BIRD 文本转 SQL 的案例研究中，轨迹检查发现了三条执行层面的路径，说明表面不同的 harness 为何没有实现不同的策略：声称的机制在控制流中缺失（12 个生成候选中的 6 个）、机制存在却从未被触发（\react，10/10）、多轮路径损坏（1/12）；代码相似度与结果不一致之间没有秩相关（$\rho=-0.01$；尽管全部通过代码差异检查，仍有 21/66 个生成对具有完全相同的正确性向量）。在 MATH-500 上一项独立的探索性研究（35 个生成 harness、400 个任务、各运行一次）显示，相对于最佳固定成员（即 \bare{} 本身）有 $4.75$\,pp 的单次 oracle 余量。随后一项新的预注册采集把八个生成 harness 与九个逐字节相同的 \bare{} 克隆槽配对，各三次独立重复：尽管克隆群体按构造没有专长，重复平均的描述性插件量在两臂上都为正（真实面板的 350 个完整任务上 $2.54$\,pp，克隆臂的 383 个完整任务上 $2.67$\,pp）。交叉拟合的冻结选择增益为 $G_{\rm real}=0.17$\,pp（95\% CI $[-0.82,1.31]$），而 $G_{\rm clone}=0.55$\,pp，故克隆校准差为 $-0.10$\,pp（95\% CI $[-1.55,1.46]$，随机化 $p=.7742$），基于 342 个配对完整任务；覆盖门控未通过（12.5\% 的真实臂任务被排除，高于冻结的 10\% 阈值），因此面板报告 \textsc{Insufficient Evidence}（证据不足）——既非存在增益，也非 $1$\,pp 等效。综合而言，这些研究表明生成 harness 群体中观测到的 oracle 覆盖增益混合了程序专长与对同一固定随机程序额外执行的收益；harness 群体评估应把单次覆盖机会、重复稳定交互与执行前选择价值作为不同的量报告。
 \end{abstract}
 \section{引言}\label{sec:introduction}
 \input{sec_intro}
 
+\section{表观互补性度量的是什么？}\label{sec:measures}
+\input{sec_phase1}
+
+\section{评估协议}\label{sec:protocol}
+\input{sec_phase2}
+
+\section{实证诊断}\label{sec:diagnosis}
+\input{sec_results}
+
 \section{相关工作}\label{sec:related}
 \input{sec_related}
 
-\section{Phase I：坍缩的测量与诊断（发现研究）}\label{sec:phase1}
-\input{sec_phase1}
-
-\section{Phase II：验证性生成研究（设计）}\label{sec:phase2}
-\input{sec_phase2}
-
-\section{Phase II：结果}\label{sec:results}
-\input{sec_results}
-
-\section{表观互补性的校准诊断}\label{sec:diagnostics}
-\input{sec_diagnostics}
-
-\section{讨论与结论}\label{sec:discussion}
+\section{意义与局限}\label{sec:discussion}
 \input{sec_discussion}\label{endofmain}
 
 \subsection*{致谢}
@@ -58,7 +59,7 @@
 
 \textbf{研究构思与方向。}核心研究问题、因果设计决策（估计目标、对比、排除规则）、解释标准及拟议的继续／停止准则在 AI 协助下形成。人类作者确定总体研究方向并要求按审稿意见修订；AI 工具也提出分析与实验设计、识别反例并实施修订。最终科学决策及投稿批准仍由作者负责。本声明不表示每项 AI 提议的决策均已获得作者逐项批准。
 
-\textbf{责任。}作者对本研究最终内容承担责任，包括借助生成式 AI 产出的文字、主张和产物。本节中的事实陈述供作者核实；其准确性的最终责任在作者。
+\textbf{责任。}作者对本研究最终内容承担责任，包括借助生成式 AI 产出的文字、主张和产物。本节中的事实陈述供作者核实；其准确性的最终责任由作者承担。
 
 \bibliography{../latex/references}
 \bibliographystyle{iclr2027_conference}
