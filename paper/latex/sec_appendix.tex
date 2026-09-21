@@ -1,6 +1,6 @@
 \section{Phase-I Provenance and Conditions (Detail)}\label{app:phase1-provenance}
 
-\paragraph{Discovery status.} Phase I (Sections~\ref{sec:phase1} and
+\paragraph{Discovery status.} Phase I (\S\ref{sec:f1-collapse} and
 \ref{sec:boundary}) is a discovery study. 24 of its 151 evaluation items
 overlapped day-1 protocol-development measurements; the human control was
 designed after inspecting day-1 traces (its observed headroom is descriptive,
@@ -37,7 +37,7 @@ declarative mechanism specifications (context $\in$
 temperature, per-candidate execution, repair rounds, selection rule), so a
 declared mechanism is present in the control flow by construction.
 \emph{Human positive control}: the four hand-written harnesses of
-\S\ref{sec:positive}.
+\S\ref{sec:f1-collapse}.
 
 \paragraph{Generation-provenance gaps.} The 09-01 free-form populations
 were produced in-session; their generation tool was not preserved, and
@@ -64,7 +64,7 @@ observations motivate Phase II but are not confirmatory, for three disclosed rea
 the design was two nested contrasts that cannot separate protocol from builder main
 effects; the early runs lack per-attempt logs, so budget equality cannot be audited;
 and acceptance was an import/smoke check, not the counterfactual conformance gate of
-\S\ref{sec:phase2}. Full condition details are in Appendix~\ref{app:phase1-provenance}.
+\S\ref{sec:protocol}. Full condition details are in Appendix~\ref{app:phase1-provenance}.
 
 \paragraph{Generation-null failures (M0).} Re-running the original optimize loop
 with Qwen3.8-Flash and DeepSeek-V4-Flash-Vision-Exp builders produced 40 candidates byte-identical to the
@@ -74,18 +74,9 @@ more primitive failure mode --- the pipeline produced no distinct population at 
 The collapse claims above rest exclusively on the genuinely distinct-source day-1
 population.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.60\linewidth]{figures/fig_phenomenon.pdf}
-\caption{\textbf{Syntactic diversity vs.\ behavioral collapse} (Phase I,
-discovery; day-1 population: 14 harnesses $\times$ 60 tasks, 91 pairs
-including the \bare{} and \react{} baselines). Each point is a harness
-pair; $x$ = token-sequence code similarity, $y$ = fraction of tasks with
-differing correctness. Code similarity does not predict outcome
-disagreement ($\rho=-0.01$); 36/91 pairs are identical on all 60 tasks.
-Raw pairs: \texttt{fig1\_phenomenon\_data.json} in the code release.}
-\label{fig:phenomenon}
-\end{figure}
+\paragraph{Figure data.} The raw pairs behind Figure~\ref{fig:phenomenon}
+(in the main text) are \texttt{fig1\_phenomenon\_data.json} in the code
+release.
 
 \section{Phase-II Protocol Summary and Deviation Log}\label{app:phase2-protocol}
 
@@ -186,7 +177,12 @@ executions of the \emph{bare baseline only} (no generated harnesses) on the
 same core-400 tasks, same frozen target (GLM-5.3-Flash, temperature 0).
 58 of 400 tasks (14.5\%) changed bare correctness in at least one of the
 three repeats; pairwise flip rates between repeat pairs are 39/400, 40/400,
-and 37/400 (9.75\%, 10.0\%, 9.25\%). R3 therefore measures the observed
+and 37/400 (9.75\%, 10.0\%, 9.25\%). Treating the three bare repeats as
+three pseudo-members (one execution each) gives a one-run oracle of
+$72.25\%$ against a best-single-repeat accuracy of $65.75\%$, a
+descriptive $6.50$\,pp same-code oracle gap computed from the raw
+\texttt{artifacts/phase2/r3\_rep\{0,1,2\}.jsonl} official-scorer columns.
+R3 therefore measures the observed
 instability rate of the baseline itself under temperature-0 API
 nondeterminism. This is not a standard error or an effect-size floor for
 any contrast, but it sets the scale at which repeat controls become
@@ -382,7 +378,7 @@ phase; Phase-II builders come from six independent labs.}
 
 \section{Worked Examples from the Phase-I Trace Audit}\label{app:examples}
 
-To make the failure taxonomy of \S\ref{sec:taxonomy} concrete, this section
+To make the failure taxonomy of \S\ref{sec:f1-collapse} concrete, this section
 walks one BIRD task through the audited harnesses. Artifacts are verbatim
 from the day-1 trace audit (5 harnesses $\times$ 10 tasks); its logger caps
 stored SQL excerpts at 120 characters, so truncations are marked
@@ -658,10 +654,12 @@ for 36 simultaneous comparisons), plus sign consistency across repeats;
 the pair direction is fixed by member identity, so population conclusions
 are invariant to member ordering. The population state means
 \emph{at least one} pair differs after multiplicity adjustment, not that
-the complete ranking is stable. \emph{C-comp}: stable
-complementarity $H_{\rm stable}=\mathbb{E}\max_h q_h(x)-\max_h\mathbb{E}
-q_h(x)$ satisfies Eq.~\eqref{eq:identity} and is zero exactly when one
-member is expectation-best on every task. Repeats with differing
+the complete ranking is stable. \emph{C-comp}: for a general population
+stable complementarity is $H_{\rm stable}=\mathbb{E}\max_h q_h(x)-\max_h\mathbb{E}
+q_h(x)$, zero exactly when one member is expectation-best on every task;
+for two members this reduces to the half-absolute-value form of
+Eq.~\eqref{eq:identity}, which is the only form displayed in the main
+text. Repeats with differing
 execution-condition fields or differing member source hashes are refused
 as matched repeats and force INSUFFICIENT\_EVIDENCE; byte-identical
 outcome matrices are refused unless both repeats carry distinct,
@@ -676,35 +674,39 @@ The repeat-averaged plug-in of $H_{\rm stable}$ is retained as a
 \emph{descriptive} field only; it never determines a scientific state.
 Two known-truth counterexamples from the review are encoded as
 regression tests: all $q=0.9$ with $M{=}9,T{=}400,R{=}3$ gives a plug-in
-$\widehat H=8.83$\,pp with a bootstrap interval excluding zero, and the
+$\widehat H=8.69$\,pp (the mean over the $300$ hash-bound simulated
+datasets), and the
 sealed same-code clone arm prints $2.67$\,pp --- both with true
 $H_{\rm stable}=0$. The calibrated statistic is the cross-fitted
 frozen-selection gain $G$ described in \S\ref{sec:calibration-test}; the
 decision uses the real-minus-clone difference $D$.
 
-\emph{Why the rule has size across the whole null family.} Let
+\emph{What holds at the population level, and what is checked
+empirically.} Let
 $\theta^*=G$ be the population gain under the frozen selection protocol
 $S$. On every task the selected member's probability is at most
 $\max_h q_h(x)$, so $\theta^*\le H_{\rm stable}$. The null $H_{\rm
 stable}=0$ is the global-dominance cone: some $h_0$ satisfies
 $q_{h_0}(x)\ge q_h(x)$ for all $h$ and almost every $x$. Under dominance
-the frozen mapping can only route to the dominant member or, when a
-weaker member ties the noisy discovery score, misroute \emph{away} from
-it; the scored held-out expectation is therefore
-$E[q_{g_S(x)}(x)]\le E[q_{h_0}(x)]=\max_h\mu_h$, hence
-$\theta^*\le0$ throughout the cone, not just at equal ability. The
-two-arm randomization reference is exact at the equal-ability boundary
-(permuted labels are exchangeable and the recomputed statistic is a draw
-from the same conditional distribution), and because the population
-parameter on the real arm is $\le0$ over the rest of the cone while the
-clone arm stays centered at zero, the one-sided rejection event
-$D>0$ against the equal-ability envelope cannot gain probability under
-dominance: the reference is conservative there. These are structural
-statements about the population parameter; finite-sample validity at the
-nominal level is then checked empirically on every null DGP in the
-calibration grid (below), including heterogeneous difficulty,
+a population-optimal frozen mapping routes to the dominant member, so
+the population gain is $\theta^*\le0$ throughout the cone, not just at
+equal ability. This is a statement about the \emph{population}
+selector, not about the finite-$(R,T)$ statistic: the discovery argmax
+is selected from noisy repeats, and a weaker member that ties the noisy
+discovery score can be chosen in a finite sample (the sealed clone arm
+prints $G_{\rm clone}=0.55$\,pp precisely from this selection noise),
+so $\theta^*\le0$ does not by itself bound the finite-sample rejection
+probability. The two-arm Monte Carlo randomization reference is exact at
+the equal-ability boundary, where permuted labels are exchangeable and
+the recomputed statistic (with the $+1$ correction) is a draw from the
+same conditional distribution. Over the rest of the dominance cone,
+false support is verified \emph{empirically} on every null DGP in the
+calibration grid below --- including heterogeneous difficulty,
 heterogeneous dominance, the $0.5/0.9$ configuration, missingness, and
-sticky within-task latent states matched between arms.
+sticky within-task latent states matched between arms --- rather than
+asserted as an analytic finite-sample result. A level-$.05$ procedure can
+false-support at level $.05$ on a finite grid; the defensible claim is
+the observed worst rate and its Wilson interval, not impossibility.
 
 \emph{Tie-breaking.} Member-label tie-breaking in the frozen argmax is
 iid $U(0,10^{-9})$ jitter averaged over ten frozen tie realizations on
@@ -734,7 +736,7 @@ clean dominant fixed member, the reviewer's $0.5/0.9$ configuration, and
 heterogeneous dominance; and crossover alternatives of increasing
 strength over two latent task types, plus difficulty-related partial
 crossover. The grid spans $M\in\{3,9,20\}$, $T\in\{100,400,1000\}$,
-$R\in\{3,5,10\}$, complete data, 5\% MCAR, and 3\% hardness-related
+$R\in\{3,5,10,20\}$, complete data, 5\% MCAR, and 3\% hardness-related
 missingness; the paper table focuses on the $(9,400,\cdot)$ acquisition
 design with 300 Monte Carlo datasets per cell (150 in sweeps). Every
 cell reports the support, refutation, abstention and error rates of four
@@ -766,9 +768,11 @@ two-member, two-task crossing example the plug-in can be downward biased
 is established is stronger and narrower: under same-code exchangeability
 the true $H_{\rm stable}$ is zero while the plug-in is positive with
 probability approaching one (selection noise on the per-task argmax;
-$\widehat H{=}8.83$\,pp in the $q{=}0.9$, $M{=}9$, $T{=}400$, $R{=}3$
-known-truth simulation, and $2.54$\,pp descriptive on the sealed clone
-arm). The calibrated procedure therefore never decides from the plug-in:
+$\widehat H{=}8.69$\,pp in the $q{=}0.9$, $M{=}9$, $T{=}400$, $R{=}3$
+known-truth simulation, and $\WpVthreeClonePlugin$\,pp descriptive on the
+sealed clone arm's $383$ complete tasks (the real panel prints
+$\WpVthreePlugin$\,pp on a different $350$-task complete set; the two
+are not a paired comparison)). The calibrated procedure therefore never decides from the plug-in:
 a discovery/validation cross-fit freezes the per-task member mapping on
 discovery repeats and scores it on held-out repeats against the best
 \emph{fixed} member (so a globally dominant member is always the frozen
@@ -815,7 +819,7 @@ hash-bound spec under the current code) matched on all $14\times 6$
 cells: zero false supports, the positive control recognized, and the
 abstention cap holds. These discrete controls complement, but do not
 replace, the Monte Carlo false-support/power calibration of
-\S\ref{sec:calibration}, which is what establishes the v3 test's
+\S\ref{sec:protocol}, which is what establishes the v3 test's
 statistical size. The earlier
 stored challenge result whose CH2 numbers contradict its own spec
 (best-fixed 0.94 is unreachable under the generating rule, which forces
@@ -834,9 +838,11 @@ not-run, not passed. Subject to that scope, all cells show single-shot
 coverage (B SUPPORTED); stability, selectability, and deployability are
 INSUFFICIENT\_EVIDENCE by the frozen rules because the archives contain no
 matched repeats and no dev/eval split for policy training --- not because
-costs are absent: per-record logical calls are archived and are now read
-(288{,}104 calls across the core-subset cells), though token/dollar costs
-remain unrecoverable. On MATH the frozen selection policy, trained on the
+costs are absent: per-record logical calls are archived and are read on
+the same canonical deduplicated view as the rest of the reanalysis
+($\RevisionLogicalCalls$ calls across $\RevisionCostRows$
+candidate--task core-subset records, Table~\ref{tab:cost}), though
+token/dollar costs remain unrecoverable. On MATH the frozen selection policy, trained on the
 first 80 of the 400 eval tasks held out of all D/E claims (the archive
 contains no dev-set executions: the 100-task dev split of
 Appendix~\ref{app:crossdomain} was used only for generation smoke tests,

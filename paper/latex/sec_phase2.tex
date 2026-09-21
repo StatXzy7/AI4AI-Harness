@@ -1,112 +1,83 @@
-Phase II is the confirmatory study. Its protocol was frozen and committed
-before any confirmatory outcome was observed (one exception, disclosed as
-deviation D1 in the protocol changelog: an 18-item pipeline smoke test whose
-aggregate accuracies were observed and whose items were retained); deviations are logged in the
-protocol changelog (Appendix~\ref{app:phase2-protocol}). The frozen
-estimand, splits, instruments, and analysis plan are summarized here.
+The empirical studies use four evidence sources, presented in the order
+of \S\ref{sec:diagnosis}: a BIRD text-to-SQL discovery population for the
+code-to-execution trace audit (\S\ref{sec:f1-collapse}); a separate
+exploratory MATH-500 one-run probe (\S\ref{sec:f2-headroom}); a fresh
+pre-registered MATH-500 collection with matched repeats and a same-code
+control (\S\ref{sec:f3-clones}); and a pre-specified BIRD admission-policy
+experiment with a versioned corrected reanalysis
+(\S\ref{sec:f2-admission}). Each study fixes its own
+estimand, repeat count, missingness rule, and budget unit, and results
+are never placed on a before/after line across studies.
 
-\subsection{Design}\label{sec:p2design}
+\paragraph{Same-code clone control.}
+The decisive design makes ``more independent executions of one fixed
+program'' a measured arm rather than a hypothesis. The pre-registered
+collection runs a panel of eight generated harnesses plus \bare{} and, in
+parallel, nine equal-slot byte-identical \bare{} clone slots, for three
+independent repeats each on the same $400$ MATH-500 tasks. Equal slots is
+not equal executions and not equal tokens; all three budget units are
+reported separately.
 
-\paragraph{Arms.} Two crossed factors: \emph{strategy forcing} (S=1: the
-builder is assigned a named mechanism from a fixed set of eight; S=0: the
-builder invents an improvement with no mechanism named) and the
-\emph{conformance gate} (G=1: the harness must pass the frozen conformance
-suite; G=0: neutral validity only). This yields four factorial arms, which
-we denote \textbf{II-A} (free/ungated), \textbf{II-B} (free/gated),
-\textbf{II-C} (forced/ungated), \textbf{II-D} (forced/gated). A fifth,
-pre-specified \emph{secondary} arm \textbf{II-E} (open mechanism discovery:
-the builder emits a self-specified behavioral contract over generic trace
-primitives, gated on its own declaration) tests whether mechanism diversity
-requires author-supplied vocabulary at all; it is deliberately outside the
-factorial. Each cell has eight slots: the eight assigned mechanisms in the
-forced arms, eight independent generations of the same free prompt in the
-free arms. In the gated free arm (II-B) the builder emits a self-declared
-mechanism from a fixed four-word vocabulary
-(\texttt{repair}, \texttt{vote}, \texttt{twostage}, \texttt{plain}); the
-gate verifies the declared scenario against the trace. These declarations
-are narrower than the forced contracts and the mapping is operational,
-not independently calibrated (Appendix~\ref{app:gatecontrols}), so arm-B
-populations are not nested in arm-A and yields need not be ordered.
-These arm names are Phase-II-specific; Phase-I conditions in
-\S\ref{sec:phase1probes} are always referred to with their descriptive
-names.
+\paragraph{Cross-fitted frozen-selection statistic.}
+\label{sec:calibration-test}
+A repeat-averaged plugin $\widehat H$ maximizes noisy per-task estimates
+and is retained only as a descriptive quantity. The scientific statistic
+cross-fits a frozen selection: in each of three folds, two discovery
+repeats freeze both the per-task member mapping $h^\star(x)=\arg\max_h
+\bar q_h(x)$ and the single best fixed member $h_{\rm fix}$; the held-out
+repeat scores the frozen mapping against that fixed member (never against
+\bare{}). This gives $G_{\rm real}$ and $G_{\rm clone}$, and the decision
+statistic is their paired difference $D=G_{\rm real}-G_{\rm clone}$ on
+tasks complete in both arms, referenced against a two-arm within-task
+Monte Carlo randomization distribution (member labels permuted
+independently per task and repeat in both arms) with a paired task
+bootstrap. The randomization reference is exact at the equal-ability
+null where arm labels are exchangeable; over the rest of the dominance
+cone finite-sample false support is checked empirically on known-truth
+DGPs, not asserted analytically. Frozen safeguards include a
+$\le10\%$ incomplete-task coverage gate in either arm, a $\ge30$
+paired-task minimum, and no imputation of unknown cells (all-$0$/all-$1$
+fill scenarios are reported instead). Without a clone arm the statistic
+is descriptive and emits no supported complementarity.
 
-\paragraph{Implemented treatment; common attempt cap.} The original gate maps both
-\texttt{hint\_guard} and \texttt{format\_guard} to a plain scenario that
-returns \texttt{NO\_MECHANISM\_declared}; admission requires \texttt{PASS}.
-Thus two of eight forced strategy slots cannot pass even if neutrally
-valid, and no \texttt{format\_guard} candidate passed neutral validity in
-either forced arm (an extraction audit finds embedded SQL fences can
-truncate otherwise valid Python, Appendix~\ref{app:extraction}). We
-interpret G as \emph{nontrivial-mechanism screening plus conformance
-verification}; the archived results do not identify pure verification.
-Each slot has at most $R{=}3$ raw builder attempts (same model,
-temperature 0.7, 16{,}384 token cap), stopping at first acceptance;
-logged raw attempts total 269/255/273/324 for A/B/C/D, and token costs
-are not fully recovered. Slot failure is final (no top-up), so
-generation reliability is part of the treatment and is reported
-separately via three rates (Appendix~\ref{app:phase2-protocol}).
+\paragraph{Instrumentation validation on known truths.}
+We validate the decision rule on simulated binary tensors with specified
+member-by-task probabilities, spanning $M\in\{3,9,20\}$ members,
+$T\in\{100,400,1000\}$ tasks, $R\in\{3,5,10,20\}$ repeats, complete
+data, $5\%$ MCAR, and $3\%$ hardness-related missingness, with null
+families (equal ability, including a heterogeneous-difficulty variant;
+global dominance, including the $0.5/0.9$ configuration) and crossover
+alternatives of increasing strength. The $100$ cells complete with zero
+procedure errors. Table~\ref{tab:calibration} reports the
+$M{=}9,T{=}400$ slice: the plugin false-supports at rate near one on
+every null (including all-$q{=}0.9$ and the sealed clone arm), whereas
+the clone-calibrated rule's worst observed null false-support is $2\%$
+(equal ability, $M{=}9,T{=}100,R{=}3$; Wilson $[0.68,5.71]\%$). Power is
+reported honestly with repeat count: a clean two-specialist crossover at
+$H=17.5$\,pp is detected with $0\%$ power at $R=3$, $0.7\%$ at $R=5$,
+and $100\%$ at $R=10,20$, while realistic $1$--$4$\,pp cyclic
+interactions remain unresolved at $R=3$. These are tested-DGP
+statements, not an analytic finite-sample size guarantee over the
+dominance cone.
 
-\paragraph{Builders and seeds.} Six builders from independent labs
-(GLM-5.3, Qwen3.8-Max, DeepSeek-V4-Pro, Kimi-K3, MiniMax-M3,
-ERNIE-5.0-Thinking-Preview), three seeds each: 18 paired (builder $\times$
-seed) cells --- the strongest models on the project's single API gateway; no
-Anthropic- or OpenAI-family builder was accessible, so frontier
-capability-dependence is untested. Every cell enters the primary contrast
-regardless of admitted population size, including $K{=}0$; excluding
-low-yield cells would condition on a post-treatment outcome.
+\begin{table}[t]
+\centering\small
+\input{calibration_table}
+\caption{\textbf{Known-truth instrumentation validation at $M=9,T=400$.}
+Null rows report false-support \% (nominal $5\%$), alternative rows
+report power \%; the final column is the $R=3$ abstention rate. The full
+$M,T,R$ and missingness grid is in Appendix~\ref{app:diagnostics}.}
+\label{tab:calibration}
+\end{table}
 
-\paragraph{Data isolation.} A fail-closed contamination registry scans every
-project artifact for observed BIRD questions. Two databases touched during
-development are banned wholesale; the confirmatory evaluation uses
-\textbf{1{,}169 questions from nine databases never opened during
-development}, with a stratified 400-item core drawn pre-outcome
-(proportional allocation across the nine databases, seed 20260904; no
-outcome variable used; no pretraining-time isolation claimed; the 18-item
-smoke contact is the disclosed exception). Factorial secondary
-analyses run on the same core items for all four arms.
-
-\paragraph{Judge.} Primary: the official BIRD execution scorer (set
-equality on raw result rows, 30\,s wall-clock timeout). Secondary: the
-Phase-I legacy judge, measured to be uniformly conservative (on Phase-I
-matrices it never credits an answer the official scorer rejects).
-
-\paragraph{Instruments.} The conformance suite drives each harness against
-scripted scenarios and asserts on the recorded execution trace, never on
-task performance, so gating cannot leak outcome supervision. Every
-mechanism is probed with \emph{paired counterfactual variants} whose
-correct answers differ --- including a variant where the first query
-\emph{succeeds}, separating conditional repair from an unconditional
-second call. Calibrated against hand-written positive/negative controls
-and re-run before each generation batch (Figure~\ref{fig:design},
-Appendix~\ref{app:phase2-protocol}).
-
-\subsection{Frozen analysis plan}\label{sec:p2plan}
-The \textbf{primary estimand} is the paired difference in bare-inclusive oracle
-headroom, $H(\text{II-D}) - H(\text{II-A})$ over (builder $\times$ seed) cells, on
-the full 1{,}169-question set under the official judge --- a continuous effect with
-a two-sided 95\% CI and paired permutation test, never a pass/fail threshold.
-The diagonal contrast is primary because the two factors are deployed
-together in the generation pipeline; main effects and interaction
-decompose it as secondaries. The
-Phase-I thresholds survive only as a descriptive checklist.
-\textbf{Confirmatory secondaries} (Holm-corrected, all four arms on the same
-core-400 items): gate main effect $[(B{-}A)+(D{-}C)]/2$, strategy main effect
-$[(C{-}A)+(D{-}B)]/2$, and their interaction $(D{-}C)-(B{-}A)$ --- whether strategy
-differentiation requires execution fidelity to be realized.
-\textbf{Original plan and corrected inference}: the original code omitted
-within-database task resampling and resampled cell summaries only. The
-versioned post-review analysis uses 10{,}000 shared database/within-database
-task draws across all arms and cells, keeping builders fixed and resampling
-generation seeds within builder; it does not add execution-repeat variance,
-and with only three seeds per builder the seed component may understate
-true generation variability (a reported data limit).
-Exact sign-flip reference tests are conditional on observed tasks and on
-cell-contrast sign symmetry (one-sided primary; two-sided secondaries with
-Holm adjustment) --- not randomized causal tests. $H(P)$ is \emph{not}
-monotone in $K$ --- adding a harness that answers everything correctly
-drives headroom to zero --- so matched-$K$ comparison, not monotonicity,
-licenses cross-population claims. K-matched sensitivity, full estimand
-definitions, and the robustness audits (dual judge, cache-off replication,
-repeat stability) are specified in Appendix~\ref{app:phase2-protocol}
-together with the protocol deviation log.
+\paragraph{Missingness and task provenance.}
+A task is \emph{complete} for an arm if it has a recorded verdict for
+every member in every repeat; tasks with an unresolved remote call or a
+carried unknown marker are excluded from that arm rather than imputed.
+Point estimates are complete-case and exact on the included tasks; the
+two arms have different complete-task sets, so arm-level descriptive
+numbers are reported on their own sets and only $D$ is paired across the
+intersection. The evaluation tasks had been executed in the earlier
+one-run probe, so the collection is prospective in execution but
+retrospective in tasks --- an independent-repeat study, not unseen-task
+validation.

@@ -1,102 +1,110 @@
-\subsection{Harness generation for LLMs}\label{related:generation}
-A growing line of work generates task-specific scaffolding around a frozen
-model. TTHE evolves text-to-SQL harnesses with an LLM proposer/judge loop
-\citep{tthe2026}; Self-Harness \citep{selfharness2026} shows a model can
-improve its own harness; JIT-Agent \citep{jitagent2026} trains a model to
-generate a harness per task at inference time; Task-CoEvolve
-\citep{coevolve2026} co-evolves tasks and scaffolds. A concurrent 2026
-cluster makes harness evolution \emph{behavior-aware from the verification
-side}: HarnessLens \citep{harnesslens2026} allocates rollout budget using
-behavior-level checks during evolution; HarnessFix \citep{harnessfix2026}
-repairs harnesses from trace-grounded diagnoses; AHE \citep{ahe2026}
-verifies each proposed edit against self-declared behavioral predictions;
-gated semantic quality-diversity search \citep{gatedqd2026} evolves
-populations over LLM-assigned pathology descriptors; Harness Handbook
-\citep{handbook2026} attacks behavior localization and outer-loop search;
-HarnessForge \citep{harnessforge2026} jointly evolves the external harness
-and the internal policy as a pair. Evolving entire execution structures
-raises two costs that motivate our diagnostic: per-candidate compute and
-brittle admission validation. We prune redundant variations and reject
-illusory one-run oracle gains \emph{offline}, before any deployment claim.
+\subsection{Harness generation for LLMs}
+\label{related:generation}
+A growing line of work generates task-specific scaffolding around a
+frozen model. TTHE evolves text-to-SQL harnesses with an LLM
+proposer/judge loop \citep{tthe2026}; Self-Harness \citep{selfharness2026}
+shows a model improving its own harness; JIT-Agent \citep{jitagent2026}
+learns to generate a harness per task at inference time; and
+Task-CoEvolve \citep{coevolve2026} co-evolves tasks and scaffolds.
+Automated agent-program search \citep{adas2024} first framed such
+generated programs as a search space. A concurrent 2026 cluster makes
+harness evolution behavior-aware from the verification side:
+HarnessLens \citep{harnesslens2026} allocates rollout budget using
+behavior-level checks during evolution, HarnessFix
+\citep{harnessfix2026} repairs harnesses from trace-grounded diagnoses,
+AHE \citep{ahe2026} verifies edits against self-declared behavioral
+predictions, gated quality-diversity/HarnessBank \citep{gatedqd2026}
+evolves populations over LLM-assigned pathology descriptors, the Harness
+Handbook \citep{handbook2026} targets behavior localization and
+outer-loop search, and HarnessForge \citep{harnessforge2026} co-evolves
+the harness and the internal policy.
 
-Our work is complementary but distinct in unit of analysis and question.
-Table~\ref{tab:nearest} contrasts the two nearest systems. HarnessLens uses
-behavior as a \emph{signal inside} an evolution loop to allocate compute;
-we ask whether the resulting \emph{population} is behaviorally diverse as an
-outcome property, and how it changes under generation-side interventions.
-HarnessBank \citep{gatedqd2026} documents search-space collapse and
-maintains a semantic diversity library with gated screening; our conformance
-gate does not score semantics at all --- it verifies mechanically, via
-counterfactual trace probes, that a declared mechanism executes --- and our
-design compares admission policies through a factorial contrast.
-Because the implemented gate also excludes allowed prompt transformations,
-the current experiment does not isolate verification's causal contribution.
+Our unit of analysis and question are complementary but distinct.
+Table~\ref{tab:nearest} contrasts the two nearest systems. HarnessLens
+uses behavior as a \emph{signal inside} an evolution loop to allocate
+compute; we ask whether the resulting \emph{population} is behaviorally
+diverse as an outcome property. HarnessBank \citep{gatedqd2026}
+documents search-space collapse and screens on LLM-assigned semantic
+descriptors; our admission instrument does not score semantics at all,
+but drives counterfactual trace probes to verify mechanically that a
+declared mechanism executes, and our experiment compares admission
+policies through a factorial contrast. Because the implemented gate also
+structurally excludes two allowed prompt transformations, the treatment
+does not isolate verification's causal contribution.
 
 \begin{table}[t]
-\centering
-\footnotesize
-\setlength{\tabcolsep}{3pt}
+\centering\footnotesize\setlength{\tabcolsep}{3pt}
 \begin{tabular}{@{}lccc@{}}
 \toprule
  & \textbf{This work} & \textbf{HarnessLens} & \textbf{HarnessBank} \\
 \midrule
 Unit of study & population outcome matrix & evolution loop & diversity library \\
-Measures population collapse & yes & no & search collapse only \\
-Gate definition & counterfactual traces & attributable-evidence & semantic screening \\
-Gate calibration & pos/neg controls & --- & --- \\
-Gate comparison & factorial, mixed screening & gate ablation (single factor) & no \\
+Behavioral collapse measured & yes & no & search collapse only \\
+Same-code clone control & yes & no & no \\
+Admission check & counterfactual traces & budget allocation & semantic screening \\
+Policy comparison & factorial & single loop & none \\
 Confirmatory split & 9 isolated DBs & --- & --- \\
 \bottomrule
 \end{tabular}
-\caption{Nearest concurrent systems. Behavior-aware verification inside
-evolution systems is concurrent independent work; our contribution is the
-population-level outcome measurement, instrument calibration, and the
-generation-policy contrast. The present gate includes structural screening; the database split has a
-disclosed 18-item smoke-test exception.}
+\caption{Nearest concurrent systems. The present gate includes structural
+screening, and the confirmatory split has a disclosed $18$-item
+smoke-test exception.}
 \label{tab:nearest}
 \end{table}
 
-\subsection{Harness conditional utility and routing}\label{related:routing}
+\subsection{Conditional utility, routing, and repeated sampling}
+\label{related:routing}
 Harness quality is instance-conditional: \citet{nouniversal2026} and
 \citet{nonmonotone2026} document that no single harness dominates across
 instances. HELIX evaluates a full sibling-harness outcome matrix and
-portfolio complementarity beyond the best fixed candidate, listing a router
-as future work \citep{helix2026}. STS routes over six fixed human-designed
-scaffolds \citep{sts2026}; GRASP gates skill edits into a development-time
-library \citep{grasp2026}; \citet{cfrouting2026} learn instance-level routing
-over \{no-search, search, abstain\}; \citet{agenticrouting2026} route models
-within a harness. Classical algorithm selection \citep{rice1976} and
-portfolio solvers such as SATzilla \citep{xu2008satzilla,kotthoff2016}
-select enumerated algorithms from instance features.
+portfolio complementarity beyond the best fixed candidate but lists a
+router as future work \citep{helix2026}. STS routes over six fixed
+human-designed scaffolds \citep{sts2026}, GRASP gates skill edits into a
+development-time library \citep{grasp2026}, \citet{cfrouting2026} learn
+routing over \{no-search, search, abstain\}, and RouteLLM
+\citep{routellm2024} routes at the model level. The underlying decision
+boundary is the classical distinction between quantitative and
+qualitative (crossover) interaction: a change in effect size alone need
+not change the preferred action \citep{gailsimon1985}. Algorithm
+selection \citep{rice1976} and portfolio solvers such as SATzilla
+\citep{xu2008satzilla,kotthoff2016} select enumerated algorithms from
+instance features, and randomized restarts have long captured gains from
+additional attempts at one solver rather than from a portfolio. Ensemble
+selection optimizes a validation objective over a model library
+\citep{caruana2004}, a different information set from choosing one
+member before execution, and self-consistency
+\citep{selfconsistency2022} aggregates multiple sampled trajectories
+post hoc, so its cost and information set again differ from
+pre-execution single-member routing.
 
-The decision boundary here is the classical one between quantitative and
-qualitative (crossover) interaction: a change in effect size alone need not
-change the preferred action \citep{gailsimon1985}. Ensemble selection also
-optimizes a validation objective over a library of models, which is a
-different information set from selecting one member before execution
-\citep{caruana2004}. Likewise, self-consistency gains come from running
-multiple sampled trajectories and aggregating them, so their cost and
-post-sampling information differ from pre-execution single-member routing
-\citep{selfconsistency2022}.
+Our candidates are complete automatically generated harnesses, and we
+measure the population outcome structure a selector would inherit rather
+than build a selector. Post-execution verifiers
+\citep{llmverifier2026} score completed trajectories, whereas our
+pre-execution estimand chooses a harness before it runs, a different
+information set; our oracle coverage is labeled throughout as the
+post-execution upper bound a verifier could realize, not as routing
+utility.
 
-Our candidates are complete automatically generated harnesses. We measure
-the population outcome structure a selector would inherit
-(\S\ref{sec:boundary}), rather than build a selector. \citet{llmverifier2026}
-formalize post-execution verification as the generation--selection
-bottleneck; they score completed trajectories, whereas our Class-D
-estimand (\S\ref{sec:diagnostics}) selects a harness before execution, a
-different information set. We diagnose execution
-paths and compare generation policies through a factorial whose treatment
-includes structural screening; the present study does not establish stable
-selectable value.
-
-\subsection{Behavioral diversity in LLM populations}\label{related:diversity}
-Diversity of LLM outputs has mostly been studied at the sample level
-(self-consistency, diverse decoding) or the agent-policy level. Repeated
-sampling from a fixed generator already yields diverse outcomes
-\citep[pass@$k$;][]{chen2021codex}; our clone control is the
-execution-level analogue --- a same-slot set of independent
-executions of one fixed program. Syntactically distinct programs
-exhibiting identical behavior is adjacent to classical program-equivalence
-\citep{budd1982} and equivalent-mutant \citep{papadakis2019} results; we
-instantiate the question for AI-generated harness populations.
+\subsection{Behavioral diversity in generated populations}
+\label{related:diversity}
+Diversity of LLM outputs has been studied mainly at the sample level
+(pass@$k$ \citep{chen2021codex}, self-consistency, diverse decoding) or
+at the agent-policy level. Repeated sampling from a fixed generator and
+multi-agent ensembling of independently instantiated identical agents
+\citep{moreagents2024} already show performance gains from additional
+executions of the same code, and nominally temperature-$0$ calls vary
+across repeats \citep{nondeterminism2023}; our same-code clone arm turns
+that execution-level baseline into an explicit measured null for harness
+populations. Syntactically distinct programs behaving identically is
+adjacent to classical program-equivalence \citep{budd1982} and
+equivalent-mutant \citep{papadakis2019} results. Most closely,
+\citet{metaagents2025} report low behavioral diversity among
+auto-designed agents at an aggregate level. We extend that observation in
+two directions: a trace-level taxonomy (mechanism described but not
+executed, present but untriggered, broken multi-turn) showing exactly
+where syntactic difference fails to become an executed strategy, and the
+converse finding that identical code under repeated execution produces a
+positive apparent-complementarity signal --- measured, for harness
+populations, with matched repeats, a same-code control, and explicit
+slots/executions/tokens bookkeeping.

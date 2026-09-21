@@ -38,7 +38,7 @@ averaged over ten frozen tie realizations; a simulation over
 dominant-member positions verifies the statistic is order-independent.
 The decision statistic is the real-minus-clone difference
 $D=G_{\rm real}-G_{\rm clone}$ on the task intersection complete in both
-arms. Its reference distribution uses 4{,}000 two-arm randomizations:
+arms. Its reference distribution uses $10{,}000$ two-arm randomizations:
 within every task and repeat, member labels are permuted independently
 in each arm and $D$ is recomputed (a single permutation joint across
 repeats was rejected in development because it preserves a genuine
@@ -99,10 +99,13 @@ Three distinct comparisons are reported and never conflated.
 (i) \emph{Equal-slot collection}: both arms execute nine members/slots
 for three repeats; this is the randomization design and does not imply
 matched spend. (ii) \emph{Common per-task execution budget}
-(Table~\ref{tab:budget-curves}, \S\ref{sec:wp1r}): offline comparison at
-$b=3,\dots,27$ executions per task between the dev-ranked panel
-portfolio and $b$ of the 27 same-code executions, under oracle and
-majority aggregation. (iii) \emph{Realized spend}: per-request
+(\S\ref{sec:f3-clones}): offline comparison at
+$b\in\{3,9,15,27\}$ executions per task between the dev-ranked panel
+portfolio and $b$ of the 27 same-code executions, under post-execution
+\emph{oracle} aggregation only; panel-minus-same-code oracle differences
+are $+0.37,+0.03,-0.11,-0.25$\,pp. No cross-arm majority-vote accuracy is
+reported because the arms emit incompatible answer formats (boxed numbers
+versus free-form prose), so a modal answer key would be unfair. (iii) \emph{Realized spend}: per-request
 accounting layers experiment-run $>$ harness-execution $>$ logical-call
 $>$ provider-attempt; migration copies are excluded. The real arm made
 22{,}192 logical calls (32{,}097 provider attempts; 54.17\,M known
