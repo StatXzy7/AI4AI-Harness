@@ -1,0 +1,66 @@
+\section{Frozen Selector and Execution-Matched Replay}\label{app:selection}
+This section concerns the fresh MATH repeat study: the selector is fitted on $100$ development tasks and scored on $400$ evaluation tasks. The historical $80/320$ archive split and BIRD database-split selection analyses are separate studies in Appendices~\ref{app:archive-analysis} and~\ref{app:rich}.
+
+\subsection{Frozen feature selector} $\pi_Z$ is multinomial logistic regression
+over TF-IDF question features (max 300) and per-member dev accuracies
+computed within training folds only; 5-fold task-level CV on the 100 dev
+tasks with same-task repeats never split across folds; fold-model
+averaging; ties broken by member id; abstain to \bare{} when the top-2
+probability gap is below 0.15. Repeat aggregation uses the
+available-repeat mean per member--task (same-task repeats stay in one
+fold). Comparators: \bare{}, dev-fixed, pre-fixed random member (seeded),
+M1b (dev-fixed with single-call fallback on missing cells). $E_1$ (budget by
+construction) is not applicable because panel members make more than one
+call; $E_b$ with $b{=}3$ calls per task is reported as a separately named
+estimand. Leakage controls: no answer, correctness, eval-derived
+difficulty, post-execution trace, or judge feature is used.
+
+\begin{table}[H]
+\centering\small
+\input{wp1r_policy_table}
+\caption{\textbf{WP-2R frozen comparator set on the 400 MATH-500 eval
+tasks} (repeat-mean correctness over three fresh repeats; retrospective
+tasks, prospective execution --- no unseen-task claim). Paired differences
+are per-task against dev-fixed with task-level bootstrap CIs.}
+\label{tab:wp1r-policy}
+\end{table}
+
+
+\FloatBarrier
+\subsection{Diagnostic definitions of selection and budget utility} Class D evaluates one
+frozen deterministic policy $\pi_Z: Z(x)\mapsto h$ --- pre-execution
+features (question text, frozen mechanism labels, training-fold dev
+accuracies), fitted on development tasks only --- by
+$D(\pi_Z)=\mathbb{E}_x[Y(x,\pi_Z(x))-Y(x,h_{\rm dev\text{-}fixed})]$,
+with an abstention rule falling back to \bare{} when the top-2
+selection-probability gap is below the frozen margin. Class E evaluates
+$U_b(\pi)=\mathbb{E}_x[\Delta(x,\pi(x))]$ under a uniform per-task call
+budget $b$ with $\lambda{=}1$ harm weighting (one regression cancels one
+repair); it is admissible only when per-record evidence verifies the
+budget on every evaluated member-task pair, and abstains otherwise.
+
+\subsection{Execution-matched replay and realized collection accounting}
+Three distinct comparisons are reported and never conflated.
+(i) \emph{Equal-slot collection}: both arms execute nine members/slots
+for three repeats; this is the randomization design and does not imply
+matched spend. (ii) \emph{Common per-task execution budget}
+(\S\ref{sec:selection-result}): offline comparison at
+$b\in\{3,9,15,27\}$ executions per task between the dev-ranked panel
+portfolio and $b$ of the 27 same-code executions, under post-execution
+\emph{oracle} aggregation only; panel-minus-same-code oracle differences
+are $+0.37,+0.03,-0.11,-0.25$\,\%. No cross-arm majority-vote accuracy is
+reported because the arms emit incompatible answer formats (boxed numbers
+versus free-form prose), so a modal answer key would be unfair. (iii) \emph{Realized spend}: per-request
+accounting layers experiment-run $>$ harness-execution $>$ logical-call
+$>$ provider-attempt; migration copies are excluded. The real arm made
+22{,}192 logical calls (32{,}097 provider attempts; 54.17\,M known
+tokens; 54.5 calls per eval task) versus the clone arm's 10{,}800
+logical calls (10{,}804 attempts; 14.51\,M tokens; exactly 27 per task)
+--- a $2.05\times$ call and $3.73\times$ token ratio driven by the
+multi-call panel members; the conservative ceiling at the frozen
+break-even price is 1{,}803.82 vs 483.15 CNY (pricing not independently
+verifiable; reported as token counts times the frozen 33.3 CNY per 1M
+tokens, never as billed amounts). Totals across all arms:
+\WpLogicalCalls{} logical calls, \WpHttpAttempts{} attempts,
+\WpTotalTokens{} known tokens, \WpCostCny{} CNY ceiling. We therefore
+make no realized-cost-matched claim; the common-budget replay matches harness executions, not token cost.

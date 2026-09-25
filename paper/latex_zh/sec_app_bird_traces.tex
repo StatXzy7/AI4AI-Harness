@@ -1,0 +1,85 @@
+\section{BIRD 执行轨迹与补充分析}\label{app:bird-traces}
+本附录展开正文的补充执行诊断。历史记录中的 Phase I 指 BIRD 发现研究，Phase II 指独立的 BIRD 准入研究；它们均不作为 MATH 结果的因果解释。
+\subsection{发现研究的总体与条件}\label{app:phase1-provenance}
+
+\paragraph{发现研究状态。}Phase I（\S\ref{sec:f1-collapse} 与 \S\ref{sec:boundary}）是发现研究。其 151 个评估项中有 24 个与发现阶段协议开发测量重叠；人工控制是在检查发现阶段轨迹后设计的（其观测提升空间是描述性的，不是稳定互补性的盲估计）。Phase-I 准入阈值（联合修复率 $\geq$15\%、提升空间 $\geq$5\,\%、$\geq$3 个成对不同的非空修复集合）在 151 题评估之前已固定；v6$\rightarrow$v7 的阈值变更（20\%$\rightarrow$15\%）已披露，两种读数接纳相同种群。这是内部评估前冻结，不是外部预注册。
+
+\paragraph{数据卫生。}single-call 基线在两次发现阶段运行之间翻转了 60 题中的 3 题（温度 0 下的 API 非确定性），因此 60 题列以略有不同的 single-call 错题集合为条件。Phase-I 评分使用行集合相等代理，我们后来测得它相对官方 BIRD 评分器一致保守（在两个记录了最终 SQL 的 Phase-I 矩阵上，它从不把官方评分器判错的答案判对；一致率 0.97--0.99）。
+
+\paragraph{Phase-I 种群。}种子基线：single-call（单次调用）与 \texttt{react}（执行反馈循环，随 TTHE 提供）。\emph{旧提议者协议}：从 TTHE 优化循环输出中选出的六个候选（GLM-5.3-Flash 构建器），仅使用与评估集不相交的 36 道题、按评估前冻结的规则为行为多样性而选择。\emph{策略强制自由形式}：GLM-5.3-Flash、Qwen3.8-Flash、DeepSeek-V4-Flash-Vision-Exp 构建器，各八个指派机制；GLM 种群是有日志的重跑（K=3；原先运行记录为零接纳，但其工具未保存，该观察无法审核）。\emph{Harness IR}：从声明式机制规格确定性编译的六个 harness（上下文 $\in$\{plain, schema\_link, hint\_guard, link+hint\}，带温度的候选生成、逐候选执行、修复轮次、选择规则），因此声明机制按构造存在于控制流中。\emph{人工正控制}：附录~\ref{app:bird-discovery} 的四个手写 harness。
+
+生成日志缺口与历史协议探查见附录~\ref{app:history}。
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.60\linewidth]{figures/fig_phenomenon.pdf}
+\caption{\textbf{源码差异未必改变观测正确性。}BIRD 发现研究包含 $14$ 个 harness、$60$ 个任务，每个执行一次。含基线的 $91$ 对中，token 序列源码相似度与正确性分歧的秩相关为 $\rho=-0.010$；$36/91$ 对具有相同正确性向量。这是观测任务上的结果比较，不是程序等价检验。}
+\label{fig:phenomenon}
+\end{figure}
+\FloatBarrier
+\subsection{发现研究的结果与人工控制}\label{app:bird-discovery}
+
+每个 BIRD 发现候选都通过代码差异检查。然而，$21/66$ 个生成候选对具有完全相同的正确性向量（含基线为 $36/91$），$91$ 对上源码相似度与正确性分歧几乎没有秩相关（$\rho=-0.010$；图~\ref{fig:phenomenon}）。整体平均分歧为 $3.3\%$（仅生成候选为 $3.8\%$），对 \bare{} 错题的联合修复为 $7.7\%$，单次余量为 $3.3$\,\%。在这 $60$ 题上一致不能确立程序普遍等价，却说明有必要检查程序实际做了什么。
+
+
+\subsection{轨迹区分机制缺失、未触发与执行失败}
+\textbf{T1：描述存在，实现缺失。}十二个候选中有六个在文档字符串中声称检索或自检，却只调用一次模型、不执行任何产物，所命名的机制并未实现。\textbf{T2：机制存在，未被触发。}全部十个经过审核的 \react{} 任务中，首个 SQL 均成功执行，已有的执行—反馈—修复分支从未启动，最终 SQL 与 \bare{} 相同。执行成功不等于语义正确，这些运行并未检验失败条件下的修复。\textbf{T3：执行发生，输出损坏。}十二个候选中有一个执行多轮查询与修复，却将自然语言作为最终 SQL 返回，丢掉了 \bare{} 能答对的题。
+
+这些观察定位不同的失败环节，而不是赋予一个共同的多样性分数。T1 要求检查实现，T2 要求任务能够触发分支，T3 要求有效的输出契约。它们未确立机制触发会引起准确率提升。四个人工编写、执行路径不同的控制在 $60$ 题上产生 $6.67$\,\% 单次余量，在 $151$ 题上为 $7.28$\,\%，说明评估装置能够记录不同修复。但这些控制是在查看轨迹后编写的，缺少匹配重复与克隆对照。附录~\ref{app:phase1-provenance} 披露较早的代理评分器及与协议开发重叠的 $24/151$ 题；附录~\ref{app:examples} 提供具体轨迹。
+
+
+\FloatBarrier
+\subsection{轨迹审核的完整样例}\label{app:examples}
+
+为使 \S\ref{sec:f1-collapse} 的失败分类具体化，本节把一项 BIRD 任务在被审 harness 中走一遍。产物逐字取自发现阶段轨迹审核（5 个 harness $\times$ 10 道题）；其日志器把存储的 SQL 摘录上限设为 120 字符，故截断以 \emph{[trunc.]} 标记。
+
+\paragraph{任务。}BIRD 开发集问题 352（\texttt{card\_games} 数据库；题目文本逐字，拼写错误为数据集原有）：
+\begin{quote}\small\ttfamily
+Calculate the percentage of the cards availabe in Chinese Simplified.
+\end{quote}
+其 BIRD 提示：
+\begin{quote}\small\ttfamily
+'Chinese Simplified' is the language; percentage = Divide(Sum(id where
+language = 'Chinese Simplified'), Count(id)) *100
+\end{quote}
+Gold SQL（在发布数据库上执行两者分别得 8.7734 与 8.7728——官方评分器将其区分）：
+\begin{quote}\small\ttfamily
+SELECT CAST(SUM(CASE WHEN T2.language = 'Chinese Simplified' THEN 1 ELSE 0
+END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN foreign\_data
+AS T2 ON T1.uuid = T2.uuid
+\end{quote}
+\bare{} harness 回答：
+\begin{quote}\small\ttfamily
+SELECT SUM(CASE WHEN language = 'Chinese Simplified' THEN 1 ELSE 0 END) *
+100.0 / COUNT(id) AS percentage FROM foreign\_data;
+\end{quote}
+被官方评分器判错：它直接在 \texttt{foreign\_data} 上计数，而 gold 查询在连接 \texttt{cards} 之后计数；提示没有写明该连接。
+
+\paragraph{\react{}（T2：机制存在但未触发）。}\react{} 的控制流确实执行 SQL 并在数据库错误时重试。但其第一次调用与 \bare{} 的提示逐字节相同，而此处生成的 SQL 执行无错误，因此错误触发的重试从不发生，最终 SQL 与 \bare{} 相同。在全部 10 道被审任务上模式都成立：有 SQL 执行，10/10 最终 SQL 与 \bare{} 逐字节相同——反馈循环是真实代码，但其修复分支在这些题上未激活。需要受控故障注入来检验反馈是否改变输出。
+
+\paragraph{单次调用候选（T1：机制被描述但未执行）。}该候选的文档字符串宣称一种“保守修复”：限制求解器最大输出 token 并要求仅答案块。其行为在结构上就是 \bare{}：一次 LLM 调用，然后提取 SQL。token 上限仅作为环境默认值存在（2{,}048 对运行时的 32{,}000）——没有任何 harness 控制流实现它，且在这些题上它从不生效，因为 SQL 答案比上限低几个数量级。在工作样例题上它恰好发起一次调用、什么都不执行，并返回与 \bare{} 相同的错误查询（忽略空白差异；直接在 \texttt{foreign\_data} 上计数而无连接）。在全部 10 道被审任务上它记录的 SQL 执行数为零，且最终 SQL 有 6 个与 \bare{} 逐字节相同（其余差异可追溯到改写的系统提示，而非任何机制）。因此最常见的 Phase-I 失败类不是机械损坏而是机械缺失：声明的机制只存在于散文中。
+
+\paragraph{超时重试候选（代码级多样性，行为同一性）。}该候选是一个真正不同的程序：它把单次 coder 调用包在守护线程看门狗中，若调用停滞超过 40\,s 就发出一次对冲重复追问。机制存在于控制流中——但其触发器（停滞的 API 调用）在审核中从未出现：零次 SQL 执行，且全部 10 道被审题的最终 SQL 都等于 \bare{}。即使新增机制是真实的，代码不同而行为相同仍可存活：它只是从不触发。
+
+\paragraph{多轮修复候选（T3：损坏的多轮路径）。}唯一一个实现了真正执行—检查—修复的被审候选把模型的\emph{散文}当作最终 SQL 返回。在一道 \bare{} 答对的题（“State the alternative languages available for card named Annul numbered 29.”）上，其记录的最终 SQL 逐字开头为：
+\begin{quote}\small\ttfamily
+with "only a single read-only SELECT is allowed". The previous "query" was
+actually just prose text (the model wrote rea\emph{[trunc.]})
+\end{quote}
+修复再提示招致了失败：被要求修复一个“实际上只是散文”的查询时，冻结目标以更多散文推理回应，找不到 SQL 块，推理文本便被当作查询提交。该题从 single-call 正确翻转为 harness 错误。
+
+
+\FloatBarrier
+\subsection{存档 BIRD 执行指纹}\label{app:bird-fingerprints}
+本指纹分析事后使用存档验证性单元（18 个构建器$\times$种子单元、384 个接纳候选、core-400 结果），沿用主重分析的记录合并规则、固定任务及成员身份检查。这些任务已被分析过，因此结果是描述性的，不构成独立迁移验证。同一档案上的历史选择分析见附录~\ref{app:rich}。
+
+\paragraph{丰富指纹。}为隔离加载器变更，W3 重分析保留旧的有损 SQL 文本变换：删除分号、替换反引号、即使在单引号分段后仍整体小写化、合并空白。这不是 SQL 解析器或语义归一化；它可能改变字面量与带引号标识符。在 $\RevisionWthreeSameSQL$ 个两条变换后 SQL 相同且非空的对—题观察中，有 $\RevisionWthreeSameDisagreements$ 个判定不同。这是观测到的一致性检查，不是按构造保证的性质。
+
+对级 SQL 不相似度仅在判定一致且两条 SQL 非空的题目上平均 $(1-$token-Jaccard$)$。它与整体结果分歧的 Spearman 相关在 4{,}386 个单元内对上为 $\RevisionWthreeRho$，在 1{,}010 个组内对上为 $\RevisionWthreeWithinRho$。各对共享候选与题目，且 SQL 指标以判定一致为条件；这些相关没有基于独立性的显著性或因果解释。
+
+在 R2 的 70-harness 首次关缓存获取中，调用数在 $\RevisionWthreeCallChanges/28000$ 次比较中变化，判定在 $\RevisionRtwoFlips/28000$ 次中变化。变换后 SQL 在 $\RevisionWthreeSQLChanges/\RevisionWthreeSQLN$ 次比较中变化（$\RevisionWthreeSQLPercent\%$）；64 次比较缺少两条非空 SQL，仅从 SQL 分母中排除。变化 SQL 对的平均 token Jaccard 为 $\RevisionWthreeJaccard$。这些通道特定比率不定义效应大小噪声地板。canonical 逻辑调用成本在表~\ref{tab:cost} 中单独报告。
+
+\subsection{第二目标模型探查}\label{app:phase1-results}
+使用 Qwen3.8-Flash 的第二目标探查重复了结果坍缩。策略强制群体仍保留提升空间，提示侧人工控制则未整体迁移。这些探索性观察不确立跨目标模型的稳定专长。
+
+\paragraph{轨迹提出了什么机制假说？}
+BIRD 中未被触发的分支提示：在正常 SQL 任务与受控执行故障任务上，比较开启修复、关闭修复和重复 \bare{}。若反馈改变查询并恢复正确性，且收益在重复、预算匹配比较中保持，将支持修复机制；若重采样同样有效，则解释受到削弱。这项干预尚未运行。它检验具体的修复假说，不是 harness 多样性的普适必要条件命题。

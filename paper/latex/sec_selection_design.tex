@@ -1,0 +1,21 @@
+\paragraph{Feature-based selection before execution.}
+The repeat diagnostic uses past outcomes on the same task; a practical
+selector must instead choose before seeing an answer. We train $\pi_Z$
+on the $100$ development tasks using TF-IDF question features and
+member accuracies computed within training folds. Five-fold task-level
+cross-validation keeps all repeats of a task together. The policy is
+frozen before evaluation and falls back to \bare{} when its top-two
+probability gap is below $0.15$; evaluation correctness and traces
+are unavailable to it. Comparators include the development-selected
+fixed member and a pre-fixed random member.
+
+\paragraph{Oracle replay after execution.}
+A separate offline comparison allocates $b\in\{3,9,15,27\}$ harness
+executions to a development-ranked portfolio and to the clone arm.
+Each included member contributes three repeats; the clone reference
+uses subsets of its $27$ recorded executions. Both arms select with
+post-execution correctness, measuring available oracle coverage.
+One harness execution can contain several model calls, so equal
+execution counts need not imply equal calls or token costs.
+Appendix~\ref{app:selection} specifies the frozen policy, replay, and
+accounting, separately from the historical archive selection analyses.

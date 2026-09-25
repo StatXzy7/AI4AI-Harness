@@ -1,76 +1,55 @@
-An LLM harness is the program of prompts, tools, and control flow that wraps
-a frozen model. When an automatically generated population of such programs
-shows higher coverage against a best-fixed reference, two explanations are
-possible: its members may implement distinct task specializations, or the
-population may simply contain more independent executions of one fixed
-stochastic program. The two are not the same claim. Two
-identical programs that each solve a task with probability $0.5$
-(independent errors) score $0.75$ coverage by running both once---a
-$25$\,pp gain over running a single one, with zero
-task-specialization evidence. A population oracle gap can
-therefore be an observation about execution noise rather than
-program diversity.
+Should a fixed inference budget buy more programs or more executions of
+one program? Automated agent design makes the first option increasingly
+accessible: a builder writes a population of LLM harnesses, each
+specifying prompts, tools, and control flow around a frozen solver
+\citep{adas2024,tthe2026,selfharness2026}. The appeal is that different
+programs might handle different tasks better. To justify that
+interpretation, however, a population's gains must be separated from
+the extra attempts used to evaluate it.
 
-We study this question on BIRD text-to-SQL \citep{bird2021} and MATH-500
-\citep{math500}, using three sources of evidence. First, in a BIRD
-discovery population, a trace audit finds that 21 of 66 generated-candidate
-pairs have identical correctness vectors (36 of 91 including
-\react{} and \bare{}), even though pairwise code similarity has no
-rank association with outcome disagreement ($\rho=-0.01$). Three
-execution-level routes explain the collapse: mechanisms
-claimed in code but absent from control flow (6 of 12
-candidates), mechanisms present but never triggered (\react,
-10/10), and broken multi-turn paths (1/12). Second, a
-separate exploratory study on MATH-500 (35 generated
-harnesses, 400 tasks, one run each) shows $4.75$\,pp
-one-run oracle headroom over the best fixed member (which is the
-\bare{} harness itself). Third, a fresh pre-registered
-collection pairs eight generated harnesses (plus \bare{}) against nine
-byte-identical
-\bare{} clone slots, three independent repeats each: the
-repeat-averaged descriptive plugin is positive on both
-arms ($2.54$\,pp on the real panel's $350$ complete tasks,
-$2.67$\,pp on the clone arm's $383$), yet the
-cross-fitted frozen-selection gains match those of the same-code arm
-($D=-0.10$\,pp, 95\% CI $[-1.55,1.46]$, randomization
-$p=.7742$, on $342$ paired complete tasks), and the predeclared coverage gate is
-unmet on $12.5\%$ of real-arm tasks. Independently, a
-three-run audit of the single \bare{} harness on the $400$ BIRD core
-tasks finds $14.5\%$ of its verdicts changing across repeats, and three
-\bare{} executions treated as three members show a descriptive
-$6.50$\,pp one-run gap with no corresponding program specialization.
+The difficulty is that different observed successes do not require
+different abilities. Two independent executions of a program with
+success probability $0.5$ cover a task with probability $0.75$.
+No program specialization has been introduced. Pass@$k$ and
+self-consistency already exploit the value of additional sampling
+\citep{chen2021codex,selfconsistency2022,moreagents2024}.
+An oracle that selects a correct answer after seeing all outcomes can
+therefore show a population gain even when every member has the same
+code. Averaging a few repeats does not automatically remove this
+ambiguity: choosing the largest estimated success rate also favors
+sampling noise.
 
-These observations motivate evaluating apparent complementarity
-as three separate quantities---source-code diversity, execution-level
-diversity, and outcome diversity---rather than as a single scalar.
-Our contributions are:
+\input{fig_sampling_control}
 
-\textbf{1. An empirical separation of code-level, execution-level, and
-outcome-level diversity in generated harness populations,} with a trace
-taxonomy showing exactly where syntactically distinct programs
-fail to realize distinct strategies.
+We ask what evidence distinguishes this coverage opportunity from
+task specialization. Three questions organize the study. Did the
+recorded executions contain additional correct answers? Does a member's
+advantage on a task persist in a fresh execution? Can a rule choose
+usefully before seeing the answer, and improve on spending the same
+resources on a fixed program? These questions concern different
+quantities. A positive answer to the first need not answer the other two.
 
-\textbf{2. Clone-controlled, repeat-based evaluation.} A
-pre-registered collection with an explicit cross-fitted
-frozen-selection statistic and a same-code randomization reference
-measures how much apparent complementarity is attributable to extra
-executions, with the decision rule validated as instrumentation on
-known-truth simulation grids.
+We first report single-run coverage in the full population of $35$
+generated MATH-500 programs, then test the specialization interpretation
+on a selected subset. The central control holds population size fixed
+and changes whether the programs differ: eight generated harnesses plus
+\bare{} are compared with nine byte-identical baseline slots. Three
+fresh repeats let us discover task-wise choices on two executions and
+score them on the third. The same-code arm measures what this procedure
+reports without program specialization. On the same panel, a selector frozen on
+development tasks then tests selection from question features, and an
+execution-matched oracle replay compares available coverage. Finally,
+BIRD traces examine whether code differences actually reach execution. They provide a separate diagnosis, not a
+causal explanation of the MATH comparison.
 
-\textbf{3. A reporting protocol for harness populations:} one-run
-coverage opportunity, repeat-stable task interaction, and pre-execution
-selection value reported as separate numbers at separately stated
-budgets (slots, executions, tokens), with scope stated once per study.
-
-The decisive question is whether distinct generated programs deliver a
-frozen-selection gain over spending the same executions on one fixed
-program, with advantages that survive independent repeats. On the fresh
-pre-registered panel the calibrated difference is indistinguishable
-from the clone arm's and the coverage gate is unmet, so the verdict is
-\textsc{Insufficient Evidence} rather than either a gain or a
-$1$\,pp equivalence: at three repeats, apparent complementarity is
-consistent with execution sampling rather than a discovered property of
-the panel. This reframes the target of population construction ---
-useful routing depends on stable task--harness interaction after
-execution noise is separated, the estimand the controlled study is built
-to test.
+The evidence yields three contributions. \textbf{First}, the same-code
+control produces a positive repeat-averaged oracle estimate, establishing
+that this signal alone cannot identify program specialization.
+\textbf{Second}, held-out repeats and calibration show where the current
+data stop: the clone-adjusted mean is $\WpVthreeD$\,\%, but missingness
+and limited power leave stable specialization unresolved.
+\textbf{Third}, separating selection from coverage changes the practical
+assessment: the tested selector gains $\WpPiZDiff$\,\%, and the full
+execution-matched replay favors additional single-call executions in
+its observed oracle mean. These findings separate coverage, repeat
+evidence, and realized selection.

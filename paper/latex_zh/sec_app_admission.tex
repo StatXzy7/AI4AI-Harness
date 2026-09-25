@@ -1,0 +1,28 @@
+\subsection{设计与主要比较}
+\label{sec:f2-admission}
+一项独立的确认性 BIRD 研究让六个独立构建器与三个种子在策略强制（来自固定集合的具名机制对自由发明）与合规门控两个因素下交叉，给出四个臂：II-A（自由、无门控）、II-B（自由、门控）、II-C（强制、无门控）、II-D（强制、门控）。评估覆盖开发期间从未打开过的九个数据库中的 $1{,}169$ 个问题（一个已披露的 $18$ 题冒烟测试例外），使用官方 BIRD 执行评分器，分析在结果前冻结、之后以版本化校正重分析重跑。所实现的门控把非平凡机制的\emph{结构性筛除}与合规验证捆绑在一起——八个强制提示转换槽中有两个即便中性有效也无法通过——所以该处理不能在因果上分离出"验证"本身。
+
+\begin{table}[H]
+\centering\small
+\input{revision_primary_table}
+\caption{\textbf{校正后的主分析。}数值为 $1{,}169$ 个问题上 $18$ 个构建器–种子单元格的均值；\bare{} 同时计入 oracle 与最佳固定对照。}
+\label{tab:primary}
+\end{table}
+
+含 single-call 的 oracle 余量上，强制/门控（II-D）减自由/无门控（II-A）的对角均值对比为 $\RevisionPrimaryDelta$\,\%，单元格对比范围为 $\RevisionPrimaryRange$\,\%：捆绑的筛除策略没有改善平均余量。原有不确定性分析保留在表~\ref{tab:primary}；这一均值比较不确立等价。结构准入因而不能证明机制会在相关任务上触发，或增加稳定效用。
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.72\linewidth]{figures/fig_results_revision.pdf}
+\caption{\textbf{版本化校正重分析。}左：完整集合的 D$-$A 单元格对比与合并 95\% 区间。右：共享核心 400 题上、以共同 \bare{} 为基线的四臂余量。}
+\label{fig:results}
+\end{figure}
+
+在共享的核心 400 题上，门控对比为 $\RevisionGateDelta$\,\%，策略与交互的次级效应同样未解决（表~\ref{tab:factorial}）；固定 $K$ 的均值对比 $\RevisionKmatchedDelta$\,\% 提供群体规模的敏感性检查。开放机制臂只在开发侧运行，没有确认性估计目标。这些都是单运行对比，而 附录~\ref{app:r2} 的 R2/R3 审核 报告的执行变异性（R2 判定翻转 $8.54\%$；$14.5\%$ 的任务三次运行间 \bare{} 正确性变化；$6.50$\,\% 同代码单次缺口）把它们刻画为覆盖机会而非能力差异。
+
+\begin{table}[H]
+\centering\small
+\input{revision_factorial_table}
+\caption{\textbf{校正后的核心 400 题析因重分析。}门控为 $[(B{-}A)+(D{-}C)]/2$，策略为 $[(C{-}A)+(D{-}B)]/2$，交互为 $(D{-}C)-(B{-}A)$；给出原始与 Holm 调整 $p$ 值。}
+\label{tab:factorial}
+\end{table}

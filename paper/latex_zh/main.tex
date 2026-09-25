@@ -1,54 +1,65 @@
 % 中文参考译本：正文、声明与全部附录，非投稿版本。
-% 对应英文投稿源 paper/latex/main.tex（2026-09-22 问题驱动重写稿）。
+% 对应英文投稿源 paper/latex/main.tex（2026-09-25 覆盖、重复证据与可用选择修订稿）。
 % 数值宏、结果表、图和参考文献共用英文源；图表内英文标签保留。
 \documentclass{article}
 \usepackage{iclr2027_conference,times}
+\usepackage{float,needspace}
 \usepackage[UTF8,fontset=windows]{ctex}
 \usepackage{hyperref,url,graphicx,booktabs,array,amsmath,amssymb,xcolor}
+\usepackage{flafter}
+\usepackage{placeins}
+\hypersetup{hidelinks}
 \graphicspath{{../}{figures/}{../latex/figures/}}
 % Shared tables/macros live in the English source directory.
 \makeatletter
 \def\input@path{{../latex/}{./}{../latex/figures/}}
 \makeatother
-\title{更多次掷骰，还是更多个程序？\\区分生成 Harness 群体中的执行抽样与任务专长\par\bigskip\large（中文参考译本）}
+\title{更多程序，还是更多次采样？\\区分 LLM Harness 的覆盖与专长\par\bigskip\large（中文参考译本）}
 \author{Anonymous}
-\newcommand{\bare}{\texttt{bare}}
+\newcommand{\bare}{single-call}
 \newcommand{\react}{\texttt{react}}
-\newcommand{\pp}{\,pp}
+\newcommand{\pp}{\,\%}
 \input{../latex/revision_numbers}
 \input{../latex/wp1r_numbers}
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \begin{document}
 \maketitle
 \begin{abstract}
-自动生成的 LLM harness 可能在源代码和观测结果上不同，却并不带来稳定的任务专长。我们研究如何区分依赖程序的专长与重复执行的收益，把源代码、执行与结果多样性作为三个不同的量分别报告。在 BIRD 文本转 SQL 的案例研究中，轨迹检查发现了三条执行层面的路径，说明表面不同的 harness 为何没有实现不同的策略：声称的机制在控制流中缺失（12 个生成候选中的 6 个）、机制存在却从未被触发（\react，10/10）、多轮路径损坏（1/12）；代码相似度与结果不一致之间没有秩相关（$\rho=-0.01$；尽管全部通过代码差异检查，仍有 21/66 个生成对具有完全相同的正确性向量）。在 MATH-500 上一项独立的探索性研究（35 个生成 harness、400 个任务、各运行一次）显示，相对于最佳固定成员（即 \bare{} 本身）有 $4.75$\,pp 的单次 oracle 余量。随后一项新的预注册采集把八个生成 harness 与九个逐字节相同的 \bare{} 克隆槽配对，各三次独立重复：尽管克隆群体按构造没有专长，重复平均的描述性插件量在两臂上都为正（真实面板的 350 个完整任务上 $2.54$\,pp，克隆臂的 383 个完整任务上 $2.67$\,pp）。交叉拟合的冻结选择增益为 $G_{\rm real}=0.17$\,pp（95\% CI $[-0.82,1.31]$），而 $G_{\rm clone}=0.55$\,pp，故克隆校准差为 $-0.10$\,pp（95\% CI $[-1.55,1.46]$，随机化 $p=.7742$），基于 342 个配对完整任务；覆盖门控未通过（12.5\% 的真实臂任务被排除，高于冻结的 10\% 阈值），因此面板报告 \textsc{Insufficient Evidence}（证据不足）——既非存在增益，也非 $1$\,pp 等效。综合而言，这些研究表明生成 harness 群体中观测到的 oracle 覆盖增益混合了程序专长与对同一固定随机程序额外执行的收益；harness 群体评估应把单次覆盖机会、重复稳定交互与执行前选择价值作为不同的量报告。
+当一个 LLM harness 群体比其中最好的成员覆盖更多任务时，收益来自程序专长，还是仅仅来自更多次尝试？本文区分执行后的覆盖、跨重复保持的任务优势，以及选择器实际获得的收益。关键对照是重复运行同一个程序：在 MATH-500 上，九个相同的单次调用槽虽然没有程序专长，重复平均后的 oracle 估计仍为正，达到 $\WpVthreeClonePlugin$\,\%；八个生成 harness 加基线在其自身完整任务集合上为 $\WpVthreePlugin$\,\%。通过留出重复并用克隆对照校准，在 $\WpVthreeNPaired$ 个配对任务上得到平均增益 $\WpVthreeD$\,\%；覆盖不完整和低灵敏度使稳定专长仍未判清。另一个独立冻结的选择器在每道题上都选择基线，收益为 $\WpPiZDiff$\,\%。这些结果揭示了一个归因问题：群体覆盖为正并不确立任务专长，而覆盖机会能否转化为可用选择，还需单独检验。本文提供了将这些判断分开的受控评估。所有增益均为以 \% 表示的绝对概率差。
 \end{abstract}
 \section{引言}\label{sec:introduction}
 \input{sec_intro}
 
-\section{表观互补性度量的是什么？}\label{sec:measures}
-\input{sec_phase1}
-
-\section{评估协议}\label{sec:protocol}
-\input{sec_phase2}
-
-\section{实证诊断}\label{sec:diagnosis}
-\input{sec_results}
-
 \section{相关工作}\label{sec:related}
 \input{sec_related}
 
-\section{意义与局限}\label{sec:discussion}
-\input{sec_discussion}\label{endofmain}
+\section{问题定义}\label{sec:measures}
+\input{sec_phase1}
 
-\subsection*{致谢}
-占位：经费、算力与基础设施致谢由作者在 camera-ready 前定稿（投稿阶段匿名）。
+\section{实验设计}\label{sec:setup}
+\input{sec_setup}
+\subsection{同代码对照与重复验证}\label{sec:protocol}
+\input{sec_phase2}
+\subsection{冻结选择与等执行次数重放}\label{sec:selection-design}
+\input{sec_selection_design}
+
+\section{结果}\label{sec:results}\label{sec:diagnosis}
+\input{sec_coverage}
+\input{sec_results}
+\input{sec_utility}
+\input{sec_supporting}
+
+\section{讨论与局限}\label{sec:discussion}
+\input{sec_discussion}
+
+\section{结论}\label{sec:conclusion}
+\input{sec_conclusion}\label{endofmain}
 
 \subsection*{伦理声明}
 全部实验使用公开的 BIRD 与 MATH-500 基准数据及生成的程序产物；不涉及人类被试、私人记录或个人身份信息。模型调用作为实验来源的一部分报告，论文不发布凭据或会暴露私人数据的提供方响应。主要伦理风险是夸大单次运行 oracle 增益对部署路由的含义；因此我们把未解决的选择与成本命题明确报告为 \textsc{Insufficient Evidence}（证据不足）。
 
 \subsection*{可复现性声明}
-补充材料包含冻结的诊断实现、控制清单与哈希绑定的结果记录。\texttt{REPRODUCE.md} 给出单元测试、校准、盲测控制、存档诊断与 LaTeX 构建的确切离线命令。所报告的依赖提供方的存档连同其来源与哈希保留；任何命题都不需要访问在线模型 API 即可重跑诊断本身。
+本文说明所报告结果的程序群体、任务划分、执行条件、评分规则、统计过程与敏感性分析。附录补充协议细节、校准结果和具体样例。实验代码不向审稿人提供；相关方法与实证主张在论文中直接呈现。
 
 % ---- ICLR 2027 强制 AI 使用声明（不计入页数限制） ----
 \subsection*{AI 使用声明}
@@ -65,8 +76,7 @@
 \bibliographystyle{iclr2027_conference}
 
 \appendix
+\raggedbottom
 \input{sec_appendix}
-\input{sec_app_wp1r}
-\input{sec_crossdomain}
 
 \end{document}

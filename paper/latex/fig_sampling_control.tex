@@ -1,0 +1,36 @@
+\begin{figure}[t]
+\centering
+\setlength{\fboxsep}{8pt}
+\fbox{\begin{minipage}[t][100pt][t]{0.445\linewidth}
+\small
+\textbf{One program, more executions}\par\medskip
+\centering
+$\boxed{H_0^{(1)}}\qquad\boxed{H_0^{(2)}}$\par\smallskip
+Same code; independent errors\par\medskip
+$p=0.5\quad\longrightarrow\quad1-(1-p)^2=0.75$\par\medskip
+\raggedright
+\textbf{Coverage increases by $25$\,\%.}\par
+Program specialization remains zero.
+\end{minipage}}\hfill
+\fbox{\begin{minipage}[t][100pt][t]{0.445\linewidth}
+\small
+\textbf{A measured same-code reference}\par\medskip
+\centering
+MATH-500: nine identical \bare{} slots\par\smallskip
+Three independent repeats per slot\par\medskip
+$H_{\rm stable}=0\qquad\widehat H=\WpVthreeClonePlugin\,\%$\par\medskip
+\raggedright
+\textbf{The observed estimate is positive.}\par
+Descriptive plugin on $383$ complete tasks.
+\end{minipage}}
+\caption{\textbf{More coverage does not identify more specialization.}
+Left: a probability calculation for two independent executions of one
+program. Right: the empirical clone arm produces a positive
+repeat-averaged oracle estimate despite zero program specialization
+(complete-task estimate; \S\ref{sec:f3-clones}).
+The panels illustrate different quantities, not matched effect sizes.
+Our control design compares eight generated programs plus \bare{} with
+nine identical \bare{} slots, then separates repeat validation from
+feature-based pre-execution selection.}
+\label{fig:sampling-control}
+\end{figure}

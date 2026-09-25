@@ -1,77 +1,33 @@
-\subsection{代码多样性却无行为多样性：BIRD}
-\label{sec:f1-collapse}
-该发现群体包含 $14$ 个 harness——$12$ 个演化生成的候选加上 \bare{} 与 \react{} 基线——在 $60$ 个 BIRD 任务上各有一次记录执行（单运行矩阵；此处未采集匹配重复），目标模型冻结为 \texttt{GLM-5.3-Flash}。成员配对给出 $\binom{12}{2}=66$ 个生成候选对，计入两个基线后为 $91$ 对。每个候选此前都通过了代码差异检查，断言所有文件互异且差异非平凡。然而，$66$ 个生成对中有 $21$ 对在每个任务上的正确性向量完全相同（计入基线后 $91$ 对中有 $36$ 对）；在全部 $91$ 对上，源代码相似度与结果不一致之间基本没有秩相关（Spearman $\rho=-0.010$；图~\ref{fig:phenomenon}）。总体平均成对结果不一致为 $3.3\%$（生成候选间 $3.8\%$），对 \bare{} 错误的联合修复率为 $7.7\%$，单次 oracle 余量为 $3.3$\,pp；\react{} 与 \bare{} 在零个任务上不同。
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.60\linewidth]{figures/fig_phenomenon.pdf}
-\caption{\textbf{代码多样性与行为坍缩}（BIRD 发现群体：$14$ 个 harness $\times$ $60$ 个任务，计入 \bare{} 与 \react{} 共 $91$ 对）。每个点是一对 harness；$x$ 为 token 序列代码相似度，$y$ 为正确性不同的任务比例。代码相似度不能预测结果不一致（$\rho=-0.010$），且 $36/91$ 对在全部 $60$ 个任务上完全相同。}
-\label{fig:phenomenon}
-\end{figure}
-
-审计执行轨迹分离出三条路径，说明不同的源代码为何没有产生不同的被执行策略。\textbf{T1——声称却未执行的机制}（$6/12$ 个生成候选）：程序只发起一次模型调用、不执行任何产物，与 \bare{} 是同一条执行路径，而其 docstring 却声称控制流中并不存在的检索或自检机制。\textbf{T2——存在却从未被触发的机制}（\react{} 在审计的 $10/10$ 个任务上）：错误修复分支是真实代码，但首个 SQL 在每个审计任务上都成功，分支从不触发，最终 SQL 与 \bare{} 相同；这并不表明修复路径在失败时缺乏因果作用力。\textbf{T3——损坏的多轮路径}（$1/12$）：一个执行-检查-修复程序把模型的散文当作最终 SQL 返回，使 \bare{}-正确的题目变成 harness-错误。三类分别要求不同的检验——执行路径准入、受控故障注入、可执行输出验证。
-
-一个人工正控表明该测量装置能够检出真正的专长。四个在同一冻结目标与评分器下、强制具有不同执行路径的手写 harness（执行并修复、三票、schema 链接、提示优先重排），在 $60$ 个任务上给出 $6.67$\,pp 的 oracle 余量，在完整的 $151$ 题集合上为 $7.28$\,pp（95\% 区间 $[3.3,10.0]$），每个机制都修复了其他机制漏掉的题。由于该控制是在检查发现轨迹之后才编写的，其余量是描述性的而非盲测；发现群体的来源（含 $24/151$ 个题目与协议开发重叠、以及保守的代理评分器）在附录~\ref{app:phase1-provenance} 报告。
-
-\subsection{探索性 MATH-500 群体中的单次余量}
-\label{sec:f2-headroom}
-在 MATH-500 上一项独立的探索性研究使用六个构建器、一个种子、一个机制无关的有效性门控，目标冻结为温度 0 的 \texttt{GLM-5.3-Flash}，每个被纳入的 harness 在相同的 $400$ 个评估任务上执行一次。$48$ 个生成槽中纳入 $35$ 个；两个推理密集型构建器在多数槽上耗尽了 $32$k 生成 token 预算，因此该群体对推理密集风格的代表性不足。这是一个复制探针而非析因实验，既未采集重复也没有同代码对照。
-
-该群体表面上行为多样：平均成对结果不一致为 $10.6\%$（最大 $33.0\%$），$36$ 个成员（计入 \bare{}）中有 $33$ 个具有唯一正确性向量，成员修复了 $76.0\%$ 的 \bare{} 错误。但单次 oracle 覆盖率为 $98.50\%$，而最佳\emph{固定}成员是 \bare{} 本身，仅 $93.75\%$；每个生成成员单独看都更差（$0.6825$--$0.915$）。因此含 bare 的单次 oracle 余量为 $4.75$\,pp：这是一个无法通过执行前承诺于任何单一程序来实现的覆盖机会。这一探索性观察促成了 \S\ref{sec:f3-clones} 中独立的预注册重复加克隆研究；两项研究使用不同的群体、估计目标与预算，$4.75$\,pp 不与受控结果作为前后校正来比较。第二域复制详见附录~\ref{app:crossdomain}。
-
-\subsection{同代码克隆呈现正的表观互补性}
+\subsection{相同程序也产生正的 oracle 估计}
 \label{sec:f3-clones}
-预注册采集（2026-09-15 冻结）在相同的 $400$ 个 MATH-500 任务上，对一个由八个生成 harness 加 \bare{} 组成的面板与九个\emph{等槽}、逐字节相同的 \bare{} 克隆槽各执行三次独立重复。该面板是从 $35$ 个探索成员中以加盐哈希抽取、资格限定为低调用机制的样本；评估任务此前曾在单次探针中使用，因此这是前瞻执行、回顾任务的研究，而非未见过任务的验证。协议与执行记录见附录~\ref{app:wp1r}。
+同代码臂直接检验专长解释：九个槽位实现同一程序，因此稳定的程序互补按构造为零。若它的估计余量为正，该估计本身就不能区分专长与执行波动。
 
-\begin{table}[t]
+重复平均后的估计确实为正：克隆臂 $383$ 个完整任务上，$\widehat H=\WpVthreeClonePlugin$\,\%；生成面板在其 $350$ 个完整任务上为 $\WpVthreePlugin$\,\%（表~\ref{tab:clone-control}）。二者是各臂的描述性估计，并非配对效应比较。未知保持缺失；较早的可用重复估计属于另一估计目标，说明见附录~\ref{app:wp1r}。该对照确立：即使平均三次重复，oracle 估计仍可在没有程序专长时为正。接下来需要检验，在部分重复中发现的选择，能否在另一次执行中保持价值。
+
+\begin{table}[htbp]
 \centering\small
 \begin{tabular}{@{}lcc@{}}
 \toprule
-量 & 真实臂 & 克隆臂 \\
+量 & 生成面板 + \bare{} & 同代码克隆 \\
 \midrule
-完整任务数 & 350 & 383 \\
-重复平均插件 $\widehat H$ & $\WpVthreePlugin$\,pp & $\WpVthreeClonePlugin$\,pp \\
-交叉拟合增益 $G$ & $\WpVthreeG$\,pp & $\WpVthreeGclone$\,pp \\
+完整任务 oracle 估计 $\widehat H$ & $\WpVthreePlugin$\,\% & $\WpVthreeClonePlugin$\,\% \\
+重复诊断 $G$ 的完整任务数 & 350 & 383 \\
+留出重复平均增益 $G$ & $\WpVthreeG$\,\% & $\WpVthreeGclone$\,\% \\
 \midrule
-\multicolumn{3}{l}{校准 $D=\WpVthreeD$\,pp，CI $\WpVthreeDCI$，$p=\WpVthreeP$} \\
-\multicolumn{3}{l}{配对完整任务：\WpVthreeNPaired{}；排除率 $\WpExclReal\%$/$\WpExclClone\%$} \\
+\multicolumn{3}{l}{配对克隆校正均值：$D=\WpVthreeD$\,\%，基于 $\WpVthreeNPaired$ 个完整任务} \\
+\multicolumn{3}{l}{不完整任务：生成臂 $\WpExclReal\%$ / 克隆臂 $\WpExclClone\%$} \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{克隆对照的 MATH-500 结果。}插件与 $G$ 使用两臂各自不同的完整任务集，因此其数值不是配对对照；$D$ 在两臂均完整的 $\WpVthreeNPaired{}$ 个任务上计算。}
+\caption{\textbf{正的 oracle 估计未确立跨重复稳定的优势。}各臂 $\widehat H$ 与 $G$ 使用本臂完整任务；$D$ 在交集上平均配对逐题增益差，因此不能由表内两项 $G$ 直接相减得到。生成臂未通过 $10\%$ 不完整比例门槛。}
 \label{tab:clone-control}
 \end{table}
 
-重复平均的描述性插件在\emph{两}臂上都为正——真实面板的 $350$ 个完整任务上 $\WpVthreePlugin$\,pp，克隆臂的 $383$ 个上 $\WpVthreeClonePlugin$\,pp——尽管克隆群体按构造有 $H_{\rm stable}=0$。这是本文最锐利的测量事实：相同源代码、相同重复计划、正的表观互补性，与已知真值零假设对最大化型插件的预测完全一致。
+\subsection{重复验证与诊断灵敏度}
+\label{sec:repeat-result}
+在评分前冻结选择，可以减少对偶然成功的重复利用。在各臂完整任务上，生成程序的留出重复均值为 $G_{\rm real}=\WpVthreeG$\,\%，克隆为 $G_{\rm clone}=\WpVthreeGclone$\,\%。在 $\WpVthreeNPaired$ 题交集上，校准差异为 $D=\WpVthreeD$\,\%，95\% 区间为 $\WpVthreeDCI$\,\%。均值没有显示超越同代码参照的优势，但也未确立等价或总体负效应：生成臂 $\WpExclReal\%$ 的任务不完整，超过 $10\%$ 门槛。判断为 \textsc{Insufficient Evidence}（证据不足）。全 $0$/全 $1$ 填充情景下，$G$ 跨越 $\WpVthreeBounds$\,\%；完整规则及敏感性方法见附录~\ref{app:statistics}，缺失记录见附录~\ref{app:wp1r}。
 
-交叉拟合的冻结选择增益在两臂各自完整任务集上为 $G_{\rm real}=\WpVthreeG$\,pp（CI $\WpVthreeGCI$）与 $G_{\rm clone}=\WpVthreeGclone$\,pp，因此克隆臂上的有限 $(R,T)$ 选择噪声与面板增益同量级。判定统计量 $D$ 并非这些臂级数值的算术差：两个增益都在两臂均完整的 $\WpVthreeNPaired{}$ 个任务上通过交叉拟合重算，得到 $D=\WpVthreeD$\,pp（CI $\WpVthreeDCI$，随机化 $p=\WpVthreeP$）。稳定成员排序（C-rank）为\textsc{Supported}（成立），但互补性判定弃权：$\WpExclReal\%$ 的真实臂任务不完整，高于冻结的 $10\%$ 覆盖门控，故 C-comp 为\textsc{Insufficient Evidence}（证据不足），区间上端不能确立 $1$\,pp 等效，被排除任务的全 0／全 1 填充情景把 $G$ 框在 $\WpVthreeBounds$\,pp。该弃权既由功效、也由覆盖率驱动：在 $R=3$ 时，该仪器即便对一个强的 $H=17.5$\,pp 双专家交叉也只有 $0\%$ 功效（$R=5$ 时 $0.7\%$，$R=10,20$ 时 $100\%$；\S\ref{sec:protocol}）。
+\paragraph{如果存在真实交叉，诊断能检出吗？}
+\label{sec:power}
+已知真值模拟回答这个必要的后续问题。在改变成员数、任务数、重复次数与缺失条件的 $100$ 个网格单元中，克隆校准规则最坏的观测零假设错误支持率为 $2\%$。灵敏度则明显不足：真实 $H_{\rm stable}=17.5$\,\% 的双专家设置在 $R=3$ 时功效为 $0\%$，$R=5$ 时约为 $0.7\%$，$R=10,20$ 时为 $100\%$。更小的循环交叉即使在 $R=20$ 时仍大多检不出（附录表~\ref{tab:calibration}）。这些结果属于所测模拟设置，不是通用重复次数门槛。
 
-槽数不决定花费。离线的等执行预算回放把 dev 排序后面板的执行后 oracle 覆盖与 $27$ 次同代码执行中的 $b$ 次对照，$b\in\{3,9,15,27\}$：面板减同代码的差为 $+0.37, +0.03, -0.11, -0.25$\,pp，即在每个预算上都持平（范围 $-0.25$ 至 $+0.37$\,pp）。该面板使用了克隆臂 $3.73\times$ 的 token（$54.17$M 对 $14.51$M，$22{,}192$ 对 $10{,}800$ 个逻辑调用），因此不做任何已实现成本匹配的主张；由于两臂输出格式不兼容（带框数字对自由散文），也不报告跨臂多数投票准确率。冻结的执行前选择器 $\pi_Z$ 在每个评估任务上都弃权为 \bare{}，与 dev 固定在三次重复上的 $\WpBareAcc\%$ 持平（探索性研究中 \bare{} 的单次准确率为 $93.75\%$；此处更高的值是同一任务集上的重复均值，是不同的统计量，并非矛盾），而预先固定一个随机成员则显著更差（$\WpRandomDiff$\,pp，CI $\WpRandomCI$）：观测到的 oracle 价值并不是已实现的路由价值。
-
-\subsection{BIRD 上的准入策略研究}
-\label{sec:f2-admission}
-一项独立的确认性 BIRD 研究让六个独立构建器与三个种子在策略强制（来自固定集合的具名机制对自由发明）与合规门控两个因素下交叉，给出四个臂：II-A（自由、无门控）、II-B（自由、门控）、II-C（强制、无门控）、II-D（强制、门控）。评估覆盖开发期间从未打开过的九个数据库中的 $1{,}169$ 个问题（一个已披露的 $18$ 题冒烟测试例外），使用官方 BIRD 执行评分器，分析在结果前冻结、之后以版本化校正重分析重跑。所实现的门控把非平凡机制的\emph{结构性筛除}与合规验证捆绑在一起——八个强制提示转换槽中有两个即便中性有效也无法通过——所以该处理不能在因果上分离出"验证"本身。
-
-\begin{table}[t]
-\centering\small
-\input{revision_primary_table}
-\caption{\textbf{校正后的主分析。}数值为 $1{,}169$ 个问题上 $18$ 个构建器–种子单元格的均值；\bare{} 同时计入 oracle 与最佳固定对照。}
-\label{tab:primary}
-\end{table}
-
-含 bare 的 oracle 余量上，强制/门控（II-D）减自由/无门控（II-A）的对角对比为 $\RevisionPrimaryDelta$\,pp（未调整 95\% CI $\RevisionPrimaryCI$，单侧符号翻转 $p=\RevisionPrimaryP$），单元格对比范围为 $\RevisionPrimaryRange$\,pp：捆绑的筛除策略没有可检出的余量红利，区间也不能确立等效。
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.72\linewidth]{figures/fig_results_revision.pdf}
-\caption{\textbf{版本化校正重分析。}左：完整集合的 D$-$A 单元格对比与合并 95\% 区间。右：共享核心 400 题上、以共同 \bare{} 为基线的四臂余量。}
-\label{fig:results}
-\end{figure}
-
-在共享的核心 400 题上，门控对比为 $\RevisionGateDelta$\,pp（Holm 调整 $p=\RevisionGateHolm$），策略与交互的次级效应同样不显著（表~\ref{tab:factorial}）；固定 $K$ 敏感性 $\RevisionKmatchedDelta$\,pp（CI $\RevisionKmatchedCI$）确认余量对群体规模并非单调。开放机制臂只在开发侧运行，没有确认性估计目标。这些都是单运行对比，而 \S\ref{sec:measures} 报告的执行变异性（R2 判定翻转 $8.54\%$；$14.5\%$ 的任务三次运行间 \bare{} 正确性变化；$6.50$\,pp 同代码单次缺口）把它们刻画为覆盖机会而非能力差异。
-
-\begin{table}[t]
-\centering\small
-\input{revision_factorial_table}
-\caption{\textbf{校正后的核心 400 题析因重分析。}门控为 $[(B{-}A)+(D{-}C)]/2$，策略为 $[(C{-}A)+(D{-}B)]/2$，交互为 $(D{-}C)-(B{-}A)$；给出原始与 Holm 调整 $p$ 值。}
-\label{tab:factorial}
-\end{table}
+两项发现支持不同结论。克隆结果反驳了仅凭正插件估计识别专长的做法。重复结果尚未判清这个生成面板是否存在稳定交叉：数据不完整，而且三次重复时检验可能漏掉已知交叉。虽然部分稳定的成员平均差异可以检出，但平均更强并不等于任务专长。稳定专长是否存在尚未判清，但实际选择的效果仍可直接测量。下一节在同一 MATH 面板上，分别检验执行前的冻结选择与等执行次数下的事后覆盖。

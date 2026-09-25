@@ -1,0 +1,28 @@
+\begin{figure}[t]
+\centering
+\setlength{\fboxsep}{8pt}
+\fbox{\begin{minipage}[t][118pt][t]{0.445\linewidth}
+\small
+\textbf{一个程序，更多次执行}\par\medskip
+\centering
+$\boxed{H_0^{(1)}}\qquad\boxed{H_0^{(2)}}$\par\smallskip
+代码相同；错误独立\par\medskip
+$p=0.5\quad\longrightarrow\quad1-(1-p)^2=0.75$\par\medskip
+\raggedright
+\textbf{覆盖率增加 $25$\,\%。}\par
+程序专长仍为零。
+\end{minipage}}\hfill
+\fbox{\begin{minipage}[t][118pt][t]{0.445\linewidth}
+\small
+\textbf{实测的同代码参照}\par\medskip
+\centering
+MATH-500：九个相同的 \bare{} 槽\par\smallskip
+每槽三次独立重复\par\medskip
+$H_{\rm stable}=0\qquad\widehat H=\WpVthreeClonePlugin\,\%$\par\medskip
+\raggedright
+\textbf{观测估计为正。}\par
+本臂 $383$ 个完整任务的描述性插件量。
+\end{minipage}}
+\caption{\textbf{更多覆盖不等于更多专长。}左：同一程序两次独立执行的概率计算。右：真实克隆臂在程序专长为零时仍产生正的重复平均 oracle 估计（采用完整任务估计；\S\ref{sec:f3-clones}）。两幅面板展示不同的量，不是匹配的效应量比较。对照设计将八个生成程序加 \bare{} 与九个相同的 \bare{} 槽比较，并将重复验证与基于特征的执行前选择分开。}
+\label{fig:sampling-control}
+\end{figure}

@@ -1,0 +1,230 @@
+\section{Provenance, Protocol Deviations, and Historical Analyses}\label{app:history}
+This section preserves historical analyses, protocol probes, and
+provenance gaps without treating them as confirmatory results of the
+fresh repeat study. MATH collection amendments and missingness remain
+in Appendix~\ref{app:wp1r}, analysis revisions in
+Appendix~\ref{app:statistics}, and admission-design limitations in
+Appendix~\ref{app:phase2-protocol}.
+\subsection{Early generation-protocol probes and their limits}\label{sec:phase1probes}
+Phase I also probed generation-side fixes --- a strategy-forced free-form protocol
+(assigned mechanism, import/smoke acceptance) and a compiled Harness IR. Under the
+strategy-forced protocol two of three builders produced populations whose point
+estimates exceeded the pre-specified thresholds (Qwen3.8-Flash 5.96,
+DeepSeek-V4-Flash-Vision-Exp 7.95\,\%; the old-protocol arm missed at
+4.64\,\%), and per-strategy acceptance ordered with builder identity
+(GLM-5.3-Flash 3/8, Qwen3.8-Flash 7/8, DeepSeek-V4-Flash-Vision-Exp 8/8,
+under the logged tool). These
+observations motivate Phase II but are not confirmatory, for three disclosed reasons:
+the design was two nested contrasts that cannot separate protocol from builder main
+effects; the early runs lack per-attempt logs, so budget equality cannot be audited;
+and acceptance was an import/smoke check, not the counterfactual conformance gate of
+\S\ref{sec:f2-admission}. Full condition details are in Appendix~\ref{app:phase1-provenance}.
+
+\paragraph{Generation-null failures (M0).} Re-running the original optimize loop
+with Qwen3.8-Flash and DeepSeek-V4-Flash-Vision-Exp builders produced 40 candidates byte-identical to the
+\bare{} baseline source. Code identity alone does not imply identical stochastic
+executions. This run supplies no distinct-code population; it is reported as a distinct,
+more primitive failure mode --- the pipeline produced no distinct population at all.
+The collapse claims above rest exclusively on the genuinely distinct-source discovery
+population.
+
+\paragraph{Figure data.} Figure~\ref{fig:phenomenon} compares source
+similarity with correctness disagreement for the observed harness pairs.
+
+\paragraph{Generation-provenance gaps.} The early free-form populations
+were produced in-session; their generation tool was not preserved, and
+per-attempt logs do not exist for them --- so budget equality cannot be
+audited for those runs, and we do not claim it. Their acceptance was an
+import/smoke check at evaluation time, \emph{not} the Phase-II
+counterfactual conformance gate. The subsequent generation procedure
+records every attempt (3 retries,
+16{,}384-token budget, per-attempt stage and finish reason); the completed
+per-strategy grids and the builder-acceptance ordering (3/8, 7/8, 8/8)
+come from this logged tool and are post-hoc with respect to the frozen
+admission decisions.
+
+\subsection{Upstream code-extraction audit}\label{app:extraction}
+Across the 36 forced C/D cells, all 108 \texttt{format\_guard} attempts
+failed neutral validity: 71 logs report unterminated Python strings,
+36 report no Python fence, and one reports a provider timeout.
+The archived generator's non-greedy Python-fence extractor terminates at
+the first subsequent triple backtick, including one inside a Python
+string. Three synthetic, syntactically valid programs containing SQL fences
+in an ordinary string, docstring, or regex become invalid prefixes;
+the extractor nevertheless sets its truncation flag to false.
+The audited extractor matches the retained implementation, but the
+historical attempt records do not verify which version actually ran. Full builder messages
+were not saved by this generator. Thus the failure pattern is compatible
+with extraction damage, not proof that all historical failures had this
+cause or that repaired candidates would pass admission.
+We found 74 retained extracted programs, all syntactically invalid; three
+coexist with no-fence logs and are retained as provenance conflicts,
+not attributed to those attempts. These findings place a generation
+interface failure alongside the gate's explicit strategy exclusions.
+
+\subsection{Post-review provider acquisition status}
+The post-review provider acquisition attempts did not yield a complete common pool: transport interruptions left completed responses, unclosed requests, and unstarted attempts in separate auditable states. These records are retained for provenance and missingness accounting, but are excluded from claims about population performance, cost, or stable complementarity. Thus, the manuscript does not use provider availability or partial acquisition as evidence for the unresolved clone-control question.
+
+
+\subsection{Historical BIRD selection analyses}\label{app:rich}
+This selection analysis and the fingerprints in
+Appendix~\ref{app:bird-fingerprints} are post-hoc on the archived confirmatory cells (18
+builder$\times$seed cells, 384 admitted candidates, core-400 outcomes).
+Both use the same record-combination rules, fixed tasks, and member
+identity checks as the main reanalysis. They remain descriptive: these tasks had already been
+analyzed, and this is not independent transfer validation.
+
+\paragraph{Diversity-aware selection.} Each cell pools all admitted
+candidates across arms. The reanalysis retains the legacy seed, 100
+random database-half splits, 200 random subset draws per split and cell,
+and candidate-selection rules. It records a new deterministic schedule:
+the historical set-derived cell order was not archived, so identical
+historical splits and draws cannot be recovered from the seed alone.
+Selection uses development databases; evaluation uses the complementary
+databases. The overlapping splits are not 1{,}800 independent experiments.
+Methods are top-$k$ development accuracy, uniform random subsets, greedy
+development oracle coverage, and greedy mean accuracy plus
+$\lambda$ times oracle coverage for $\lambda\in\{0.25,0.5,1,2\}$.
+All candidate choices are frozen within a split before its evaluation.
+
+Table~\ref{tab:selection} retains the common AD single-call in every evaluated
+subset; $k$ counts candidates only. Candidate-only values are recorded separately
+to distinguish the historical estimand. Oracle and best-fixed use
+held-out outcomes as descriptive upper bounds. Dev-fixed instead chooses
+one member using development accuracy, with ascending member-name ties
+and single-call first. Deterministic methods already retain a globally dev-best
+candidate; differences in this comparator may arise from which tied
+maxima survive, not improved maximum development accuracy.
+
+At $k=8$, div-only versus top-acc changes oracle by
+$\RevisionWoneOracle$\,\%, best-fixed by $\RevisionWoneBest$\,\%,
+and headroom by $\RevisionWoneHeadroom$\,\%. Dev-fixed changes by
+$\RevisionWoneFixed$\,\%. These are distinct quantities, and none is an
+independently validated routing gain. We withdraw the legacy cell-only
+confidence intervals; the current table is descriptive while inference
+covering database/task sampling and re-selection remains outstanding.
+The earlier normalized-headroom ratio is excluded from the reported analysis.
+
+\begin{table}[H]
+\centering\small
+\input{revision_selection_table}
+\caption{Canonical descriptive W1 reanalysis. Every pool contains $k$
+selected candidates plus the common single-call. Means over 18 cells and 100
+overlapping database splits; no confidence intervals. Dev-fixed is chosen
+only on development data; Best uses held-out outcomes.}
+\label{tab:selection}
+\end{table}
+
+\paragraph{Re-selection does not establish interval coverage.}
+An exact counterexample rules out a universal 95\% coverage guarantee for
+our proposed positive-weight re-selection percentile interval. Let nine
+independent databases each contain one Bernoulli($p$) task state. Sixteen
+fixed candidates comprise eight state-0 specialists followed by eight
+state-1 specialists; single-call is always wrong. Apply the canonical $k=8$
+rules to four development and five held-out databases. With the recorded
+tie rules, the expected div-only minus top-acc headroom statistic is
+$(1-p^4)\,\mathbb{E}[\min(B,5-B)/5]>0$, where $B\sim\mathrm{Binomial}(5,p)$.
+On the event that all nine states coincide, every positive reweighting
+produces zero headroom for both methods, so the percentile interval is
+$[0,0]$. Coverage is therefore at most $1-p^9-(1-p)^9$, or 61.26\% at
+$p=0.1$. Averaging identical cells or overlapping fixed splits does not
+remove this event. This bound concerns the stated construction and
+interval, not BIRD-specific coverage or the impossibility of other
+inference methods.
+
+\subsection{Routing and exploratory selection}\label{sec:boundary}
+The Phase-I leave-one-harness-out predictor did not beat the best fixed
+harness in the tested DeepSeek population ($-3.4$\,\%); the Qwen estimate
+was $+0.9$\,\% (CI $[-5.2,+6.9]$), and task-held-out repair AUROC was
+0.512. These predictor and split-specific results do not establish value
+prediction. The canonical W1 analysis is likewise descriptive: at $k=8$,
+diversity versus top-accuracy selection changes oracle by
+$\RevisionWoneOracle$\,\%, best-fixed by $\RevisionWoneBest$\,\%, and
+headroom by $\RevisionWoneHeadroom$\,\%; the development-selected fixed
+member changes by $\RevisionWoneFixed$\,\%. None is a validated routing
+gain (Appendix~\ref{app:rich}).
+
+
+\FloatBarrier
+\subsection{Historical archive diagnostics and rescoring}\label{app:archive-analysis} Applied to the MATH-500 archive
+(36 members $\times$ 400 tasks) and the 18-cell BIRD Phase-II archive. On
+BIRD, the integrity class (A) is REFUTED\_WITHIN\_SCOPE for every cell: the
+combined observations contain overlapping acquisition records that
+duplicate on the canonical key (resolved by the archived first-write-wins
+policy, with recorded verdict-conflict counts), so the coverage numbers
+below are computed on that deduplicated view, not on a conflict-free
+archive; judge replay is not executed on this path and is reported as
+not-run, not passed. Subject to that scope, all cells show single-shot
+coverage (B SUPPORTED); stability, selectability, and deployability are
+INSUFFICIENT\_EVIDENCE by the frozen rules because the archives contain no
+matched repeats and no dev/eval split for policy training --- not because
+costs are absent: per-record logical calls are archived and are read on
+the same canonical deduplicated view as the rest of the reanalysis
+($\RevisionLogicalCalls$ calls across $\RevisionCostRows$
+candidate--task core-subset records, Table~\ref{tab:cost}), though
+token/dollar costs remain unrecoverable. On MATH the frozen selection policy, trained on the
+first 80 of the 400 eval tasks held out of all D/E claims (the archive
+contains no dev-set executions: the 100-task dev split of
+Appendix~\ref{app:crossdomain} was used only for generation smoke tests,
+so the policy split is carved from the eval side, leaving 320 scored
+tasks), ties with dev-fixed (single-call) on every eval task, so
+selectability and deployability are INSUFFICIENT\_EVIDENCE rather than
+refuted. Three published numbers were corrected (membership-basis of the
+outcome-vector count, now 33/36 members including single-call and 32/35 generated
+harnesses; the generated-harness accuracy range 0.6825--0.915, previously
+printed as 0.68--0.87; the headroom decomposition with best-fixed = single-call
+stated explicitly), two overloaded metric names were disambiguated
+(union-all-fail vs any-candidate-fail), and one preserved-judgment control
+confirms a reported pair (union repair 76.0\% / union-all-fail 0.8\%) under
+the explicit definition. A re-execution of the versioned
+endpoint-sensitive judge over all 14{,}400 MATH verdicts changes 14 of them
+--- all v1 false rejects of interval-endpoint answers on one task
+; the v1 replay itself is internally consistent, and an
+earlier stored 0-flip artifact is not reproduced by the corrected analysis
+and is superseded. The bracket-merging defect the new judge was designed to
+catch therefore does fire in this archive, on exactly one task.
+
+\subsection{Quarantined MATH prompt-protocol pilot} First, the clean-protocol
+diversity result replicates in a second domain with a different output
+space. Second, a quarantined pilot round supplies an exploratory comparison:
+when the same six builders were (mistakenly) given a GSM8K-style task
+description whose numeric answer format did not match MATH-500, the
+generated population remained behaviorally diverse (16.2\% disagreement,
+19 unique outcome vectors) while its union repair collapsed to 18\% --- and
+code-level inspection of the catastrophic members reproduced the Phase-I
+trace taxonomy verbatim (a generate-then-verify harness whose verifier
+rejected nearly every answer and whose fallback returned the stale loop
+variable or ``0''). Diversity without utility, induced by a prompt-side
+protocol error invisible to code-level checks: the measurement mandate, not
+any code-level audit, is what detects it.
+
+
+\FloatBarrier
+\Needspace{0.32\textheight}
+\subsection{Parallel domain evidence for the measurement boundary}
+Table~\ref{tab:domain-main} places the two domains side by side for the
+same diagnostic question, without pooling them. MATH-500 reproduces the
+boundary: one-run disagreement and 4.75\,\% headroom coexist with single-call as
+the best fixed member (93.75\%). The one-run probe itself has no
+repaired-gate control; clone, repeat, and selector controls come from the
+separate fresh WP-1R collection (\S\ref{sec:f3-clones}).
+
+\begin{table}[H]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+Domain / analysis & $n_H$ & $n_{eval}$ & Disagree. & Oracle & Best-fixed & $H$ (\%) \\
+\midrule
+BIRD, A / D & 18 cells & 1,169 & --- & 76.14 / 75.70\% & 67.58 / 67.30\% & 8.56 / 8.40 \\
+BIRD, D$-$A & 18 paired & 1,169 & --- & --- & --- & $-0.16$ \\
+MATH-500, free & $\RevisionMathHarnesses$ & $\RevisionMathTasks$ & $\RevisionMathDisagreement$\% & $\RevisionMathOracle$\% & $\RevisionMathBest$\% (single-call) & $\RevisionMathHeadroom$ \\
+\bottomrule
+\end{tabular}
+\caption{Parallel domain evidence for the same measurement question. BIRD
+is the archived factorial analysis; MATH-500 is a one-seed exploratory
+free-arm probe. Designs are not pooled. Headroom is a one-run diagnostic,
+not selector accuracy or stable complementarity.}
+\label{tab:domain-main}
+\end{table}

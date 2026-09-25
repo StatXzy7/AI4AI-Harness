@@ -1,0 +1,32 @@
+\subsection{Selected MATH Program Inventory}
+\label{app:panel-mechanisms}
+Table~\ref{tab:panel-mechanisms} describes the nine frozen members
+selected for the repeat study. H1--H8 are neutral labels for generated
+members, all constructed under seed $0$. The listed operations describe
+what each program implements, not whether every branch fires or improves
+correctness. The mean-call eligibility ceiling is not a per-execution
+maximum, and one logical call may request several samples.
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{@{}p{0.29\linewidth}p{0.66\linewidth}@{}}
+\toprule
+Frozen member & Source-defined execution path \\
+\midrule
+\bare{} & One temperature-$0$ solution with the final-answer format. \\
+H1 (DeepSeek) & Three temperature-$0.4$ solutions; normalized-answer vote; a greedy fallback when no answer or a tie remains. \\
+H2 (ERNIE) & Draft a solution, then ask the solver to verify/correct the extracted answer; return the checked answer. \\
+H3 (GLM) & Up to five differently prompted temperature-$0$ solutions; stop when three agree; adjudicate unresolved disagreement, with format fallbacks. \\
+H4 (Kimi) & Request five temperature-$0.7$ samples in one call; extract answers and vote. \\
+H5 (Kimi) & Initial solution, verification, and an alternative solution; vote, with an additional resolution call if no majority emerges. \\
+H6 (MiniMax) & Draft, critique, and an additional tie-breaking call on disagreement; parse failures use an earlier available answer. \\
+H7 (MiniMax) & Request five temperature-$0.7$ samples in one call; normalize and vote, resolving ties by first occurrence. \\
+H8 (Qwen) & Draft plus an independent solve-and-audit call; compare answers and request adjudication on conflict, with a format-repair path. \\
+\bottomrule
+\end{tabular}
+\caption{\textbf{What was selected for the repeat study.} All calls use
+the same frozen solver; verification and adjudication are solver prompts,
+not access to benchmark labels. Six seats are builder-stratified; H5 (Kimi) and H7 (MiniMax)
+are the two at-large seats.}
+\label{tab:panel-mechanisms}
+\end{table}

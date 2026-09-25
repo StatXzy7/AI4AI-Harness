@@ -1,104 +1,62 @@
-% Cross-domain replication section. Numbers from
-% artifacts/gsm8k_audit/metrics.json (35 harnesses, 400 eval tasks,
-% completed 2026-09-10 10:00).
+\subsection{Exploratory MATH population, splits, and coverage}\label{app:crossdomain}
 
-\section{Cross-Domain Replication: MATH-500 Mini-Audit}\label{app:crossdomain}
+This single-run study establishes the initial coverage phenomenon and
+supplies the programs for the repeat panel. It carries the BIRD admission
+study's free, ungated generation procedure into competition mathematics,
+with a domain-specific answer comparator.
 
-To test whether the Phase-II clean-protocol finding (free ungated generation
-produces distinct one-run correctness vectors) is
-text-to-SQL-specific, we replicated the free-arm protocol on competition
-math.
-
-\paragraph{Protocol.} Six builders (the same models as Phase II), one seed,
+\paragraph{Protocol.} Six builders (the same models as the BIRD admission study), one seed,
 eight slots each, an $R{=}3$ raw-attempt cap per slot, neutral validity gate
 (mechanism-blind: parse, import, interface, non-empty answer on two dev
-questions). Frozen target GLM-5.3-Flash (same as the SQL study), temperature
-0. MATH-500 \citep{math500}: 500 tasks frozen before generation (100 dev /
-400 eval, seed 20260908). The 100 dev tasks are used only for
+questions). Frozen target GLM-5.3-Flash (same as the SQL study), with decoding
+settings defined by each frozen member; the baseline uses temperature $0$. MATH-500 \citep{math500}: 500 tasks frozen before generation (100 dev /
+400 eval, fixed random split). The 100 dev tasks are used only for
 generation-side smoke tests and are never executed in the evaluation
 archive; the selection-policy experiments of
-Appendix~\ref{app:diagnostics} therefore carve their training split (80
-tasks) from the eval side, leaving 320 scored tasks for D/E claims. Judge: numeric equality where both sides parse as
+Appendix~\ref{app:archive-analysis} therefore carve their training split (80
+tasks) from the eval side, leaving 320 scored tasks for D/E claims.
+This historical archive analysis is distinct from the fresh repeat
+study, whose selector uses the 100 development tasks and scores all
+400 evaluation tasks (Appendix~\ref{app:selection}). Judge: numeric equality where both sides parse as
 numbers (including $a/b$, \verb|\frac{a}{b}|, decimals), else normalized
 LaTeX string equality (units, base subscripts, $^\circ$ stripped;
 \verb|\text{X}| content preserved; pmatrix $\to$ tuple). Judge
 self-consistency: 400/400 gold answers judge correct against themselves.
-bare accuracy 0.9375 under the matched answer-format instruction. Yield:
+single-call accuracy 0.9375 under the matched answer-format instruction. Yield:
 35/48 slots admitted ($R_{\mathrm{artifact}}$ 0.10--1.00; the two
 reasoning-heavy builders, GLM-5.3 and Qwen3.8-Max, exhausted the 32k-token
 generation budget on reasoning before emitting code in most slots ---
-reported as-is). This constraint effectively removes two of the six
-builders from the evaluated pool, so the free-arm population
-under-represents reasoning-heavy builder styles; we do not adjust the
+reported as-is). This constraint under-represents reasoning-heavy builder styles
+in the evaluated pool; we do not adjust the
 budget post hoc, and the limitation is part of the reported protocol. This is a replication probe, not a factorial: no
 strategy forcing, no conformance gate.
 
 \paragraph{Results (35 harnesses, 400 eval tasks).} Mean pairwise outcome
 disagreement 10.6\% (max 33.0\%); 33 of the 36 members had unique outcome
-vectors when bare is counted (32 of the 35 generated harnesses);
+vectors when single-call is counted (32 of the 35 generated harnesses);
 outcome-identical pairs 0.7\% --- no trace of
-Phase-I-style collapse. Union repair 76.0\% of bare errors; the union of all
-generated candidates fails on 0.8\% of bare-correct tasks (a
+Phase-I-style collapse. Union repair 76.0\% of single-call errors; the union of all
+generated candidates fails on 0.8\% of single-call-correct tasks (a
 \emph{union-all-fail} rate, not an any-candidate or router harm). Observed
-oracle coverage exceeds bare by 4.75\,pp, and the best fixed member is
-\emph{bare itself} (0.9375; generated harnesses 0.6825--0.915): every
+oracle coverage exceeds single-call by 4.75\,\%, and the best fixed member is
+\emph{single-call itself} (0.9375; generated harnesses 0.6825--0.915): every
 generated member is worse individually. The one-run mini-audit originally
-did not collect repeated-execution or same-code clone controls; that gap is
-closed on this same MATH-500 task set by the fresh pre-registered WP-1R
-collection (\S\ref{sec:f3-clones}), which executes an eight-member panel and nine
-same-code clone slots for three independent repeats and therefore does
-evaluate the stability estimands cross-domain. A
+did not collect repeated-execution or same-code clone controls. The
+separate WP-1R collection (\S\ref{sec:f3-clones}) adds those controls
+on the same task set for eight generated members plus \bare{}, with
+nine same-code slots and three fresh repeats. Its acquisition protocol
+was frozen before collection, while the v3 analysis was revised later.
+Its nonpositive clone-adjusted mean and limited sensitivity do not
+retroactively identify the source of the full population's $4.75$\,\%
+one-run headroom. A
 hash-bound re-execution of the versioned endpoint-sensitive rescore of all
 14{,}400 archived verdicts changes 14 of them (0.097\%): all are v1 false
 rejects of interval-endpoint answers on a single task, so per-member
 accuracies rise by at most one task and no qualitative conclusion moves
-(Appendix~\ref{app:diagnostics}). An earlier stored artifact reporting zero flips is
-not reproducible from the committed code and is retained only as provenance.
-
-\paragraph{Two failure-side observations.} First, the clean-protocol
-diversity result replicates in a second domain with a different output
-space. Second, a quarantined pilot round (disclosed in
-\texttt{PROTOCOL\_CHANGELOG.md}, entry G1) supplies an exploratory comparison:
-when the same six builders were (mistakenly) given a GSM8K-style task
-description whose numeric answer format did not match MATH-500, the
-generated population remained behaviorally diverse (16.2\% disagreement,
-19 unique outcome vectors) while its union repair collapsed to 18\% --- and
-code-level inspection of the catastrophic members reproduced the Phase-I
-trace taxonomy verbatim (a generate-then-verify harness whose verifier
-rejected nearly every answer and whose fallback returned the stale loop
-variable or ``0''). Diversity without utility, induced by a prompt-side
-protocol error invisible to code-level checks: the measurement mandate, not
-any code-level audit, is what detects it.
+(Appendix~\ref{app:archive-analysis}). An earlier stored artifact reporting zero flips is
+not reproduced by the corrected analysis and is retained only as provenance.
 
 \paragraph{Scope.} One seed, one target, no factorial, exploratory; the
 Phase-I collapse-inducing SQL protocol was not re-run in the math domain,
 so this replication speaks to the clean-protocol result only, not to the
 boundary of collapse.
-
-\subsection{Parallel domain evidence for the measurement boundary}
-Table~\ref{tab:domain-main} places the two domains side by side for the
-same diagnostic question, without pooling them. MATH-500 reproduces the
-boundary: one-run disagreement and 4.75\,pp headroom coexist with bare as
-the best fixed member (93.75\%). The one-run probe itself has no
-repaired-gate control; clone, repeat, and selector controls come from the
-separate fresh WP-1R collection (\S\ref{sec:f3-clones}).
-
-\begin{table}[t]
-\centering
-\scriptsize
-\setlength{\tabcolsep}{2.5pt}
-\begin{tabular}{@{}lrrrrrr@{}}
-\toprule
-Domain / analysis & $n_H$ & $n_{eval}$ & Disagree. & Oracle & Best-fixed & $H$ (pp) \\
-\midrule
-BIRD, A / D & 18 cells & 1,169 & --- & 76.14 / 75.70\% & 67.58 / 67.30\% & 8.56 / 8.40 \\
-BIRD, D$-$A & 18 paired & 1,169 & --- & --- & --- & $-0.16$ \\
-MATH-500, free & $\RevisionMathHarnesses$ & $\RevisionMathTasks$ & $\RevisionMathDisagreement$\% & $\RevisionMathOracle$\% & $\RevisionMathBest$\% (bare) & $\RevisionMathHeadroom$ \\
-\bottomrule
-\end{tabular}
-\caption{Parallel domain evidence for the same measurement question. BIRD
-is the archived factorial analysis; MATH-500 is a one-seed exploratory
-free-arm probe. Designs are not pooled. Headroom is a one-run diagnostic,
-not selector accuracy or stable complementarity.}
-\label{tab:domain-main}
-\end{table}

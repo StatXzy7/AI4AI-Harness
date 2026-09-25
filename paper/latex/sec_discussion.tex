@@ -1,42 +1,21 @@
-\textbf{What the studies show.}
-Population utility is a stable task--harness interaction after
-execution noise is separated: an oracle asks who was correct after
-execution, whereas a router must commit beforehand. On BIRD, source-code
-diversity is uninformative about behavioral difference ($\rho=-0.01$,
-$21/66$ identical vectors despite passing code-difference checks), with
-three named execution routes showing where distinct programs fail to
-realize a distinct strategy. On the exploratory MATH-500 population,
-one-run oracle coverage is $4.75$\,pp above the best fixed member, which
-is \bare{} itself. On the pre-registered panel, byte-identical programs
-reproduce a positive repeat-averaged plugin ($2.67$\,pp on the clone
-arm), while the calibrated difference is $D=\WpVthreeD$\,pp (CI
-$\WpVthreeDCI$, $p=\WpVthreeP$) and common-execution coverage is tied:
-at three repeats the apparent gain is indistinguishable from extra
-executions of one fixed program, and the predeclared rule abstains
-rather than calling this equivalence; the frozen selector captures none
-of the gap a pre-fixed random member loses ($\WpRandomDiff$\,pp).
+\paragraph{Implications for evaluation.}
+A positive oracle gain answers whether additional correct answers
+were available. The same-code control shows why it cannot also answer
+whether different programs supplied different task abilities.
+Evaluations should report coverage, repeat-stable task advantages,
+and realized policy gains as separate results, with a repeated
+fixed-program reference for resource comparisons. If a gain is
+attributed to a mechanism, traces must establish what ran and an
+intervention must test its contribution. This reporting separates
+useful sampling from specialization without discounting either.
 
-\textbf{A reporting protocol.}
-The results motivate four low-cost practices: (i) include a same-code
-clone arm so additional executions are a measured baseline; (ii) collect
-held-out independent repeats with discovery/validation splitting, and
-report the repeat count and per-arm missingness; (iii) report one-run
-coverage opportunity, repeat-stable interaction, and pre-execution
-selection value as three distinct numbers with distinct information
-sets; (iv) report slots, executions, and tokens separately, running any
-budget-matched comparison at the claimed unit.
-
-\textbf{Scope.}
-The BIRD evidence covers one SQL target, six builders, and three seeds
-(W1/W3 analyses descriptive); the MATH panel is a low-call-filtered draw
-on previously seen tasks, not an unseen-task test. At $R=3$ the decision
-is powered only for strong crossovers ($0\%$ power for an
-$H=17.5$\,pp interaction) and the coverage gate independently failed on
-$12.5\%$ of real-arm tasks, so the abstention is a measurement boundary,
-not evidence of absence --- more repeats are the direct route to
-resolving it. The panel spent $3.73\times$ the clone arm's tokens, so
-the equal-execution replay (not realized cost) is the cost-controlled
-comparison, and calibration is an empirical tested-DGP result over $100$
-cells, not an analytic dominance-cone guarantee. The portable claim is
-the measurement distinction and its controls across two domains; other
-panels, targets, and repeat counts are the open extension.
+\paragraph{Limitations.}
+The controlled MATH panel is a low-call draw under one target on
+previously evaluated tasks; its v3 analysis was revised after
+collection. Missingness exceeds the declared gate, and simulations
+show that three repeats can miss substantial crossovers. The
+nonpositive calibrated mean therefore does not establish absence
+or equivalence. Zero routing gain concerns one selector; the replay
+matches executions, not tokens. BIRD retains separate single-run
+protocols, judging, and caching conditions. Its execution failures
+cannot be used as a causal explanation for MATH.

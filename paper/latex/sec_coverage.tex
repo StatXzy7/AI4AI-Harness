@@ -1,0 +1,23 @@
+\subsection{Single-Run Coverage in Generated Populations}
+\label{sec:f2-headroom}
+We first ask whether the generated population supplies correct
+answers beyond those of its best fixed member. All
+$35$ admitted generated members are evaluated once on $400$ tasks.
+Their union with \bare{} reaches $98.50\%$ oracle coverage, versus
+$93.75\%$ for the best fixed member, \bare{}. Yet every generated
+member is individually worse ($68.25$--$91.50\%$).
+The resulting $4.75$\,\% headroom is an opportunity available in
+hindsight, not an observed routing gain.
+
+The outcomes are diverse: $33$ of $36$ correctness vectors are unique,
+mean pairwise disagreement is $10.6\%$ (maximum $33.0\%$), and the
+union repairs $76.0\%$ of baseline errors. None of these quantities
+says how to choose a member before execution. This single-run study
+has no clone control of its own; two reasoning-heavy builders also
+exhausted generation budgets on most slots, limiting representation.
+This raises the next question: can additional executions of identical
+code also yield a positive oracle estimate? The repeat study introduces
+that control on a selected subset.
+Its $D$ does not correct the full population's $4.75$\,\% headroom,
+and its fresh baseline mean $\WpBareAcc\%$ is a separate estimate
+(Appendix~\ref{app:crossdomain}).

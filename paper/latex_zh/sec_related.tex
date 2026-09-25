@@ -1,33 +1,8 @@
-\subsection{面向 LLM 的 harness 生成}
-\label{related:generation}
-一条不断增长的研究线围绕冻结模型生成任务专属的脚手架。TTHE 用 LLM 提议/评判循环演化文本转 SQL harness \citep{tthe2026}；Self-Harness \citep{selfharness2026} 展示模型可以改进自己的 harness；JIT-Agent \citep{jitagent2026} 学会在推理时为每个任务生成 harness；Task-CoEvolve \citep{coevolve2026} 共同演化任务与脚手架。自动智能体程序搜索 \citep{adas2024} 最早把这类生成程序框定为搜索空间。2026 年的一个并行集群从验证侧让 harness 演化具备行为感知：HarnessLens \citep{harnesslens2026} 在演化过程中用行为级检查分配推演预算，HarnessFix \citep{harnessfix2026} 从有轨迹依据的诊断修复 harness，AHE \citep{ahe2026} 对照自声明的行为预测验证每次编辑，门控质量多样性／HarnessBank \citep{gatedqd2026} 在 LLM 标注的病理描述符上演化群体，Harness Handbook \citep{handbook2026} 针对行为定位与外环搜索，HarnessForge \citep{harnessforge2026} 共同演化 harness 与内部策略。
+\paragraph{自动化智能体与 harness 设计。}
+ADAS 将智能体程序作为搜索空间 \citep{adas2024}。TTHE、Self-Harness、JIT-Agent 与 Task-CoEvolve 围绕冻结模型生成或调整程序结构 \citep{tthe2026,selfharness2026,jitagent2026,coevolve2026}。HarnessLens、HarnessFix、AHE、HarnessBank、Harness Handbook 和 HarnessForge 通过运行分配、轨迹、预测检查、描述符、定位或联合策略演化研究行为 \citep{harnesslens2026,harnessfix2026,ahe2026,gatedqd2026,handbook2026,harnessforge2026}。自动设计智能体的低行为多样性也已有报道 \citep{metaagents2025}，程序等价与变异测试则提供了更早的概念背景 \citep{budd1982,papadakis2019}。本文关心所得群体的收益归因：源码差异可能不改变执行，而结果差异也可能在相同源码下出现。轨迹研究与克隆对照分别检验这两个方向。
 
-我们的分析单位与问题互补但不同。表~\ref{tab:nearest} 对比了两个最接近的系统。HarnessLens 把行为当作演化循环\emph{内部}的信号来分配算力；我们追问所得\emph{群体}作为一种结果属性是否行为多样。HarnessBank \citep{gatedqd2026} 记录搜索空间坍缩并按 LLM 给出的语义描述符筛除；我们的准入工具完全不给语义打分，而是驱动反事实轨迹探针，机械地验证一个声称的机制确实执行，并通过析因对比比较准入策略。由于所实现的门控也在结构上排除了两个被允许的提示转换，该处理不能在因果上分离验证本身。
+\paragraph{重复采样与集成。}
+Pass@$k$、自一致性与相同智能体的集成利用额外尝试 \citep{chen2021codex,selfconsistency2022,moreagents2024}；名义温度为 $0$ 的调用也可能变化 \citep{nondeterminism2023}。本文不将采样收益作为新发现，而是把它作为评估生成程序互补的显式参照。执行后的验证器 \citep{llmverifier2026} 与集成选择 \citep{caruana2004} 所拥有的信息，也不同于答案出现前必须作出选择的策略。本文的 oracle 重放与冻结选择器保留了这一差别。
 
-\begin{table}[t]
-\centering\footnotesize\setlength{\tabcolsep}{3pt}
-\begin{tabular}{@{}lccc@{}}
-\toprule
- & \textbf{本文} & \textbf{HarnessLens} & \textbf{HarnessBank} \\
-\midrule
-分析单位 & 群体结果矩阵 & 演化循环 & 多样性库 \\
-是否测量行为坍缩 & 是 & 否 & 仅搜索坍缩 \\
-同代码克隆对照 & 是 & 否 & 否 \\
-准入检查 & 反事实轨迹 & 预算分配 & 语义筛除 \\
-策略比较 & 析因 & 单循环 & 无 \\
-确认性划分 & 9 个隔离 DB & --- & --- \\
-\bottomrule
-\end{tabular}
-\caption{最接近的并行系统。当前门控包含结构性筛除，确认性划分有一个已披露的 $18$ 题冒烟测试例外。}
-\label{tab:nearest}
-\end{table}
-
-\subsection{条件效用、路由与重复抽样}
-\label{related:routing}
-Harness 质量是依实例条件变化的：\citet{nouniversal2026} 与 \citet{nonmonotone2026} 记录了没有任何单一 harness 在所有实例上占优。HELIX 评估完整的兄弟 harness 结果矩阵以及超过最佳固定候选的群体互补性，但把路由器列为未来工作 \citep{helix2026}。STS 在六个固定的人工设计脚手架上路由 \citep{sts2026}，GRASP 把技能编辑门控进开发期库 \citep{grasp2026}，\citet{cfrouting2026} 学习在｛不搜索、搜索、弃权｝上路由，RouteLLM \citep{routellm2024} 在模型层面路由。底层决策边界是经典的定量与定性（交叉）交互之分：仅效应量改变并不一定改变应选的动作 \citep{gailsimon1985}。算法选择 \citep{rice1976} 与 SATzilla 这类组合求解器 \citep{xu2008satzilla,kotthoff2016} 根据实例特征在枚举的算法间选择，随机重启长期以来捕获的是对单个求解器多做尝试、而非来自组合的收益。集成选择在模型库上优化一个验证目标 \citep{caruana2004}，与执行前选择一个成员是不同的信息集；自一致 \citep{selfconsistency2022} 在事后聚合多条采样轨迹，其成本与信息集同样不同于执行前的单成员路由。
-
-我们的候选是完整的、自动生成的 harness；我们测量一个选择器将继承的群体结果结构，而不是构建选择器。执行后验证器 \citep{llmverifier2026} 给已完成的轨迹打分，而我们的执行前估计目标在 harness 运行之前就做出选择，是不同的信息集；我们通篇把 oracle 覆盖明确标注为执行后、验证器可实现的上界，而非路由效用。
-
-\subsection{生成群体中的行为多样性}
-\label{related:diversity}
-LLM 输出的多样性主要在样本层（pass@$k$ \citep{chen2021codex}、自一致、多样化解码）或智能体策略层被研究。对固定生成器重复抽样、以及由独立实例化的相同智能体组成多智能体集成 \citep{moreagents2024}，都已表明同代码额外执行能带来性能收益；名义温度 $0$ 的调用在重复间也会变化 \citep{nondeterminism2023}。我们的同代码克隆臂把这一执行层基线变成 harness 群体的显式被测量零假设。语法不同的程序行为相同，与经典的程序等价 \citep{budd1982} 和变异体等价 \citep{papadakis2019} 结果相邻。最接近的是 \citet{metaagents2025}，他们在聚合层面报告自动设计智能体行为多样性偏低；我们在两个方向上扩展该观察：一个轨迹层分类法（声称却未执行、存在却未触发、多轮损坏），确切说明语法差异在何处没有变成被执行的策略；以及反向发现——相同代码在重复执行下产生正的表观互补信号——并针对 harness 群体以匹配重复、同代码对照和显式的槽数/执行数/token 记账加以测量。
+\paragraph{选择与资源配置。}
+随实例变化的 harness 质量 \citep{nouniversal2026,nonmonotone2026} 和 HELIX 结果矩阵 \citep{helix2026} 说明应超越最佳固定成员评估。STS、GRASP、反事实路由与 RouteLLM 在程序结构、技能、搜索动作或模型之间选择 \citep{sts2026,grasp2026,cfrouting2026,routellm2024}，延续算法选择与组合求解中的问题 \citep{rice1976,xu2008satzilla,kotthoff2016}。定量交互与定性交互的区别 \citep{gailsimon1985} 解释了为什么效应大小变化未必改变最佳动作。本文将任务交叉与同代码参照、留出重复相连接，再单独评估选择。这是一项诊断贡献，而非新的路由算法。

@@ -1,0 +1,62 @@
+\subsection{Design and primary contrasts}
+\label{sec:f2-admission}
+A separate confirmatory BIRD study crosses six independent builders with
+three seeds under strategy forcing (a named mechanism from a fixed set
+versus free invention) and conformance gating, giving four arms:
+II-A (free, ungated), II-B (free, gated), II-C (forced, ungated), and
+II-D (forced, gated). The evaluation covers
+$1{,}169$ questions from nine databases never opened during
+development (one disclosed $18$-item smoke-test exception), with the
+official BIRD execution scorer and a pre-outcome-frozen analysis later
+re-run as a versioned corrected reanalysis. The implemented gate bundles
+nontrivial-mechanism structural screening with conformance verification
+--- two of eight forced prompt-transformation slots cannot pass even
+when neutrally valid --- so the treatment does not isolate verification
+causally.
+
+\begin{table}[H]
+\centering\small
+\input{revision_primary_table}
+\caption{\textbf{Corrected primary analysis.} Means over $18$
+builder--seed cells on $1{,}169$ questions; \bare{} is included in both
+the oracle and best-fixed comparators.}
+\label{tab:primary}
+\end{table}
+
+The diagonal forced/gated minus free/ungated contrast in single-call-inclusive
+oracle headroom is $\RevisionPrimaryDelta$\,\%, with cell contrasts
+ranging over $\RevisionPrimaryRange$\,\%: the bundled screening policy
+does not improve mean headroom. The original uncertainty analysis is
+retained in Table~\ref{tab:primary}; this mean comparison does not
+establish equivalence. Structural admission is therefore not evidence
+that a mechanism activates on relevant tasks or adds stable utility.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.72\linewidth]{figures/fig_results_revision.pdf}
+\caption{\textbf{Versioned corrected reanalysis.} Left: full-set
+D$-$A cell contrasts with the pooled 95\% interval. Right: four-arm
+headroom on the shared core-$400$ tasks with a common \bare{} baseline.}
+\label{fig:results}
+\end{figure}
+
+On the shared core-$400$ tasks the gate contrast is
+$\RevisionGateDelta$\,\%, and the strategy and interaction secondaries
+are likewise inconclusive (Table~\ref{tab:factorial}); the fixed-$K$
+mean contrast $\RevisionKmatchedDelta$\,\% provides a population-size
+sensitivity check. The open-mechanism arm ran only on
+the development side and has no confirmatory estimand. These are all
+single-run contrasts, and the execution variability reported in
+the R2/R3 audits in Appendix~\ref{app:r2} ($8.54\%$ R2 verdict flips; $14.5\%$ of tasks
+changing \bare{} correctness across three runs; a $6.50$\,\% same-code
+one-run gap) characterizes them as coverage opportunities rather than
+capability differences.
+
+\begin{table}[H]
+\centering\small
+\input{revision_factorial_table}
+\caption{\textbf{Corrected core-$400$ factorial reanalysis.} Gate is
+$[(B{-}A)+(D{-}C)]/2$, strategy $[(C{-}A)+(D{-}B)]/2$, interaction
+$(D{-}C)-(B{-}A)$; raw and Holm-adjusted $p$-values.}
+\label{tab:factorial}
+\end{table}

@@ -1,235 +1,27 @@
-\section{Phase-I 来源与条件详述}\label{app:phase1-provenance}
-
-\paragraph{发现研究状态。}Phase I（\S\ref{sec:f1-collapse} 与 \S\ref{sec:boundary}）是发现研究。其 151 个评估项中有 24 个与首日协议开发测量重叠；人工控制是在检查首日轨迹后设计的（其观测提升空间是描述性的，不是稳定互补性的盲估计）；仓库历史为事后初始化，决策日志变更记录是权威的排序记录。Phase-I 准入阈值（联合修复率 $\geq$15\%、提升空间 $\geq$5\,pp、$\geq$3 个成对不同的非空修复集合）在 151 题评估之前已于内部决策日志冻结；v6$\rightarrow$v7 的阈值变更（20\%$\rightarrow$15\%）已披露，两种读数接纳相同种群。这是内部评估前冻结，不是外部预注册。
-
-\paragraph{数据卫生。}bare 基线在两次首日运行之间翻转了 60 题中的 3 题（温度 0 下的 API 非确定性），因此 60 题列以略有不同的 bare 错题集合为条件。Phase-I 评分使用行集合相等代理，我们后来测得它相对官方 BIRD 评分器一致保守（在两个记录了最终 SQL 的 Phase-I 矩阵上，它从不把官方评分器判错的答案判对；一致率 0.97--0.99）。
-
-\paragraph{Phase-I 种群。}种子基线：\texttt{bare}（单次调用）与 \texttt{react}（执行反馈循环，随 TTHE 提供）。\emph{旧提议者协议}：从 TTHE 优化循环输出中选出的六个候选（GLM-5.3-Flash 构建器），仅使用与评估集不相交的 36 道题、按评估前冻结的规则为行为多样性而选择。\emph{策略强制自由形式}：GLM-5.3-Flash、Qwen3.8-Flash、DeepSeek-V4-Flash-Vision-Exp 构建器，各八个指派机制；GLM 种群是有日志的重跑（K=3；原 09-01 运行记录为零接纳，但其工具未保存，该观察无法审核）。\emph{Harness IR}：从声明式机制规格确定性编译的六个 harness（上下文 $\in$\{plain, schema\_link, hint\_guard, link+hint\}，带温度的候选生成、逐候选执行、修复轮次、选择规则），因此声明机制按构造存在于控制流中。\emph{人工正控制}：\S\ref{sec:f1-collapse} 的四个手写 harness。
-
-\paragraph{生成来源缺口。}09-01 自由形式种群在会话中产出；其生成工具未保存，也不存在逐尝试日志——因此这些运行的预算相等无法审核，我们也不作此主张。它们的准入是评估时的导入／冒烟检查，\emph{不是} Phase-II 的反事实一致性门控。自 2026-09-03 起的在案工具（\texttt{builder\_generate3.py}）记录每次尝试（3 次重试、16{,}384 token 预算、逐尝试阶段与结束原因）；完整的逐策略网格与构建器接纳排序（3/8、7/8、8/8）来自该有日志工具，相对冻结的准入决定属于事后。
-
-\subsection{Phase-I 协议探查及其局限}\label{sec:phase1probes}
-Phase I 还探查了生成侧修复——策略强制自由形式协议（指派机制，导入／冒烟准入）与编译式 Harness IR。在策略强制协议下，三个构建器中有两个产生的种群点估计超过预先指定阈值（Qwen3.8-Flash 5.96、DeepSeek-V4-Flash-Vision-Exp 7.95\,pp；旧协议臂为 4.64\,pp 未达标），且逐策略接纳随构建器身份排序（在有日志工具下 GLM-5.3-Flash 3/8、Qwen3.8-Flash 7/8、DeepSeek-V4-Flash-Vision-Exp 8/8）。这些观察为 Phase II 提供动机，但不是验证性的，原因有三并已披露：设计是两个嵌套对比，无法把协议主效应与构建器主效应分开；早期运行缺少逐尝试日志，预算相等无法审核；准入是导入／冒烟检查，不是 \S\ref{sec:protocol} 的反事实一致性门控。完整条件见附录~\ref{app:phase1-provenance}。
-
-\paragraph{生成空结果失败（M0）。}用 Qwen3.8-Flash 与 DeepSeek-V4-Flash-Vision-Exp 构建器重跑原优化循环，产生 40 个与 \bare{} 基线源码逐字节相同的候选。代码同一并不意味着随机执行也相同。这次运行没有提供不同代码的种群；它作为另一种更原始的失败模式报告——流水线根本没有产生不同种群。上述坍缩主张完全基于来源确实不同的首日种群。
-
-\paragraph{图数据。}图~\ref{fig:phenomenon}（正文）背后的原始点对是代码材料中的 \texttt{fig1\_phenomenon\_data.json}。
-
-\section{Phase-II 协议摘要与偏差日志}\label{app:phase2-protocol}
-
-权威协议（估计目标、划分、仪器、排除规则与历史偏差变更日志）是代码材料中的 \texttt{PHASE2\_PROTOCOL.md}，冻结于 \texttt{PROTOCOL\_FREEZE.txt} 记录的提交。摘要：$2{\times}2$ 析因加开放机制臂；六构建器 $\times$ 三种子；每槽位至多 $R{=}3$ 次尝试，首次接纳即停，不补足；污染登记器（失败即关闭，两个开发数据库整体禁用）；来自九个开发期间从未打开数据库的 1{,}169 题验证集加预抽取 400 题核心；官方 BIRD 评分器强制 30\,s 超时；以模型身份为键、跨进程加锁的响应缓存（偏差 D13 记录并修复了采集中发现的一个缓存并发缺陷）；主对比为配对（构建器 $\times$ 种子）单元上的 D$-$A，配分层 bootstrap 与置换推断；共同核心上 Holm 校正的析因次要项；仅 K 匹配敏感性。偏差 D1--D13 包括已披露的 18 题流水线冒烟测试、在观察任何验证性结果之前所作的仪器校准修复、凭据处理事件及其补救、以及产物分歧隔离——每项在变更日志中均有理由与日期。
-审后修正记录于 \texttt{review-stage/REVISION\_20260910.md}；修订结果不替代历史冻结。特别地，实际门控在结构上拒绝两种允许的提示层策略，且各组实际生成成本不同。如正文所述，修正表格使用共享基线记录与数据库／题目重采样。
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.75\linewidth]{figures/fig_design_revision.pdf}
-\caption{\textbf{Phase-II 验证性设计}（冻结协议）。左：数据库级污染隔离。中：$2{\times}2$ 析因与共同尝试上限，加开放机制臂 II-E。右：三层准入流程。}
-\label{fig:design}
-\end{figure}
-
-\paragraph{上游代码提取审计。}\label{app:extraction}
-在 36 个强制 C/D 单元中，全部 108 次 \texttt{format\_guard} 尝试均未通过中性有效性：71 条日志报告 Python 字符串未终止，36 条报告无 Python 围栏，1 条报告提供方超时。存档生成器的非贪婪 Python 围栏提取器在随后第一个三反引号处终止，包括 Python 字符串内部的三反引号。三个合成的、语法有效、在普通字符串、文档字符串或正则中包含 SQL 围栏的文件变成了无效前缀；而提取器仍把其截断标志设为 false。该提取器与审稿锁定提交相比未变，但历史尝试日志未绑定其执行时来源哈希。完整构建器消息未被该生成器保存。因此失败模式与提取损坏相容，但不证明所有历史失败都由此造成，也不证明修复后的候选会通过准入。我们找到 74 个已保存的提取文件，全部语法无效；其中三个与无围栏日志并存，作为来源冲突保留，不归属于那些尝试。这些发现把一个生成接口失败置于门控显式策略排除之旁。
-
-\paragraph{修正的 K 匹配与 R2 重放。}\label{app:r2}
-两次重放都使用与修正主分析相同的 manifest 排序 canonical 加载器与共享数据库／库内题目抽取，在固定构建器内重采样种子（10{,}000 次重复）。K 匹配中，每个 A/B 与 C/D 对使用较小候选数；每个均匀候选子集被精确枚举一次。bare 留在每个子集中，最佳固定在每次题目抽取的每个子集内部重算。这是规模敏感性分析，不是因果中介分解。保留全部 18 个单元（包括两个 A 子集为单成员的单元）使子集 D$-$A 从 \RevisionRtwoCached\ 变为 \RevisionRtwoOff\,pp（变化 \RevisionRtwoChange\,pp，95\% CI \RevisionRtwoChangeCI）。R2 子集提升空间排除 bare，因为 R2 未获得匹配的 bare 运行，故它不同于包含 bare 的主估计目标；旧的 16 单元比较在此对账。这些是不稳定性测量，不是标准误，也不是平均处理效应的可检出下限；它们不证明每个对比都不变，也不识别 harness 间分歧中有多大部分是噪声。
-
-R2 在 400 题上获得 70 个 harness，在可用时为每个 A/D 单元选择前两个可调用的已接纳候选。两个关缓存获取文件即使都存储 \texttt{repeat=0} 也保留各自身份；来源哈希与缓存运行核对。未获得匹配 bare，因此 R2 提升空间在两种条件下都排除 bare。修正分析保留单成员单元（其子集提升空间为零），得到全部 18 个配对单元。对缓存结果有 \RevisionRtwoFlips/28{,}000 次判定翻转（\RevisionRtwoFlipPercent\%），两次 D 关缓存轮次之间有 \RevisionRtwoRepeatFlips/14{,}400 次翻转（\RevisionRtwoRepeatPercent\%）。
-仅为对账，限制到两臂都至少有两个成员的 16 个单元，缓存下 D$-$A 为 $\RevisionRtwoLegacyCached$\,pp、关缓存下为 $\RevisionRtwoLegacyOff$\,pp。这解释了与全单元估计的差别；两种分析都不识别未来执行方差、单独缓存的效应、或相对克隆的稳定互补优势。获取时间与缓存条件未被分离。
-
-\paragraph{R3 仅 bare 重复审核。}\label{app:r3}
-R3 是一项单独的、更小的不稳定性审核：仅 \emph{bare 基线}（无生成 harness）在相同 core-400 题、相同冻结目标（GLM-5.3-Flash，温度 0）上的三次独立关缓存执行。400 题中 58 题（14.5\%）在三次重复中至少一次改变 bare 正确性；重复对之间的成对翻转率为 39/400、40/400、37/400（9.75\%、10.0\%、9.25\%）。把三次 bare 重复当作三个伪成员（各一次执行）给出单次 oracle $72.25\%$，相对最佳单次重复准确率 $65.75\%$，即描述性的 $6.50$\,pp 同代码 oracle 缺口，由原始 \texttt{artifacts/phase2/r3\_rep\{0,1,2\}.jsonl} 的官方评分列计算。因此 R3 测量的是温度 0 API 非确定性下基线自身的观测不稳定率。这不是任何对比的标准误或效应大小下限，但它设定了重复控制成为解释必要项的尺度：没有它们，这个量级的 harness 对 bare 差异不能归因于能力。存档记录为 \texttt{artifacts/phase2/r3\_flip\_rate.json}，生成脚本为 \texttt{experiment/phase2/run\_r2r3.py}。
-
-\begin{table}[t]
-\centering\small
-\input{../latex/revision_sensitivity_table}
-\caption{core-400、18 单元上的修正敏感性。CI 未校正。K 匹配比较始终保留 bare；R2 比较排除 bare，并以观察到的获取组为条件。}
-\label{tab:sensitivity}
-\end{table}
-
-\paragraph{记录成本与缺失账单数据。}
-相同 canonical 核心记录在 \RevisionCostRows{} 条候选—题目记录中包含 \RevisionLogicalCalls{} 次记录的逻辑 solver 调用（表~\ref{tab:cost}）。这些调用包括缓存服务的请求，不是提供方计费的 API 请求。所检查的记录均无 token 用量字段；我们不从调用数推算 token 或货币支出。因此实际生成尝试数、接纳候选数与这些执行计数保持为不同测量。种群成本均值对每个构建器—种子单元等权且排除 bare；零候选种群贡献零次 solver 调用。
-
-\begin{table}[t]
-\centering\small
-\input{../latex/revision_cost_table}
-\caption{core-400 上的描述性 canonical 成本审核，每组 18 单元。记录的逻辑调用不是计费请求或 token 计数。末列为各单元逐题候选种群调用的平均值。}
-\label{tab:cost}
-\end{table}
-
-\subsection{审后提供方获取状态}
-审后的提供方获取尝试未形成完整共同池：传输中断把已完成响应、未闭合请求与未启动尝试留在不同的可审计状态中。这些记录为来源与缺失性核算保留，但被排除于关于种群表现、成本或稳定互补性的主张之外。因此，稿件不把提供方可用性或部分获取用作未解决的克隆控制问题的证据。
-
-\section{探索性指纹与选择分析}\label{app:rich}
-两项分析都是对存档验证性单元（18 个构建器$\times$种子单元、384 个接纳候选、core-400 结果）的事后分析。版本化的 \texttt{experiment/revision/} 脚本现在使用与主重分析相同的 canonical 加载器、冻结题目列表、成员关系与来源检查。它们仍是描述性的：这些题目此前已被分析过，这不是独立迁移验证。
-
-\paragraph{丰富指纹。}为隔离加载器变更，W3 重分析保留旧的有损 SQL 文本变换：删除分号、替换反引号、即使在单引号分段后仍整体小写化、合并空白。这不是 SQL 解析器或语义归一化；它可能改变字面量与带引号标识符。在 $\RevisionWthreeSameSQL$ 个两条变换后 SQL 相同且非空的对—题观察中，有 $\RevisionWthreeSameDisagreements$ 个判定不同。这是观测到的一致性检查，不是按构造保证的性质。
-
-对级 SQL 不相似度仅在判定一致且两条 SQL 非空的题目上平均 $(1-$token-Jaccard$)$。它与整体结果分歧的 Spearman 相关在 4{,}386 个单元内对上为 $\RevisionWthreeRho$，在 1{,}010 个组内对上为 $\RevisionWthreeWithinRho$。各对共享候选与题目，且 SQL 指标以判定一致为条件；这些相关没有基于独立性的显著性或因果解释。
-
-在 R2 的 70-harness 首次关缓存获取中，调用数在 $\RevisionWthreeCallChanges/28000$ 次比较中变化，判定在 $\RevisionRtwoFlips/28000$ 次中变化。变换后 SQL 在 $\RevisionWthreeSQLChanges/\RevisionWthreeSQLN$ 次比较中变化（$\RevisionWthreeSQLPercent\%$）；64 次比较缺少两条非空 SQL，仅从 SQL 分母中排除。变化 SQL 对的平均 token Jaccard 为 $\RevisionWthreeJaccard$。这些通道特定比率不定义效应大小噪声地板。canonical 逻辑调用成本在表~\ref{tab:cost} 中单独报告。
-
-\paragraph{多样性感知选择。}每个单元合并跨臂的全部接纳候选。重分析保留旧种子、100 次随机数据库对半划分、每划分每单元 200 次随机子集抽取及候选选择规则。它记录一个新的确定性调度：历史的集合派生单元顺序未存档，因此仅凭种子无法恢复相同的历史划分与抽取。选择使用开发数据库；评估使用互补数据库。重叠划分不是 1{,}800 个独立实验。方法为开发准确率 top-$k$、均匀随机子集、贪心开发 oracle 覆盖、以及贪心平均准确率加 $\lambda$ 倍 oracle 覆盖（$\lambda\in\{0.25,0.5,1,2\}$）。所有候选选择都在划分的评估之前于划分内冻结。
-
-表~\ref{tab:selection} 在每个被评估子集中保留共同的 AD bare；$k$ 只计候选。JSON 还记录仅候选值以区分历史估计目标。Oracle 与最佳固定使用留出结果作为描述性上界。开发固定改为用开发准确率选一个成员，成员名并列时升序、bare 优先。确定性方法本就保留一个全局开发最佳候选；该比较器的差异可能来自哪些并列最大值存活，而非开发最大准确率提高。
-
-在 $k=8$ 时，仅多样性相对 top-acc 使 oracle 变化 $\RevisionWoneOracle$\,pp、最佳固定变化 $\RevisionWoneBest$\,pp、提升空间变化 $\RevisionWoneHeadroom$\,pp。开发固定变化 $\RevisionWoneFixed$\,pp。这些是不同的量，没有一个是独立验证的路由增益。我们撤回旧的仅单元置信区间；当前表是描述性的，涵盖数据库／题目采样与重选择的推断仍待完成。更早的归一化提升空间比率仅保留在历史产物中，不进入修订主张。
-
-\begin{table}[t]
-\centering\small
-\input{../latex/revision_selection_table}
-\caption{canonical 描述性 W1 重分析。每个池含 $k$ 个选定候选加共同 bare。18 单元与 100 个重叠数据库划分上的均值；无置信区间。开发固定仅在开发数据上选择；最佳固定使用留出结果。}
-\label{tab:selection}
-\end{table}
-
-\paragraph{重选择不确立区间覆盖。}
-一个精确反例排除了我们提出的正权重重选择百分位区间的普遍 95\% 覆盖保证。令九个独立数据库各含一个 Bernoulli($p$) 任务状态。16 个固定候选由八个状态 0 专家后接八个状态 1 专家组成；bare 恒错。把 canonical $k=8$ 规则应用于四个开发库与五个留出库。在记录的并列规则下，仅多样性减 top-acc 提升空间统计量的期望为 $(1-p^4)\,\mathbb{E}[\min(B,5-B)/5]>0$，其中 $B\sim\mathrm{Binomial}(5,p)$。在全部九个状态恰好相同的事件上，每种正加权都给两种方法产生零提升空间，故百分位区间为 $[0,0]$。因此覆盖率至多为 $1-p^9-(1-p)^9$，在 $p=0.1$ 时为 61.26\%。对相同单元或重叠固定划分取平均不能移除该事件。此界限针对所述构造与区间，不涉及 BIRD 特定覆盖率，也不涉及其他推断方法的不可能性。
-
-\subsection{路由与探索性选择}\label{sec:boundary}
-Phase-I 留一 harness 预测器未在所测 DeepSeek 种群中超过最佳固定 harness（$-3.4$\,pp）；Qwen 估计为 $+0.9$\,pp（CI $[-5.2,+6.9]$），题目留出的修复 AUROC 为 0.512。这些预测器与划分特定结果不确立价值预测。canonical W1 分析同样是描述性的：在 $k=8$ 时，多样性相对 top-准确率选择使 oracle 变化 $\RevisionWoneOracle$\,pp、最佳固定变化 $\RevisionWoneBest$\,pp、提升空间变化 $\RevisionWoneHeadroom$\,pp；开发选定固定成员变化 $\RevisionWoneFixed$\,pp。没有一个是经验证的路由增益（附录~\ref{app:rich}）。
-
-\section{Phase-I 补充结果}\label{app:phase1-results}
-逐 harness 准确率、逐折 LOHO 表、bootstrap 区间、修复集审核、$K$ 子采样曲线、题目留出控制与第二目标重复（Qwen3.8-Flash 作冻结目标：坍缩重复；策略强制种群保留提升空间；提示侧人工控制未整体迁移）均连同其生成脚本包含在匿名代码材料中。
-
-\section{模型与版本}\label{app:models}
-
-表~\ref{tab:models} 列出本文使用的每个模型及其发送给 API 的确切版本字符串。所有模型均通过单一商业 OpenAI 兼容 API 聚合器访问（每个角色都用同一提供方）；BIRD 数据采集窗口为 2026-08-30 至 2026-09-08。冻结目标始终在温度 0 调用。Phase-II harness 生成使用温度 0.7、16{,}384 token 预算；Phase-I 生成设置按工具记录于代码材料。Phase I 使用代理执行评分器；Phase II 使用官方 BIRD 评分器（30\,s 超时），旧评分器作为次要审核。MATH-500 探查使用附录~\ref{app:crossdomain} 的答案比较器；报告的准确率无一由 LLM 评分器产生。
-
-\begin{table}[h]
-\centering
-\small
-\begin{tabular}{p{0.26\linewidth}p{0.50\linewidth}p{0.14\linewidth}}
-\toprule
-角色 & 模型（确切版本字符串） & 用于 \\
-\midrule
-冻结目标求解器 & \texttt{GLM-5.3-Flash}（温度 0） & Phase I--II \\
-第二冻结目标（重复） & \texttt{Qwen3.8-Flash} & Phase I \\
-Phase-I 构建器 & \texttt{GLM-5.3-Flash}, \texttt{Qwen3.8-Flash},
-\texttt{DeepSeek-V4-Flash-Vision-Exp} & \S\ref{sec:phase1probes} \\
-Phase-II 构建器 & \texttt{GLM-5.3}, \texttt{Qwen3.8-Max},
-\texttt{DeepSeek-V4-Pro}, \texttt{Kimi-K3}, \texttt{MiniMax-M3},
-\texttt{ERNIE-5.0-Thinking-Preview} & Phase II \\
-门控仪器开发 & \texttt{GPT-6} & 附录~\ref{app:gatecontrols} \\
-控制编写 & \texttt{gpt-5.5}（v2/v3 集）, \texttt{gpt-5.6-sol}（v4 集） & 附录~\ref{app:gatecontrols} \\
-盲测控制审核／裁决 & \texttt{gpt-5.6-sol}（v2/v3）, \texttt{gpt-5.5}（v4，语义裁决） & 附录~\ref{app:gatecontrols} \\
-评分器 & 代理／官方 BIRD 执行评分器；MATH 答案比较器 & 见正文 \\
-\bottomrule
-\end{tabular}
-\caption{完整模型清单。目标在每个阶段内保持冻结；Phase-II 构建器来自六个独立实验室。}
-\label{tab:models}
-\end{table}
-
-\section{Phase-I 轨迹审核的工作样例}\label{app:examples}
-
-为使 \S\ref{sec:f1-collapse} 的失败分类具体化，本节把一项 BIRD 任务在被审 harness 中走一遍。产物逐字取自首日轨迹审核（5 个 harness $\times$ 10 道题）；其日志器把存储的 SQL 摘录上限设为 120 字符，故截断以 \emph{[trunc.]} 标记。完整 harness 来源与轨迹在代码材料中。
-
-\paragraph{任务。}BIRD 开发集问题 352（\texttt{card\_games} 数据库；题目文本逐字，拼写错误为数据集原有）：
-\begin{quote}\small\ttfamily
-Calculate the percentage of the cards availabe in Chinese Simplified.
-\end{quote}
-其 BIRD 提示：
-\begin{quote}\small\ttfamily
-'Chinese Simplified' is the language; percentage = Divide(Sum(id where
-language = 'Chinese Simplified'), Count(id)) *100
-\end{quote}
-Gold SQL（在发布数据库上执行两者分别得 8.7734 与 8.7728——官方评分器将其区分）：
-\begin{quote}\small\ttfamily
-SELECT CAST(SUM(CASE WHEN T2.language = 'Chinese Simplified' THEN 1 ELSE 0
-END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN foreign\_data
-AS T2 ON T1.uuid = T2.uuid
-\end{quote}
-\bare{} harness 回答：
-\begin{quote}\small\ttfamily
-SELECT SUM(CASE WHEN language = 'Chinese Simplified' THEN 1 ELSE 0 END) *
-100.0 / COUNT(id) AS percentage FROM foreign\_data;
-\end{quote}
-被官方评分器判错：它直接在 \texttt{foreign\_data} 上计数，而 gold 查询在连接 \texttt{cards} 之后计数；提示没有写明该连接。
-
-\paragraph{\react{}（T2：机制存在但未触发）。}\react{} 的控制流确实执行 SQL 并在数据库错误时重试。但其第一次调用与 \bare{} 的提示逐字节相同，而此处生成的 SQL 执行无错误，因此错误触发的重试从不发生，最终 SQL 与 \bare{} 相同。在全部 10 道被审任务上模式都成立：有 SQL 执行，10/10 最终 SQL 与 \bare{} 逐字节相同——反馈循环是真实代码，但其修复分支在这些题上未激活。需要受控故障注入来检验反馈是否改变输出。
-
-\paragraph{\texttt{cand\_bird\_g1\_b0r0\_g0}（T1：机制被描述但未执行）。}该候选的文档字符串宣称一种“保守修复”：限制求解器最大输出 token 并要求仅答案块。其 \texttt{solve()} 在结构上就是 \bare{}：一次 LLM 调用，然后 \texttt{extract\_sql}。token 上限仅作为 \texttt{os.environ.setdefault} 默认值存在（2{,}048 对运行时的 32{,}000）——没有任何 harness 控制流实现它，且在这些题上它从不生效，因为 SQL 答案比上限低几个数量级。在工作样例题上它恰好发起一次调用、什么都不执行，并返回与 \bare{} 相同的错误查询（忽略空白差异；直接在 \texttt{foreign\_data} 上计数而无连接）。在全部 10 道被审任务上它记录的 SQL 执行数为零，且最终 SQL 有 6 个与 \bare{} 逐字节相同（其余差异可追溯到改写的系统提示，而非任何机制）。因此最常见的 Phase-I 失败类不是机械损坏而是机械缺失：声明的机制只存在于散文中。
-
-\paragraph{\texttt{cand\_bird\_g1\_b0r1\_g0}（代码级多样性，行为同一性）。}该候选是一个真正不同的程序：它把单次 coder 调用包在守护线程看门狗中，若调用停滞超过 40\,s 就发出一次对冲重复追问。机制存在于控制流中——但其触发器（停滞的 API 调用）在审核中从未出现：零次 SQL 执行，且全部 10 道被审题的最终 SQL 都等于 \bare{}。即使新增机制是真实的，代码不同而行为相同仍可存活：它只是从不触发。
-
-\paragraph{\texttt{cand\_bird\_g1\_b1r1\_g1}（T3：损坏的多轮路径）。}唯一一个实现了真正执行—检查—修复的被审候选把模型的\emph{散文}当作最终 SQL 返回。在一道 \bare{} 答对的题（“State the alternative languages available for card named Annul numbered 29.”）上，其记录的最终 SQL 逐字开头为：
-\begin{quote}\small\ttfamily
-with "only a single read-only SELECT is allowed". The previous "query" was
-actually just prose text (the model wrote rea\emph{[trunc.]})
-\end{quote}
-修复再提示招致了失败：被要求修复一个“实际上只是散文”的查询时，冻结目标以更多散文推理回应，找不到 SQL 块，推理文本便被当作查询提交。该题从 bare 正确翻转为 harness 错误。
-
-\section{仪器控制的独立构造}\label{app:gatecontrols}
-我们用 32 个新编写的控制测试审后 Gate-v2 开发仪器，与开发其探针所用的控制分开。仪器先固定，之后另一个模型（\texttt{gpt-5.5}；表~\ref{tab:models}）只收到公开合同与可调用接口，不接触其实现或早期控制。作者为八类机制各提供两个意图符合与两个意图不符合的实现。控制来源、作者参考标签、仪器、测量代码与执行顺序在首次评估前哈希。未运行任何基准或提供方生成，首次测量原样保留。
-
-\begin{table}[h]
-\centering\small
-\begin{tabular}{lrrr}\toprule
-声明机制 & 结构通过 & 结构失败 & 需审阅 \\\midrule
-修复 & 2 & 2 & 0 \\
-执行结果投票 & 2 & 2 & 0 \\
-模式链接 & 0 & 4 & 0 \\
-提示守卫 & 0 & 0 & 4 \\
-双视图 & 0 & 3 & 1 \\
-分解 & 1 & 3 & 0 \\
-错误分类 & 0 & 4 & 0 \\
-格式守卫 & 0 & 0 & 4 \\\midrule
-合计 & 5 & 18 & 9 \\\bottomrule
-\end{tabular}
-\caption{固定开发仪器对 32 个独立编写控制的首次评估。无一例发生执行失败。这些是仪器状态，不是正确性标签或种群错误率；作者意图的正／负标签需另行审查。}
-\label{tab:gatecontrols}
-\end{table}
-
-九个需审阅案例全部保留。第三个模型（\texttt{gpt-5.6-sol}）收到完整控制来源与轨迹，但没有作者参考标签或自动判定，用于对全部 32 个控制作来源—合同审查并对四类指定机制作语义裁决。
-独立来源审查支持一个分解控制与两个错误分类控制符合，而仪器拒绝了它们。分解 stub 返回其文本在请求中出现的第一个计划步骤的载荷；因此在下一请求的上下文中保留较早步骤会再次取回较早载荷。分类检查移除了确切错误文本，但仍把普通 \texttt{Schema:} 标题计为一个类别，使提取的类别集与预期错误类不一致。这些是仪器在这些控制上的失败，不是目标模型的观测失败。
-三个作者意图正控制被争议：两个模式链接控制保留了无关表，一个双视图控制批量处理其请求并错误处理空结果。其原始标签与审查分歧分别保留。在作者标签与来源审查一致的 29 个控制中，仪器拒绝了 13 个符合控制中的 3 个；全部 16 个不符合控制在指定语义审查后都被拒绝。因此仪器未通过这项有限控制检查。这些计数不估计生成种群中的错误率。
-指定 16 个控制的语义裁决产生 7 个符合、8 个不符合、1 个不确定。不确定案例本就有结构失败，保留该失败而不解决其语义。这个小型、刻意平衡的控制集不是生成 harness 的随机样本。通过它并不能验证生产接口或取代准入政策的共同原始池比较。来源、冻结输入、完整轨迹与裁决保留在配套修订产物中。
-
-\paragraph{修订仪器与新的独立控制集。}
-Gate-v3 修正了分解请求归属，并把类别关键词与共享请求模板当作审阅线索而非自动拒绝。我们在新的模型上下文（\texttt{gpt-5.5} 编写、\texttt{gpt-5.6-sol} 审查）编写并审查新的 32 控制集之前固定此版本，仍为每机制两个意图正、两个意图负控制。审查包隐去作者标签、自动判定与仪器派生的归属元数据。全部 32 个控制接受来源审查；四个提示／表述组加分解中的 20 个控制还接受语义或数据流审查。结构结果为 8 通过、10 失败、14 需审阅，无执行失败。经一次记录在案的证据澄清，来源审查把 15 个控制分类为符合、17 个不符合；语义审查分类为 8 符合、11 不符合、1 不确定。
-
-不确定的分类控制请求一个中间错误类别，但合成接口返回 SQL 文本。其回退随后选择了语义修复动作。这确立的是 fixture 中的响应类型不匹配，不是真实求解器的分类错误。第二个分类控制受到参考争议：其来源把提供的模式失败消息映射到语义动作。在 31 个无争议参考中，15 个符合控制有 14 个被接受、1 个仍未解决；全部 16 个不符合控制被拒绝。因此预先指定的有限检查因未决案例及错误分类缺乏足够一致的正覆盖而仍未满足。一个投票控制的符合性仅适用于结果仲裁；它未确立以任务为条件的候选生成。这些有限机制检查不验证完整 harness 运行，也不取代计划中的共同池政策比较。
-
-\paragraph{运行时响应合同。}
-我们随后测试了七个存档的无门控、策略强制候选，按策略选择第一个可用文件名而非按表现；没有可用的格式守卫候选（附录~\ref{app:extraction}）。27 个合成场景同时暴露了候选与仪器的局限。双视图候选在第一个结果非空时跳过第二次执行，与其原本“两者都执行”的声明相反。相比之下，模式链接候选请求 JSON 却收到纯文本，分解请求中的完整计划使冻结探针无法唯一归属当前目标。
-我们保留这些观察，并在另外 11 个开发场景中测试来源指派的响应配置。专用子问题字段识别了当前目标，可执行 SQL 载荷到达最终装配，内存 SQLite 数据库产生的四个错误引出相应的语法或模式修复指令。模式链接 JSON 改变了 SQL 编写请求中的显式表／列限制，但完整模式仍在场。因此仅凭保留模式上下文不能确立链接子集被忽略。这些暴露候选检查把响应接口失败与可观察的候选偏差区分开；它们不取代独立校准，也不提供修订后的基准结果。
-
-\paragraph{统一接口与测量前参考审查。}
-Gate-v4 把来源指派的响应接口与五个未变的 Gate-v3 机制探针结合。另写的 32 控制集（\texttt{gpt-5.6-sol}）在执行前接受盲测来源审查。作者熟悉更早的控制失败；此来源审查中发现的模式响应与声明投票参数不匹配在保留初版的同时被修正。修订参考在每机制有两个一致符合与两个一致不符合控制。冻结其来源、配置与依赖后，一次测量覆盖 124 个场景，无执行异常。结构结果为 4 通过、6 失败、22 需审阅。
-
-一个新的审查上下文（\texttt{gpt-5.5}）收到全部来源与实际轨迹，但没有参考标签、来源审查决定或自动判定。其首次判定为 18 符合、14 不符合。在预先指定的混合规则中保留结构失败会接受全部 16 个符合参考，但也接受一个不符合的提示控制，故有限零错误标准未满足。该控制正确重述已有提示，却在未提供提示时虚构了强制排序。一次记录在案的、有针对性的证据澄清纠正了这一疏漏，也纠正了一个把同一请求的两个样本当作独立表述的双视图判定。后一控制本已被结构拒绝。澄清后的判定与全部 32 个参考一致，但这次跟进不取代首次盲测结果，也不构成新的独立校准通过。此检查中未执行任何仪器重跑、提供方生成或基准评估。
-
-\paragraph{声明词表的范围。}
-这些控制覆盖八个策略强制合同，不覆盖自由臂的四种声明（repair、vote、twostage、plain）。在原自由提示中，vote 指定多次采样与选择但未指定三票多数投票；twostage 指定产物消费但无特定响应接口。plain 声明还指定无控制流机制，而自由提示要求控制流变更。因此把八策略门控应用于这些声明需要另行固定语义规则与不确定政策，而不是静默把 vote 当作 vote3 或在观察其结果后选择兼容配置。这一来源级范围缺口不估计生成候选的错误拒绝率。
-
-\subsection{同核心提升空间分解}\label{app:decomp}
-\begin{table}[t]
-\centering\footnotesize
-\input{../latex/revision_decomposition_table}
-\caption{\textbf{同核心提升空间分解。}所有臂使用相同 400 题与相同 bare 结果。$K_{\rm cand}$ 排除 bare，$K_{\rm total}=K_{\rm cand}+1$；数量与准确率为单元均值。提升空间为 oracle 减最佳固定准确率，不是已实现路由增益。}
-\label{tab:decomp}
-\end{table}
-
-\section{诊断流程与验证（本次修订）}\label{app:diagnostics}
-
-\paragraph{五个问题类。}对一个 harness 种群与一个 bare 参考，诊断流程在显式执行矩阵 $Y[h,x,r,c]$（成员、任务、重复、执行条件）上评估五类命题：\textbf{（A）}测量充分性（清单一致性、带显式已执行／未执行状态的评分器重放、同一性唯一性；未运行的检查被报告为未运行，且永远不能把该类渲染为 SUPPORTED）；\textbf{（B）}单次覆盖（oracle 减最佳固定，开发固定单独报告）；\textbf{（C）}稳定性，分两个分开的估计目标；\textbf{（D）}执行前可选择性（冻结的一次调用选择政策对照开发固定）；\textbf{（E）}冻结 1 次调用预算、$\lambda{=}1$ 损害加权下的预算匹配政策效用（离线、一次调用；除非逐任务调用预算由逐记录证据验证或属于生成设计的一部分，否则 E 留作 INSUFFICIENT\_EVIDENCE）。每类返回 SUPPORTED、REFUTED\_WITHIN\_SCOPE、INSUFFICIENT\_EVIDENCE 或 NOT\_APPLICABLE，附范围与最小缺失证据；各类绝不合并为单一分数。
-
-\paragraph{两个稳定性估计目标。}\emph{C-rank}：成对同条件准确率差，配共享题目重采样 bootstrap 与所有 $M(M-1)/2$ 个规范成员对上的 max-T 同时 95\% 区间（族系错误控制；v3 之前的逐对区间未对 36 个同时比较调整），外加跨重复符号一致性；对的方向由成员身份固定，故种群结论对成员排序不变。种群状态意味着多重性调整后\emph{至少一对}不同，而非完整排序稳定。\emph{C-comp}：一般群体的稳定互补性是 $H_{\rm stable}=\mathbb{E}\max_h q_h(x)-\max_h\mathbb{E} q_h(x)$，恰在某成员在每题上都是期望最佳时为零；对两个成员它退化为式~\eqref{eq:identity} 的半绝对值形式（正文只展示该形式）。执行条件字段不同或成员来源哈希不同的重复被拒绝作为匹配重复并强制 INSUFFICIENT\_EVIDENCE；逐字节相同的结果矩阵被拒绝，除非两次重复都带有不同的、显式独立的执行来源（合法的近确定性程序可以复现相同矩阵，故同一性相等触发的是来源验证而非自动拒绝）。未知单元的对级插补界与记录成功率一并报告。
-
-\paragraph{v3 C-comp 判定（2026-09-19 审查之后）。}$H_{\rm stable}$ 的重复平均 plug-in 仅作为\emph{描述性}字段保留；它从不决定科学状态。审查中的两个已知真值反例被编码为回归测试：$M{=}9,T{=}400,R{=}3$ 下全部 $q=0.9$ 给出 plug-in $\widehat H=8.69$\,pp（$300$ 个哈希绑定模拟数据集上的均值），密封同代码克隆臂打印 $2.67$\,pp——两者真实 $H_{\rm stable}=0$。校准统计量是 \S\ref{sec:calibration-test} 所述交叉拟合冻结选择增益 $G$；判定使用真实减克隆差 $D$。
-
-\emph{什么在总体层面成立、什么是经验检查的。}令 $\theta^*=G$ 为冻结选择协议 $S$ 下的种群增益。每题上被选成员的概率至多为 $\max_h q_h(x)$，故 $\theta^*\le H_{\rm stable}$。零假设 $H_{\rm stable}=0$ 是全局支配锥：存在某 $h_0$ 对所有 $h$ 与几乎每个 $x$ 满足 $q_{h_0}(x)\ge q_h(x)$。在支配下，总体最优的冻结映射路由到支配成员，因此整个锥上总体增益 $\theta^*\le0$，不只在等能力处。这是关于\emph{总体}选择器的陈述，而非有限 $(R,T)$ 统计量：发现 argmax 是从含噪重复中选出的，较弱成员可能在有限样本中因与含噪发现分数并列而被选中（密封克隆臂打印的 $G_{\rm clone}=0.55$\,pp 正来自这一选择噪声），所以 $\theta^*\le0$ 本身并不界定有限样本拒绝概率。双臂 Monte Carlo 随机化参考在等能力边界处是精确的——在该处置换标签可交换，重算统计量（配合 $+1$ 校正）是同一条件分布的一次抽样。在支配锥的其余部分，错误支持是在下面校准网格的每个零假设 DGP 上\emph{经验}验证——包括异质难度、异质支配、$0.5/0.9$ 配置、缺失性以及两臂间匹配的黏性题内潜在状态——而不是解析地断言为有限样本结果。水平 $.05$ 的程序在有限网格上可以以 $.05$ 的水平错误支持；可辩护的陈述是观测到的最差比率及其 Wilson 区间，而非"不可能"。
-
-\emph{并列处理。}冻结 argmax 中的成员标签并列处理使用 iid $U(0,10^{-9})$ 抖动，在真实数据报告上对十个冻结并列实现取平均（每个校准数据集用一次抽样：零假设下并列偏差均值为零）；确定性字典序规则不是标签不变的，被模拟拒绝。标签对称性由一个置换不变性回归测试直接断言：当成员顺序在两臂中以相同方式置换时，10 次抽样并列平均的 $G$、$D$ 与状态在 Monte Carlo 容差内一致。
-
-\paragraph{随机化机制。}标签在每个题目\emph{且}每个重复内独立置换（跨重复的单一联合置换会保留真正的交叉映射，不会使统计量归零：开发中已验证），每次抽取重算两个 $G$、它们的差及两个选择；$+1$ Monte Carlo 校正给出精确离散水平。配对题目 bootstrap 提供抽样区间；一个 $\le10\%$ 不完整题目覆盖门控、极值未知单元界与正 $G_{\rm real}$ 符号守卫补全规则，没有克隆臂时不发出 SUPPORTED 状态。
-
-\paragraph{已知真值模拟校准。}
-二元张量从指定的 $M\times T$ 概率矩阵抽取（\texttt{experiment/diagnostics/calibration\_sim.py}）：常数 $q$ 与共享题目难度的 iid 等能力；带干净支配固定成员、审查者 $0.5/0.9$ 配置及异质支配的全局支配；以及两类潜在任务类型上强度递增的交叉备择，外加难度相关的部分交叉。网格覆盖 $M\in\{3,9,20\}$、$T\in\{100,400,1000\}$、$R\in\{3,5,10,20\}$、完整数据、5\% MCAR 与 3\% 难度相关缺失；论文表聚焦 $(9,400,\cdot)$ 获取设计，每格 300 个 Monte Carlo 数据集（扫描中 150 个）。每格报告四种程序（plug-in；单切分冻结增益；重复交叉拟合增益；克隆校准 v3 判定）的支持、否证、弃答与错误率，对真实参数的区间覆盖，以及平均估计。结果（产物在 \texttt{artifacts/diagnostics/calibration\_v3/}）：plug-in 在所有网格点的每个零假设上以约 1 的比率错误支持；v3 在 100 个模拟零假设单元上的零假设支持率至多 $2\%$（最差单元 Wilson 上界 $5.71\%$，零错误），覆盖所列零假设族、$M/T/R$ 点、完整数据、5\% MCAR 与 3\% 难度相关缺失；其在备择上的功效随 $R$ 增长（小／中等交互在 $R{=}3$ 下仍未解决，这作为弃答性质报告而非隐藏）。更早的八个机制派生类与四个基于重复的类（C9--C12，其中 C9/C10 现与注册的同代码克隆臂配对）继续匹配其哈希冻结期望状态；不变量测试还直接断言置换不变性、支配$\ne$互补性、同一性拒绝及两个审查反例。
-
-\paragraph{有限重复偏差与克隆零假设校准。}
-把 $\hat{q}_h(x)$ 记为重复平均估计，由 Jensen，对每题 $\mathbb{E}\max_h \hat{q}_h(x) \geq \max_h \mathbb{E}\hat{q}_h(x)$，当有限 $R$ 噪声能改变逐题 argmax 时严格不等。plug-in\emph{提升空间}是两个此类最大值之差；Jensen 分别界定每一项，因此一般而言并不确立该差向上偏——在一个两成员两任务交叉例子中 plug-in 可能向下偏（真实 $H{=}0.40$，三次重复的期望 plug-in 约为 0.34）。被确立的是更强也更窄的命题：在同代码可交换性下，真实 $H_{\rm stable}$ 为零，而 plug-in 以趋近一的概率为正（逐题 argmax 上的选择噪声；$q{=}0.9$、$M{=}9$、$T{=}400$、$R{=}3$ 的已知真值模拟中 $\widehat H{=}8.69$\,pp，密封克隆臂的 $383$ 个完整任务上描述性为 $\WpVthreeClonePlugin$\,pp（真实面板在另一个 $350$ 题完整集合上打印 $\WpVthreePlugin$\,pp；二者不是配对比较））。因此校准程序从不凭 plug-in 判定：发现／验证交叉拟合在发现重复上冻结逐题成员映射，在留出重复上对照最佳\emph{固定}成员评分（使全局支配成员总是被冻结选中），真实减克隆差用双臂 Monte Carlo 随机化参考移除残余的有限 $(R,T)$ 选择噪声成分（$+1$ 校正；在等能力边界精确，在整个支配网格上经验检查而非解析断言；附录~\ref{app:diagnostics}）。同一性门控通过要求来源验证的独立执行直接处理退化情形；没有不同来源的相同矩阵被拒绝。
-
-\paragraph{D 类与 E 类形式定义。}D 类评估一个冻结的确定性政策 $\pi_Z: Z(x)\mapsto h$——执行前特征（题目文本、冻结机制标签、训练折开发准确率），仅在开发任务上拟合——按 $D(\pi_Z)=\mathbb{E}_x[Y(x,\pi_Z(x))-Y(x,h_{\rm dev\text{-}fixed})]$，并带弃答规则：当 top-2 选择概率差距低于冻结边界时回退到 \bare{}。E 类在均匀逐任务调用预算 $b$、$\lambda{=}1$ 损害加权（一次回归抵消一次修复）下评估 $U_b(\pi)=\mathbb{E}_x[\Delta(x,\pi(x))]$；仅当逐记录证据在每个被评估成员—任务对上验证预算时它才可受理，否则弃答。
-
-\paragraph{在人工构建已知真值控制上的验证。}冻结包有两层：原八个机制派生类 $\times$ 2 实例（16 个控制，期望不变），加四个基于重复的类 $\times$ 2 实例，演练单次控制无法到达的稳定性路径——全局支配（C-rank SUPPORTED，C-comp REFUTED）、等均值交叉技能（C-rank INSUFFICIENT，C-comp 在克隆校准下 SUPPORTED，可见层使 D/E SUPPORTED）、条件混合陷阱与克隆重复陷阱（后两者必须弃答）；C9/C10 按 v3 判定要求携带注册的同代码克隆臂。期望状态在任何盲测运行之前冻结于哈希清单，并由生成机制导出。不变量测试还断言置换不变性、支配$\ne$互补性、同一性拒绝、两个 2026-09-19 审查反例（iid 噪声与 $0.5/0.9$ 支配不得支持；交叉在重复充足时必须支持），以及判定从不在无克隆臂时支持。校准在所有状态单元上匹配；盲测集（12 个控制加 2 个审核者挑战，在当前代码下从预提交、哈希绑定的规格重新执行）在全部 $14\times 6$ 单元上匹配：零错误支持，正控制被识别，弃答上限成立。这些离散控制补充但不取代 \S\ref{sec:protocol} 的 Monte Carlo 错误支持／功效校准——后者才是确立 v3 检验统计规模的东西。更早存储的、其 CH2 数字与自身规格矛盾的挑战结果（生成规则强制 0.79 时最佳固定 0.94 不可达）仅作为来源保留；忠实于规格的重新执行在每个单元上匹配审核者预提交期望。
-
-\paragraph{在存档上的应用。}应用于 MATH-500 存档（36 成员 $\times$ 400 题）与 18 单元 BIRD Phase-II 存档。在 BIRD 上，完整性类（A）对每个单元为 REFUTED\_WITHIN\_SCOPE：冻结输入清单包含重叠的采集文件，其行在 canonical 键上重复（由存档的先写先得策略解决，并记录判定冲突计数），因此下述覆盖数字在该去重视图上计算，而非在无冲突存档上；评分器重放在此路径上不执行，被报告为未运行而非通过。在此范围内，所有单元显示单次覆盖（B SUPPORTED）；稳定性、可选择性与可部署性按冻结规则为 INSUFFICIENT\_EVIDENCE，因为存档不含匹配重复也没有供政策训练的开发／评估划分——不是因为成本缺失：逐记录逻辑调用已存档，并在与其余重分析相同的规范化去重视图上读取（$\RevisionCostRows$ 条候选–题核心子集记录上共 $\RevisionLogicalCalls$ 次调用，表~\ref{tab:cost}），但 token／美元成本仍不可恢复。在 MATH 上，冻结选择政策在 400 道评估题的前 80 道上训练（这 80 道从所有 D/E 命题中留出；存档不含开发集执行：附录~\ref{app:crossdomain} 的 100 题开发划分仅用于生成冒烟测试，故政策划分从评估侧切出，留下 320 道计分题），在每道评估题上与开发固定（bare）持平，因此可选择性与可部署性为 INSUFFICIENT\_EVIDENCE 而非被否证。三个已发表数字被修正（结果向量计数的成员口径，现为计入 bare 的 33/36 成员与 32/35 生成 harness；生成 harness 准确率范围 0.6825--0.915，此前印为 0.68--0.87；最佳固定 = bare 的提升空间分解明确写出），两个过载的指标名被消歧（并集全败对任一候选失败），一个保留判定控制在显式定义下确认了报告的一对数字（联合修复 76.0\%／并集全败 0.8\%）。对全部 14{,}400 条 MATH 判定的版本化端点敏感评分器的一次哈希绑定重执行改变了其中 14 条——全是单一任务（math500\_split\#103）上 v1 对区间端点答案的错误拒绝；v1 重放本身内部一致，而更早存储的零翻转产物无法从提交代码复现，已被取代。因此新评分器旨在捕获的括号合并缺陷确实在此存档中触发，且恰在一个任务上。
+\FloatBarrier
+\section*{附录阅读导航}
+附录按正文论证顺序组织：先列主研究对象与协议，再给统计和选择细节，随后呈现 BIRD 补充证据，最后保留历史分析与偏离记录。
+\begin{description}
+\item[\ref{app:inventory}] \hyperref[app:inventory]{Harness 生成、程序清单与数据划分}.
+\item[\ref{app:wp1r}] \hyperref[app:wp1r]{同代码对照与重复执行协议}.
+\item[\ref{app:statistics}] \hyperref[app:statistics]{统计分析、校准与灵敏度}.
+\item[\ref{app:selection}] \hyperref[app:selection]{冻结选择器与等执行次数重放}.
+\item[\ref{app:bird-traces}] \hyperref[app:bird-traces]{BIRD 执行轨迹与补充分析}.
+\item[\ref{app:phase2-protocol}] \hyperref[app:phase2-protocol]{BIRD 准入策略研究}.
+\item[\ref{app:history}] \hyperref[app:history]{来源、协议偏离与历史分析}.
+\end{description}
+\FloatBarrier
+\input{sec_app_inventory}
+\FloatBarrier
+\input{sec_app_wp1r}
+\FloatBarrier
+\input{sec_app_statistics}
+\FloatBarrier
+\input{sec_app_selection}
+\FloatBarrier
+\input{sec_app_bird_traces}
+\FloatBarrier
+\input{sec_app_bird_admission}
+\FloatBarrier
+\input{sec_app_history}
+\FloatBarrier

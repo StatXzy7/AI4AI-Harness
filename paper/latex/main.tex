@@ -1,9 +1,13 @@
 % Canonical ICLR 2027 manuscript (promoted from 2026-09-15 insight revision;
-% rewritten 2026-09-21: question-driven empirical framing).
+% revised 2026-09-25: coverage, repeat evidence, and usable selection).
 \documentclass{article}
 \usepackage{iclr2027_conference,times}
+\usepackage{float,needspace}
 \usepackage{hyperref}
 \usepackage{url}
+\usepackage{flafter}
+\usepackage{placeins}
+\hypersetup{hidelinks}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{array}
@@ -12,13 +16,13 @@
 
 % \iclrfinalcopy  % submission mode: keep OFF until acceptance
 
-\title{More Rolls, or More Programs? Separating Execution Sampling from\\Task Specialization in Generated Harness Populations}
+\title{More Programs or More Rolls?\\Separating Coverage from Specialization in LLM Harnesses}
 
 \author{Anonymous}
 
-\newcommand{\bare}{\texttt{bare}}
+\newcommand{\bare}{single-call}
 \newcommand{\react}{\texttt{react}}
-\newcommand{\pp}{\,pp}
+\newcommand{\pp}{\,\%}
 \input{revision_numbers}
 \input{wp1r_numbers}
 
@@ -27,32 +31,53 @@
 \maketitle
 
 \begin{abstract}
-Automatically generated LLM harnesses can differ in source code and observed outcomes without offering stable task-specific advantages. We study how to separate program-dependent specialization from the benefits of repeated execution, reporting source-code, execution, and outcome diversity as three distinct quantities. In a BIRD text-to-SQL case study, trace inspection finds three execution-level routes through which apparently distinct harnesses fail to realize distinct strategies: claimed mechanisms absent from control flow (6 of 12 generated candidates), mechanisms present but never triggered (\react, 10/10), and broken multi-turn paths (1/12); code similarity has no rank association with outcome disagreement ($\rho=-0.01$; 21 of 66 generated pairs have identical correctness vectors despite all passing code-difference checks). A separate exploratory study on MATH-500 (35 generated harnesses, 400 tasks, one run each) shows 4.75\pp\ one-run oracle headroom over the best fixed member (which is the \bare{} harness itself). A fresh pre-registered collection then pairs eight generated harnesses against nine byte-identical \bare{} clone slots, with three independent repeats each: the repeat-averaged descriptive plugin is positive on both arms despite the clone population having zero specialization by construction ($2.54$\,pp on the real panel's $350$ complete tasks, $2.67$\,pp on the clone arm's $383$). The cross-fitted frozen-selection gain is $G_{\rm real}=0.17$\,pp (95\% CI $[-0.82,1.31]$) against $G_{\rm clone}=0.55$\,pp, so the clone-calibrated difference is $-0.10$\,pp (95\% CI $[-1.55,1.46]$, randomization $p=.7742$) on 342 paired complete tasks; the coverage gate fails (12.5\% of real-arm tasks excluded, above the frozen 10\% threshold), so the panel reports \textsc{Insufficient Evidence} --- neither a gain nor $1$\,pp equivalence. Together, these studies show that apparent oracle coverage gains in generated harness populations mix program specialization with the benefits of extra executions of one fixed stochastic program; harness-population evaluation should report one-run coverage opportunity, repeat-stable interaction, and pre-execution selection value as distinct quantities.
+When a population of LLM harnesses solves more tasks than its best
+member, does the gain reflect program specialization or simply more
+attempts? We distinguish coverage observed after execution, task
+advantages that persist across repeats, and gains realized by a
+selector. The decisive control runs identical copies of one program:
+on MATH-500, nine single-call slots produce a positive repeat-averaged
+oracle estimate of $\WpVthreeClonePlugin$\,\%, despite having no program
+specialization. Eight generated harnesses plus the baseline yield
+$\WpVthreePlugin$\,\% on their own complete-task set. Holding out repeats
+and calibrating against clones gives a mean gain of $\WpVthreeD$\,\%
+on $\WpVthreeNPaired$ paired tasks; incomplete coverage and low sensitivity
+leave stable specialization unresolved. A separately frozen selector
+chooses the baseline on every task and gains $\WpPiZDiff$\,\%.
+These results identify an attribution problem: positive population
+coverage does not establish task specialization, and coverage
+opportunities require a separate test of usable selection. We provide
+a controlled evaluation that keeps these judgments distinct. Gains
+are absolute probability differences expressed as \%.
 \end{abstract}
 
 \section{Introduction}\label{sec:introduction}
 \input{sec_intro}
 
-\section{What Does Apparent Complementarity Measure?}\label{sec:measures}
-\input{sec_phase1}
-
-\section{Evaluation Protocol}\label{sec:protocol}
-\input{sec_phase2}
-
-\section{Empirical Diagnosis}\label{sec:diagnosis}
-\input{sec_results}
-
 \section{Related Work}\label{sec:related}
 \input{sec_related}
 
-\section{Implications and Limitations}\label{sec:discussion}
-\input{sec_discussion}\label{endofmain}
+\section{Problem Formulation}\label{sec:measures}
+\input{sec_phase1}
 
-% Optional ICLR statement; placed after the main-text marker and before the
-% bibliography so it does not consume the nine-page main-text allowance.
-\subsection*{Acknowledgments}
-Placeholder: funding, compute, and infrastructure acknowledgments to be
-finalized by the authors before camera-ready (anonymized for submission).
+\section{Experimental Design}\label{sec:setup}
+\input{sec_setup}
+\subsection{Same-Code Controls and Repeat Validation}\label{sec:protocol}
+\input{sec_phase2}
+\subsection{Frozen Selection and Execution-Matched Replay}\label{sec:selection-design}
+\input{sec_selection_design}
+
+\section{Results}\label{sec:results}\label{sec:diagnosis}
+\input{sec_coverage}
+\input{sec_results}
+\input{sec_utility}
+\input{sec_supporting}
+
+\section{Discussion and Limitations}\label{sec:discussion}
+\input{sec_discussion}
+
+\section{Conclusion}\label{sec:conclusion}
+\input{sec_conclusion}\label{endofmain}
 
 \subsection*{Ethics Statement}
 All experiments use public BIRD and MATH-500 benchmark data and generated
@@ -65,12 +90,12 @@ report the unresolved selection and cost claims explicitly as
 \textsc{Insufficient Evidence}.
 
 \subsection*{Reproducibility Statement}
-The supplementary source includes the frozen diagnostic implementation,
-control manifests, and hash-bound result records.  `REPRODUCE.md` gives the
-exact offline commands for unit tests, calibration, blinded controls, archive
-diagnoses, and the LaTeX build.  The reported provider-dependent archives are
-retained with their provenance and hashes; no claim requires access to a live
-model API to rerun the diagnostic itself.
+The manuscript specifies the populations, task splits, execution
+conditions, scoring rules, statistical procedures, and sensitivity
+analyses used for the reported results. The appendices provide
+additional protocol details, calibration results, and worked examples.
+Experimental code is not provided to reviewers; the methodological
+and empirical claims are presented within the manuscript.
 
 % ---- ICLR 2027 mandatory AI use statement (does not count toward page limit) ----
 \subsection*{AI use statement}
@@ -113,8 +138,7 @@ final responsibility for their accuracy rests with the authors.
 \bibliographystyle{iclr2027_conference}
 
 \appendix
+\raggedbottom
 \input{sec_appendix}
-\input{sec_app_wp1r}
-\input{sec_crossdomain}
 
 \end{document}

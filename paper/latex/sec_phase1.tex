@@ -1,65 +1,48 @@
-An LLM \textbf{harness} $H$ is the program of prompts, tools, and
-control flow wrapped around a frozen target model $M$: it receives a
-natural-language task $x$, issues one or more calls to $M$, optionally
-executes intermediate artifacts such as SQL, and returns a final answer
-scored programmatically. Let $H_0$ denote the single-call \bare{}
-baseline and $Y(h,x,r)\in\{0,1\}$ the correctness of member $h$ on task
-$x$ on independent repeat $r$. The population $P$ we evaluate always
-includes $H_0$.
+A population can supply more correct answers without containing
+task specialists, and specialists can exist without an effective
+selector. We formalize these distinctions before describing the controls.
+Let $P$ contain baseline $H_0$, and let $Y(h,x,r)\in\{0,1\}$ denote
+member $h$'s correctness on task $x$ in repeat $r$. Throughout, gains
+use \% for absolute probability differences:
+$98.50\%-93.75\%=4.75\%$ means $0.0475$ additional success probability.
 
-\paragraph{Question~1: one-run coverage opportunity.}
-Given a single execution matrix, the \emph{best-fixed accuracy} is
-$\max_h \mathbb E_x Y(h,x,\cdot)$ and the \emph{one-run oracle
-accuracy} is $\mathbb E_x \max_h Y(h,x,\cdot)$. Their difference is the
-bare-inclusive oracle headroom
+\paragraph{Coverage: were additional correct answers available?}
+A one-run oracle sees correctness before choosing a member. Its
+headroom over the best fixed member in the recorded matrix is
 \begin{equation}
-H(P)=\tfrac1n\textstyle\sum_{i}\max_{h\in P\cup\{H_0\}}Y(x_i,h)
--\max_{h\in P\cup\{H_0\}}\tfrac1n\textstyle\sum_{i}Y(x_i,h).
+H(P)=\tfrac1n\sum_{i=1}^n\max_{h\in P}Y(h,x_i,r)
+-\max_{h\in P}\tfrac1n\sum_{i=1}^nY(h,x_i,r).
 \label{eq:headroom}
 \end{equation}
-$H(P)$ records only item-dependent successes present in \emph{that}
-execution matrix. It cannot establish a repeatable advantage or any
-pre-execution decision, because it is computed with knowledge of who was
-correct after the fact. Two simple indicators sit alongside it:
-pairwise outcome disagreement (the fraction of tasks on which two
-members differ) and the union repair rate (the fraction of \bare{}
-errors some member corrects); disagreement without repair adds no
-coverage, and repair that does not beat the best fixed member adds no
-headroom.
+This measures available answers, including successes from repeated
+sampling. The repeat-averaged plugin $\widehat H$ replaces $Y$ by each
+member--task mean. With few repeats, maximizing those means can still
+select favorable estimation errors; $\widehat H>0$ is not by itself
+evidence of specialization.
 
-\paragraph{Execution noise is large enough to make the distinction
-material.} On the BIRD core-$400$ archive, a canonical replay finds
-$2{,}391/28{,}000$ same-harness verdict flips against cached outcomes
-($8.54\%$), and a dedicated three-run \bare{}-only audit finds $14.5\%$
-of tasks changing \bare{} correctness at least once; three independent
-\bare{} executions treated as three ``members'' show a descriptive
-$6.50$\,pp one-run oracle gap even though they are one program. A
-single-run $H(P)$ therefore counts both specialization and extra
-sampling chances, motivating Question~2.
-
-\paragraph{Question~2: repeat-stable task-conditioned advantage.}
-For two members write $\Delta(x)=p_1(x)-p_0(x)$ for their per-task
-success-probability difference and $(u)_+=\max(u,0)$. At the population
-level,
+\paragraph{Stable interaction: does the best member change with the task?}
+To remove execution noise conceptually, write
+$p_h(x)=\Pr\{Y(h,x,r)=1\}$ under a fixed execution condition and define
+$H_{\rm stable}=\mathbb E_x\max_h p_h(x)-\max_h\mathbb E_x p_h(x)$.
+For two members with $\Delta(x)=p_1(x)-p_0(x)$,
 \begin{equation}
-H_{\rm stable}=\mathbb E\,\Delta(x)_+-(\mathbb E\Delta(x))_+
-=\tfrac12\bigl(\mathbb E|\Delta(x)|-|\mathbb E\Delta(x)|\bigr),
+H_{\rm stable}=\tfrac12\bigl(\mathbb E|\Delta(x)|-|\mathbb E\Delta(x)|\bigr).
 \label{eq:identity}
 \end{equation}
-so a member better \emph{everywhere} produces a stable ranking
-difference with $H_{\rm stable}=0$: global dominance is not
-complementarity, which requires the advantage to cross over tasks. This
-is a two-member population identity and a conceptual anchor, not a
-finite-sample bound: mappings and best-fixed members selected from a
-finite number of noisy repeats carry selection noise, which the same-code
-control measures in \S\ref{sec:f3-clones}. Stable ranking and stable
-complementarity are consequently not a nested ladder.
+If one member is better everywhere, the expression is zero, even when
+the size of its advantage varies. Positive complementarity requires
+task-wise crossover. Identical programs under the same condition have
+equal $p_h(x)$ and hence zero stable complementarity. This population
+identity clarifies the target; it does not estimate unknown probabilities
+from a small number of executions.
 
-\paragraph{Question~3: pre-execution selection value.}
-An oracle reads who was correct after execution; a router must commit to
-one member beforehand, a strictly smaller information set. The
-practically deployable quantity is therefore the held-out gain of a
-selector frozen before execution over the best fixed member --- not
-post-execution oracle coverage. The remainder of the paper measures all
-three questions separately and reports the budgets (slots, executions,
-tokens) at which each is answered.
+\paragraph{Usable selection: can the advantage inform a choice?}
+A selector $\pi_Z$ must choose from task features $Z(x)$ before seeing
+the result. Even stable crossovers may not be predictable from those
+features. Learning a choice from earlier outcomes on the \emph{same}
+task instead tests repeat generalization, a different information
+setting. We evaluate both separately. Practical resource allocation
+adds one more comparison: a selection gain over one fixed execution
+must be assessed against additional fixed-program executions under a
+common budget and answer-selection rule. Equal numbers of harness
+executions need not entail equal model calls or tokens.

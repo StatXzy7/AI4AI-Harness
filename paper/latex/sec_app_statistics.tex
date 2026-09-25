@@ -1,0 +1,235 @@
+\section{Statistical Analysis, Calibration, and Sensitivity}\label{app:statistics}\label{app:diagnostics}
+This section expands the held-out-repeat diagnostic in the main text.
+Historical archive applications and their separate data splits are
+retained in Appendix~\ref{app:archive-analysis}.
+\subsection{Decision rule and post-collection analysis revisions}
+The primary complementarity statistic is the cross-fitted
+frozen-selection gain $G$ of \S\ref{sec:calibration-test}: in each of
+three folds, two repeats freeze the per-task member mapping and the best
+\emph{fixed} member, the third repeat scores the frozen mapping against
+that fixed member; $G$ is the per-task mean averaged over folds.
+Tie-breaking is label-symmetric: because $R{=}2$ discovery scores lie
+on $\{0,\tfrac12,1\}$ and ties dominate at high accuracy, a deterministic
+lexicographic rule would bias the selection toward the first listed
+member, so iid $U(0,10^{-9})$ jitter is drawn per (fold, task) and
+averaged over ten frozen tie realizations; a simulation over
+dominant-member positions verifies the statistic is order-independent.
+The decision statistic is the real-minus-clone difference
+$D=G_{\rm real}-G_{\rm clone}$ on the task intersection complete in both
+arms. Its reference distribution uses $10{,}000$ two-arm randomizations:
+within every task and repeat, member labels are permuted independently
+in each arm and $D$ is recomputed (a single permutation joint across
+repeats was rejected in development because it preserves a genuine
+crossover mapping and does not null it). A paired task bootstrap
+(2{,}000 draws with a fixed random seed) gives the 95\% interval. The frozen rule
+emits SUPPORTED only when the coverage gate passes ($\le10\%$ incomplete
+tasks in either arm and on their intersection; $\ge30$ paired tasks), the randomization $p<0.05$,
+the bootstrap lower bound is positive, $D>1.0$\,\%, and $G_{\rm real}$'s
+own lower bound is positive; REFUTED requires the $D$ upper bound within
+the margin and a small equivalence $p$; otherwise INSUFFICIENT. The
+acceptance rule that any of these states terminates the study without
+re-running remains. The earlier v2 procedure --- a discovery-repeat
+argmax scored against \bare{} on repeats 2--3 (A8.6) --- is retained as
+a labeled secondary statistic, not a complementarity test (under pure
+global dominance with \bare{} at 0.5 and the other members at 0.9 its
+expectation is $\approx0.5(1-0.1^8)\cdot0.4\approx0.20$). Two frozen
+sensitivity branches accompany it (within-task available-repeat mean
+imputation; exclusion of doubly-executed conflict cells).
+
+\subsection{Diagnostic targets and calibration} For a population of harnesses and a single-call
+reference, the diagnostics pipeline evaluates five classes of claims on an
+explicit execution matrix $Y[h,x,r,c]$ (member, task, repeat, execution
+condition): \textbf{(A)} measurement sufficiency (manifest consistency,
+judge replay with an explicit executed/not-executed state, identity
+uniqueness; a check that was not run is reported as not-run and can never
+render the class SUPPORTED); \textbf{(B)} single-shot coverage (oracle minus
+best-fixed, with dev-fixed reported separately); \textbf{(C)} stability, in
+two separated estimands; \textbf{(D)} pre-execution selectability (a frozen
+one-call selection policy versus dev-fixed); \textbf{(E)} budget-matched policy
+utility under a frozen 1-call budget with $\lambda{=}1$ harm weighting
+(offline, one-call; E leaves INSUFFICIENT\_EVIDENCE unless the per-task call
+budget is verified by per-record evidence or is part of the generating
+design). Each
+class returns SUPPORTED, REFUTED\_WITHIN\_SCOPE, INSUFFICIENT\_EVIDENCE, or
+NOT\_APPLICABLE with scope and minimal missing evidence; classes are never
+collapsed into a single score.
+
+\paragraph{Two stability estimands.} \emph{C-rank}: pairwise same-condition
+accuracy differences with a SHARED task-resample bootstrap and max-T
+simultaneous 95\% intervals over all $M(M-1)/2$ canonical member pairs
+(family-wise error control; the pre-v3 per-pair intervals did not adjust
+for 36 simultaneous comparisons), plus sign consistency across repeats;
+the pair direction is fixed by member identity, so population conclusions
+are invariant to member ordering. The population state means
+\emph{at least one} pair differs after multiplicity adjustment, not that
+the complete ranking is stable. \emph{C-comp}: for a general population
+stable complementarity is $H_{\rm stable}=\mathbb{E}\max_h q_h(x)-\max_h\mathbb{E}
+q_h(x)$, zero exactly when one member is expectation-best on every task;
+for two members this reduces to the half-absolute-value form of
+Eq.~\eqref{eq:identity}, which is the only form displayed in the main
+text. Repeats with differing
+execution-condition fields or differing program identities are refused
+as matched repeats and force INSUFFICIENT\_EVIDENCE; byte-identical
+outcome matrices are refused unless both repeats carry distinct,
+explicitly independent execution provenance (legitimate
+near-deterministic programs can reproduce identical matrices, so
+identity equality triggers provenance verification rather than an
+automatic rejection). Pair-level imputation bounds over unknown cells
+are reported alongside the recorded success rate.
+
+\paragraph{The revised C-comp decision.}
+The repeat-averaged plug-in of $H_{\rm stable}$ is retained as a
+\emph{descriptive} field only; it never determines a scientific state.
+Two known-truth counterexamples from the review are encoded as
+regression tests: all $q=0.9$ with $M{=}9,T{=}400,R{=}3$ gives a plug-in
+$\widehat H=8.69$\,\% (the mean over the $300$ fixed simulated
+datasets), and the
+earlier available-repeat clone estimate is $2.67$\,\%
+(the complete-task estimand is reported in Appendix~\ref{app:wp1r}) --- both with true
+$H_{\rm stable}=0$. The calibrated statistic is the cross-fitted
+frozen-selection gain $G$ described in \S\ref{sec:calibration-test}; the
+decision uses the real-minus-clone difference $D$.
+
+\emph{What holds at the population level, and what is checked
+empirically.} Let
+$\theta^*$ be a selector's population gain relative to the
+population-best fixed member. On every task the selected member's probability is at most
+$\max_h q_h(x)$, so $\theta^*\le H_{\rm stable}$. The null $H_{\rm
+stable}=0$ is the global-dominance cone: some $h_0$ satisfies
+$q_{h_0}(x)\ge q_h(x)$ for all $h$ and almost every $x$. Under dominance
+a population-optimal mapping routes to the dominant member, so
+the population gain is $\theta^*\le0$ throughout the cone, not just at
+equal ability. This compares with the \emph{population-best fixed}
+member, whereas the finite-$(R,T)$ statistic $G$ uses a fixed member
+selected from discovery data. In that statistic, the discovery argmax
+is selected from noisy repeats, and a weaker member that ties the noisy
+discovery score can be chosen in a finite sample (the sealed clone arm
+prints $G_{\rm clone}=0.55$\,\% under finite-sample variation),
+so $\theta^*\le0$ does not by itself bound the finite-sample rejection
+probability. The two-arm Monte Carlo randomization reference is exact at
+the equal-ability boundary, where permuted labels are exchangeable and
+the recomputed statistic (with the $+1$ correction) is a draw from the
+same conditional distribution. Over the rest of the dominance cone,
+false support is verified \emph{empirically} on every null DGP in the
+calibration grid below --- including heterogeneous difficulty,
+heterogeneous dominance, the $0.5/0.9$ configuration, missingness, and
+sticky within-task latent states matched between arms --- rather than
+asserted as an analytic finite-sample result. A level-$.05$ procedure can
+false-support at level $.05$ on a finite grid; the defensible claim is
+the observed worst rate and its Wilson interval, not impossibility.
+
+\emph{Tie-breaking.} Member-label tie-breaking in the frozen argmax is
+iid $U(0,10^{-9})$ jitter averaged over ten frozen tie realizations on
+the real-data report (each calibration dataset uses one draw: under the
+null the tie bias has mean zero); a deterministic lexicographic rule is
+not label-invariant and is rejected by simulation. Label-symmetry is
+asserted directly by a permutation-invariance regression test: the
+10-draw tie-averaged $G$, $D$, and state agree up to Monte Carlo
+tolerance when the member order is permuted identically in both arms.
+
+\paragraph{Randomization mechanics.} Labels are permuted independently
+within every task AND every repeat (a single joint permutation across
+repeats preserves a genuine crossover mapping and does not null the
+statistic: verified in development), recomputing both $G$'s, their
+difference, and the two selections on every draw; the $+1$ Monte Carlo
+correction gives an exact discrete level. A paired task bootstrap
+supplies the sampling interval; a $\le10\%$ incomplete-task coverage
+gate, extremal unknown-cell bounds, and a positive $G_{\rm real}$ sign
+guard complete the rule, and without a clone arm no SUPPORTED state is
+emitted.
+
+\begin{table}[H]
+\centering\small
+\input{calibration_table}
+\caption{\textbf{Three repeats can miss even a strong positive case.}
+At $M=9,T=400$, null rows report false-support \% and alternative
+rows report power \%; the final column gives $R=3$ abstention.
+The clone-calibrated rule (v3) rarely supports nulls, but has little
+sensitivity to the tested small and moderate crossovers.}
+\label{tab:calibration}
+\end{table}
+
+\paragraph{Known-truth simulation calibration.}
+Binary tensors are drawn from specified $M\times T$ probability matrices: iid equal ability
+at constant $q$ and with shared task difficulty; global dominance with a
+clean dominant fixed member, the reviewer's $0.5/0.9$ configuration, and
+heterogeneous dominance; and crossover alternatives of increasing
+strength over two latent task types, plus difficulty-related partial
+crossover. The grid spans $M\in\{3,9,20\}$, $T\in\{100,400,1000\}$,
+$R\in\{3,5,10,20\}$, complete data, 5\% MCAR, and 3\% hardness-related
+missingness; the paper table focuses on the $(9,400,\cdot)$ acquisition
+design with 300 Monte Carlo datasets per cell (150 in sweeps). Every
+cell reports the support, refutation, abstention and error rates of four
+procedures (plug-in; one-split frozen gain; repeat-cross-fitted gain;
+clone-calibrated v3 decision), interval coverage against the true
+parameter, and mean estimates. The plug-in
+frequently false-supports under the tested nulls; v3's worst observed
+null support rate is $2\%$. Its power reaches $100\%$ for the strong
+two-specialist alternative at $R=10,20$, while the smaller cyclic
+crossovers remain largely undetected even at $R=20$. These empirical
+rates characterize the tested grid, not a general size or power guarantee. The earlier
+eight mechanism-derived classes and the four repeat-based classes
+(C9--C12, with C9/C10 now paired with registered same-code clone arms)
+continue to match their predefined expected states; invariant tests
+additionally assert permutation invariance,
+dominance$\neq$complementarity, identity refusal, and the two review
+counterexamples directly.
+
+\subsection{Finite-repeat bias and clone-null calibration}
+Writing $\hat{q}_h(x)$ for a repeat-averaged estimate,
+$\mathbb{E}\max_h \hat{q}_h(x) \geq \max_h \mathbb{E}\hat{q}_h(x)$
+by Jensen for each task, with strict inequality when finite-$R$ noise can
+change the per-task argmax. The plug-in \emph{headroom} is a difference of
+two such maxima; Jensen bounds each term separately and therefore does NOT
+establish that the difference is upward biased in general --- in a
+two-member, two-task crossing example the plug-in can be downward biased
+(true $H{=}0.40$, expected plug-in over three repeats $\approx0.34$). What
+is established is stronger and narrower: under same-code exchangeability
+the true $H_{\rm stable}$ is zero while the plug-in is positive with
+probability approaching one (selection noise on the per-task argmax;
+$\widehat H{=}8.69$\,\% in the $q{=}0.9$, $M{=}9$, $T{=}400$, $R{=}3$
+known-truth simulation, and $\WpVthreeClonePlugin$\,\% descriptively on
+the sealed clone arm's $383$ complete tasks; the real panel gives
+$\WpVthreePlugin$\,\% on its $350$ complete tasks).
+They use the same complete-task sets as each arm's $G$, but are not
+the paired comparison used for $D$. The calibrated procedure never decides from the plug-in:
+a discovery/validation cross-fit freezes the per-task member mapping on
+discovery repeats and scores it on held-out repeats against the best
+\emph{fixed} member selected on the discovery repeats. Finite discovery
+data need not identify a globally dominant member. The real-minus-clone
+difference uses the clone arm as an observed sampling reference; it is
+not an analytic removal of all finite-$(R,T)$ selection bias. Inference
+uses a two-arm Monte Carlo randomization reference ($+1$ correction; exact at the equal-ability
+boundary, empirically checked across the dominance grid rather than
+asserted analytically throughout the cone; Appendix~\ref{app:diagnostics}).
+The identity gates handle the
+degenerate case outright by requiring provenance-verified independent
+executions; identical matrices without distinct provenance are refused.
+
+\subsection{Validation on known-truth controls} The frozen
+package has two layers: the original eight mechanism-derived classes
+$\times$ 2 instances (16 controls, expectations unchanged), plus four
+repeat-based classes $\times$ 2 instances exercising the stability paths
+single-shot controls cannot reach --- global dominance (C-rank
+SUPPORTED, C-comp REFUTED), equal-mean crossover skill (C-rank
+INSUFFICIENT, C-comp SUPPORTED under clone calibration, and the visible
+stratum makes D/E SUPPORTED), a condition-mixing trap, and a
+cloned-repeats trap (both must abstain); C9/C10 carry registered
+same-code clone arms as required by the v3 decision. Expected states
+are fixed before any blinded run and derive
+from the generating mechanisms. Invariant tests additionally assert
+permutation invariance, dominance$\neq$complementarity, identity
+refusal, the two review counterexamples (iid noise and
+$0.5/0.9$ dominance must not support; crossover must support with
+adequate repeats), and that the decision never supports without a clone
+arm. Calibration matched on all state cells; the blinded set (12
+controls + 2 auditor challenges re-executed from the pre-committed,
+fixed specification under the current code) matched on all $14\times 6$
+cells: zero false supports, the positive control recognized, and the
+abstention cap holds. These discrete controls complement, but do not
+replace, the Monte Carlo false-support/power calibration of
+\S\ref{sec:power}, which reports the v3 test's empirical false-support rates and power on the tested grid. The earlier
+stored challenge result whose CH2 numbers contradict its own spec
+(best-fixed 0.94 is unreachable under the generating rule, which forces
+0.79) is retained as provenance only; spec-faithful re-execution matches
+the auditor's pre-committed expectations on every cell.
