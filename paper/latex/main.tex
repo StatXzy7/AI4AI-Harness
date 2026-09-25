@@ -31,24 +31,25 @@
 \maketitle
 
 \begin{abstract}
-When a population of LLM harnesses solves more tasks than its best
-member, does the gain reflect program specialization or simply more
-attempts? We distinguish coverage observed after execution, task
-advantages that persist across repeats, and gains realized by a
-selector. The decisive control runs identical copies of one program:
-on MATH-500, nine single-call slots produce a positive repeat-averaged
-oracle estimate of $\WpVthreeClonePlugin$\,\%, despite having no program
-specialization. Eight generated harnesses plus the baseline yield
-$\WpVthreePlugin$\,\% on their own complete-task set. Holding out repeats
-and calibrating against clones gives a mean gain of $\WpVthreeD$\,\%
-on $\WpVthreeNPaired$ paired tasks; incomplete coverage and low sensitivity
-leave stable specialization unresolved. A separately frozen selector
-chooses the baseline on every task and gains $\WpPiZDiff$\,\%.
-These results identify an attribution problem: positive population
-coverage does not establish task specialization, and coverage
-opportunities require a separate test of usable selection. We provide
-a controlled evaluation that keeps these judgments distinct. Gains
-are absolute probability differences expressed as \%.
+When a population of LLM harnesses solves more tasks than its
+best-performing individual member, does this gain reflect genuine
+program specialization, or simply more opportunities to produce
+correct answers? We investigate this question from two complementary
+perspectives. On MATH-500, we compare generated harnesses with repeated
+executions of byte-identical programs. Even when all nine execution
+slots run the same single-call program, the repeat-averaged oracle
+headroom reaches $\WpVthreeClonePlugin$ percentage points, showing that
+positive coverage gains alone do not establish specialization among
+programs. On BIRD, we further examine whether source-code differences
+translate into distinct execution behavior. Trace analysis reveals
+several failure modes: some claimed mechanisms are not implemented,
+some are present but never triggered, and others execute but corrupt
+the final output. Together, these findings provide a clearer evidence
+framework for evaluating LLM harness populations: code-level
+differences, actual execution behavior, stable task advantages, and
+the ability to select and exploit those advantages should be tested
+separately to more accurately assess the value of generated program
+populations.
 \end{abstract}
 
 \section{Introduction}\label{sec:introduction}
