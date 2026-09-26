@@ -1,0 +1,22 @@
+{
+  "v1_outputs_unchanged": true,
+  "version_folders_inside_output": true,
+  "latex_unchanged": true,
+  "pdfs": [
+    {
+      "file": "teaser_academic.pdf",
+      "words": 59,
+      "raster_images": 0,
+      "pages": 1,
+      "size_bytes": 31242
+    },
+    {
+      "file": "teaser_illustrated.pdf",
+      "words": 47,
+      "raster_images": 1,
+      "pages": 1,
+      "size_bytes": 1367798
+    }
+  ],
+  "visual_review": "Both color previews and academic grayscale inspected; design review found no blocking issues; repeat-mean label and redundant markers refined."
+}

@@ -1,0 +1,39 @@
+{
+  "version": "v2",
+  "source": "artifacts/common386_20260926/analysis.json",
+  "source_sha256": "253a2587fa67d3be8e830a22582497ec7c26ba6ee67db10ef85b5735cfa2ca21",
+  "base_commit": "922c914cc7ce218e43b5a7114e582cf35632d253",
+  "data_transformations": [
+    "Percent / pp = source proportion \u00d7 100.",
+    "Display rounding only; no data or uncertainty recomputation."
+  ],
+  "artwork": "Unmodified v1 conceptual artwork reused only in illustrated PDF.",
+  "design_intent": "No global title; concise labels; control-first and result-first alternatives.",
+  "matplotlib": "3.9.2",
+  "outputs": [
+    {
+      "file": "teaser_academic.pdf",
+      "page_count": 1,
+      "width_pt": 396.0,
+      "height_pt": 186.0,
+      "visible_word_count": 59,
+      "raster_images": 0,
+      "embedded_fonts": true,
+      "text_within_page": true,
+      "global_title": false,
+      "sha256": "60b157085b763f9993efa061db884c8e2548dd00acc15ccc21ddc79cc5eeaaa8"
+    },
+    {
+      "file": "teaser_illustrated.pdf",
+      "page_count": 1,
+      "width_pt": 396.0,
+      "height_pt": 178.0,
+      "visible_word_count": 47,
+      "raster_images": 1,
+      "embedded_fonts": true,
+      "text_within_page": true,
+      "global_title": false,
+      "sha256": "04e34268dbf3741c5a5dda7ec29f237753724ff3cd6631248b2bbce720406360"
+    }
+  ]
+}

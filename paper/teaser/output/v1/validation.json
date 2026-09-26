@@ -1,0 +1,29 @@
+[
+  {
+    "file": "teaser_academic.pdf",
+    "bytes": 36631,
+    "required_values_present": true,
+    "text_within_page": true,
+    "embedded_fonts": [
+      "EVICAO+DejaVuSans-Bold",
+      "BMQQDV+DejaVuSans"
+    ],
+    "raster_images": 0
+  },
+  {
+    "file": "teaser_illustrated.pdf",
+    "bytes": 1373711,
+    "required_values_present": true,
+    "text_within_page": true,
+    "embedded_fonts": [
+      "EVICAO+DejaVuSans-Bold",
+      "BMQQDV+DejaVuSans"
+    ],
+    "raster_images": 1
+  },
+  {
+    "file": "teaser_both_styles.pdf",
+    "pages": 2,
+    "bytes": 1384601
+  }
+]

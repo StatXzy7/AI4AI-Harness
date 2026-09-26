@@ -1,0 +1,61 @@
+{
+  "source": "artifacts/common386_20260926/analysis.json",
+  "source_sha256": "253a2587fa67d3be8e830a22582497ec7c26ba6ee67db10ef85b5735cfa2ca21",
+  "base_commit": "922c914cc7ce218e43b5a7114e582cf35632d253",
+  "values_recomputed": false,
+  "transformations": [
+    "Proportions multiplied by 100 where labeled percent or pp.",
+    "Display rounding: 2 decimals for pp/percent; 3 for correlations."
+  ],
+  "ci": "95% bootstrap intervals already stored in the frozen analysis; not recomputed.",
+  "art": "AI-generated conceptual illustration; does not represent measured traces or outcomes.",
+  "matplotlib": "3.9.2",
+  "outputs": [
+    {
+      "file": "teaser_academic.pdf",
+      "pages": 1,
+      "width_pt": 396.0,
+      "height_pt": 324.0,
+      "images": 0,
+      "image_details": [],
+      "fonts": [
+        {
+          "type": "Type0",
+          "name": "EVICAO+DejaVuSans-Bold"
+        },
+        {
+          "type": "Type0",
+          "name": "BMQQDV+DejaVuSans"
+        }
+      ],
+      "text_characters": 877,
+      "sha256": "750a4bd9a5e826d9a2c60c16d757659b1516d81a6366b379585f5f8326858a1b"
+    },
+    {
+      "file": "teaser_illustrated.pdf",
+      "pages": 1,
+      "width_pt": 396.0,
+      "height_pt": 423.0,
+      "images": 1,
+      "image_details": [
+        {
+          "width_px": 2164,
+          "height_px": 727,
+          "effective_ppi_x": 405.8
+        }
+      ],
+      "fonts": [
+        {
+          "type": "Type0",
+          "name": "EVICAO+DejaVuSans-Bold"
+        },
+        {
+          "type": "Type0",
+          "name": "BMQQDV+DejaVuSans"
+        }
+      ],
+      "text_characters": 874,
+      "sha256": "ae2a5cc512fa91806c533ebaac81f58b4e90bff97ad044264cc3c4c60f426253"
+    }
+  ]
+}

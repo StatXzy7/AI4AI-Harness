@@ -1,0 +1,53 @@
+{
+  "version": "v3",
+  "source": "artifacts/common386_20260926/analysis.json",
+  "source_sha256": "253a2587fa67d3be8e830a22582497ec7c26ba6ee67db10ef85b5735cfa2ca21",
+  "base_commit": "922c914cc7ce218e43b5a7114e582cf35632d253",
+  "data_transformations": [
+    "Source proportions \u00d7 100 for percent and pp.",
+    "Display rounding only. All nine replay budgets shown.",
+    "One persistent-loss square per task; no invented data."
+  ],
+  "schematics": "Program motifs and repeat-fold cells are conceptual protocol diagrams.",
+  "fonts": "Adobe Source Sans 3 Regular, Semibold, and Italic; SIL OFL 1.1.",
+  "artwork": "Unmodified v1 image in illustrated PDF only.",
+  "previous_version_files_unchanged": 25,
+  "outputs": [
+    {
+      "file": "teaser_academic.pdf",
+      "page_count": 1,
+      "width_pt": 396.0,
+      "height_pt": 269.0,
+      "visible_word_count": 140,
+      "minimum_font_pt": 6.1,
+      "fonts": [
+        "SourceSans3-It",
+        "SourceSans3-Regular",
+        "SourceSans3-Semibold"
+      ],
+      "raster_images": 0,
+      "embedded_fonts": true,
+      "text_within_page": true,
+      "global_title": false,
+      "sha256": "360e66223f7bd01681c86b71d309e545ad53fb7dfc4a12330355d05a0f59a605"
+    },
+    {
+      "file": "teaser_illustrated.pdf",
+      "page_count": 1,
+      "width_pt": 396.0,
+      "height_pt": 269.0,
+      "visible_word_count": 138,
+      "minimum_font_pt": 6.1,
+      "fonts": [
+        "SourceSans3-It",
+        "SourceSans3-Regular",
+        "SourceSans3-Semibold"
+      ],
+      "raster_images": 1,
+      "embedded_fonts": true,
+      "text_within_page": true,
+      "global_title": false,
+      "sha256": "71cca96323fea3055bc257cb7061e3f1de5689079b1d9ba6b7ac85c6cca9d215"
+    }
+  ]
+}
