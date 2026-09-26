@@ -10,8 +10,9 @@ the extra attempts used to evaluate it.
 The difficulty is that different observed successes do not require
 different abilities. Two independent executions of a program with
 success probability $0.5$ cover a task with probability $0.75$.
-No program specialization has been introduced. Pass@$k$ and
-self-consistency already exploit the value of additional sampling
+No program specialization has been introduced. Pass@$k$ measures
+coverage over multiple samples; self-consistency and sampling-and-voting
+ensembles aggregate multiple attempts into one answer
 \citep{chen2021codex,selfconsistency2022,moreagents2024}.
 An oracle that selects a correct answer after seeing all outcomes can
 therefore show a population gain even when every member has the same
@@ -39,17 +40,19 @@ score them on the third. The same-code arm measures what this procedure
 reports without program specialization. On the same panel, a selector frozen on
 development tasks then tests selection from question features, and an
 execution-matched oracle replay compares available coverage. Finally,
-BIRD traces examine whether code differences actually reach execution. They provide a separate diagnosis, not a
-causal explanation of the MATH comparison.
+BIRD traces examine whether code differences actually reach execution,
+providing a complementary diagnosis within the SQL setting.
 
-The evidence yields three contributions. \textbf{First}, the same-code
-control produces a positive repeat-averaged oracle estimate, establishing
-that this signal alone cannot identify program specialization.
-\textbf{Second}, held-out repeats and calibration show where the current
-data stop: the clone-adjusted mean is $\WpVthreeD$\,\%, but missingness
-and limited power leave stable specialization unresolved.
-\textbf{Third}, separating selection from coverage changes the practical
-assessment: the tested selector gains $\WpPiZDiff$\,\%, and the full
-execution-matched replay favors additional single-call executions in
-its observed oracle mean. These findings separate coverage, repeat
-evidence, and realized selection.
+The evidence yields three contributions. \textbf{First}, identical
+programs produce positive repeat-averaged oracle headroom, so that
+signal alone cannot identify program specialization. \textbf{Second},
+generated programs have substantially more repeatable scored-outcome
+patterns than clones, dominated by persistent losses: losses span
+$\RcvLossTasks$ tasks ($\RcvLossPairs$ member--task pairs), whereas
+persistent wins occur on one task. Stable differences therefore need
+not provide useful task advantages; the clone-adjusted held-out gain is
+$\RcvD$ pp. \textbf{Third}, the frozen selector gains
+$\RcvPolicyGain$ pp, and the 27-execution oracle replay ties at
+$\RcvReplayFullCoverage\%$. On this panel, more programs produce
+neither a gain for the tested selector nor greater full-budget oracle
+coverage than more executions of the baseline.

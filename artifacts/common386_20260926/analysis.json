@@ -1,0 +1,453 @@
+{
+  "n_tasks": 386,
+  "primary": {
+    "state": "INSUFFICIENT_EVIDENCE",
+    "estimand": "PRIMARY: D = G_real - G_clone where G is the cross-fitted frozen per-task selector gain vs the best FIXED member. G <= H_stable, G=0 under dominance; the same-code clone subtraction removes the finite-(R,T) selection-noise component. G without a clone arm is reported descriptively only.",
+    "G": 0.00095,
+    "G_ci95": [
+      -0.00846,
+      0.01131
+    ],
+    "p_D_clone_randomization": 0.81272,
+    "p_D_equivalence": 0.31477,
+    "null_D": {
+      "null_D_mean": 0.00025,
+      "null_D_sd": 0.01451
+    },
+    "paired_difference": {
+      "D_real_minus_clone": -0.00259,
+      "D_ci95": [
+        -0.01451,
+        0.0095
+      ],
+      "n_paired_tasks": 386,
+      "G_clone": 0.00354
+    },
+    "H_plugin_descriptive": 0.02332,
+    "descriptive_warning": "H_plugin is the repeat-average plug-in; it is upward biased by finite-R selection noise and is reported for transparency only",
+    "n_complete_tasks": 386,
+    "excluded_frac": 0.0,
+    "coverage_gate": "excluded <= 0.1",
+    "coverage_ok": true,
+    "missing_extremal_G_bounds": [
+      0.00086,
+      0.00086
+    ],
+    "unidentified_cells": 0,
+    "folds": [
+      {
+        "held_out_repeat": 0,
+        "best_fixed": 0,
+        "n_distinct_selection": 9,
+        "best_fixed_tie_majority": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "held_out_repeat": 1,
+        "best_fixed": 0,
+        "n_distinct_selection": 9
+      },
+      {
+        "held_out_repeat": 2,
+        "best_fixed": 0,
+        "n_distinct_selection": 9
+      }
+    ],
+    "delta": 0.01,
+    "alpha": 0.05,
+    "n_perm": 10000,
+    "n_boot": 2000,
+    "seed": 20260915,
+    "reason": "real-minus-clone gain neither clears the randomization null by the margin nor is bounded inside it; abstention"
+  },
+  "repeat_plugin": {
+    "eval_real": {
+      "best_member": "bare",
+      "best_accuracy": 0.9585492227979278,
+      "oracle_mean": 0.9818652849740933,
+      "headroom_pp": 2.3316062176165553
+    },
+    "eval_clone": {
+      "best_member": "clone-c4",
+      "best_accuracy": 0.9620034542314339,
+      "oracle_mean": 0.9835924006908462,
+      "headroom_pp": 2.158894645941234
+    }
+  },
+  "replay": [
+    {
+      "members": 1,
+      "executions": 3,
+      "panel_oracle": 0.9844559585492227,
+      "clone_oracle": 0.9824480758159514,
+      "gap_pp": 0.2007882733271349
+    },
+    {
+      "members": 2,
+      "executions": 6,
+      "panel_oracle": 0.9870466321243523,
+      "clone_oracle": 0.9854993870988465,
+      "gap_pp": 0.1547245025505739
+    },
+    {
+      "members": 3,
+      "executions": 9,
+      "panel_oracle": 0.9870466321243523,
+      "clone_oracle": 0.9862692263609967,
+      "gap_pp": 0.07774057633556097
+    },
+    {
+      "members": 4,
+      "executions": 12,
+      "panel_oracle": 0.9870466321243523,
+      "clone_oracle": 0.9866381013395374,
+      "gap_pp": 0.04085307848148423
+    },
+    {
+      "members": 5,
+      "executions": 15,
+      "panel_oracle": 0.9870466321243523,
+      "clone_oracle": 0.9868515348305723,
+      "gap_pp": 0.019509729377997775
+    },
+    {
+      "members": 6,
+      "executions": 18,
+      "panel_oracle": 0.9870466321243523,
+      "clone_oracle": 0.9869722321879636,
+      "gap_pp": 0.007439993638869158
+    },
+    {
+      "members": 7,
+      "executions": 21,
+      "panel_oracle": 0.9870466321243523,
+      "clone_oracle": 0.987028918117001,
+      "gap_pp": 0.0017714007351288252
+    },
+    {
+      "members": 8,
+      "executions": 24,
+      "panel_oracle": 0.9870466321243523,
+      "clone_oracle": 0.9870457464239848,
+      "gap_pp": 8.857003674922481e-05
+    },
+    {
+      "members": 9,
+      "executions": 27,
+      "panel_oracle": 0.9870466321243523,
+      "clone_oracle": 0.9870466321243523,
+      "gap_pp": 0.0
+    }
+  ],
+  "selector": {
+    "choices_on_subset": {
+      "bare": 386
+    },
+    "accuracy": 0.9585492227979274,
+    "gain_vs_bare_pp": 0.0
+  },
+  "repeatability": {
+    "eval_real": {
+      "reference": "bare",
+      "mean_pearson_raw": 0.8613,
+      "mean_pearson_raw_ci95": [
+        0.8217,
+        0.8952
+      ],
+      "mean_pearson_residualized": 0.7892,
+      "mean_pearson_residualized_ci95": [
+        0.7494,
+        0.8269
+      ],
+      "note": "raw includes stable member and task main effects; the residualized (double-centered) statistic isolates stable member-by-task interaction, with the same-code clone arm as the empirical null",
+      "all_repeat_patterns": {
+        "win_pairs": 8,
+        "win_tasks": 1,
+        "loss_pairs": 570,
+        "loss_tasks": 100,
+        "win_task_ids": [
+          "math500_split#379"
+        ],
+        "scope": "descriptive frozen-judge scores; not semantic reasoning advantages"
+      }
+    },
+    "eval_clone": {
+      "reference": "clone-c1",
+      "mean_pearson_raw": -0.0594,
+      "mean_pearson_raw_ci95": [
+        -0.1447,
+        0.0259
+      ],
+      "mean_pearson_residualized": 0.0064,
+      "mean_pearson_residualized_ci95": [
+        -0.0665,
+        0.0832
+      ],
+      "note": "raw includes stable member and task main effects; the residualized (double-centered) statistic isolates stable member-by-task interaction, with the same-code clone arm as the empirical null",
+      "all_repeat_patterns": {
+        "win_pairs": 0,
+        "win_tasks": 0,
+        "loss_pairs": 0,
+        "loss_tasks": 0,
+        "win_task_ids": [],
+        "scope": "descriptive frozen-judge scores; not semantic reasoning advantages"
+      }
+    },
+    "difference": {
+      "real_minus_clone_residualized": 0.7829,
+      "ci95": [
+        0.6913,
+        0.8689
+      ]
+    }
+  },
+  "original_missingness": {
+    "eval_real": {
+      "known": 10739,
+      "missing": 61,
+      "complete_tasks": 386,
+      "missing_by_member": {
+        "gsm_deepseek_s0_g3": 5,
+        "gsm_ernie_s0_g3": 4,
+        "gsm_glm_s0_g6": 9,
+        "gsm_kimi_s0_g3": 12,
+        "gsm_kimi_s0_g4": 18,
+        "gsm_minimax_s0_g0": 3,
+        "gsm_minimax_s0_g3": 6,
+        "gsm_qwen_s0_g5": 4
+      },
+      "missing_per_excluded_task": {
+        "math500_split#103": 1,
+        "math500_split#110": 4,
+        "math500_split#154": 15,
+        "math500_split#157": 1,
+        "math500_split#204": 5,
+        "math500_split#284": 4,
+        "math500_split#286": 4,
+        "math500_split#326": 1,
+        "math500_split#352": 1,
+        "math500_split#396": 1,
+        "math500_split#400": 15,
+        "math500_split#422": 3,
+        "math500_split#444": 1,
+        "math500_split#478": 5
+      }
+    },
+    "eval_clone": {
+      "known": 10800,
+      "missing": 0,
+      "complete_tasks": 400,
+      "missing_by_member": {},
+      "missing_per_excluded_task": {
+        "math500_split#103": 0,
+        "math500_split#110": 0,
+        "math500_split#154": 0,
+        "math500_split#157": 0,
+        "math500_split#204": 0,
+        "math500_split#284": 0,
+        "math500_split#286": 0,
+        "math500_split#326": 0,
+        "math500_split#352": 0,
+        "math500_split#396": 0,
+        "math500_split#400": 0,
+        "math500_split#422": 0,
+        "math500_split#444": 0,
+        "math500_split#478": 0
+      }
+    }
+  },
+  "excluded_comparison": {
+    "included": {
+      "n": 386,
+      "subject": {
+        "Geometry": 32,
+        "Intermediate Algebra": 71,
+        "Prealgebra": 63,
+        "Number Theory": 51,
+        "Precalculus": 39,
+        "Counting & Probability": 31,
+        "Algebra": 99
+      },
+      "level": {
+        "5": 102,
+        "1": 32,
+        "4": 104,
+        "3": 85,
+        "2": 63
+      },
+      "mean_level": 3.4689119170984455,
+      "mean_question_chars": 198.74870466321244,
+      "bare_repeat_accuracy": 0.9585492227979274,
+      "clone_all_slots_accuracy": 0.9579735175590098,
+      "clone_27_oracle": 0.9870466321243523
+    },
+    "excluded": {
+      "n": 14,
+      "subject": {
+        "Intermediate Algebra": 7,
+        "Geometry": 2,
+        "Precalculus": 3,
+        "Prealgebra": 1,
+        "Counting & Probability": 1
+      },
+      "level": {
+        "5": 9,
+        "4": 2,
+        "2": 2,
+        "3": 1
+      },
+      "mean_level": 4.285714285714286,
+      "mean_question_chars": 284.7142857142857,
+      "bare_repeat_accuracy": 0.7142857142857143,
+      "clone_all_slots_accuracy": 0.6851851851851852,
+      "clone_27_oracle": 0.9285714285714286
+    }
+  },
+  "conflict_sensitivity": {
+    "state": "INSUFFICIENT_EVIDENCE",
+    "estimand": "PRIMARY: D = G_real - G_clone where G is the cross-fitted frozen per-task selector gain vs the best FIXED member. G <= H_stable, G=0 under dominance; the same-code clone subtraction removes the finite-(R,T) selection-noise component. G without a clone arm is reported descriptively only.",
+    "G": -0.00017,
+    "G_ci95": [
+      -0.01105,
+      0.0114
+    ],
+    "p_D_clone_randomization": 0.87031,
+    "p_D_equivalence": 0.39266,
+    "null_D": {
+      "null_D_mean": -0.00012,
+      "null_D_sd": 0.01428
+    },
+    "paired_difference": {
+      "D_real_minus_clone": -0.00609,
+      "D_ci95": [
+        -0.01958,
+        0.00636
+      ],
+      "n_paired_tasks": 383,
+      "G_clone": 0.00592
+    },
+    "H_plugin_descriptive": 0.0235,
+    "descriptive_warning": "H_plugin is the repeat-average plug-in; it is upward biased by finite-R selection noise and is reported for transparency only",
+    "n_complete_tasks": 383,
+    "excluded_frac": 0.0,
+    "coverage_gate": "excluded <= 0.1",
+    "coverage_ok": true,
+    "missing_extremal_G_bounds": [
+      0.00261,
+      0.00261
+    ],
+    "unidentified_cells": 0,
+    "folds": [
+      {
+        "held_out_repeat": 0,
+        "best_fixed": 0,
+        "n_distinct_selection": 9,
+        "best_fixed_tie_majority": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "held_out_repeat": 1,
+        "best_fixed": 0,
+        "n_distinct_selection": 9
+      },
+      {
+        "held_out_repeat": 2,
+        "best_fixed": 0,
+        "n_distinct_selection": 9
+      }
+    ],
+    "delta": 0.01,
+    "alpha": 0.05,
+    "n_perm": 10000,
+    "n_boot": 2000,
+    "seed": 20260915,
+    "reason": "real-minus-clone gain neither clears the randomization null by the margin nor is bounded inside it; abstention",
+    "excluded_task_ids": [
+      "math500_split#125",
+      "math500_split#279",
+      "math500_split#351"
+    ]
+  },
+  "single_run": {
+    "n_members": 36,
+    "n_generated": 35,
+    "n_tasks": 386,
+    "complete_cells": 13896,
+    "accuracy_by_member": {
+      "bare": 0.9507772020725389,
+      "gsm_deepseek_s0_g0": 0.8341968911917098,
+      "gsm_deepseek_s0_g1": 0.7124352331606217,
+      "gsm_deepseek_s0_g2": 0.7642487046632125,
+      "gsm_deepseek_s0_g3": 0.7150259067357513,
+      "gsm_deepseek_s0_g4": 0.7357512953367875,
+      "gsm_deepseek_s0_g5": 0.7124352331606217,
+      "gsm_deepseek_s0_g6": 0.7020725388601037,
+      "gsm_deepseek_s0_g7": 0.6968911917098446,
+      "gsm_ernie_s0_g0": 0.7564766839378239,
+      "gsm_ernie_s0_g1": 0.8341968911917098,
+      "gsm_ernie_s0_g2": 0.8419689119170984,
+      "gsm_ernie_s0_g3": 0.7797927461139896,
+      "gsm_ernie_s0_g4": 0.8186528497409327,
+      "gsm_ernie_s0_g5": 0.7797927461139896,
+      "gsm_ernie_s0_g6": 0.8082901554404145,
+      "gsm_ernie_s0_g7": 0.8005181347150259,
+      "gsm_glm_s0_g5": 0.7072538860103627,
+      "gsm_glm_s0_g6": 0.7150259067357513,
+      "gsm_kimi_s0_g0": 0.7227979274611399,
+      "gsm_kimi_s0_g1": 0.8808290155440415,
+      "gsm_kimi_s0_g2": 0.9248704663212435,
+      "gsm_kimi_s0_g3": 0.8549222797927462,
+      "gsm_kimi_s0_g4": 0.8886010362694301,
+      "gsm_kimi_s0_g5": 0.7072538860103627,
+      "gsm_kimi_s0_g6": 0.8471502590673575,
+      "gsm_minimax_s0_g0": 0.7072538860103627,
+      "gsm_minimax_s0_g2": 0.7124352331606217,
+      "gsm_minimax_s0_g3": 0.7150259067357513,
+      "gsm_minimax_s0_g4": 0.7124352331606217,
+      "gsm_minimax_s0_g5": 0.7176165803108808,
+      "gsm_minimax_s0_g6": 0.7124352331606217,
+      "gsm_minimax_s0_g7": 0.7046632124352331,
+      "gsm_qwen_s0_g0": 0.7150259067357513,
+      "gsm_qwen_s0_g1": 0.7098445595854922,
+      "gsm_qwen_s0_g5": 0.7150259067357513
+    },
+    "best_fixed_member": "bare",
+    "best_fixed_accuracy": 0.9507772020725389,
+    "oracle_accuracy": 0.9922279792746114,
+    "headroom_pp": 4.145077720207246,
+    "generated_min_accuracy": 0.6968911917098446,
+    "generated_max_accuracy": 0.9248704663212435,
+    "unique_vectors": 29,
+    "unique_generated_vectors": 28,
+    "mean_pairwise_disagreement": 0.10942100501685995,
+    "max_pairwise_disagreement": 0.3316062176165803,
+    "identical_pair_fraction": 0.022222222222222223,
+    "union_repair": 0.8421052631578947,
+    "union_all_fail": 0.008174386920980926
+  },
+  "judge_audit": {
+    "n": 13896,
+    "v1_replay_mismatches": [],
+    "v2_flips": [],
+    "raw_gold_without_answer_marker_self_correct": 270,
+    "formatted_gold_self_correct": 386
+  },
+  "policy_comparators": {
+    "bare": 0.9585492227979274,
+    "dev_fixed": "bare",
+    "random_fixed_member": "gsm_kimi_s0_g3",
+    "random_accuracy": 0.8601036269430051,
+    "random_delta": -0.09844559585492228,
+    "random_delta_ci95": [
+      -0.1303972366148532,
+      -0.0690846286701209
+    ],
+    "choices_refitted": false
+  }
+}

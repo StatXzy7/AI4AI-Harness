@@ -5,9 +5,10 @@ on the $100$ development tasks using TF-IDF question features and
 member accuracies computed within training folds. Five-fold task-level
 cross-validation keeps all repeats of a task together. The policy is
 frozen before evaluation and falls back to \bare{} when its top-two
-probability gap is below $0.15$; evaluation correctness and traces
-are unavailable to it. Comparators include the development-selected
-fixed member and a pre-fixed random member.
+probability gap is below $0.15$; ties use fixed member-ID order.
+The five fold-model probability vectors are averaged before selection. Its inputs consist of question
+features and development-derived member statistics. Comparators include the development-selected
+fixed member and one randomly drawn fixed member.
 
 \paragraph{Oracle replay after execution.}
 A separate offline comparison allocates $b\in\{3,9,15,27\}$ harness
@@ -15,7 +16,12 @@ executions to a development-ranked portfolio and to the clone arm.
 Each included member contributes three repeats; the clone reference
 uses subsets of its $27$ recorded executions. Both arms select with
 post-execution correctness, measuring available oracle coverage.
-One harness execution can contain several model calls, so equal
-execution counts need not imply equal calls or token costs.
+One harness execution can contain several model calls; model-call
+counts and token costs vary by program.
 Appendix~\ref{app:selection} specifies the frozen policy, replay, and
-accounting, separately from the historical archive selection analyses.
+accounting.
+
+For recovery analysis, the previously recorded selector choices and
+portfolio order stay fixed. Replay uses only tasks complete in both
+arms and computes the exact uniform average over clone subsets.
+Portfolio members follow the recorded development ranking.

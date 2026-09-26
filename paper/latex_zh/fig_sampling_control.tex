@@ -1,28 +1,32 @@
 \begin{figure}[t]
 \centering
-\setlength{\fboxsep}{8pt}
-\fbox{\begin{minipage}[t][118pt][t]{0.445\linewidth}
-\small
-\textbf{一个程序，更多次执行}\par\medskip
-\centering
-$\boxed{H_0^{(1)}}\qquad\boxed{H_0^{(2)}}$\par\smallskip
-代码相同；错误独立\par\medskip
-$p=0.5\quad\longrightarrow\quad1-(1-p)^2=0.75$\par\medskip
-\raggedright
-\textbf{覆盖率增加 $25$\,\%。}\par
-程序专长仍为零。
+\setlength{\fboxsep}{5pt}
+\fbox{\begin{minipage}[t][107pt][t]{0.29\linewidth}
+\small\raggedright
+\textbf{1. 覆盖}\par\medskip
+重复平均 oracle 余量\par\medskip
+生成程序：$\RcvRealPlugin$ pp\par
+同代码：$\RcvClonePlugin$ pp\par\medskip
+\textbf{相同程序也产生\newline 正的覆盖余量。}
 \end{minipage}}\hfill
-\fbox{\begin{minipage}[t][118pt][t]{0.445\linewidth}
-\small
-\textbf{实测的同代码参照}\par\medskip
-\centering
-MATH-500：九个相同的 \bare{} 槽\par\smallskip
-每槽三次独立重复\par\medskip
-$H_{\rm stable}=0\qquad\widehat H=\WpVthreeClonePlugin\,\%$\par\medskip
-\raggedright
-\textbf{观测估计为正。}\par
-本臂 $383$ 个完整任务的描述性插件量。
+\fbox{\begin{minipage}[t][107pt][t]{0.29\linewidth}
+\small\raggedright
+\textbf{2. 可重复性}\par\medskip
+评分模式残差相关性\par\medskip
+生成程序：$\RcvRealRho$\par
+同代码：$\RcvCloneRho$\par\medskip
+持续损失：$\RcvLossTasks$ 题\par
+持续获胜：$1$ 题
+\end{minipage}}\hfill
+\fbox{\begin{minipage}[t][107pt][t]{0.29\linewidth}
+\small\raggedright
+\textbf{3. 选择与重放}\par\medskip
+冻结选择器收益\par
+\textbf{$\RcvPolicyGain$ pp}\par\medskip
+27 次执行的 oracle 覆盖\par
+生成程序：$\RcvReplayFullCoverage\%$\par
+同代码：$\RcvReplayFullCoverage\%$
 \end{minipage}}
-\caption{\textbf{更多覆盖不等于更多专长。}左：同一程序两次独立执行的概率计算。右：真实克隆臂在程序专长为零时仍产生正的重复平均 oracle 估计（采用完整任务估计；\S\ref{sec:f3-clones}）。两幅面板展示不同的量，不是匹配的效应量比较。对照设计将八个生成程序加 \bare{} 与九个相同的 \bare{} 槽比较，并将重复验证与基于特征的执行前选择分开。}
+\caption{\textbf{正余量与强可重复性，同时伴随零选择收益和相同的完整预算 oracle 覆盖。}三栏均使用相同的 $\RcvPairedN$ 道 MATH 题、八个生成程序加 \bare{}，以及九个相同的 \bare{} 槽位，每个成员进行三次新执行。持续输赢指三次均相对 \bare{} 失分或获胜。选择器收益相对开发集选出的固定基线计算；重放在相同 harness 执行次数下，使用执行后正确性比较生成面板与同代码执行。}
 \label{fig:sampling-control}
 \end{figure}

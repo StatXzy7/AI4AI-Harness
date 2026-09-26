@@ -1,21 +1,32 @@
 \paragraph{Implications for evaluation.}
-A positive oracle gain answers whether additional correct answers
-were available. The same-code control shows why it cannot also answer
-whether different programs supplied different task abilities.
-Evaluations should report coverage, repeat-stable task advantages,
-and realized policy gains as separate results, with a repeated
-fixed-program reference for resource comparisons. If a gain is
-attributed to a mechanism, traces must establish what ran and an
-intervention must test its contribution. This reporting separates
-useful sampling from specialization without discounting either.
+Our results separate three observations that can otherwise be treated
+as interchangeable evidence. Identical programs produce positive oracle
+headroom; generated programs produce repeatable score patterns; the
+frozen selector nevertheless realizes no gain, and full-budget oracle
+coverage ties. A claim of useful specialization must therefore connect
+repeatable \emph{advantages}, task-wise crossover, and a usable selection
+rule. In the generated panel, persistent losses span $\RcvLossTasks$
+tasks, while persistent wins occur on one: the reproducible structure
+is largely a map of where programs lose, rather than where a selector
+can gain.
+If an advantage is attributed to a mechanism, traces must establish
+what ran and an intervention must test its contribution.
 
 \paragraph{Limitations.}
-The controlled MATH panel is a low-call draw under one target on
-previously evaluated tasks; its v3 analysis was revised after
-collection. Missingness exceeds the declared gate, and simulations
-show that three repeats can miss substantial crossovers. The
-nonpositive calibrated mean therefore does not establish absence
-or equivalence. Zero routing gain concerns one selector; the replay
-matches executions, not tokens. BIRD retains separate single-run
-protocols, judging, and caching conditions. Its execution failures
-cannot be used as a causal explanation for MATH.
+The controlled MATH panel is a low-call draw under one solver on
+previously evaluated tasks. The revised held-out-repeat procedure and
+added repeatability analysis were developed after collection. The
+initial study ended under its stopping rule; the separately recorded
+recovery stage followed inspection of those earlier results, with
+programs, tasks, solver, and repeat count held fixed.
+The $\RcvPairedN$-task analysis set is fully
+observed and selected by completeness. The $\RcvExcludedN$ excluded
+problems have higher observed difficulty and lower baseline accuracy
+(Appendix~\ref{app:wp1r}); performance estimates therefore describe
+the selected cohort. Three repeats have low diagnostic power, and
+stable score patterns can include formatting effects from the fixed
+judge. The calibrated result remains \textsc{Insufficient Evidence}.
+The zero routing gain concerns the tested selector and features.
+Replay standardizes harness execution counts; model-call counts and
+token costs vary by program. BIRD findings apply to its own judging
+and acquisition conditions.

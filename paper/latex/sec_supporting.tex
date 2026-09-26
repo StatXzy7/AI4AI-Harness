@@ -3,35 +3,36 @@ The MATH controls show that outcome differences need not require
 different programs. The supporting BIRD study asks the converse:
 do source differences produce distinct, useful execution? Here a
 mechanism is an implemented prompt transformation, tool use, or
-control-flow operation. This study uses separate populations, judging,
-and execution protocols; it does not explain the MATH results causally.
+control-flow operation. The BIRD study examines execution directly in
+its own program populations, with task-specific judging and protocols.
 
 \paragraph{Source differences and observed outcomes.}
 All $12$ discovery candidates pass a code-difference check, yet $21/66$
 generated-candidate pairs have identical correctness vectors
 ($36/91$ including baselines). Source similarity has essentially no
 rank association with correctness disagreement ($\rho=-0.010$).
-Agreement on these $60$ tasks is not general program equivalence,
-but motivates inspecting execution (Appendix Figure~\ref{fig:phenomenon}).
+The agreement on these $60$ tasks motivates inspecting execution
+(Appendix Figure~\ref{fig:phenomenon}).
 
 \paragraph{Traces locate three distinct failures.}
 \textbf{T1: described but absent.} Six of twelve candidates claim
 retrieval or self-checking but make one model call and execute no
-artifact. \textbf{T2: present but untriggered.} On all ten audited
+artifact. This is a classification of all twelve candidates; the
+five-harness trace audit provides worked examples.
+\textbf{T2: present but untriggered.} On all ten audited
 \react{} tasks, the first SQL executes successfully, so the repair
 branch never fires and final SQL equals \bare{}; execution success
 is not semantic correctness. \textbf{T3: executed but broken.} One
 candidate runs multi-turn repair but returns prose as final SQL,
 losing tasks that the baseline answers correctly. These failures
 require implementation checks, branch-exercising tasks, and valid
-output contracts, respectively. They do not establish that activation
-improves accuracy. Appendix~\ref{app:bird-traces} retains worked traces,
+output contracts, respectively. Appendix~\ref{app:bird-traces} retains worked traces,
 hand-written controls, and their development-exposure limitations.
 
 The separate BIRD admission study also finds a mean headroom contrast
-of $\RevisionPrimaryDelta$\,\% for forced/gated versus free/ungated
+of $\RevisionPrimaryDelta$\,pp for forced/gated versus free/ungated
 generation. Its gate bundles structural exclusion with conformance
-verification, so it does not identify a pure verification effect
-(Appendix~\ref{app:phase2-protocol}). Source and admission evidence
-therefore require an execution check; persistent task advantages and
-selection value remain separate measurements.
+verification (Appendix~\ref{app:phase2-protocol}). Together these results
+locate failures between source variation, mechanism implementation,
+activation, and valid output. Repeated task advantages and selection
+value measure the subsequent steps in the evidence chain.

@@ -1,8 +1,11 @@
-Additional coverage, stable task specialization, and achievable selection
-gains are distinct objects; evidence for one cannot substitute for the
-others. Here, generated populations supply additional correct answers,
-but identical programs also yield positive oracle estimates. Missingness
-and low sensitivity leave stable specialization unresolved. The tested
-selector gains nothing, and execution-matched replay shows no consistent
-portfolio advantage. Population evaluation should connect coverage,
-repeat validation, and actual selection while reporting what each establishes.
+For the tested MATH panel, more programs do not improve on more rolls
+at the full execution budget: both arms reach
+$\RcvReplayFullCoverage\%$ oracle coverage after 27 executions, and
+the frozen feature selector gains $\RcvPolicyGain$ pp.
+Generated programs nevertheless exhibit strongly repeatable score
+patterns, with persistent losses spanning far more tasks than
+persistent wins. The same-code control, repeated executions, and
+frozen selector separate three distinct quantities: available correct
+answers, repeatable differences, and usable task advantages.
+Useful specialization requires the last of these: advantages that
+guide selection and improve on additional executions of a fixed program.

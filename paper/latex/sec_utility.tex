@@ -1,51 +1,39 @@
 \subsection{Pre-Execution Selection and Oracle Replay}\label{sec:utility}
-\paragraph{Pre-execution selection yields no gain.}
-A frozen feature-based policy tests a choice that can actually be made
-before execution. On the repeat panel, it selects \bare{} on all
-$400$ evaluation tasks and ties the development-selected fixed member
-at $\WpPiZAcc\%$ repeat-mean accuracy: $\WpPiZDiff$\,\% gain.
-The pre-fixed random-member comparator differs by
-$\WpRandomDiff$\,\% (Appendix~\ref{app:selection}). The policy avoids weak
-members but obtains no task-specific benefit. This result concerns
-one policy and feature set; it neither exhausts possible selectors
-nor turns the oracle opportunity into achieved accuracy.
+\paragraph{The frozen selector matches the development-selected baseline.}
+The final feature-policy choices, including its confidence-based
+fallback, are \bare{} on all $\RcvPairedN$ evaluation tasks. The result
+evaluates this complete decision rule; the reported choices do not
+separate the classifier's initial preference from fallback decisions.
+Keeping those choices fixed and updating only the
+recorded outcomes gives $\RcvBaselineAcc\%$ accuracy over three repeats,
+identical to the development-selected fixed member:
+$\RcvPolicyGain$ pp gain for the tested policy and features. Appendix~\ref{app:selection}
+retains its construction and the same-set comparator results.
 
-\paragraph{Execution-matched oracle replay.}
+\paragraph{At the full execution budget, the oracle coverages tie.}
 \label{sec:selection-result}
-Even oracle coverage must be compared with the extra attempts a fixed
-program could receive. The replay gives a development-ranked panel
-portfolio and the clone arm the same number $b$ of harness executions.
-At $b=3$, the panel contains only \bare{}; its $+0.37$\,\% difference
-cannot be due to program diversity. Adding members leaves a
-$+0.03$\,\% difference at $b=9$, followed by negative differences
-at $b=15$ and $27$ (Table~\ref{tab:execution-means}).
+We compare development-ranked portfolios with uniformly selected
+same-code executions on the $\RcvPairedN$ tasks complete in both arms.
+At $b=3$, the portfolio contains only \bare{}, so its
+$\RcvReplayThreeGap$ pp difference reflects execution variation
+between identical programs.
+At $b=9$ and $15$, the differences are $\RcvReplayNineGap$ pp and
+$\RcvReplayFifteenGap$ pp. At $b=27$, both arms reach
+$\RcvReplayFullCoverage\%$ oracle coverage (Table~\ref{tab:execution-means}).
 
 \begin{table}[htbp]
 \centering\small
-\begin{tabular}{@{}lrrrr@{}}
-\toprule
-Harness executions per task $b$ & 3 & 9 & 15 & 27 \\
-\midrule
-Panel members, including \bare{} & 1 & 3 & 5 & 9 \\
-Panel oracle coverage (\%) & 98.00 & 98.25 & 98.25 & 98.25 \\
-Clone oracle coverage (\%) & 97.63 & 98.22 & 98.36 & 98.50 \\
-Panel minus clones (\%) & $+0.37$ & $+0.03$ & $-0.11$ & $-0.25$ \\
-\bottomrule
-\end{tabular}
-\caption{\textbf{The full execution budget does not favor more programs
-in the observed oracle mean.} Members are ranked on development data
-and contribute three repeats each. Clone coverage averages subsets
-of its $27$ recorded executions. Both arms use post-execution oracle
-selection; execution counts are matched, token costs are not.}
+\input{common386_replay_table}
+\caption{\textbf{Full-budget oracle coverage is equal in the observed
+recovery snapshot.} Each included member contributes
+three repeats. Clone coverage is the exact mean over uniform subsets of
+its $27$ recorded executions, paired on complete tasks.
+Both arms use post-execution correctness at matched harness execution counts.}
 \label{tab:execution-means}
 \end{table}
 
-Collection also costs more for the generated arm: $22{,}192$ logical
-calls and $54.17$M known tokens versus $10{,}800$ calls and $14.51$M
-for clones, a $3.73\times$ token ratio. These are realized collection
-costs, not a token-matched performance comparison. Cross-arm majority
-voting is not reported because answer formats are incompatible.
-Thus the tested selector delivers no gain, and the execution-matched
-oracle means provide no consistent advantage for this portfolio.
-Neither result establishes how other selectors or a token-matched
-operational comparison would perform.
+These replay means describe post-execution oracle coverage at matched
+harness execution counts. Model-call counts and token costs vary by
+program. The tested pre-execution selector yields zero gain, while
+the full recorded execution budget provides equal oracle coverage
+for the two arms.

@@ -1,7 +1,8 @@
 \section{BIRD Admission-Policy Study}\label{app:phase2-protocol}
 
-The study uses a $2{\times}2$ factorial design plus an open-mechanism
-arm, with six builders and three seeds. Each slot allows at most
+The confirmatory study uses a $2{\times}2$ factorial design with six
+builders and three seeds; open-mechanism arm II-E is development-only.
+Each slot allows at most
 $R=3$ attempts, stopping at first admission without top-up. Two development
 databases are excluded from the evaluation pool. The evaluation set
 contains $1{,}169$ questions from nine databases and a pre-drawn
@@ -19,15 +20,22 @@ confirmatory outcomes. Other deviations included operational access
 handling and quarantine of inconsistent observations. The corrected
 analysis uses shared baseline records and database/task resampling;
 these revisions followed the original analysis specification.
-The implemented gate structurally rejects two permitted prompt-level
-strategies, and realized generation costs differ across arms.
+Overlapping acquisition records are deduplicated on canonical identity
+using the recorded first-write-wins rule; verdict conflicts remain
+in the source audit. These tables use that deduplicated view.
+The implemented gate can structurally reject permitted prompt-only
+transformations despite neutral validity, and realized generation costs
+differ across arms.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.75\linewidth]{figures/fig_design_revision.pdf}
-\caption{\textbf{Phase-II confirmatory design} (frozen protocol). Left:
+\par\smallskip
+{\footnotesize\textbf{II-E: development-only; excluded from confirmatory comparisons.}}
+\caption{\textbf{BIRD admission design.} Left:
 database-level contamination isolation. Middle: the $2{\times}2$
-factorial with a common attempt cap, plus open-mechanism arm II-E. Right:
+confirmatory factorial with a common attempt cap; the additional
+open-mechanism arm II-E belongs only to development. Right:
 the three-layer admission pipeline.}
 \label{fig:design}
 \end{figure}
@@ -62,11 +70,10 @@ every uniform candidate subset is enumerated exactly. Single-call stays in every
 subset, and best-fixed is recomputed inside each subset on every task draw.
 This is a size sensitivity analysis, not a causal mediation decomposition.
 Retaining all 18 cells, including two with singleton A subsets, changes
-subset D$-$A from \RevisionRtwoCached\ to \RevisionRtwoOff\,\%
-(change \RevisionRtwoChange\,\%, 95\% CI \RevisionRtwoChangeCI). R2
+subset D$-$A from \RevisionRtwoCached\ to \RevisionRtwoOff\,pp
+(change \RevisionRtwoChange\,pp, 95\% CI \RevisionRtwoChangeCI). R2
 subset headroom excludes single-call because R2 did not acquire a matched single-call
-run, so it is distinct from the single-call-inclusive primary estimand; the old
-16-cell comparison is reconciled here. These are instability measurements,
+run, so it is distinct from the single-call-inclusive primary estimand; all $18$ cells are retained. These are instability measurements,
 not standard errors or a detectability floor for the mean treatment effect;
 they do not establish that every contrast is unchanged, or identify what
 fraction of between-harness disagreement is noise.
@@ -82,12 +89,9 @@ There are \RevisionRtwoFlips/28{,}000 verdict flips against cached outcomes
 (\RevisionRtwoFlipPercent\%) and
 \RevisionRtwoRepeatFlips/14{,}400 flips between the two D cache-off passes
 (\RevisionRtwoRepeatPercent\%).
-For reconciliation only, restricting to the 16 cells with at least two
-members in both arms gives D$-$A $\RevisionRtwoLegacyCached$\,\% cached
-and $\RevisionRtwoLegacyOff$\,\% cache-off. This explains the difference
-from the full-cell estimates; neither analysis identifies future execution
-variance, the effect of caching alone, or a stable-complementarity advantage
-over clones. Acquisition time and caching condition are not isolated.
+These observed replays do not identify future execution variance,
+the effect of caching alone, or stable complementarity over clones.
+Acquisition time and caching condition are not isolated.
 
 \paragraph{R3 single-call-only repeat audit.}\label{app:r3}
 R3 is a separate, smaller instability audit: three independent cache-off
@@ -98,7 +102,7 @@ three repeats; pairwise flip rates between repeat pairs are 39/400, 40/400,
 and 37/400 (9.75\%, 10.0\%, 9.25\%). Treating the three single-call repeats as
 three pseudo-members (one execution each) gives a one-run oracle of
 $72.25\%$ against a best-single-repeat accuracy of $65.75\%$, a
-descriptive $6.50$\,\% same-code oracle gap computed from the recorded
+descriptive $6.50$\,pp same-code oracle gap computed from the recorded
 official-scorer outcomes.
 R3 therefore measures the observed
 instability rate of the baseline itself under temperature-0 API
@@ -138,161 +142,30 @@ column averages candidate-population calls per task over cells.}
 
 
 \FloatBarrier
-\subsection{Independent controls for the admission instrument}\label{app:gatecontrols}
-We tested the post-review Gate-v2 development instrument with 32 newly
-authored controls, separate from the controls used to develop its probes.
-The instrument was fixed before a separate model
-(\texttt{gpt-5.5}; Table~\ref{tab:models}) received the public
-contracts and callable interface, without its implementation or earlier
-controls. The author supplied two intended conforming and two intended
-nonconforming implementations for each of the eight mechanism types.
-Control source, author-reference labels, instrument, measurement code,
-and execution order were fixed before the first evaluation. No benchmark
-or provider generation was run, and this first measurement is retained unchanged.
+\subsection{Admission scope and instrument limits}
+\label{app:free-vocabulary}
+In the free arm, builders choose among four declarations: repair,
+vote, twostage, and plain. Vote requires multiple samples and selection,
+not necessarily three-way majority voting; twostage requires artifact
+consumption without prescribing a response interface. Plain declares
+no control-flow mechanism despite the prompt's request for a
+control-flow change. Thus ``free'' means builder choice within a
+specified vocabulary, not an unrestricted interface.
 
-\begin{table}[H]
-\centering\small
-\begin{tabular}{lrrr}\toprule
-Declared mechanism & Structural pass & Structural fail & Review required \\\midrule
-Repair & 2 & 2 & 0 \\
-Execution-result vote & 2 & 2 & 0 \\
-Schema linking & 0 & 4 & 0 \\
-Hint guard & 0 & 0 & 4 \\
-Two views & 0 & 3 & 1 \\
-Decomposition & 1 & 3 & 0 \\
-Error classification & 0 & 4 & 0 \\
-Format guard & 0 & 0 & 4 \\\midrule
-Total & 5 & 18 & 9 \\\bottomrule
-\end{tabular}
-\caption{First evaluation of 32 independently authored controls by the
-fixed development instrument. No case had an execution failure. These
-are instrument states, not correctness labels or population error rates;
-the author's intended positive/negative labels require separate scrutiny.}
-\label{tab:gatecontrols}
-\end{table}
+The gate bundles structural screening with conformance verification.
+Independent development checks identified false rejections,
+request-attribution and response-interface defects, and unresolved
+conformance judgments. Later interface revisions and adjudication did
+not yield revised benchmark outcomes. The reported treatment therefore
+remains the implemented screening bundle; those development checks do
+not establish general semantic validity of the admission instrument.
 
-The nine review-required cases were retained. A third model
-(\texttt{gpt-5.6-sol}) received the
-full control source and traces without author-reference labels or
-automatic verdicts, for source-contract review of all 32 controls and
-semantic adjudication of the four designated mechanism types.
-Independent source review supported conformance for one decomposition
-control and two error-classification controls that the instrument rejected.
-The decomposition stub returned the payload of the first plan step whose
-text occurred in a request; retaining the earlier step in the context of
-the next request therefore retrieved the earlier payload again. The
-classification check removed the exact error text but still counted
-an ordinary \texttt{Schema:} heading as a category, making the extracted
-category set disagree with the expected error class. These are instrument
-failures on these controls, not observed failures of a target model.
-Three author-intended positive controls were disputed: two schema-linking
-controls retained an unrelated table, and one two-view control batched
-its requests and mishandled an empty result. Their original labels and
-the review disagreements were retained separately. Among the 29 controls
-whose author labels and source review agreed, the instrument rejected
-3 of 13 conforming controls; all 16 nonconforming controls were rejected
-after the designated semantic review. The instrument therefore did not
-pass this finite control check. These counts do not estimate error rates
-in a generated population.
-Semantic adjudication of the designated 16 controls yielded 7 conforming,
-8 nonconforming, and 1 indeterminate case. The indeterminate case already
-had a structural failure, which was retained without resolving its semantics.
-This small, deliberately balanced control set is not a random sample of
-generated harnesses. Passing it would not validate the production
-interface or replace the common-raw-pool comparison of admission policies.
-
-\paragraph{Revised instrument and a new independent control set.}
-Gate-v3 corrected decomposition request attribution and treated category
-keywords and shared request templates as review clues rather than automatic
-rejections. We fixed this version before fresh model contexts
-(\texttt{gpt-5.5} authoring, \texttt{gpt-5.6-sol} review) authored and
-reviewed a new set of 32 controls, again two intended positive and two intended
-negative controls per mechanism. The review packet withheld author labels,
-automatic verdicts, and instrument-derived attribution metadata. All 32
-controls received source review; the 20 controls in the four prompt/formulation
-groups plus decomposition also received semantic or data-flow review.
-Structural outcomes were 8 passes, 10 failures, and 14 review-required cases,
-with no execution failures. Following one recorded evidence clarification,
-source review classified 15 controls as conforming and 17 as nonconforming;
-semantic review classified 8 as conforming, 11 as nonconforming, and 1 as
-indeterminate.
-
-The indeterminate classification control requested an intermediate error
-category, but the synthetic interface returned SQL text. Its fallback then
-selected a semantics repair action. This establishes a response-type mismatch
-in the fixture, not a real solver's classification error. A second classification
-control was reference-disputed: its source mapped the supplied schema-failure
-message to a semantics action. Among the 31 undisputed references, 14 of 15
-conforming controls were accepted and one remained unresolved; all 16
-nonconforming controls were rejected. The prespecified finite check therefore
-remained unmet because of the unresolved case and insufficient agreed positive
-coverage for error classification. One voting control's conformance applied
-only to result arbitration; it did not establish task-conditioned candidate
-generation. These finite mechanism checks do not validate complete harness
-operation or replace the planned common-pool policy comparison.
-
-\paragraph{Runtime response contracts.}
-We subsequently tested seven archived ungated, strategy-forced candidates,
-selecting the first available candidate per strategy in a fixed ordering,
-rather than by performance;
-no format-guard candidate was available (Appendix~\ref{app:extraction}).
-The 27 synthetic scenarios exposed both candidate and instrument limitations.
-The two-view candidate skipped its second execution when the first result was
-nonempty, contrary to its original ``execute both'' declaration. In contrast,
-the schema-linking candidate requested JSON but received plain text, and
-the full plan in decomposition requests prevented the frozen probe from
-uniquely attributing the current target.
-We retained those observations and tested source-assigned response profiles
-in 11 further development scenarios. Dedicated subquestion fields identified
-the current target, executable SQL payloads reached the final assembly, and
-four errors produced by an in-memory SQLite database elicited the corresponding
-syntax or schema repair instructions. Schema-linking JSON changed the explicit
-table/column restrictions in the SQL-writing request, although the full schema
-remained present. Retaining schema context therefore cannot by itself establish
-that the linked subset was ignored. These exposed-candidate checks distinguish
-response-interface failures from observable candidate deviations; they do not
-replace independent calibration or provide revised benchmark outcomes.
-
-\paragraph{Unified interface and premeasurement reference review.}
-Gate-v4 combined the source-assigned response interfaces with the five unchanged
-Gate-v3 mechanism probes. A separately authored set of 32 controls
-(\texttt{gpt-5.6-sol}) underwent
-blinded source review before execution. The author was familiar with earlier
-control failures; schema-response and declared voting-parameter mismatches found
-in this source review were corrected, with the initial versions retained.
-The revised references had two agreed conforming and two agreed nonconforming
-controls per mechanism. After freezing their source, profiles, and dependencies,
-one measurement covered 124 scenarios without execution exceptions. Structural
-results were 4 passes, 6 failures, and 22 review-required cases.
-
-A new review context (\texttt{gpt-5.5}) received all source and actual
-traces without reference
-labels, source-review decisions, or automatic verdicts. Its first judgments
-were 18 conforming and 14 nonconforming. Retaining structural failures in the
-prespecified hybrid rule accepted all 16 conforming references but also one
-nonconforming hint control, so the finite zero-error criterion was not met.
-That control correctly restated existing hints but invented a mandatory sort
-order when no hint was supplied. A recorded, targeted evidence clarification
-corrected this oversight and a two-view judgment that had treated two samples
-from one request as independent formulations. The latter control was already
-rejected structurally. The clarified decisions agreed with all 32 references,
-but this follow-up does not replace the first blinded result or constitute
-a new independent calibration pass. No instrument rerun, provider generation,
-or benchmark evaluation was performed in this check.
-
-\paragraph{Scope of the declaration vocabulary.}
-These controls cover the eight strategy-forced contracts, not the free arm's
-four declarations (repair, vote, twostage, and plain). In the original free
-prompt, vote specifies multiple samples and selection but not three-way
-majority voting; twostage specifies artifact consumption without a particular
-response interface. The plain declaration also specifies no control-flow
-mechanism, whereas the free prompt requests a control-flow change. Applying
-the eight-strategy gate to these declarations
-therefore requires separately fixed semantic rules and an indeterminate policy,
-rather than silently treating vote as vote3 or choosing a compatible profile
-after observing its result. This source-level scope gap does not estimate
-false-rejection rates for generated candidates.
-
-
-Upstream extraction issues and incomplete provider acquisition records
-are retained in Appendix~\ref{app:history}.
+\paragraph{Generation-interface limits.}\label{app:extraction}
+All $108$ format-guard attempts across the $36$ forced-arm cells failed
+neutral validity: $71$ logs report unterminated strings, $36$ no Python
+fence, and one a provider timeout. Synthetic examples reproduce
+truncation by the archived non-greedy code-fence extractor, but full
+builder messages and the exact version executed on each historical
+attempt were not retained. These observations document an upstream
+validity failure; they do not establish nonconformance of the intended
+mechanisms or attribute every rejection to the gate.

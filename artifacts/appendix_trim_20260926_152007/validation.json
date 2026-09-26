@@ -1,0 +1,116 @@
+{
+  "pdf": {
+    "latex_before": {
+      "pages": 32,
+      "appendix_start": 12,
+      "appendix_pages": 21
+    },
+    "latex_after": {
+      "pages": 25,
+      "appendix_start": 12,
+      "appendix_pages": 14
+    },
+    "latex_zh_before": {
+      "pages": 38,
+      "appendix_start": 14,
+      "appendix_pages": 25
+    },
+    "latex_zh_after": {
+      "pages": 30,
+      "appendix_start": 14,
+      "appendix_pages": 17
+    }
+  },
+  "sources": {
+    "latex": {
+      "changed": [
+        "sec_appendix.tex",
+        "sec_app_bird_admission.tex",
+        "sec_app_bird_traces.tex",
+        "sec_app_inventory.tex",
+        "sec_app_selection.tex",
+        "sec_app_statistics.tex",
+        "sec_crossdomain.tex",
+        "sec_selection_design.tex",
+        "sec_setup.tex"
+      ],
+      "evidence_sources_unchanged": {
+        "sec_app_wp1r.tex": true,
+        "calibration_table.tex": true,
+        "common386_numbers.tex": true,
+        "common386_policy_table.tex": true,
+        "common386_replay_table.tex": true,
+        "revision_primary_table.tex": true,
+        "revision_factorial_table.tex": true,
+        "revision_sensitivity_table.tex": true
+      },
+      "checks": {
+        "unresolved_references": [],
+        "duplicate_labels": [],
+        "history_compiled": false,
+        "utf8_replacement_characters": 0,
+        "overfull_boxes": 0,
+        "missing_characters": 0,
+        "undefined_reference_or_citation": 0,
+        "font_warnings": 0,
+        "output_pdf_sha256": "aca6a579b56203ec299e494c3af7d9d4f9f853d20510882612596ab494271e00",
+        "four_required_limits": {
+          "low_power": true,
+          "format_case": true,
+          "harder_exclusions": true,
+          "all_baseline_selector": true
+        }
+      }
+    },
+    "latex_zh": {
+      "changed": [
+        "sec_appendix.tex",
+        "sec_app_bird_admission.tex",
+        "sec_app_bird_traces.tex",
+        "sec_app_inventory.tex",
+        "sec_app_selection.tex",
+        "sec_app_statistics.tex",
+        "sec_crossdomain.tex",
+        "sec_selection_design.tex",
+        "sec_setup.tex"
+      ],
+      "evidence_sources_unchanged": {
+        "sec_app_wp1r.tex": true
+      },
+      "checks": {
+        "unresolved_references": [],
+        "duplicate_labels": [],
+        "history_compiled": false,
+        "utf8_replacement_characters": 0,
+        "overfull_boxes": 0,
+        "missing_characters": 0,
+        "undefined_reference_or_citation": 0,
+        "font_warnings": 2,
+        "output_pdf_sha256": "b5232d8d5e19410bf9d41c751472324029be9bec5dcda2559a59bbd6682f0732",
+        "four_required_limits": {
+          "low_power": true,
+          "format_case": true,
+          "harder_exclusions": true,
+          "all_baseline_selector": true
+        }
+      }
+    }
+  },
+  "source_diff_check": {
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "visual_review": {
+    "rendered": "all appendix pages",
+    "contact_sheets_reviewed": 5,
+    "clipping_or_overlap_observed": false,
+    "scope": "local editorial review, not independent scientific acceptance"
+  },
+  "scope": {
+    "new_model_calls": 0,
+    "results_rescored": false,
+    "experiments_changed": false,
+    "source_files_changed": 18
+  }
+}

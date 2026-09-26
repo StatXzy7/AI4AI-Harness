@@ -1,80 +1,74 @@
 \subsection{Positive Oracle Estimates from Identical Programs}
 \label{sec:f3-clones}
-The same-code arm provides the most direct check of the specialization
-interpretation: all nine slots implement the same program, so stable
-program complementarity is zero. If its estimated headroom is positive,
-that estimate cannot by itself distinguish specialization from
-execution variability.
-
-The repeat-averaged estimate is indeed positive:
-$\widehat H=\WpVthreeClonePlugin$\,\% on $383$ complete clone tasks.
-The generated panel gives $\WpVthreePlugin$\,\% on its $350$ complete
-tasks (Table~\ref{tab:clone-control}). These are arm-specific descriptive
-estimates, not a paired effect comparison. Unknowns remain missing;
-the older available-repeat estimates use a different estimand and
-are documented in Appendix~\ref{app:wp1r}. The control establishes
-that even an oracle estimate averaged over three repeats can be
-positive without program specialization. The next question is whether
-choices discovered in some repeats remain useful in another.
+All nine clone slots implement the same program: their population-level
+stable complementarity is zero. On the common $\RcvPairedN$ tasks,
+their repeat-averaged oracle estimate is $\RcvClonePlugin$ pp, while
+the generated panel gives $\RcvRealPlugin$ pp
+(Table~\ref{tab:clone-control}). Both estimates use identical task
+identities and complete observations. The control establishes that
+averaging three repeats does not make a positive oracle estimate
+identify specialization.
 
 \begin{table}[htbp]
 \centering\small
 \begin{tabular}{@{}lcc@{}}
 \toprule
-Quantity & Generated panel + \bare{} & Same-code clones \\
+Quantity & Generated + \bare{} & Same-code clones \\
 \midrule
-Complete-task oracle estimate $\widehat H$ & $\WpVthreePlugin$\,\% & $\WpVthreeClonePlugin$\,\% \\
-Complete tasks for repeat-based $G$ & 350 & 383 \\
-Held-out-repeat mean gain $G$ & $\WpVthreeG$\,\% & $\WpVthreeGclone$\,\% \\
+Complete-task oracle estimate $\widehat H$ & $\RcvRealPlugin$ pp & $\RcvClonePlugin$ pp \\
+Complete tasks for repeat-based $G$ & \RcvRealN & \RcvCloneN \\
+Held-out-repeat mean gain $G$ & $\RcvRealG$ pp & $\RcvCloneG$ pp \\
+Residual score-pattern correlation & $\RcvRealRho$ & $\RcvCloneRho$ \\
 \midrule
-\multicolumn{3}{l}{Paired clone-adjusted mean: $D=\WpVthreeD$\,\% on $\WpVthreeNPaired$ complete tasks} \\
-\multicolumn{3}{l}{Incomplete tasks: $\WpExclReal\%$ (generated) / $\WpExclClone\%$ (clones)} \\
+\multicolumn{3}{l}{Paired clone-adjusted mean: $D=\RcvD$ pp on $\RcvPairedN$ tasks} \\
+\multicolumn{3}{l}{Analysis-set completeness: $100\%$ in both arms ($\RcvCells$ cells each)} \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{Positive oracle estimates do not establish a repeat-stable
-advantage.} Each arm's $\widehat H$ and $G$ use its own complete tasks;
-$D$ averages paired task-level gain differences on the intersection,
-so subtracting the two displayed $G$ values does not recover $D$.
-The generated arm fails the $10\%$ incompleteness gate.}
+\caption{\textbf{Coverage, repeatability, and selection gain separate.}
+All quantities use the same $\RcvPairedN$ tasks. Both arms are fully
+observed on this analysis set. $D$ is the paired difference of the
+unrounded cross-fitted gains; rounding may affect the displayed difference.
+}
 \label{tab:clone-control}
 \end{table}
 
-\subsection{Repeat Validation and Diagnostic Sensitivity}
+\subsection{Repeatable Score Patterns and Held-Out Selection Gain}
 \label{sec:repeat-result}
-Freezing choices before scoring reduces reuse of chance successes.
-On the respective complete-task sets, the held-out-repeat mean is
-$G_{\rm real}=\WpVthreeG$\,\% for generated programs and
-$G_{\rm clone}=\WpVthreeGclone$\,\% for clones. On their
-$\WpVthreeNPaired$-task intersection, the calibrated difference is
-$D=\WpVthreeD$\,\%, with 95\% interval $\WpVthreeDCI$\,\%.
-The mean shows no advantage over the same-code reference. It also
-establishes neither equivalence nor a negative population effect:
-$\WpExclReal\%$ of generated-arm tasks are incomplete, exceeding the
-$10\%$ gate. The decision is \textsc{Insufficient Evidence}.
-All-$0$/all-$1$ filling scenarios give $G$ values spanning
-$\WpVthreeBounds$\,\%; the full decision rule and sensitivity methods appear
-in Appendix~\ref{app:statistics}, with missingness records in
-Appendix~\ref{app:wp1r}.
+Generated programs do exhibit repeatable differences. An exploratory
+analysis removes additive member and task effects from the score-advantage
+matrix and correlates each held-out repeat with the other two.
+The mean residual correlation is $\RcvRealRho$ for generated programs
+and $\RcvCloneRho$ for clones; their paired-bootstrap difference is
+$\RcvRhoDiff$ (95\% interval $\RcvRhoDiffCI$).
+These correlations describe repeatable \emph{scored-outcome patterns}.
+To examine their direction, we count persistent losses and wins.
+All-three-repeat losses to
+\bare{} span $\RcvLossTasks$ tasks ($\RcvLossPairs$ member--task pairs), while all-three-repeat
+wins occur on only one task, shared by all eight generated members.
+That apparent repair is sensitive to answer-format extraction
+(Appendix~\ref{app:repeatability}). The observed asymmetry helps explain
+the coexistence of strong score repeatability and limited observed wins.
+
+The held-out selection diagnostic asks the stronger question: do past
+outcomes identify a useful member for another execution?
+The clone-adjusted mean is $D=\RcvD$ pp, with 95\% interval
+$\RcvDCI$ pp and randomization $p=\RcvP$.
+All primary analysis tasks are fully observed. The decision nevertheless
+remains \textsc{Insufficient Evidence}: the interval includes zero and
+the positive-support conditions are not met; the result does not
+establish equivalence.
+Excluding the three included tasks containing conflicting scores gives
+$D=\RcvConflictD$ pp
+on $\RcvConflictN$ paired tasks and the same decision
+(Appendix~\ref{app:wp1r}).
 
 \paragraph{Would the diagnostic detect real crossovers?}
 \label{sec:power}
-Known-truth simulations answer this necessary follow-up. Across a
-$100$-cell grid varying members, tasks, repeats, and missingness, the
-clone-calibrated rule's worst observed null false-support rate is
-$2\%$. Sensitivity is much less reassuring: a two-specialist setting
-with true $H_{\rm stable}=17.5$\,\% has $0\%$ power at $R=3$, about
-$0.7\%$ at $R=5$, and $100\%$ at $R=10,20$. Smaller cyclic crossovers
-remain largely undetected even at $R=20$
-(Appendix Table~\ref{tab:calibration}). These are results for the tested
-simulation settings, not a universal repeat threshold.
-
-The two findings support different conclusions. The clone result
-refutes using a positive plugin alone to identify specialization.
-The repeat result does not settle whether this generated panel has
-stable crossovers: the data are incomplete and the test can miss
-known crossovers at three repeats. Some stable mean member differences
-are detected, but a stronger average member is not itself a task
-specialist. Although stable specialization remains unresolved, selection performance
-can still be measured directly. We next use the same MATH panel to test
-a frozen pre-execution choice and compare post-execution coverage at
-equal execution counts.
+Known-truth calibration quantifies the diagnostic's sensitivity. Across the tested $100$-cell grid the worst observed
+null false-support rate is $2\%$, but a two-specialist setting with
+true $H_{\rm stable}=17.5$ pp has $0\%$ power at $R=3$, about $0.7\%$
+at $R=5$, and $100\%$ at $R=10,20$. Smaller cyclic crossovers remain
+largely undetected even at $R=20$ (Appendix Table~\ref{tab:calibration}).
+These are setting-specific empirical results. Thus the data identify
+repeatable score patterns, while useful task-wise crossovers remain
+unresolved. Actual pre-execution selection can still be evaluated directly.

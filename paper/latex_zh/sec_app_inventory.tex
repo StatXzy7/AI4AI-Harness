@@ -7,7 +7,7 @@
 \FloatBarrier
 \subsection{模型与版本}\label{app:models}
 
-表~\ref{tab:models} 列出本文使用的每个模型及其发送给 API 的确切版本字符串。所有模型均通过单一商业 OpenAI 兼容 API 聚合器访问（每个角色都用同一提供方）。冻结的是目标模型身份；解码由各 harness 定义，single-call 基线的温度为 $0$。Phase-II harness 生成使用温度 0.7、16{,}384 token 预算；Phase-I 生成条件及其证据缺口见附录~\ref{app:phase1-provenance}。Phase I 使用代理执行评分器；Phase II 使用官方 BIRD 评分器（30\,s 超时），旧评分器作为次要审核。MATH-500 探查使用附录~\ref{app:crossdomain} 的答案比较器；报告的准确率无一由 LLM 评分器产生。
+表~\ref{tab:models} 列出所报告基准研究使用的模型及其发送给 API 的确切版本字符串。所有模型均通过单一商业 OpenAI 兼容 API 聚合器访问（每个角色都用同一提供方）。冻结的是目标模型身份；解码由各 harness 定义，single-call 基线的温度为 $0$。Phase-II harness 生成使用温度 0.7、16{,}384 token 预算；Phase-I 生成条件及其证据缺口见附录~\ref{app:phase1-provenance}。Phase I 使用代理执行评分器；Phase II 使用官方 BIRD 评分器（30\,s 超时），旧评分器作为次要审核。MATH-500 探查使用附录~\ref{app:crossdomain} 的答案比较器；报告的准确率无一由 LLM 评分器产生。
 
 \begin{table}[H]
 \centering
@@ -17,18 +17,13 @@
 角色 & 模型（确切版本字符串） & 用于 \\
 \midrule
 冻结目标求解器 & \texttt{GLM-5.3-Flash}（基线温度 $0$） & MATH / BIRD \\
-第二冻结目标（重复） & \texttt{Qwen3.8-Flash} & Phase I \\
-Phase-I 构建器 & \texttt{GLM-5.3-Flash}, \texttt{Qwen3.8-Flash},
-\texttt{DeepSeek-V4-Flash-Vision-Exp} & \S\ref{sec:phase1probes} \\
-Phase-II 构建器 & \texttt{GLM-5.3}, \texttt{Qwen3.8-Max},
+BIRD 发现构建器 & \texttt{GLM-5.3-Flash} & 附录~\ref{app:phase1-provenance} \\
+MATH / BIRD 准入构建器 & \texttt{GLM-5.3}, \texttt{Qwen3.8-Max},
 \texttt{DeepSeek-V4-Pro}, \texttt{Kimi-K3}, \texttt{MiniMax-M3},
-\texttt{ERNIE-5.0-Thinking-Preview} & Phase II \\
-门控仪器开发 & \texttt{GPT-6} & 附录~\ref{app:gatecontrols} \\
-控制编写 & \texttt{gpt-5.5}（v2/v3 集）, \texttt{gpt-5.6-sol}（v4 集） & 附录~\ref{app:gatecontrols} \\
-盲测控制审核／裁决 & \texttt{gpt-5.6-sol}（v2/v3）, \texttt{gpt-5.5}（v4，语义裁决） & 附录~\ref{app:gatecontrols} \\
+\texttt{ERNIE-5.0-Thinking-Preview} & MATH / BIRD \\
 评分器 & 代理／官方 BIRD 执行评分器；MATH 答案比较器 & 见正文 \\
 \bottomrule
 \end{tabular}
-\caption{完整模型清单。目标在每个阶段内保持冻结；Phase-II 构建器来自六个独立实验室。}
+\caption{所报告基准研究的模型清单。目标在每个阶段内保持冻结；Phase-II 构建器来自六个独立实验室。}
 \label{tab:models}
 \end{table}

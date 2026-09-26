@@ -2,9 +2,9 @@ A population can supply more correct answers without containing
 task specialists, and specialists can exist without an effective
 selector. We formalize these distinctions before describing the controls.
 Let $P$ contain baseline $H_0$, and let $Y(h,x,r)\in\{0,1\}$ denote
-member $h$'s correctness on task $x$ in repeat $r$. Throughout, gains
-use \% for absolute probability differences:
-$98.50\%-93.75\%=4.75\%$ means $0.0475$ additional success probability.
+member $h$'s correctness on task $x$ in repeat $r$. Accuracies and frequencies
+use \%; gains and headroom use percentage points (pp). For example,
+a probability difference of $0.04145$ is reported as $4.15$ pp after rounding.
 
 \paragraph{Coverage: were additional correct answers available?}
 A one-run oracle sees correctness before choosing a member. Its
@@ -20,7 +20,7 @@ member--task mean. With few repeats, maximizing those means can still
 select favorable estimation errors; $\widehat H>0$ is not by itself
 evidence of specialization.
 
-\paragraph{Stable interaction: does the best member change with the task?}
+\paragraph{Stable complementarity: does the best member change with the task?}
 To remove execution noise conceptually, write
 $p_h(x)=\Pr\{Y(h,x,r)=1\}$ under a fixed execution condition and define
 $H_{\rm stable}=\mathbb E_x\max_h p_h(x)-\max_h\mathbb E_x p_h(x)$.

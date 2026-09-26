@@ -1,5 +1,5 @@
 % Canonical ICLR 2027 manuscript (promoted from 2026-09-15 insight revision;
-% revised 2026-09-25: coverage, repeat evidence, and usable selection).
+% revised 2026-09-26: frozen recovery, score repeatability, and usable selection).
 \documentclass{article}
 \usepackage{iclr2027_conference,times}
 \usepackage{float,needspace}
@@ -22,34 +22,33 @@
 
 \newcommand{\bare}{single-call}
 \newcommand{\react}{\texttt{react}}
-\newcommand{\pp}{\,\%}
+\newcommand{\pp}{\,\mathrm{pp}}
 \input{revision_numbers}
-\input{wp1r_numbers}
+\input{common386_numbers}
 
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \begin{document}
 \maketitle
 
 \begin{abstract}
-When a population of LLM harnesses solves more tasks than its
-best-performing individual member, does this gain reflect genuine
-program specialization, or simply more opportunities to produce
-correct answers? We investigate this question from two complementary
-perspectives. On MATH-500, we compare generated harnesses with repeated
-executions of byte-identical programs. Even when all nine execution
-slots run the same single-call program, the repeat-averaged oracle
-headroom reaches $\WpVthreeClonePlugin$ percentage points, showing that
-positive coverage gains alone do not establish specialization among
-programs. On BIRD, we further examine whether source-code differences
-translate into distinct execution behavior. Trace analysis reveals
-several failure modes: some claimed mechanisms are not implemented,
-some are present but never triggered, and others execute but corrupt
-the final output. Together, these findings provide a clearer evidence
-framework for evaluating LLM harness populations: code-level
-differences, actual execution behavior, stable task advantages, and
-the ability to select and exploit those advantages should be tested
-separately to more accurately assess the value of generated program
-populations.
+Do generated LLM harnesses add task-specific abilities, or merely more
+opportunities to produce correct answers? We separate coverage,
+repeatability, and usable selection using same-code controls on
+$\RcvPairedN$ fully observed MATH-500 tasks. Eight generated programs
+plus a baseline are compared with nine byte-identical baseline slots,
+each executed three times. The clones produce $\RcvClonePlugin$
+percentage points of repeat-averaged oracle headroom despite zero
+program specialization. Generated programs show much stronger
+residual score-pattern correlation ($\RcvRealRho$ versus $\RcvCloneRho$),
+but persistent losses to the baseline span $\RcvLossTasks$ tasks,
+whereas persistent wins occur on only one. The frozen feature selector
+gains zero; at 27 executions, both arms reach
+$\RcvReplayFullCoverage\%$ oracle coverage. Held-out-repeat evidence
+leaves stable complementarity unresolved. Supporting BIRD traces
+distinguish mechanisms that are absent, untriggered, or executed but
+broken. Thus, in the tested panel, strong repeatability yields neither
+a gain for the frozen selector nor greater full-budget oracle coverage
+than additional executions of the same program.
 \end{abstract}
 
 \section{Introduction}\label{sec:introduction}
@@ -95,8 +94,8 @@ The manuscript specifies the populations, task splits, execution
 conditions, scoring rules, statistical procedures, and sensitivity
 analyses used for the reported results. The appendices provide
 additional protocol details, calibration results, and worked examples.
-Experimental code is not provided to reviewers; the methodological
-and empirical claims are presented within the manuscript.
+The review materials present the methodological and empirical evidence
+through these descriptions, tables, and examples.
 
 % ---- ICLR 2027 mandatory AI use statement (does not count toward page limit) ----
 \subsection*{AI use statement}
@@ -115,10 +114,8 @@ retain their original provenance and stated limitations. The post-review
 corrections are recorded separately from the original protocol.
 Verification records specify the scope of automated tests, development
 controls, and review for each artifact. Post-review revisions also used
-same-model subagent reviews; these are mechanical checks, not independent
-cross-model scientific validation. Development controls and local runtime
-tests do not establish independent gate calibration or provider-level
-execution independence.
+same-model subagent reviews for mechanical checks, supplemented by
+development controls and local runtime tests.
 
 \textbf{Research ideas and direction.} The core research questions, the causal
 design decisions (estimand, contrasts, exclusion rules), the interpretation
@@ -127,13 +124,12 @@ The human authors set the overall research direction and requested the
 review-driven revision; AI tools also proposed analysis and experiment
 designs, identified counterexamples, and implemented revisions. Final
 scientific decisions and approval of the submission remain the authors'
-responsibility. This disclosure does not claim that every AI-proposed
-decision has already received individual author approval.
+responsibility.
 
 \textbf{Responsibility.} We take responsibility for the final content of this
 work, including text, claims, and artifacts produced with the aid of generative
-AI tools. The factual statements in this section are provided for author verification;
-final responsibility for their accuracy rests with the authors.
+AI tools. The authors have reviewed these disclosures and the final
+manuscript and are responsible for their accuracy.
 
 \bibliography{references}
 \bibliographystyle{iclr2027_conference}

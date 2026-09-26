@@ -10,8 +10,8 @@ and~\ref{app:phase2-protocol}.
 \FloatBarrier
 \subsection{Models and versions}\label{app:models}
 
-Table~\ref{tab:models} lists every model used in this paper with its exact
-version string as sent to the API. All models were accessed through a single
+Table~\ref{tab:models} lists the models used in the reported benchmark
+studies with their exact version strings as sent to the API. All models were accessed through a single
 commercial OpenAI-compatible API aggregator (the same provider for every
 role). The frozen
 target model identity is fixed; decoding follows each harness, with
@@ -31,19 +31,14 @@ in Appendix~\ref{app:crossdomain}; no LLM judge produces reported accuracy.
 Role & Model (exact version string) & Used in \\
 \midrule
 Frozen target solver & \texttt{GLM-5.3-Flash} (baseline temperature $0$) & MATH / BIRD \\
-Second frozen target (replication) & \texttt{Qwen3.8-Flash} & Phase I \\
-Phase-I builders & \texttt{GLM-5.3-Flash}, \texttt{Qwen3.8-Flash},
-\texttt{DeepSeek-V4-Flash-Vision-Exp} & \S\ref{sec:phase1probes} \\
+BIRD discovery builder & \texttt{GLM-5.3-Flash} & App.~\ref{app:phase1-provenance} \\
 MATH / BIRD admission builders & \texttt{GLM-5.3}, \texttt{Qwen3.8-Max},
 \texttt{DeepSeek-V4-Pro}, \texttt{Kimi-K3}, \texttt{MiniMax-M3},
 \texttt{ERNIE-5.0-Thinking-Preview} & MATH / BIRD \\
-Gate-instrument development & \texttt{GPT-6} & App.~\ref{app:gatecontrols} \\
-Control authoring & \texttt{gpt-5.5} (v2/v3 sets), \texttt{gpt-5.6-sol} (v4 set) & App.~\ref{app:gatecontrols} \\
-Blinded control review/adjudication & \texttt{gpt-5.6-sol} (v2/v3), \texttt{gpt-5.5} (v4, semantic adjudication) & App.~\ref{app:gatecontrols} \\
 Judge & proxy / official BIRD execution scorer; MATH answer comparator & see text \\
 \bottomrule
 \end{tabular}
-\caption{Complete model inventory. The target is held frozen within each
+\caption{Model inventory for the reported benchmark studies. The target is held frozen within each
 phase; Phase-II builders come from six independent labs.}
 \label{tab:models}
 \end{table}

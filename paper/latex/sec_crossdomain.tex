@@ -1,62 +1,76 @@
-\subsection{Exploratory MATH population, splits, and coverage}\label{app:crossdomain}
+\subsection{MATH population, common analysis set, and coverage}\label{app:crossdomain}
+The single-run study supplies the initial coverage evidence and the
+programs for the repeat panel. It carries the BIRD admission study's
+free, ungated generation procedure into competition mathematics, with
+a domain-specific answer comparator.
 
-This single-run study establishes the initial coverage phenomenon and
-supplies the programs for the repeat panel. It carries the BIRD admission
-study's free, ungated generation procedure into competition mathematics,
-with a domain-specific answer comparator.
+\paragraph{Protocol and analysis set.}
+\label{app:builder-instruction}
+The builder task can be summarized as follows (a structured summary,
+not a verbatim prompt): write a Python harness implementing
+\texttt{solve(question)}; use \texttt{self.llm} to improve on a single
+greedy call; choose the prompting, decoding, sampling, and control flow;
+return the final mathematical answer with the requested
+\texttt{\#\#\#\#} marker. Gold answers belong to the external judge.
+No slot is assigned a mechanism and no cross-program diversity target
+is imposed. Repeated attempts use the same instruction, without
+earlier candidate code or performance feedback. Admission checks
+interface validity and nonempty output, not an accuracy improvement.
 
-\paragraph{Protocol.} Six builders (the same models as the BIRD admission study), one seed,
-eight slots each, an $R{=}3$ raw-attempt cap per slot, neutral validity gate
-(mechanism-blind: parse, import, interface, non-empty answer on two dev
-questions). Frozen target GLM-5.3-Flash (same as the SQL study), with decoding
-settings defined by each frozen member; the baseline uses temperature $0$. MATH-500 \citep{math500}: 500 tasks frozen before generation (100 dev /
-400 eval, fixed random split). The 100 dev tasks are used only for
-generation-side smoke tests and are never executed in the evaluation
-archive; the selection-policy experiments of
-Appendix~\ref{app:archive-analysis} therefore carve their training split (80
-tasks) from the eval side, leaving 320 scored tasks for D/E claims.
-This historical archive analysis is distinct from the fresh repeat
-study, whose selector uses the 100 development tasks and scores all
-400 evaluation tasks (Appendix~\ref{app:selection}). Judge: numeric equality where both sides parse as
-numbers (including $a/b$, \verb|\frac{a}{b}|, decimals), else normalized
-LaTeX string equality (units, base subscripts, $^\circ$ stripped;
-\verb|\text{X}| content preserved; pmatrix $\to$ tuple). Judge
-self-consistency: 400/400 gold answers judge correct against themselves.
-single-call accuracy 0.9375 under the matched answer-format instruction. Yield:
-35/48 slots admitted ($R_{\mathrm{artifact}}$ 0.10--1.00; the two
-reasoning-heavy builders, GLM-5.3 and Qwen3.8-Max, exhausted the 32k-token
-generation budget on reasoning before emitting code in most slots ---
-reported as-is). This constraint under-represents reasoning-heavy builder styles
-in the evaluated pool; we do not adjust the
-budget post hoc, and the limitation is part of the reported protocol. This is a replication probe, not a factorial: no
-strategy forcing, no conformance gate.
+Six builders receive eight slots each under one seed, with at most
+three raw attempts per slot. The neutral-validity gate checks parsing,
+import, interface, and nonempty answers on two development questions. The frozen target is
+GLM-5.3-Flash, with member-specific decoding and temperature $0$ for
+\bare{}. The original task split precedes generation and reserves
+$100$ development problems. The final evaluation analysis uses the
+same $\RcvPairedN$ fully observed tasks for the single-run population,
+both repeat arms, and frozen-policy scoring. This task set is determined
+after collection by completeness; $\RcvExcludedN$ incomplete problems
+are excluded (Appendix~\ref{app:wp1r}). The development tasks and frozen
+selector remain unchanged.
 
-\paragraph{Results (35 harnesses, 400 eval tasks).} Mean pairwise outcome
-disagreement 10.6\% (max 33.0\%); 33 of the 36 members had unique outcome
-vectors when single-call is counted (32 of the 35 generated harnesses);
-outcome-identical pairs 0.7\% --- no trace of
-Phase-I-style collapse. Union repair 76.0\% of single-call errors; the union of all
-generated candidates fails on 0.8\% of single-call-correct tasks (a
-\emph{union-all-fail} rate, not an any-candidate or router harm). Observed
-oracle coverage exceeds single-call by 4.75\,\%, and the best fixed member is
-\emph{single-call itself} (0.9375; generated harnesses 0.6825--0.915): every
-generated member is worse individually. The one-run mini-audit originally
-did not collect repeated-execution or same-code clone controls. The
-separate WP-1R collection (\S\ref{sec:f3-clones}) adds those controls
-on the same task set for eight generated members plus \bare{}, with
-nine same-code slots and three fresh repeats. Its acquisition protocol
-was frozen before collection, while the v3 analysis was revised later.
-Its nonpositive clone-adjusted mean and limited sensitivity do not
-retroactively identify the source of the full population's $4.75$\,\%
-one-run headroom. A
-hash-bound re-execution of the versioned endpoint-sensitive rescore of all
-14{,}400 archived verdicts changes 14 of them (0.097\%): all are v1 false
-rejects of interval-endpoint answers on a single task, so per-member
-accuracies rise by at most one task and no qualitative conclusion moves
-(Appendix~\ref{app:archive-analysis}). An earlier stored artifact reporting zero flips is
-not reproduced by the corrected analysis and is retained only as provenance.
+The judge compares numeric values when both sides parse as numbers
+(including fractions and decimals), and normalized LaTeX otherwise.
+Normalization strips units, base subscripts, and degree symbols,
+preserves text-command content, and maps matrices to tuples. The
+requested final-answer marker is \texttt{\#\#\#\#}. Formatting each gold
+answer with this marker gives $\RcvPairedN/\RcvPairedN$ correct
+self-comparisons, verifying format consistency on these gold answers. The observed single-run baseline accuracy is
+$\RevisionMathBest\%$ on the analysis set.
 
-\paragraph{Scope.} One seed, one target, no factorial, exploratory; the
-Phase-I collapse-inducing SQL protocol was not re-run in the math domain,
-so this replication speaks to the clean-protocol result only, not to the
-boundary of collapse.
+The validity gate admits $35/48$ slots. The two reasoning-heavy
+builders, GLM-5.3 and Qwen3.8-Max, exhaust the $32$k-token generation
+budget before emitting code in most slots. This under-represents those
+builder styles under the fixed generation budget. The exploratory
+study evaluates free generation with neutral-validity admission under
+one seed.
+
+\paragraph{Results on the common complete set.}
+All $36$ members, including \bare{}, have one recorded score on each
+of the $\RcvPairedN$ tasks ($\RcvSingleCells/\RcvSingleCells$ cells).
+Mean pairwise disagreement is $\RevisionMathDisagreement\%$
+(maximum $\MathMaxDisagreement\%$). There are $\MathUnique/36$ unique
+member outcome vectors ($\MathGenUnique/35$ generated vectors), and
+$\MathIdenticalPairs\%$ of member pairs have identical outcomes.
+The union of generated candidates repairs $\MathUnionRepair\%$ of
+baseline errors and fails on $\MathUnionFail\%$ of baseline-correct
+problems. The latter measures the fraction of baseline-correct tasks
+on which all generated members fail.
+Oracle coverage is $\RevisionMathOracle\%$, versus
+$\RevisionMathBest\%$ for the best fixed member, \bare{}, giving
+$\RevisionMathHeadroom$ percentage points of headroom. Generated-member
+accuracies range from $\MathGenMin\%$ to $\MathGenMax\%$.
+
+The fresh repeat panel uses eight generated members plus \bare{}
+and nine same-code slots on these identical task identities. Its
+clone-adjusted diagnostic measures held-out selection gain for this
+panel; the one-run headroom characterizes the full generated population. Replaying the archived
+judge reproduces all $\RcvSingleCells$ included scores; the versioned
+endpoint-sensitive judge produces identical scores on this subset.
+
+
+\paragraph{Scope.}
+The MATH findings characterize exploratory generation under one seed
+and one target on a completeness-selected evaluation set. The BIRD
+studies characterize SQL execution and admission under their respective
+protocols.

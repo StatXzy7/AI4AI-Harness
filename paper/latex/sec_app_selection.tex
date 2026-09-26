@@ -1,66 +1,93 @@
 \section{Frozen Selector and Execution-Matched Replay}\label{app:selection}
-This section concerns the fresh MATH repeat study: the selector is fitted on $100$ development tasks and scored on $400$ evaluation tasks. The historical $80/320$ archive split and BIRD database-split selection analyses are separate studies in Appendices~\ref{app:archive-analysis} and~\ref{app:rich}.
+The selector is fitted on $100$ development tasks and evaluated on the
+same $\RcvPairedN$ fully observed analysis tasks as every other current
+MATH comparison. We apply the recorded selector choices and
+development ranking to this common set.
 
-\subsection{Frozen feature selector} $\pi_Z$ is multinomial logistic regression
-over TF-IDF question features (max 300) and per-member dev accuracies
-computed within training folds only; 5-fold task-level CV on the 100 dev
-tasks with same-task repeats never split across folds; fold-model
-averaging; ties broken by member id; abstain to \bare{} when the top-2
-probability gap is below 0.15. Repeat aggregation uses the
-available-repeat mean per member--task (same-task repeats stay in one
-fold). Comparators: \bare{}, dev-fixed, pre-fixed random member (seeded),
-M1b (dev-fixed with single-call fallback on missing cells). $E_1$ (budget by
-construction) is not applicable because panel members make more than one
-call; $E_b$ with $b{=}3$ calls per task is reported as a separately named
-estimand. Leakage controls: no answer, correctness, eval-derived
-difficulty, post-execution trace, or judge feature is used.
+\subsection{Frozen feature selector}
+The reported selector $\pi_Z$ combines five multinomial-logistic
+fold models fitted using the $100$ development tasks. Its inputs are
+TF-IDF question features (at most $300$) and per-member development
+accuracies computed within the respective training folds. All repeats
+of a task stay together in the five-fold task partition. The score
+summary for member $h$ on development task $x$ is the available-repeat
+mean,
+\[
+ \bar Y_h(x)=\frac{1}{|\mathcal R_{hx}|}
+             \sum_{r\in\mathcal R_{hx}}Y(h,x,r),
+\]
+where $\mathcal R_{hx}$ contains its observed development repeats.
+The five fitted models are combined by fold-model averaging. If
+$p_k(h\mid x)$ is the probability assigned by fold model $k$, the
+inference rule uses $\bar p(h\mid x)=\frac15\sum_{k=1}^5p_k(h\mid x)$.
+Let $h_{(1)}$ and $h_{(2)}$ be the members with the two highest averaged
+probabilities, breaking ties by member ID. The final frozen choice is
+\[
+ \pi_Z(x)=
+ \begin{cases}
+  \text{\bare{}}, & \bar p(h_{(1)}\mid x)-\bar p(h_{(2)}\mid x)<0.15,\\
+  h_{(1)}, & \text{otherwise}.
+ \end{cases}
+\]
+Thus the five-fold step supplies the averaged prediction used at
+inference, and the threshold is applied after averaging. The policy
+table evaluates these final choices, including the baseline fallback.
+It reports repeat-mean accuracy, with harness executions as the unit of
+evaluation; a selected harness can make multiple model calls.
+
+Comparators are \bare{}, the development-selected fixed member,
+one randomly drawn fixed member (drawn once with a fixed seed), and
+the development-selected member with a baseline fallback on missing
+cells. The random comparator uses the same member for every task.
 
 \begin{table}[H]
 \centering\small
-\input{wp1r_policy_table}
-\caption{\textbf{WP-2R frozen comparator set on the 400 MATH-500 eval
-tasks} (repeat-mean correctness over three fresh repeats; retrospective
-tasks, prospective execution --- no unseen-task claim). Paired differences
-are per-task against dev-fixed with task-level bootstrap CIs.}
+\input{common386_policy_table}
+\caption{\textbf{Frozen comparators on the common $\RcvPairedN$-task MATH
+analysis set.} Every selected member has all three scores on every task.
+Accuracy is repeat-mean correctness; paired differences are against
+dev-fixed with $2{,}000$ task-bootstrap draws. The feature policy,
+dev-fixed, and fallback policy all retain their recorded \bare{} choices.
+The randomly drawn fixed member is \texttt{gsm\_kimi\_s0\_g3}.
+Recorded policies are evaluated on fresh executions of these tasks.}
 \label{tab:wp1r-policy}
 \end{table}
 
 
 \FloatBarrier
-\subsection{Diagnostic definitions of selection and budget utility} Class D evaluates one
-frozen deterministic policy $\pi_Z: Z(x)\mapsto h$ --- pre-execution
-features (question text, frozen mechanism labels, training-fold dev
-accuracies), fitted on development tasks only --- by
-$D(\pi_Z)=\mathbb{E}_x[Y(x,\pi_Z(x))-Y(x,h_{\rm dev\text{-}fixed})]$,
-with an abstention rule falling back to \bare{} when the top-2
-selection-probability gap is below the frozen margin. Class E evaluates
-$U_b(\pi)=\mathbb{E}_x[\Delta(x,\pi(x))]$ under a uniform per-task call
-budget $b$ with $\lambda{=}1$ harm weighting (one regression cancels one
-repair); it is admissible only when per-record evidence verifies the
-budget on every evaluated member-task pair, and abstains otherwise.
+\subsection{Selection gain and the scope of budget utility}
+For the implemented selector, $Z(x)$ consists only of question features
+and training-fold member accuracies. Its gain over the
+development-selected fixed member is
+\[
+ S(\pi_Z)=\mathbb E_x\!\left[
+ \bar Y_{\pi_Z(x)}(x)-\bar Y_{h_{\rm dev\text{-}fixed}}(x)\right],
+\]
+where $\bar Y_h(x)$ now averages the three evaluation repeats. We use
+$S$ for policy gain and reserve $D$ for the real-minus-clone repeat
+diagnostic. Mechanism labels are not inputs to this feature selector.
 
-\subsection{Execution-matched replay and realized collection accounting}
-Three distinct comparisons are reported and never conflated.
-(i) \emph{Equal-slot collection}: both arms execute nine members/slots
-for three repeats; this is the randomization design and does not imply
-matched spend. (ii) \emph{Common per-task execution budget}
-(\S\ref{sec:selection-result}): offline comparison at
-$b\in\{3,9,15,27\}$ executions per task between the dev-ranked panel
-portfolio and $b$ of the 27 same-code executions, under post-execution
-\emph{oracle} aggregation only; panel-minus-same-code oracle differences
-are $+0.37,+0.03,-0.11,-0.25$\,\%. No cross-arm majority-vote accuracy is
-reported because the arms emit incompatible answer formats (boxed numbers
-versus free-form prose), so a modal answer key would be unfair. (iii) \emph{Realized spend}: per-request
-accounting layers experiment-run $>$ harness-execution $>$ logical-call
-$>$ provider-attempt; migration copies are excluded. The real arm made
-22{,}192 logical calls (32{,}097 provider attempts; 54.17\,M known
-tokens; 54.5 calls per eval task) versus the clone arm's 10{,}800
-logical calls (10{,}804 attempts; 14.51\,M tokens; exactly 27 per task)
---- a $2.05\times$ call and $3.73\times$ token ratio driven by the
-multi-call panel members; the conservative ceiling at the frozen
-break-even price is 1{,}803.82 vs 483.15 CNY (pricing not independently
-verifiable; reported as token counts times the frozen 33.3 CNY per 1M
-tokens, never as billed amounts). Totals across all arms:
-\WpLogicalCalls{} logical calls, \WpHttpAttempts{} attempts,
-\WpTotalTokens{} known tokens, \WpCostCny{} CNY ceiling. We therefore
-make no realized-cost-matched claim; the common-budget replay matches harness executions, not token cost.
+The replay below measures oracle coverage at matched
+\emph{harness execution} counts. Its budget $b$ counts harness executions,
+each of which may contain multiple model calls.
+
+\subsection{Execution-matched replay and collection accounting}
+Equal-slot collection executes nine members/slots for three repeats in
+each arm, with call counts and token use determined by each program.
+The current execution-matched
+replay (\S\ref{sec:selection-result}) instead uses the $\RcvPairedN$
+common complete tasks and the unchanged development ranking. At budgets
+$b\in\{3,9,15,27\}$ it includes all three repeats of the first $b/3$
+ranked members. For a task with $f$ incorrect clone executions out of
+$27$, the expected coverage of a uniformly selected size-$b$ subset is
+$1-\binom{f}{b}/\binom{27}{b}$, with $\binom{f}{b}=0$ for $b>f$.
+We compute the exact uniform-subset expectation. Table~\ref{tab:execution-means} reports the paired means.
+Both arms use post-execution oracle correctness, yielding descriptive
+coverage estimates at matched harness execution counts.
+
+Acquisition accounting remains separate from these outcome tables.
+The raw ledgers retain all recorded attempts and known usage, including
+excluded tasks and recovery. These ledgers record incurred acquisition
+costs over their full scope, while the outcome tables describe the
+common complete task set. Generated members can make multiple calls;
+resource use is recorded at the program and acquisition-record level.

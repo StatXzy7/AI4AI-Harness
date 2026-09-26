@@ -3,8 +3,7 @@ Running more members introduces more attempts as well as more code.
 We therefore compare nine distinct members with nine byte-identical
 \bare{} slots, each evaluated three times per task. The latter preserve
 the opportunity for stochastic outcomes while removing program
-specialization. They are an equal-ability reference, not an assumption
-that all generated programs must behave like \bare{}.
+specialization, providing an equal-ability reference.
 
 \paragraph{Held-out repeats separate discovery from validation.}
 \label{sec:calibration-test}
@@ -13,7 +12,7 @@ would reuse lucky successes. Instead, each of three folds uses two
 discovery repeats to freeze both a per-task member mapping and a
 single best fixed member. The third repeat measures their accuracy
 difference. Averaging folds gives $G_{\rm real}$ and $G_{\rm clone}$;
-the fixed comparator is discovery-selected, not necessarily \bare{}.
+the fixed comparator is selected by discovery accuracy.
 We then compare the arms on their common complete tasks:
 \begin{equation}
 D=G_{\rm real}-G_{\rm clone}.
@@ -21,20 +20,28 @@ D=G_{\rm real}-G_{\rm clone}.
 \end{equation}
 Here the subtraction is of paired task-level gains. It asks whether
 past outcomes identify choices that transfer to another execution
-better for distinct programs than for identical ones. Because those
-past outcomes come from the same evaluation tasks, this is a repeat
-diagnostic, not an unseen-task router.
+better for distinct programs than for identical ones. The diagnostic
+measures cross-repeat transfer on the same evaluation tasks.
 
-\paragraph{Missingness and sensitivity govern the interpretation.}
-A complete task has a verdict for every member and repeat; unknown
-outcomes stay missing. Descriptive quantities use each arm's complete
-tasks, while $D$ uses their intersection. The decision rule requires
-at most $10\%$ incomplete tasks in either arm and on the intersection,
-at least $30$ paired tasks, and positive-effect checks including
-$D>1$\,\%. Known-truth simulations assess whether the procedure detects
-crossovers at the available repeat count. These checks distinguish an
-unresolved result from evidence of absence. Appendix~\ref{app:wp1r} documents completeness;
-Appendix~\ref{app:statistics} gives the full rule, tie handling,
-uncertainty, and sensitivity analyses.
-The acquisition protocol was fixed before collection, with operational
-amendments during collection; the v3 analysis was revised afterward.
+\paragraph{Complete observations and sensitivity govern interpretation.}
+Every primary quantity, including both descriptive plugins and the two
+cross-fitted gains, uses the same $\RcvPairedN$ complete tasks. Each arm
+contains $\RcvCells/\RcvCells$ scored member--task--repeat cells
+($100\%$ completeness); all estimates use recorded binary scores.
+The original acquisition-coverage gate is assessed before subsetting
+and is passed: $\RcvOriginalExcludedPct\%$ of tasks were incomplete,
+below its $10\%$ ceiling. Positive-effect checks, including $D>1$ pp,
+and the minimum of $30$ paired tasks remain unchanged. Known-truth
+simulations assess repeat sensitivity. Appendix~\ref{app:wp1r} documents
+selection into the analysis set; Appendix~\ref{app:statistics} gives the
+rule, tie handling, uncertainty, and sensitivity analyses.
+The acquisition protocol preceded collection; the v3 procedure and
+common-complete-set analysis were determined afterward.
+
+\paragraph{Recovery snapshot and exploratory repeatability.}
+We analyze the timestamped recovery snapshot in Appendix~\ref{app:wp1r},
+with programs, solver, tasks, and repeat count held fixed. We additionally examine
+cross-repeat correlation after removing additive member and task
+effects. This exploratory correlation measures residual score-pattern
+repeatability, while $G$ measures held-out selection gain. Construction
+and scoring details appear in Appendix~\ref{app:repeatability}.

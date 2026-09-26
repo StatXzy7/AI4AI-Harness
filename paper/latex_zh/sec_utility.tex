@@ -1,25 +1,16 @@
 \subsection{执行前选择与 oracle 重放}\label{sec:utility}
-\paragraph{执行前选择没有获得额外收益。}
-冻结的特征策略检验一种执行前实际可作出的选择。在重复面板上，它对全部 $400$ 个评估任务选择 \bare{}，与开发集选定的固定成员同为 $\WpPiZAcc\%$ 重复平均准确率，收益为 $\WpPiZDiff$\,\%。预先固定的随机成员比较对象差值为 $\WpRandomDiff$\,\%（附录~\ref{app:selection}）。该策略避开了弱成员，却没有获得任务专属收益。这个结果只涉及一个策略与特征集，既未穷尽可能的选择器，也没有把 oracle 机会变成实际准确率。
+\paragraph{冻结选择器与开发集选出的基线持平。}
+特征策略在应用置信度回退规则后，最终在全部 $\RcvPairedN$ 道评估题上选择 \bare{}。这里评估完整决策规则；报告的最终选择不区分分类器初始偏好和回退决定。保持选择不变、仅更新记录结果后，三次重复的准确率为 $\RcvBaselineAcc\%$，与开发集选出的固定成员完全相同：所测策略与特征的增益为 $\RcvPolicyGain$ 个百分点。附录~\ref{app:selection} 给出其构造与同一分析集上的比较器结果。
 
-\paragraph{等执行次数的 oracle 重放。}
+\paragraph{完整执行预算下，两臂 oracle 覆盖持平。}
 \label{sec:selection-result}
-即使考察 oracle 覆盖，也需要与固定程序可以获得的额外尝试比较。重放为开发集排序的面板组合与克隆臂分配相同的 harness 执行次数 $b$。在 $b=3$ 时，面板仅含 \bare{}，因此 $+0.37$\,\% 的差异不可能来自程序多样性。增加成员后，$b=9$ 时差值为 $+0.03$\,\%，$b=15$ 和 $27$ 时为负（表~\ref{tab:execution-means}）。
+在两臂均完整的 $\RcvPairedN$ 个任务上，比较按开发集排序的程序组合与均匀抽取的同代码执行。在 $b=3$ 时，组合只包含 \bare{}，其 $\RcvReplayThreeGap$ pp 差异反映相同程序之间的执行变动。在 $b=9$ 和 $15$ 时，差异分别为 $\RcvReplayNineGap$ pp 与 $\RcvReplayFifteenGap$ pp。在 $b=27$ 时，两臂的 oracle 覆盖均为 $\RcvReplayFullCoverage\%$（表~\ref{tab:execution-means}）。
 
 \begin{table}[htbp]
 \centering\small
-\begin{tabular}{@{}lrrrr@{}}
-\toprule
-每题 harness 执行次数 $b$ & 3 & 9 & 15 & 27 \\
-\midrule
-面板成员数（含 \bare{}） & 1 & 3 & 5 & 9 \\
-面板 oracle 覆盖（\%） & 98.00 & 98.25 & 98.25 & 98.25 \\
-克隆 oracle 覆盖（\%） & 97.63 & 98.22 & 98.36 & 98.50 \\
-面板减克隆（\%） & $+0.37$ & $+0.03$ & $-0.11$ & $-0.25$ \\
-\bottomrule
-\end{tabular}
-\caption{\textbf{完整执行预算下，观测 oracle 均值并未支持更多程序。}成员按开发集表现排序，每个贡献三次重复。克隆覆盖平均其 $27$ 次记录执行的子集。两臂均使用事后 oracle 选择；执行次数匹配，token 成本未匹配。}
+\input{../latex/common386_replay_table}
+\caption{\textbf{在观测到的补采集快照中，完整预算下的 oracle 覆盖相同。}每个入选成员贡献三次重复；克隆覆盖是从记录的 $27$ 次执行中均匀抽取子集的精确均值，并在共同完整任务上配对。两臂在相同 harness 执行次数下使用执行后正确性。}
 \label{tab:execution-means}
 \end{table}
 
-生成臂的采集成本也更高：$22{,}192$ 次逻辑调用与 $54.17$M 已知 token，对照克隆臂的 $10{,}800$ 次调用与 $14.51$M token，token 比为 $3.73\times$。这些是实际采集支出，不是等 token 性能比较。由于答案格式不兼容，本文不报告跨臂多数投票。因此，所测选择器没有提供收益，而等执行次数的 oracle 均值没有显示该组合持续占优。两项结果都未确立其他选择器或等 token 的实际运行比较将会如何表现。
+这些重放均值描述相同 harness 执行次数下的执行后 oracle 覆盖。模型调用数和 token 成本随程序而异。所测执行前选择器的增益为零，完整的记录执行预算则为两臂提供了相同的 oracle 覆盖。

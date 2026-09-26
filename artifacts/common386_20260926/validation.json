@@ -1,0 +1,115 @@
+{
+  "checked_utc": "2026-09-26T05:40:15.990058+00:00",
+  "data": {
+    "single_run": {
+      "shape": [
+        36,
+        386
+      ],
+      "observed_cells": 13896,
+      "missing_cells": 0,
+      "completion_fraction": 1.0,
+      "task_ids_identical": true
+    },
+    "eval_real": {
+      "shape": [
+        3,
+        9,
+        386
+      ],
+      "observed_cells": 10422,
+      "missing_cells": 0,
+      "completion_fraction": 1.0,
+      "task_ids_identical": true
+    },
+    "eval_clone": {
+      "shape": [
+        3,
+        9,
+        386
+      ],
+      "observed_cells": 10422,
+      "missing_cells": 0,
+      "completion_fraction": 1.0,
+      "task_ids_identical": true
+    }
+  },
+  "papers": {
+    "latex": {
+      "pages": 30,
+      "main_end_page": 8,
+      "layout_reference_errors": [],
+      "old_value_hits": [],
+      "font_fallback": null,
+      "utf8_replacement_chars": 0,
+      "pdf_sha256": "6b643f2b098e20cd23ca0a89b7967775e474b9dd2b2bb5e936e89833a0ffbf9c",
+      "abstract_whitespace_words": 150,
+      "line_number_565_not_a_stale_result": true
+    },
+    "latex_zh": {
+      "pages": 37,
+      "main_end_page": 9,
+      "layout_reference_errors": [],
+      "old_value_hits": [],
+      "font_fallback": "SimSun small caps",
+      "utf8_replacement_chars": 0,
+      "pdf_sha256": "874c6f774d27f0e5db106cbe3fea191bcf9eddcafbe12b1dab632636d9dd9c7b",
+      "line_number_565_not_a_stale_result": true
+    }
+  },
+  "rendered_pages": {
+    "latex": [
+      1,
+      4,
+      6,
+      7,
+      13,
+      18
+    ],
+    "latex_zh": [
+      1,
+      5,
+      7,
+      8,
+      17
+    ]
+  },
+  "source_hashes": {
+    "paper\\latex\\main.tex": "26168db43f105444fff624d91a7f8d722ff5d73eebde1ae9413cecf7497d8c57",
+    "paper\\latex\\sec_app_history.tex": "ba418a74f7dd58ebf98b9d7f703d1bcaa995b60e146eb8f4be1ddf5d34a9fd7e",
+    "paper\\latex\\sec_app_selection.tex": "7734a4944216d91fe25369aa05eb446621c6c99d8e853bb5ee4124a8ccb7cf82",
+    "paper\\latex\\sec_app_statistics.tex": "63b8713af04e512090b6eb37e2becbb241b8f36a3eb6c069b307c1f4812ed57d",
+    "paper\\latex\\sec_app_wp1r.tex": "6936948cf16add250976fdbb21f74146aacb0c22eaf2c03fd259bc6f46b519eb",
+    "paper\\latex\\sec_coverage.tex": "f526c2f9b73451227e67f59c60fa9b08919d300c37d0864a129f7c65c0a87bfb",
+    "paper\\latex\\sec_crossdomain.tex": "d26acc83f8b562069f955fe854b04cb4365f04d0234aadd60fc93b064a77b27e",
+    "paper\\latex\\sec_discussion.tex": "c312d3383ab80ea1eb2dea696cb54becdad69258d950771d84128a30e556124e",
+    "paper\\latex\\sec_phase1.tex": "bbde17cc1af36dbdc9b98ab46cb8eea76a1da4f56ab8b135ae612e6541bdcf2b",
+    "paper\\latex\\sec_phase2.tex": "5cd4ced1ebdabc1afbe82fecb589dc3c9d7f91d0505989c2551239b865ec3660",
+    "paper\\latex\\sec_results.tex": "0d143fc25a8d077d0a9a922471d0fd79f2f2aff9d4bb66bcde981de8db2bf6f1",
+    "paper\\latex\\sec_setup.tex": "580b1bf00b2dc61daaceb319ed99815e1cadd760d7fe9c90088bdc7aaa48664f",
+    "paper\\latex\\sec_utility.tex": "c7b74b66563d2903fa904f6d10aaffbaa5fe77c71e9fa708b7a8bb2b286f5358",
+    "paper\\latex_zh\\main.tex": "8be659c232b9a3cb185de542377eb512e4293dbb2cc5ce840dca00f2dcaf57bd",
+    "paper\\latex_zh\\sec_app_history.tex": "c76492c6aeaa2320b1c1c58bf85882007d8c0650bba565a4b57e81ca91a46b9a",
+    "paper\\latex_zh\\sec_app_selection.tex": "0d68dcccf424f6dfcd6fc9a965377eb79be8daa6d98f6e4c02f3f32570c17f5f",
+    "paper\\latex_zh\\sec_app_statistics.tex": "cc02dc45ae9027426eae77928104d4286bbf85ba7e10900c824dfbb17bc373c6",
+    "paper\\latex_zh\\sec_app_wp1r.tex": "26a604ab7f7b205264030b0916d53e4f83d749c899f645e83258d9cf39b52c11",
+    "paper\\latex_zh\\sec_coverage.tex": "6ed52d842543ff71acced91df60ef66f3ea4570290c3c3467e56faee7395075d",
+    "paper\\latex_zh\\sec_crossdomain.tex": "67a6d29f1cbbeb76f96f72ff894d9f373447cfc68b9dc467fc80707d3324a6ee",
+    "paper\\latex_zh\\sec_discussion.tex": "3fc0aecca30c50a01f93e137901eca1dceb8f8199b15ac44f2825038842c5fd8",
+    "paper\\latex_zh\\sec_phase1.tex": "4a33f40f646667f8fd1a57ce361faac59d400a1d0472fff3f339ac4a3131e68c",
+    "paper\\latex_zh\\sec_phase2.tex": "d456db0a364b4e20c8654ce9871e30a0d16c4cfae7ede77e8d4431b4a5cd842b",
+    "paper\\latex_zh\\sec_results.tex": "77c3cd57486e0998565d7586a71ed6ed606324511d68f4b0a960f27fc6b55848",
+    "paper\\latex_zh\\sec_setup.tex": "a130789d3c27ddfb87de03dcdd4f80c0ff3740d365499d84285bee858f3c1f43",
+    "paper\\latex_zh\\sec_utility.tex": "78615c117f09a22c13523b6a0309915fbfcf13c3262447c2fee5de0fa84d8c32",
+    "paper\\latex\\common386_numbers.tex": "31a19ac14151f338e3244fcce42e5410a7507ad9e929aa0e8e9f46af0da442ec",
+    "paper\\latex\\common386_policy_table.tex": "4aa065e5f33077a5461e2d5691a4a2c3e758ed9e46229300666f5da3a61f3568",
+    "paper\\latex\\common386_replay_table.tex": "30bf7e4699fb2d6b608a0d374dcd36bb765f2ace456df3d41a935e94f9aaa0fa"
+  },
+  "analysis_sha256": "03b1b70b757b31c785964428a4256639d2ef82afa5baec983ddbfd8e14848dea",
+  "new_model_calls": 0,
+  "raw_ledger_modified_by_this_task": false,
+  "collection_processes_managed_by_this_task": false,
+  "scientific_state": "INSUFFICIENT_EVIDENCE",
+  "independent_cross_model_review": "NOT_PERFORMED",
+  "visual_check": "Representative abstract, main results, replay, exclusions and policy pages inspected; no clipping observed."
+}

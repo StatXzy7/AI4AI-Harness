@@ -1,8 +1,6 @@
 \subsection{相同程序也产生正的 oracle 估计}
 \label{sec:f3-clones}
-同代码臂直接检验专长解释：九个槽位实现同一程序，因此稳定的程序互补按构造为零。若它的估计余量为正，该估计本身就不能区分专长与执行波动。
-
-重复平均后的估计确实为正：克隆臂 $383$ 个完整任务上，$\widehat H=\WpVthreeClonePlugin$\,\%；生成面板在其 $350$ 个完整任务上为 $\WpVthreePlugin$\,\%（表~\ref{tab:clone-control}）。二者是各臂的描述性估计，并非配对效应比较。未知保持缺失；较早的可用重复估计属于另一估计目标，说明见附录~\ref{app:wp1r}。该对照确立：即使平均三次重复，oracle 估计仍可在没有程序专长时为正。接下来需要检验，在部分重复中发现的选择，能否在另一次执行中保持价值。
+九个克隆槽位实现相同程序，其总体层面的稳定互补按构造为零。在同一批 $\RcvPairedN$ 个任务上，克隆的重复平均 oracle 估计为 $\RcvClonePlugin$ pp，生成面板为 $\RcvRealPlugin$ pp（表~\ref{tab:clone-control}）。两者使用完全相同的题目身份及完整观测。这一对照确立：平均三次重复，仍不足以让正的 oracle 估计识别程序专长。
 
 \begin{table}[htbp]
 \centering\small
@@ -10,24 +8,25 @@
 \toprule
 量 & 生成面板 + \bare{} & 同代码克隆 \\
 \midrule
-完整任务 oracle 估计 $\widehat H$ & $\WpVthreePlugin$\,\% & $\WpVthreeClonePlugin$\,\% \\
-重复诊断 $G$ 的完整任务数 & 350 & 383 \\
-留出重复平均增益 $G$ & $\WpVthreeG$\,\% & $\WpVthreeGclone$\,\% \\
+完整任务 oracle 估计 $\widehat H$ & $\RcvRealPlugin$ pp & $\RcvClonePlugin$ pp \\
+重复诊断 $G$ 的完整任务数 & \RcvRealN & \RcvCloneN \\
+留出重复平均增益 $G$ & $\RcvRealG$ pp & $\RcvCloneG$ pp \\
+评分模式残差相关性 & $\RcvRealRho$ & $\RcvCloneRho$ \\
 \midrule
-\multicolumn{3}{l}{配对克隆校正均值：$D=\WpVthreeD$\,\%，基于 $\WpVthreeNPaired$ 个完整任务} \\
-\multicolumn{3}{l}{不完整任务：生成臂 $\WpExclReal\%$ / 克隆臂 $\WpExclClone\%$} \\
+\multicolumn{3}{l}{配对克隆校正均值：$D=\RcvD$ pp，基于 $\RcvPairedN$ 题} \\
+\multicolumn{3}{l}{分析集完整率：两臂均 $100\%$，每臂 $\RcvCells$ 个单元} \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{正的 oracle 估计未确立跨重复稳定的优势。}各臂 $\widehat H$ 与 $G$ 使用本臂完整任务；$D$ 在交集上平均配对逐题增益差，因此不能由表内两项 $G$ 直接相减得到。生成臂未通过 $10\%$ 不完整比例门槛。}
+\caption{\textbf{覆盖、可重复性和选择收益相互分离。}所有量均使用同一批 $\RcvPairedN$ 题，两臂在该分析集上均完整观测。$D$ 是未舍入交叉拟合增益的配对差，显示值的舍入可能影响直接相减。}
 \label{tab:clone-control}
 \end{table}
 
-\subsection{重复验证与诊断灵敏度}
+\subsection{可重复评分模式与留出选择增益}
 \label{sec:repeat-result}
-在评分前冻结选择，可以减少对偶然成功的重复利用。在各臂完整任务上，生成程序的留出重复均值为 $G_{\rm real}=\WpVthreeG$\,\%，克隆为 $G_{\rm clone}=\WpVthreeGclone$\,\%。在 $\WpVthreeNPaired$ 题交集上，校准差异为 $D=\WpVthreeD$\,\%，95\% 区间为 $\WpVthreeDCI$\,\%。均值没有显示超越同代码参照的优势，但也未确立等价或总体负效应：生成臂 $\WpExclReal\%$ 的任务不完整，超过 $10\%$ 门槛。判断为 \textsc{Insufficient Evidence}（证据不足）。全 $0$/全 $1$ 填充情景下，$G$ 跨越 $\WpVthreeBounds$\,\%；完整规则及敏感性方法见附录~\ref{app:statistics}，缺失记录见附录~\ref{app:wp1r}。
+生成程序确实呈现可重复的差异。探索性分析从评分优势矩阵中去除成员与任务的加性效应，再计算每个留出重复与其余两次重复均值的相关性。生成程序的平均残差相关性为 $\RcvRealRho$，克隆为 $\RcvCloneRho$；配对 bootstrap 差异为 $\RcvRhoDiff$，95\% 区间为 $\RcvRhoDiffCI$。这些相关性描述可重复的\emph{评分结果模式}。为考察其方向，我们统计持续输赢：三次重复均输给 \bare{} 的情况涉及 $\RcvLossTasks$ 道题（$\RcvLossPairs$ 个成员—任务对）；三次均获胜则只出现在一道题上，由八个生成成员共同实现。这一表面修复对答案格式提取敏感（附录~\ref{app:repeatability}）。这种观测不对称性解释了强评分可重复性与有限的观测获胜如何并存。
+
+留出选择诊断检验更强的问题：过去的结果能否为下一次执行识别有用的成员？克隆校正均值为 $D=\RcvD$ pp，95\% 区间为 $\RcvDCI$ pp，随机化 $p=\RcvP$。主分析任务均完整观测，但判断仍为 \textsc{Insufficient Evidence}（证据不足）：区间包含零，未满足正向支持条件，也未建立等效结论。排除包含冲突评分的三道纳入题后，在 $\RcvConflictN$ 个配对任务上得到 $D=\RcvConflictD$ pp，判断不变（附录~\ref{app:wp1r}）。
 
 \paragraph{如果存在真实交叉，诊断能检出吗？}
 \label{sec:power}
-已知真值模拟回答这个必要的后续问题。在改变成员数、任务数、重复次数与缺失条件的 $100$ 个网格单元中，克隆校准规则最坏的观测零假设错误支持率为 $2\%$。灵敏度则明显不足：真实 $H_{\rm stable}=17.5$\,\% 的双专家设置在 $R=3$ 时功效为 $0\%$，$R=5$ 时约为 $0.7\%$，$R=10,20$ 时为 $100\%$。更小的循环交叉即使在 $R=20$ 时仍大多检不出（附录表~\ref{tab:calibration}）。这些结果属于所测模拟设置，不是通用重复次数门槛。
-
-两项发现支持不同结论。克隆结果反驳了仅凭正插件估计识别专长的做法。重复结果尚未判清这个生成面板是否存在稳定交叉：数据不完整，而且三次重复时检验可能漏掉已知交叉。虽然部分稳定的成员平均差异可以检出，但平均更强并不等于任务专长。稳定专长是否存在尚未判清，但实际选择的效果仍可直接测量。下一节在同一 MATH 面板上，分别检验执行前的冻结选择与等执行次数下的事后覆盖。
+已知真值校准量化诊断的灵敏度。在所测 $100$ 单元网格上，最坏的观测零假设错误支持率为 $2\%$；但真实 $H_{\rm stable}=17.5$ pp 的双专家设置在 $R=3$ 时功效为 $0\%$，$R=5$ 时约为 $0.7\%$，$R=10,20$ 时为 $100\%$。更小的循环交叉即使在 $R=20$ 时仍大多检不出（附录表~\ref{tab:calibration}）。这些都是具体设置下的经验结果。因此，数据识别出了可重复评分模式，有用的任务交叉优势仍未判清。实际执行前选择的效果则仍可直接评估。

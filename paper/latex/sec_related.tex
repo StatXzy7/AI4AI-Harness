@@ -1,41 +1,52 @@
 \paragraph{Automated agent and harness design.}
 ADAS treats agent programs as a search space \citep{adas2024}.
-TTHE, Self-Harness, JIT-Agent, and Task-CoEvolve generate or adapt
-scaffolding around a frozen model
-\citep{tthe2026,selfharness2026,jitagent2026,coevolve2026}.
-HarnessLens, HarnessFix, AHE, HarnessBank, the Harness Handbook, and
-HarnessForge examine behavior through rollout allocation, traces,
-prediction checks, descriptors, localization, or joint policy evolution
+Self-Harness mines failures from traces, proposes targeted edits, and
+retains edits after regression testing \citep{selfharness2026}; TTHE adapts
+the executable harness during evaluation using unlabeled traces
+\citep{tthe2026}. Other systems improve task adaptation and validation
+allocation \citep{jitagent2026,coevolve2026}, or make harness behavior
+observable and editable through verification, diagnosis, localization,
+and policy evolution
 \citep{harnesslens2026,harnessfix2026,ahe2026,gatedqd2026,handbook2026,harnessforge2026}.
-Low behavioral diversity has also been reported for automatically
-designed agents \citep{metaagents2025}, with conceptual precedents in
-program equivalence and mutation testing \citep{budd1982,papadakis2019}.
-Our question concerns attribution in the resulting population:
-source differences may not change execution, while outcome differences
-may occur even with identical source. The trace study and clone
-control examine these two directions separately.
+\citet{metaagents2025} find low diversity in task-level score patterns
+among the automatically designed agents they study. We separate two explanations for population-level
+results: distinct programs can execute the same behavior, and identical
+programs can produce different outcomes. Trace inspection tests whether
+proposed mechanisms execute; repeated same-code controls isolate the
+coverage available without changing the program. This connects program
+equivalence and mutation testing \citep{budd1982,papadakis2019} to
+performance attribution in generated harness populations.
 
 \paragraph{Repeated sampling and ensembles.}
-Pass@$k$, self-consistency, and identical-agent ensembles exploit extra
-attempts \citep{chen2021codex,selfconsistency2022,moreagents2024};
+Pass@$k$ measures success within $k$ samples; self-consistency and
+identical-agent ensembles aggregate multiple attempts \citep{chen2021codex,selfconsistency2022,moreagents2024};
 even nominally temperature-$0$ calls can vary \citep{nondeterminism2023}.
-We do not claim that sampling gains are new. We use them as an explicit
-reference when evaluating generated-program complementarity.
-Post-execution verifiers \citep{llmverifier2026} and ensemble selection
-\citep{caruana2004} also have different information from a policy that
-chooses before any answer is available. Our oracle replay and frozen
+We use these sampling gains as an explicit reference for
+generated-program complementarity at matched execution budgets.
+Post-execution verifiers rank candidate solutions \citep{llmverifier2026},
+while ensemble selection chooses a model combination on validation data
+and averages its predictions at inference \citep{caruana2004}.
+Both assess or combine generated outputs, whereas our selector chooses
+a program before executing it. Our oracle replay and frozen
 selector retain this distinction.
 
 \paragraph{Selection and resource allocation.}
-Instance-dependent harness quality \citep{nouniversal2026,nonmonotone2026}
-and HELIX outcome matrices \citep{helix2026} motivate going beyond the
-best fixed member. STS, GRASP, counterfactual routing, and RouteLLM
-select among scaffolds, skills, search actions, or models
-\citep{sts2026,grasp2026,cfrouting2026,routellm2024}, extending questions
-studied in algorithm selection and portfolios
+HELIX uses complementary sibling trajectories both to expand verified
+coverage and to supply data for subsequent model improvement \citep{helix2026}.
+STS compares six reasoning paradigms and trains an embedding-based
+router to recover part of their oracle gap \citep{sts2026}.
+Our study evaluates generated programs with the target model fixed,
+separating oracle coverage, repeat-stable task advantages, and realized
+selector gain. The same-code population supplies the sampling reference
+for that separation. Harness sensitivity across model--problem pairs
+\citep{nouniversal2026} and across evaluated models
+\citep{nonmonotone2026}, search routing
+\citep{cfrouting2026}, and preference-trained model routing
+\citep{routellm2024} connect this question to algorithm selection and portfolios
 \citep{rice1976,xu2008satzilla,kotthoff2016}.
+GRASP instead selects edits to a bounded skill library under regression
+constraints \citep{grasp2026}.
 The distinction between quantitative and qualitative interaction
 \citep{gailsimon1985} explains why varying effect sizes need not change
-the best action. We connect task-wise crossovers to a same-code
-reference and held-out repeats, then evaluate selection separately.
-This yields a diagnostic contribution, not a new routing algorithm.
+the best action. Our contribution is an evaluation that measures all
+three quantities in the same population and shows where they diverge.
