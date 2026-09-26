@@ -6,10 +6,8 @@ $2{\times}2$ 研究交叉六个构建器与三个种子，II-E 仅用于开发�
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.75\linewidth]{figures/fig_design_revision.pdf}
-\par\smallskip
-{\footnotesize\textbf{II-E：仅用于开发，不纳入确认性比较。}}
-\caption{\textbf{BIRD 准入设计。}左：数据库级污染隔离。中：$2{\times}2$ 确认性析因与共同尝试上限；额外的开放机制臂 II-E 仅用于开发。右：三层准入流程。}
+\includegraphics[width=0.95\linewidth]{figures/fig_design_revision.pdf}
+\caption{\textbf{BIRD 准入设计。}左：数据划分及已披露的开发暴露。中：采用共同尝试上限的 $2{\times}2$ 四臂比较。右：中性有效性检查及门控臂实际采用的结构筛选与合规验证组合。额外的开放机制臂 II-E 仅用于开发。}
 \label{fig:design}
 \end{figure}
 
@@ -17,12 +15,12 @@ $2{\times}2$ 研究交叉六个构建器与三个种子，II-E 仅用于开发�
 
 \FloatBarrier
 \Needspace{0.25\textheight}
-\subsection{同核心提升空间分解}\label{app:decomp}
+\subsection{同一核心集上的余量分解}\label{app:decomp}
 表~\ref{tab:decomp} 在相同核心任务与基线记录下分解各臂的覆盖、最佳固定准确率及余量。
 \begin{table}[H]
 \centering\footnotesize
 \input{../latex/revision_decomposition_table}
-\caption{\textbf{同核心提升空间分解。}所有臂使用相同 400 题与相同 single-call 结果。$K_{\rm cand}$ 排除 single-call，$K_{\rm total}=K_{\rm cand}+1$；数量与准确率为单元均值。提升空间为 oracle 减最佳固定准确率，不是已实现路由增益。}
+\caption{\textbf{同一核心集上的余量分解。}所有臂使用相同 400 题与相同 single-call 结果。$K_{\rm cand}$ 排除 single-call，$K_{\rm total}=K_{\rm cand}+1$；数量与准确率为单元均值。余量为 oracle 减最佳固定准确率，不是已实现路由增益。}
 \label{tab:decomp}
 \end{table}
 
@@ -58,7 +56,7 @@ R2 在 400 题上覆盖 70 个 harness，在可用时取 A/D 每单元前两个�
 \label{app:free-vocabulary}
 自由臂构建器在 repair、vote、twostage、plain 中选择。vote 要求多样本与选择，包含但不限于三路多数投票；twostage 消费产物，不规定响应接口；plain 不声明控制流机制，尽管提示要求改变。因此，策略选择在这四类声明内进行。
 
-所评估门控组合结构筛选与符合性验证，有效的纯提示变换也可能被结构筛查拒绝。开发检验发现误拒、请求归属与响应接口缺陷，以及未决判断。后续修订未产生替代基准结果，故报告对应实际实现的组合政策。
+所评估门控组合结构筛选与合规验证，有效的纯提示变换也可能被结构筛查拒绝。开发检验发现误拒、请求归属与响应接口缺陷，以及未决判断。后续修订未产生替代基准结果，故报告对应实际实现的门控组合。
 
 \paragraph{生成接口。}\label{app:extraction}
-$36$ 个强制臂单元的 $108$ 次格式守卫尝试均未通过中性有效性：$71$ 条日志为字符串未终止，$36$ 条为无 Python 围栏，一条为提供方超时。合成示例复现存档非贪婪围栏提取器的截断。完整构建器消息与确切历史提取器版本缺失，限制了这些上游有效性失败的归因。
+格式守卫（format-guard）是八个固定策略之一；C、D 两个强制臂的每个构建器—种子单元为每种策略分配一个槽位。该策略要求遵守数据库结构约束，并以 SQL 代码块给出最终答案，不附加其他文字。其 $36$ 个槽位的 $108$ 次尝试均未通过中性有效性：$71$ 条日志为字符串未终止，$36$ 条为无 Python 围栏，一条为提供方超时。合成示例复现存档非贪婪围栏提取器的截断。完整构建器消息与确切历史提取器版本缺失，限制了这些上游有效性失败的归因。

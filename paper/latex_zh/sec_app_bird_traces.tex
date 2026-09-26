@@ -10,7 +10,7 @@ Phase I 对应 BIRD 发现研究，Phase II 对应准入研究。本附录展开
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.60\linewidth]{figures/fig_phenomenon.pdf}
+\includegraphics[width=0.75\linewidth]{figures/fig_phenomenon.pdf}
 \caption{\textbf{源码差异未必改变观测正确性。}BIRD 发现研究包含 $14$ 个 harness、$60$ 个任务，每个执行一次。含基线的 $91$ 对中，token 序列源码相似度与正确性分歧的秩相关为 $\rho=-0.010$；$36/91$ 对具有相同正确性向量。这是观测任务上的结果比较，不是程序等价检验。}
 \label{fig:phenomenon}
 \end{figure}
@@ -29,7 +29,7 @@ Phase I 对应 BIRD 发现研究，Phase II 对应准入研究。本附录展开
 \FloatBarrier
 \subsection{轨迹审核的完整样例}\label{app:examples}
 
-T1 的六／十二计数覆盖完整发现群体。独立轨迹审核在十道题上跟踪五个 harness：\bare{}、\react{}、单次调用、超时重试及多轮修复（5 $\times$ 10）。下文以一题展示路径。日志中的 SQL 摘录上限为 120 字符，截断标为 \emph{[trunc.]}。
+T1 的六／十二计数覆盖完整发现群体。独立轨迹审核在十道题上跟踪五个 harness：\bare{} 基线、\react{}、生成的单次调用候选、超时重试候选及多轮修复候选（5 $\times$ 10）。下文以一题展示路径。日志中的 SQL 摘录上限为 120 字符，截断标为 \emph{[trunc.]}。
 
 \paragraph{任务。}BIRD 开发集问题 352（\texttt{card\_games} 数据库；题目文本逐字，拼写错误为数据集原有）：
 \begin{quote}\small\ttfamily
@@ -40,7 +40,7 @@ Calculate the percentage of the cards availabe in Chinese Simplified.
 'Chinese Simplified' is the language; percentage = Divide(Sum(id where
 language = 'Chinese Simplified'), Count(id)) *100
 \end{quote}
-Gold SQL（在发布数据库上执行两者分别得 8.7734 与 8.7728——官方评分器将其区分）：
+标准 SQL：
 \begin{quote}\small\ttfamily
 SELECT CAST(SUM(CASE WHEN T2.language = 'Chinese Simplified' THEN 1 ELSE 0
 END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN foreign\_data
@@ -51,7 +51,7 @@ AS T2 ON T1.uuid = T2.uuid
 SELECT SUM(CASE WHEN language = 'Chinese Simplified' THEN 1 ELSE 0 END) *
 100.0 / COUNT(id) AS percentage FROM foreign\_data;
 \end{quote}
-被官方评分器判错：它直接在 \texttt{foreign\_data} 上计数，而 gold 查询在连接 \texttt{cards} 之后计数；提示没有写明该连接。
+在发布数据库上，标准查询得到 8.7734，基线查询得到 8.7728。官方评分器将基线查询判错：它直接在 \texttt{foreign\_data} 上计数，而标准查询在连接 \texttt{cards} 之后计数；提示没有写明该连接。
 
 \paragraph{\react{}（T2：修复未触发）。}
 首个提示与 \bare{} 逐字节相同。SQL 执行成功，因此数据库错误重试未触发。全部 10 道被审题沿此路径运行：执行 SQL，但 10/10 最终查询与 \bare{} 逐字节相同。
@@ -67,6 +67,6 @@ SELECT SUM(CASE WHEN language = 'Chinese Simplified' THEN 1 ELSE 0 END) *
 with "only a single read-only SELECT is allowed". The previous "query" was
 actually just prose text (the model wrote rea\emph{[trunc.]})
 \end{quote}
-修复提示导致输出契约失败：被要求修复一个“实际上只是自然语言说明”的查询时，冻结目标继续返回自然语言推理；由于找不到 SQL 块，推理文本便被当作查询提交。该题从 single-call 正确翻转为 harness 错误。
+该修复提示下，输出契约再次失败：被要求修复一个“实际上只是自然语言说明”的查询时，冻结目标继续返回自然语言推理；由于找不到 SQL 块，推理文本便被当作查询提交。该题从基线正确翻转为 harness 错误。
 
 \FloatBarrier

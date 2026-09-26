@@ -5,7 +5,7 @@
 程序、求解器、评分器、开发划分及三次重复身份固定。加盐哈希选出每个构建器的一个低调用成员，另加两个自由席位与 \bare{}；对照含九个相同基线槽位。2026 年 9 月 26 日 UTC 05:15 快照合并生成臂续采 10 与克隆臂续采 20。查看结果后，保留单次与重复研究每个必需单元均有记录二元评分的任务，以这 $\RcvPairedN$ 个题目身份定义共同重分析集。
 
 \paragraph{完整性与排除。}
-单次矩阵包含 $36\times\RcvPairedN=\RcvSingleCells$ 个观测单元，每个重复臂包含 $9\times3\times\RcvPairedN=\RcvCells$ 个，三个矩阵均为 $100\%$ 完整。政策评估与 oracle 重放使用相同题目身份。
+单次矩阵包含 $36\times\RcvPairedN=\RcvSingleCells$ 个观测单元，每个重复臂包含 $9\times3\times\RcvPairedN=\RcvCells$ 个，三个矩阵均为 $100\%$ 完整。选择策略评估与 oracle 重放使用相同题目身份。
 
 排除的 $\RcvExcludedN$ 道题包含 $\RcvOriginalMissingCells$ 个生成臂未评分单元，分布为 DeepSeek 5、ERNIE 4、GLM 9、Kimi 30、MiniMax 9、Qwen 4；基线与克隆记录完整。取子集前的排除比例 $\RcvOriginalExcludedPct\%$ 低于冻结的 $10\%$ 门槛。排除题更难、更长，基线准确率更低（表~\ref{tab:complete-subset}）。未知评分与全部已发生采集成本仍保留在来源记录中。
 
@@ -29,7 +29,7 @@ Level-5 题目比例（\%） & 26.42 & 64.29 \\
 Manifest 核验涵盖执行条件、程序、任务／划分哈希、面板抽样及调度的 13 项字段；快照、矩阵与题目名单绑定哈希。完成评分替代未知，冲突时保留最先完成者。生成臂有五个冲突单元，其中三个位于三道纳入题；克隆无冲突。采集器与并发变更保留记录。
 
 \paragraph{估计与敏感性。}
-记录二元评分给出生成臂插件余量 $\RcvRealPlugin$\,pp、克隆臂 $\RcvClonePlugin$\,pp，以及 $D=\RcvD$\,pp（95\% 区间 $\RcvDCI$\,pp；\textsc{Insufficient Evidence}）。从两臂删除三道冲突题，并在剩余 $\RcvConflictN$ 题上重新选择，得到 $D=\RcvConflictD$\,pp（区间 $\RcvConflictDCI$\,pp），判断不变。
+记录二元评分给出生成臂代入估计余量 $\RcvRealPlugin$\,pp、克隆臂 $\RcvClonePlugin$\,pp，以及 $D=\RcvD$\,pp（95\% 区间 $\RcvDCI$\,pp；\textsc{Insufficient Evidence}）。从两臂删除三道冲突题，并在剩余 $\RcvConflictN$ 题上重新选择，得到 $D=\RcvConflictD$\,pp（区间 $\RcvConflictDCI$\,pp），判断不变。
 
 \subsection{探索性可重复性与评分敏感性}\label{app:repeatability}
 对非参照成员定义 $A_r(h,x)=Y(h,x,r)-Y(h_0,x,r)$，其中 $h_0$ 为 \bare{} 或 clone-c1。各重复内减去行、列均值并加回总体均值，将每次留出的残差矩阵与其余两次均值的残差相关，再平均三项相关性。配对任务 bootstrap 使用 $2{,}000$ 次共享抽样。生成臂相关性为 $\RcvRealRho$（$\RcvRealRhoCI$），克隆为 $\RcvCloneRho$（$\RcvCloneRhoCI$），差异为 $\RcvRhoDiff$（$\RcvRhoDiffCI$）。这一采集后诊断衡量去除加性效应后的重复评分模式。

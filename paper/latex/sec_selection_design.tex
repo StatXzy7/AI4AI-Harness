@@ -1,12 +1,16 @@
 \paragraph{Selecting a program from the question.}
-We train $\pi_Z$ on the $100$ development tasks using TF-IDF question
-features and training-fold member accuracies. Five-fold task-level
-cross-validation keeps each task's repeats together. At inference,
-the five fold-model probability vectors are averaged; the policy selects
-the top member, falling back to \bare{} when the top-two probability
-gap is below $0.15$. Ties follow fixed member-ID order. The complete
-policy is frozen before evaluation. Comparators include the
-development-selected fixed member and one randomly drawn fixed member.
+Using the $100$-task development set, we fit $\pi_Z$ to predict the member
+with the highest available-repeat mean correctness on each task;
+training-label ties follow member-ID order. Five task folds keep each
+task's repeats together. The fitted models share a TF-IDF vocabulary
+learned from development questions and use training-fold member
+accuracies as additional inputs. At inference, we average the fitted
+fold models' probability vectors and select the top member, falling
+back to \bare{} when the top-two gap is below $0.15$, including a tie
+for the highest probability. The policy is frozen before evaluation;
+Appendix~\ref{app:selection} specifies fitting and fallback details.
+Comparators include the development-selected fixed member and one
+randomly drawn fixed member.
 
 \paragraph{Allocating executions to a portfolio.}
 An offline oracle replay compares a development-ranked portfolio with

@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="489.6pt" height="338.4pt" viewBox="0 0 489.6 338.4" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-09-26T17:49:20.617430</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.0, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 338.4 
+L 489.6 338.4 
+L 489.6 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 16.690222 96.1902 
+L 151.345333 96.1902 
+Q 153.929333 96.1902 153.929333 90.8604 
+L 153.929333 41.1156 
+Q 153.929333 35.7858 151.345333 35.7858 
+L 16.690222 35.7858 
+Q 14.106222 35.7858 14.106222 41.1156 
+L 14.106222 90.8604 
+Q 14.106222 96.1902 16.690222 96.1902 
+z
+" clip-path="url(#p13d8ab0f1d)" style="fill: #edf3f7; stroke: #476b88; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 16.690222 167.2542 
+L 151.345333 167.2542 
+Q 153.929333 167.2542 153.929333 161.9244 
+L 153.929333 109.2186 
+Q 153.929333 103.8888 151.345333 103.8888 
+L 16.690222 103.8888 
+Q 14.106222 103.8888 14.106222 109.2186 
+L 14.106222 161.9244 
+Q 14.106222 167.2542 16.690222 167.2542 
+z
+" clip-path="url(#p13d8ab0f1d)" style="fill: #edf3f7; stroke: #476b88; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 16.690222 238.3182 
+L 151.345333 238.3182 
+Q 153.929333 238.3182 153.929333 232.9884 
+L 153.929333 180.2826 
+Q 153.929333 174.9528 151.345333 174.9528 
+L 16.690222 174.9528 
+Q 14.106222 174.9528 14.106222 180.2826 
+L 14.106222 232.9884 
+Q 14.106222 238.3182 16.690222 238.3182 
+z
+" clip-path="url(#p13d8ab0f1d)" style="fill: #f9f3e9; stroke: #a76b2d; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 16.690222 310.8627 
+L 151.345333 310.8627 
+Q 153.929333 310.8627 153.929333 305.5329 
+L 153.929333 252.8271 
+Q 153.929333 247.4973 151.345333 247.4973 
+L 16.690222 247.4973 
+Q 14.106222 247.4973 14.106222 252.8271 
+L 14.106222 305.5329 
+Q 14.106222 310.8627 16.690222 310.8627 
+z
+" clip-path="url(#p13d8ab0f1d)" style="fill: #edf3f7; stroke: #476b88; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(45.282387 58.870496)">Hand-written controls</text>
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(66.243637 68.884906)">151 items</text>
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(27.045715 78.111988)">Development overlap disclosed</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(40.491793 127.687168)">Admission development</text>
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(33.872856 137.7035)">2 databases; 365 questions</text>
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(38.554543 147.69741)">card_games + formula_1</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(45.275981 199.517996)">Admission evaluation</text>
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(30.45384 208.7675)">9 databases; 1,169 questions</text>
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(30.471137 218.77166)">18-item smoke-test exception</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(33.8767 271.345637)">Shared core: 400 questions</text>
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(40.494356 282.116625)">Drawn before outcomes</text>
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(48.459887 291.588426)">Subset of the 1,169</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="12.24" y="21.456" transform="rotate(-0 12.24 21.456)">a  Data and exposure</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_6">
+    <path d="M 178.908 134.6832 
+L 234.607556 134.6832 
+Q 237.191556 134.6832 237.191556 129.3534 
+L 237.191556 70.7256 
+Q 237.191556 65.3958 234.607556 65.3958 
+L 178.908 65.3958 
+Q 176.324 65.3958 176.324 70.7256 
+L 176.324 129.3534 
+Q 176.324 134.6832 178.908 134.6832 
+z
+" clip-path="url(#p82a001eb52)" style="fill: #edf3f7; stroke: #476b88; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 254.992444 134.6832 
+L 310.692 134.6832 
+Q 313.276 134.6832 313.276 129.3534 
+L 313.276 70.7256 
+Q 313.276 65.3958 310.692 65.3958 
+L 254.992444 65.3958 
+Q 252.408444 65.3958 252.408444 70.7256 
+L 252.408444 129.3534 
+Q 252.408444 134.6832 254.992444 134.6832 
+z
+" clip-path="url(#p82a001eb52)" style="fill: #edf3f7; stroke: #476b88; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 178.908 220.5522 
+L 234.607556 220.5522 
+Q 237.191556 220.5522 237.191556 215.2224 
+L 237.191556 156.5946 
+Q 237.191556 151.2648 234.607556 151.2648 
+L 178.908 151.2648 
+Q 176.324 151.2648 176.324 156.5946 
+L 176.324 215.2224 
+Q 176.324 220.5522 178.908 220.5522 
+z
+" clip-path="url(#p82a001eb52)" style="fill: #edf3f7; stroke: #476b88; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 254.992444 220.5522 
+L 310.692 220.5522 
+Q 313.276 220.5522 313.276 215.2224 
+L 313.276 156.5946 
+Q 313.276 151.2648 310.692 151.2648 
+L 254.992444 151.2648 
+Q 252.408444 151.2648 252.408444 156.5946 
+L 252.408444 215.2224 
+Q 252.408444 220.5522 254.992444 220.5522 
+z
+" clip-path="url(#p82a001eb52)" style="fill: #edf3f7; stroke: #476b88; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 8.1px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle" x="244.8" y="51.183" transform="rotate(-0 244.8 51.183)">Ungated               Gated</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(200.379715 92.970043)">II-A</text>
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(198.328434 102.926156)">Free</text>
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(191.257856 112.115441)">Ungated</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(276.46416 92.970043)">II-B</text>
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(274.412878 102.926156)">Free</text>
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(271.674207 112.978363)">Gated</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(200.153575 178.839043)">II-C</text>
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(193.99845 188.795156)">Forced</text>
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(191.257856 197.984441)">Ungated</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(276.238019 178.839043)">II-D</text>
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(270.082894 188.795156)">Forced</text>
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(271.674207 198.847363)">Gated</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 8.5px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle" x="244.8" y="251.0505" transform="rotate(-0 244.8 251.0505)">Primary contrast: D − A</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(189.418609 277.783854)">6 builders × 3 seeds = 18 cells</text>
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(191.357781 288.516084)">All cells enter, including K = 0</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(218.365891 312.937645)">Attempt cap: 3</text>
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(204.468812 323.749152)">Stop at first admission</text>
+   </g>
+   <g id="text_14">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="173.022222" y="21.456" transform="rotate(-0 173.022222 21.456)">b  Four-arm comparison</text>
+   </g>
+  </g>
+  <g id="axes_3">
+   <g id="patch_10">
+    <path d="M 338.254667 105.0732 
+L 472.909778 105.0732 
+Q 475.493778 105.0732 475.493778 99.7434 
+L 475.493778 41.1156 
+Q 475.493778 35.7858 472.909778 35.7858 
+L 338.254667 35.7858 
+Q 335.670667 35.7858 335.670667 41.1156 
+L 335.670667 99.7434 
+Q 335.670667 105.0732 338.254667 105.0732 
+z
+" clip-path="url(#p86734f817e)" style="fill: #edf3f7; stroke: #476b88; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 338.254667 199.8252 
+L 472.909778 199.8252 
+Q 475.493778 199.8252 475.493778 194.4954 
+L 475.493778 126.9846 
+Q 475.493778 121.6548 472.909778 121.6548 
+L 338.254667 121.6548 
+Q 335.670667 121.6548 335.670667 126.9846 
+L 335.670667 194.4954 
+Q 335.670667 199.8252 338.254667 199.8252 
+z
+" clip-path="url(#p86734f817e)" style="fill: #f9f3e9; stroke: #a76b2d; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 338.254667 319.7457 
+L 472.909778 319.7457 
+Q 475.493778 319.7457 475.493778 314.4159 
+L 475.493778 238.0221 
+Q 475.493778 232.6923 472.909778 232.6923 
+L 338.254667 232.6923 
+Q 335.670667 232.6923 335.670667 238.0221 
+L 335.670667 314.4159 
+Q 335.670667 319.7457 338.254667 319.7457 
+z
+" clip-path="url(#p86734f817e)" style="fill: #f4f4f4; stroke: #777777; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(382.572894 63.361965)">All four arms</text>
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(378.695191 72.501281)">Neutral validity</text>
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(349.300753 82.557973)">Parse / import / nonempty SQL</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(368.212003 153.670543)">Gated arms B and D</text>
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(369.122972 162.86175)">Structural screening</text>
+    <text style="font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(356.248972 173.680785)">+ mechanism conformance</text>
+   </g>
+   <g id="patch_13">
+    <path d="M 405.582222 107.96032 
+Q 405.582222 113.36449 405.582222 117.874234 
+" style="fill: none; stroke: #50565c; stroke-width: 0.8; stroke-linecap: round"/>
+    <path d="M 407.282222 114.474234 
+L 405.582222 117.874234 
+L 403.882222 114.474234 
+" style="fill: none; stroke: #50565c; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 8px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(365.785972 263.600016)">II-E: development only</text>
+    <text style="font-size: 8px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(374.236597 273.458297)">Open mechanism</text>
+    <text style="font-size: 8px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(366.232847 283.215953)">Self-specified contract</text>
+    <text style="font-size: 8px; font-family: 'Arial', 'DejaVu Sans', sans-serif" transform="translate(342.008472 292.976109)">Excluded from four-arm comparison</text>
+   </g>
+   <g id="text_18">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start" x="333.804444" y="21.456" transform="rotate(-0 333.804444 21.456)">c  Admission scope</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p13d8ab0f1d">
+   <rect x="12.24" y="30.456" width="143.555556" height="296.1"/>
+  </clipPath>
+  <clipPath id="p82a001eb52">
+   <rect x="173.022222" y="30.456" width="143.555556" height="296.1"/>
+  </clipPath>
+  <clipPath id="p86734f817e">
+   <rect x="333.804444" y="30.456" width="143.555556" height="296.1"/>
+  </clipPath>
+ </defs>
+</svg>

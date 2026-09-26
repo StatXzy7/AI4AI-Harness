@@ -1,13 +1,13 @@
 \renewcommand{\arraystretch}{0.95}
 \setlength{\tabcolsep}{4pt}
 \footnotesize
-\begin{tabular}{@{}lcccccccc@{}}
+\begin{tabular}{@{}lccccccc@{}}
 \toprule
  & \multicolumn{2}{c}{$R{=}3$} & \multicolumn{2}{c}{$R{=}10$} & \multicolumn{2}{c}{$R{=}20$} & abst. \\
 \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-8}
-regime & plug & v3 & plug & v3 & plug & v3 & $R{=}3$ \\
+regime & plug & v3$^\ast$ & plug & v3$^\ast$ & plug & v3$^\ast$ & $R{=}3$ \\
 \midrule
-equal $q{=}0.9$$^\dagger$ & 100 & 0 & 100 & 0 & 100 & 1 & 100 \\
+equal $p{=}0.9$$^\dagger$ & 100 & 0 & 100 & 0 & 100 & 1 & 100 \\
 equal + difficulty$^\dagger$ & 100 & 0 & 100 & 1 & 100 & 1 & 100 \\
 $0.5/0.9$ dominance$^\dagger$ & 100 & 0 & 100 & 0 & 13 & 0 & 100 \\
 dominance$^\dagger$ & 100 & 0 & 100 & 0 & 100 & 0 & 100 \\
@@ -18,4 +18,4 @@ two strong specialists, $H{=}17.5$\,pp & 100 & 0 & 100 & 100 & 100 & 100 & 100 \
 \bottomrule
 \end{tabular}
 
-{\scriptsize $^\dagger$Null ($H{=}0$): false-support \%, nominal 5\%; else power \%. $M{=}9,T{=}400$, $B{=}300$ at $R{=}3$ ($150$ sweeps), 300 randomizations. Appendix~\ref{app:diagnostics} describes the $M,T,R$ and missingness settings and summarizes the wider calibration grid.}
+{\scriptsize $^\dagger$Null ($H{=}0$): false-support \%; otherwise power \%. $M{=}9,T{=}400$, $300$ datasets at $R{=}3$ ($150$ in sweeps). \emph{plug}: positive 95\% bootstrap lower bound. $^\ast$v3 simulation variant: real-arm completeness gate, $300$ bootstrap draws and $300$ randomizations. The empirical rule additionally gates clones and their paired intersection; details are given above.}

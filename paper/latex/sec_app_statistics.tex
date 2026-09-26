@@ -38,15 +38,15 @@ inclusion, exclusions, and conflict sensitivity are specified in
 Appendix~\ref{app:wp1r}.
 
 \subsection{Population target and limits of the diagnostic}
-For member success probabilities $q_h(x)$, stable complementarity is
+For member success probabilities $p_h(x)$, stable complementarity is
 \[
-H_{\rm stable}=\mathbb E_x\max_h q_h(x)-\max_h\mathbb E_x q_h(x).
+H_{\rm stable}=\mathbb E_x\max_h p_h(x)-\max_h\mathbb E_x p_h(x).
 \]
 It is zero when some fixed member is expectation-best on almost every
 task. A selector's population gain $\theta^*$ relative to the
 \emph{population-best fixed} member satisfies
 $\theta^*\le H_{\rm stable}$, because its success probability on each
-task is at most $\max_h q_h(x)$.
+task is at most $\max_h p_h(x)$.
 
 Empirical $G$ uses a fixed member selected from finite discovery data.
 Clone subtraction provides a sampling reference, while $D$ and its
@@ -58,11 +58,11 @@ exchangeability. For the broader global-dominance null, error control
 is empirical over the calibration grid.
 
 \paragraph{Finite-repeat oracle estimates.}
-For repeat means $\hat q_h(x)$, Jensen's inequality gives
-$\mathbb E\max_h\hat q_h(x)\ge\max_h\mathbb E\hat q_h(x)$
+For repeat means $\hat p_h(x)$, Jensen's inequality gives
+$\mathbb E\max_h\hat p_h(x)\ge\max_h\mathbb E\hat p_h(x)$
 on each task. Headroom subtracts a second maximum, so this inequality
 does not imply upward bias of the difference in general. In a
-known-truth equal-ability simulation with $q=0.9$, $M=9$, $T=400$, and
+known-truth equal-ability simulation with $p_h(x)=0.9$, $M=9$, $T=400$, and
 $R=3$, the mean plug-in is $8.69$\,pp over $300$ datasets despite
 $H_{\rm stable}=0$. The empirical same-code arm likewise gives
 $\RcvClonePlugin$\,pp. These examples show that positive plug-in
@@ -71,12 +71,32 @@ headroom is insufficient evidence of specialization.
 \subsection{Known-truth calibration and statistical power}
 Binary tensors are sampled from specified member--task probability
 matrices. Null settings include equal ability, shared task difficulty,
-global dominance, the $0.5/0.9$ dominance configuration, heterogeneous
-dominance, and matched sticky within-task latent states. Alternatives
+global dominance, the $0.5/0.9$ dominance configuration, and heterogeneous
+dominance. Alternatives
 include crossovers over latent task types and difficulty-related
 partial crossover. The grid spans $M\in\{3,9,20\}$,
 $T\in\{100,400,1000\}$, $R\in\{3,5,10,20\}$, complete data,
 5\% MCAR, and 3\% hardness-related missingness.
+
+For every repeat count $R$, the calibrated statistic uses $R$ folds:
+each fold learns both choices from the other $R-1$ repeats and scores
+them on its single held-out repeat. The table's \emph{plug} comparator
+declares a positive result when the lower endpoint of its percentile
+95\% task-bootstrap interval exceeds zero ($1{,}000$ draws).
+It fixes the task-wise maxima and sample-best member before resampling.
+The simulation variant, labeled v3$^\ast$, uses the positive-support
+conditions above with $300$ bootstrap draws and $300$ randomizations,
+but checks the completeness gate only on the real arm. The empirical
+rule additionally gates the clone arm and paired intersection.
+Simulation abstention denotes failure to obtain positive support.
+
+In the two-specialist setting, the $400$ tasks form two equal halves.
+Each of two specialists succeeds with probability $0.95$ on its own
+half and $0.60$ on the other; the remaining seven members have
+probability $0.60$ throughout. Outcomes are independent Bernoulli
+draws. The oracle mean is $0.95$ and the best fixed mean is $0.775$,
+so $H_{\rm stable}=17.5$\,pp. All nine clone slots share the first
+specialist's probability profile, with fresh independent draws.
 
 Table~\ref{tab:calibration} reports $M=9,T=400$, using $300$
 Monte Carlo datasets per cell ($150$ in sweeps) and $300$
@@ -94,7 +114,8 @@ complementarity unresolved.
 \caption{\textbf{Three repeats can miss even a strong positive case.}
 At $M=9,T=400$, null rows report false-support \% and alternative
 rows report power \%; the final column gives $R=3$ abstention.
-The clone-calibrated rule (v3) rarely supports nulls, but has little
-sensitivity to the tested small and moderate crossovers.}
+The simulated clone-calibrated rule (v3$^\ast$) rarely declares positive
+support when stable complementarity is zero, but has little sensitivity
+to the tested small and moderate crossovers.}
 \label{tab:calibration}
 \end{table}

@@ -19,7 +19,7 @@ the early records, which lack generation-tool and per-attempt logs.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.60\linewidth]{figures/fig_phenomenon.pdf}
+\includegraphics[width=0.75\linewidth]{figures/fig_phenomenon.pdf}
 \caption{\textbf{Source differences need not change observed correctness.}
 BIRD discovery: $14$ harnesses, $60$ tasks, one execution each.
 Across $91$ pairs including baselines, token-sequence source similarity
@@ -63,10 +63,11 @@ Appendix~\ref{app:examples}.
 \subsection{Worked examples from the trace audit}\label{app:examples}
 
 The six-of-twelve T1 count covers the full discovery population.
-The separate trace audit follows five harnesses---\bare{}, \react{},
-single-call, timeout-retry, and multi-turn repair---on ten tasks
-(5 $\times$ 10). Below, one task illustrates these paths. Quoted SQL
-is capped by the logger at 120 characters; truncation is marked
+The separate trace audit follows five harnesses---the \bare{} baseline,
+\react{}, a generated single-call candidate, a timeout-retry candidate,
+and a multi-turn repair candidate---on ten tasks
+(5 $\times$ 10). Below, one task illustrates these paths. Logged SQL
+excerpts are capped at 120 characters; truncation is marked
 \emph{[trunc.]}.
 
 \paragraph{The task.} BIRD dev-set question 352 (\texttt{card\_games}
@@ -79,8 +80,7 @@ Its BIRD hint:
 'Chinese Simplified' is the language; percentage = Divide(Sum(id where
 language = 'Chinese Simplified'), Count(id)) *100
 \end{quote}
-Gold SQL (executing the two on the released database yields 8.7734 and
-8.7728 respectively --- the official scorer separates them):
+Gold SQL:
 \begin{quote}\small\ttfamily
 SELECT CAST(SUM(CASE WHEN T2.language = 'Chinese Simplified' THEN 1 ELSE 0
 END) AS REAL) * 100 / COUNT(T1.id) FROM cards AS T1 INNER JOIN foreign\_data
@@ -91,7 +91,9 @@ The \bare{} harness answers:
 SELECT SUM(CASE WHEN language = 'Chinese Simplified' THEN 1 ELSE 0 END) *
 100.0 / COUNT(id) AS percentage FROM foreign\_data;
 \end{quote}
-marked wrong by the official scorer: it counts directly over
+On the released database, the gold query yields 8.7734 and the baseline
+query yields 8.7728. The official scorer marks the baseline query wrong:
+it counts directly over
 \texttt{foreign\_data}, whereas the gold query counts after joining to
 \texttt{cards}; the hint does not spell out that join.
 
@@ -127,9 +129,9 @@ numbered 29.''), its logged final SQL begins, verbatim:
 with "only a single read-only SELECT is allowed". The previous "query" was
 actually just prose text (the model wrote rea\emph{[trunc.]})
 \end{quote}
-The repair re-prompt invites the failure: asked to fix a query that ``was
+Under this repair re-prompt, the output contract fails again: asked to fix a query that ``was
 actually just prose'', the frozen target responds with more prose reasoning,
 no SQL block is found, and the reasoning text is submitted as the query. The
-item flips from single-call-correct to harness-wrong.
+item flips from baseline-correct to harness-wrong.
 
 \FloatBarrier

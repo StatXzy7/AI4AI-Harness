@@ -70,10 +70,10 @@ BIRD \citep{bird2021} requires SQL for a question and database. In the
 discovery study, TTHE's proposer uses a GLM-5.3-Flash builder to produce
 $12$ candidates that pass import and smoke-execution checks. These
 programs and two supplied baselines are evaluated on $60$ questions.
-The admission study crosses free versus assigned strategies with
+The admission study crosses free versus assigned (``forced'') strategies with
 ungated versus conformance-gated admission: six builders, three seeds,
 and eight slots per arm, with up to three attempts per slot
-(temperature $0.7$; $16{,}384$ output tokens). Assigned strategies
+(temperature $0.7$; $16{,}384$ output tokens). Forced strategies
 include execution repair, three-sample voting, and schema linking.
 All arms require a valid interface and nonempty SQL; gated arms also
 check mechanism conformance and exclude some structures.

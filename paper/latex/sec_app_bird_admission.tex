@@ -18,14 +18,12 @@ remain in the source audit. Generation costs vary across arms.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.75\linewidth]{figures/fig_design_revision.pdf}
-\par\smallskip
-{\footnotesize\textbf{II-E: development-only; excluded from confirmatory comparisons.}}
-\caption{\textbf{BIRD admission design.} Left:
-database-level contamination isolation. Middle: the $2{\times}2$
-confirmatory factorial with a common attempt cap; the additional
-open-mechanism arm II-E belongs only to development. Right:
-the three-layer admission pipeline.}
+\includegraphics[width=0.95\linewidth]{figures/fig_design_revision.pdf}
+\caption{\textbf{BIRD admission design.} Left: data splits and disclosed
+development exposure. Middle: the $2{\times}2$ four-arm comparison with
+a common attempt cap. Right: neutral validity and the implemented
+structural-screening/conformance bundle in gated arms. The additional
+open-mechanism arm II-E is development-only.}
 \label{fig:design}
 \end{figure}
 
@@ -127,7 +125,10 @@ revisions produced no replacement benchmark outcomes, so results
 describe the implemented bundle.
 
 \paragraph{Generation interface.}\label{app:extraction}
-All $108$ format-guard attempts across $36$ forced-arm cells fail
+Format-guard is one of eight fixed strategies, each assigned one slot
+per builder--seed cell in both forced arms (C and D). It requests schema
+fidelity and a final SQL code block with no extra text.
+All $108$ format-guard attempts across its $36$ slots fail
 neutral validity: $71$ logs report unterminated strings, $36$ no Python
 fence, and one a provider timeout. Synthetic examples reproduce
 truncation in the archived non-greedy fence extractor. Full builder

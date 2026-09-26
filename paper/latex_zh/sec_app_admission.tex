@@ -1,6 +1,6 @@
 \subsection{设计与主要比较}
 \label{sec:f2-admission}
-六构建器、三种子研究交叉策略强制与门控：II-A（自由、无门控）、II-B（自由、门控）、II-C（强制、无门控）、II-D（强制、门控）。强制策略来自固定集合，自由构建器在附录~\ref{app:free-vocabulary} 的词汇中选择声明。评估使用九个数据库的 $1{,}169$ 题、官方 BIRD 评分器，并包含已披露的 $18$ 题冒烟例外。下列结果来自对结果前规格的校正重分析。
+六构建器、三种子研究交叉策略强制与门控：II-A（自由、无门控）、II-B（自由、门控）、II-C（强制、无门控）、II-D（强制、门控）。强制策略来自固定集合，自由构建器在附录~\ref{app:free-vocabulary} 的词汇中选择声明。评估使用九个数据库的 $1{,}169$ 题、官方 BIRD 评分器，并包含已披露的 $18$ 题冒烟例外。下文报告按照查看结果前制定的分析方案开展的校正重分析。
 
 \begin{table}[H]
 \centering\small
@@ -9,13 +9,12 @@
 \label{tab:primary}
 \end{table}
 
-强制／门控减自由／无门控的含基线 oracle 余量对比为 $\RevisionPrimaryDelta$\,pp，单元对比范围 $\RevisionPrimaryRange$\,pp。实际组合政策未提高观测平均余量；不确定性见表~\ref{tab:primary}。
+强制／门控减自由／无门控的含基线 oracle 余量对比为 $\RevisionPrimaryDelta$\,pp，单元对比范围 $\RevisionPrimaryRange$\,pp。实际的策略强制与门控组合未提高观测平均余量；不确定性见表~\ref{tab:primary}。
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.72\linewidth]{figures/fig_results_revision.pdf}
-\caption{\textbf{版本化校正重分析。}左：完整集合的 D$-$A 单元格对比与合并 95\% 区间。右：共享核心 400 题上、以共同 \bare{} 为基线的四臂余量。}
-\par\smallskip{\footnotesize 图中余量和差值坐标均表示百分点。}
+\includegraphics[width=0.95\linewidth]{figures/fig_results_revision.pdf}
+\caption{\textbf{BIRD 准入对比。}左：完整集合的 D$-$A 单元格对比与合并 95\% 区间。右：共享核心 400 题上、以共同 \bare{} 为基线的四臂余量。图中余量和差值坐标均表示百分点。}
 \label{fig:results}
 \end{figure}
 

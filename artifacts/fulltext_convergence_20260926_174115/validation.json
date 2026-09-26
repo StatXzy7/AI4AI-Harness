@@ -1,0 +1,208 @@
+{
+  "languages": {
+    "latex": {
+      "active_tex_count": 34,
+      "citation_keys": 33,
+      "missing_references": [],
+      "duplicate_labels": [],
+      "missing_citations": [],
+      "placeholder_or_stale_prose_hits": [],
+      "overfull": 0,
+      "reference_warnings": [],
+      "pdf_pages": 23,
+      "endofmain": [
+        "\\newlabel{endofmain}{{7}{8}{Conclusion}{section.7}{}}"
+      ],
+      "pdf_sha256": "6a1638e4336cc866062662a944d84e97f311eb7607f6a63a352649f65da3ce10",
+      "sources_sha256": {
+        "paper\\latex\\main.tex": "94b48e47d315a312ee99876e1baf62197e1c1ec7fae6d3984fc439f43b5bb49d",
+        "paper\\latex\\revision_numbers.tex": "5315de9773f76e144c0bc8a2d351fae8fd59b61f01d8863cb2f2daede55d9eb1",
+        "paper\\latex\\common386_numbers.tex": "31a19ac14151f338e3244fcce42e5410a7507ad9e929aa0e8e9f46af0da442ec",
+        "paper\\latex\\sec_intro.tex": "b596e1d9d95cef9d5d02f386c8109b38ebded21f75783897cde83f579377e47d",
+        "paper\\latex\\fig_sampling_control.tex": "8a6e2200527c788c8d2e0726041f117936e64a08f7701404bd17b3e7c3473c75",
+        "paper\\latex\\sec_related.tex": "ad9b3a836585be0898888c15ce28c5d357b2d0f591176a1f9a9e7459e15eaaf5",
+        "paper\\latex\\sec_phase1.tex": "4e2e30d013580b988f260d7e266897f43ab3bc6755ff7d8b05fe5e3c77a29265",
+        "paper\\latex\\sec_setup.tex": "3e3526dc6b23e8ecb9b3b051de7e5292a7d041d2671ead91d864cc5e0a9fefb6",
+        "paper\\latex\\sec_phase2.tex": "b23cce3d083b7bc0549bddecf7034c01a0d20ecf8e37da626f8ea0036c367cd7",
+        "paper\\latex\\sec_selection_design.tex": "7752e92338a1177489d339724544a36b4b4b6b6425f8979768ac11a4b4dd0fd5",
+        "paper\\latex\\sec_coverage.tex": "033037e2d99e3fad00b50df4d42dd9d185eb006f9b81cdb7e49783e51762248d",
+        "paper\\latex\\sec_results.tex": "a0876ffa9df10e1221e85d1101a31129e13f21a6fc921d974fcd38a34f803037",
+        "paper\\latex\\sec_utility.tex": "ba14e2bb5c599eff8bfcebb7383884b6e46bb87e08e71a0d388d43b384504791",
+        "paper\\latex\\common386_replay_table.tex": "ef3fabbda2523d24a554844beace8c21fff99da6141c34975b3328fa6f28676c",
+        "paper\\latex\\sec_supporting.tex": "22fcac6ae4be21b96ccfec3924c5fcfc5ee21ba86de158dfa45c54763b939ab2",
+        "paper\\latex\\sec_discussion.tex": "7ec51bad2c27df9519c97830ab6f4a1352639584905c93fa0f30a8e536bb1fe5",
+        "paper\\latex\\sec_conclusion.tex": "54ad0937dade2e906c6eb64c355527cfa0a70a78716055e64cb3bdcf6c532022",
+        "paper\\latex\\sec_appendix.tex": "b5aa1439f63d463273eb43867019e56fec296b0e340b06995aec85f64e4c3867",
+        "paper\\latex\\sec_app_inventory.tex": "93b5de783385a3f2bea113c4e613212863dc8f687d0afc05542448ab45218b68",
+        "paper\\latex\\sec_crossdomain.tex": "e20410c397c9b9e75925038b0fada3049136e0e2424d1f30a15e887bfb3547df",
+        "paper\\latex\\panel_inventory.tex": "bbdd436bfe8618c1e5718aa5a6ae7cc92d7c34707cf802883bb6edff7cda9612",
+        "paper\\latex\\sec_app_wp1r.tex": "9df10721c894fdd557804d3b7079119587a07be7c101a136b4d733e17cd7e9c8",
+        "paper\\latex\\sec_app_statistics.tex": "2fd83b647be7a09255d705ddc261d9346afab65f3739cb510ca61f21e2b3398a",
+        "paper\\latex\\calibration_table.tex": "38b93fefbb039071a2b66723354d3e9454f145e875a082eaf63ca8ea738aeda8",
+        "paper\\latex\\sec_app_selection.tex": "85659da875f6ed37cda6009069e04ff705c7a6b3cb9e002cb40172cc8b88b856",
+        "paper\\latex\\common386_policy_table.tex": "529b9a1a1c212fc5eef0d952e27d5759a6436336d133b5908d76fa4d0dfddac4",
+        "paper\\latex\\sec_app_bird_traces.tex": "58fe296cb0c49888a00373a1683beaabc208d751b847e8cc7ebf63a3401d49c0",
+        "paper\\latex\\sec_app_bird_admission.tex": "5e95bfd3498e692493605baa51185764d46db2f9d1db9b01ee7df51e5efbada8",
+        "paper\\latex\\sec_app_admission.tex": "ba1824f773d6de0140939ca2d3aedf19d12a1be88e0700927cb26b42533c29ae",
+        "paper\\latex\\revision_primary_table.tex": "15cdab94ec4ea99e32047566b38300408f30e4abc6c92cba35611e2982a80c83",
+        "paper\\latex\\revision_factorial_table.tex": "a2e9b34116f8952d0d1bfb572cf04aef3e9a92a536059fe23b15237b51e09f1f",
+        "paper\\latex\\revision_decomposition_table.tex": "8a885ff4e468dc781596f0919ccc7ee5bb2237c0cf712cd7b74a7b6f528057aa",
+        "paper\\latex\\revision_sensitivity_table.tex": "ecbae9a73cdd60cf265d355c1829a875616ae57ecd6cda139e663f243ef72608",
+        "paper\\latex\\revision_cost_table.tex": "339adf78e0d016bc9843b0b98ba72f7ea539742709ce9464386b580438654f4a"
+      },
+      "embedded_figure_font_samples": [
+        {
+          "page": 17,
+          "text": "Source similarity and observed correctness",
+          "font_pt": 6.401
+        },
+        {
+          "page": 17,
+          "text": "36/91 pairs have identical correctness on all 60 tasks",
+          "font_pt": 6.045
+        },
+        {
+          "page": 20,
+          "text": "18-item smoke-test exception",
+          "font_pt": 6.301
+        },
+        {
+          "page": 20,
+          "text": "a  Data and exposure",
+          "font_pt": 6.916
+        },
+        {
+          "page": 20,
+          "text": "II-E: development only",
+          "font_pt": 6.147
+        },
+        {
+          "page": 21,
+          "text": "Shading: pooled unadjusted 95% CI",
+          "font_pt": 6.147
+        },
+        {
+          "page": 21,
+          "text": "Mean headroom (pp)",
+          "font_pt": 6.532
+        }
+      ]
+    },
+    "latex_zh": {
+      "active_tex_count": 34,
+      "citation_keys": 33,
+      "missing_references": [],
+      "duplicate_labels": [],
+      "missing_citations": [],
+      "placeholder_or_stale_prose_hits": [],
+      "overfull": 0,
+      "reference_warnings": [],
+      "pdf_pages": 27,
+      "endofmain": [
+        "\\newlabel{endofmain}{{7}{9}{结论}{section.7}{}}"
+      ],
+      "pdf_sha256": "8e7bb23c87d72389f2d95f8200c8bdc088f47c51d50cfb3136ede7e93d17b05f",
+      "sources_sha256": {
+        "paper\\latex_zh\\main.tex": "3c9362e3b8abca9f3e0cdde62ff7f11723cd583ec6e3abdd593bf414597245c9",
+        "paper\\latex\\revision_numbers.tex": "5315de9773f76e144c0bc8a2d351fae8fd59b61f01d8863cb2f2daede55d9eb1",
+        "paper\\latex\\common386_numbers.tex": "31a19ac14151f338e3244fcce42e5410a7507ad9e929aa0e8e9f46af0da442ec",
+        "paper\\latex_zh\\sec_intro.tex": "980a44419726fc6b95f937ba27f178f9787fabc29271cfc5e5973d8f2ded7961",
+        "paper\\latex_zh\\fig_sampling_control.tex": "8dd47d4e7e9eab43c5f4a26d099cdaf433cb4d54eb2db4e201fa3b4152557b62",
+        "paper\\latex_zh\\sec_related.tex": "6d37d1d46d6ec4993aa43aa905659b61c5bff53278c5d1838b17a755e1131833",
+        "paper\\latex_zh\\sec_phase1.tex": "d9e25fd98b2d7163131217aa6b98638c6db422195640fc8568d1e313ec9487c3",
+        "paper\\latex_zh\\sec_setup.tex": "9773e2c5a21ff6b3320005ae874cfe13092c667a2fdc09a45d67b8e9cdcae7f5",
+        "paper\\latex_zh\\sec_phase2.tex": "a059787b056fae61fc53c5b8eacb7c47497fa86ab3295e8fe98bea8820f79cef",
+        "paper\\latex_zh\\sec_selection_design.tex": "e446eabbef5f6d16b5667029631f326af83b29babcbf2f200cc4f880c4382fc2",
+        "paper\\latex_zh\\sec_coverage.tex": "fda51454893c882ffef5298a6c8cb7432320afd46a18ace365eeed2fcb0e78de",
+        "paper\\latex_zh\\sec_results.tex": "2f31660e17c21fdb62a4004fc2f1732033e81b29b990cbeb4f9544a995dd79ab",
+        "paper\\latex_zh\\sec_utility.tex": "5b111e08cedfb97516683eca31a7924026ac54f4ad6fa9d7ac97c75bc66805c3",
+        "paper\\latex\\common386_replay_table.tex": "ef3fabbda2523d24a554844beace8c21fff99da6141c34975b3328fa6f28676c",
+        "paper\\latex_zh\\sec_supporting.tex": "cdb882ec5d5e1a838aa99bb17193433ee4490569dd8227b4283613d9d8e8ad1b",
+        "paper\\latex_zh\\sec_discussion.tex": "b3d61a58ee3a3fab6f2ab9ad70d6c0013b583278827965fee30771c693151a38",
+        "paper\\latex_zh\\sec_conclusion.tex": "3ac5e6908323d09b27cb31c5c683ac7a2a679e033354aaa1c102ae0fd79894c9",
+        "paper\\latex_zh\\sec_appendix.tex": "6b50b5404dac99094beabdb4fbbd988b3e6ffedaefed73d37d98f4acd13a2acd",
+        "paper\\latex_zh\\sec_app_inventory.tex": "e626254d1e9e87d3d1aa86f5f9c588b810b53ca2d75465fc1621ea9f8bd7be73",
+        "paper\\latex_zh\\sec_crossdomain.tex": "77fa231ee783939815af1757d652e40c049828ff30826cb722f96b6835021e9f",
+        "paper\\latex_zh\\panel_inventory.tex": "f95415cbf7826d13a0af564c6e136c961342508316038875ff7ef9ce4e090625",
+        "paper\\latex_zh\\sec_app_wp1r.tex": "d5e79c9072178f7d8cdfcb5309d3996b94fdfb62a126d7077b65357b51b4ba67",
+        "paper\\latex_zh\\sec_app_statistics.tex": "b8955a977d7b49233bf5c654b8c70acbabfae62e2033663a686323dc2e700106",
+        "paper\\latex\\calibration_table.tex": "38b93fefbb039071a2b66723354d3e9454f145e875a082eaf63ca8ea738aeda8",
+        "paper\\latex_zh\\sec_app_selection.tex": "4ac7e95501c8acb090830f1f1e7cb61e054c240eb551becb358a921e5a25241f",
+        "paper\\latex\\common386_policy_table.tex": "529b9a1a1c212fc5eef0d952e27d5759a6436336d133b5908d76fa4d0dfddac4",
+        "paper\\latex_zh\\sec_app_bird_traces.tex": "40cf741ffda830b2d422241a10eaa9614d8eb262c69c2f6fa34b74640b2aa9af",
+        "paper\\latex_zh\\sec_app_bird_admission.tex": "b5006c6927d51a9775d02ad59dede9dba609f4078b8e3de415acb399ed525906",
+        "paper\\latex_zh\\sec_app_admission.tex": "0f50aec0bd4ab034185294b8f6580a08ab98661af8291a47bca7bbc51eed7cc1",
+        "paper\\latex\\revision_primary_table.tex": "15cdab94ec4ea99e32047566b38300408f30e4abc6c92cba35611e2982a80c83",
+        "paper\\latex\\revision_factorial_table.tex": "a2e9b34116f8952d0d1bfb572cf04aef3e9a92a536059fe23b15237b51e09f1f",
+        "paper\\latex\\revision_decomposition_table.tex": "8a885ff4e468dc781596f0919ccc7ee5bb2237c0cf712cd7b74a7b6f528057aa",
+        "paper\\latex\\revision_sensitivity_table.tex": "ecbae9a73cdd60cf265d355c1829a875616ae57ecd6cda139e663f243ef72608",
+        "paper\\latex\\revision_cost_table.tex": "339adf78e0d016bc9843b0b98ba72f7ea539742709ce9464386b580438654f4a"
+      },
+      "embedded_figure_font_samples": [
+        {
+          "page": 21,
+          "text": "Source similarity and observed correctness",
+          "font_pt": 6.401
+        },
+        {
+          "page": 21,
+          "text": "36/91 pairs have identical correctness on all 60 tasks",
+          "font_pt": 6.045
+        },
+        {
+          "page": 24,
+          "text": "18-item smoke-test exception",
+          "font_pt": 6.301
+        },
+        {
+          "page": 24,
+          "text": "a  Data and exposure",
+          "font_pt": 6.916
+        },
+        {
+          "page": 24,
+          "text": "II-E: development only",
+          "font_pt": 6.147
+        },
+        {
+          "page": 25,
+          "text": "Shading: pooled unadjusted 95% CI",
+          "font_pt": 6.147
+        },
+        {
+          "page": 25,
+          "text": "Mean headroom (pp)",
+          "font_pt": 6.532
+        }
+      ]
+    }
+  },
+  "numeric_macros": {
+    "common386_numbers.tex": {
+      "unchanged": true,
+      "sha256": "31a19ac14151f338e3244fcce42e5410a7507ad9e929aa0e8e9f46af0da442ec"
+    },
+    "revision_numbers.tex": {
+      "unchanged": true,
+      "sha256": "5315de9773f76e144c0bc8a2d351fae8fd59b61f01d8863cb2f2daede55d9eb1"
+    },
+    "wp1r_numbers.tex": {
+      "unchanged": true,
+      "sha256": "80fbdb0c7c1e563e6a9a6fa519b4e1743eb8acd0f87ee7cfaf950f904b2ead01"
+    },
+    "recovery_numbers.tex": {
+      "unchanged": true,
+      "sha256": "601d26ce9f0b9ec103f378e2e5f1e761b44514ee3c1ea45f70a60c205a2d4b59"
+    }
+  },
+  "table_data": {
+    "calibration_table.tex": true,
+    "common386_policy_table.tex": true,
+    "common386_replay_table.tex": true,
+    "revision_decomposition_table.tex": true,
+    "revision_sensitivity_table.tex": true,
+    "revision_primary_table.tex": true,
+    "revision_factorial_table.tex": true,
+    "revision_cost_table.tex": true
+  }
+}

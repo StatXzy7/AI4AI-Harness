@@ -1,0 +1,41 @@
+{
+  "backend": "python/matplotlib",
+  "operation": "rendering only",
+  "inputs_sha256": {
+    "artifacts/revision_20260910/corrected_analysis.json": "4725c9707af2da9ebf05fde08d2700706e800714f41892442e6f231d3d696dc4",
+    "artifacts/phase2/fig1_phenomenon_data.json": "88876cb149a4ca597c46ed8a315afff09e5fec8bf2ccd877655b7203ab50f993"
+  },
+  "source_sha256": "683029377ef8fb93bda9cef82b2fa43e974a439c5efbfa9d35b8f768878f91ac",
+  "input_rows": {
+    "discovery_pairs": 91,
+    "primary_cells": 18
+  },
+  "excluded_rows": 0,
+  "annotation_policy": "Published discovery annotations retained; no statistics recomputed",
+  "figures": {
+    "fig_design_revision": {
+      "alignment_verdict": "PASS",
+      "files": {
+        "fig_design_revision.pdf": "bf041c46328d4ca0ab72e56b55d5d421ffdaf0bed712e69287e9959e633eda03",
+        "fig_design_revision.svg": "6a163b9c8b17f97b133da665f9d54ff34ec14a0938778c7e38333079c4207509",
+        "fig_design_revision.png": "fc3bc0c2f9aa5a3b4d7e21b3c4d0bd194161c67d61d465f54bec188059f24680"
+      }
+    },
+    "fig_results_revision": {
+      "alignment_verdict": "PASS",
+      "files": {
+        "fig_results_revision.pdf": "f0b13529dfde71f6ffd1779bd39eac3a3998757d3c439185263945938a8ce5c9",
+        "fig_results_revision.svg": "69776b4ea8e2e8cc4d6c28b6a38699827d3e97fd44c2a1ac1e77ccd3241dc562",
+        "fig_results_revision.png": "d4fa3cafc6b530bf4d89e2000ae4292cb2c89b4c077e414124c9cb3e8ff44546"
+      }
+    },
+    "fig_phenomenon": {
+      "alignment_verdict": "NOT APPLICABLE",
+      "files": {
+        "fig_phenomenon.pdf": "0dbf6f190e112d8fcee95e255f73e90a97d84f37d19072e2e7a357e0c1cc1a62",
+        "fig_phenomenon.svg": "f3bf89ece35f9e9a7b1dc5e9373350e17134835c366cb94570d9d4be9d6d9c33",
+        "fig_phenomenon.png": "a20277f86c1dab20f1e534d6b3ac6720eedd159d1c1c4dbad1f2cba310a1a415"
+      }
+    }
+  }
+}

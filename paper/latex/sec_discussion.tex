@@ -1,16 +1,14 @@
 \paragraph{From a population of programs to a useful choice.}
-The three measurements describe successive parts of the same story.
-Coverage records the answers a population makes available. Repeats
-reveal which differences persist. Selection tests whether those
-differences help a decision made before execution. In the generated
-panel, the strongest repeatable structure is a map of losses: persistent
-losses span $\RcvLossTasks$ tasks, while persistent wins occur on one.
-The frozen selector provides a direct practical result,
-$\RcvPolicyGain$ pp gain, alongside the equal full-budget oracle coverage.
-For harness design, the relevant target is a repeatable task advantage
-that a selection rule can recognize. BIRD adds an execution-level view:
-implementation, activation, and a valid final output are successive
-requirements for a proposed mechanism to affect behavior.
+The same-code reference separates sampling opportunities from program
+identity, while repeats reveal the direction of persistent differences.
+In the tested panel, that persistent structure is concentrated in losses.
+Strong repeatability therefore describes where programs fail more
+clearly than where a selector can exploit an advantage. This explains
+why repeatable score patterns can coexist with zero selection gain and
+equal full-budget coverage. The design objective is a task advantage
+that persists and can be recognized before execution. BIRD locates
+three breaks on the path to such an advantage: a proposed operation
+can be absent, remain idle, or execute and return an invalid answer.
 
 \paragraph{Scope.}
 The MATH study uses a low-call panel, one solver, and three repeats.

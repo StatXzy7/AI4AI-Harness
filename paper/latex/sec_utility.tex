@@ -1,13 +1,11 @@
 \subsection{The Tested Selector Adds No Gain and Full-Budget Coverage Ties}\label{sec:utility}
 \paragraph{The frozen selector matches the development-selected baseline.}
-The tested feature policy yields $\RcvPolicyGain$ pp gain:
-after applying its confidence-based fallback, it selects \bare{} on
-all $\RcvPairedN$ evaluation tasks. Keeping these choices fixed and
-updating only the recorded outcomes gives $\RcvBaselineAcc\%$
-accuracy over three repeats, identical to the development-selected
-fixed member. This result evaluates the complete decision rule;
-the reported choices do not distinguish initial classifier preferences
-from fallback decisions.
+The tested feature policy yields $\RcvPolicyGain$ pp gain. Its frozen
+classifier directly selects \bare{} on all $\RcvPairedN$ evaluation
+tasks; the confidence-based fallback is never triggered. These choices
+give $\RcvBaselineAcc\%$ accuracy over three repeats, identical to the
+development-selected fixed member. Thus the learned policy itself
+retains the baseline on this analysis set.
 Appendix~\ref{app:selection} gives its construction and the
 same-set comparator results.
 

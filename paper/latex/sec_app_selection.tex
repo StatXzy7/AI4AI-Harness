@@ -3,38 +3,48 @@ The selector is fitted on $100$ development tasks. Its recorded choices
 and development ranking are evaluated on the common $\RcvPairedN$ tasks.
 
 \subsection{Frozen feature selector}
-The reported selector $\pi_Z$ combines five multinomial-logistic
-fold models fitted using the $100$ development tasks. Its inputs are
-TF-IDF question features (at most $300$) and per-member development
-accuracies computed within the respective training folds. All repeats
-of a task stay together in the five-fold task partition. The score
-summary for member $h$ on development task $x$ is the available-repeat
-mean,
+The reported selector $\pi_Z$ uses multinomial logistic regression with
+five task folds on the $100$ development tasks. The score summary for
+member $h$ on development task $x$ is the available-repeat mean,
 \[
  \bar Y_h(x)=\frac{1}{|\mathcal R_{hx}|}
              \sum_{r\in\mathcal R_{hx}}Y(h,x,r),
 \]
 where $\mathcal R_{hx}$ contains its observed development repeats.
-The five fitted models are combined by fold-model averaging. If
-$p_k(h\mid x)$ is the probability assigned by fold model $k$, the
-inference rule uses $\bar p(h\mid x)=\frac15\sum_{k=1}^5p_k(h\mid x)$.
-Let $h_{(1)}$ and $h_{(2)}$ be the members with the two highest averaged
-probabilities, breaking ties by member ID. The final frozen choice is
+A task is eligible for fitting only when every member has at least one
+observed repeat. Its training label is
+$y(x)=\arg\max_h\bar Y_h(x)$, with ties resolved by ascending member ID.
+Eligible tasks, ordered by task ID, are split into five consecutive
+folds without shuffling; all repeats of a task stay together.
+
+The TF-IDF vocabulary and inverse-document frequencies are fitted once
+on eligible development questions, using English stop-word removal and
+at most $300$ features. Each fold model appends the vector of member
+accuracies computed on its four training folds to every question's
+features. This vector is constant across questions within that model;
+only the text features vary by task. Logistic regression uses
+$C=1$ and at most $1{,}000$ iterations. A training fold with only one
+label is omitted; absent member classes receive zero probability.
+If $1\le K\le5$ models are fitted and $q_k(h\mid x)$ is model $k$'s
+predicted class probability, inference uses
+$\bar q(h\mid x)=K^{-1}\sum_{k=1}^Kq_k(h\mid x)$.
+Let $h_{(1)}$ and $h_{(2)}$ have the two highest averaged probabilities.
+The final frozen choice is
 \[
  \pi_Z(x)=
  \begin{cases}
-  \text{\bare{}}, & \bar p(h_{(1)}\mid x)-\bar p(h_{(2)}\mid x)<0.15,\\
+  \text{\bare{}}, & \bar q(h_{(1)}\mid x)-\bar q(h_{(2)}\mid x)<0.15,\\
   h_{(1)}, & \text{otherwise}.
  \end{cases}
 \]
-Thus the five-fold step supplies the averaged prediction used at
-inference, and the threshold is applied after averaging. The policy
+The threshold is applied after averaging; a tied top probability
+therefore triggers the baseline fallback. The policy
 table evaluates these final choices, including the baseline fallback.
 It reports repeat-mean accuracy, with harness executions as the unit of
 evaluation; a selected harness can make multiple model calls.
 
 Comparators are \bare{}, the development-selected fixed member,
-one fixed member drawn once with a fixed seed, and the
+one fixed member drawn once with seed $20260915$, and the
 development-selected member with baseline fallback on missing cells.
 
 \begin{table}[H]

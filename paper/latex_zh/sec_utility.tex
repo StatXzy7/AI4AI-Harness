@@ -1,6 +1,6 @@
 \subsection{所测选择器无增益，完整预算下覆盖持平}\label{sec:utility}
 \paragraph{冻结选择器与开发集选出的基线持平。}
-所测特征策略的增益为 $\RcvPolicyGain$ pp：应用置信度回退规则后，它在全部 $\RcvPairedN$ 道评估题上选择 \bare{}。保持选择不变、仅更新记录结果后，三次重复的准确率为 $\RcvBaselineAcc\%$，与开发集选出的固定成员相同。这一结果评估完整决策规则，报告的最终选择不区分分类器初始偏好与回退决定。附录~\ref{app:selection} 给出其构造和同一分析集上的比较器结果。
+所测特征策略的增益为 $\RcvPolicyGain$ pp。冻结分类器在全部 $\RcvPairedN$ 道评估题上直接选择 \bare{}，未触发置信度回退。这些选择在三次重复上的准确率为 $\RcvBaselineAcc\%$，与开发集选出的固定成员相同。因此，在该分析集上保留基线的是学习到的策略本身。附录~\ref{app:selection} 给出其构造和同一分析集上的比较器结果。
 
 \paragraph{完整执行预算下，两臂 oracle 覆盖持平。}
 \label{sec:selection-result}
