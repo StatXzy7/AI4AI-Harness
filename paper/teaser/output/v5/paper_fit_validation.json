@@ -1,0 +1,32 @@
+{
+  "original_manuscript_pdf": "paper/latex/main.pdf",
+  "original_manuscript_snapshot_commit": "922c914cc7ce218e43b5a7114e582cf35632d253",
+  "original_manuscript_pdf_sha256": "aca6a579b56203ec299e494c3af7d9d4f9f853d20510882612596ab494271e00",
+  "original_pdf_unchanged": true,
+  "proof_uses_latest_main_manuscript": false,
+  "raw_figure_sha256": "507b8cecc12ff157e172d12386977b14d6fa52bdd5883d1846f9432388c6e152",
+  "manuscript_text_width_pt": 396,
+  "manuscript_text_height_pt": 648,
+  "reports": [
+    {
+      "mode": "illustrated",
+      "figure_rect_pt": [
+        108.0,
+        82.0,
+        504.0,
+        280.0
+      ],
+      "figure_scale": 1.0,
+      "figure_aspect_ratio": 2.0,
+      "caption": "Figure 1: Controlled diagnosis of program specialization. Both arms use 386 complete MATH tasks, nine slots, and three repeats. Headroom uses repeat means. Persistent tasks have at least one generated member winning/losing against baseline in all three repeats; the sole win is extraction-sensitive. D is clone-adjusted held-out repeat gain (95% bootstrap CI). Program drawings are schematic.",
+      "caption_word_count": 56,
+      "caption_size_pt": 10,
+      "caption_height_pt": 62.363983154296875,
+      "figure_caption_spacing_pt": 9.0,
+      "caption_body_spacing_pt": 18,
+      "total_figure_caption_and_spacing_pt": 287.3639831542969,
+      "body_excerpt_bottom_pt": 644.3639831542969,
+      "method": "PDF composition with original text excerpt; no reflow or LaTeX compilation"
+    }
+  ]
+}
