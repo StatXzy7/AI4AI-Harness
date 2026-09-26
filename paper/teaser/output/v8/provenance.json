@@ -1,0 +1,136 @@
+{
+  "version": "v8",
+  "reference": "v6",
+  "branch": "jzsawyer-dev/teaser-v8",
+  "purpose": "Explain the control, persistent score patterns, and held-out correction.",
+  "data_source": "artifacts/common386_20260926/analysis.json",
+  "data_sha256": "253a2587fa67d3be8e830a22582497ec7c26ba6ee67db10ef85b5735cfa2ca21",
+  "reviewed_manuscript_commit": "782bacec0579a4e2ccfea956999235af74ce3bee",
+  "v6_pr": "https://github.com/StatXzy7/AI4AI-Harness/pull/2",
+  "v6_pr_merged_at": "2026-09-26T10:22:24Z",
+  "old_version_files_unchanged": 108,
+  "evidence_audit": "evidence_audit.json",
+  "data_transformations": [
+    "Display rounding only for the six retained result groups.",
+    "Persistent-pattern counts reproduced from full binary tensors.",
+    "B displays one deliberately chosen task; no data interpolation."
+  ],
+  "illustration_semantics": {
+    "A": "Original whole schematic bitmap; count grid and vector loss-pattern definition.",
+    "B": "Vector schematic code motifs and actual binary observations for example #138.",
+    "C": "Original whole schematic bitmap; two-member population-probability schematics, not measured curves."
+  },
+  "font": "Embedded STIX General, 7.5 pt minimum.",
+  "comparison": [
+    {
+      "label": "V6 reference",
+      "source": "output/v6/teaser_illustrated.pdf",
+      "figure_rect_pt": [
+        108.0,
+        53.0,
+        504.0,
+        251.0
+      ],
+      "scale": 1.0
+    },
+    {
+      "label": "A \u00b7 Explain the control and persistent scores",
+      "source": "output/v8/teaser_A_calibrated.pdf",
+      "figure_rect_pt": [
+        108.0,
+        285.0,
+        504.0,
+        483.0
+      ],
+      "scale": 1.0
+    },
+    {
+      "label": "B \u00b7 Illustrate the control with recorded outcomes",
+      "source": "output/v8/teaser_B_fingerprint.pdf",
+      "figure_rect_pt": [
+        108.0,
+        517.0,
+        504.0,
+        715.0
+      ],
+      "scale": 1.0
+    },
+    {
+      "label": "C \u00b7 Explain what stable specialization requires",
+      "source": "output/v8/teaser_C_crossover.pdf",
+      "figure_rect_pt": [
+        108.0,
+        749.0,
+        504.0,
+        947.0
+      ],
+      "scale": 1.0
+    }
+  ],
+  "outputs": [
+    {
+      "file": "teaser_A_calibrated.pdf",
+      "width_pt": 396,
+      "height_pt": 198,
+      "aspect_ratio": 2.0,
+      "visible_word_count": 121,
+      "minimum_font_pt": 7.5,
+      "fonts": [
+        "STIXGeneral-Bold",
+        "STIXGeneral-Regular"
+      ],
+      "embedded_fonts": true,
+      "text_within_page": true,
+      "normalized_text_span_overlaps": 0,
+      "raster_images": 1,
+      "global_title": false,
+      "six_evidence_groups_present": true,
+      "sha256": "a1f2b57ebaf5a2f2b516199259ac951da883b3d9729877914a36177f8f364e9a",
+      "candidate": "A",
+      "concept": "Explain the control and persistent scores"
+    },
+    {
+      "file": "teaser_B_fingerprint.pdf",
+      "width_pt": 396,
+      "height_pt": 198,
+      "aspect_ratio": 2.0,
+      "visible_word_count": 129,
+      "minimum_font_pt": 7.5,
+      "fonts": [
+        "STIXGeneral-Bold",
+        "STIXGeneral-Regular"
+      ],
+      "embedded_fonts": true,
+      "text_within_page": true,
+      "normalized_text_span_overlaps": 0,
+      "raster_images": 0,
+      "global_title": false,
+      "six_evidence_groups_present": true,
+      "sha256": "4446a46bb322e11af284e4b5afd46b89e8dadf26e3f7bc6440d2f852bd05920b",
+      "candidate": "B",
+      "concept": "Illustrate the control with recorded outcomes"
+    },
+    {
+      "file": "teaser_C_crossover.pdf",
+      "width_pt": 396,
+      "height_pt": 198,
+      "aspect_ratio": 2.0,
+      "visible_word_count": 131,
+      "minimum_font_pt": 7.5,
+      "fonts": [
+        "STIXGeneral-Bold",
+        "STIXGeneral-Italic",
+        "STIXGeneral-Regular"
+      ],
+      "embedded_fonts": true,
+      "text_within_page": true,
+      "normalized_text_span_overlaps": 0,
+      "raster_images": 1,
+      "global_title": false,
+      "six_evidence_groups_present": true,
+      "sha256": "74da2854e9598680361c36724c445b792d1b8e26d7c7198e1e491b1f7d37ccff",
+      "candidate": "C",
+      "concept": "Explain what stable specialization requires"
+    }
+  ]
+}

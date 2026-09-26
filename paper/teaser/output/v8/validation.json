@@ -1,0 +1,75 @@
+{
+  "source_values_checked": true,
+  "tensor_hashes_checked": true,
+  "persistent_counts_reproduced": {
+    "loss": 100,
+    "win": 1
+  },
+  "previous_version_files_unchanged": 108,
+  "outputs": [
+    {
+      "file": "teaser_A_calibrated.pdf",
+      "width_pt": 396,
+      "height_pt": 198,
+      "aspect_ratio": 2.0,
+      "visible_word_count": 121,
+      "minimum_font_pt": 7.5,
+      "fonts": [
+        "STIXGeneral-Bold",
+        "STIXGeneral-Regular"
+      ],
+      "embedded_fonts": true,
+      "text_within_page": true,
+      "normalized_text_span_overlaps": 0,
+      "raster_images": 1,
+      "global_title": false,
+      "six_evidence_groups_present": true,
+      "sha256": "a1f2b57ebaf5a2f2b516199259ac951da883b3d9729877914a36177f8f364e9a",
+      "candidate": "A",
+      "concept": "Explain the control and persistent scores"
+    },
+    {
+      "file": "teaser_B_fingerprint.pdf",
+      "width_pt": 396,
+      "height_pt": 198,
+      "aspect_ratio": 2.0,
+      "visible_word_count": 129,
+      "minimum_font_pt": 7.5,
+      "fonts": [
+        "STIXGeneral-Bold",
+        "STIXGeneral-Regular"
+      ],
+      "embedded_fonts": true,
+      "text_within_page": true,
+      "normalized_text_span_overlaps": 0,
+      "raster_images": 0,
+      "global_title": false,
+      "six_evidence_groups_present": true,
+      "sha256": "4446a46bb322e11af284e4b5afd46b89e8dadf26e3f7bc6440d2f852bd05920b",
+      "candidate": "B",
+      "concept": "Illustrate the control with recorded outcomes"
+    },
+    {
+      "file": "teaser_C_crossover.pdf",
+      "width_pt": 396,
+      "height_pt": 198,
+      "aspect_ratio": 2.0,
+      "visible_word_count": 131,
+      "minimum_font_pt": 7.5,
+      "fonts": [
+        "STIXGeneral-Bold",
+        "STIXGeneral-Italic",
+        "STIXGeneral-Regular"
+      ],
+      "embedded_fonts": true,
+      "text_within_page": true,
+      "normalized_text_span_overlaps": 0,
+      "raster_images": 1,
+      "global_title": false,
+      "six_evidence_groups_present": true,
+      "sha256": "74da2854e9598680361c36724c445b792d1b8e26d7c7198e1e491b1f7d37ccff",
+      "candidate": "C",
+      "concept": "Explain what stable specialization requires"
+    }
+  ]
+}

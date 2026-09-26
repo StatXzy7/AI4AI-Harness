@@ -1,0 +1,59 @@
+{
+  "original_pdf_sha256": "aca6a579b56203ec299e494c3af7d9d4f9f853d20510882612596ab494271e00",
+  "original_pdf_unchanged": true,
+  "method": "PDF composition, not a LaTeX compilation or pagination check.",
+  "manuscript_snapshot": "922c914",
+  "reports": [
+    {
+      "figure": "teaser_A_calibrated.pdf",
+      "page": 1,
+      "scale": 1.0,
+      "raw_figure_sha256": "a1f2b57ebaf5a2f2b516199259ac951da883b3d9729877914a36177f8f364e9a",
+      "figure_rect_pt": [
+        108.0,
+        82.0,
+        504.0,
+        280.0
+      ],
+      "caption": "Figure 1: Coverage, repeatable scores, and useful selection on 386 complete MATH tasks. Both arms freeze per-task choices and a best fixed member on two repeats, then measure gain G on the held-out repeat. D subtracts the same-code gain. Oracle budgets count harness executions. Intervals are 95% bootstrap CIs; the sole persistent win is extraction-sensitive. Persistent task counts require at least one generated member to differ from baseline in all three repeats.",
+      "caption_words": 72,
+      "caption_size_pt": 10,
+      "caption_height_pt": 62.363983154296875,
+      "body_excerpt_bottom_pt": 644.3639831542969
+    },
+    {
+      "figure": "teaser_B_fingerprint.pdf",
+      "page": 2,
+      "scale": 1.0,
+      "raw_figure_sha256": "4446a46bb322e11af284e4b5afd46b89e8dadf26e3f7bc6440d2f852bd05920b",
+      "figure_rect_pt": [
+        108.0,
+        82.0,
+        504.0,
+        280.0
+      ],
+      "caption": "Figure 1: Coverage, repeatable scores, and useful selection on 386 complete MATH tasks. Both arms freeze per-task choices and a best fixed member on two repeats, then measure gain G on the held-out repeat. D subtracts the same-code gain. Oracle budgets count harness executions. Intervals are 95% bootstrap CIs; the sole persistent win is extraction-sensitive. Example #138 is deliberately selected to illustrate the recorded outcomes; it is not representative.",
+      "caption_words": 69,
+      "caption_size_pt": 10,
+      "caption_height_pt": 62.363983154296875,
+      "body_excerpt_bottom_pt": 644.3639831542969
+    },
+    {
+      "figure": "teaser_C_crossover.pdf",
+      "page": 3,
+      "scale": 1.0,
+      "raw_figure_sha256": "74da2854e9598680361c36724c445b792d1b8e26d7c7198e1e491b1f7d37ccff",
+      "figure_rect_pt": [
+        108.0,
+        82.0,
+        504.0,
+        280.0
+      ],
+      "caption": "Figure 1: Coverage, repeatable scores, and useful selection on 386 complete MATH tasks. Both arms freeze per-task choices and a best fixed member on two repeats, then measure gain G on the held-out repeat. D subtracts the same-code gain. Oracle budgets count harness executions. Intervals are 95% bootstrap CIs; the sole persistent win is extraction-sensitive. The top-right sketches are population success-probability examples, not observed task curves. Stable complementarity requires the better member to change across tasks.",
+      "caption_words": 76,
+      "caption_size_pt": 10,
+      "caption_height_pt": 74.17999267578125,
+      "body_excerpt_bottom_pt": 656.1799926757812
+    }
+  ]
+}
