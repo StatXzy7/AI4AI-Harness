@@ -1,16 +1,16 @@
 \subsection{Harness Populations and Evaluation Setup}
 \label{sec:interface}
-A \emph{builder} writes a Python harness; a \emph{target solver} answers
-its model calls; an external \emph{judge} scores its final output.
-The reported comparisons use \texttt{GLM-5.3-Flash}
-(Appendix~\ref{app:models}). Each
-harness implements \texttt{solve(question)} and calls \texttt{self.llm};
-BIRD also exposes schema and SQL feedback through \texttt{self.execute}.
-Gold answers are available only to the judge. The \bare{} baseline makes
-one temperature-$0$ call. Generated programs can change prompts,
-decoding, sample count, and control flow. These choices determine
-each member's computation and sampling behavior.
-Table~\ref{tab:study-map} identifies the role of each study.
+We hold the target solver, \texttt{GLM-5.3-Flash}, fixed and vary the
+Python programs that call it. A \emph{builder} writes each harness,
+the \emph{solver} answers its model calls, and an external \emph{judge}
+scores the final output. Gold answers are available only to the judge.
+Every harness implements \texttt{solve(question)} and calls
+\texttt{self.llm}; BIRD also provides schema and SQL feedback through
+\texttt{self.execute}. The \bare{} baseline makes one temperature-$0$
+call. Generated programs can change prompts, decoding, sample count,
+and control flow. Table~\ref{tab:study-map} maps the resulting populations
+to the questions they address; model details appear in
+Appendix~\ref{app:models}.
 
 \begin{table}[t]
 \centering\small
@@ -25,7 +25,7 @@ BIRD discovery & 12 generated + \bare{} + \react{} & 60 tasks; one run & What me
 BIRD admission & 6 builders $\times$ 3 seeds $\times$ 4 arms & 1,169 for primary contrast; 400 for all arms & Does screening change coverage? \\
 \bottomrule
 \end{tabular}
-\caption{\textbf{Each study addresses a different inference.} One run
+\caption{\textbf{Four studies connect coverage, repeatability, and execution.} One run
 means one execution per member--task pair. The repeated MATH panel is
 selected from the exploratory population. BIRD supplies separate
 execution and admission evidence, with effects reported by study.}
@@ -35,62 +35,56 @@ execution and admission evidence, with effects reported by study.}
 \paragraph{MATH populations and panel selection.}
 \label{sec:math-setup}
 Six builders---GLM-5.3, Qwen3.8-Max, DeepSeek-V4-Pro, Kimi-K3,
-MiniMax-M3, and ERNIE-5.0-Thinking-Preview---receive eight slots each
-under one seed. Each slot is an independent generation opportunity,
-not an assigned strategy. Prompts request an improvement over one greedy call
-and leave program structure to the builder, without a cross-slot diversity
-constraint. Retries reuse the same prompt without feeding back earlier
-code or evaluation outcomes. Each slot allows three attempts at
-most (temperature $0.7$; $32{,}768$ output tokens per attempt), stopping
-at the first program that passes parsing, import, interface, and
-nonempty-answer checks on two development questions. This yields
-$35$ frozen programs from $48$ slots for subsequent evaluation.
-Appendix~\ref{app:builder-instruction} summarizes the builder instruction
-and its interface constraints.
+MiniMax-M3, and ERNIE-5.0-Thinking-Preview---each receive eight slots
+under one seed. A slot is an independent opportunity to improve on a
+single greedy call: the builder chooses the strategy, with no cross-slot
+diversity constraint. Each slot allows up to three attempts at
+temperature $0.7$ and $32{,}768$ output tokens, using the same prompt
+without feedback from earlier attempts. Generation stops at the first
+program that passes parsing, import, interface, and nonempty-answer
+checks on two development questions. The $48$ slots yield $35$ frozen
+programs (builder instructions: Appendix~\ref{app:builder-instruction}).
 
-For the repeat panel, a historical mean-call ceiling of $3.05$ leaves $21$ eligible members; a fixed
-salted hash selects one per builder and two at-large seats. This
-favors low-call programs. Selected sources include draft--check--revise,
-agreement checking, and sample voting; Appendix~\ref{app:panel-mechanisms}
-lists them. Adding \bare{} gives nine members. Both this panel and
-nine identical baseline slots receive three fresh, cache-disabled
-repeats, with decoding fixed by each member's source.
+The repeat panel samples eight of these programs. A historical mean-call
+ceiling of $3.05$ leaves $21$ eligible members; a fixed salted hash
+selects one per builder and two at-large seats. The resulting low-call
+panel includes draft--check--revise, agreement checking, and sample
+voting (Appendix~\ref{app:panel-mechanisms}). Adding \bare{} gives
+nine members. This panel and nine identical baseline slots each receive
+three fresh, cache-disabled repeats, with decoding fixed by the source.
 
-From MATH-500 \citep{math500}, we use $100$ development problems and a
-common analysis set of $\RcvPairedN$ evaluation problems. We determine
-this set after collection by requiring complete observations in both
-repeat arms and the single-run population; $\RcvExcludedN$ problems
-with incomplete repeat observations are excluded. All reported MATH
-primary comparisons use these same task identities, with $100\%$
-observed scoring cells within the analysis set. The repeat study uses
-fresh executions of these tasks. Appendix~\ref{app:wp1r} reports the exclusions.
-The judge extracts the final answer, preferring the requested
-\texttt{\#\#\#\#} line, then compares numeric values when both parse
-and normalized LaTeX otherwise. Appendix~\ref{app:crossdomain}
-details the comparator and its audit.
+MATH-500 \citep{math500} supplies $100$ development problems and
+$\RcvPairedN$ evaluation problems in the common analysis set. We form
+this set after collection by requiring complete observations across
+both repeat arms and the single-run population, excluding
+$\RcvExcludedN$ problems with incomplete repeat observations
+(Appendix~\ref{app:wp1r}). All primary MATH comparisons therefore use
+the same task identities and fully observed scoring cells. The judge
+extracts the final answer, preferring the requested \texttt{\#\#\#\#}
+line, and compares numeric values when both parse or normalized LaTeX
+otherwise (Appendix~\ref{app:crossdomain}).
 
 \paragraph{BIRD discovery and admission.}
 \label{sec:bird-setup}
-BIRD \citep{bird2021} requires SQL for a question and database. TTHE's
-proposer with a GLM-5.3-Flash builder produces the $12$ discovery
-candidates, admitted by import and smoke-execution checks. They and
-two supplied baselines are evaluated on $60$ questions. The separate
-admission study crosses free versus assigned strategies with ungated
-versus conformance-gated admission, using six builders, three seeds,
-and eight slots per arm. At most three attempts per slot are allowed
+BIRD \citep{bird2021} requires SQL for a question and database. In the
+discovery study, TTHE's proposer uses a GLM-5.3-Flash builder to produce
+$12$ candidates that pass import and smoke-execution checks. These
+programs and two supplied baselines are evaluated on $60$ questions.
+The admission study crosses free versus assigned strategies with
+ungated versus conformance-gated admission: six builders, three seeds,
+and eight slots per arm, with up to three attempts per slot
 (temperature $0.7$; $16{,}384$ output tokens). Assigned strategies
 include execution repair, three-sample voting, and schema linking.
 All arms require a valid interface and nonempty SQL; gated arms also
 check mechanism conformance and exclude some structures.
 
-The admission split reserves $365$ questions in two databases for
-development and $1{,}169$ in nine databases for evaluation; all four
-arms use a pre-drawn $400$-question core. An $18$-item smoke test is a
-disclosed development-exposure exception. Predicted and gold query
-results are compared using the official set-of-rows scorer with a
-$30$-second timeout and failures scored zero. Discovery instead uses
-an earlier stringified-row proxy with a row cap. Admission also uses
-shared response caching; the MATH repeats use cache-disabled execution. These
-conditions and the bundled nature of the gating intervention are
-retained in Appendices~\ref{app:phase1-provenance}
-and~\ref{app:phase2-protocol}.
+The admission split uses $365$ questions from two databases for
+development and $1{,}169$ from nine databases for evaluation, with a
+pre-drawn $400$-question core shared by all four arms. An $18$-item
+smoke test is a development-exposure exception. The official set-of-rows
+scorer compares predicted and gold query results, with a $30$-second
+timeout and failures scored zero. Discovery uses an earlier
+stringified-row proxy with a row cap. Admission uses shared response
+caching, whereas the MATH repeats disable caching. Full split, scoring,
+and bundled gating specifications appear in
+Appendices~\ref{app:phase1-provenance} and~\ref{app:phase2-protocol}.

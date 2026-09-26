@@ -1,0 +1,416 @@
+{
+  "date": "2026-09-26",
+  "purpose": "Editorial rewrite and mechanical validation, not a scientific peer-review verdict",
+  "source_checks": {
+    "paper/latex/main.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex/sec_appendix.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex/sec_app_admission.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex/sec_app_bird_admission.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex/sec_app_bird_traces.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex/sec_app_inventory.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex/sec_app_selection.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex/sec_app_statistics.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex/sec_app_wp1r.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex/sec_conclusion.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex/sec_coverage.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex/sec_crossdomain.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex/sec_discussion.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex/sec_intro.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex/sec_phase1.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex/sec_phase2.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex/sec_related.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex/sec_results.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex/sec_selection_design.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex/sec_setup.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex/sec_supporting.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex/sec_utility.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex_zh/main.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex_zh/sec_appendix.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex_zh/sec_app_admission.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex_zh/sec_app_bird_admission.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex_zh/sec_app_bird_traces.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex_zh/sec_app_inventory.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex_zh/sec_app_selection.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex_zh/sec_app_statistics.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex_zh/sec_app_wp1r.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex_zh/sec_conclusion.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex_zh/sec_coverage.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex_zh/sec_crossdomain.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex_zh/sec_discussion.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex_zh/sec_intro.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex_zh/sec_phase1.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex_zh/sec_phase2.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex_zh/sec_related.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex_zh/sec_results.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex_zh/sec_selection_design.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex_zh/sec_setup.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex_zh/sec_supporting.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    },
+    "paper/latex_zh/sec_utility.tex": {
+      "labels_unchanged": true,
+      "citation_keys_and_counts_unchanged": true,
+      "tabular_blocks_unchanged": true
+    }
+  },
+  "builds": {
+    "latex": {
+      "success": true,
+      "main_end_page": 8,
+      "total_pages": 22,
+      "before_total_pages": 25,
+      "reference_or_overflow_errors": [],
+      "font_note": null,
+      "sha256_pdf": "b51e0db1adcbc5ee76b5d558ee96acd7d9299cd8cfc571426260abd4f231afa4"
+    },
+    "latex_zh": {
+      "success": true,
+      "main_end_page": 9,
+      "total_pages": 26,
+      "before_total_pages": 30,
+      "reference_or_overflow_errors": [],
+      "font_note": "Chinese small-cap font substitutes normal shape; visible Latin text checked",
+      "sha256_pdf": "ea6083027a99cebbea4844d095bfe9e004d1c80a326e30729eefebc09cced6a9"
+    }
+  },
+  "protected_files": [
+    {
+      "path": "paper/latex/calibration_table.tex",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "paper/latex/common386_numbers.tex",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "paper/latex/common386_policy_table.tex",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "paper/latex/common386_replay_table.tex",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "paper/latex/panel_inventory.tex",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "paper/latex/recovery_numbers.tex",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "paper/latex/recovery_replay_table.tex",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "paper/latex/references.bib",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "paper/latex/revision_budget_table.tex",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "paper/latex/revision_cost_table.tex",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "paper/latex/revision_decomposition_table.tex",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "paper/latex/revision_factorial_table.tex",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "paper/latex/revision_numbers.tex",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "paper/latex/revision_primary_table.tex",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "paper/latex/revision_selection_table.tex",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "paper/latex/revision_sensitivity_table.tex",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "paper/latex/wp1r_numbers.tex",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "paper/latex/wp1r_policy_table.tex",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "paper/latex_zh/panel_inventory.tex",
+      "sha256_unchanged": true
+    },
+    {
+      "path": "paper/latex_zh/references.bib",
+      "sha256_unchanged": true
+    }
+  ],
+  "bilingual_macro_count_differences": [],
+  "changed_tex_files": 44,
+  "preserved_tables_figures_quotes_in_appendices": "See appendix_style_checks.json for exact-block checks.",
+  "editorial_review": {
+    "score_out_of_10": 9,
+    "verdict": "ready",
+    "scope": "Writing only; four suggestions resolved in both languages."
+  },
+  "word_counts": {
+    "before": {
+      "text_header_caption_words": 9604,
+      "per_included_file": {
+        "revision_numbers.tex": 0,
+        "common386_numbers.tex": 0,
+        "sec_intro.tex": 455,
+        "sec_related.tex": 351,
+        "sec_phase1.tex": 300,
+        "sec_setup.tex": 594,
+        "sec_phase2.tex": 317,
+        "sec_selection_design.tex": 210,
+        "sec_coverage.tex": 145,
+        "sec_results.tex": 363,
+        "sec_utility.tex": 222,
+        "sec_supporting.tex": 273,
+        "sec_discussion.tex": 252,
+        "sec_conclusion.tex": 92,
+        "sec_appendix.tex": 87,
+        "fig_sampling_control.tex": 72,
+        "sec_app_inventory.tex": 174,
+        "sec_app_wp1r.tex": 697,
+        "sec_app_statistics.tex": 715,
+        "sec_app_selection.tex": 537,
+        "sec_app_bird_traces.tex": 1177,
+        "sec_app_bird_admission.tex": 1061,
+        "sec_crossdomain.tex": 513,
+        "panel_inventory.tex": 99,
+        "sec_app_admission.tex": 344
+      }
+    },
+    "after": {
+      "text_header_caption_words": 7559,
+      "per_included_file": {
+        "revision_numbers.tex": 0,
+        "common386_numbers.tex": 0,
+        "sec_intro.tex": 450,
+        "sec_related.tex": 320,
+        "sec_phase1.tex": 261,
+        "sec_setup.tex": 550,
+        "sec_phase2.tex": 220,
+        "sec_selection_design.tex": 170,
+        "sec_coverage.tex": 141,
+        "sec_results.tex": 341,
+        "sec_utility.tex": 228,
+        "sec_supporting.tex": 296,
+        "sec_discussion.tex": 207,
+        "sec_conclusion.tex": 86,
+        "sec_appendix.tex": 48,
+        "fig_sampling_control.tex": 72,
+        "sec_app_inventory.tex": 127,
+        "sec_app_wp1r.tex": 466,
+        "sec_app_statistics.tex": 583,
+        "sec_app_selection.tex": 428,
+        "sec_app_bird_traces.tex": 833,
+        "sec_app_bird_admission.tex": 719,
+        "sec_crossdomain.tex": 353,
+        "panel_inventory.tex": 99,
+        "sec_app_admission.tex": 212
+      }
+    },
+    "definition": "TeXcount -inc -sum=1,1,1,0,0,0,0; text, headings, captions; excludes bibliography and math counts; generated numeric macros are not expanded."
+  },
+  "corpus_counts": {
+    "accepted_conference": 38,
+    "journal": 2,
+    "preprint": 1,
+    "corporate_report_or_card": 10,
+    "conference_targeted_structure_reads": 22,
+    "verified_citation_records": 21
+  },
+  "visual_review": {
+    "rendered_pages": {
+      "en": 22,
+      "zh": 26
+    },
+    "inspection": "All-page contact sheets; detailed first English page and revised Chinese appendix guide",
+    "result": "No clipping, overlap, missing text, or broken table layout observed",
+    "fix": "Appendix navigation held together with needspace"
+  }
+}

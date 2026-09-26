@@ -1,32 +1,25 @@
-\paragraph{Implications for evaluation.}
-Our results separate three observations that can otherwise be treated
-as interchangeable evidence. Identical programs produce positive oracle
-headroom; generated programs produce repeatable score patterns; the
-frozen selector nevertheless realizes no gain, and full-budget oracle
-coverage ties. A claim of useful specialization must therefore connect
-repeatable \emph{advantages}, task-wise crossover, and a usable selection
-rule. In the generated panel, persistent losses span $\RcvLossTasks$
-tasks, while persistent wins occur on one: the reproducible structure
-is largely a map of where programs lose, rather than where a selector
-can gain.
-If an advantage is attributed to a mechanism, traces must establish
-what ran and an intervention must test its contribution.
+\paragraph{From a population of programs to a useful choice.}
+The three measurements describe successive parts of the same story.
+Coverage records the answers a population makes available. Repeats
+reveal which differences persist. Selection tests whether those
+differences help a decision made before execution. In the generated
+panel, the strongest repeatable structure is a map of losses: persistent
+losses span $\RcvLossTasks$ tasks, while persistent wins occur on one.
+The frozen selector provides a direct practical result,
+$\RcvPolicyGain$ pp gain, alongside the equal full-budget oracle coverage.
+For harness design, the relevant target is a repeatable task advantage
+that a selection rule can recognize. BIRD adds an execution-level view:
+implementation, activation, and a valid final output are successive
+requirements for a proposed mechanism to affect behavior.
 
-\paragraph{Limitations.}
-The controlled MATH panel is a low-call draw under one solver on
-previously evaluated tasks. The revised held-out-repeat procedure and
-added repeatability analysis were developed after collection. The
-initial study ended under its stopping rule; the separately recorded
-recovery stage followed inspection of those earlier results, with
-programs, tasks, solver, and repeat count held fixed.
-The $\RcvPairedN$-task analysis set is fully
-observed and selected by completeness. The $\RcvExcludedN$ excluded
-problems have higher observed difficulty and lower baseline accuracy
-(Appendix~\ref{app:wp1r}); performance estimates therefore describe
-the selected cohort. Three repeats have low diagnostic power, and
-stable score patterns can include formatting effects from the fixed
-judge. The calibrated result remains \textsc{Insufficient Evidence}.
-The zero routing gain concerns the tested selector and features.
-Replay standardizes harness execution counts; model-call counts and
-token costs vary by program. BIRD findings apply to its own judging
-and acquisition conditions.
+\paragraph{Scope.}
+The MATH study uses a low-call panel, one solver, and three repeats.
+The repeat diagnostic and complete-case reanalysis were developed
+after collection; the recovery stage preserved programs, tasks, solver,
+and repeat count. The $\RcvExcludedN$ excluded tasks are harder than the
+$\RcvPairedN$ included tasks (Appendix~\ref{app:wp1r}). The held-out comparison leaves stable complementarity unresolved
+at three repeats, and recorded score patterns include answer-format
+effects. Selector results concern
+the frozen policy; replay matches harness executions, with model calls
+and tokens varying by program. BIRD uses its own populations and
+scoring conditions.

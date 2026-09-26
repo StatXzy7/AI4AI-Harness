@@ -1,6 +1,6 @@
 \subsection{相同程序也产生正的 oracle 估计}
 \label{sec:f3-clones}
-九个克隆槽位实现相同程序，其总体层面的稳定互补按构造为零。在同一批 $\RcvPairedN$ 个任务上，克隆的重复平均 oracle 估计为 $\RcvClonePlugin$ pp，生成面板为 $\RcvRealPlugin$ pp（表~\ref{tab:clone-control}）。两者使用完全相同的题目身份及完整观测。这一对照确立：平均三次重复，仍不足以让正的 oracle 估计识别程序专长。
+相同程序的重复平均 oracle 估计达到 $\RcvClonePlugin$ pp，生成面板为 $\RcvRealPlugin$ pp（表~\ref{tab:clone-control}）。九个克隆槽位实现相同程序，其总体层面的稳定互补按构造为零。两项估计均使用同一批 $\RcvPairedN$ 道题及完整观测。因此，即使平均三次重复，正的 oracle 估计本身仍不足以识别程序专长。
 
 \begin{table}[htbp]
 \centering\small
@@ -21,12 +21,14 @@
 \label{tab:clone-control}
 \end{table}
 
-\subsection{可重复评分模式与留出选择增益}
+\subsection{可重复评分差异主要体现为持续失分}
 \label{sec:repeat-result}
-生成程序确实呈现可重复的差异。探索性分析从评分优势矩阵中去除成员与任务的加性效应，再计算每个留出重复与其余两次重复均值的相关性。生成程序的平均残差相关性为 $\RcvRealRho$，克隆为 $\RcvCloneRho$；配对 bootstrap 差异为 $\RcvRhoDiff$，95\% 区间为 $\RcvRhoDiffCI$。这些相关性描述可重复的\emph{评分结果模式}。为考察其方向，我们统计持续输赢：三次重复均输给 \bare{} 的情况涉及 $\RcvLossTasks$ 道题（$\RcvLossPairs$ 个成员—任务对）；三次均获胜则只出现在一道题上，由八个生成成员共同实现。这一表面修复对答案格式提取敏感（附录~\ref{app:repeatability}）。这种观测不对称性解释了强评分可重复性与有限的观测获胜如何并存。
+生成程序的评分结果模式比克隆更可重复。生成程序的平均残差相关性为 $\RcvRealRho$，克隆为 $\RcvCloneRho$；配对 bootstrap 差异为 $\RcvRhoDiff$，95\% 区间为 $\RcvRhoDiffCI$。这一探索性分析从评分优势矩阵中去除成员与任务的加性效应，再计算每个留出重复与其余两次重复均值的相关性。
 
-留出选择诊断检验更强的问题：过去的结果能否为下一次执行识别有用的成员？克隆校正均值为 $D=\RcvD$ pp，95\% 区间为 $\RcvDCI$ pp，随机化 $p=\RcvP$。主分析任务均完整观测，但判断仍为 \textsc{Insufficient Evidence}（证据不足）：区间包含零，未满足正向支持条件，也未建立等效结论。排除包含冲突评分的三道纳入题后，在 $\RcvConflictN$ 个配对任务上得到 $D=\RcvConflictD$ pp，判断不变（附录~\ref{app:wp1r}）。
+持续差异明显偏向 \bare{}。三次重复均输给基线的情况涉及 $\RcvLossTasks$ 道题（$\RcvLossPairs$ 个成员—任务对）；三次均获胜只出现在一道题上，由八个生成成员共同实现。这一表面修复对答案格式提取敏感（附录~\ref{app:repeatability}）。这种方向上的不对称性解释了强评分可重复性为何可以与少量观测获胜并存。
 
-\paragraph{如果存在真实交叉，诊断能检出吗？}
+留出选择没有提供明确的超越克隆的正向证据。在完整观测的分析任务上，克隆校正均值为 $D=\RcvD$ pp，95\% 区间为 $\RcvDCI$ pp，随机化 $p=\RcvP$。区间包含零，未满足正向支持条件，因而判断为 \textsc{Insufficient Evidence}（证据不足），并非等效结论。排除包含冲突评分的三道题后，在 $\RcvConflictN$ 个配对任务上得到 $D=\RcvConflictD$ pp，判断不变（附录~\ref{app:wp1r}）。
+
+\paragraph{三次重复对交叉优势的检出能力有限。}
 \label{sec:power}
-已知真值校准量化诊断的灵敏度。在所测 $100$ 单元网格上，最坏的观测零假设错误支持率为 $2\%$；但真实 $H_{\rm stable}=17.5$ pp 的双专家设置在 $R=3$ 时功效为 $0\%$，$R=5$ 时约为 $0.7\%$，$R=10,20$ 时为 $100\%$。更小的循环交叉即使在 $R=20$ 时仍大多检不出（附录表~\ref{tab:calibration}）。这些都是具体设置下的经验结果。因此，数据识别出了可重复评分模式，有用的任务交叉优势仍未判清。实际执行前选择的效果则仍可直接评估。
+已知真值校准表明，三次重复可能漏检幅度可观的任务交叉优势。真实 $H_{\rm stable}=17.5$ pp 的双专家设置在 $R=3$ 时功效为 $0\%$，$R=5$ 时约为 $0.7\%$，$R=10,20$ 时为 $100\%$。在所测 $100$ 单元网格上，最坏的观测零假设错误支持率为 $2\%$；更小的循环交叉即使在 $R=20$ 时仍大多检不出（附录表~\ref{tab:calibration}）。这些具体设置下的结果解释了为何当前重复次数仍无法判清有用交叉优势。接下来，我们直接评估所测执行前决策规则。

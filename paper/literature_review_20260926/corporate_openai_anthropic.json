@@ -1,0 +1,115 @@
+{
+  "scope": "Writing style only; user-established research positioning accepted. No research similarity, novelty or mandatory-citation assessments.",
+  "verified_at": "2026-09-26",
+  "source_count": 4,
+  "search_queries": [
+    "site.openai.com GPT-4 technical report pdf 2023",
+    "site.openai.com index gpt-4o system card",
+    "site.anthropic.com Claude 3 model card pdf",
+    "site.anthropic.com Claude 4 system card pdf"
+  ],
+  "sources": [
+    {
+      "id": "gpt4",
+      "title": "GPT-4 Technical Report",
+      "year": 2023,
+      "type": "corporate technical report",
+      "url": "https://cdn.openai.com/papers/gpt-4.pdf",
+      "sections": [
+        "Abstract",
+        "1 Introduction",
+        "2 Scope and Limitations of this Technical Report",
+        "3 Predictable Scaling",
+        "4 Capabilities",
+        "5 Limitations"
+      ],
+      "style": "Object and representative result precede technical explanation; report scope and consolidated limitations have distinct locations.",
+      "access": "web PDF text",
+      "conference_acceptance_claimed": false,
+      "deep_read": "targeted sections",
+      "citation_count": null,
+      "verbatim_quote_words": 0
+    },
+    {
+      "id": "gpt4o",
+      "title": "GPT-4o System Card",
+      "year": 2024,
+      "date": "2024-08-08",
+      "type": "corporate safety system card",
+      "url": "https://cdn.openai.com/gpt-4o-system-card.pdf",
+      "landing": "https://openai.com/index/gpt-4o-system-card/",
+      "sections": [
+        "1 Introduction",
+        "3.2 Evaluation Methodology",
+        "3.3 Observed safety challenges, evaluations and mitigations",
+        "6 Conclusion and Next Steps"
+      ],
+      "style": "Short opening establishes model capability and document purpose; recurring evaluation schema and local methodological qualifications.",
+      "access": "web PDF text",
+      "conference_acceptance_claimed": false,
+      "deep_read": "targeted sections",
+      "citation_count": null,
+      "verbatim_quote_words": 0
+    },
+    {
+      "id": "claude3",
+      "title": "The Claude 3 Model Family: Opus, Sonnet, Haiku",
+      "year": 2024,
+      "type": "corporate model card",
+      "url": "https://assets.anthropic.com/m/61e7d27f8c8f5919/original/Claude-3-Model-Card.pdf",
+      "official_index": "https://www.anthropic.com/system-cards",
+      "official_index_pdf": "https://www-cdn.anthropic.com/c6a80a657af445f40e31afac050f3bf76d3b1404.pdf",
+      "sections": [
+        "Abstract",
+        "1 Introduction",
+        "5 Core Capabilities Evaluations opening",
+        "5.1 Reasoning, Coding, and Question Answering",
+        "5.3 Vision Capabilities",
+        "5.4 Behavioral Design",
+        "5.5 Human Preferences"
+      ],
+      "pages_read": "1-12",
+      "pdf_page_count": 64,
+      "bytes": 46824360,
+      "version_note": "Current official PDF includes June and October 2024 addenda; only original Claude 3 main-text pages analyzed.",
+      "style": "Overall finding precedes representative example, evaluation detail and local qualification.",
+      "access": "Official assets URL read via urllib with ordinary browser User-Agent; in-memory pypdf extraction; web PDF reader exceeded size limit",
+      "conference_acceptance_claimed": false,
+      "deep_read": "targeted sections",
+      "citation_count": null,
+      "verbatim_quote_words": 0
+    },
+    {
+      "id": "claude4",
+      "title": "System Card: Claude Opus 4 & Claude Sonnet 4",
+      "year": 2025,
+      "date": "2025-05",
+      "type": "corporate safety system card",
+      "url": "https://www-cdn.anthropic.com/07b2a3f9902ee19fe39a36ca638e5ae987bc64dd.pdf",
+      "official_index": "https://www.anthropic.com/system-cards",
+      "additional_read_version": "https://www-cdn.anthropic.com/6be99a52cb68eb70eb9572b4cafad13df32ed995.pdf",
+      "sections": [
+        "Abstract",
+        "Table of contents",
+        "1 Introduction",
+        "2.1 Safeguards results",
+        "4.1 Findings",
+        "4.2 Further details on major assessments",
+        "7.1 Process",
+        "7.3 Autonomy results"
+      ],
+      "style": "Findings overview and detailed evaluations form separate reading layers; result-first summaries guide tables.",
+      "access": "web PDF text",
+      "conference_acceptance_claimed": false,
+      "deep_read": "targeted sections",
+      "citation_count": null,
+      "verbatim_quote_words": 0
+    }
+  ],
+  "limitations": [
+    "Targeted section reading, not complete appendix audits.",
+    "Safety system cards are used for local prose and hierarchy, not as whole-paper narrative templates.",
+    "No citation counts, review scores or honors asserted.",
+    "No visual layout inspection claimed."
+  ]
+}

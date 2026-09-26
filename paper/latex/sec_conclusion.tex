@@ -1,11 +1,10 @@
-For the tested MATH panel, more programs do not improve on more rolls
-at the full execution budget: both arms reach
-$\RcvReplayFullCoverage\%$ oracle coverage after 27 executions, and
-the frozen feature selector gains $\RcvPolicyGain$ pp.
-Generated programs nevertheless exhibit strongly repeatable score
-patterns, with persistent losses spanning far more tasks than
-persistent wins. The same-code control, repeated executions, and
-frozen selector separate three distinct quantities: available correct
-answers, repeatable differences, and usable task advantages.
-Useful specialization requires the last of these: advantages that
-guide selection and improve on additional executions of a fixed program.
+A harness population can find more answers, exhibit repeatable
+differences, and still provide little value to a selector. The tested
+MATH panel brings these properties into the same comparison: identical
+programs produce positive oracle headroom, generated score patterns
+repeat mainly through persistent losses, and the frozen selector gains
+$\RcvPolicyGain$ pp. At 27 executions, both arms reach
+$\RcvReplayFullCoverage\%$ oracle coverage. These findings make the
+resource-allocation question concrete. The value of more programs lies
+in task advantages that persist, guide selection, and improve on
+additional executions of a fixed program.

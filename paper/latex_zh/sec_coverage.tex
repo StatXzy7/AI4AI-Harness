@@ -1,5 +1,5 @@
-\subsection{生成群体的单次覆盖}
+\subsection{群体覆盖超过任一固定成员}
 \label{sec:f2-headroom}
-我们先考察生成群体是否包含最佳固定成员之外的正确答案。全部 $35$ 个获准生成成员与 \bare{} 在同一批 $\RcvPairedN$ 道分析题上均有一次完整评分，共观测到 $\RcvSingleCells/\RcvSingleCells$ 个单元。其并集达到 $\RevisionMathOracle\%$ oracle 覆盖，而最佳固定成员 \bare{} 为 $\RevisionMathBest\%$。每个生成成员单独都更差（$\MathGenMin$--$\MathGenMax\%$）。由此得到的 $\RevisionMathHeadroom$ pp 余量量化了执行后 oracle 可获得的额外正确答案。
+生成群体覆盖的任务多于其最佳固定成员。在 $\RcvPairedN$ 道分析题上，$35$ 个获准生成成员与 \bare{} 的并集达到 $\RevisionMathOracle\%$ oracle 覆盖，而 \bare{} 为 $\RevisionMathBest\%$。每个生成成员单独都更差（$\MathGenMin$--$\MathGenMax\%$）。全部 $\RcvSingleCells/\RcvSingleCells$ 个单次执行单元均已观测，得到执行后 oracle 可获得的 $\RevisionMathHeadroom$ pp 额外覆盖。
 
-这些结果确有差异：$36$ 个正确性向量中有 $\MathUnique$ 个唯一向量，平均成对分歧为 $\RevisionMathDisagreement\%$（最大 $\MathMaxDisagreement\%$），并集修复基线错误的 $\MathUnionRepair\%$。这些量描述群体中可获得的正确答案。重复研究在同一批 $\RcvPairedN$ 题上将选定程序面板与同代码对照比较；$D$ 衡量面板相对克隆的留出选择增益，新执行的基线均值为 $\RcvBaselineAcc\%$。完整群体余量与面板估计分别描述各自的程序群体和执行（附录~\ref{app:crossdomain}）。
+这一覆盖伴随着明显的评分结果差异：$36$ 个正确性向量中有 $\MathUnique$ 个唯一向量，平均成对分歧为 $\RevisionMathDisagreement\%$（最大 $\MathMaxDisagreement\%$），并集修复基线错误的 $\MathUnionRepair\%$。接下来的问题是，这些差异有多少能在重复执行中保持。我们在同一批 $\RcvPairedN$ 题上，将选定程序面板与同代码对照比较，新执行的基线均值为 $\RcvBaselineAcc\%$。重复诊断 $D$ 衡量面板相对克隆的留出选择增益；完整群体的覆盖与面板估计分别对应各自的程序群体和执行（附录~\ref{app:crossdomain}）。

@@ -1,8 +1,6 @@
 \section{Frozen Selector and Execution-Matched Replay}\label{app:selection}
-The selector is fitted on $100$ development tasks and evaluated on the
-same $\RcvPairedN$ fully observed analysis tasks as every other current
-MATH comparison. We apply the recorded selector choices and
-development ranking to this common set.
+The selector is fitted on $100$ development tasks. Its recorded choices
+and development ranking are evaluated on the common $\RcvPairedN$ tasks.
 
 \subsection{Frozen feature selector}
 The reported selector $\pi_Z$ combines five multinomial-logistic
@@ -36,9 +34,8 @@ It reports repeat-mean accuracy, with harness executions as the unit of
 evaluation; a selected harness can make multiple model calls.
 
 Comparators are \bare{}, the development-selected fixed member,
-one randomly drawn fixed member (drawn once with a fixed seed), and
-the development-selected member with a baseline fallback on missing
-cells. The random comparator uses the same member for every task.
+one fixed member drawn once with a fixed seed, and the
+development-selected member with baseline fallback on missing cells.
 
 \begin{table}[H]
 \centering\small
@@ -53,7 +50,6 @@ Recorded policies are evaluated on fresh executions of these tasks.}
 \label{tab:wp1r-policy}
 \end{table}
 
-
 \FloatBarrier
 \subsection{Selection gain and the scope of budget utility}
 For the implemented selector, $Z(x)$ consists only of question features
@@ -67,27 +63,19 @@ where $\bar Y_h(x)$ now averages the three evaluation repeats. We use
 $S$ for policy gain and reserve $D$ for the real-minus-clone repeat
 diagnostic. Mechanism labels are not inputs to this feature selector.
 
-The replay below measures oracle coverage at matched
-\emph{harness execution} counts. Its budget $b$ counts harness executions,
-each of which may contain multiple model calls.
+Replay budget $b$ counts \emph{harness executions}, each potentially
+containing multiple model calls; coverage uses a post-execution oracle.
 
 \subsection{Execution-matched replay and collection accounting}
-Equal-slot collection executes nine members/slots for three repeats in
-each arm, with call counts and token use determined by each program.
-The current execution-matched
-replay (\S\ref{sec:selection-result}) instead uses the $\RcvPairedN$
-common complete tasks and the unchanged development ranking. At budgets
-$b\in\{3,9,15,27\}$ it includes all three repeats of the first $b/3$
-ranked members. For a task with $f$ incorrect clone executions out of
-$27$, the expected coverage of a uniformly selected size-$b$ subset is
-$1-\binom{f}{b}/\binom{27}{b}$, with $\binom{f}{b}=0$ for $b>f$.
-We compute the exact uniform-subset expectation. Table~\ref{tab:execution-means} reports the paired means.
-Both arms use post-execution oracle correctness, yielding descriptive
-coverage estimates at matched harness execution counts.
+Each arm contains nine members/slots with three repeats. Replay uses the
+common $\RcvPairedN$ tasks and frozen development ranking
+(\S\ref{sec:selection-result}), taking all three repeats of the first
+$b/3$ members for $b\in\{3,9,15,27\}$. With $f$ incorrect clone
+executions among $27$, expected coverage of a uniform size-$b$ subset is
+$1-\binom{f}{b}/\binom{27}{b}$, where $\binom{f}{b}=0$ for $b>f$.
+Table~\ref{tab:execution-means} compares this exact expectation with
+generated-panel coverage at matched execution counts.
 
-Acquisition accounting remains separate from these outcome tables.
-The raw ledgers retain all recorded attempts and known usage, including
-excluded tasks and recovery. These ledgers record incurred acquisition
-costs over their full scope, while the outcome tables describe the
-common complete task set. Generated members can make multiple calls;
-resource use is recorded at the program and acquisition-record level.
+Acquisition ledgers retain all attempts and known usage, including
+excluded tasks and recovery; outcome tables use the common complete set.
+Calls and tokens follow each program and acquisition record.

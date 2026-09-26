@@ -1,40 +1,31 @@
 \section{Same-Code Controls and Repeated-Execution Protocol}\label{app:wp1r}
-All current MATH primary estimates use one $\RcvPairedN$-task,
-fully observed analysis set. This section records how it was obtained
-and documents score completeness, provenance, and sample selection.
+All MATH primary estimates use the same $\RcvPairedN$ fully observed tasks.
+The protocol below specifies the panel, inclusion rule, and repeat analysis.
 
-\paragraph{Study objects, capture, and inclusion rule.}
-The program panel, solver, judge, development split, and three repeat
-identities remain fixed. A salted-hash draw selects one low-call member
-per builder and two at-large seats, then adds \bare{}; the comparator
-has nine identical baseline slots. The score snapshot captured on
-September 26, 2026 at 05:15 UTC combines generated-arm ledgers through
-continuation 10 and clone-arm ledgers through continuation 20. This
-snapshot fixes the analysis inputs. We retain exactly the tasks with a scored
-outcome for every required member and repeat in both arms and every
-member in the single-run study, accepting either recorded binary
-score at each required cell. The resulting $\RcvPairedN$ task identities
-are frozen for every primary comparison. This inclusion rule is applied
-after outcome inspection and is disclosed as a reanalysis.
+\paragraph{Panel and inclusion.}
+Programs, solver, judge, development split, and three repeat identities
+are fixed. A salted hash selects one low-call member per builder plus
+two at-large members and \bare{}; the control contains nine identical
+baseline slots. The September 26, 2026, 05:15 UTC snapshot combines
+generated continuation 10 and clone continuation 20. After outcome
+inspection, we retained tasks with a recorded binary score in every
+required single-run and repeat cell. These $\RcvPairedN$ task identities
+define the common reanalysis set.
 
-\paragraph{Complete analysis set and excluded observations.}
+\paragraph{Completeness and exclusions.}
 The single-run matrix contains $36\times\RcvPairedN=\RcvSingleCells$
-observed cells. Each repeat arm contains
-$9\times3\times\RcvPairedN=\RcvCells$ observed cells. All three matrices
-therefore have $100\%$ scored-observation completeness on the analysis
-set. The same identities are used for policy accuracy and oracle replay.
-Score completeness and acquisition accounting are recorded separately.
+observed cells and each repeat arm $9\times3\times\RcvPairedN=\RcvCells$,
+giving $100\%$ completeness for all three matrices. Policy evaluation and
+oracle replay use the same task identities.
 
-The fixed inclusion rule excludes $\RcvExcludedN$ problems with
-$\RcvOriginalMissingCells$ unscored generated-arm cells; the clone
-records on these excluded problems are complete. These problems are
-excluded from the present analysis, and their unknown scores remain
-unknown in the retained source records. The original excluded-task fraction is
-$\RcvOriginalExcludedPct\%$, below the frozen $10\%$ gate, assessed
-on the pre-subsetting acquisition records. By builder, unscored
-cells are DeepSeek 5, ERNIE 4, GLM 9, Kimi 30, MiniMax 9, and Qwen 4.
-The baseline is complete. Source records and incurred acquisition costs
-remain preserved, including those outside the analysis set.
+The $\RcvExcludedN$ excluded problems contain
+$\RcvOriginalMissingCells$ unscored generated cells, distributed as
+DeepSeek 5, ERNIE 4, GLM 9, Kimi 30, MiniMax 9, and Qwen 4; baseline
+and clone records are complete. Their pre-subsetting fraction,
+$\RcvOriginalExcludedPct\%$, is below the frozen $10\%$ gate.
+Excluded tasks are harder and longer, with lower baseline accuracy
+(Table~\ref{tab:complete-subset}). Unknown scores and all incurred
+acquisition costs remain in the source records.
 
 \begin{table}[H]
 \centering\small
@@ -54,55 +45,42 @@ lower baseline accuracy.}
 \label{tab:complete-subset}
 \end{table}
 
-\paragraph{Identity, precedence, and conflicts.}
-Continuation manifests are checked on 13 condition fields, including
-solver, cache, judge, protocol, repeats, program identities, task/split
-hashes, panel draw, and schedule. The original snapshot hashes are
-verified and the new score matrices and task lists are hash-bound.
-For each member--task--repeat identity, a completed score replaces an
-unknown; the first completed score takes precedence when later records
-differ. Five generated-arm cell identities have conflicting scores,
-three of which lie on three included tasks; clones have none. Collector
-and concurrency changes remain recorded as operational deviations.
+\paragraph{Provenance and conflicts.}
+Manifests are checked on 13 fields covering execution conditions,
+programs, task/split hashes, panel draw, and schedule; snapshots,
+matrices, and task lists are hash-bound. Completed scores replace
+unknowns, with first-completed precedence on disagreement. Five
+generated cell identities conflict, including three on three retained
+tasks; clones have none. Collector and concurrency changes are logged.
 
-\paragraph{Current estimates and sensitivity.}
-The common-set plugins are $\RcvRealPlugin$\,pp (generated) and
-$\RcvClonePlugin$\,pp (clone). The paired diagnostic is
-$D=\RcvD$\,pp, with 95\% interval $\RcvDCI$\,pp and
-\textsc{Insufficient Evidence}. A conflict-exclusion sensitivity removes
-the three affected included tasks from both arms and recomputes all
-choices on the remaining $\RcvConflictN$ fully observed tasks:
-$D=\RcvConflictD$\,pp, interval $\RcvConflictDCI$\,pp, with the same
-state. This explicitly labeled sensitivity subset is separate from the
-$\RcvPairedN$-task primary analysis. Both estimates are computed
-directly from recorded binary scores. Versioned artifacts preserve
-earlier estimates and acquisition snapshots.
+\paragraph{Estimates and sensitivity.}
+Recorded binary scores give plug-in headroom of $\RcvRealPlugin$\,pp
+(generated) and $\RcvClonePlugin$\,pp (clone), and
+$D=\RcvD$\,pp (95\% interval $\RcvDCI$\,pp;
+\textsc{Insufficient Evidence}). Removing the three conflict-affected
+tasks from both arms and reselecting on the remaining $\RcvConflictN$
+tasks gives $D=\RcvConflictD$\,pp (interval $\RcvConflictDCI$\,pp),
+with the same decision.
 
 \subsection{Exploratory Repeatability and Score Sensitivity}\label{app:repeatability}
-For each arm, let $A_r(h,x)=Y(h,x,r)-Y(h_0,x,r)$ for non-reference
-members, with $h_0=$\bare{} or clone-c1. On the common complete tasks,
-subtract the row and column means and add the grand mean separately
-within each repeat. For each held-out repeat, correlate the flattened
-residual matrix with the residual of the other two repeats' mean;
-report the mean of the three correlations. A paired task bootstrap
-with $2{,}000$ draws, resampling the same tasks in both arms, supplies
-intervals. Generated correlation is $\RcvRealRho$ ($\RcvRealRhoCI$),
-clone correlation $\RcvCloneRho$ ($\RcvCloneRhoCI$), and their
-difference $\RcvRhoDiff$ ($\RcvRhoDiffCI$). This post-collection
-diagnostic measures residual score-pattern repeatability after removing
-additive effects.
+For non-reference members, define $A_r(h,x)=Y(h,x,r)-Y(h_0,x,r)$,
+where $h_0$ is \bare{} or clone-c1. Within each repeat, subtract row
+and column means and add the grand mean. Correlate each held-out
+residual matrix with the residual of the other two repeats' mean,
+then average the three correlations. A paired task bootstrap uses
+$2{,}000$ shared draws. Correlations are $\RcvRealRho$
+($\RcvRealRhoCI$) for generated members and $\RcvCloneRho$
+($\RcvCloneRhoCI$) for clones, with difference $\RcvRhoDiff$
+($\RcvRhoDiffCI$). This post-collection diagnostic measures repeatable
+score patterns after removing additive effects.
 
-The recorded-score asymmetry is substantial: generated members lose
-to \bare{} in all three repeats on $\RcvLossPairs$ member--task pairs spanning
-$\RcvLossTasks$ distinct tasks. All-three-repeat wins comprise eight pairs but
-only one task, shared by all eight generated programs. These counts
-summarize the observed three-repeat score patterns.
-In that single task, the gold answer is \texttt{12}; all baseline
-outputs conclude \texttt{\#\#\#\# 12th grade}, whereas a generated
-member returns \texttt{12th grade}. The fixed extractor preserves
-the complete \texttt{\#\#\#\#} payload and scores the former zero,
-but falls back to numeric extraction and scores the latter one.
-The score difference arises from the extractor's format-dependent
-branches. We retain the recorded scores and interpret this example
-as a format-sensitive repeated repair.
+Losses in all three repeats span $\RcvLossPairs$ member--task pairs on
+$\RcvLossTasks$ tasks. Wins in all three comprise eight pairs on one
+task, shared by all eight generated programs. That task is
+format-sensitive: the gold answer is \texttt{12}, baseline outputs end
+with \texttt{\#\#\#\# 12th grade}, and a generated member returns
+\texttt{12th grade}. The extractor retains the former's complete
+\texttt{\#\#\#\#} payload and scores it zero, but uses numeric fallback
+for the latter and scores it one. Recorded scores are retained; the
+repeated repair here arises from answer formatting.
 \FloatBarrier

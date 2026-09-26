@@ -1,23 +1,24 @@
-\subsection{Single-Run Coverage in Generated Populations}
+\subsection{The Population Covers More Tasks Than Any Single Member}
 \label{sec:f2-headroom}
-We first ask whether the generated population supplies correct answers
-beyond its best fixed member. All $35$ admitted generated members and
-\bare{} have one scored execution on each of the same $\RcvPairedN$
-analysis tasks: $\RcvSingleCells$ of $\RcvSingleCells$ cells are observed.
-Their union reaches $\RevisionMathOracle\%$ oracle coverage, versus
-$\RevisionMathBest\%$ for the best fixed member, \bare{}. Every generated
-member is individually worse ($\MathGenMin$--$\MathGenMax\%$).
-The resulting $\RevisionMathHeadroom$ pp headroom quantifies
-additional correct answers available to an oracle after execution.
+The generated population covers more tasks than its best fixed member.
+Across $\RcvPairedN$ analysis tasks, the union of $35$ admitted
+generated members and \bare{} reaches $\RevisionMathOracle\%$ oracle
+coverage, compared with $\RevisionMathBest\%$ for \bare{}.
+Every generated member is individually worse
+($\MathGenMin$--$\MathGenMax\%$). All $\RcvSingleCells$ of
+$\RcvSingleCells$ single-execution cells are observed, yielding
+$\RevisionMathHeadroom$ pp of additional coverage available to an
+oracle after execution.
 
-The outcomes are diverse: $\MathUnique$ of $36$ correctness vectors are
-unique, mean pairwise disagreement is $\RevisionMathDisagreement\%$
+This coverage comes with substantial variation in scored outcomes:
+$\MathUnique$ of the $36$ correctness vectors are unique, mean
+pairwise disagreement is $\RevisionMathDisagreement\%$
 (maximum $\MathMaxDisagreement\%$), and the union repairs
-$\MathUnionRepair\%$ of baseline errors. These quantities describe
-the population's available correct answers. The repeat study evaluates
-a selected program panel against same-code controls on the same
-$\RcvPairedN$ tasks. Its $D$ measures the panel's held-out selection
-gain relative to clones, and its fresh baseline mean is
-$\RcvBaselineAcc\%$. The full-population headroom and panel estimates
-thus describe their respective populations and executions
+$\MathUnionRepair\%$ of baseline errors. The next question is how
+much of this variation survives repetition. We evaluate a selected
+program panel against same-code controls on the same $\RcvPairedN$
+tasks, with a fresh baseline mean of $\RcvBaselineAcc\%$.
+The repeat-based $D$ measures the panel's held-out selection gain
+relative to clones; the full-population coverage and panel estimates
+refer to their respective populations and executions
 (Appendix~\ref{app:crossdomain}).

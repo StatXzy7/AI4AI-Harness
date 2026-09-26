@@ -1,0 +1,214 @@
+{
+  "query": "Automated Design of Agentic Systems",
+  "url": "https://api.openalex.org/works?filter=title.search%3AAutomated+Design+of+Agentic+Systems&per-page=4&select=id%2Ctitle%2Ccited_by_count%2Cpublication_year%2Cdoi%2Cprimary_location%2Cupdated_date",
+  "accessed_at": "2026-09-26T08:04:09.867454+00:00",
+  "response": {
+    "meta": {
+      "count": 45,
+      "db_response_time_ms": 15,
+      "page": 1,
+      "per_page": 4,
+      "groups_count": null,
+      "x_query": {
+        "oql": "works where title has (Automated Design of Agentic Systems)",
+        "oqo": {
+          "get_rows": "works",
+          "filter_rows": [
+            {
+              "column_id": "display_name.search",
+              "value": "Automated Design of Agentic Systems",
+              "operator": "has"
+            }
+          ]
+        },
+        "url": "/works?filter=display_name.search:Automated Design of Agentic Systems&per_page=4"
+      },
+      "cost_usd": 0.001
+    },
+    "results": [
+      {
+        "id": "https://openalex.org/W4402500863",
+        "title": "Automated Design of Agentic Systems",
+        "cited_by_count": 8,
+        "publication_year": 2024,
+        "doi": "https://doi.org/10.48550/arxiv.2408.08435",
+        "primary_location": {
+          "id": "pmh:oai:arXiv.org:2408.08435",
+          "is_oa": true,
+          "landing_page_url": "http://arxiv.org/abs/2408.08435",
+          "pdf_url": "https://arxiv.org/pdf/2408.08435",
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": "submittedVersion",
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": null,
+          "raw_type": "text"
+        },
+        "updated_date": "2026-09-24T07:57:37.273135"
+      },
+      {
+        "id": "https://openalex.org/W2144804481",
+        "title": "Automated organization design for multi-agent systems",
+        "cited_by_count": 74,
+        "publication_year": 2007,
+        "doi": "https://doi.org/10.1007/s10458-007-9023-8",
+        "primary_location": {
+          "id": "doi:10.1007/s10458-007-9023-8",
+          "is_oa": false,
+          "landing_page_url": "https://doi.org/10.1007/s10458-007-9023-8",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S5405189",
+            "display_name": "Autonomous Agents and Multi-Agent Systems",
+            "issn_l": "1387-2532",
+            "issn": [
+              "1387-2532",
+              "1573-7454"
+            ],
+            "is_oa": false,
+            "is_in_doaj": false,
+            "is_core": true,
+            "listed_in": [
+              "cwts-core",
+              "jufo-2",
+              "norway-1"
+            ],
+            "host_organization": "https://openalex.org/P4310319900",
+            "host_organization_name": "Springer Science+Business Media",
+            "host_organization_lineage": [
+              "https://openalex.org/P4310319900",
+              "https://openalex.org/P4310319965"
+            ],
+            "host_organization_lineage_names": [
+              "Springer Science+Business Media",
+              "Springer Nature"
+            ],
+            "type": "journal"
+          },
+          "license": null,
+          "license_id": null,
+          "version": "publishedVersion",
+          "is_accepted": true,
+          "is_published": true,
+          "raw_source_name": "Autonomous Agents and Multi-Agent Systems",
+          "raw_type": "journal-article"
+        },
+        "updated_date": "2026-09-24T07:57:37.273135"
+      },
+      {
+        "id": "https://openalex.org/W2117614061",
+        "title": "Agent-Oriented Embedded Control System Design and Development of a Vision-Based Automated Guided Vehicle",
+        "cited_by_count": 11,
+        "publication_year": 2012,
+        "doi": "https://doi.org/10.5772/46127",
+        "primary_location": {
+          "id": "doi:10.5772/46127",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.5772/46127",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S169266912",
+            "display_name": "International Journal of Advanced Robotic Systems",
+            "issn_l": "1729-8806",
+            "issn": [
+              "1729-8806",
+              "1729-8814"
+            ],
+            "is_oa": true,
+            "is_in_doaj": true,
+            "is_core": true,
+            "listed_in": [
+              "cwts-core",
+              "doaj",
+              "norway-1"
+            ],
+            "host_organization": "https://openalex.org/P4310320017",
+            "host_organization_name": "SAGE Publishing",
+            "host_organization_lineage": [
+              "https://openalex.org/P4310320017"
+            ],
+            "host_organization_lineage_names": [
+              "SAGE Publishing"
+            ],
+            "type": "journal"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": "publishedVersion",
+          "is_accepted": true,
+          "is_published": true,
+          "raw_source_name": "International Journal of Advanced Robotic Systems",
+          "raw_type": "journal-article"
+        },
+        "updated_date": "2026-09-22T06:50:58.402377"
+      },
+      {
+        "id": "https://openalex.org/W2914537119",
+        "title": "Towards automated testing of multi-agent systems using prometheus design models.",
+        "cited_by_count": 8,
+        "publication_year": 2019,
+        "doi": null,
+        "primary_location": {
+          "id": "mag:2914537119",
+          "is_oa": true,
+          "landing_page_url": "https://dblp.uni-trier.de/db/journals/iajit/iajit16.html#RehmanNS19",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S100666833",
+            "display_name": "The International Arab Journal of Information Technology",
+            "issn_l": "1683-3198",
+            "issn": [
+              "1683-3198",
+              "2309-4524"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": true,
+            "listed_in": [
+              "cwts-core",
+              "jufo-1"
+            ],
+            "host_organization": "https://openalex.org/P4362726017",
+            "host_organization_name": "Zarqa University",
+            "host_organization_lineage": [
+              "https://openalex.org/P4362726017"
+            ],
+            "host_organization_lineage_names": [
+              "Zarqa University"
+            ],
+            "type": "journal"
+          },
+          "license": null,
+          "license_id": null,
+          "version": null,
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": "The International Arab Journal of Information Technology",
+          "raw_type": null
+        },
+        "updated_date": "2025-10-10T17:16:08.811792"
+      }
+    ],
+    "group_by": []
+  }
+}

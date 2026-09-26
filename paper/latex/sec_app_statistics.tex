@@ -1,7 +1,6 @@
 \section{Statistical Analysis, Calibration, and Sensitivity}\label{app:statistics}\label{app:diagnostics}
-This section specifies the held-out-repeat diagnostic used in the main
-text. Empirical estimates use the common $\RcvPairedN$ complete MATH
-tasks; synthetic calibration uses the separately specified sample sizes.
+Empirical diagnostics use $\RcvPairedN$ complete MATH tasks.
+Synthetic calibration uses the sample sizes specified below.
 
 \subsection{Held-out-repeat statistic and decision rule}
 In each of three folds, two discovery repeats select a member for each
@@ -23,27 +22,20 @@ draws, with the $+1$ Monte Carlo correction. A paired task bootstrap
 uses $2{,}000$ draws with a fixed random seed and the same resampled
 task identities in both arms to obtain the 95\% interval.
 
-Positive support requires all of the following: at most $10\%$
-incomplete tasks in either arm or their intersection, assessed before
-complete-case subsetting; at least $30$ paired tasks; randomization
-$p<0.05$; a positive bootstrap lower bound for $D$; $D>1.0$\,pp; and
-a positive lower bound for $G_{\rm real}$. The current comparison is
-\textsc{Insufficient Evidence}; it does not establish equivalence.
-Execution-condition and program-identity checks require matched,
-independently acquired repeats. Identical outcome matrices alone do not
-establish duplicated acquisition: distinct execution provenance must
-be verified.
+Positive support requires: at most $10\%$ incomplete tasks in either
+arm or their intersection before subsetting; at least $30$ paired
+tasks; randomization $p<0.05$; positive bootstrap lower bounds for
+$D$ and $G_{\rm real}$; and $D>1.0$\,pp. Repeats must have matched
+conditions and verified independent execution provenance.
+The current decision is \textsc{Insufficient Evidence}, rather
+than an equivalence finding.
 
-\paragraph{Analysis amendments.}
-The acquisition protocol preceded collection; the current v3 diagnostic
-and completeness-selected analysis were determined afterward. The
-original stopping rule applied to the initial collection. Recovery
-and the common-set reanalysis are separately recorded amendments,
-with the present estimates tied to the September 26 snapshot.
-Appendix~\ref{app:wp1r} gives the inclusion rule, excluded-task
-characteristics, score conflicts, and conflict-exclusion sensitivity.
-Earlier diagnostic versions are superseded and do not supply the
-current estimates.
+\paragraph{Analysis specification.}
+The acquisition protocol and initial stopping rule preceded collection;
+the v3 diagnostic, recovery, and completeness-selected reanalysis are
+post-collection amendments. Estimates use the September 26 snapshot;
+inclusion, exclusions, and conflict sensitivity are specified in
+Appendix~\ref{app:wp1r}.
 
 \subsection{Population target and limits of the diagnostic}
 For member success probabilities $q_h(x)$, stable complementarity is
@@ -56,18 +48,14 @@ task. A selector's population gain $\theta^*$ relative to the
 $\theta^*\le H_{\rm stable}$, because its success probability on each
 task is at most $\max_h q_h(x)$.
 
-The empirical $G$ instead compares with a fixed member selected from
-finite discovery data, which need not identify the population-best
-member. Clone subtraction supplies an observed sampling reference;
-it does not analytically remove all finite-sample selection bias.
-The reported interval for $D$ is therefore not an interval for
-$H_{\rm stable}$. A near-zero $D$ does not bound stable complementarity
-near zero.
+Empirical $G$ uses a fixed member selected from finite discovery data.
+Clone subtraction provides a sampling reference, while $D$ and its
+interval remain distinct from $H_{\rm stable}$: a near-zero $D$ does
+not bound the population target near zero.
 
-The randomization reference is exact at the equal-ability boundary
-under member-label exchangeability. For the wider global-dominance
-null, error control is checked empirically on the calibration grid,
-not established by a general finite-sample theorem.
+The randomization reference is exact under equal-ability member-label
+exchangeability. For the broader global-dominance null, error control
+is empirical over the calibration grid.
 
 \paragraph{Finite-repeat oracle estimates.}
 For repeat means $\hat q_h(x)$, Jensen's inequality gives
@@ -90,17 +78,15 @@ partial crossover. The grid spans $M\in\{3,9,20\}$,
 $T\in\{100,400,1000\}$, $R\in\{3,5,10,20\}$, complete data,
 5\% MCAR, and 3\% hardness-related missingness.
 
-Table~\ref{tab:calibration} retains the $M=9,T=400$ settings,
-with $300$ Monte Carlo datasets per cell ($150$ in sweeps) and
-$300$ randomizations per dataset. It compares plug-in support with
-the current clone-calibrated rule. Across the tested $100$-cell grid,
-the worst observed null false-support rate for that rule is $2\%$.
-A two-specialist alternative with true $H_{\rm stable}=17.5$\,pp has
-$0\%$ power at $R=3$, about $0.7\%$ at $R=5$, and $100\%$ at
-$R=10,20$. Smaller cyclic crossovers remain largely undetected even
-at $R=20$. These setting-specific rates do not establish a general
-size or power guarantee; three repeats leave stable complementarity
-unresolved in the current study.
+Table~\ref{tab:calibration} reports $M=9,T=400$, using $300$
+Monte Carlo datasets per cell ($150$ in sweeps) and $300$
+randomizations per dataset. Across the $100$-cell grid, the largest
+observed null false-support rate is $2\%$. A two-specialist
+alternative with $H_{\rm stable}=17.5$\,pp has power $0\%$ at
+$R=3$, approximately $0.7\%$ at $R=5$, and $100\%$ at $R=10,20$;
+smaller cyclic crossovers remain largely undetected at $R=20$.
+These setting-specific results show why three repeats leave stable
+complementarity unresolved.
 
 \begin{table}[H]
 \centering\small

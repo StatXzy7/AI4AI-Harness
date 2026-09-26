@@ -1,0 +1,72 @@
+{
+  "query": "Deep Reinforcement Learning at the Edge of the Statistical Precipice",
+  "url": "https://api.openalex.org/works?filter=title.search%3ADeep+Reinforcement+Learning+at+the+Edge+of+the+Statistical+Precipice&per-page=4&select=id%2Ctitle%2Ccited_by_count%2Cpublication_year%2Cdoi%2Cprimary_location%2Cupdated_date",
+  "accessed_at": "2026-09-26T08:04:08.983682+00:00",
+  "response": {
+    "meta": {
+      "count": 1,
+      "db_response_time_ms": 30,
+      "page": 1,
+      "per_page": 4,
+      "groups_count": null,
+      "x_query": {
+        "oql": "works where title has (Deep Reinforcement Learning at the Edge of the Statistical Precipice)",
+        "oqo": {
+          "get_rows": "works",
+          "filter_rows": [
+            {
+              "column_id": "display_name.search",
+              "value": "Deep Reinforcement Learning at the Edge of the Statistical Precipice",
+              "operator": "has"
+            }
+          ]
+        },
+        "url": "/works?filter=display_name.search:Deep Reinforcement Learning at the Edge of the Statistical Precipice&per_page=4"
+      },
+      "cost_usd": 0.001
+    },
+    "results": [
+      {
+        "id": "https://openalex.org/W3197485521",
+        "title": "Deep Reinforcement Learning at the Edge of the Statistical Precipice",
+        "cited_by_count": 41,
+        "publication_year": 2021,
+        "doi": "https://doi.org/10.48550/arxiv.2108.13264",
+        "primary_location": {
+          "id": "pmh:oai:arXiv.org:2108.13264",
+          "is_oa": true,
+          "landing_page_url": "http://arxiv.org/abs/2108.13264",
+          "pdf_url": "https://arxiv.org/pdf/2108.13264",
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": null,
+          "license_id": null,
+          "version": "submittedVersion",
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": null,
+          "raw_type": "text"
+        },
+        "updated_date": "2026-09-22T06:50:58.402377"
+      }
+    ],
+    "group_by": []
+  }
+}

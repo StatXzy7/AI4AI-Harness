@@ -1,20 +1,20 @@
 \subsection{MATH 群体、共同分析集与覆盖}\label{app:crossdomain}
-单次研究提供初始覆盖证据以及重复面板的程序来源。它把 BIRD 准入研究的无门控自由生成方案用于竞赛数学，并采用领域特定答案比较器。
+单次研究提供覆盖测量与重复面板的程序来源，将 BIRD 的无门控自由生成方案用于竞赛数学，并采用领域特定比较器。
 
 \paragraph{协议与分析集。}
 \label{app:builder-instruction}
-构建器任务可概括为以下结构化指令（并非原提示逐字引用）：编写实现 \texttt{solve(question)} 的 Python harness；通过 \texttt{self.llm} 改进单次贪心调用；自行选择提示、解码、采样与控制流；使用要求的 \texttt{\#\#\#\#} 标记返回数学最终答案。标准答案仅属于外部评分器。槽位不指定机制，也不施加跨程序多样性目标。多次尝试使用相同指令，不输入前次候选代码或性能反馈。准入检查接口有效性和输出非空，不要求准确率提升。
+构建器指令可概括为（非逐字引用）：编写 Python \texttt{solve(question)} harness，通过 \texttt{self.llm} 改进单次贪心调用，自选提示、解码、采样与控制流，以 \texttt{\#\#\#\#} 返回最终答案。标准答案保留在外部评分器中。槽位不分配机制或多样性目标；尝试沿用相同指令，不提供先前代码或性能反馈。准入要求接口有效且输出非空。
 
-六个构建器在一个种子下各有八个槽位，每槽至多三次原始尝试。中性有效性门控在两道开发题上检查解析、导入、接口及非空答案。冻结目标为 GLM-5.3-Flash，解码由各成员定义，\bare{} 温度为 $0$。原始任务划分在生成前确定，保留 $100$ 道开发题。最终评估分析在单次群体、两臂重复与冻结政策评分中统一使用同一批 $\RcvPairedN$ 道完整观测题。该集合在采集后按完整性确定，排除 $\RcvExcludedN$ 道不完整题（附录~\ref{app:wp1r}）。开发题及冻结选择器保持不变。
+六个构建器在一个种子下各获八个槽位，每槽至多三次尝试，在两道开发题上检查解析、导入、接口及非空答案。目标为 GLM-5.3-Flash，解码由成员定义，\bare{} 温度为 $0$。生成前划分保留 $100$ 道开发题。单次、重复与政策分析共用 $\RcvPairedN$ 道完整观测题；采集后的完整性规则排除 $\RcvExcludedN$ 道题（附录~\ref{app:wp1r}）。开发题与选择器保持固定。
 
-评分器在两端均可解析为数值时比较数值（含分数与小数），否则比较规范化 LaTeX。归一化去除单位、进制下标和度数符号，保留文本命令内容，并将矩阵转换为元组。所要求的最终答案标记为 \texttt{\#\#\#\#}。给每个标准答案加上该标记后，$\RcvPairedN/\RcvPairedN$ 次自比较均判对；这验证了这些标准答案的格式一致性。分析集上的单次基线准确率为 $\RevisionMathBest\%$。
+评分器优先比较可解析的数值（含分数与小数），否则比较规范化 LaTeX。归一化去除单位、进制下标和度数符号，保留文本命令内容，并将矩阵转为元组。加上 \texttt{\#\#\#\#} 标记的标准答案通过 $\RcvPairedN/\RcvPairedN$ 次自比较。该集单次基线准确率为 $\RevisionMathBest\%$。
 
-有效性门控接纳 $35/48$ 个槽位。两个重推理构建器 GLM-5.3 与 Qwen3.8-Max 在多数槽位发出代码前即耗尽 $32$k token 生成预算，使这些构建器风格在固定生成预算下的代表性不足。本探索性研究在一个种子下评估自由生成与中性有效性准入。
+门控接纳 $35/48$ 个槽位。GLM-5.3 与 Qwen3.8-Max 在多数槽位发出代码前耗尽 $32$k token 预算，使其风格在这一固定预算群体中代表性不足。
 
 \paragraph{共同完整集上的结果。}
-包含 \bare{} 在内的全部 $36$ 个成员在 $\RcvPairedN$ 题上各有一次记录评分，共 $\RcvSingleCells/\RcvSingleCells$ 个单元。平均成对分歧为 $\RevisionMathDisagreement\%$（最大 $\MathMaxDisagreement\%$）。唯一成员结果向量为 $\MathUnique/36$（生成向量为 $\MathGenUnique/35$），$\MathIdenticalPairs\%$ 的成员对结果相同。生成候选并集修复基线错误的 $\MathUnionRepair\%$，并在 $\MathUnionFail\%$ 的基线正确题上全部失败。后者衡量全部生成成员均失败的题目占基线正确题的比例。Oracle 覆盖为 $\RevisionMathOracle\%$，最佳固定成员 \bare{} 为 $\RevisionMathBest\%$，余量为 $\RevisionMathHeadroom$ 个百分点。生成成员准确率介于 $\MathGenMin\%$ 与 $\MathGenMax\%$。
+包含 \bare{} 的 $36$ 个成员在 $\RcvPairedN$ 题上各有一次评分，共 $\RcvSingleCells/\RcvSingleCells$ 个单元。平均成对分歧为 $\RevisionMathDisagreement\%$（最大 $\MathMaxDisagreement\%$），唯一结果向量为 $\MathUnique/36$（生成为 $\MathGenUnique/35$），$\MathIdenticalPairs\%$ 的成员对结果相同。生成并集修复 $\MathUnionRepair\%$ 的基线错题；在 $\MathUnionFail\%$ 的基线正确题上，所有生成成员均失败。Oracle 覆盖 $\RevisionMathOracle\%$，比最佳固定成员 \bare{}（$\RevisionMathBest\%$）高 $\RevisionMathHeadroom$\,pp。生成成员准确率为 $\MathGenMin\%$--$\MathGenMax\%$。
 
-新重复面板使用八个生成成员加 \bare{}，对照九个同代码槽位，题目身份完全相同。其克隆校正诊断衡量该面板的留出选择增益，单次余量则描述完整生成群体。存档评分器重放复现全部 $\RcvSingleCells$ 个纳入评分；版本化端点敏感评分器在该子集上产生相同评分。
+重复面板在相同题目上比较八个生成成员加 \bare{} 与九个同代码槽位。留出诊断对应此面板，单次余量对应完整群体。存档评分器与版本化端点敏感评分器均复现全部 $\RcvSingleCells$ 个纳入评分。
 
 \paragraph{范围。}
-MATH 发现描述单种子、单目标下的探索性生成，评估范围为按完整性筛选的题集。BIRD 研究则在各自协议下描述 SQL 执行与准入。
+这些测量对应一个种子、一个目标与按完整性筛选的 MATH 题集；BIRD 使用下文的独立协议。

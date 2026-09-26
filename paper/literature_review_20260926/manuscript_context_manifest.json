@@ -1,0 +1,38 @@
+{
+  "observed_at": "2026-09-26T08:08:23.186976+00:00",
+  "scope": "Writing and literature research; no manuscript or experiment changes",
+  "files": [
+    {
+      "path": "paper/latex/main.tex",
+      "sha256": "c69fab4a103574bffc7539370cc9942baffaa2401fd984e59a52a84a422f54d9"
+    },
+    {
+      "path": "paper/latex/sec_intro.tex",
+      "sha256": "75166f15b5b26990d0b6ce6cc3e687dea0400550f804342c462a57faf02d6aca"
+    },
+    {
+      "path": "paper/latex/sec_related.tex",
+      "sha256": "34b2793b0dc131403000e7ae38618d6fab2331e8babb86e838dd1a58f1c8dbf7"
+    },
+    {
+      "path": "paper/latex/sec_results.tex",
+      "sha256": "ff234cfcb16c7d6e76eba9402c802ab270c6e45d726de2d0f61b71315b48638f"
+    },
+    {
+      "path": "paper/latex/sec_utility.tex",
+      "sha256": "1df0e8e8f07368a1f06f01c72f7efbcd4035957efce7a9655f3f5aaefec6d8ba"
+    },
+    {
+      "path": "paper/latex/sec_discussion.tex",
+      "sha256": "d1b5a8a14a5e5eef276bd9501fe478b2ce3820600ae7f275109770e1d9eb3260"
+    },
+    {
+      "path": "paper/latex/common386_numbers.tex",
+      "sha256": "31a19ac14151f338e3244fcce42e5410a7507ad9e929aa0e8e9f46af0da442ec"
+    },
+    {
+      "path": "paper/latex/references.bib",
+      "sha256": "0ce3524ea14c275ee65e6b2a0b348ba4c51145ef1e16f045a28cbca80e648a25"
+    }
+  ]
+}

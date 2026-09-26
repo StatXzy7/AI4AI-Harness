@@ -1,6 +1,6 @@
 \subsection{设计与主要比较}
 \label{sec:f2-admission}
-一项独立的确认性 BIRD 研究让六个独立构建器与三个种子在策略强制（来自固定集合的具名机制对构建器自选策略）与合规门控两个因素下交叉，给出四个臂：II-A（自由、无门控）、II-B（自由、门控）、II-C（强制、无门控）、II-D（强制、门控）。“自由”表示不指派具体策略；构建器仍须声明 repair、vote、twostage 或 plain，详见附录~\ref{app:free-vocabulary}。评估覆盖开发期间从未打开过的九个数据库中的 $1{,}169$ 个问题（一个已披露的 $18$ 题冒烟测试例外），使用官方 BIRD 执行评分器，分析在结果前冻结、之后以版本化校正重分析重跑。所实现的门控把非平凡机制的\emph{结构性筛除}与合规验证捆绑在一起——允许的纯提示变换即便通过中性有效性检查，也可能被结构筛查排除——所以该处理不能在因果上分离出“验证”本身。
+六构建器、三种子研究交叉策略强制与门控：II-A（自由、无门控）、II-B（自由、门控）、II-C（强制、无门控）、II-D（强制、门控）。强制策略来自固定集合，自由构建器在附录~\ref{app:free-vocabulary} 的词汇中选择声明。评估使用九个数据库的 $1{,}169$ 题、官方 BIRD 评分器，并包含已披露的 $18$ 题冒烟例外。下列结果来自对结果前规格的校正重分析。
 
 \begin{table}[H]
 \centering\small
@@ -9,7 +9,7 @@
 \label{tab:primary}
 \end{table}
 
-含 single-call 的 oracle 余量上，强制/门控（II-D）减自由/无门控（II-A）的对角均值对比为 $\RevisionPrimaryDelta$\,pp，单元格对比范围为 $\RevisionPrimaryRange$\,pp：捆绑的筛除策略没有改善平均余量。校正分析的不确定性估计见表~\ref{tab:primary}；这一均值比较不确立等价。结构准入因而不能证明机制会在相关任务上触发，或增加稳定效用。
+强制／门控减自由／无门控的含基线 oracle 余量对比为 $\RevisionPrimaryDelta$\,pp，单元对比范围 $\RevisionPrimaryRange$\,pp。实际组合政策未提高观测平均余量；不确定性见表~\ref{tab:primary}。
 
 \begin{figure}[H]
 \centering
@@ -19,7 +19,7 @@
 \label{fig:results}
 \end{figure}
 
-在共享的核心 400 题上，门控对比为 $\RevisionGateDelta$\,pp，策略与交互的次级效应同样未解决（表~\ref{tab:factorial}）；固定 $K$ 的均值对比 $\RevisionKmatchedDelta$\,pp 提供群体规模的敏感性检查。开放机制臂只在开发侧运行，没有确认性估计目标。这些都是单运行对比，而 附录~\ref{app:r2} 的 R2/R3 审核 报告的执行变异性（R2 判定翻转 $8.54\%$；$14.5\%$ 的任务三次运行间 \bare{} 正确性变化；$6.50$\,pp 同代码单次缺口）把它们刻画为覆盖机会而非能力差异。
+核心 $400$ 题的门控对比为 $\RevisionGateDelta$\,pp，策略与交互效应尚无定论（表~\ref{tab:factorial}）；固定 $K$ 对比为 $\RevisionKmatchedDelta$\,pp。II-E 仍仅用于开发。R2/R3 审核（附录~\ref{app:r2}）为这些单次覆盖测量提供参照：R2 翻转 $8.54\%$，三次运行间 $14.5\%$ 的基线题目改变正确性，同代码 oracle 缺口为 $6.50$\,pp。
 
 \begin{table}[H]
 \centering\small

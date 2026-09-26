@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "retrieved_date": "2026-09-26",
+  "scope": "Writing style only. No similarity or novelty assessment.",
+  "sources": [
+    {
+      "id": "D01",
+      "title": "DeepSeek-V3 Technical Report",
+      "institution": "DeepSeek-AI",
+      "document_type": "institutional technical report",
+      "year": 2024,
+      "version_read": "arXiv v2, 2025-02-18",
+      "paper_url": "https://arxiv.org/pdf/2412.19437v2",
+      "official_url": "https://github.com/deepseek-ai/DeepSeek-V3",
+      "locations_read": [
+        "Abstract",
+        "Introduction",
+        "Contents",
+        "Figure 1",
+        "Table 1",
+        "Section 2 opening and Figure 2",
+        "Sections 4-5 structure",
+        "Section 6"
+      ],
+      "writing_takeaway": "Complete outcome first, categorized contribution groups, stable method modules, consolidated closing section."
+    },
+    {
+      "id": "D02",
+      "title": "DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning",
+      "institution": "DeepSeek-AI",
+      "document_type": "institutional technical report",
+      "year": 2025,
+      "version_read": "arXiv v1, 2025-01-22",
+      "paper_url": "https://arxiv.org/pdf/2501.12948v1",
+      "official_url": "https://github.com/deepseek-ai/DeepSeek-R1",
+      "locations_read": [
+        "Abstract",
+        "Introduction",
+        "Sections 1.1-1.2",
+        "Section 2.1",
+        "Figure 1",
+        "Sections 3-4 structure",
+        "Section 4.2",
+        "Section 5"
+      ],
+      "writing_takeaway": "Method decisions form a story; contributions and evaluation highlights have separate roles; unsuccessful attempts come after the main results."
+    },
+    {
+      "id": "D03",
+      "title": "ChatGLM: A Family of Large Language Models from GLM-130B to GLM-4 All Tools",
+      "institution": "Team GLM / Zhipu AI and Tsinghua University",
+      "document_type": "institutional technical report",
+      "year": 2024,
+      "version_read": "arXiv PDF retrieved 2026-09-26",
+      "paper_url": "https://arxiv.org/pdf/2406.12793",
+      "official_url": "https://github.com/zai-org/GLM-4",
+      "legacy_official_url": "https://github.com/THUDM/GLM-4",
+      "locations_read": [
+        "Abstract",
+        "Introduction",
+        "Figures 1-2",
+        "Section 3 structure",
+        "Sections 3.4-3.5",
+        "Section 5"
+      ],
+      "writing_takeaway": "Overview for orientation, capability-based result grouping, compact final summary."
+    },
+    {
+      "id": "D04",
+      "title": "GLM-4.5: Agentic, Reasoning, and Coding (ARC) Foundation Models",
+      "institution": "GLM-4.5 Team / Zhipu AI and Tsinghua University",
+      "document_type": "institutional technical report",
+      "year": 2025,
+      "version_read": "arXiv v1, 2025-08-08",
+      "paper_url": "https://arxiv.org/pdf/2508.06471v1",
+      "official_url": "https://github.com/zai-org/GLM-4.5",
+      "locations_read": [
+        "Abstract",
+        "Introduction",
+        "Figures 1-2",
+        "Sections 2-4 structure",
+        "Section 4.2.2",
+        "Section 5"
+      ],
+      "writing_takeaway": "Few organizing concepts repeated consistently from title to results; short conclusion rather than recurrent limitation lists."
+    }
+  ],
+  "query_log": [
+    {
+      "date": "2026-09-26",
+      "queries": [
+        "site:arxiv.org \"DeepSeek-V3 Technical Report\"",
+        "site:arxiv.org \"DeepSeek-R1: Incentivizing Reasoning Capability\"",
+        "site:arxiv.org \"GLM-4.5\" technical report",
+        "site:arxiv.org \"ChatGLM\" \"GLM-4\" \"2024\""
+      ]
+    }
+  ],
+  "verification_notes": [
+    "Official organization repositories and author-submitted arXiv documents used.",
+    "R1 original report version explicitly selected to study its technical-report narration.",
+    "These four sources are separate from the accepted-conference sample.",
+    "No direct prose quotations."
+  ]
+}

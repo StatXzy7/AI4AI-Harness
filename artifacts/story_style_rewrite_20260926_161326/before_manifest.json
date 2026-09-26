@@ -1,0 +1,289 @@
+{
+  "created_at": "2026-09-26T08:13:26.936251+00:00",
+  "files": [
+    {
+      "path": "paper/latex/calibration_table.tex",
+      "sha256": "2fc7eb1c151a999eee2d97c0611cadfc87d1728caae5b2eec1bc20f997f7d6c4"
+    },
+    {
+      "path": "paper/latex/common386_numbers.tex",
+      "sha256": "31a19ac14151f338e3244fcce42e5410a7507ad9e929aa0e8e9f46af0da442ec"
+    },
+    {
+      "path": "paper/latex/common386_policy_table.tex",
+      "sha256": "529b9a1a1c212fc5eef0d952e27d5759a6436336d133b5908d76fa4d0dfddac4"
+    },
+    {
+      "path": "paper/latex/common386_replay_table.tex",
+      "sha256": "ef3fabbda2523d24a554844beace8c21fff99da6141c34975b3328fa6f28676c"
+    },
+    {
+      "path": "paper/latex/fig_sampling_control.tex",
+      "sha256": "8a6e2200527c788c8d2e0726041f117936e64a08f7701404bd17b3e7c3473c75"
+    },
+    {
+      "path": "paper/latex/iclr2027_conference.tex",
+      "sha256": "03e556d6e5593e498fd39f262ec2d184ebfe8693cbf47fb7cea3402d8d5166ac"
+    },
+    {
+      "path": "paper/latex/main.pdf",
+      "sha256": "aca6a579b56203ec299e494c3af7d9d4f9f853d20510882612596ab494271e00"
+    },
+    {
+      "path": "paper/latex/main.tex",
+      "sha256": "c69fab4a103574bffc7539370cc9942baffaa2401fd984e59a52a84a422f54d9"
+    },
+    {
+      "path": "paper/latex/panel_inventory.tex",
+      "sha256": "bbdd436bfe8618c1e5718aa5a6ae7cc92d7c34707cf802883bb6edff7cda9612"
+    },
+    {
+      "path": "paper/latex/recovery_numbers.tex",
+      "sha256": "601d26ce9f0b9ec103f378e2e5f1e761b44514ee3c1ea45f70a60c205a2d4b59"
+    },
+    {
+      "path": "paper/latex/recovery_replay_table.tex",
+      "sha256": "f6c20502bc97874ba8fc3e088bc2ec27f4a43a0aa6af2b27c3426d04676c3a5b"
+    },
+    {
+      "path": "paper/latex/references.bib",
+      "sha256": "0ce3524ea14c275ee65e6b2a0b348ba4c51145ef1e16f045a28cbca80e648a25"
+    },
+    {
+      "path": "paper/latex/revision_budget_table.tex",
+      "sha256": "7168eb62a03031d9702d9280af70931ea4dedfe8f91443fad1878e9e20cdccdd"
+    },
+    {
+      "path": "paper/latex/revision_cost_table.tex",
+      "sha256": "339adf78e0d016bc9843b0b98ba72f7ea539742709ce9464386b580438654f4a"
+    },
+    {
+      "path": "paper/latex/revision_decomposition_table.tex",
+      "sha256": "8ec31b4cbc547462d1a3313cbefddaf831aa1387cbbd913f5218b4b941721ff8"
+    },
+    {
+      "path": "paper/latex/revision_factorial_table.tex",
+      "sha256": "a2e9b34116f8952d0d1bfb572cf04aef3e9a92a536059fe23b15237b51e09f1f"
+    },
+    {
+      "path": "paper/latex/revision_numbers.tex",
+      "sha256": "5315de9773f76e144c0bc8a2d351fae8fd59b61f01d8863cb2f2daede55d9eb1"
+    },
+    {
+      "path": "paper/latex/revision_primary_table.tex",
+      "sha256": "15cdab94ec4ea99e32047566b38300408f30e4abc6c92cba35611e2982a80c83"
+    },
+    {
+      "path": "paper/latex/revision_selection_table.tex",
+      "sha256": "921e0bf8992090b9d6fe60493d7ad28bf8b24a284d11c44e94c4928b9ccddb4a"
+    },
+    {
+      "path": "paper/latex/revision_sensitivity_table.tex",
+      "sha256": "7c8b5da1febdc37d3e516a8739133f48d867ede7affcea46d6c0c9bdaa65f695"
+    },
+    {
+      "path": "paper/latex/sec_appendix.tex",
+      "sha256": "816e6e32aecb1e92471493bd707fc94e85e1c2d250d0c2a0c70fb9dd584555b9"
+    },
+    {
+      "path": "paper/latex/sec_app_admission.tex",
+      "sha256": "82fd31df0bed07d0d6d293fc8c3e6ab1eab04ae557a5f33faa9eb8a9577b9a03"
+    },
+    {
+      "path": "paper/latex/sec_app_bird_admission.tex",
+      "sha256": "36db3e5fd2f6d917277afb79c4a5801ffb1754c3145d241ac4e998e66e9059bf"
+    },
+    {
+      "path": "paper/latex/sec_app_bird_traces.tex",
+      "sha256": "52438b2fe605a0fa0ecadf1b72c62b36c2876f3462fa975620e6993faccaec46"
+    },
+    {
+      "path": "paper/latex/sec_app_history.tex",
+      "sha256": "ea9416e50c384b2f9a6fae8cf3beb18ecdcd9705aa9829f32d064daa0c7c2509"
+    },
+    {
+      "path": "paper/latex/sec_app_inventory.tex",
+      "sha256": "9538c850a05eba45b4246548b3bbe274de67960e1ffe272909b3ad12e9fbbc40"
+    },
+    {
+      "path": "paper/latex/sec_app_selection.tex",
+      "sha256": "e03931b08bf626d49ea28640fc71c1b2d5ffa0fe210bfb341ac064a35efc7a14"
+    },
+    {
+      "path": "paper/latex/sec_app_statistics.tex",
+      "sha256": "5f3d182640dec31e64533f29af938dd01a6ae3ab3a13c5f6589d447d7922e899"
+    },
+    {
+      "path": "paper/latex/sec_app_wp1r.tex",
+      "sha256": "1abd2c15da4383c2b564d376bac2385f04e1b1114f1a607967c3e6ecca50151e"
+    },
+    {
+      "path": "paper/latex/sec_conclusion.tex",
+      "sha256": "158c54749640dfc53fd24da83ba49baf3d28c7a3629f1966c96d5a889f7ee259"
+    },
+    {
+      "path": "paper/latex/sec_coverage.tex",
+      "sha256": "24a8cba6ce46880eda5ca4ae7b1481c20b1b2b84baaa9e20d1ad2f4d6593770c"
+    },
+    {
+      "path": "paper/latex/sec_crossdomain.tex",
+      "sha256": "93a52e45158bf384446c4c09adef393da5fe065056c4e1c8ba36b260934bda4f"
+    },
+    {
+      "path": "paper/latex/sec_discussion.tex",
+      "sha256": "d1b5a8a14a5e5eef276bd9501fe478b2ce3820600ae7f275109770e1d9eb3260"
+    },
+    {
+      "path": "paper/latex/sec_intro.tex",
+      "sha256": "75166f15b5b26990d0b6ce6cc3e687dea0400550f804342c462a57faf02d6aca"
+    },
+    {
+      "path": "paper/latex/sec_phase1.tex",
+      "sha256": "7f080e76268106fc2a3bfa773199b858e69a3908a79865fcb389c7d10a7ee14f"
+    },
+    {
+      "path": "paper/latex/sec_phase2.tex",
+      "sha256": "c1c8d295002885fb892c64dccc0948af37f12ca2a6d6a488452b55d0d4534b8e"
+    },
+    {
+      "path": "paper/latex/sec_related.tex",
+      "sha256": "34b2793b0dc131403000e7ae38618d6fab2331e8babb86e838dd1a58f1c8dbf7"
+    },
+    {
+      "path": "paper/latex/sec_results.tex",
+      "sha256": "ff234cfcb16c7d6e76eba9402c802ab270c6e45d726de2d0f61b71315b48638f"
+    },
+    {
+      "path": "paper/latex/sec_selection_design.tex",
+      "sha256": "d5bbca8a283f6285e2cbc4ef6e15d66e50b3f03ff25904db89c8a71ead3cc252"
+    },
+    {
+      "path": "paper/latex/sec_setup.tex",
+      "sha256": "fabd269ed33d2a5c1058cc09f2019fe99f55e8c17dad1f2251c58e46aad5e1c6"
+    },
+    {
+      "path": "paper/latex/sec_supporting.tex",
+      "sha256": "bee6aab5447bfad27a62a8fb51a7850e1ec8457f0f5fca60bbaa125aec0ba8c3"
+    },
+    {
+      "path": "paper/latex/sec_utility.tex",
+      "sha256": "1df0e8e8f07368a1f06f01c72f7efbcd4035957efce7a9655f3f5aaefec6d8ba"
+    },
+    {
+      "path": "paper/latex/wp1r_numbers.tex",
+      "sha256": "80fbdb0c7c1e563e6a9a6fa519b4e1743eb8acd0f87ee7cfaf950f904b2ead01"
+    },
+    {
+      "path": "paper/latex/wp1r_policy_table.tex",
+      "sha256": "10696e9972ad0fef3d85544073f9517e1ec8fbc74908d239f4d5f6abfd9e218c"
+    },
+    {
+      "path": "paper/latex_zh/fig_sampling_control.tex",
+      "sha256": "8dd47d4e7e9eab43c5f4a26d099cdaf433cb4d54eb2db4e201fa3b4152557b62"
+    },
+    {
+      "path": "paper/latex_zh/main.pdf",
+      "sha256": "b5232d8d5e19410bf9d41c751472324029be9bec5dcda2559a59bbd6682f0732"
+    },
+    {
+      "path": "paper/latex_zh/main.tex",
+      "sha256": "cc294a1ac6c5ed39f0045a599b98f9008a4bfcad15492ef306362372ca4229ce"
+    },
+    {
+      "path": "paper/latex_zh/panel_inventory.tex",
+      "sha256": "f95415cbf7826d13a0af564c6e136c961342508316038875ff7ef9ce4e090625"
+    },
+    {
+      "path": "paper/latex_zh/references.bib",
+      "sha256": "101788c9775087e160533ccf5ad886d2713b2286b1cd4ec9d92bb4b75cc55bc6"
+    },
+    {
+      "path": "paper/latex_zh/sec_appendix.tex",
+      "sha256": "7029d08c7f96f7133783e93a724476ad5e265c4909d16451d3812f919c5e39a1"
+    },
+    {
+      "path": "paper/latex_zh/sec_app_admission.tex",
+      "sha256": "a6ff53706056ddfd3794d22375e07ed291d421cff2cd033586fb7dcff29bcbf4"
+    },
+    {
+      "path": "paper/latex_zh/sec_app_bird_admission.tex",
+      "sha256": "8ad3fadcde2cd338daadc9b24e5e8e60411d7972c1569223841b36d1198681d0"
+    },
+    {
+      "path": "paper/latex_zh/sec_app_bird_traces.tex",
+      "sha256": "78bcb8a78f518edeff3d5a8c122d43be0163b952600bbc762552ff832fe86cd2"
+    },
+    {
+      "path": "paper/latex_zh/sec_app_history.tex",
+      "sha256": "eaabb1fc8b6258badd3cd18b06f44252ab26003cfaf63ad82acde86fdc8b98e0"
+    },
+    {
+      "path": "paper/latex_zh/sec_app_inventory.tex",
+      "sha256": "ea2f8e10793428ed7bf15f95c0edfc934be5e9b99e0680c3feecba858cf885e8"
+    },
+    {
+      "path": "paper/latex_zh/sec_app_selection.tex",
+      "sha256": "003ec48b2369fb924bbaae8f906a8fe9d9d086b2de24b7ac94283f3ac74ddd7a"
+    },
+    {
+      "path": "paper/latex_zh/sec_app_statistics.tex",
+      "sha256": "0f3e14f866cbb84acc94f9e4d3e2fca55bb9d08d826d7f217ad7c077a4159824"
+    },
+    {
+      "path": "paper/latex_zh/sec_app_wp1r.tex",
+      "sha256": "7728d3a56fa6f4cd482151986539d123a4e83844be26642f057b05ab92a1cb7d"
+    },
+    {
+      "path": "paper/latex_zh/sec_conclusion.tex",
+      "sha256": "61546af05b91151e084b5402f1a11915c3b50db2d0edba5a2381baa16bc46d6b"
+    },
+    {
+      "path": "paper/latex_zh/sec_coverage.tex",
+      "sha256": "d3dcf9c81a9b3ff428de165442a5b25c9939a0b1c0451af61c9ba022f1780412"
+    },
+    {
+      "path": "paper/latex_zh/sec_crossdomain.tex",
+      "sha256": "8ede76e760a2043ae31cf9cf6900101b51695f8a13dbe6f5171a485b69b6efc9"
+    },
+    {
+      "path": "paper/latex_zh/sec_discussion.tex",
+      "sha256": "0a2e4c5836a7bdc2a7d7ffd624f4bba40f5cef1097c811deeb7d13d7d046b9bd"
+    },
+    {
+      "path": "paper/latex_zh/sec_intro.tex",
+      "sha256": "20ab95845f62147b5c1743394c84d79d86d55456ec0e486cdee3cf06235e74d4"
+    },
+    {
+      "path": "paper/latex_zh/sec_phase1.tex",
+      "sha256": "cae887d2942dab17214518a24769a9e8e6baadf6acbfc8f8776f2dd9f5122753"
+    },
+    {
+      "path": "paper/latex_zh/sec_phase2.tex",
+      "sha256": "d20b6b869519cdfdcaff73ae721f0112c473c2468a792ae3a61d00a68e66497c"
+    },
+    {
+      "path": "paper/latex_zh/sec_related.tex",
+      "sha256": "379febeb4e8df12189ac4bf68eec37a850e3fc040b7f53f1cdffede2df6cfa6e"
+    },
+    {
+      "path": "paper/latex_zh/sec_results.tex",
+      "sha256": "2e897cd8e75f7686bd85a7ac2640581803486992b24235e050d6cc74e38e5200"
+    },
+    {
+      "path": "paper/latex_zh/sec_selection_design.tex",
+      "sha256": "b2ffe194c594189c5c1018ede2e56a862dfb74c096957a6337671f6093eaacd1"
+    },
+    {
+      "path": "paper/latex_zh/sec_setup.tex",
+      "sha256": "2ae5e106d34724ff40f4f7d32a564cfe69b1f58c53743a26e1e039a9c5db80d5"
+    },
+    {
+      "path": "paper/latex_zh/sec_supporting.tex",
+      "sha256": "e0bf3db656a626c92fa3824cb59293114059fd8fc29cdff632dd420e8e90482b"
+    },
+    {
+      "path": "paper/latex_zh/sec_utility.tex",
+      "sha256": "0b7f6ff4abdadf234d8dfd58bbd1cdf409428c3fde093bdeaef57afeff51784a"
+    }
+  ]
+}

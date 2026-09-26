@@ -1,0 +1,132 @@
+{
+  "url": "https://api.semanticscholar.org/graph/v1/paper/batch?fields=title,year,citationCount,url,externalIds",
+  "ids": [
+    "ARXIV:2406.12045",
+    "ARXIV:2507.19457",
+    "ARXIV:2510.21652",
+    "ARXIV:2003.08555",
+    "ARXIV:2303.11366",
+    "ARXIV:2303.17651",
+    "ARXIV:2405.15793",
+    "ARXIV:2305.10601",
+    "ARXIV:1902.10811"
+  ],
+  "accessed_at": "2026-09-26T08:07:22.567683+00:00",
+  "response": [
+    {
+      "paperId": "70aa016c1f68fd5c0261f26ad20017b8307650af",
+      "externalIds": {
+        "DBLP": "journals/corr/abs-2406-12045",
+        "ArXiv": "2406.12045",
+        "DOI": "10.48550/arXiv.2406.12045",
+        "CorpusId": 270562578
+      },
+      "url": "https://www.semanticscholar.org/paper/70aa016c1f68fd5c0261f26ad20017b8307650af",
+      "title": "τ-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains",
+      "year": 2024,
+      "citationCount": 1238
+    },
+    {
+      "paperId": "f1c0aad419cd942d5a135b47fcce58d101dbb3bd",
+      "externalIds": {
+        "ArXiv": "2507.19457",
+        "DBLP": "journals/corr/abs-2507-19457",
+        "CorpusId": 280046245
+      },
+      "url": "https://www.semanticscholar.org/paper/f1c0aad419cd942d5a135b47fcce58d101dbb3bd",
+      "title": "GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning",
+      "year": 2025,
+      "citationCount": 398
+    },
+    {
+      "paperId": "083152cf82efbde68c6210e1916f2b3984480af9",
+      "externalIds": {
+        "ArXiv": "2510.21652",
+        "DBLP": "journals/corr/abs-2510-21652",
+        "DOI": "10.48550/arXiv.2510.21652",
+        "CorpusId": 282384249
+      },
+      "url": "https://www.semanticscholar.org/paper/083152cf82efbde68c6210e1916f2b3984480af9",
+      "title": "AstaBench: Rigorous Benchmarking of AI Agents with a Scientific Research Suite",
+      "year": 2025,
+      "citationCount": 43
+    },
+    {
+      "paperId": "3f17ce51ce50c9a865627cced4677846b431d649",
+      "externalIds": {
+        "ArXiv": "2003.08555",
+        "MAG": "3012117243",
+        "CorpusId": 213176404
+      },
+      "url": "https://www.semanticscholar.org/paper/3f17ce51ce50c9a865627cced4677846b431d649",
+      "title": "Information transfer by quantum matterwave modulation",
+      "year": 2020,
+      "citationCount": 0
+    },
+    {
+      "paperId": "0671fd553dd670a4e820553a974bc48040ba0819",
+      "externalIds": {
+        "DBLP": "conf/nips/ShinnCGNY23",
+        "ArXiv": "2303.11366",
+        "DOI": "10.52202/075280-0377",
+        "CorpusId": 258833055
+      },
+      "url": "https://www.semanticscholar.org/paper/0671fd553dd670a4e820553a974bc48040ba0819",
+      "title": "Reflexion: language agents with verbal reinforcement learning",
+      "year": 2023,
+      "citationCount": 5426
+    },
+    {
+      "paperId": "3aaf6a2cbad5850ad81ab5c163599cb3d523436f",
+      "externalIds": {
+        "ArXiv": "2303.17651",
+        "DBLP": "conf/nips/MadaanTGHGW0DPY23",
+        "DOI": "10.48550/arXiv.2303.17651",
+        "CorpusId": 257900871
+      },
+      "url": "https://www.semanticscholar.org/paper/3aaf6a2cbad5850ad81ab5c163599cb3d523436f",
+      "title": "Self-Refine: Iterative Refinement with Self-Feedback",
+      "year": 2023,
+      "citationCount": 4755
+    },
+    {
+      "paperId": "1c3c531fc0fbe79f97f367ed3648de8467caeeaa",
+      "externalIds": {
+        "DBLP": "journals/corr/abs-2405-15793",
+        "ArXiv": "2405.15793",
+        "DOI": "10.48550/arXiv.2405.15793",
+        "CorpusId": 270063685
+      },
+      "url": "https://www.semanticscholar.org/paper/1c3c531fc0fbe79f97f367ed3648de8467caeeaa",
+      "title": "SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering",
+      "year": 2024,
+      "citationCount": 1853
+    },
+    {
+      "paperId": "2f3822eb380b5e753a6d579f31dfc3ec4c4a0820",
+      "externalIds": {
+        "ArXiv": "2305.10601",
+        "DBLP": "journals/corr/abs-2305-10601",
+        "DOI": "10.48550/arXiv.2305.10601",
+        "CorpusId": 258762525
+      },
+      "url": "https://www.semanticscholar.org/paper/2f3822eb380b5e753a6d579f31dfc3ec4c4a0820",
+      "title": "Tree of Thoughts: Deliberate Problem Solving with Large Language Models",
+      "year": 2023,
+      "citationCount": 4940
+    },
+    {
+      "paperId": "4e0bb8c1c683b43357c5d5216f6b74ff2cb32434",
+      "externalIds": {
+        "MAG": "2953937638",
+        "DBLP": "journals/corr/abs-1902-10811",
+        "ArXiv": "1902.10811",
+        "CorpusId": 67855879
+      },
+      "url": "https://www.semanticscholar.org/paper/4e0bb8c1c683b43357c5d5216f6b74ff2cb32434",
+      "title": "Do ImageNet Classifiers Generalize to ImageNet?",
+      "year": 2019,
+      "citationCount": 2355
+    }
+  ]
+}

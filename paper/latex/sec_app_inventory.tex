@@ -1,7 +1,6 @@
 \section{Harness Generation, Program Inventory, and Data Splits}\label{app:inventory}
-We first document the MATH source population, task splits, and frozen
-panel, then list model versions. The BIRD discovery and admission
-protocols are in Appendices~\ref{app:bird-traces}
+This appendix describes the MATH population, splits, frozen panel, and model
+versions. BIRD protocols appear in Appendices~\ref{app:bird-traces}
 and~\ref{app:phase2-protocol}.
 
 \input{sec_crossdomain}
@@ -10,18 +9,15 @@ and~\ref{app:phase2-protocol}.
 \FloatBarrier
 \subsection{Models and versions}\label{app:models}
 
-Table~\ref{tab:models} lists the models used in the reported benchmark
-studies with their exact version strings as sent to the API. All models were accessed through a single
-commercial OpenAI-compatible API aggregator (the same provider for every
-role). The frozen
-target model identity is fixed; decoding follows each harness, with
-temperature $0$ for the single-call baseline. Phase-II harness generation uses
-temperature 0.7 with a 16{,}384-token budget. Phase-I generation
-conditions and their evidence gaps are described in
-Appendix~\ref{app:phase1-provenance}. Phase I used a proxy execution judge;
-Phase II uses the official BIRD scorer (30\,s timeout), with the legacy
-judge as a secondary audit. The MATH-500 probe uses the answer comparator
-in Appendix~\ref{app:crossdomain}; no LLM judge produces reported accuracy.
+Table~\ref{tab:models} gives the exact API model identifiers. All roles
+use one commercial OpenAI-compatible aggregator. Target identity is fixed;
+decoding follows each harness, with temperature $0$ for the single-call
+baseline. Phase-II generation uses temperature 0.7 and a 16{,}384-token
+budget; Phase-I conditions appear in Appendix~\ref{app:phase1-provenance}.
+Phase I uses a proxy execution judge, Phase II the official BIRD scorer
+(30\,s timeout) with a secondary legacy-judge audit, and MATH-500 the
+answer comparator in Appendix~\ref{app:crossdomain}. Reported accuracy
+uses no LLM judge.
 
 \begin{table}[H]
 \centering

@@ -1,13 +1,13 @@
-\subsection{Positive Oracle Estimates from Identical Programs}
+\subsection{Identical Programs Also Produce Positive Oracle Estimates}
 \label{sec:f3-clones}
-All nine clone slots implement the same program: their population-level
-stable complementarity is zero. On the common $\RcvPairedN$ tasks,
-their repeat-averaged oracle estimate is $\RcvClonePlugin$ pp, while
-the generated panel gives $\RcvRealPlugin$ pp
-(Table~\ref{tab:clone-control}). Both estimates use identical task
-identities and complete observations. The control establishes that
-averaging three repeats does not make a positive oracle estimate
-identify specialization.
+Identical programs produce a $\RcvClonePlugin$ pp repeat-averaged
+oracle estimate, compared with $\RcvRealPlugin$ pp for the generated
+panel (Table~\ref{tab:clone-control}). The nine clone slots implement
+the same program, so their population-level stable complementarity
+is zero by construction. Both estimates use the same
+$\RcvPairedN$ tasks with complete observations.
+Thus, even after averaging three repeats, a positive oracle estimate
+alone does not identify specialization.
 
 \begin{table}[htbp]
 \centering\small
@@ -32,43 +32,44 @@ unrounded cross-fitted gains; rounding may affect the displayed difference.
 \label{tab:clone-control}
 \end{table}
 
-\subsection{Repeatable Score Patterns and Held-Out Selection Gain}
+\subsection{Repeatable Score Patterns Are Dominated by Losses}
 \label{sec:repeat-result}
-Generated programs do exhibit repeatable differences. An exploratory
-analysis removes additive member and task effects from the score-advantage
-matrix and correlates each held-out repeat with the other two.
-The mean residual correlation is $\RcvRealRho$ for generated programs
-and $\RcvCloneRho$ for clones; their paired-bootstrap difference is
+Generated programs have more repeatable scored-outcome patterns than
+clones. Their mean residual correlation is $\RcvRealRho$, compared
+with $\RcvCloneRho$ for clones; the paired-bootstrap difference is
 $\RcvRhoDiff$ (95\% interval $\RcvRhoDiffCI$).
-These correlations describe repeatable \emph{scored-outcome patterns}.
-To examine their direction, we count persistent losses and wins.
-All-three-repeat losses to
-\bare{} span $\RcvLossTasks$ tasks ($\RcvLossPairs$ member--task pairs), while all-three-repeat
-wins occur on only one task, shared by all eight generated members.
+This exploratory analysis removes additive member and task effects
+from the score-advantage matrix, then correlates each held-out repeat
+with the mean of the other two.
+
+Persistent differences overwhelmingly favor \bare{}.
+All-three-repeat losses span $\RcvLossTasks$ tasks
+($\RcvLossPairs$ member--task pairs), whereas all-three-repeat wins
+occur on one task shared by all eight generated members.
 That apparent repair is sensitive to answer-format extraction
-(Appendix~\ref{app:repeatability}). The observed asymmetry helps explain
-the coexistence of strong score repeatability and limited observed wins.
+(Appendix~\ref{app:repeatability}).
+This directional asymmetry explains how strong score repeatability
+can coexist with few observed wins.
 
-The held-out selection diagnostic asks the stronger question: do past
-outcomes identify a useful member for another execution?
-The clone-adjusted mean is $D=\RcvD$ pp, with 95\% interval
-$\RcvDCI$ pp and randomization $p=\RcvP$.
-All primary analysis tasks are fully observed. The decision nevertheless
-remains \textsc{Insufficient Evidence}: the interval includes zero and
-the positive-support conditions are not met; the result does not
-establish equivalence.
-Excluding the three included tasks containing conflicting scores gives
-$D=\RcvConflictD$ pp
-on $\RcvConflictN$ paired tasks and the same decision
-(Appendix~\ref{app:wp1r}).
+Held-out selection provides no clear positive evidence beyond clones.
+On the fully observed analysis tasks, the clone-adjusted mean is
+$D=\RcvD$ pp, with 95\% interval $\RcvDCI$ pp and randomization
+$p=\RcvP$. The interval includes zero and the positive-support
+conditions are not met, giving \textsc{Insufficient Evidence}
+rather than an equivalence conclusion.
+Excluding the three tasks containing conflicting scores gives
+$D=\RcvConflictD$ pp on $\RcvConflictN$ paired tasks and the same
+decision (Appendix~\ref{app:wp1r}).
 
-\paragraph{Would the diagnostic detect real crossovers?}
+\paragraph{Three repeats have limited power for crossovers.}
 \label{sec:power}
-Known-truth calibration quantifies the diagnostic's sensitivity. Across the tested $100$-cell grid the worst observed
-null false-support rate is $2\%$, but a two-specialist setting with
-true $H_{\rm stable}=17.5$ pp has $0\%$ power at $R=3$, about $0.7\%$
-at $R=5$, and $100\%$ at $R=10,20$. Smaller cyclic crossovers remain
-largely undetected even at $R=20$ (Appendix Table~\ref{tab:calibration}).
-These are setting-specific empirical results. Thus the data identify
-repeatable score patterns, while useful task-wise crossovers remain
-unresolved. Actual pre-execution selection can still be evaluated directly.
+Known-truth calibration shows that three repeats can miss substantial
+task-wise crossovers. A two-specialist setting with true
+$H_{\rm stable}=17.5$ pp has $0\%$ power at $R=3$, about $0.7\%$
+at $R=5$, and $100\%$ at $R=10,20$. Across the tested $100$-cell
+grid, the worst observed null false-support rate is $2\%$; smaller
+cyclic crossovers remain largely undetected even at $R=20$
+(Appendix Table~\ref{tab:calibration}).
+These setting-specific results explain why useful crossovers remain
+unresolved at the current repeat count. We next evaluate the tested
+pre-execution decision rule directly.

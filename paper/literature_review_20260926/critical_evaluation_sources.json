@@ -1,0 +1,434 @@
+{
+  "schema_version": 1,
+  "retrieved_date": "2026-09-26",
+  "scope": "Writing style only: abstracts, introductions, contribution phrasing, result narratives, figures, captions, and concise closing paragraphs. No similarity or novelty assessment.",
+  "count": 12,
+  "deep_structure_count": 6,
+  "source_policy": "Primary conference proceedings, official program/awards, author-hosted text, public reviews. Citation counts maintained by parent task separately.",
+  "bibliometric_artifact": "bibliometrics/semantic_scholar_batch.json",
+  "limitations": [
+    "Review score vectors generally unavailable; no inferred mean scores.",
+    "Six selected structural readings do not imply every appendix of each long paper was read.",
+    "No manuscript modifications and no experimental execution."
+  ],
+  "papers": [
+    {
+      "id": "C01",
+      "title": "Deep Reinforcement Learning at the Edge of the Statistical Precipice",
+      "authors_short": "Agarwal et al.",
+      "year": 2021,
+      "venue": "NeurIPS 2021",
+      "track": "main",
+      "accepted_verified": true,
+      "venue_url": "https://proceedings.neurips.cc/paper/2021/hash/f514cec81cb148559cf475e7426eed5e-Abstract.html",
+      "full_text_url": "https://proceedings.neurips.cc/paper/2021/file/f514cec81cb148559cf475e7426eed5e-Paper.pdf",
+      "honor": "Outstanding Paper Award",
+      "honor_verified": true,
+      "honor_url": "https://proceedings.neurips.cc/paper/2021/hash/f514cec81cb148559cf475e7426eed5e-Abstract.html",
+      "review_score_status": "unverified",
+      "reading": "deep_structure",
+      "locations_read": [
+        "Abstract",
+        "Introduction",
+        "Sections 2-5",
+        "Table 1",
+        "Figures 2, 4, 5, 9, 10, 11",
+        "Discussion"
+      ],
+      "writing_takeaway": "Result-first paragraphs, informative captions, and main-text/appendix allocation"
+    },
+    {
+      "id": "C02",
+      "title": "Implementation Matters in Deep RL: A Case Study on PPO and TRPO",
+      "authors_short": "Engstrom et al.",
+      "year": 2020,
+      "venue": "ICLR 2020",
+      "track": "conference",
+      "accepted_verified": true,
+      "venue_url": "https://iclr.cc/virtual_2020/poster_r1etN1rtPB.html",
+      "full_text_url": "https://arxiv.org/pdf/2005.12729",
+      "full_text_note": "Author PDF uses title Implementation Matters in Deep Policy Gradients; header says published ICLR 2020.",
+      "honor": null,
+      "honor_verified": false,
+      "review_score_status": "unverified_browser_challenge",
+      "review_url": "https://openreview.net/forum?id=r1etN1rtPB",
+      "reading": "deep_structure",
+      "locations_read": [
+        "Abstract",
+        "Introduction",
+        "Sections 3-5",
+        "Figures 1-2",
+        "Tables 1-2"
+      ],
+      "writing_takeaway": "Condition table and question-driven transitions between result sections"
+    },
+    {
+      "id": "C03",
+      "title": "Are We Really Making Much Progress? A Worrying Analysis of Recent Neural Recommendation Approaches",
+      "authors_short": "Ferrari Dacrema et al.",
+      "year": 2019,
+      "venue": "RecSys 2019",
+      "track": "long paper",
+      "accepted_verified": true,
+      "venue_url": "https://recsys.acm.org/recsys19/accepted-contributions/",
+      "full_text_url": "https://arxiv.org/pdf/1907.06902",
+      "honor": "Best Long Paper",
+      "honor_verified": true,
+      "honor_url": "https://recsys.acm.org/best-papers/",
+      "review_score_status": "unverified",
+      "reading": "targeted_full_text",
+      "locations_read": [
+        "Abstract",
+        "Introduction",
+        "Section 2.1",
+        "Section 4",
+        "Tables 8-9"
+      ],
+      "writing_takeaway": "Clear material-selection description followed by layered discussion"
+    },
+    {
+      "id": "C04",
+      "title": "A Closer Look at Few-shot Classification",
+      "authors_short": "Chen et al.",
+      "year": 2019,
+      "venue": "ICLR 2019",
+      "track": "conference",
+      "accepted_verified": true,
+      "venue_url": "https://iclr.cc/Downloads/2019",
+      "full_text_url": "https://arxiv.org/pdf/1904.04232",
+      "full_text_note": "Published ICLR 2019 header independently verifies acceptance.",
+      "honor": null,
+      "honor_verified": false,
+      "review_score_status": "unverified_browser_challenge",
+      "review_url": "https://openreview.net/forum?id=HkxLXnAcFQ",
+      "reading": "targeted_full_text",
+      "locations_read": [
+        "Abstract",
+        "Section 3.1-3.2",
+        "Section 4.2",
+        "Figure 1",
+        "Tables 1-2"
+      ],
+      "writing_takeaway": "Simple method diagram and explicit reading order for tables"
+    },
+    {
+      "id": "C05",
+      "title": "Do ImageNet Classifiers Generalize to ImageNet?",
+      "authors_short": "Recht et al.",
+      "year": 2019,
+      "venue": "ICML 2019",
+      "track": "conference",
+      "accepted_verified": true,
+      "venue_url": "https://proceedings.mlr.press/v97/recht19a.html",
+      "full_text_url": "https://proceedings.mlr.press/v97/recht19a/recht19a.pdf",
+      "honor": null,
+      "honor_verified": false,
+      "review_score_status": "unverified",
+      "reading": "deep_structure",
+      "locations_read": [
+        "Abstract",
+        "Introduction",
+        "Section 2",
+        "Section 4",
+        "Section 5",
+        "Figures 1-2",
+        "Table 2"
+      ],
+      "writing_takeaway": "Paired observations in the abstract and a discussion that returns to the opening question"
+    },
+    {
+      "id": "C06",
+      "title": "Measuring Robustness to Natural Distribution Shifts in Image Classification",
+      "authors_short": "Taori et al.",
+      "year": 2020,
+      "venue": "NeurIPS 2020",
+      "track": "main",
+      "accepted_verified": true,
+      "venue_url": "https://proceedings.neurips.cc/paper/2020/hash/d8330f857a17c53d217014ee776bfd50-Abstract.html",
+      "full_text_url": "https://proceedings.neurips.cc/paper_files/paper/2020/file/d8330f857a17c53d217014ee776bfd50-Paper.pdf",
+      "honor": null,
+      "honor_verified": false,
+      "review_score_status": "partial_one_explicit_post_rebuttal_rating",
+      "review_url": "https://proceedings.neurips.cc/paper/2020/file/d8330f857a17c53d217014ee776bfd50-Review.html",
+      "meta_review_url": "https://proceedings.neurips.cc/paper_files/paper/2020/file/d8330f857a17c53d217014ee776bfd50-MetaReview.html",
+      "review_score_evidence": {
+        "reviewer": "Review 2",
+        "value": 7,
+        "phase": "post-rebuttal",
+        "full_vector": null,
+        "mean": null,
+        "note": "Number appears in review prose. Do not present as paper average or complete official rating vector."
+      },
+      "reading": "deep_structure",
+      "locations_read": [
+        "Abstract",
+        "Introduction",
+        "Section 2",
+        "Section 4",
+        "Figures 1 and 3",
+        "Reviews 1-3 and meta-review"
+      ],
+      "writing_takeaway": "Visual intuition before definitions, stable labels across figures"
+    },
+    {
+      "id": "C07",
+      "title": "Rethinking the Role of Demonstrations: What Makes In-Context Learning Work?",
+      "authors_short": "Min et al.",
+      "year": 2022,
+      "venue": "EMNLP 2022",
+      "track": "main",
+      "accepted_verified": true,
+      "venue_url": "https://aclanthology.org/2022.emnlp-main.759/",
+      "full_text_url": "https://aclanthology.org/2022.emnlp-main.759.pdf",
+      "honor": null,
+      "honor_verified": false,
+      "review_score_status": "unverified",
+      "reading": "deep_structure",
+      "locations_read": [
+        "Abstract",
+        "Introduction",
+        "Sections 4-5",
+        "Figures 1,4-10"
+      ],
+      "writing_takeaway": "Early main finding in the abstract and a simple first-page comparison"
+    },
+    {
+      "id": "C08",
+      "title": "Language Models Don't Always Say What They Think: Unfaithful Explanations in Chain-of-Thought Prompting",
+      "authors_short": "Turpin et al.",
+      "year": 2023,
+      "venue": "NeurIPS 2023",
+      "track": "main",
+      "accepted_verified": true,
+      "venue_url": "https://proceedings.neurips.cc/paper_files/paper/2023/hash/ed3fea9033a80fea1376299fa7863f4a-Abstract-Conference.html",
+      "full_text_url": "https://proceedings.neurips.cc/paper_files/paper/2023/file/ed3fea9033a80fea1376299fa7863f4a-Paper-Conference.pdf",
+      "honor": null,
+      "honor_verified": false,
+      "review_score_status": "unverified",
+      "reading": "targeted_full_text",
+      "locations_read": [
+        "Abstract",
+        "Introduction",
+        "Sections 3.2-3.3",
+        "Figure 1 discussion",
+        "Table 4 discussion"
+      ],
+      "writing_takeaway": "Quantitative result first, illustrative examples second"
+    },
+    {
+      "id": "C09",
+      "title": "Why Do Multi-Agent LLM Systems Fail?",
+      "authors_short": "Cemri et al.",
+      "year": 2025,
+      "venue": "NeurIPS 2025",
+      "track": "Datasets and Benchmarks",
+      "accepted_verified": true,
+      "venue_url": "https://papers.nips.cc/paper_files/paper/2025/hash/b1041e52d3be19f0a9bc491657488e4a-Abstract-Datasets_and_Benchmarks_Track.html",
+      "full_text_url": "https://papers.nips.cc/paper_files/paper/2025/file/b1041e52d3be19f0a9bc491657488e4a-Paper-Datasets_and_Benchmarks_Track.pdf",
+      "honor": null,
+      "honor_verified": false,
+      "review_score_status": "unverified",
+      "reading": "accepted_abstract_and_structure",
+      "locations_read": [
+        "Official accepted abstract",
+        "Official full text metadata and initial structure"
+      ],
+      "version_caution": "Use accepted version: 7 frameworks, 1600+ traces; not early arXiv abstract's 5 frameworks/150 tasks.",
+      "writing_takeaway": "Parallel contribution sentences with distinct grammatical roles"
+    },
+    {
+      "id": "C10",
+      "title": "Does Robustness on ImageNet Transfer to Downstream Tasks?",
+      "authors_short": "Yamada and Otani",
+      "year": 2022,
+      "venue": "CVPR 2022",
+      "track": "conference",
+      "accepted_verified": true,
+      "venue_url": "https://openaccess.thecvf.com/content/CVPR2022/html/Yamada_Does_Robustness_on_ImageNet_Transfer_to_Downstream_Tasks_CVPR_2022_paper.html",
+      "full_text_url": "https://openaccess.thecvf.com/content/CVPR2022/papers/Yamada_Does_Robustness_on_ImageNet_Transfer_to_Downstream_Tasks_CVPR_2022_paper.pdf",
+      "honor": null,
+      "honor_verified": false,
+      "review_score_status": "unverified",
+      "reading": "abstract_and_targeted_section",
+      "locations_read": [
+        "Abstract",
+        "Section 3",
+        "Section 3.1"
+      ],
+      "version_caution": "Not an ICML 2020 paper; distinct from Taori et al.",
+      "writing_takeaway": "Experimental setting before rationale and measurement details"
+    },
+    {
+      "id": "C11",
+      "title": "AstaBench: Rigorous Benchmarking of AI Agents with a Scientific Research Suite",
+      "authors_short": "Bragg et al.",
+      "year": 2026,
+      "venue": "ICLR 2026",
+      "track": "conference",
+      "accepted_verified": true,
+      "venue_url": "https://iclr.cc/virtual/2026/events/oral",
+      "full_text_url": "https://arxiv.org/pdf/2510.21652",
+      "full_text_version": "v2, 2026-04-21, published ICLR 2026 header",
+      "honor": "Oral presentation",
+      "honor_verified": true,
+      "honor_url": "https://iclr.cc/virtual/2026/events/oral",
+      "review_score_status": "unverified",
+      "reading": "deep_structure",
+      "locations_read": [
+        "Abstract",
+        "Introduction",
+        "Section 4.2",
+        "Section 5",
+        "Tables 1-3",
+        "Figures 1-2"
+      ],
+      "access_note": "Official oral listing retrieved through web search index; direct virtual URL robots blocked. Acceptance also verified by published full-text header.",
+      "writing_takeaway": "Unified figure grammar and consistent division of overview and detailed results"
+    },
+    {
+      "id": "C12",
+      "title": "Holistic Agent Leaderboard: The Missing Infrastructure for AI Agent Evaluation",
+      "authors_short": "Kapoor et al.",
+      "year": 2026,
+      "venue": "ICLR 2026",
+      "track": "conference",
+      "accepted_verified": true,
+      "venue_url": "https://iclr.cc/virtual/2026/papers.html",
+      "author_confirmation_url": "https://sage.cs.princeton.edu/",
+      "abstract_url": "https://arxiv.org/abs/2510.11977",
+      "honor": null,
+      "honor_verified": false,
+      "review_score_status": "unverified",
+      "reading": "venue_and_abstract_only",
+      "locations_read": [
+        "Official conference paper listing",
+        "Author research-group publication listing",
+        "Abstract"
+      ],
+      "access_note": "Official virtual listing available via search index; author page explicitly lists ICLR 2026.",
+      "writing_takeaway": "Three parallel contribution statements in the abstract"
+    }
+  ],
+  "screened_not_in_core": [
+    {
+      "title": "AI Agents That Matter",
+      "status": "TMLR 2025 journal, not conference",
+      "verification": "Parent task verified published PDF; this subtask independently confirmed author publication list.",
+      "url": "https://sage.cs.princeton.edu/"
+    },
+    {
+      "title": "Measuring Faithfulness in Chain-of-Thought Reasoning",
+      "status": "Conference acceptance unverified in this search; retained only as screened lead.",
+      "url": "https://arxiv.org/abs/2307.13702"
+    },
+    {
+      "title": "Making Reasoning Matter: Measuring and Improving Faithfulness of Chain-of-Thought Reasoning",
+      "status": "EMNLP Findings 2024, a distinct paper from the Lanham title; screened but not core.",
+      "url": "https://aclanthology.org/2024.findings-emnlp.882/"
+    }
+  ],
+  "query_log": [
+    {
+      "batch": 1,
+      "date": "2026-09-26",
+      "queries": [
+        "site.proceedings.neurips.cc \"Deep Reinforcement Learning at the Edge\"",
+        "site:openreview.net \"Implementation Matters in Deep RL\"",
+        "site:acm.org \"Are We Really Making Much Progress\" RecSys 2019 award"
+      ]
+    },
+    {
+      "batch": 2,
+      "date": "2026-09-26",
+      "queries": [
+        "\"Implementation Matters in Deep RL\" \"ICLR 2020\"",
+        "\"A Closer Look at Few-shot Classification\" openreview",
+        "\"Do ImageNet Classifiers Generalize to ImageNet\" ICML 2019",
+        "\"Rethinking the Role of Demonstrations\" EMNLP 2022"
+      ]
+    },
+    {
+      "batch": 3,
+      "date": "2026-09-26",
+      "queries": [
+        "site:openreview.net \"A Closer Look at Few-shot Classification\" \"ICLR 2019\"",
+        "site:proceedings.neurips.cc \"Language Models Don’t Always Say What They Think\"",
+        "\"AI Agents That Matter\" conference COLM",
+        "\"Why Do Multi-Agent LLM Systems Fail\" NeurIPS 2025"
+      ]
+    },
+    {
+      "batch": 4,
+      "date": "2026-09-26",
+      "queries": [
+        "site:aclanthology.org \"Measuring Faithfulness in Chain-of-Thought Reasoning\"",
+        "site:proceedings.mlr.press \"Does Robustness on ImageNet Transfer\"",
+        "site:iclr.cc \"Implementation Matters\" 2020",
+        "site:iclr.cc \"A Closer Look at Few\" 2019"
+      ]
+    },
+    {
+      "batch": 5,
+      "date": "2026-09-26",
+      "queries": [
+        "\"Does Robustness on ImageNet Transfer\" ICML 2020 Taori",
+        "\"Implementation Matters\" \"9\" \"OpenReview\"",
+        "\"Are We Really Making Much Progress\" pdf arxiv",
+        "\"Language Models Don’t Always Say What They Think\" NeurIPS abstract"
+      ]
+    },
+    {
+      "batch": 6,
+      "date": "2026-09-26",
+      "queries": [
+        "site:proceedings.neurips.cc \"Measuring Robustness to Natural Distribution Shifts\"",
+        "site:iclr.cc \"A Closer Look at Few-shot Classification\"",
+        "site:arxiv.org \"Implementation Matters in Deep Policy Gradients\""
+      ]
+    },
+    {
+      "batch": 7,
+      "date": "2026-09-26",
+      "queries": [
+        "site:iclr.cc/virtual/2026 AstaBench",
+        "site:iclr.cc/virtual/2026 \"Holistic Agent Leaderboard\"",
+        "site:arxiv.org \"Holistic Agent Leaderboard\"",
+        "site:openreview.net \"AstaBench\""
+      ]
+    },
+    {
+      "batch": 8,
+      "date": "2026-09-26",
+      "queries": [
+        "site:proceedings.iclr.cc/paper_files/paper/2026 \"AstaBench\"",
+        "site:proceedings.iclr.cc/paper_files/paper/2026 \"Holistic Agent Leaderboard\""
+      ]
+    }
+  ],
+  "access_failures": [
+    {
+      "url": "https://openreview.net/forum?id=r1etN1rtPB",
+      "result": "browser challenge"
+    },
+    {
+      "url": "https://openreview.net/pdf?id=r1etN1rtPB",
+      "result": "browser challenge"
+    },
+    {
+      "url": "https://openreview.net/forum?id=HkxLXnAcFQ",
+      "result": "browser challenge"
+    },
+    {
+      "url": "https://openreview.net/pdf?id=HkxLXnAcFQ",
+      "result": "browser challenge; indexed cached result exists but alternate author PDF used"
+    },
+    {
+      "url": "https://proceedings.neurips.cc/paper/2021/file/f514cec81cb148559cf475e7426eed5e-Review.html",
+      "result": "internal error"
+    },
+    {
+      "url": "https://iclr.cc/virtual/2026/events/oral",
+      "result": "direct access robots blocked; indexed official search content available"
+    }
+  ]
+}

@@ -1,39 +1,42 @@
-\subsection{Pre-Execution Selection and Oracle Replay}\label{sec:utility}
+\subsection{The Tested Selector Adds No Gain and Full-Budget Coverage Ties}\label{sec:utility}
 \paragraph{The frozen selector matches the development-selected baseline.}
-The final feature-policy choices, including its confidence-based
-fallback, are \bare{} on all $\RcvPairedN$ evaluation tasks. The result
-evaluates this complete decision rule; the reported choices do not
-separate the classifier's initial preference from fallback decisions.
-Keeping those choices fixed and updating only the
-recorded outcomes gives $\RcvBaselineAcc\%$ accuracy over three repeats,
-identical to the development-selected fixed member:
-$\RcvPolicyGain$ pp gain for the tested policy and features. Appendix~\ref{app:selection}
-retains its construction and the same-set comparator results.
+The tested feature policy yields $\RcvPolicyGain$ pp gain:
+after applying its confidence-based fallback, it selects \bare{} on
+all $\RcvPairedN$ evaluation tasks. Keeping these choices fixed and
+updating only the recorded outcomes gives $\RcvBaselineAcc\%$
+accuracy over three repeats, identical to the development-selected
+fixed member. This result evaluates the complete decision rule;
+the reported choices do not distinguish initial classifier preferences
+from fallback decisions.
+Appendix~\ref{app:selection} gives its construction and the
+same-set comparator results.
 
 \paragraph{At the full execution budget, the oracle coverages tie.}
 \label{sec:selection-result}
-We compare development-ranked portfolios with uniformly selected
-same-code executions on the $\RcvPairedN$ tasks complete in both arms.
-At $b=3$, the portfolio contains only \bare{}, so its
+At $b=27$ executions, the development-ranked portfolio and same-code
+controls both reach $\RcvReplayFullCoverage\%$ oracle coverage
+(Table~\ref{tab:execution-means}). The comparison uses the
+$\RcvPairedN$ tasks complete in both arms and averages clone coverage
+over uniformly selected executions.
+At $b=9$ and $15$, the portfolio-minus-clone differences are
+$\RcvReplayNineGap$ pp and $\RcvReplayFifteenGap$ pp.
+At $b=3$, the portfolio contains only \bare{}, so the
 $\RcvReplayThreeGap$ pp difference reflects execution variation
 between identical programs.
-At $b=9$ and $15$, the differences are $\RcvReplayNineGap$ pp and
-$\RcvReplayFifteenGap$ pp. At $b=27$, both arms reach
-$\RcvReplayFullCoverage\%$ oracle coverage (Table~\ref{tab:execution-means}).
 
 \begin{table}[htbp]
 \centering\small
 \input{common386_replay_table}
-\caption{\textbf{Full-budget oracle coverage is equal in the observed
-recovery snapshot.} Each included member contributes
-three repeats. Clone coverage is the exact mean over uniform subsets of
-its $27$ recorded executions, paired on complete tasks.
-Both arms use post-execution correctness at matched harness execution counts.}
+\caption{\textbf{Full-budget oracle coverage ties in the recorded executions.}
+Each included member contributes three repeats. Clone coverage is the
+exact mean over uniform subsets of its $27$ recorded executions,
+paired on complete tasks. Both arms use post-execution correctness
+at matched harness execution counts.}
 \label{tab:execution-means}
 \end{table}
 
-These replay means describe post-execution oracle coverage at matched
-harness execution counts. Model-call counts and token costs vary by
-program. The tested pre-execution selector yields zero gain, while
-the full recorded execution budget provides equal oracle coverage
-for the two arms.
+Together, the selector and replay results separate two operational
+questions: the tested pre-execution policy yields zero gain, while
+post-execution oracle coverage ties at the full recorded budget.
+That budget matches harness executions; model-call counts and token
+costs vary by program.

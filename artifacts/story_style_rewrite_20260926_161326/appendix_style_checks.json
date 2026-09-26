@@ -1,0 +1,326 @@
+[
+  {
+    "path": "paper/latex/sec_appendix.tex",
+    "before_chars": 1406,
+    "after_chars": 1064,
+    "before_words": 109,
+    "after_words": 69,
+    "before_han": 0,
+    "after_han": 0,
+    "checks": {
+      "\\\\input\\{[^}]+\\}": true,
+      "\\\\includegraphics\\[[^\\]]*\\]\\{[^}]+\\}": true,
+      "\\\\label\\{[^}]+\\}": true,
+      "(?s)\\\\begin\\{(?:table|figure|quote)\\}.*?\\\\end\\{(?:table|figure|quote)\\}": true
+    },
+    "missing_numbers": [],
+    "missing_result_macros": [],
+    "replacement_char": false
+  },
+  {
+    "path": "paper/latex/sec_app_inventory.tex",
+    "before_chars": 2141,
+    "after_chars": 1849,
+    "before_words": 250,
+    "after_words": 203,
+    "before_han": 0,
+    "after_han": 0,
+    "checks": {
+      "\\\\input\\{[^}]+\\}": true,
+      "\\\\includegraphics\\[[^\\]]*\\]\\{[^}]+\\}": true,
+      "\\\\label\\{[^}]+\\}": true,
+      "(?s)\\\\begin\\{(?:table|figure|quote)\\}.*?\\\\end\\{(?:table|figure|quote)\\}": true
+    },
+    "missing_numbers": [],
+    "missing_result_macros": [],
+    "replacement_char": false
+  },
+  {
+    "path": "paper/latex/sec_crossdomain.tex",
+    "before_chars": 4413,
+    "after_chars": 3219,
+    "before_words": 542,
+    "after_words": 380,
+    "before_han": 0,
+    "after_han": 0,
+    "checks": {
+      "\\\\input\\{[^}]+\\}": true,
+      "\\\\includegraphics\\[[^\\]]*\\]\\{[^}]+\\}": true,
+      "\\\\label\\{[^}]+\\}": true,
+      "(?s)\\\\begin\\{(?:table|figure|quote)\\}.*?\\\\end\\{(?:table|figure|quote)\\}": true
+    },
+    "missing_numbers": [],
+    "missing_result_macros": [],
+    "replacement_char": false
+  },
+  {
+    "path": "paper/latex/sec_app_wp1r.tex",
+    "before_chars": 6036,
+    "after_chars": 4376,
+    "before_words": 770,
+    "after_words": 542,
+    "before_han": 0,
+    "after_han": 0,
+    "checks": {
+      "\\\\input\\{[^}]+\\}": true,
+      "\\\\includegraphics\\[[^\\]]*\\]\\{[^}]+\\}": true,
+      "\\\\label\\{[^}]+\\}": true,
+      "(?s)\\\\begin\\{(?:table|figure|quote)\\}.*?\\\\end\\{(?:table|figure|quote)\\}": true
+    },
+    "missing_numbers": [],
+    "missing_result_macros": [],
+    "replacement_char": false
+  },
+  {
+    "path": "paper/latex/sec_app_statistics.tex",
+    "before_chars": 6266,
+    "after_chars": 5257,
+    "before_words": 794,
+    "after_words": 662,
+    "before_han": 0,
+    "after_han": 0,
+    "checks": {
+      "\\\\input\\{[^}]+\\}": true,
+      "\\\\includegraphics\\[[^\\]]*\\]\\{[^}]+\\}": true,
+      "\\\\label\\{[^}]+\\}": true,
+      "(?s)\\\\begin\\{(?:table|figure|quote)\\}.*?\\\\end\\{(?:table|figure|quote)\\}": true
+    },
+    "missing_numbers": [],
+    "missing_result_macros": [],
+    "replacement_char": false
+  },
+  {
+    "path": "paper/latex/sec_app_selection.tex",
+    "before_chars": 4744,
+    "after_chars": 3983,
+    "before_words": 605,
+    "after_words": 496,
+    "before_han": 0,
+    "after_han": 0,
+    "checks": {
+      "\\\\input\\{[^}]+\\}": true,
+      "\\\\includegraphics\\[[^\\]]*\\]\\{[^}]+\\}": true,
+      "\\\\label\\{[^}]+\\}": true,
+      "(?s)\\\\begin\\{(?:table|figure|quote)\\}.*?\\\\end\\{(?:table|figure|quote)\\}": true
+    },
+    "missing_numbers": [],
+    "missing_result_macros": [],
+    "replacement_char": false
+  },
+  {
+    "path": "paper/latex/sec_app_bird_traces.tex",
+    "before_chars": 9288,
+    "after_chars": 6892,
+    "before_words": 1220,
+    "after_words": 869,
+    "before_han": 0,
+    "after_han": 0,
+    "checks": {
+      "\\\\input\\{[^}]+\\}": true,
+      "\\\\includegraphics\\[[^\\]]*\\]\\{[^}]+\\}": true,
+      "\\\\label\\{[^}]+\\}": true,
+      "(?s)\\\\begin\\{(?:table|figure|quote)\\}.*?\\\\end\\{(?:table|figure|quote)\\}": true
+    },
+    "missing_numbers": [],
+    "missing_result_macros": [],
+    "replacement_char": false
+  },
+  {
+    "path": "paper/latex/sec_app_bird_admission.tex",
+    "before_chars": 9221,
+    "after_chars": 6731,
+    "before_words": 1099,
+    "after_words": 755,
+    "before_han": 0,
+    "after_han": 0,
+    "checks": {
+      "\\\\input\\{[^}]+\\}": true,
+      "\\\\includegraphics\\[[^\\]]*\\]\\{[^}]+\\}": true,
+      "\\\\label\\{[^}]+\\}": true,
+      "(?s)\\\\begin\\{(?:table|figure|quote)\\}.*?\\\\end\\{(?:table|figure|quote)\\}": true
+    },
+    "missing_numbers": [],
+    "missing_result_macros": [],
+    "replacement_char": false
+  },
+  {
+    "path": "paper/latex/sec_app_admission.tex",
+    "before_chars": 3317,
+    "after_chars": 2278,
+    "before_words": 368,
+    "after_words": 233,
+    "before_han": 0,
+    "after_han": 0,
+    "checks": {
+      "\\\\input\\{[^}]+\\}": true,
+      "\\\\includegraphics\\[[^\\]]*\\]\\{[^}]+\\}": true,
+      "\\\\label\\{[^}]+\\}": true,
+      "(?s)\\\\begin\\{(?:table|figure|quote)\\}.*?\\\\end\\{(?:table|figure|quote)\\}": true
+    },
+    "missing_numbers": [],
+    "missing_result_macros": [],
+    "replacement_char": false
+  },
+  {
+    "path": "paper/latex_zh/sec_appendix.tex",
+    "before_chars": 884,
+    "after_chars": 780,
+    "before_words": 37,
+    "after_words": 35,
+    "before_han": 160,
+    "after_han": 90,
+    "checks": {
+      "\\\\input\\{[^}]+\\}": true,
+      "\\\\includegraphics\\[[^\\]]*\\]\\{[^}]+\\}": true,
+      "\\\\label\\{[^}]+\\}": true,
+      "(?s)\\\\begin\\{(?:table|figure|quote)\\}.*?\\\\end\\{(?:table|figure|quote)\\}": true
+    },
+    "missing_numbers": [],
+    "missing_result_macros": [],
+    "replacement_char": false
+  },
+  {
+    "path": "paper/latex_zh/sec_app_inventory.tex",
+    "before_chars": 1286,
+    "after_chars": 1206,
+    "before_words": 98,
+    "after_words": 97,
+    "before_han": 305,
+    "after_han": 243,
+    "checks": {
+      "\\\\input\\{[^}]+\\}": true,
+      "\\\\includegraphics\\[[^\\]]*\\]\\{[^}]+\\}": true,
+      "\\\\label\\{[^}]+\\}": true,
+      "(?s)\\\\begin\\{(?:table|figure|quote)\\}.*?\\\\end\\{(?:table|figure|quote)\\}": true
+    },
+    "missing_numbers": [],
+    "missing_result_macros": [],
+    "replacement_char": false
+  },
+  {
+    "path": "paper/latex_zh/sec_crossdomain.tex",
+    "before_chars": 1775,
+    "after_chars": 1476,
+    "before_words": 79,
+    "after_words": 75,
+    "before_han": 878,
+    "after_han": 611,
+    "checks": {
+      "\\\\input\\{[^}]+\\}": true,
+      "\\\\includegraphics\\[[^\\]]*\\]\\{[^}]+\\}": true,
+      "\\\\label\\{[^}]+\\}": true,
+      "(?s)\\\\begin\\{(?:table|figure|quote)\\}.*?\\\\end\\{(?:table|figure|quote)\\}": true
+    },
+    "missing_numbers": [],
+    "missing_result_macros": [],
+    "replacement_char": false
+  },
+  {
+    "path": "paper/latex_zh/sec_app_wp1r.tex",
+    "before_chars": 2569,
+    "after_chars": 2095,
+    "before_words": 139,
+    "after_words": 135,
+    "before_han": 1209,
+    "after_han": 763,
+    "checks": {
+      "\\\\input\\{[^}]+\\}": true,
+      "\\\\includegraphics\\[[^\\]]*\\]\\{[^}]+\\}": true,
+      "\\\\label\\{[^}]+\\}": true,
+      "(?s)\\\\begin\\{(?:table|figure|quote)\\}.*?\\\\end\\{(?:table|figure|quote)\\}": true
+    },
+    "missing_numbers": [],
+    "missing_result_macros": [],
+    "replacement_char": false
+  },
+  {
+    "path": "paper/latex_zh/sec_app_statistics.tex",
+    "before_chars": 2580,
+    "after_chars": 2303,
+    "before_words": 155,
+    "after_words": 151,
+    "before_han": 1202,
+    "after_han": 969,
+    "checks": {
+      "\\\\input\\{[^}]+\\}": true,
+      "\\\\includegraphics\\[[^\\]]*\\]\\{[^}]+\\}": true,
+      "\\\\label\\{[^}]+\\}": true,
+      "(?s)\\\\begin\\{(?:table|figure|quote)\\}.*?\\\\end\\{(?:table|figure|quote)\\}": true
+    },
+    "missing_numbers": [],
+    "missing_result_macros": [],
+    "replacement_char": false
+  },
+  {
+    "path": "paper/latex_zh/sec_app_selection.tex",
+    "before_chars": 2184,
+    "after_chars": 1928,
+    "before_words": 143,
+    "after_words": 135,
+    "before_han": 934,
+    "after_han": 741,
+    "checks": {
+      "\\\\input\\{[^}]+\\}": true,
+      "\\\\includegraphics\\[[^\\]]*\\]\\{[^}]+\\}": true,
+      "\\\\label\\{[^}]+\\}": true,
+      "(?s)\\\\begin\\{(?:table|figure|quote)\\}.*?\\\\end\\{(?:table|figure|quote)\\}": true
+    },
+    "missing_numbers": [],
+    "missing_result_macros": [],
+    "replacement_char": false
+  },
+  {
+    "path": "paper/latex_zh/sec_app_bird_traces.tex",
+    "before_chars": 4493,
+    "after_chars": 3632,
+    "before_words": 338,
+    "after_words": 293,
+    "before_han": 1812,
+    "after_han": 1189,
+    "checks": {
+      "\\\\input\\{[^}]+\\}": true,
+      "\\\\includegraphics\\[[^\\]]*\\]\\{[^}]+\\}": true,
+      "\\\\label\\{[^}]+\\}": true,
+      "(?s)\\\\begin\\{(?:table|figure|quote)\\}.*?\\\\end\\{(?:table|figure|quote)\\}": true
+    },
+    "missing_numbers": [],
+    "missing_result_macros": [],
+    "replacement_char": false
+  },
+  {
+    "path": "paper/latex_zh/sec_app_bird_admission.tex",
+    "before_chars": 4056,
+    "after_chars": 3211,
+    "before_words": 224,
+    "after_words": 179,
+    "before_han": 1770,
+    "after_han": 1198,
+    "checks": {
+      "\\\\input\\{[^}]+\\}": true,
+      "\\\\includegraphics\\[[^\\]]*\\]\\{[^}]+\\}": true,
+      "\\\\label\\{[^}]+\\}": true,
+      "(?s)\\\\begin\\{(?:table|figure|quote)\\}.*?\\\\end\\{(?:table|figure|quote)\\}": true
+    },
+    "missing_numbers": [],
+    "missing_result_macros": [],
+    "replacement_char": false
+  },
+  {
+    "path": "paper/latex_zh/sec_app_admission.tex",
+    "before_chars": 1686,
+    "after_chars": 1338,
+    "before_words": 84,
+    "after_words": 75,
+    "before_han": 607,
+    "after_han": 356,
+    "checks": {
+      "\\\\input\\{[^}]+\\}": true,
+      "\\\\includegraphics\\[[^\\]]*\\]\\{[^}]+\\}": true,
+      "\\\\label\\{[^}]+\\}": true,
+      "(?s)\\\\begin\\{(?:table|figure|quote)\\}.*?\\\\end\\{(?:table|figure|quote)\\}": true
+    },
+    "missing_numbers": [],
+    "missing_result_macros": [],
+    "replacement_char": false
+  }
+]

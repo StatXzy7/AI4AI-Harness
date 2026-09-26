@@ -1,27 +1,21 @@
 \section{BIRD Execution Traces and Supporting Analyses}\label{app:bird-traces}
-This appendix expands the supporting execution diagnosis. In the
-historical records, Phase I denotes BIRD discovery and Phase II the
-separate BIRD admission study; neither explains the MATH results causally.
+Phase I studies BIRD discovery; Phase II studies admission.
+This appendix details the discovery programs and their execution paths.
 \subsection{Discovery populations and conditions}\label{app:phase1-provenance}
 
 \paragraph{Population and judging.}
-The discovery comparison in \S\ref{sec:f1-collapse} evaluates twelve
-TTHE-proposer candidates from a GLM-5.3-Flash builder, plus \bare{}
-and \react{}, on $60$ tasks. Admission checks import and smoke execution;
-it does not validate the claimed mechanism. The baseline flipped three
-of the $60$ items between discovery runs, so their baseline-error sets
-differ slightly. Discovery used a set-of-rows proxy judge. On the two
-matrices with retained final SQL, its agreement with the official BIRD
-scorer is 0.97--0.99, with no proxy-correct/official-incorrect cases.
+Discovery evaluates twelve TTHE-proposer candidates from GLM-5.3-Flash,
+plus \bare{} and \react{}, on $60$ tasks (\S\ref{sec:f1-collapse}).
+Admission checks import and smoke execution. The baseline flips on
+three of $60$ tasks between discovery runs. The set-of-rows proxy judge
+agrees with the official BIRD scorer on 0.97--0.99 of outcomes in two
+matrices with retained SQL, with no proxy-correct/official-incorrect cases.
 
-\paragraph{Development exposure and record limits.}
-The hand-written controls were designed after inspecting discovery
-traces; $24$ of their $151$ evaluation items overlapped
-protocol-development measurements. Their headroom is descriptive,
-not a blind estimate of stable complementarity. Early in-session
-generation records do not retain the generation tool and per-attempt
-logs needed to audit equal generation budgets. These limitations
-apply to the discovery evidence retained here.
+\paragraph{Development exposure.}
+Hand-written controls were designed after trace inspection, and
+$24/151$ evaluation items overlap protocol development. Their headroom
+is descriptive. Equal generation budgets cannot be reconstructed from
+the early records, which lack generation-tool and per-attempt logs.
 
 \begin{figure}[H]
 \centering
@@ -37,53 +31,42 @@ comparison on the observed tasks, not a test of program equivalence.}
 \FloatBarrier
 \subsection{Discovery measurements and hand-written controls}\label{app:bird-discovery}
 
-Every BIRD discovery candidate passes a code-difference check. Yet
-$21/66$ generated-candidate pairs have identical correctness vectors
-($36/91$ including baselines), and source similarity has essentially
-no rank association with correctness disagreement across the $91$
-pairs ($\rho=-0.010$; Figure~\ref{fig:phenomenon}). Mean disagreement
-is $3.3\%$ overall ($3.8\%$ among generated candidates), union repair
-of \bare{} errors is $7.7\%$, and one-run headroom is $3.3$\,pp.
-Agreement on these $60$ tasks does not establish general program
-equivalence, but it motivates examining what the programs actually do.
-
+All candidates pass the code-difference check, but $21/66$ generated
+pairs share correctness vectors ($36/91$ with baselines).
+Source similarity and correctness disagreement have
+$\rho=-0.010$ across $91$ pairs (Figure~\ref{fig:phenomenon}).
+On these $60$ tasks, mean disagreement is $3.3\%$ overall and
+$3.8\%$ among generated candidates, union repair is $7.7\%$,
+and single-run headroom is $3.3$\,pp. Traces explain how distinct
+programs produce these closely aligned outcomes.
 
 \subsection{Traces distinguish absence, non-activation, and failure}
 \textbf{T1: described but absent.} Six of twelve candidates claim
-retrieval or self-checking in docstrings but make a single model call
-and execute no artifact. The named mechanism is not implemented.
-\textbf{T2: present but untriggered.} In all ten audited \react{} tasks,
-the first SQL executes successfully, so an existing
-execute--feedback--repair branch never fires; final SQL equals
-\bare{}. Successful execution is not semantic correctness, and these
-runs do not test repair under failure.
-\textbf{T3: executed but broken.} One of twelve candidates performs
-multi-turn execution and repair but returns prose as final SQL,
-losing tasks that \bare{} answers correctly.
+retrieval or self-checking but make one model call without implementing
+either step.
+\textbf{T2: present but untriggered.} On all ten audited \react{} tasks,
+the first SQL executes without error, leaving the repair branch idle and
+final SQL identical to \bare{}; execution success can coexist with
+semantic error.
+\textbf{T3: executed but broken.} One of twelve candidates executes
+multi-turn repair but returns prose as SQL, losing baseline-correct tasks.
 
-These observations locate different failures rather than assigning
-one diversity score. T1 requires checking implementation; T2 requires
-tasks that exercise the branch; T3 requires a valid output contract.
-They do not establish that activation causes improved accuracy.
-Four hand-written controls with distinct paths produce $6.67$\,pp
-one-run headroom on $60$ tasks and $7.28$\,pp on $151$ items, showing
-that the apparatus can record different repairs. But they were written
-after trace inspection and lack matched repeats and clone controls.
-Appendix~\ref{app:phase1-provenance} discloses the legacy proxy and
-$24/151$ items overlapping protocol development;
-Appendix~\ref{app:examples} gives worked traces.
-
+The three cases separate implementation, branch activation, and output
+validity. Four hand-written controls with distinct paths yield
+$6.67$\,pp headroom on $60$ tasks and $7.28$\,pp on $151$ items.
+These post-inspection controls lack matched repeats and clones;
+their $24/151$ development overlap is documented in
+Appendix~\ref{app:phase1-provenance}. Worked traces follow in
+Appendix~\ref{app:examples}.
 
 \FloatBarrier
 \subsection{Worked examples from the trace audit}\label{app:examples}
 
-The T1 count above classifies all twelve discovery candidates. The separate
-trace audit covers five harnesses: \bare{}, \react{}, the single-call
-candidate, the timeout-retry candidate, and the multi-turn repair candidate.
-It illustrates execution paths rather than providing the denominator for
-the six-of-twelve T1 count. This section walks one task through those
-paths. Outputs are quoted from this audit (5 harnesses $\times$ 10 tasks); its logger caps
-stored SQL excerpts at 120 characters, so truncations are marked
+The six-of-twelve T1 count covers the full discovery population.
+The separate trace audit follows five harnesses---\bare{}, \react{},
+single-call, timeout-retry, and multi-turn repair---on ten tasks
+(5 $\times$ 10). Below, one task illustrates these paths. Quoted SQL
+is capped by the logger at 120 characters; truncation is marked
 \emph{[trunc.]}.
 
 \paragraph{The task.} BIRD dev-set question 352 (\texttt{card\_games}
@@ -112,40 +95,28 @@ marked wrong by the official scorer: it counts directly over
 \texttt{foreign\_data}, whereas the gold query counts after joining to
 \texttt{cards}; the hint does not spell out that join.
 
-\paragraph{\react{} (T2: mechanism present but untriggered).} \react's control
-flow does execute SQL and retries on database errors. But its first call is
-byte-identical to \bare's prompt, and here the generated SQL executes without
-error, so the error-triggered retry never fires and the final SQL equals
-\bare's. Across all 10 audited tasks the pattern held: SQL executions
-present, final SQL byte-identical to \bare's on 10/10 --- the feedback loop
-is real code whose repair branch did not activate on these tasks. Controlled
-failure injection is needed to test whether feedback changes the output.
+\paragraph{\react{} (T2: untriggered repair).}
+The first prompt is byte-identical to \bare{}'s. SQL executes successfully,
+so the database-error retry does not fire. All 10 audited tasks follow
+this path, with SQL execution but 10/10 final queries byte-identical to
+\bare{}'s.
 
-\paragraph{Single-call candidate (T1: mechanism described, not
-executed).} This candidate's docstring claims a ``conservative repair'':
-cap the solver's maximum output tokens and demand an answer-only block.
-Its behavior is structurally \bare's: one LLM call followed by
-SQL extraction. The token cap exists only as an environment default (2{,}048 against the runtime's
-32{,}000) --- no harness control flow implements it, and it never binds on
-these tasks because a SQL answer is orders of magnitude below the cap. On
-the worked task it issues exactly one call, executes nothing, and returns
-the same wrong query as \bare{} modulo whitespace (counting over
-\texttt{foreign\_data} without the join). Across the 10 audited tasks it
-records zero SQL executions on all 10, and its final SQL is byte-identical
-to \bare's on 6 (the remaining differences trace to the reworded system
-prompt, with no implemented retrieval, self-check, or repair operation).
-Prompt rewriting is an implemented transformation; it does not implement
-the additional mechanism claimed in the docstring. The most common
-Phase-I failure is thus a claimed operation absent from the executed program.
+\paragraph{Single-call candidate (T1: absent repair).}
+The docstring's \emph{conservative repair} specifies an output-token cap
+and answer-only block. Execution consists of one model call followed
+by SQL extraction. The cap is an environment default (2{,}048 versus
+32{,}000 at runtime), has no harness control-flow implementation, and
+never binds on these short answers. The worked task returns the same
+wrong \texttt{foreign\_data} query, modulo whitespace, with one call
+and zero SQL executions. Across all 10 tasks, SQL executions remain zero
+and 6 final queries are byte-identical to \bare{}'s. The remaining
+differences reflect a reworded prompt, without retrieval, self-check,
+or repair.
 
-\paragraph{Timeout-retry candidate (code-level diversity,
-behavioral identity).} This candidate is a genuinely different program: it
-wraps the single coder call in a daemon-thread watchdog and fires one hedged
-duplicate re-ask if the call stalls past 40\,s. The mechanism exists in the
-control flow --- but its trigger (a stalled API call) never occurred in the
-audit: zero SQL executions, and the final SQL equaled \bare's on all 10
-audited tasks. Code difference without behavioral difference survives even
-when the added mechanism is real: it simply never fires.
+\paragraph{Timeout-retry candidate (untriggered watchdog).}
+A daemon-thread watchdog wraps the coder call and issues one hedged
+duplicate after a 40\,s stall. No stall occurs in the audit:
+SQL executions are zero and final SQL equals \bare{}'s on all 10 tasks.
 
 \paragraph{Multi-turn repair candidate (T3: a broken multi-turn
 path).} The one audited candidate implementing genuine execute-inspect-repair
@@ -160,6 +131,5 @@ The repair re-prompt invites the failure: asked to fix a query that ``was
 actually just prose'', the frozen target responds with more prose reasoning,
 no SQL block is found, and the reasoning text is submitted as the query. The
 item flips from single-call-correct to harness-wrong.
-
 
 \FloatBarrier

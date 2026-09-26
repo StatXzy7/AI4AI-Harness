@@ -1,16 +1,16 @@
-\subsection{执行前选择与 oracle 重放}\label{sec:utility}
+\subsection{所测选择器无增益，完整预算下覆盖持平}\label{sec:utility}
 \paragraph{冻结选择器与开发集选出的基线持平。}
-特征策略在应用置信度回退规则后，最终在全部 $\RcvPairedN$ 道评估题上选择 \bare{}。这里评估完整决策规则；报告的最终选择不区分分类器初始偏好和回退决定。保持选择不变、仅更新记录结果后，三次重复的准确率为 $\RcvBaselineAcc\%$，与开发集选出的固定成员完全相同：所测策略与特征的增益为 $\RcvPolicyGain$ 个百分点。附录~\ref{app:selection} 给出其构造与同一分析集上的比较器结果。
+所测特征策略的增益为 $\RcvPolicyGain$ pp：应用置信度回退规则后，它在全部 $\RcvPairedN$ 道评估题上选择 \bare{}。保持选择不变、仅更新记录结果后，三次重复的准确率为 $\RcvBaselineAcc\%$，与开发集选出的固定成员相同。这一结果评估完整决策规则，报告的最终选择不区分分类器初始偏好与回退决定。附录~\ref{app:selection} 给出其构造和同一分析集上的比较器结果。
 
 \paragraph{完整执行预算下，两臂 oracle 覆盖持平。}
 \label{sec:selection-result}
-在两臂均完整的 $\RcvPairedN$ 个任务上，比较按开发集排序的程序组合与均匀抽取的同代码执行。在 $b=3$ 时，组合只包含 \bare{}，其 $\RcvReplayThreeGap$ pp 差异反映相同程序之间的执行变动。在 $b=9$ 和 $15$ 时，差异分别为 $\RcvReplayNineGap$ pp 与 $\RcvReplayFifteenGap$ pp。在 $b=27$ 时，两臂的 oracle 覆盖均为 $\RcvReplayFullCoverage\%$（表~\ref{tab:execution-means}）。
+在 $b=27$ 次执行时，按开发集排序的程序组合与同代码对照都达到 $\RcvReplayFullCoverage\%$ oracle 覆盖（表~\ref{tab:execution-means}）。比较使用两臂均完整的 $\RcvPairedN$ 道题，克隆覆盖对均匀抽取的执行取平均。在 $b=9$ 和 $15$ 时，程序组合减去克隆的差异分别为 $\RcvReplayNineGap$ pp 与 $\RcvReplayFifteenGap$ pp。在 $b=3$ 时，组合只包含 \bare{}，因此 $\RcvReplayThreeGap$ pp 的差异反映相同程序之间的执行变动。
 
 \begin{table}[htbp]
 \centering\small
 \input{../latex/common386_replay_table}
-\caption{\textbf{在观测到的补采集快照中，完整预算下的 oracle 覆盖相同。}每个入选成员贡献三次重复；克隆覆盖是从记录的 $27$ 次执行中均匀抽取子集的精确均值，并在共同完整任务上配对。两臂在相同 harness 执行次数下使用执行后正确性。}
+\caption{\textbf{在记录的执行中，完整预算下 oracle 覆盖持平。}每个入选成员贡献三次重复；克隆覆盖是从记录的 $27$ 次执行中均匀抽取子集的精确均值，并在共同完整任务上配对。两臂在相同 harness 执行次数下使用执行后正确性。}
 \label{tab:execution-means}
 \end{table}
 
-这些重放均值描述相同 harness 执行次数下的执行后 oracle 覆盖。模型调用数和 token 成本随程序而异。所测执行前选择器的增益为零，完整的记录执行预算则为两臂提供了相同的 oracle 覆盖。
+选择器与重放结果分别回答两个应用问题：所测执行前策略的增益为零，执行后 oracle 覆盖则在完整记录预算下持平。这里匹配的是 harness 执行次数，模型调用数和 token 成本随程序而异。

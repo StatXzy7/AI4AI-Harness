@@ -1,0 +1,31 @@
+{
+  "query": "ReAct Synergizing Reasoning and Acting",
+  "url": "https://api.openalex.org/works?filter=title.search%3AReAct+Synergizing+Reasoning+and+Acting&per-page=4&select=id%2Ctitle%2Ccited_by_count%2Cpublication_year%2Cdoi%2Cprimary_location%2Cupdated_date",
+  "accessed_at": "2026-09-26T08:04:08.982684+00:00",
+  "response": {
+    "meta": {
+      "count": 0,
+      "db_response_time_ms": 23,
+      "page": 1,
+      "per_page": 4,
+      "groups_count": null,
+      "x_query": {
+        "oql": "works where title has (ReAct Synergizing Reasoning \"and\" Acting)",
+        "oqo": {
+          "get_rows": "works",
+          "filter_rows": [
+            {
+              "column_id": "display_name.search",
+              "value": "ReAct Synergizing Reasoning and Acting",
+              "operator": "has"
+            }
+          ]
+        },
+        "url": "/works?filter=display_name.search:ReAct Synergizing Reasoning and Acting&per_page=4"
+      },
+      "cost_usd": 0.001
+    },
+    "results": [],
+    "group_by": []
+  }
+}

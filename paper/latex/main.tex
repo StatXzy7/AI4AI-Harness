@@ -1,5 +1,5 @@
 % Canonical ICLR 2027 manuscript (promoted from 2026-09-15 insight revision;
-% revised 2026-09-26: frozen recovery, score repeatability, and usable selection).
+% revised 2026-09-26: question-driven narrative and technical-report style).
 \documentclass{article}
 \usepackage{iclr2027_conference,times}
 \usepackage{float,needspace}
@@ -31,24 +31,23 @@
 \maketitle
 
 \begin{abstract}
-Do generated LLM harnesses add task-specific abilities, or merely more
-opportunities to produce correct answers? We separate coverage,
-repeatability, and usable selection using same-code controls on
-$\RcvPairedN$ fully observed MATH-500 tasks. Eight generated programs
-plus a baseline are compared with nine byte-identical baseline slots,
-each executed three times. The clones produce $\RcvClonePlugin$
-percentage points of repeat-averaged oracle headroom despite zero
-program specialization. Generated programs show much stronger
-residual score-pattern correlation ($\RcvRealRho$ versus $\RcvCloneRho$),
-but persistent losses to the baseline span $\RcvLossTasks$ tasks,
-whereas persistent wins occur on only one. The frozen feature selector
-gains zero; at 27 executions, both arms reach
-$\RcvReplayFullCoverage\%$ oracle coverage. Held-out-repeat evidence
-leaves stable complementarity unresolved. Supporting BIRD traces
-distinguish mechanisms that are absent, untriggered, or executed but
-broken. Thus, in the tested panel, strong repeatability yields neither
-a gain for the frozen selector nor greater full-budget oracle coverage
-than additional executions of the same program.
+Should an inference budget buy more programs or more executions of
+one program? We study this choice by separating answer coverage,
+repeatable performance, and usable selection in generated LLM harnesses.
+On $\RcvPairedN$ MATH-500 tasks, we compare eight generated programs
+plus a baseline with nine byte-identical baseline slots, each executed
+three times. Identical programs already yield $\RcvClonePlugin$ percentage
+points of repeat-averaged oracle headroom. Generated programs exhibit
+much stronger residual score-pattern correlation
+($\RcvRealRho$ versus $\RcvCloneRho$), but this structure is dominated
+by persistent losses across $\RcvLossTasks$ tasks; persistent wins occur
+on one. The frozen selector gains $\RcvPolicyGain$ percentage points,
+and both arms reach $\RcvReplayFullCoverage\%$ oracle coverage at
+27 executions. Held-out repeats leave stable complementarity unresolved.
+Supporting BIRD traces show how implementation, activation, and output
+validity shape executed behavior. In the tested panel, repeatable differences primarily reveal
+where programs lose, while additional baseline executions match
+full-budget coverage.
 \end{abstract}
 
 \section{Introduction}\label{sec:introduction}
@@ -84,10 +83,9 @@ All experiments use public BIRD and MATH-500 benchmark data and generated
 program artifacts; no human participants, private records, or personally
 identifiable information are collected.  Model calls are reported as part of
 the experimental provenance, and the paper does not release credentials or
-provider responses that would expose private data.  The main ethical risk is
-overstating what one-run oracle gains imply for deployed routing; we therefore
-report the unresolved selection and cost claims explicitly as
-\textsc{Insufficient Evidence}.
+provider responses that would expose private data. The results distinguish
+recorded answer coverage from the performance of a selector operating
+before execution.
 
 \subsection*{Reproducibility Statement}
 The manuscript specifies the populations, task splits, execution
@@ -99,37 +97,13 @@ through these descriptions, tables, and examples.
 
 % ---- ICLR 2027 mandatory AI use statement (does not count toward page limit) ----
 \subsection*{AI use statement}
-
-This work is, by construction, an AI-assisted research project studying
-AI-generated artifacts, and we disclose the extent of that assistance precisely.
-
-\textbf{Required disclosure.} We used generative AI tools for: (i) writing and
-modifying the experimental code (generation pipeline, evaluation collectors,
-statistical analysis scripts); (ii) running experimental workflows that
-made model API calls; (iii) analyzing experimental data and
-producing tables and figures; and (iv) drafting and editing manuscript text.
-The revised primary and factorial tables and result figure are generated
-from a shared, versioned reanalysis artifact. Historical exploratory analyses
-retain their original provenance and stated limitations. The post-review
-corrections are recorded separately from the original protocol.
-Verification records specify the scope of automated tests, development
-controls, and review for each artifact. Post-review revisions also used
-same-model subagent reviews for mechanical checks, supplemented by
-development controls and local runtime tests.
-
-\textbf{Research ideas and direction.} The core research questions, the causal
-design decisions (estimand, contrasts, exclusion rules), the interpretation
-standards, and proposed go/no-go criteria were developed with AI assistance.
-The human authors set the overall research direction and requested the
-review-driven revision; AI tools also proposed analysis and experiment
-designs, identified counterexamples, and implemented revisions. Final
-scientific decisions and approval of the submission remain the authors'
-responsibility.
-
-\textbf{Responsibility.} We take responsibility for the final content of this
-work, including text, claims, and artifacts produced with the aid of generative
-AI tools. The authors have reviewed these disclosures and the final
-manuscript and are responsible for their accuracy.
+Generative AI tools assisted with research questions, experimental and
+statistical design, counterexample analysis, code development, model-API
+workflows, data analysis, figures, and manuscript preparation. Versioned
+artifacts record the analyses and revisions; automated tests, local runtime
+checks, and same-model subagents supported mechanical verification.
+The human authors set the research direction and retain responsibility
+for scientific decisions, verification, the final content, and submission.
 
 \bibliography{references}
 \bibliographystyle{iclr2027_conference}

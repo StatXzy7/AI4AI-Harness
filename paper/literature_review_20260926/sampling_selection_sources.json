@@ -1,0 +1,496 @@
+{
+  "schema_version": 1,
+  "verified_date": "2026-09-26",
+  "scope": "Writing style only: rhetorical structure, paragraph progression, sentence design, figures and result narration. Research positioning follows the user-reviewed manuscript.",
+  "counts": {
+    "top_conference_verified": 9,
+    "journal_verified": 2,
+    "conference_status_unverified_preprint": 1,
+    "deep_read_conference_related": 4,
+    "deep_read_preprint_additional": 1
+  },
+  "method": {
+    "review_scores_not_inferred_from_presentation": true,
+    "quotation_words": 0,
+    "fulltext_deep_read_means": "Style reading of abstract, introduction and specified results/figures",
+    "primary_sources_for_style_observations": true,
+    "research_overlap_assessment": "OUT_OF_SCOPE_BY_USER_INSTRUCTION"
+  },
+  "queries": [
+    "Self-Consistency ICLR 2023",
+    "Tree of Thoughts NeurIPS 2023",
+    "Scaling LLM Test-Time Compute Optimally ICLR 2025 Oral",
+    "RouteLLM ICLR 2025",
+    "GraphRouter ICLR 2025",
+    "How Do Large Language Monkeys Get Their Power Laws ICML 2025",
+    "Scaling Test-Time Compute Without Verification or RL",
+    "Deep Ensembles NeurIPS 2017 reviews",
+    "Hydra Automatically Configuring Algorithms AAAI",
+    "FrugalGPT OpenReview",
+    "More Agents Is All You Need OpenReview"
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Self-Consistency Improves Chain of Thought Reasoning in Language Models",
+      "venue": "ICLR",
+      "year": 2023,
+      "decision": "Virtual presentation / poster accept",
+      "decisionURL": "https://iclr.cc/virtual/2023/poster/11718",
+      "fulltextURL": "https://arxiv.org/pdf/2203.11171",
+      "arxiv": "2203.11171",
+      "verification": {
+        "status": "VERIFIED_AS_STATED",
+        "basis": "official_event",
+        "accessed_at": "2026-09-26",
+        "note": "Author arXiv full text link; PDF not successfully read in this subtask"
+      },
+      "deep_read": {
+        "completed": false,
+        "anchors": [
+          "Abstract",
+          "Official event metadata"
+        ]
+      },
+      "citation_metadata": {
+        "citationCount": 7730,
+        "influentialCitationCount": 954,
+        "url": "https://www.semanticscholar.org/paper/5f19ae1135a9500940978104ec15a5b8751bc7d2",
+        "provider": "Semantic Scholar Graph API",
+        "accessed_at": "2026-09-26T16:04:39.413401+08:00",
+        "local_evidence": "bibliometrics/semantic_scholar_batch.json",
+        "note": "Bibliometric metadata only, not peer-review score; arXiv-linked aggregate record"
+      },
+      "review_metadata": {
+        "numeric_scores": null,
+        "status": "NUMERIC_SCORES_NOT_VERIFIED",
+        "url": null
+      },
+      "award": {
+        "status": "NOT_VERIFIED"
+      },
+      "style_focus": "Keep one central operation consistent across title and abstract"
+    },
+    {
+      "id": "S2",
+      "title": "Tree of Thoughts: Deliberate Problem Solving with Large Language Models",
+      "venue": "NeurIPS",
+      "year": 2023,
+      "decision": "MAIN_CONFERENCE_PRESENTATION_UNVERIFIED",
+      "decisionURL": "https://proceedings.neurips.cc/paper/2023/hash/271db9922b8d1f4dd7aaef84ed5ac703-Abstract.html",
+      "fulltextURL": "https://proceedings.neurips.cc/paper/2023/file/271db9922b8d1f4dd7aaef84ed5ac703-Paper-Conference.pdf",
+      "arxiv": "2305.10601",
+      "verification": {
+        "status": "VERIFIED_AS_STATED",
+        "basis": "official_proceedings",
+        "accessed_at": "2026-09-26",
+        "note": "Final conference PDF"
+      },
+      "deep_read": {
+        "completed": true,
+        "anchors": [
+          "Abstract",
+          "Sections 1-3",
+          "Section 4.1",
+          "Figure 1",
+          "Figure 3",
+          "Table 2"
+        ]
+      },
+      "citation_metadata": {
+        "citationCount": 4940,
+        "url": "https://www.semanticscholar.org/paper/2f3822eb380b5e753a6d579f31dfc3ec4c4a0820",
+        "provider": "Semantic Scholar Graph API",
+        "accessed_at": "2026-09-26T16:07:22.567683+08:00",
+        "local_evidence": "bibliometrics/semantic_scholar_batch2.json",
+        "note": "Bibliometric metadata only, not peer-review score; arXiv-linked aggregate record"
+      },
+      "review_metadata": {
+        "numeric_scores": null,
+        "status": "NUMERIC_SCORES_NOT_VERIFIED",
+        "url": null
+      },
+      "award": {
+        "status": "NOT_VERIFIED"
+      },
+      "style_focus": "Use a shared visual grammar and follow main results with explanatory analysis"
+    },
+    {
+      "id": "S3",
+      "title": "Scaling LLM Test-Time Compute Optimally Can be More Effective than Scaling Parameters for Reasoning",
+      "venue": "ICLR",
+      "year": 2025,
+      "decision": "Oral",
+      "decisionURL": "https://iclr.cc/virtual/2025/oral/31924",
+      "fulltextURL": "https://proceedings.iclr.cc/paper_files/paper/2025/file/1b623663fd9b874366f3ce019fdfdd44-Paper-Conference.pdf",
+      "arxiv": "2408.03314",
+      "verification": {
+        "status": "VERIFIED_AS_STATED",
+        "basis": "official_event_and_proceedings",
+        "accessed_at": "2026-09-26",
+        "note": "Final conference PDF; opening question, abstract progression and result narration read"
+      },
+      "deep_read": {
+        "completed": true,
+        "anchors": [
+          "Abstract",
+          "Sections 1-3.2",
+          "Section 5.2",
+          "Figures 1, 3, 4"
+        ]
+      },
+      "citation_metadata": {
+        "citationCount": 2192,
+        "influentialCitationCount": 153,
+        "url": "https://www.semanticscholar.org/paper/8292083dd8f6ae898ea0ee54a6b97997d1a51c9d",
+        "provider": "Semantic Scholar Graph API",
+        "accessed_at": "2026-09-26T16:04:39.413401+08:00",
+        "local_evidence": "bibliometrics/semantic_scholar_batch.json",
+        "note": "Bibliometric metadata only, not peer-review score; arXiv-linked aggregate record"
+      },
+      "review_metadata": {
+        "numeric_scores": null,
+        "status": "NUMERIC_SCORES_NOT_VERIFIED",
+        "url": null
+      },
+      "award": {
+        "status": "NOT_VERIFIED"
+      },
+      "style_focus": "State a precise opening question and report trends before numerical detail"
+    },
+    {
+      "id": "S4",
+      "title": "RouteLLM: Learning to Route LLMs from Preference Data",
+      "venue": "ICLR",
+      "year": 2025,
+      "decision": "Poster",
+      "decisionURL": "https://iclr.cc/virtual/2025/poster/30737",
+      "fulltextURL": "https://proceedings.iclr.cc/paper_files/paper/2025/file/5503a7c69d48a2f86fc00b3dc09de686-Paper-Conference.pdf",
+      "arxiv": "2406.18665",
+      "verification": {
+        "status": "VERIFIED_AS_STATED",
+        "basis": "official_event_and_proceedings",
+        "accessed_at": "2026-09-26",
+        "note": "Official title uses from; conference PDF title uses with"
+      },
+      "deep_read": {
+        "completed": true,
+        "anchors": [
+          "Abstract",
+          "Sections 1,3,4.1",
+          "Sections 5.1-5.5",
+          "Figure 1",
+          "Tables 1-7"
+        ]
+      },
+      "citation_metadata": {
+        "citationCount": 710,
+        "influentialCitationCount": 97,
+        "url": "https://www.semanticscholar.org/paper/9b3239cff17327960804098e33e1ca903e7b9e85",
+        "provider": "Semantic Scholar Graph API",
+        "accessed_at": "2026-09-26T16:04:39.413401+08:00",
+        "local_evidence": "bibliometrics/semantic_scholar_batch.json",
+        "note": "Bibliometric metadata only, not peer-review score; arXiv-linked aggregate record"
+      },
+      "review_metadata": {
+        "numeric_scores": null,
+        "status": "NUMERIC_SCORES_NOT_VERIFIED",
+        "url": null
+      },
+      "award": {
+        "status": "NOT_VERIFIED"
+      },
+      "style_focus": "Use parallel goal statements and organize result subsections around reader questions"
+    },
+    {
+      "id": "S5",
+      "title": "GraphRouter: A Graph-based Router for LLM Selections",
+      "venue": "ICLR",
+      "year": 2025,
+      "decision": "Poster",
+      "decisionURL": "https://iclr.cc/virtual/2025/poster/28926",
+      "fulltextURL": "https://arxiv.org/abs/2410.03834",
+      "arxiv": "2410.03834",
+      "verification": {
+        "status": "VERIFIED_AS_STATED",
+        "basis": "official_event_and_proceedings",
+        "accessed_at": "2026-09-26",
+        "note": "Full-text landing page only, not deep read"
+      },
+      "deep_read": {
+        "completed": false,
+        "anchors": [
+          "Abstract",
+          "Official event metadata"
+        ]
+      },
+      "citation_metadata": {
+        "citationCount": null,
+        "status": "NOT_RETRIEVED"
+      },
+      "review_metadata": {
+        "numeric_scores": null,
+        "status": "NUMERIC_SCORES_NOT_VERIFIED",
+        "url": null
+      },
+      "award": {
+        "status": "NOT_VERIFIED"
+      },
+      "style_focus": "Assign each abstract sentence one distinct rhetorical function"
+    },
+    {
+      "id": "S6",
+      "title": "How Do Large Language Monkeys Get Their Power (Laws)?",
+      "venue": "ICML",
+      "year": 2025,
+      "decision": "ACCEPTED_PRESENTATION_UNVERIFIED",
+      "decisionURL": "https://proceedings.mlr.press/v267/schaeffer25a.html",
+      "fulltextURL": "https://arxiv.org/pdf/2502.17578",
+      "arxiv": "2502.17578",
+      "verification": {
+        "status": "VERIFIED_AS_STATED",
+        "basis": "official_proceedings",
+        "accessed_at": "2026-09-26",
+        "note": "Deep reading used arXiv v1 (2025-02-24), not final PMLR PDF; final URL returned unsupported octet-stream"
+      },
+      "deep_read": {
+        "completed": true,
+        "anchors": [
+          "Abstract",
+          "Sections 1-5,7",
+          "Figures 2-5"
+        ]
+      },
+      "citation_metadata": {
+        "citationCount": null,
+        "status": "NOT_RETRIEVED"
+      },
+      "review_metadata": {
+        "numeric_scores": null,
+        "status": "NUMERIC_SCORES_NOT_VERIFIED",
+        "url": null
+      },
+      "award": {
+        "status": "NOT_VERIFIED"
+      },
+      "style_focus": "Carry a question across sections and answer it at the start of the next paragraph"
+    },
+    {
+      "id": "S7",
+      "title": "Scaling Test-Time Compute Without Verification or RL is Suboptimal",
+      "venue": "ICML",
+      "year": 2025,
+      "decision": "ACCEPTED_PRESENTATION_UNVERIFIED",
+      "decisionURL": "https://proceedings.mlr.press/v267/setlur25a.html",
+      "fulltextURL": "https://raw.githubusercontent.com/mlresearch/v267/main/assets/setlur25a/setlur25a.pdf",
+      "arxiv": "2502.12118",
+      "verification": {
+        "status": "VERIFIED_AS_STATED",
+        "basis": "official_proceedings",
+        "accessed_at": "2026-09-26",
+        "note": "Official abstract screened for rhetorical structure"
+      },
+      "deep_read": {
+        "completed": false,
+        "anchors": [
+          "Official abstract"
+        ]
+      },
+      "citation_metadata": {
+        "citationCount": null,
+        "status": "NOT_RETRIEVED"
+      },
+      "review_metadata": {
+        "numeric_scores": null,
+        "status": "NUMERIC_SCORES_NOT_VERIFIED",
+        "url": null
+      },
+      "award": {
+        "status": "NOT_VERIFIED"
+      },
+      "style_focus": "Use precise verbs to signal definitions, formal analysis and empirical observations"
+    },
+    {
+      "id": "S8",
+      "title": "Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles",
+      "venue": "NIPS",
+      "year": 2017,
+      "decision": "ACCEPTED_PRESENTATION_UNVERIFIED",
+      "decisionURL": "https://papers.nips.cc/paper/2017/hash/9ef2ed4b7fd2c810847ffa5fa85bce38-Abstract.html",
+      "fulltextURL": "https://papers.nips.cc/paper/2017/file/9ef2ed4b7fd2c810847ffa5fa85bce38-Paper.pdf",
+      "arxiv": "1612.01474",
+      "verification": {
+        "status": "VERIFIED_AS_STATED",
+        "basis": "official_proceedings",
+        "accessed_at": "2026-09-26",
+        "note": "Review text available but numerical scores absent"
+      },
+      "deep_read": {
+        "completed": false,
+        "anchors": [
+          "Abstract",
+          "Introduction first page",
+          "Official review text"
+        ]
+      },
+      "citation_metadata": {
+        "citationCount": null,
+        "status": "NOT_RETRIEVED"
+      },
+      "review_metadata": {
+        "numeric_scores": null,
+        "status": "TEXT_AVAILABLE_NUMERIC_SCORES_NOT_SHOWN",
+        "url": "https://papers.neurips.cc/paper_files/paper/2017/file/9ef2ed4b7fd2c810847ffa5fa85bce38-Reviews.html"
+      },
+      "award": {
+        "status": "NOT_VERIFIED"
+      },
+      "style_focus": "Use parallel short phrases followed by concrete evaluation settings"
+    },
+    {
+      "id": "S9",
+      "title": "Hydra: Automatically Configuring Algorithms for Portfolio-Based Selection",
+      "venue": "AAAI",
+      "year": 2010,
+      "decision": "ACCEPTED_PRESENTATION_UNVERIFIED",
+      "decisionURL": "https://ojs.aaai.org/index.php/AAAI/article/view/7565",
+      "fulltextURL": "https://ojs.aaai.org/index.php/AAAI/article/download/7565/7426",
+      "arxiv": null,
+      "verification": {
+        "status": "VERIFIED_AS_STATED",
+        "basis": "official_proceedings",
+        "accessed_at": "2026-09-26",
+        "note": "24(1):210-216"
+      },
+      "deep_read": {
+        "completed": false,
+        "anchors": [
+          "Abstract",
+          "Introduction"
+        ]
+      },
+      "citation_metadata": {
+        "citationCount": null,
+        "status": "NOT_RETRIEVED"
+      },
+      "review_metadata": {
+        "numeric_scores": null,
+        "status": "NUMERIC_SCORES_NOT_VERIFIED",
+        "url": null
+      },
+      "award": {
+        "status": "NOT_VERIFIED"
+      },
+      "style_focus": "Introduce two alternatives through syntactically parallel sentences"
+    },
+    {
+      "id": "X1",
+      "title": "Large Language Monkeys: Scaling Inference Compute with Repeated Sampling",
+      "venue": "arXiv",
+      "year": 2024,
+      "decision": "CONFERENCE_ACCEPTANCE_NOT_VERIFIED",
+      "decisionURL": "https://arxiv.org/abs/2407.21787",
+      "fulltextURL": "https://arxiv.org/html/2407.21787v1",
+      "arxiv": "2407.21787",
+      "verification": {
+        "status": "VERIFIED_AS_STATED",
+        "basis": "author_preprint",
+        "accessed_at": "2026-09-26",
+        "note": "Not counted among accepted top-conference papers"
+      },
+      "deep_read": {
+        "completed": true,
+        "anchors": [
+          "Abstract",
+          "Sections 1,2,4,4.1,4.2",
+          "Figures 1,7"
+        ]
+      },
+      "citation_metadata": {
+        "citationCount": null,
+        "status": "NOT_RETRIEVED"
+      },
+      "review_metadata": {
+        "numeric_scores": null,
+        "status": "NUMERIC_SCORES_NOT_VERIFIED",
+        "url": null
+      },
+      "award": {
+        "status": "NOT_VERIFIED"
+      },
+      "style_focus": "Name organizing questions early and reuse the same terms consistently"
+    },
+    {
+      "id": "X2",
+      "title": "More Agents Is All You Need",
+      "venue": "TMLR",
+      "year": 2024,
+      "decision": "JOURNAL_ACCEPTED",
+      "decisionURL": "https://openreview.net/forum?id=bgzUSZ8aeg",
+      "fulltextURL": "https://openreview.net/pdf?id=bgzUSZ8aeg",
+      "arxiv": "2402.05120",
+      "verification": {
+        "status": "VERIFIED_AS_STATED",
+        "basis": "published_paper_title_page",
+        "accessed_at": "2026-09-26",
+        "note": "Published in TMLR 10/2024; current direct fetch challenged; indexed PDF title-page available"
+      },
+      "deep_read": {
+        "completed": false,
+        "anchors": [
+          "Published PDF title-page search extract",
+          "Abstract"
+        ]
+      },
+      "citation_metadata": {
+        "citationCount": null,
+        "status": "NOT_RETRIEVED"
+      },
+      "review_metadata": {
+        "numeric_scores": null,
+        "status": "NUMERIC_SCORES_NOT_VERIFIED",
+        "url": null
+      },
+      "award": {
+        "status": "NOT_VERIFIED"
+      },
+      "style_focus": "Use a compact observation-method-factors-evaluation abstract sequence"
+    },
+    {
+      "id": "X3",
+      "title": "FrugalGPT: How to Use Large Language Models While Reducing Cost and Improving Performance",
+      "venue": "TMLR",
+      "year": 2024,
+      "decision": "JOURNAL_ACCEPTED",
+      "decisionURL": "https://groups.google.com/g/tmlr-announce-weekly/c/wcAk_8urPr4",
+      "fulltextURL": "https://arxiv.org/abs/2305.05176",
+      "arxiv": "2305.05176",
+      "verification": {
+        "status": "VERIFIED_AS_STATED",
+        "basis": "official_journal_announcement",
+        "accessed_at": "2026-09-26",
+        "note": "Correct OpenReview ID cSimKw5p6R; search snippet initially conflated previous article ID"
+      },
+      "deep_read": {
+        "completed": false,
+        "anchors": [
+          "Official accepted-paper announcement",
+          "Abstract"
+        ]
+      },
+      "citation_metadata": {
+        "citationCount": null,
+        "status": "NOT_RETRIEVED"
+      },
+      "review_metadata": {
+        "numeric_scores": null,
+        "status": "NUMERIC_SCORES_NOT_VERIFIED",
+        "url": null
+      },
+      "award": {
+        "status": "NOT_VERIFIED"
+      },
+      "style_focus": "Begin with a concrete practical setting and express paired outcomes consistently"
+    }
+  ]
+}

@@ -1,58 +1,57 @@
 Should a fixed inference budget buy more programs or more executions of
 one program? Automated agent design makes the first option increasingly
-accessible: a builder writes a population of LLM harnesses, each
-specifying prompts, tools, and control flow around a frozen solver
-\citep{adas2024,tthe2026,selfharness2026}. The appeal is that different
-programs might handle different tasks better. To justify that
-interpretation, however, a population's gains must be separated from
-the extra attempts used to evaluate it.
+accessible: a builder writes LLM harnesses that arrange prompts, tools,
+and control flow around a frozen solver
+\citep{adas2024,tthe2026,selfharness2026}. A population of such programs
+promises a division of labor, with different members serving different
+tasks. The practical value of that promise depends on whether the
+programs offer advantages that persist and can guide a choice.
 
-The difficulty is that different observed successes do not require
-different abilities. Two independent executions of a program with
-success probability $0.5$ cover a task with probability $0.75$.
-No program specialization has been introduced. Pass@$k$ measures
-coverage over multiple samples; self-consistency and sampling-and-voting
-ensembles aggregate multiple attempts into one answer
-\citep{chen2021codex,selfconsistency2022,moreagents2024}.
-An oracle that selects a correct answer after seeing all outcomes can
-therefore show a population gain even when every member has the same
-code. Averaging a few repeats does not automatically remove this
-ambiguity: choosing the largest estimated success rate also favors
-sampling noise.
+The first sign of such an advantage is often additional coverage:
+one program answers a question that another misses. Yet the same pattern
+can arise from a single program. Two independent executions with success
+probability $0.5$ cover a task with probability $0.75$. Pass@$k$ captures
+this opportunity; self-consistency and sampling-and-voting ensembles
+turn multiple attempts into an aggregated answer
+\citep{chen2021codex,selfconsistency2022,moreagents2024}. An oracle that
+sees all outcomes can therefore reward a population even when every
+member has identical code. With only a few repeats, selecting the
+largest estimated success rate can continue to reward lucky outcomes.
 
 \input{fig_sampling_control}
 
-We ask what evidence distinguishes this coverage opportunity from
-task specialization. Three questions organize the study. Did the
-recorded executions contain additional correct answers? Does a member's
-advantage on a task persist in a fresh execution? Can a rule choose
-usefully before seeing the answer, and improve on spending the same
-resources on a fixed program? These questions concern different
-quantities. A positive answer to the first need not answer the other two.
+We study how this initial coverage signal develops into useful task
+specialization. Three questions guide the analysis. Does the population
+supply additional correct answers? Do its task-wise advantages recur in
+a fresh execution? Can a rule choose a helpful program before execution,
+and how does the resulting coverage compare with additional attempts
+from a fixed program? Each question moves one step closer to a decision
+about where to spend the inference budget.
 
-We first report single-run coverage in the full population of $35$
-generated MATH-500 programs, then test the specialization interpretation
-on a selected subset. The central control holds population size fixed
-and changes whether the programs differ: eight generated harnesses plus
-\bare{} are compared with nine byte-identical baseline slots. Three
-fresh repeats let us discover task-wise choices on two executions and
-score them on the third. The same-code arm measures what this procedure
-reports without program specialization. On the same panel, a selector frozen on
-development tasks then tests selection from question features, and an
-execution-matched oracle replay compares available coverage. Finally,
-BIRD traces examine whether code differences actually reach execution,
-providing a complementary diagnosis within the SQL setting.
+Our central experiment changes program identity while holding the
+number of members and repeats fixed. Eight generated harnesses plus
+\bare{} are compared with nine byte-identical baseline slots, each run
+three times on the same $\RcvPairedN$ MATH-500 tasks. Two repeats identify
+task-wise choices; the third tests whether those choices transfer.
+A selector frozen on development data then makes choices from question
+features, while an execution-matched replay compares the answers
+available at increasing budgets. The full population of $35$ generated
+programs supplies the initial single-run coverage picture. Supporting
+BIRD traces follow program differences into execution, revealing how
+implementation and activation shape the behavior behind a score.
 
-The evidence yields three contributions. \textbf{First}, identical
-programs produce positive repeat-averaged oracle headroom, so that
-signal alone cannot identify program specialization. \textbf{Second},
-generated programs have substantially more repeatable scored-outcome
-patterns than clones, dominated by persistent losses: losses span
-$\RcvLossTasks$ tasks ($\RcvLossPairs$ member--task pairs), whereas
-persistent wins occur on one task. Stable differences therefore need
-not provide useful task advantages; the clone-adjusted held-out gain is
-$\RcvD$ pp. \textbf{Third}, the frozen selector gains
-$\RcvPolicyGain$ pp, and the 27-execution oracle replay ties at
-$\RcvReplayFullCoverage\%$. On this panel, more programs produce
-neither a gain for the tested selector nor greater full-budget oracle
-coverage than more executions of the baseline.
+The results tell a consistent story. Identical programs yield positive
+oracle headroom. Generated programs do have substantially more
+repeatable score patterns, but persistent losses span
+$\RcvLossTasks$ tasks, while persistent wins occur on one. This structure
+maps weaknesses more clearly than useful task advantages: the
+clone-adjusted held-out gain is $\RcvD$ pp, the frozen selector gains
+$\RcvPolicyGain$ pp, and both arms reach
+$\RcvReplayFullCoverage\%$ oracle coverage at 27 executions.
+
+The study contributes a same-code reference for interpreting oracle
+headroom, a repeated-execution analysis that separates persistent losses
+from wins, and a joint view of frozen selection and execution-matched
+coverage. Together, they make the population's value concrete: which
+answers it adds, which differences persist, and which advantages inform
+a usable choice.

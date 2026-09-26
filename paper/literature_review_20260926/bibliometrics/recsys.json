@@ -1,0 +1,156 @@
+{
+  "query": "Are We Really Making Much Progress",
+  "url": "https://api.openalex.org/works?filter=title.search%3AAre+We+Really+Making+Much+Progress&per-page=4&select=id%2Ctitle%2Ccited_by_count%2Cpublication_year%2Cdoi%2Cprimary_location%2Cupdated_date",
+  "accessed_at": "2026-09-26T08:04:11.438062+00:00",
+  "response": {
+    "meta": {
+      "count": 5,
+      "db_response_time_ms": 20,
+      "page": 1,
+      "per_page": 4,
+      "groups_count": null,
+      "x_query": {
+        "oql": "works where title has (Are We Really Making Much Progress)",
+        "oqo": {
+          "get_rows": "works",
+          "filter_rows": [
+            {
+              "column_id": "display_name.search",
+              "value": "Are We Really Making Much Progress",
+              "operator": "has"
+            }
+          ]
+        },
+        "url": "/works?filter=display_name.search:Are We Really Making Much Progress&per_page=4"
+      },
+      "cost_usd": 0.001
+    },
+    "results": [
+      {
+        "id": "https://openalex.org/W4285378361",
+        "title": "Are we really making much progress?",
+        "cited_by_count": 283,
+        "publication_year": 2021,
+        "doi": "https://doi.org/10.1145/3447548.3467350",
+        "primary_location": {
+          "id": "doi:10.1145/3447548.3467350",
+          "is_oa": false,
+          "landing_page_url": "https://doi.org/10.1145/3447548.3467350",
+          "pdf_url": null,
+          "source": null,
+          "license": null,
+          "license_id": null,
+          "version": "publishedVersion",
+          "is_accepted": true,
+          "is_published": true,
+          "raw_source_name": "Proceedings of the 27th ACM SIGKDD Conference on Knowledge Discovery &amp; Data Mining",
+          "raw_type": "proceedings-article"
+        },
+        "updated_date": "2026-09-24T07:57:37.273135"
+      },
+      {
+        "id": "https://openalex.org/W2957191877",
+        "title": "Are we really making much progress? A worrying analysis of recent neural recommendation approaches",
+        "cited_by_count": 412,
+        "publication_year": 2019,
+        "doi": "https://doi.org/10.1145/3298689.3347058",
+        "primary_location": {
+          "id": "doi:10.1145/3298689.3347058",
+          "is_oa": false,
+          "landing_page_url": "https://doi.org/10.1145/3298689.3347058",
+          "pdf_url": null,
+          "source": null,
+          "license": null,
+          "license_id": null,
+          "version": "publishedVersion",
+          "is_accepted": true,
+          "is_published": true,
+          "raw_source_name": "Proceedings of the 13th ACM Conference on Recommender Systems",
+          "raw_type": "proceedings-article"
+        },
+        "updated_date": "2026-09-25T08:18:29.962427"
+      },
+      {
+        "id": "https://openalex.org/W3173025631",
+        "title": "Are we really making much progress? Revisiting, benchmarking, and refining heterogeneous graph neural networks",
+        "cited_by_count": 52,
+        "publication_year": 2021,
+        "doi": "https://doi.org/10.48550/arxiv.2112.14936",
+        "primary_location": {
+          "id": "pmh:oai:arXiv.org:2112.14936",
+          "is_oa": true,
+          "landing_page_url": "http://arxiv.org/abs/2112.14936",
+          "pdf_url": "https://arxiv.org/pdf/2112.14936",
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": null,
+          "license_id": null,
+          "version": "submittedVersion",
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": null,
+          "raw_type": "text"
+        },
+        "updated_date": "2026-09-24T07:57:37.273135"
+      },
+      {
+        "id": "https://openalex.org/W4223430004",
+        "title": "Are We Really Making Much Progress in Text Classification? A Comparative Review",
+        "cited_by_count": 10,
+        "publication_year": 2022,
+        "doi": "https://doi.org/10.48550/arxiv.2204.03954",
+        "primary_location": {
+          "id": "pmh:oai:arXiv.org:2204.03954",
+          "is_oa": true,
+          "landing_page_url": "http://arxiv.org/abs/2204.03954",
+          "pdf_url": "https://arxiv.org/pdf/2204.03954",
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": null,
+          "license_id": null,
+          "version": "submittedVersion",
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": null,
+          "raw_type": "text"
+        },
+        "updated_date": "2026-09-22T06:50:58.402377"
+      }
+    ],
+    "group_by": []
+  }
+}

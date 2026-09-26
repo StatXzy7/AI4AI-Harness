@@ -1,0 +1,54 @@
+{
+  "query": "Chain-of-Thought Prompting Elicits Reasoning",
+  "url": "https://api.openalex.org/works?filter=title.search%3AChain-of-Thought+Prompting+Elicits+Reasoning&per-page=4&select=id%2Ctitle%2Ccited_by_count%2Cpublication_year%2Cdoi%2Cprimary_location%2Cupdated_date",
+  "accessed_at": "2026-09-26T08:04:08.983682+00:00",
+  "response": {
+    "meta": {
+      "count": 1,
+      "db_response_time_ms": 28,
+      "page": 1,
+      "per_page": 4,
+      "groups_count": null,
+      "x_query": {
+        "oql": "works where title has (Chain-of-Thought Prompting Elicits Reasoning)",
+        "oqo": {
+          "get_rows": "works",
+          "filter_rows": [
+            {
+              "column_id": "display_name.search",
+              "value": "Chain-of-Thought Prompting Elicits Reasoning",
+              "operator": "has"
+            }
+          ]
+        },
+        "url": "/works?filter=display_name.search:Chain-of-Thought Prompting Elicits Reasoning&per_page=4"
+      },
+      "cost_usd": 0.001
+    },
+    "results": [
+      {
+        "id": "https://openalex.org/W7133224126",
+        "title": "Chain-Of-Thought Prompting Elicits Reasoning in Large Language Models",
+        "cited_by_count": 2199,
+        "publication_year": 2022,
+        "doi": "https://doi.org/10.52202/068431-1800",
+        "primary_location": {
+          "id": "doi:10.52202/068431-1800",
+          "is_oa": false,
+          "landing_page_url": "https://doi.org/10.52202/068431-1800",
+          "pdf_url": null,
+          "source": null,
+          "license": null,
+          "license_id": null,
+          "version": "publishedVersion",
+          "is_accepted": true,
+          "is_published": true,
+          "raw_source_name": "Advances in Neural Information Processing Systems 35",
+          "raw_type": "proceedings-article"
+        },
+        "updated_date": "2026-09-25T08:18:29.962427"
+      }
+    ],
+    "group_by": []
+  }
+}

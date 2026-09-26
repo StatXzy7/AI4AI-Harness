@@ -1,20 +1,13 @@
 \subsection{Design and primary contrasts}
 \label{sec:f2-admission}
-A separate confirmatory BIRD study crosses six independent builders with
-three seeds under strategy forcing (a named mechanism from a fixed set
-versus builder-chosen strategy) and conformance gating, giving four arms:
+The six-builder, three-seed study crosses strategy forcing and gating:
 II-A (free, ungated), II-B (free, gated), II-C (forced, ungated), and
-II-D (forced, gated). ``Free'' means that no specific strategy is assigned;
-the builder still declares repair, vote, twostage, or plain, as detailed
-in Appendix~\ref{app:free-vocabulary}. The evaluation covers
-$1{,}169$ questions from nine databases never opened during
-development (one disclosed $18$-item smoke-test exception), with the
-official BIRD execution scorer and a pre-outcome-frozen analysis later
-re-run as a versioned corrected reanalysis. The implemented gate bundles
-nontrivial-mechanism structural screening with conformance verification
---- permitted prompt-only transformations can fail structural screening
-despite passing neutral validity checks --- so the treatment does not isolate verification
-causally.
+II-D (forced, gated). Forced strategies come from a fixed set;
+free builders select a declaration within the vocabulary in
+Appendix~\ref{app:free-vocabulary}. The evaluation uses $1{,}169$
+questions from nine databases, with the disclosed $18$-item smoke-test
+exception, and the official BIRD scorer. Results below use the
+corrected reanalysis of the pre-outcome specification.
 
 \begin{table}[H]
 \centering\small
@@ -25,13 +18,11 @@ the oracle and best-fixed comparators.}
 \label{tab:primary}
 \end{table}
 
-The diagonal forced/gated minus free/ungated contrast in single-call-inclusive
-oracle headroom is $\RevisionPrimaryDelta$\,pp, with cell contrasts
-ranging over $\RevisionPrimaryRange$\,pp: the bundled screening policy
-does not improve mean headroom. The uncertainty estimates for this corrected
-analysis appear in Table~\ref{tab:primary}; this mean comparison does not
-establish equivalence. Structural admission is therefore not evidence
-that a mechanism activates on relevant tasks or adds stable utility.
+The forced/gated minus free/ungated contrast is
+$\RevisionPrimaryDelta$\,pp in baseline-inclusive oracle headroom,
+with cell contrasts $\RevisionPrimaryRange$\,pp.
+The implemented bundle does not improve observed mean headroom;
+Table~\ref{tab:primary} reports uncertainty.
 
 \begin{figure}[H]
 \centering
@@ -43,17 +34,14 @@ Headroom and contrast axes show percentage points.}
 \label{fig:results}
 \end{figure}
 
-On the shared core-$400$ tasks the gate contrast is
-$\RevisionGateDelta$\,pp, and the strategy and interaction secondaries
-are likewise inconclusive (Table~\ref{tab:factorial}); the fixed-$K$
-mean contrast $\RevisionKmatchedDelta$\,pp provides a population-size
-sensitivity check. The open-mechanism arm ran only on
-the development side and has no confirmatory estimand. These are all
-single-run contrasts, and the execution variability reported in
-the R2/R3 audits in Appendix~\ref{app:r2} ($8.54\%$ R2 verdict flips; $14.5\%$ of tasks
-changing \bare{} correctness across three runs; a $6.50$\,pp same-code
-one-run gap) characterizes them as coverage opportunities rather than
-capability differences.
+On core-$400$, the gate contrast is $\RevisionGateDelta$\,pp,
+with inconclusive strategy and interaction effects
+(Table~\ref{tab:factorial}). The fixed-$K$ contrast is
+$\RevisionKmatchedDelta$\,pp. II-E remains development-only.
+The R2/R3 audits (Appendix~\ref{app:r2}) place these single-run
+coverage measurements alongside $8.54\%$ R2 flips,
+$14.5\%$ of baseline tasks changing across three runs, and a
+$6.50$\,pp same-code oracle gap.
 
 \begin{table}[H]
 \centering\small

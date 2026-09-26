@@ -1,0 +1,179 @@
+{
+  "query": "A Closer Look at Few-shot Classification",
+  "url": "https://api.openalex.org/works?filter=title.search%3AA+Closer+Look+at+Few-shot+Classification&per-page=4&select=id%2Ctitle%2Ccited_by_count%2Cpublication_year%2Cdoi%2Cprimary_location%2Cupdated_date",
+  "accessed_at": "2026-09-26T08:04:10.703054+00:00",
+  "response": {
+    "meta": {
+      "count": 11,
+      "db_response_time_ms": 30,
+      "page": 1,
+      "per_page": 4,
+      "groups_count": null,
+      "x_query": {
+        "oql": "works where title has (A Closer Look at Few-shot Classification)",
+        "oqo": {
+          "get_rows": "works",
+          "filter_rows": [
+            {
+              "column_id": "display_name.search",
+              "value": "A Closer Look at Few-shot Classification",
+              "operator": "has"
+            }
+          ]
+        },
+        "url": "/works?filter=display_name.search:A Closer Look at Few-shot Classification&per_page=4"
+      },
+      "cost_usd": 0.001
+    },
+    "results": [
+      {
+        "id": "https://openalex.org/W2911906319",
+        "title": "A Closer Look at Few-shot Classification",
+        "cited_by_count": 187,
+        "publication_year": 2019,
+        "doi": "https://doi.org/10.48550/arxiv.1904.04232",
+        "primary_location": {
+          "id": "pmh:oai:arXiv.org:1904.04232",
+          "is_oa": true,
+          "landing_page_url": "http://arxiv.org/abs/1904.04232",
+          "pdf_url": "https://arxiv.org/pdf/1904.04232",
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": null,
+          "license_id": null,
+          "version": "submittedVersion",
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": null,
+          "raw_type": "text"
+        },
+        "updated_date": "2026-08-26T07:47:46.906454"
+      },
+      {
+        "id": "https://openalex.org/W4318751704",
+        "title": "A Closer Look at Few-shot Classification Again",
+        "cited_by_count": 16,
+        "publication_year": 2023,
+        "doi": "https://doi.org/10.48550/arxiv.2301.12246",
+        "primary_location": {
+          "id": "pmh:oai:arXiv.org:2301.12246",
+          "is_oa": true,
+          "landing_page_url": "http://arxiv.org/abs/2301.12246",
+          "pdf_url": "https://arxiv.org/pdf/2301.12246",
+          "source": {
+            "id": "https://openalex.org/S4306400194",
+            "display_name": "arXiv (Cornell University)",
+            "issn_l": "2331-8422",
+            "issn": [
+              "2331-8422"
+            ],
+            "is_oa": true,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": "https://openalex.org/I205783295",
+            "host_organization_name": "Cornell University",
+            "host_organization_lineage": [
+              "https://openalex.org/I205783295"
+            ],
+            "host_organization_lineage_names": [],
+            "type": "repository"
+          },
+          "license": null,
+          "license_id": null,
+          "version": "submittedVersion",
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": null,
+          "raw_type": "text"
+        },
+        "updated_date": "2026-09-24T07:57:37.273135"
+      },
+      {
+        "id": "https://openalex.org/W4401535406",
+        "title": "A Closer Look at Few-Shot Classification with Many Novel Classes",
+        "cited_by_count": 4,
+        "publication_year": 2024,
+        "doi": "https://doi.org/10.3390/app14167060",
+        "primary_location": {
+          "id": "doi:10.3390/app14167060",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.3390/app14167060",
+          "pdf_url": "https://www.mdpi.com/2076-3417/14/16/7060/pdf?version=1723456160",
+          "source": {
+            "id": "https://openalex.org/S4210205812",
+            "display_name": "Applied Sciences",
+            "issn_l": "2076-3417",
+            "issn": [
+              "2076-3417"
+            ],
+            "is_oa": true,
+            "is_in_doaj": true,
+            "is_core": true,
+            "listed_in": [
+              "cwts-core",
+              "doaj",
+              "norway-1"
+            ],
+            "host_organization": "https://openalex.org/P4310310987",
+            "host_organization_name": "Multidisciplinary Digital Publishing Institute",
+            "host_organization_lineage": [
+              "https://openalex.org/P4310310987"
+            ],
+            "host_organization_lineage_names": [
+              "Multidisciplinary Digital Publishing Institute"
+            ],
+            "type": "journal"
+          },
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": "publishedVersion",
+          "is_accepted": true,
+          "is_published": true,
+          "raw_source_name": "Applied Sciences",
+          "raw_type": "journal-article"
+        },
+        "updated_date": "2026-09-25T08:18:29.962427"
+      },
+      {
+        "id": "https://openalex.org/W2979308242",
+        "title": "A Closer Look At Feature Space Data Augmentation For Few-Shot Intent Classification",
+        "cited_by_count": 51,
+        "publication_year": 2019,
+        "doi": "https://doi.org/10.18653/v1/d19-6101",
+        "primary_location": {
+          "id": "doi:10.18653/v1/d19-6101",
+          "is_oa": true,
+          "landing_page_url": "https://doi.org/10.18653/v1/d19-6101",
+          "pdf_url": "https://www.aclweb.org/anthology/D19-6101.pdf",
+          "source": null,
+          "license": "cc-by",
+          "license_id": "https://openalex.org/licenses/cc-by",
+          "version": "publishedVersion",
+          "is_accepted": true,
+          "is_published": true,
+          "raw_source_name": "Proceedings of the 2nd Workshop on Deep Learning Approaches for Low-Resource NLP (DeepLo 2019)",
+          "raw_type": "proceedings-article"
+        },
+        "updated_date": "2026-09-25T08:18:29.962427"
+      }
+    ],
+    "group_by": []
+  }
+}

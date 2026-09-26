@@ -1,13 +1,13 @@
 \section{同代码对照与重复执行协议}\label{app:wp1r}
-当前全部 MATH 主估计统一使用一个 $\RcvPairedN$ 题的完整观测分析集。本节说明其形成方式，记录评分完整性、来源与样本筛选。
+全部 MATH 主估计共用 $\RcvPairedN$ 道完整观测题。下文给出面板、纳入规则与重复分析。
 
-\paragraph{研究对象、快照与纳入规则。}
-程序面板、求解器、评分器、开发划分及三次重复身份保持固定。加盐哈希为每个构建器选出一个低调用成员，再增加两个自由席位和 \bare{}；对照有九个相同基线槽位。2026 年 9 月 26 日 UTC 05:15 捕获的评分快照合并生成臂截至续采 10、克隆臂截至续采 20 的账本，并以该快照固定分析输入。仅保留两臂所有成员与重复均有评分、且单次研究中全部成员均有评分的任务。每个必需单元均接受记录中的任一二元评分。所得 $\RcvPairedN$ 个题目身份固定用于全部主比较。这一纳入规则在查看结果后应用，作为重分析披露。
+\paragraph{面板与纳入规则。}
+程序、求解器、评分器、开发划分及三次重复身份固定。加盐哈希选出每个构建器的一个低调用成员，另加两个自由席位与 \bare{}；对照含九个相同基线槽位。2026 年 9 月 26 日 UTC 05:15 快照合并生成臂续采 10 与克隆臂续采 20。查看结果后，保留单次与重复研究每个必需单元均有记录二元评分的任务，以这 $\RcvPairedN$ 个题目身份定义共同重分析集。
 
-\paragraph{完整分析集与排除的观测。}
-单次矩阵有 $36\times\RcvPairedN=\RcvSingleCells$ 个已观测单元，每个重复臂有 $9\times3\times\RcvPairedN=\RcvCells$ 个已观测单元。因此三个矩阵在分析集内的评分观测完整率均为 $100\%$。政策准确率及 oracle 重放使用相同题目身份。评分完整性与采集账目分别记录。
+\paragraph{完整性与排除。}
+单次矩阵包含 $36\times\RcvPairedN=\RcvSingleCells$ 个观测单元，每个重复臂包含 $9\times3\times\RcvPairedN=\RcvCells$ 个，三个矩阵均为 $100\%$ 完整。政策评估与 oracle 重放使用相同题目身份。
 
-固定纳入规则排除 $\RcvExcludedN$ 道题，涉及生成臂 $\RcvOriginalMissingCells$ 个未评分单元；这些排除题的克隆记录均完整。这些题已从当前分析中排除，保留的来源记录中未知评分保持未知。原始排除题比例为 $\RcvOriginalExcludedPct\%$，低于冻结的 $10\%$ 门槛，门槛按取子集前的采集记录检查。按构建器计，未评分单元为 DeepSeek 5、ERNIE 4、GLM 9、Kimi 30、MiniMax 9、Qwen 4；基线完整。原始记录和已发生的采集成本均保留，包括分析集之外的记录。
+排除的 $\RcvExcludedN$ 道题包含 $\RcvOriginalMissingCells$ 个生成臂未评分单元，分布为 DeepSeek 5、ERNIE 4、GLM 9、Kimi 30、MiniMax 9、Qwen 4；基线与克隆记录完整。取子集前的排除比例 $\RcvOriginalExcludedPct\%$ 低于冻结的 $10\%$ 门槛。排除题更难、更长，基线准确率更低（表~\ref{tab:complete-subset}）。未知评分与全部已发生采集成本仍保留在来源记录中。
 
 \begin{table}[H]
 \centering\small
@@ -25,14 +25,14 @@ Level-5 题目比例（\%） & 26.42 & 64.29 \\
 \label{tab:complete-subset}
 \end{table}
 
-\paragraph{身份、保留规则与冲突。}
-对续采 manifest 的 13 项条件字段作核验，包括求解器、缓存、评分器、协议、重复、程序身份、任务／划分哈希、面板抽样及调度。核实原快照哈希，并将新评分矩阵和题目名单绑定至哈希。对于每个成员—任务—重复身份，完成评分替代未知；后续记录不同仍以最先完成评分为准。生成臂有五个评分冲突单元身份，其中三个位于分析集中的三道题；克隆无冲突。采集器与并发变更保留为操作偏离记录。
+\paragraph{来源与冲突。}
+Manifest 核验涵盖执行条件、程序、任务／划分哈希、面板抽样及调度的 13 项字段；快照、矩阵与题目名单绑定哈希。完成评分替代未知，冲突时保留最先完成者。生成臂有五个冲突单元，其中三个位于三道纳入题；克隆无冲突。采集器与并发变更保留记录。
 
-\paragraph{当前估计与敏感性。}
-共同集上的插件量为生成臂 $\RcvRealPlugin$\,pp、克隆臂 $\RcvClonePlugin$\,pp。配对诊断为 $D=\RcvD$\,pp，95\% 区间 $\RcvDCI$\,pp，判断为 \textsc{Insufficient Evidence}。冲突排除敏感性从两臂删除分析集中受影响的三道题，在剩余 $\RcvConflictN$ 道完整观测题上重新计算选择，得到 $D=\RcvConflictD$\,pp，区间 $\RcvConflictDCI$\,pp，状态不变。这个明确标注的敏感性子集与 $\RcvPairedN$ 题主分析分开；两者均直接使用记录中的二元评分计算。版本化产物保留早期估计及采集快照。
+\paragraph{估计与敏感性。}
+记录二元评分给出生成臂插件余量 $\RcvRealPlugin$\,pp、克隆臂 $\RcvClonePlugin$\,pp，以及 $D=\RcvD$\,pp（95\% 区间 $\RcvDCI$\,pp；\textsc{Insufficient Evidence}）。从两臂删除三道冲突题，并在剩余 $\RcvConflictN$ 题上重新选择，得到 $D=\RcvConflictD$\,pp（区间 $\RcvConflictDCI$\,pp），判断不变。
 
 \subsection{探索性可重复性与评分敏感性}\label{app:repeatability}
-对每个臂，以 $A_r(h,x)=Y(h,x,r)-Y(h_0,x,r)$ 表示非参照成员的优势，$h_0$ 为 \bare{} 或 clone-c1。在共同完整任务上，对每次重复分别减去行均值和列均值，再加回总体均值。每次留出一个重复，计算展平后的残差矩阵与其余两次重复均值的残差之间的相关性，再对三项相关性取平均。配对任务 bootstrap 使用 $2{,}000$ 次抽样，两臂共享抽到的任务。生成臂相关性为 $\RcvRealRho$（$\RcvRealRhoCI$），克隆为 $\RcvCloneRho$（$\RcvCloneRhoCI$），差异为 $\RcvRhoDiff$（$\RcvRhoDiffCI$）。这一采集后诊断衡量去除加性效应后的残差评分模式可重复性。
+对非参照成员定义 $A_r(h,x)=Y(h,x,r)-Y(h_0,x,r)$，其中 $h_0$ 为 \bare{} 或 clone-c1。各重复内减去行、列均值并加回总体均值，将每次留出的残差矩阵与其余两次均值的残差相关，再平均三项相关性。配对任务 bootstrap 使用 $2{,}000$ 次共享抽样。生成臂相关性为 $\RcvRealRho$（$\RcvRealRhoCI$），克隆为 $\RcvCloneRho$（$\RcvCloneRhoCI$），差异为 $\RcvRhoDiff$（$\RcvRhoDiffCI$）。这一采集后诊断衡量去除加性效应后的重复评分模式。
 
-记录评分呈现明显不对称：生成成员在 $\RcvLossPairs$ 个成员—任务对上三次重复均输给 \bare{}，涉及 $\RcvLossTasks$ 个不同任务；三次均赢的有八个成员—任务对，却全部来自同一个任务，由八个生成程序共享。这些计数汇总了三次重复中实际观测到的评分模式。在该唯一任务中，标准答案为 \texttt{12}，基线所有输出均以 \texttt{\#\#\#\# 12th grade} 结尾，一个生成成员则返回 \texttt{12th grade}。固定提取器保留完整的 \texttt{\#\#\#\#} 内容并将前者计为零，却对后者回退到数字提取并计为一。评分差异来自提取器对不同格式采用的分支。我们保留记录评分，并将该案例解释为对格式敏感的重复修复。
+三次均输的记录涉及 $\RcvLossPairs$ 个成员—任务对、$\RcvLossTasks$ 道题。三次均赢的八个对全部来自同一题，由八个生成程序共享。该题对格式敏感：标准答案为 \texttt{12}，基线输出以 \texttt{\#\#\#\# 12th grade} 结尾，一个生成成员返回 \texttt{12th grade}。提取器保留前者的完整 \texttt{\#\#\#\#} 内容并计零，却对后者回退至数值提取并计一。保留记录评分；此处的重复修复来自答案格式。
 \FloatBarrier

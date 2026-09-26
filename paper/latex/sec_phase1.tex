@@ -1,48 +1,46 @@
-A population can supply more correct answers without containing
-task specialists, and specialists can exist without an effective
-selector. We formalize these distinctions before describing the controls.
+We distinguish the answers a population provides, the task advantages
+that persist across executions, and the gains a selector realizes.
 Let $P$ contain baseline $H_0$, and let $Y(h,x,r)\in\{0,1\}$ denote
-member $h$'s correctness on task $x$ in repeat $r$. Accuracies and frequencies
-use \%; gains and headroom use percentage points (pp). For example,
-a probability difference of $0.04145$ is reported as $4.15$ pp after rounding.
+member $h$'s correctness on task $x$ in repeat $r$. Accuracies use
+\%; gains and headroom use percentage points (pp).
 
-\paragraph{Coverage: were additional correct answers available?}
-A one-run oracle sees correctness before choosing a member. Its
+\paragraph{Coverage: which additional answers are available?}
+A one-run oracle selects a member after seeing correctness. Its
 headroom over the best fixed member in the recorded matrix is
 \begin{equation}
 H(P)=\tfrac1n\sum_{i=1}^n\max_{h\in P}Y(h,x_i,r)
 -\max_{h\in P}\tfrac1n\sum_{i=1}^nY(h,x_i,r).
 \label{eq:headroom}
 \end{equation}
-This measures available answers, including successes from repeated
-sampling. The repeat-averaged plugin $\widehat H$ replaces $Y$ by each
-member--task mean. With few repeats, maximizing those means can still
-select favorable estimation errors; $\widehat H>0$ is not by itself
-evidence of specialization.
+This quantity captures available correct answers, including those
+obtained through repeated sampling. The repeat-averaged plugin
+$\widehat H$ replaces $Y$ with each member--task mean. With few repeats,
+maximizing those means can select favorable estimation errors,
+which motivates the same-code control.
 
-\paragraph{Stable complementarity: does the best member change with the task?}
-To remove execution noise conceptually, write
-$p_h(x)=\Pr\{Y(h,x,r)=1\}$ under a fixed execution condition and define
+\paragraph{Stable complementarity: which member is best for each task?}
+Write $p_h(x)=\Pr\{Y(h,x,r)=1\}$ under a fixed execution condition.
+The corresponding population headroom is
 $H_{\rm stable}=\mathbb E_x\max_h p_h(x)-\max_h\mathbb E_x p_h(x)$.
 For two members with $\Delta(x)=p_1(x)-p_0(x)$,
 \begin{equation}
 H_{\rm stable}=\tfrac12\bigl(\mathbb E|\Delta(x)|-|\mathbb E\Delta(x)|\bigr).
 \label{eq:identity}
 \end{equation}
-If one member is better everywhere, the expression is zero, even when
-the size of its advantage varies. Positive complementarity requires
-task-wise crossover. Identical programs under the same condition have
-equal $p_h(x)$ and hence zero stable complementarity. This population
-identity clarifies the target; it does not estimate unknown probabilities
-from a small number of executions.
+Positive complementarity requires task-wise crossover: the better
+member changes with the task. If one member is better everywhere,
+headroom is zero even when its advantage varies in size. Identical
+programs under the same condition have equal $p_h(x)$, giving a
+zero-complementarity reference. This definition concerns population
+probabilities; the repeat diagnostic below tests choices learned from
+finite executions.
 
-\paragraph{Usable selection: can the advantage inform a choice?}
-A selector $\pi_Z$ must choose from task features $Z(x)$ before seeing
-the result. Even stable crossovers may not be predictable from those
-features. Learning a choice from earlier outcomes on the \emph{same}
-task instead tests repeat generalization, a different information
-setting. We evaluate both separately. Practical resource allocation
-adds one more comparison: a selection gain over one fixed execution
-must be assessed against additional fixed-program executions under a
-common budget and answer-selection rule. Equal numbers of harness
-executions need not entail equal model calls or tokens.
+\paragraph{Usable selection: which advantage can guide a decision?}
+A selector $\pi_Z$ chooses from task features $Z(x)$ before execution.
+Its usefulness depends on whether those features predict the relevant
+advantage. We evaluate this decision separately from choices learned
+from earlier outcomes on the same task, which test repeat
+generalization. An execution-matched oracle replay then compares the
+coverage offered by a portfolio with additional fixed-program
+executions. Its budget counts harness executions; each execution may
+contain multiple model calls and tokens.

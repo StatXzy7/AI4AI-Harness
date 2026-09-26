@@ -1,76 +1,57 @@
 \subsection{MATH population, common analysis set, and coverage}\label{app:crossdomain}
-The single-run study supplies the initial coverage evidence and the
-programs for the repeat panel. It carries the BIRD admission study's
-free, ungated generation procedure into competition mathematics, with
-a domain-specific answer comparator.
+The single-run study supplies coverage measurements and programs for the
+repeat panel, applying BIRD's free, ungated generation procedure to
+competition mathematics with a domain-specific comparator.
 
 \paragraph{Protocol and analysis set.}
 \label{app:builder-instruction}
-The builder task can be summarized as follows (a structured summary,
-not a verbatim prompt): write a Python harness implementing
-\texttt{solve(question)}; use \texttt{self.llm} to improve on a single
-greedy call; choose the prompting, decoding, sampling, and control flow;
-return the final mathematical answer with the requested
-\texttt{\#\#\#\#} marker. Gold answers belong to the external judge.
-No slot is assigned a mechanism and no cross-program diversity target
-is imposed. Repeated attempts use the same instruction, without
-earlier candidate code or performance feedback. Admission checks
-interface validity and nonempty output, not an accuracy improvement.
+The builder instruction, summarized rather than quoted, requests a Python
+\texttt{solve(question)} harness that improves on one greedy call through
+\texttt{self.llm}, with freely chosen prompting, decoding, sampling, and
+control flow and a final \texttt{\#\#\#\#} answer. Gold answers remain
+external. Slots receive no assigned mechanism or diversity target.
+Attempts reuse the instruction without prior code or performance
+feedback; admission requires a valid interface and nonempty output.
 
-Six builders receive eight slots each under one seed, with at most
-three raw attempts per slot. The neutral-validity gate checks parsing,
-import, interface, and nonempty answers on two development questions. The frozen target is
-GLM-5.3-Flash, with member-specific decoding and temperature $0$ for
-\bare{}. The original task split precedes generation and reserves
-$100$ development problems. The final evaluation analysis uses the
-same $\RcvPairedN$ fully observed tasks for the single-run population,
-both repeat arms, and frozen-policy scoring. This task set is determined
-after collection by completeness; $\RcvExcludedN$ incomplete problems
-are excluded (Appendix~\ref{app:wp1r}). The development tasks and frozen
-selector remain unchanged.
+Six builders each receive eight slots under one seed, with at most three
+attempts per slot. Parsing, import, interface, and nonempty answers are
+checked on two development questions. The target is GLM-5.3-Flash, with
+member-specific decoding and temperature $0$ for \bare{}. The
+pre-generation split reserves $100$ development problems. Single-run,
+repeat, and policy analyses share $\RcvPairedN$ fully observed tasks;
+the post-collection completeness rule excludes $\RcvExcludedN$ problems
+(Appendix~\ref{app:wp1r}). Development tasks and the selector stay fixed.
 
-The judge compares numeric values when both sides parse as numbers
-(including fractions and decimals), and normalized LaTeX otherwise.
-Normalization strips units, base subscripts, and degree symbols,
-preserves text-command content, and maps matrices to tuples. The
-requested final-answer marker is \texttt{\#\#\#\#}. Formatting each gold
-answer with this marker gives $\RcvPairedN/\RcvPairedN$ correct
-self-comparisons, verifying format consistency on these gold answers. The observed single-run baseline accuracy is
-$\RevisionMathBest\%$ on the analysis set.
+The judge compares parsed numbers, including fractions and decimals,
+or otherwise normalized LaTeX. Normalization removes units, base
+subscripts, and degree symbols, retains text-command content, and maps
+matrices to tuples. Gold answers prefixed with \texttt{\#\#\#\#} pass
+$\RcvPairedN/\RcvPairedN$ self-comparisons. Single-run baseline accuracy
+on this set is $\RevisionMathBest\%$.
 
-The validity gate admits $35/48$ slots. The two reasoning-heavy
-builders, GLM-5.3 and Qwen3.8-Max, exhaust the $32$k-token generation
-budget before emitting code in most slots. This under-represents those
-builder styles under the fixed generation budget. The exploratory
-study evaluates free generation with neutral-validity admission under
-one seed.
+The gate admits $35/48$ slots. GLM-5.3 and Qwen3.8-Max exhaust the
+$32$k-token generation budget before emitting code in most slots,
+leaving their styles under-represented in this fixed-budget population.
 
 \paragraph{Results on the common complete set.}
-All $36$ members, including \bare{}, have one recorded score on each
-of the $\RcvPairedN$ tasks ($\RcvSingleCells/\RcvSingleCells$ cells).
+All $36$ members, including \bare{}, have one score per task:
+$\RcvSingleCells/\RcvSingleCells$ cells over $\RcvPairedN$ tasks.
 Mean pairwise disagreement is $\RevisionMathDisagreement\%$
-(maximum $\MathMaxDisagreement\%$). There are $\MathUnique/36$ unique
-member outcome vectors ($\MathGenUnique/35$ generated vectors), and
-$\MathIdenticalPairs\%$ of member pairs have identical outcomes.
-The union of generated candidates repairs $\MathUnionRepair\%$ of
-baseline errors and fails on $\MathUnionFail\%$ of baseline-correct
-problems. The latter measures the fraction of baseline-correct tasks
-on which all generated members fail.
-Oracle coverage is $\RevisionMathOracle\%$, versus
-$\RevisionMathBest\%$ for the best fixed member, \bare{}, giving
-$\RevisionMathHeadroom$ percentage points of headroom. Generated-member
-accuracies range from $\MathGenMin\%$ to $\MathGenMax\%$.
+(maximum $\MathMaxDisagreement\%$), with $\MathUnique/36$ unique
+outcome vectors ($\MathGenUnique/35$ generated) and
+$\MathIdenticalPairs\%$ identical pairs. The generated union repairs
+$\MathUnionRepair\%$ of baseline errors; all generated members fail on
+$\MathUnionFail\%$ of baseline-correct tasks. Oracle coverage of
+$\RevisionMathOracle\%$ exceeds the best fixed member \bare{}
+($\RevisionMathBest\%$) by $\RevisionMathHeadroom$\,pp.
+Generated accuracies span $\MathGenMin\%$--$\MathGenMax\%$.
 
-The fresh repeat panel uses eight generated members plus \bare{}
-and nine same-code slots on these identical task identities. Its
-clone-adjusted diagnostic measures held-out selection gain for this
-panel; the one-run headroom characterizes the full generated population. Replaying the archived
-judge reproduces all $\RcvSingleCells$ included scores; the versioned
-endpoint-sensitive judge produces identical scores on this subset.
-
+The repeat panel compares eight generated members plus \bare{} with
+nine same-code slots on identical tasks. Its held-out diagnostic concerns
+this panel; single-run headroom concerns the full population. Both the
+archived judge and the versioned endpoint-sensitive judge reproduce all
+$\RcvSingleCells$ included scores.
 
 \paragraph{Scope.}
-The MATH findings characterize exploratory generation under one seed
-and one target on a completeness-selected evaluation set. The BIRD
-studies characterize SQL execution and admission under their respective
-protocols.
+These measurements describe one seed and one target on the
+completeness-selected MATH set; BIRD uses the separate protocols below.

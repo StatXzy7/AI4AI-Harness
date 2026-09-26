@@ -1,5 +1,5 @@
 \section{Harness 生成、程序清单与数据划分}\label{app:inventory}
-本附录先给出主研究的程序来源、任务划分与冻结面板，再列模型版本。BIRD 的发现与准入协议分别见附录~\ref{app:bird-traces} 和~\ref{app:phase2-protocol}。
+本附录给出 MATH 群体、任务划分、冻结面板与模型版本。BIRD 协议见附录~\ref{app:bird-traces} 和~\ref{app:phase2-protocol}。
 
 \input{sec_crossdomain}
 \FloatBarrier
@@ -7,7 +7,7 @@
 \FloatBarrier
 \subsection{模型与版本}\label{app:models}
 
-表~\ref{tab:models} 列出所报告基准研究使用的模型及其发送给 API 的确切版本字符串。所有模型均通过单一商业 OpenAI 兼容 API 聚合器访问（每个角色都用同一提供方）。冻结的是目标模型身份；解码由各 harness 定义，single-call 基线的温度为 $0$。Phase-II harness 生成使用温度 0.7、16{,}384 token 预算；Phase-I 生成条件及其证据缺口见附录~\ref{app:phase1-provenance}。Phase I 使用代理执行评分器；Phase II 使用官方 BIRD 评分器（30\,s 超时），旧评分器作为次要审核。MATH-500 探查使用附录~\ref{app:crossdomain} 的答案比较器；报告的准确率无一由 LLM 评分器产生。
+表~\ref{tab:models} 给出确切 API 模型标识。所有角色均通过同一商业 OpenAI 兼容聚合器访问。目标身份固定，解码由各 harness 定义，single-call 基线温度为 $0$。Phase-II 生成使用温度 0.7、16{,}384 token 预算；Phase-I 条件见附录~\ref{app:phase1-provenance}。Phase I 使用代理执行评分器，Phase II 使用官方 BIRD 评分器（30\,s 超时）并保留旧评分器的次要审核，MATH-500 使用附录~\ref{app:crossdomain} 的答案比较器。报告准确率均不使用 LLM 评分器。
 
 \begin{table}[H]
 \centering

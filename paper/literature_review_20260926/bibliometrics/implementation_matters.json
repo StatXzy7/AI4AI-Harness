@@ -1,0 +1,68 @@
+{
+  "query": "Implementation Matters in Deep RL",
+  "url": "https://api.openalex.org/works?filter=title.search%3AImplementation+Matters+in+Deep+RL&per-page=4&select=id%2Ctitle%2Ccited_by_count%2Cpublication_year%2Cdoi%2Cprimary_location%2Cupdated_date",
+  "accessed_at": "2026-09-26T08:04:09.843360+00:00",
+  "response": {
+    "meta": {
+      "count": 1,
+      "db_response_time_ms": 12,
+      "page": 1,
+      "per_page": 4,
+      "groups_count": null,
+      "x_query": {
+        "oql": "works where title has (Implementation Matters in Deep RL)",
+        "oqo": {
+          "get_rows": "works",
+          "filter_rows": [
+            {
+              "column_id": "display_name.search",
+              "value": "Implementation Matters in Deep RL",
+              "operator": "has"
+            }
+          ]
+        },
+        "url": "/works?filter=display_name.search:Implementation Matters in Deep RL&per_page=4"
+      },
+      "cost_usd": 0.001
+    },
+    "results": [
+      {
+        "id": "https://openalex.org/W2995894173",
+        "title": "Implementation Matters in Deep RL: A Case Study on PPO and TRPO",
+        "cited_by_count": 119,
+        "publication_year": 2020,
+        "doi": null,
+        "primary_location": {
+          "id": "mag:2995894173",
+          "is_oa": false,
+          "landing_page_url": "https://openreview.net/pdf?id=r1etN1rtPB",
+          "pdf_url": null,
+          "source": {
+            "id": "https://openalex.org/S4306419637",
+            "display_name": "International Conference on Learning Representations",
+            "issn_l": null,
+            "issn": null,
+            "is_oa": false,
+            "is_in_doaj": false,
+            "is_core": false,
+            "listed_in": [],
+            "host_organization": null,
+            "host_organization_name": null,
+            "host_organization_lineage": [],
+            "host_organization_lineage_names": [],
+            "type": "conference"
+          },
+          "license": null,
+          "license_id": null,
+          "version": null,
+          "is_accepted": false,
+          "is_published": false,
+          "raw_source_name": "International Conference on Learning Representations",
+          "raw_type": null
+        },
+        "updated_date": "2026-09-21T07:43:02.447757"
+      }
+    ],
+    "group_by": []
+  }
+}
