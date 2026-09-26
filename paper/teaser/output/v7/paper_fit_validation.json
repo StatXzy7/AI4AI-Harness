@@ -1,0 +1,88 @@
+{
+  "original_manuscript_pdf": "paper/latex/main.pdf",
+  "original_manuscript_snapshot_commit": "922c914cc7ce218e43b5a7114e582cf35632d253",
+  "original_manuscript_pdf_sha256": "aca6a579b56203ec299e494c3af7d9d4f9f853d20510882612596ab494271e00",
+  "original_pdf_unchanged": true,
+  "proof_uses_latest_main_manuscript": false,
+  "proof_file": "paper_fit_all.pdf",
+  "proof_pages": 3,
+  "manuscript_text_width_pt": 396,
+  "manuscript_text_height_pt": 648,
+  "reports": [
+    {
+      "option": "A_columns",
+      "option_label": "Option A: Columns",
+      "proof_page": 1,
+      "preview_file": "paper_fit_A_columns.preview.png",
+      "figure_rect_pt": [
+        108.0,
+        82.0,
+        504.0,
+        280.0
+      ],
+      "figure_scale": 1.0,
+      "figure_aspect_ratio": 2.0,
+      "caption": "Figure 1: Coverage, repeatability, and selection on 386 complete MATH tasks. Oracle coverage matches executions, not tokens/calls; headroom uses repeat means. Persistent task counts require at least one generated member to win/lose against baseline in all three repeats; the sole win is extraction-sensitive. Intervals are 95% bootstrap CIs. Program drawings are schematic.",
+      "caption_word_count": 52,
+      "caption_size_pt": 10,
+      "caption_height_pt": 50.5479736328125,
+      "figure_caption_spacing_pt": 9.0,
+      "caption_body_spacing_pt": 18,
+      "total_figure_caption_and_spacing_pt": 275.5479736328125,
+      "body_excerpt_bottom_pt": 632.5479736328125,
+      "method": "PDF composition with original text excerpt; no reflow or LaTeX compilation",
+      "raw_figure_file": "teaser_A_columns.pdf",
+      "raw_figure_sha256": "d4fe86db9b15bbc00304e77222f9623047efb6b6e80e982df032e8fc6c1baa1d"
+    },
+    {
+      "option": "B_lanes",
+      "option_label": "Option B: Evidence lanes",
+      "proof_page": 2,
+      "preview_file": "paper_fit_B_lanes.preview.png",
+      "figure_rect_pt": [
+        108.0,
+        82.0,
+        504.0,
+        280.0
+      ],
+      "figure_scale": 1.0,
+      "figure_aspect_ratio": 2.0,
+      "caption": "Figure 1: Coverage, repeatability, and selection on 386 complete MATH tasks. Oracle coverage matches executions, not tokens/calls; headroom uses repeat means. Persistent task counts require at least one generated member to win/lose against baseline in all three repeats; the sole win is extraction-sensitive. Intervals are 95% bootstrap CIs. Program drawings are schematic.",
+      "caption_word_count": 52,
+      "caption_size_pt": 10,
+      "caption_height_pt": 50.5479736328125,
+      "figure_caption_spacing_pt": 9.0,
+      "caption_body_spacing_pt": 18,
+      "total_figure_caption_and_spacing_pt": 275.5479736328125,
+      "body_excerpt_bottom_pt": 632.5479736328125,
+      "method": "PDF composition with original text excerpt; no reflow or LaTeX compilation",
+      "raw_figure_file": "teaser_B_lanes.pdf",
+      "raw_figure_sha256": "1f7365bca98e1e37bd050828e0af198188e82536a2e5a5fe604d28a83755879f"
+    },
+    {
+      "option": "C_board",
+      "option_label": "Option C: Illustrated evidence board",
+      "proof_page": 3,
+      "preview_file": "paper_fit_C_board.preview.png",
+      "figure_rect_pt": [
+        108.0,
+        82.0,
+        504.0,
+        280.0
+      ],
+      "figure_scale": 1.0,
+      "figure_aspect_ratio": 2.0,
+      "caption": "Figure 1: Coverage, repeatability, and selection on 386 complete MATH tasks. Oracle coverage matches executions, not tokens/calls; headroom uses repeat means. Persistent task counts require at least one generated member to win/lose against baseline in all three repeats; the sole win is extraction-sensitive. Intervals are 95% bootstrap CIs. Program drawings are schematic.",
+      "caption_word_count": 52,
+      "caption_size_pt": 10,
+      "caption_height_pt": 50.5479736328125,
+      "figure_caption_spacing_pt": 9.0,
+      "caption_body_spacing_pt": 18,
+      "total_figure_caption_and_spacing_pt": 275.5479736328125,
+      "body_excerpt_bottom_pt": 632.5479736328125,
+      "method": "PDF composition with original text excerpt; no reflow or LaTeX compilation",
+      "raw_figure_file": "teaser_C_board.pdf",
+      "raw_figure_sha256": "27b61da53d7b43a38630b90342428382db1bac9519de940cd99c2dbfb37be18c"
+    }
+  ]
+}

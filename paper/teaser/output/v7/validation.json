@@ -1,0 +1,69 @@
+{
+  "source_values_checked": true,
+  "previous_versions_unchanged": true,
+  "outputs": [
+    {
+      "file": "teaser_A_columns.pdf",
+      "width_pt": 396,
+      "height_pt": 198,
+      "aspect_ratio": 2.0,
+      "visible_word_count": 117,
+      "minimum_font_pt": 7.5,
+      "fonts": [
+        "STIXGeneral-Bold",
+        "STIXGeneral-Regular"
+      ],
+      "embedded_fonts": true,
+      "text_within_page": true,
+      "normalized_text_span_overlaps": 0,
+      "raster_images": 1,
+      "global_title": false,
+      "six_evidence_groups_present": true,
+      "sha256": "d4fe86db9b15bbc00304e77222f9623047efb6b6e80e982df032e8fc6c1baa1d",
+      "candidate": "A",
+      "label": "Refined columns"
+    },
+    {
+      "file": "teaser_B_lanes.pdf",
+      "width_pt": 396,
+      "height_pt": 198,
+      "aspect_ratio": 2.0,
+      "visible_word_count": 107,
+      "minimum_font_pt": 7.5,
+      "fonts": [
+        "STIXGeneral-Bold",
+        "STIXGeneral-Regular"
+      ],
+      "embedded_fonts": true,
+      "text_within_page": true,
+      "normalized_text_span_overlaps": 0,
+      "raster_images": 1,
+      "global_title": false,
+      "six_evidence_groups_present": true,
+      "sha256": "1f7365bca98e1e37bd050828e0af198188e82536a2e5a5fe604d28a83755879f",
+      "candidate": "B",
+      "label": "Evidence rows"
+    },
+    {
+      "file": "teaser_C_board.pdf",
+      "width_pt": 396,
+      "height_pt": 198,
+      "aspect_ratio": 2.0,
+      "visible_word_count": 115,
+      "minimum_font_pt": 7.5,
+      "fonts": [
+        "STIXGeneral-Bold",
+        "STIXGeneral-Regular"
+      ],
+      "embedded_fonts": true,
+      "text_within_page": true,
+      "normalized_text_span_overlaps": 0,
+      "raster_images": 1,
+      "global_title": false,
+      "six_evidence_groups_present": true,
+      "sha256": "27b61da53d7b43a38630b90342428382db1bac9519de940cd99c2dbfb37be18c",
+      "candidate": "C",
+      "label": "Illustrated board"
+    }
+  ]
+}

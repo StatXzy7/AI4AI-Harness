@@ -1,0 +1,118 @@
+{
+  "version": "v7",
+  "purpose": "Three illustrated alternatives for author choice",
+  "chosen_candidate": null,
+  "source": "artifacts/common386_20260926/analysis.json",
+  "source_sha256": "253a2587fa67d3be8e830a22582497ec7c26ba6ee67db10ef85b5735cfa2ca21",
+  "reviewed_manuscript_commit": "782bacec0579a4e2ccfea956999235af74ce3bee",
+  "artwork": {
+    "path": "paper/teaser/assets/programs_and_rolls.png",
+    "sha256": "0ba25a6238dd8777142b1f574afe2dda11deed34a2c6ae1105572ce79507c7a4",
+    "handling": "Whole original image, unmodified; schematic only"
+  },
+  "data_transformations": [
+    "Display rounding and source proportions \u00d7 100 only.",
+    "All nine replay budgets retained in every alternative.",
+    "Persistent count squares represent tasks with at least one member differing in all repeats."
+  ],
+  "previous_version_files_unchanged": 83,
+  "branch": "jzsawyer-dev/teaser-v7",
+  "v6_pr_head_unchanged": "95b1054c2254315cf179e1e19b1ac35e0233f17d",
+  "outputs": [
+    {
+      "file": "teaser_A_columns.pdf",
+      "width_pt": 396,
+      "height_pt": 198,
+      "aspect_ratio": 2.0,
+      "visible_word_count": 117,
+      "minimum_font_pt": 7.5,
+      "fonts": [
+        "STIXGeneral-Bold",
+        "STIXGeneral-Regular"
+      ],
+      "embedded_fonts": true,
+      "text_within_page": true,
+      "normalized_text_span_overlaps": 0,
+      "raster_images": 1,
+      "global_title": false,
+      "six_evidence_groups_present": true,
+      "sha256": "d4fe86db9b15bbc00304e77222f9623047efb6b6e80e982df032e8fc6c1baa1d",
+      "candidate": "A",
+      "label": "Refined columns"
+    },
+    {
+      "file": "teaser_B_lanes.pdf",
+      "width_pt": 396,
+      "height_pt": 198,
+      "aspect_ratio": 2.0,
+      "visible_word_count": 107,
+      "minimum_font_pt": 7.5,
+      "fonts": [
+        "STIXGeneral-Bold",
+        "STIXGeneral-Regular"
+      ],
+      "embedded_fonts": true,
+      "text_within_page": true,
+      "normalized_text_span_overlaps": 0,
+      "raster_images": 1,
+      "global_title": false,
+      "six_evidence_groups_present": true,
+      "sha256": "1f7365bca98e1e37bd050828e0af198188e82536a2e5a5fe604d28a83755879f",
+      "candidate": "B",
+      "label": "Evidence rows"
+    },
+    {
+      "file": "teaser_C_board.pdf",
+      "width_pt": 396,
+      "height_pt": 198,
+      "aspect_ratio": 2.0,
+      "visible_word_count": 115,
+      "minimum_font_pt": 7.5,
+      "fonts": [
+        "STIXGeneral-Bold",
+        "STIXGeneral-Regular"
+      ],
+      "embedded_fonts": true,
+      "text_within_page": true,
+      "normalized_text_span_overlaps": 0,
+      "raster_images": 1,
+      "global_title": false,
+      "six_evidence_groups_present": true,
+      "sha256": "27b61da53d7b43a38630b90342428382db1bac9519de940cd99c2dbfb37be18c",
+      "candidate": "C",
+      "label": "Illustrated board"
+    }
+  ],
+  "comparison_placements": [
+    {
+      "candidate": "A",
+      "rect_pt": [
+        108.0,
+        54.0,
+        504.0,
+        252.0
+      ],
+      "scale": 1.0
+    },
+    {
+      "candidate": "B",
+      "rect_pt": [
+        108.0,
+        286.0,
+        504.0,
+        484.0
+      ],
+      "scale": 1.0
+    },
+    {
+      "candidate": "C",
+      "rect_pt": [
+        108.0,
+        518.0,
+        504.0,
+        716.0
+      ],
+      "scale": 1.0
+    }
+  ]
+}
