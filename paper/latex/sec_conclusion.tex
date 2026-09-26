@@ -1,9 +1,18 @@
-For the tested MATH panel, additional baseline executions match the
-generated portfolio's $\RcvReplayFullCoverage\%$ oracle coverage at
-27 executions, while the frozen selector gains $\RcvPolicyGain$ pp.
-The generated programs exhibit repeatable differences, concentrated
-in persistent losses. Together with positive headroom from identical
-programs, these results separate finding more answers from having
-useful task specialization. More programs earn their place in an
-inference budget when their task advantages persist, guide selection,
-and improve on additional executions of a fixed program.
+On the tested MATH panel, more programs provide no gain for the frozen
+selector, and more executions of the baseline match the portfolio's
+$\RcvReplayFullCoverage\%$ oracle coverage at $27$ executions.
+The contribution of this study is to explain what the intervening
+signals do establish: identical programs can yield positive headroom,
+and distinct programs can exhibit strongly repeatable score patterns
+dominated by losses. Coverage, repeatability, and usable specialization
+therefore answer different questions about a harness population.
+
+The same-code reference, repeated-execution analysis, and frozen
+selection evaluation make these questions separately testable.
+Supporting BIRD traces connect program descriptions to implementation,
+activation, and output validity. Together, the findings motivate a
+concrete objective for harness design: produce task advantages that
+survive fresh executions and can be converted into better decisions.
+To justify additional programs through specialization, those decisions
+must improve on spending the relevant inference budget on further
+executions of a fixed program.

@@ -1,23 +1,72 @@
-\paragraph{From a population of programs to a useful choice.}
-The same-code reference separates sampling opportunities from program
-identity, while repeats reveal the direction of persistent differences.
-In the tested panel, that persistent structure is concentrated in losses.
-Strong repeatability therefore describes where programs fail more
-clearly than where a selector can exploit an advantage. This explains
-why repeatable score patterns can coexist with zero selection gain and
-equal full-budget coverage. The design objective is a task advantage
-that persists and can be recognized before execution. BIRD locates
-three breaks on the path to such an advantage: a proposed operation
-can be absent, remain idle, or execute and return an invalid answer.
+\paragraph{What additional coverage tells us about program diversity.}
+Our results separate three properties often expected to coincide in a
+program population: finding additional correct answers, retaining task
+advantages across executions, and making those advantages useful for
+selection. The same-code control makes this distinction concrete.
+Byte-identical programs produce positive oracle headroom even after
+averaging repeats, although their stable complementarity is zero by
+construction. Additional coverage is therefore a real sampling
+opportunity, but attributing it to program specialization requires
+further evidence. The control changes the interpretation of a population's
+success: the relevant comparison includes what repeated execution of a
+fixed program can already provide.
 
-\paragraph{Scope.}
-The MATH study uses a low-call panel, one solver, and three repeats.
-The repeat diagnostic and complete-case reanalysis were developed
-after collection; the recovery stage preserved programs, tasks, solver,
-and repeat count. The $\RcvExcludedN$ excluded tasks are harder than the
-$\RcvPairedN$ included tasks (Appendix~\ref{app:wp1r}). The held-out comparison leaves stable complementarity unresolved
-at three repeats, and recorded score patterns include answer-format
-effects. Selector results concern
-the frozen policy; replay matches harness executions, with model calls
-and tokens varying by program. BIRD uses its own populations and
-scoring conditions.
+\paragraph{Repeatability must be interpreted through the direction of advantage.}
+The generated panel adds a second distinction. Its strong residual
+score-pattern correlation shows that program identity is associated with
+persistent differences, yet those differences predominantly identify
+where generated members lose to the baseline. This is consistent with
+the crossover requirement in Eq.~\ref{eq:identity}: variation in the
+size of a disadvantage can be highly repeatable without changing which
+program should be chosen. A specialization claim consequently needs
+evidence about who wins on which tasks, as well as whether those wins
+recur. In this panel, the asymmetry between persistent losses and wins
+explains why repeatable structure offers little observed support for
+switching away from the baseline. The frozen classifier's direct choice
+of \bare{} on every task is consistent with this pattern; its zero gain
+does not establish a limit on all possible selectors.
+
+\paragraph{Designing mechanisms around the tasks that need them.}
+The BIRD traces give this statistical distinction an execution-level
+counterpart. An advertised operation must be implemented, activated on
+the relevant input, and produce a valid answer before it can contribute
+to performance. The inactive repair branch is particularly instructive:
+SQL can execute successfully while answering the question incorrectly,
+so an execution-error trigger can leave precisely that failure untouched.
+This motivates designing a mechanism together with the task condition
+that should activate it. A useful next experiment would compare the same
+program with a mechanism enabled and disabled on tasks that exercise its
+intended trigger, then test whether any advantage survives fresh
+executions. Such interventions would examine a causal contribution;
+the present traces locate failures along this path.
+
+\paragraph{Evaluating the value of a larger program population.}
+The findings suggest that evaluation should follow the decision the
+population is meant to improve. For pre-execution routing, the target is
+a task advantage predictable from information available before the
+answer is known. For portfolios that execute several programs, the
+target is the gain delivered by an implementable answer-selection or
+aggregation procedure. Our oracle replay measures available answers
+and leaves this latter decision open. Its full-budget tie shows why
+additional fixed-program executions are an essential comparator.
+Future studies should combine this comparator with repeat counts
+calibrated to detect task-wise crossovers and comparisons at matched
+model-call or token budgets. This would test whether adding programs
+changes the value of inference beyond the sampling opportunities it
+creates.
+
+\paragraph{Scope and unresolved questions.}
+The MATH evidence concerns a selected low-call panel, one solver, and
+three repeats. The repeat diagnostic and common-complete-set reanalysis
+were developed after collection; recovery preserved the programs,
+tasks, solver, and repeat count. The $\RcvExcludedN$ excluded tasks
+are harder than the $\RcvPairedN$ included tasks
+(Appendix~\ref{app:wp1r}), and recorded score patterns include
+answer-format effects. The calibrated low power at three repeats leaves
+stable complementarity unresolved: \textsc{Insufficient Evidence}
+does not imply equivalence. Selection results concern the frozen policy,
+and replay matches harness executions, with model calls and tokens
+varying by program. BIRD uses separate populations and scoring
+conditions, so its traces supply supporting execution evidence rather
+than a causal explanation of the MATH outcomes. Broader solver and
+program populations remain to be tested.

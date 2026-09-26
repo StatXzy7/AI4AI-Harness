@@ -1,9 +1,9 @@
 # Standalone teaser designs
 
-Versioned standalone figures for **More Programs or More Rolls? Separating Coverage from Specialization in LLM Harnesses**. No LaTeX manuscript files are changed or integrated.
+Versioned figures for **More Programs or More Rolls? Separating Coverage from Specialization in LLM Harnesses**. V6 is integrated as Figure 1 in the English and Chinese manuscripts through their `fig_sampling_control.tex` inputs.
 
 - **Latest: `output/v6/teaser_illustrated.pdf`.** One illustrated design restoring the complete v4 evidence: coverage and headroom, repeatability and persistent losses/wins, held-out gain and frozen selection. It keeps the 2:1 footprint, uses a 7.5 pt minimum label size, and contains 120 visible words versus v4's 128. The page-size proof is `output/v6/paper_fit_illustrated.pdf`.
-- `output/v6/design_notes.md` records the retained information and visual checks; `output/v6/captions.md` keeps the caption outside LaTeX. V6 has no academic alternative or combined-style export.
+- `output/v6/design_notes.md` records the retained information and visual checks; `output/v6/captions.md` preserves the caption source, alternative text, and interpretation notes. Its caption is now used in the English manuscript and translated in the Chinese manuscript. V6 has no academic alternative or combined-style export.
 - `output/v5/teaser_illustrated.pdf`: preserved simpler composition emphasizing the same-code counterexample, persistent scored differences, and unresolved held-out gain. V6 restores the coverage curve, residual correlations, and frozen selector that v5 omitted.
 - `output/v4/teaser_academic.pdf` and `output/v4/teaser_illustrated.pdf`: preserved manuscript-sized 2:1 figures with the wider set of results. Both options remain in `output/v4/teaser_both_styles.pdf`; page-size placement proofs remain in `output/v4/paper_fit_both_styles.pdf`.
 - `output/v4/design_notes.md` records dimensions, font sizes, the caption budget, and validation. Placement proofs are separate PDF compositions, not a revised or compiled manuscript.
@@ -17,7 +17,7 @@ Versioned standalone figures for **More Programs or More Rolls? Separating Cover
 - `output/v2/captions.md`: accompanying caption drafts for review, kept separate from the manuscript.
 - The sibling SVGs preserve editable text. PNGs are inspection previews only.
 
-V6 is the current illustrated proposal for the manuscript. Its program comparison uses the unmodified original bitmap, with vector plots, task glyphs, protocol diagram, and searchable embedded text. It is 5.5 × 2.75 inches, matching the repository's text width. The page-size proof demonstrates the width, caption, and body-text relationship using excerpts from the local manuscript snapshot; actual LaTeX float placement and pagination remain to be checked upon authorized insertion. All 71 v1–v5 output files are preserved and hash-checked by the v6 build.
+V6 is the current illustrated teaser in the manuscript. Its program comparison uses the unmodified original bitmap, with vector plots, task glyphs, protocol diagram, and searchable embedded text. It is 5.5 × 2.75 inches, matching the repository's text width. The standalone page-size proof uses excerpts from an earlier manuscript snapshot. Actual LaTeX integration was checked on 26 September 2026: Figure 1 and its caption appear on page 2 in both languages; the English PDF has 24 pages with the main text ending on page 9, and the Chinese PDF has 28 pages with the main text ending on page 10. The introduction references the figure in both versions. All 71 v1–v5 output files are preserved and hash-checked by the v6 build.
 
 ## Evidence
 

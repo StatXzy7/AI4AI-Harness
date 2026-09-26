@@ -1,32 +1,6 @@
 \begin{figure}[t]
 \centering
-\setlength{\fboxsep}{5pt}
-\fbox{\begin{minipage}[t][107pt][t]{0.29\linewidth}
-\small\raggedright
-\textbf{1. 覆盖}\par\medskip
-重复平均 oracle 余量\par\medskip
-生成程序：$\RcvRealPlugin$ pp\par
-同代码：$\RcvClonePlugin$ pp\par\medskip
-\textbf{相同程序也产生\newline 正的覆盖余量。}
-\end{minipage}}\hfill
-\fbox{\begin{minipage}[t][107pt][t]{0.29\linewidth}
-\small\raggedright
-\textbf{2. 可重复性}\par\medskip
-评分模式残差相关性\par\medskip
-生成程序：$\RcvRealRho$\par
-同代码：$\RcvCloneRho$\par\medskip
-持续损失：$\RcvLossTasks$ 题\par
-持续获胜：$1$ 题
-\end{minipage}}\hfill
-\fbox{\begin{minipage}[t][107pt][t]{0.29\linewidth}
-\small\raggedright
-\textbf{3. 选择与重放}\par\medskip
-冻结选择器收益\par
-\textbf{$\RcvPolicyGain$ pp}\par\medskip
-27 次执行的 oracle 覆盖\par
-生成程序：$\RcvReplayFullCoverage\%$\par
-同代码：$\RcvReplayFullCoverage\%$
-\end{minipage}}
-\caption{\textbf{正余量与强可重复性，同时伴随零选择收益和相同的完整预算 oracle 覆盖。}三栏均使用相同的 $\RcvPairedN$ 道 MATH 题、八个生成程序加 \bare{}，以及九个相同的 \bare{} 槽位，每个成员进行三次新执行。持续输赢指三次均相对 \bare{} 失分或获胜。选择器收益相对开发集选出的固定基线计算；重放在相同 harness 执行次数下，使用执行后正确性比较生成面板与同代码执行。}
+\includegraphics[width=\linewidth]{../teaser/output/v6/teaser_illustrated.pdf}
+\caption{\textbf{$\RcvPairedN$ 道完整 MATH 题上的覆盖、可重复性与选择。}Oracle 覆盖按执行次数匹配，不按 token 或调用次数匹配；余量使用重复均值。持续输赢的题数要求至少一个生成成员在三次重复中均相对基线获胜或失分；唯一的持续获胜题对答案提取敏感。区间为 95\% bootstrap 置信区间。程序图为示意。}
 \label{fig:sampling-control}
 \end{figure}

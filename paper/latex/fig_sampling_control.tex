@@ -1,39 +1,11 @@
 \begin{figure}[t]
 \centering
-\setlength{\fboxsep}{5pt}
-\fbox{\begin{minipage}[t][107pt][t]{0.29\linewidth}
-\small\raggedright
-\textbf{1. Coverage}\par\medskip
-Repeat-mean oracle headroom\par\medskip
-Generated: $\RcvRealPlugin$ pp\par
-Same code: $\RcvClonePlugin$ pp\par\medskip
-\textbf{Identical programs also\newline produce positive headroom.}
-\end{minipage}}\hfill
-\fbox{\begin{minipage}[t][107pt][t]{0.29\linewidth}
-\small\raggedright
-\textbf{2. Repeatability}\par\medskip
-Residual score correlation\par\medskip
-Generated: $\RcvRealRho$\par
-Same code: $\RcvCloneRho$\par\medskip
-Persistent losses: $\RcvLossTasks$ tasks\par
-Persistent wins: $1$ task
-\end{minipage}}\hfill
-\fbox{\begin{minipage}[t][107pt][t]{0.29\linewidth}
-\small\raggedright
-\textbf{3. Selection and replay}\par\medskip
-Frozen selector gain\par
-\textbf{$\RcvPolicyGain$ pp}\par\medskip
-Oracle coverage, 27 executions\par
-Generated: $\RcvReplayFullCoverage\%$\par
-Same code: $\RcvReplayFullCoverage\%$
-\end{minipage}}
-\caption{\textbf{Positive headroom and strong repeatability coexist with zero
-selector gain and equal full-budget oracle coverage.} All panels use the same
-$\RcvPairedN$ MATH tasks, eight generated programs plus \bare{}, and
-nine identical \bare{} slots, with three fresh executions per member.
-Persistent losses and wins are relative to \bare{} in all three repeats.
-Selector gain is relative to the development-selected fixed baseline.
-Replay compares the generated panel with same-code executions using
-post-execution correctness at matched harness execution counts.}
+\includegraphics[width=\linewidth]{../teaser/output/v6/teaser_illustrated.pdf}
+\caption{\textbf{Coverage, repeatability, and selection on $\RcvPairedN$ complete
+MATH tasks.} Oracle coverage matches executions, not tokens/calls; headroom
+uses repeat means. Persistent task counts require at least one generated
+member to win/lose against baseline in all three repeats; the sole win is
+extraction-sensitive. Intervals are 95\% bootstrap CIs. Program drawings
+are schematic.}
 \label{fig:sampling-control}
 \end{figure}
