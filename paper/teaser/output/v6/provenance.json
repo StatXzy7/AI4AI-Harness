@@ -1,0 +1,54 @@
+{
+  "version": "v6",
+  "variant": "illustrated only",
+  "source": "artifacts/common386_20260926/analysis.json",
+  "source_sha256": "253a2587fa67d3be8e830a22582497ec7c26ba6ee67db10ef85b5735cfa2ca21",
+  "source_base_commit": "922c914cc7ce218e43b5a7114e582cf35632d253",
+  "reviewed_manuscript_commit": "782bacec0579a4e2ccfea956999235af74ce3bee",
+  "data_transformations": [
+    "Source proportions \u00d7 100 for percent and pp.",
+    "Display rounding only. All nine replay budgets shown.",
+    "One persistent-loss square per task; no invented data."
+  ],
+  "schematics": "Program motifs and repeat-fold cells are conceptual protocol diagrams.",
+  "fonts": "STIX General Regular and Bold; Times-like serif; embedded TrueType.",
+  "layout": {
+    "aspect_ratio": 2.0,
+    "width_in": 5.5,
+    "height_in": 2.75,
+    "fraction_of_manuscript_text_height": 0.3055555555555556,
+    "artwork_width_pt": 124,
+    "minimum_text_pt": 7.5
+  },
+  "artwork": "Unmodified whole original bitmap; all data and text are vector.",
+  "restored_from_v4": [
+    "All nine oracle-coverage budgets and 98.70% endpoint tie.",
+    "Residual correlations and 95% intervals for both arms.",
+    "Frozen feature selector: baseline on 386/386 tasks, 0.00 pp gain."
+  ],
+  "retained_from_v5": [
+    "Same-code control and repeat-mean headroom 2.33/2.16 pp.",
+    "Persistent losses: 100 tasks; win: 1 task, extraction-sensitive.",
+    "Clone-adjusted held-out gain \u22120.26 pp and CI; specialization unresolved."
+  ],
+  "previous_version_files_unchanged": 71,
+  "outputs": [
+    {
+      "file": "teaser_illustrated.pdf",
+      "page_count": 1,
+      "width_pt": 396.0,
+      "height_pt": 198.0,
+      "visible_word_count": 120,
+      "minimum_font_pt": 7.5,
+      "fonts": [
+        "STIXGeneral-Bold",
+        "STIXGeneral-Regular"
+      ],
+      "raster_images": 1,
+      "embedded_fonts": true,
+      "text_within_page": true,
+      "global_title": false,
+      "sha256": "978ff50f2379ddd68a3fa564decae8a73d8219ab60002a246d9dd414feed9dfc"
+    }
+  ]
+}

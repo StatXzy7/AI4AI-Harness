@@ -1,0 +1,23 @@
+{
+  "source_values_checked": true,
+  "previous_versions_unchanged": true,
+  "outputs": [
+    {
+      "file": "teaser_illustrated.pdf",
+      "page_count": 1,
+      "width_pt": 396.0,
+      "height_pt": 198.0,
+      "visible_word_count": 120,
+      "minimum_font_pt": 7.5,
+      "fonts": [
+        "STIXGeneral-Bold",
+        "STIXGeneral-Regular"
+      ],
+      "raster_images": 1,
+      "embedded_fonts": true,
+      "text_within_page": true,
+      "global_title": false,
+      "sha256": "978ff50f2379ddd68a3fa564decae8a73d8219ab60002a246d9dd414feed9dfc"
+    }
+  ]
+}

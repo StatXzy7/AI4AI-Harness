@@ -1,0 +1,52 @@
+{
+  "version": "v5",
+  "variant": "illustrated only",
+  "source": "artifacts/common386_20260926/analysis.json",
+  "source_sha256": "253a2587fa67d3be8e830a22582497ec7c26ba6ee67db10ef85b5735cfa2ca21",
+  "reviewed_manuscript_commit": "782bacec0579a4e2ccfea956999235af74ce3bee",
+  "layout": {
+    "width_pt": 396,
+    "height_pt": 198,
+    "aspect_ratio": 2.0
+  },
+  "artwork": {
+    "path": "paper/teaser/assets/programs_and_rolls.png",
+    "sha256": "0ba25a6238dd8777142b1f574afe2dda11deed34a2c6ae1105572ce79507c7a4",
+    "handling": "Original whole image; no crop or pixel edits; schematic only"
+  },
+  "data_transformations": [
+    "Held-out proportions \u00d7 100 to pp; display rounding only.",
+    "Headroom already in pp; zero-anchored common bar scale.",
+    "One triplet glyph per persistent-difference task; bars represent three repeats."
+  ],
+  "interpretation": [
+    "Headroom bars and held-out D use different estimators.",
+    "Persistent loss/win tasks: at least one generated member vs baseline in all repeats.",
+    "The single win is answer-extraction sensitive.",
+    "D is not stable headroom; interval crossing zero leaves specialization unresolved.",
+    "Scope is the 386-task common complete set; same solver, selected low-call panel."
+  ],
+  "schematics": "Original program motifs and R1\u2013R3 protocol; no fabricated scored matrix.",
+  "fonts": "Bundled STIX General, regular/bold; all fonts embedded in PDF.",
+  "previous_version_files_unchanged": 59,
+  "outputs": [
+    {
+      "file": "teaser_illustrated.pdf",
+      "page_count": 1,
+      "width_pt": 396,
+      "height_pt": 198,
+      "aspect_ratio": 2.0,
+      "minimum_font_pt": 7.5,
+      "visible_word_count": 88,
+      "fonts": [
+        "STIXGeneral-Bold",
+        "STIXGeneral-Regular"
+      ],
+      "embedded_fonts": true,
+      "raster_images": 1,
+      "text_within_page": true,
+      "global_title": false,
+      "sha256": "507b8cecc12ff157e172d12386977b14d6fa52bdd5883d1846f9432388c6e152"
+    }
+  ]
+}
