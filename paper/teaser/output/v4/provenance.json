@@ -1,0 +1,58 @@
+{
+  "version": "v4",
+  "source": "artifacts/common386_20260926/analysis.json",
+  "source_sha256": "253a2587fa67d3be8e830a22582497ec7c26ba6ee67db10ef85b5735cfa2ca21",
+  "base_commit": "922c914cc7ce218e43b5a7114e582cf35632d253",
+  "data_transformations": [
+    "Source proportions \u00d7 100 for percent and pp.",
+    "Display rounding only. All nine replay budgets shown.",
+    "One persistent-loss square per task; no invented data."
+  ],
+  "schematics": "Program motifs and repeat-fold cells are conceptual protocol diagrams.",
+  "fonts": "STIX General Regular and Bold; Times-like serif; embedded TrueType.",
+  "layout": {
+    "aspect_ratio": 2.0,
+    "width_in": 5.5,
+    "height_in": 2.75,
+    "height_reduction_from_v3_percent": 26.394052044609662,
+    "fraction_of_manuscript_text_height": 0.3055555555555556
+  },
+  "artwork": "Unmodified v1 image in illustrated PDF only.",
+  "previous_version_files_unchanged": 39,
+  "outputs": [
+    {
+      "file": "teaser_academic.pdf",
+      "page_count": 1,
+      "width_pt": 396.0,
+      "height_pt": 198.0,
+      "visible_word_count": 128,
+      "minimum_font_pt": 6.5,
+      "fonts": [
+        "STIXGeneral-Bold",
+        "STIXGeneral-Regular"
+      ],
+      "raster_images": 0,
+      "embedded_fonts": true,
+      "text_within_page": true,
+      "global_title": false,
+      "sha256": "794f0f33367e96b98eee28f3df0e899b8de8b436eda49d6f990db6b6b4db9fc2"
+    },
+    {
+      "file": "teaser_illustrated.pdf",
+      "page_count": 1,
+      "width_pt": 396.0,
+      "height_pt": 198.0,
+      "visible_word_count": 128,
+      "minimum_font_pt": 6.5,
+      "fonts": [
+        "STIXGeneral-Bold",
+        "STIXGeneral-Regular"
+      ],
+      "raster_images": 1,
+      "embedded_fonts": true,
+      "text_within_page": true,
+      "global_title": false,
+      "sha256": "b6b44fc43cbc4e71d6367c08aedf7e68784ffe5b7f7c1a72e1f61e18e67de8cc"
+    }
+  ]
+}

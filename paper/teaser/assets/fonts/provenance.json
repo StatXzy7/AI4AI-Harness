@@ -1,0 +1,27 @@
+{
+  "source": "https://github.com/adobe-fonts/source-sans",
+  "download_date": "2026-09-26",
+  "license": "SIL Open Font License 1.1",
+  "files": [
+    {
+      "file": "LICENSE.md",
+      "url": "https://raw.githubusercontent.com/adobe-fonts/source-sans/release/LICENSE.md",
+      "sha256": "56af9b9c6715597e458284a474dc118a50a4150e9d547c70f7b4a33c3e6a9328"
+    },
+    {
+      "file": "SourceSans3-It.ttf",
+      "url": "https://raw.githubusercontent.com/adobe-fonts/source-sans/release/TTF/SourceSans3-It.ttf",
+      "sha256": "192afd78f0f54a3c69eaf02d43f4d9a821e9d6110e41d3d25d61a7385cd580e4"
+    },
+    {
+      "file": "SourceSans3-Regular.ttf",
+      "url": "https://raw.githubusercontent.com/adobe-fonts/source-sans/release/TTF/SourceSans3-Regular.ttf",
+      "sha256": "4644c81b86ec9caaa76b634889968ed3c4f4f52f054855933acc7c2b21e53b0f"
+    },
+    {
+      "file": "SourceSans3-Semibold.ttf",
+      "url": "https://raw.githubusercontent.com/adobe-fonts/source-sans/release/TTF/SourceSans3-Semibold.ttf",
+      "sha256": "a3f4f8dcf343a8f24dc61951de93f3ba1558b15cd250ba24af8a40e957081b7d"
+    }
+  ]
+}

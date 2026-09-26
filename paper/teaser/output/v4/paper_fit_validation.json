@@ -1,0 +1,44 @@
+{
+  "original_manuscript_pdf_sha256": "aca6a579b56203ec299e494c3af7d9d4f9f853d20510882612596ab494271e00",
+  "original_pdf_unchanged": true,
+  "manuscript_text_width_pt": 396,
+  "manuscript_text_height_pt": 648,
+  "reports": [
+    {
+      "mode": "academic",
+      "figure_rect_pt": [
+        108.0,
+        82.0,
+        504.0,
+        280.0
+      ],
+      "figure_scale": 1.0,
+      "figure_aspect_ratio": 2.0,
+      "caption_size_pt": 10,
+      "caption_height_pt": 62.363983154296875,
+      "figure_caption_spacing_pt": 9.0,
+      "caption_body_spacing_pt": 18,
+      "total_figure_caption_and_spacing_pt": 287.3639831542969,
+      "body_excerpt_bottom_pt": 644.3639831542969,
+      "method": "PDF composition with original text excerpt, not reflow or LaTeX compilation"
+    },
+    {
+      "mode": "illustrated",
+      "figure_rect_pt": [
+        108.0,
+        82.0,
+        504.0,
+        280.0
+      ],
+      "figure_scale": 1.0,
+      "figure_aspect_ratio": 2.0,
+      "caption_size_pt": 10,
+      "caption_height_pt": 62.363983154296875,
+      "figure_caption_spacing_pt": 9.0,
+      "caption_body_spacing_pt": 18,
+      "total_figure_caption_and_spacing_pt": 287.3639831542969,
+      "body_excerpt_bottom_pt": 644.3639831542969,
+      "method": "PDF composition with original text excerpt, not reflow or LaTeX compilation"
+    }
+  ]
+}

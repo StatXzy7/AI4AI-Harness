@@ -1,0 +1,40 @@
+{
+  "source_values_checked": true,
+  "previous_versions_unchanged": true,
+  "outputs": [
+    {
+      "file": "teaser_academic.pdf",
+      "page_count": 1,
+      "width_pt": 396.0,
+      "height_pt": 198.0,
+      "visible_word_count": 128,
+      "minimum_font_pt": 6.5,
+      "fonts": [
+        "STIXGeneral-Bold",
+        "STIXGeneral-Regular"
+      ],
+      "raster_images": 0,
+      "embedded_fonts": true,
+      "text_within_page": true,
+      "global_title": false,
+      "sha256": "794f0f33367e96b98eee28f3df0e899b8de8b436eda49d6f990db6b6b4db9fc2"
+    },
+    {
+      "file": "teaser_illustrated.pdf",
+      "page_count": 1,
+      "width_pt": 396.0,
+      "height_pt": 198.0,
+      "visible_word_count": 128,
+      "minimum_font_pt": 6.5,
+      "fonts": [
+        "STIXGeneral-Bold",
+        "STIXGeneral-Regular"
+      ],
+      "raster_images": 1,
+      "embedded_fonts": true,
+      "text_within_page": true,
+      "global_title": false,
+      "sha256": "b6b44fc43cbc4e71d6367c08aedf7e68784ffe5b7f7c1a72e1f61e18e67de8cc"
+    }
+  ]
+}

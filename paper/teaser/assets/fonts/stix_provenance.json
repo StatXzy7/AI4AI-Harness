@@ -1,0 +1,22 @@
+{
+  "source": "Matplotlib 3.9.2 bundled STIX fonts, mpl-data/fonts/ttf",
+  "license_file": "LICENSE_STIX",
+  "files": [
+    {
+      "file": "STIXGeneral.ttf",
+      "sha256": "167378031e2dddc6216d67819c9260e9a06ffc4c478e4e23cb98a6fd44b183c2"
+    },
+    {
+      "file": "STIXGeneralBol.ttf",
+      "sha256": "e8533dc7083fa346bda1933d60ea4a83b67d0945bceaf1b3541f82b4a0e2c6a0"
+    },
+    {
+      "file": "STIXGeneralItalic.ttf",
+      "sha256": "6cfcb333d22b7c3c623bdfd40174f14c85c3d6731ca6166c1edc80140eae8527"
+    },
+    {
+      "file": "LICENSE_STIX",
+      "sha256": "bab3d31dfef07f483624f2f65f2711e76065b8e7273278b1c071ede1041c9959"
+    }
+  ]
+}
