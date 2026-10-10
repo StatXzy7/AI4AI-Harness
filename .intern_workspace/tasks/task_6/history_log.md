@@ -14,3 +14,8 @@ AI4AI_HARNESS_CONNECTED
 ## Reply ready
 
 AI4AI_HARNESS_CONNECTED
+
+<!-- event:6:complete -->
+## complete
+
+AI4AI_HARNESS_CONNECTED
