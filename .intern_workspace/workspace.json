@@ -1,0 +1,10 @@
+{
+  "schema": "intern-agent.workspace.v1",
+  "workspace_id": "ai4ai-harness",
+  "repo_url": "https://github.com/StatXzy7/AI4AI-Harness.git",
+  "provider": "github",
+  "metadata_mode": "metadata_branch",
+  "metadata_branch": "intern_workspace/ai4ai-harness-20261010",
+  "default_branch": "main",
+  "pull_requests": "explicit_user_request_only"
+}
