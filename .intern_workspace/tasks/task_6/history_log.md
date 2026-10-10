@@ -9,3 +9,8 @@
 ## uncertain_delivery
 
 AI4AI_HARNESS_CONNECTED
+
+<!-- event:6:Reply ready -->
+## Reply ready
+
+AI4AI_HARNESS_CONNECTED
