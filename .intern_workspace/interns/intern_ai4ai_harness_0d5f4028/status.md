@@ -1,6 +1,6 @@
 # intern_ai4ai_harness_0d5f4028
 
-<!-- METADATA:STATUS=Running,TASK=task_6,ROLE=independent,TEAM_ID= -->
+<!-- METADATA:STATUS=uncertain_delivery,TASK=task_6,ROLE=independent,TEAM_ID= -->
 
 | Field | Value |
 | --- | --- |
@@ -11,4 +11,4 @@
 | Management branch | intern_workspace/ai4ai-harness-20261010 |
 | Model | gpt-6.1-sol |
 | Reasoning effort | high |
-| Status | Running |
+| Status | uncertain_delivery |
