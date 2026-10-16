@@ -2,14 +2,14 @@
 
 <!-- intern-agent.record.v2
 {
-  "activity": "running",
+  "activity": "completed",
   "conversation_id": "s_b2df87ce0d5f4028",
   "kind": "conversation",
   "mode": "idle",
-  "revision": 1531,
+  "revision": 1561,
   "schema": "intern-agent.record.v2",
   "task_id": null,
-  "updated_at": "2026-10-16T07:40:10.691Z",
+  "updated_at": "2026-10-16T07:40:54.589Z",
   "workspace": "ai4ai-harness"
 }
 -->
@@ -18,6 +18,6 @@
 
 Mode: idle
 
-Agent: running
+Agent: completed
 
 Named task: none

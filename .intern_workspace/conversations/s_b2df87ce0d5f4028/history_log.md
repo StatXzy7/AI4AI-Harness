@@ -67,10 +67,74 @@
       "revision": 1531,
       "task_id": null,
       "turn_id": "turn_6"
+    },
+    {
+      "at": "2026-10-16T07:40:18.105Z",
+      "event_id": "event_1538",
+      "phase": "memory",
+      "revision": 1538,
+      "task_id": null,
+      "turn_id": null
+    },
+    {
+      "at": "2026-10-16T07:40:53.411Z",
+      "event_id": "event_1555",
+      "phase": "evidence",
+      "revision": 1555,
+      "task_id": null,
+      "turn_id": "turn_187"
+    },
+    {
+      "at": "2026-10-16T07:40:53.635Z",
+      "event_id": "event_1556",
+      "phase": "evidence",
+      "revision": 1556,
+      "task_id": null,
+      "turn_id": "turn_187"
+    },
+    {
+      "at": "2026-10-16T07:40:53.636Z",
+      "event_id": "event_1557",
+      "phase": "running",
+      "revision": 1557,
+      "task_id": null,
+      "turn_id": "turn_187"
+    },
+    {
+      "at": "2026-10-16T07:40:54.489Z",
+      "event_id": "event_1558",
+      "phase": "result_ready",
+      "revision": 1558,
+      "task_id": null,
+      "turn_id": "turn_187"
+    },
+    {
+      "at": "2026-10-16T07:40:54.562Z",
+      "event_id": "event_1559",
+      "phase": "result_ready",
+      "revision": 1559,
+      "task_id": null,
+      "turn_id": "turn_187"
+    },
+    {
+      "at": "2026-10-16T07:40:54.581Z",
+      "event_id": "event_1560",
+      "phase": "reply_ready",
+      "revision": 1560,
+      "task_id": null,
+      "turn_id": "turn_187"
+    },
+    {
+      "at": "2026-10-16T07:40:54.589Z",
+      "event_id": "event_1561",
+      "phase": "preparing_reply",
+      "revision": 1561,
+      "task_id": null,
+      "turn_id": "turn_187"
     }
   ],
   "kind": "history",
-  "revision": 1531,
+  "revision": 1561,
   "schema": "intern-agent.record.v2",
   "workspace": "ai4ai-harness"
 }
@@ -86,3 +150,11 @@
 - 2026-10-16T07:40:10.682Z | running | turn_187
 - 2026-10-16T07:40:10.688Z | received | turn_6
 - 2026-10-16T07:40:10.691Z | complete | turn_6
+- 2026-10-16T07:40:18.105Z | memory | conversation
+- 2026-10-16T07:40:53.411Z | evidence | turn_187
+- 2026-10-16T07:40:53.635Z | evidence | turn_187
+- 2026-10-16T07:40:53.636Z | running | turn_187
+- 2026-10-16T07:40:54.489Z | result_ready | turn_187
+- 2026-10-16T07:40:54.562Z | result_ready | turn_187
+- 2026-10-16T07:40:54.581Z | reply_ready | turn_187
+- 2026-10-16T07:40:54.589Z | preparing_reply | turn_187
