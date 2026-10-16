@@ -5,19 +5,19 @@
   "activity": "completed",
   "code_end": "bffbb6a730ac757da7ec5076fbe8e4690af4388d",
   "code_start": "bffbb6a730ac757da7ec5076fbe8e4690af4388d",
-  "completed_at": null,
+  "completed_at": "2026-10-16T07:41:00.574Z",
   "conversation_id": "s_b2df87ce0d5f4028",
   "evidence": [
     "Codex observed turn/completed status completed",
     "Observed bound Codex transcript task_complete for turn 01a143a7-90d6-7d83-9202-938c7124d1a3"
   ],
   "kind": "turn",
-  "phase": "preparing_reply",
+  "phase": "complete",
   "received_at": "2026-10-16T07:40:05.887Z",
-  "revision": 1561,
+  "revision": 1565,
   "schema": "intern-agent.record.v2",
   "source": "local",
-  "sync": "pending",
+  "sync": "synced",
   "task_id": null,
   "turn_id": "turn_187",
   "workspace": "ai4ai-harness"

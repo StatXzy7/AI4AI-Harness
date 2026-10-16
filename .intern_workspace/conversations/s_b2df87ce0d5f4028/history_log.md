@@ -131,10 +131,26 @@
       "revision": 1561,
       "task_id": null,
       "turn_id": "turn_187"
+    },
+    {
+      "at": "2026-10-16T07:40:54.884Z",
+      "event_id": "event_1563",
+      "phase": "memory",
+      "revision": 1563,
+      "task_id": null,
+      "turn_id": null
+    },
+    {
+      "at": "2026-10-16T07:41:00.574Z",
+      "event_id": "event_1565",
+      "phase": "complete",
+      "revision": 1565,
+      "task_id": null,
+      "turn_id": "turn_187"
     }
   ],
   "kind": "history",
-  "revision": 1561,
+  "revision": 1565,
   "schema": "intern-agent.record.v2",
   "workspace": "ai4ai-harness"
 }
@@ -158,3 +174,5 @@
 - 2026-10-16T07:40:54.562Z | result_ready | turn_187
 - 2026-10-16T07:40:54.581Z | reply_ready | turn_187
 - 2026-10-16T07:40:54.589Z | preparing_reply | turn_187
+- 2026-10-16T07:40:54.884Z | memory | conversation
+- 2026-10-16T07:41:00.574Z | complete | turn_187

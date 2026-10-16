@@ -4,7 +4,7 @@
 {
   "conversation_id": "s_b2df87ce0d5f4028",
   "kind": "knowledge",
-  "revision": 1561,
+  "revision": 1565,
   "schema": "intern-agent.record.v2",
   "workspace": "ai4ai-harness"
 }
