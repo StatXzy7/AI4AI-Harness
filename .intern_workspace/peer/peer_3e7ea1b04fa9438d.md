@@ -25,6 +25,10 @@
       {
         "at": 1792136454.8839617,
         "stage": "replied"
+      },
+      {
+        "at": 1792136466.5084004,
+        "stage": "reply_read"
       }
     ],
     "recipient": "bot_a30b70a68553",
@@ -32,9 +36,9 @@
     "reply_state": "available",
     "sender": "bot_279ee3e56cc1",
     "state": "replied",
-    "updated_at": 1792136454.8839757
+    "updated_at": 1792136466.5084877
   },
-  "revision": 1563,
+  "revision": 1570,
   "schema": "intern-agent.record.v2",
   "workspace": "ai4ai-harness"
 }
@@ -60,7 +64,7 @@
 
 ## Delivery receipts
 
-> [{"stage": "stored", "at": 1792136405.3555274}, {"stage": "queued", "at": 1792136405.8881435}, {"stage": "received", "at": 1792136418.1049263}, {"stage": "replied", "at": 1792136454.8839617}]
+> [{"stage": "stored", "at": 1792136405.3555274}, {"stage": "queued", "at": 1792136405.8881435}, {"stage": "received", "at": 1792136418.1049263}, {"stage": "replied", "at": 1792136454.8839617}, {"stage": "reply_read", "at": 1792136466.5084004}]
 
 ## Policy
 
