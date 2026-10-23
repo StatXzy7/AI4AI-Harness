@@ -40,7 +40,8 @@
     "reply_state": "handled",
     "sender": "bot_279ee3e56cc1",
     "state": "replied",
-    "updated_at": 1792136541.674435
+    "updated_at": 1792136541.674435,
+    "waiting_reason": null
   },
   "revision": 1606,
   "schema": "intern-agent.record.v2",

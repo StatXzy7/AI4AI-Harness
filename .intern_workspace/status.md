@@ -4,10 +4,10 @@
 {
   "kind": "workspace",
   "mode": "idle",
-  "revision": 1606,
+  "revision": 10681,
   "schema": "intern-agent.record.v2",
-  "sync": "pending",
-  "updated_at": "2026-10-16T07:42:21.674Z",
+  "sync": "synced",
+  "updated_at": "2026-10-23T10:42:30.386Z",
   "working_conversations": 0,
   "workspace": "ai4ai-harness"
 }
