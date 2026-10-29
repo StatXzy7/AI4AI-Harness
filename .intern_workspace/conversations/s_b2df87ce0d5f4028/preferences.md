@@ -4,7 +4,7 @@
 {
   "conversation_id": "s_b2df87ce0d5f4028",
   "kind": "knowledge",
-  "revision": 10681,
+  "revision": 13205,
   "schema": "intern-agent.record.v2",
   "workspace": "ai4ai-harness"
 }
@@ -20,12 +20,16 @@
 >   "fast": {
 >     "tier": "default"
 >   },
+>   "goal_selection": null,
 >   "lifecycle": "ready",
 >   "model": {
 >     "effort": "high",
 >     "model": "gpt-6.1-sol"
 >   },
->   "progress": null,
+>   "progress": {
+>     "enabled": 1,
+>     "presentation": "messages"
+>   },
 >   "role": "agent",
 >   "trigger": null
 > }
