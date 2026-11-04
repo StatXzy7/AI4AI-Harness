@@ -291,10 +291,34 @@
       "revision": 15307,
       "task_id": null,
       "turn_id": "turn_923"
+    },
+    {
+      "at": "2026-11-04T03:56:02.002Z",
+      "event_id": "event_15308",
+      "phase": "memory",
+      "revision": 15308,
+      "task_id": null,
+      "turn_id": null
+    },
+    {
+      "at": "2026-11-04T03:56:12.008Z",
+      "event_id": "event_15310",
+      "phase": "complete",
+      "revision": 15310,
+      "task_id": null,
+      "turn_id": "turn_923"
+    },
+    {
+      "at": "2026-11-04T03:57:03.529Z",
+      "event_id": "event_15312",
+      "phase": "memory",
+      "revision": 15312,
+      "task_id": null,
+      "turn_id": null
     }
   ],
   "kind": "history",
-  "revision": 15307,
+  "revision": 15312,
   "schema": "intern-agent.record.v2",
   "workspace": "ai4ai-harness"
 }
@@ -338,3 +362,6 @@
 - 2026-11-04T03:56:01.744Z | result_ready | turn_923
 - 2026-11-04T03:56:01.760Z | reply_ready | turn_923
 - 2026-11-04T03:56:01.766Z | preparing_reply | turn_923
+- 2026-11-04T03:56:02.002Z | memory | conversation
+- 2026-11-04T03:56:12.008Z | complete | turn_923
+- 2026-11-04T03:57:03.529Z | memory | conversation
