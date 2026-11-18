@@ -3,7 +3,7 @@
 <!-- intern-agent.record.v2
 {
   "kind": "knowledge",
-  "revision": 15357,
+  "revision": 22836,
   "schema": "intern-agent.record.v2",
   "workspace": "ai4ai-harness"
 }
